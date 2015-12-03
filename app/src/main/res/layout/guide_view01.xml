@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/s1" >
+
+    <TextView
+        android:id="@+id/tv_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="70dip"
+        android:gravity="center"
+        android:text="一块地种植作物到底需要什么肥料？\n又需要多少？还需要施肥多少次？"
+        android:textSize="17sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="70dip"
+        android:gravity="center"
+        android:text="想知道吗？"
+        android:textSize="30sp"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/bg_titlebar" >
+
+        <ImageButton
+            android:id="@+id/imgbtn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/titlebar_height"
+            android:layout_marginLeft="5dip"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/back" />
+
+        <ProgressBar
+            android:id="@+id/main_head_progress"
+            style="@style/loading_small"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5.0dip"
+            android:layout_toRightOf="@id/imgbtn_back"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/titlebar_height"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="评分"
+            android:textColor="@color/textcolor_titlebar"
+            android:textSize="@dimen/titlebar_textsize" />
+
+        <Button
+            android:id="@+id/btn_sure"
+            android:layout_width="60dip"
+            android:layout_height="35dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@null"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/textcolor_titlebar"
+            android:textSize="@dimen/titlebar_textsize" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:gravity="center"
+            android:text="评分："
+            android:textSize="@dimen/size_12" />
+
+        <RadioGroup
+            android:id="@+id/rg_score"
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rb_y"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="优"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/size_12" />
+
+            <RadioButton
+                android:id="@+id/rb_hg"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="合格"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/size_12" />
+
+            <RadioButton
+                android:id="@+id/rb_bhg"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="不合格"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/size_12" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bg_selectitem" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:gravity="center"
+            android:text="说明："
+            android:textSize="@dimen/size_12" />
+
+        <EditText
+            android:id="@+id/et_note"
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="请输入说明"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_12" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_selectitem" />
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+</LinearLayout>

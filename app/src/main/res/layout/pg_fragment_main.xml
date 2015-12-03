@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/bg_titlebar" >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/titlebar_height"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="首页"
+            android:textColor="@color/textcolor_titlebar"
+            android:textSize="@dimen/titlebar_textsize" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container_weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv_day"
+            android:layout_width="wrap_content"
+            android:layout_height="65dip"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="10月1日 星期四"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="3dip"
+        android:background="@color/line_color" />
+
+    <FrameLayout
+        android:id="@+id/container_todayjob"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

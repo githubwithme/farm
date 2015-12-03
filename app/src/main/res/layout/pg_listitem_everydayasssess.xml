@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dip"
+    android:background="@color/white"
+    android:minHeight="100dip"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="50dip"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dip"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <com.farm.widget.CircleImageView
+            android:id="@+id/iv_zyd"
+            android:layout_width="15dip"
+            android:layout_height="15dip"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/lately2"
+            app:border_color="@color/white"
+            app:border_width="0dp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_day"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="2015-09-22"
+                android:textColor="@color/black"
+                android:textSize="9sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginTop="10dip"
+        android:layout_weight="4"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_cmdname_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="9.5分"
+                android:textColor="@color/red"
+                android:textSize="@dimen/textsize_cmd_name" />
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:minWidth="60dip"
+                android:text="优"
+                android:textColor="@color/red"
+                android:textSize="@dimen/textsize_cmd" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_yq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="备注："
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <TextView
+                android:id="@+id/tv_pq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="植保工作做的不错！"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip" >
+
+            <TextView
+                android:id="@+id/tv_tip_fk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="罚款:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <TextView
+                android:id="@+id/tv_fk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@id/tv_tip_fk"
+                android:gravity="left"
+                android:text="无"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <TextView
+                android:id="@+id/tv_tip_ly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@id/tv_fk"
+                android:gravity="center"
+                android:text="理由:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <TextView
+                android:id="@+id/tv_ly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@id/tv_tip_ly"
+                android:gravity="left"
+                android:text="无"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <FrameLayout
+                android:layout_width="40dip"
+                android:layout_height="15dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="40dip" >
+
+                <ProgressBar
+                    android:id="@+id/pb_downloaaudio"
+                    style="@style/loading_small" />
+
+                <ImageButton
+                    android:id="@+id/btn_record"
+                    android:layout_width="14dip"
+                    android:layout_height="18dip"
+                    android:background="@drawable/feed_voice_3"
+                    android:gravity="left"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textsize_workstation"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

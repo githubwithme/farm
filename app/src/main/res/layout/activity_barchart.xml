@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dip"
+        android:background="@color/white" >
+
+        <ImageButton
+            android:id="@+id/btn_previous"
+            android:layout_width="60dip"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/tv_titlebar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="数据分析"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dip"
+        android:background="#dcdc"
+        android:gravity="center"
+        android:text="注：双击或双指左右上下拉伸可以放大图表"
+        android:textColor="#ff0000"
+        android:textSize="11sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:orientation="horizontal" >
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/tv_year"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="2015"
+                android:textColor="#ff0000"
+                android:textSize="11sp" />
+
+            <ImageView
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_gravity="bottom|right"
+                android:src="@drawable/downward" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="0.1dip"
+            android:layout_height="match_parent"
+            android:background="#dcdc" />
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="人员"
+                android:textColor="#ff0000"
+                android:textSize="11sp" />
+
+            <ImageView
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_gravity="bottom|right"
+                android:src="@drawable/downward" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="0.1dip"
+            android:layout_height="match_parent"
+            android:background="#dcdc" />
+
+        <Button
+            android:id="@+id/btn_sure"
+            android:layout_width="60dip"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="#ff0000"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dip"
+        android:background="#dcdc" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:gravity="center"
+                android:text="每月信息统计情况"
+                android:textSize="14sp" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chart1"
+                android:layout_width="match_parent"
+                android:layout_height="250dip" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dip"
+                android:layout_marginTop="20dip"
+                android:background="#919191" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:gravity="center"
+                android:text="全年信息统计情况"
+                android:textSize="14sp" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chart_year"
+                android:layout_width="match_parent"
+                android:layout_height="250dip" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dip"
+                android:layout_marginTop="20dip"
+                android:background="#919191" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:gravity="center"
+                android:text="全年人员占比情况"
+                android:textSize="14sp" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/chart_pie"
+                android:layout_width="match_parent"
+                android:layout_height="250dip" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

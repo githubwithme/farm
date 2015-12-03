@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/s4" >
+
+    <TextView
+        android:id="@+id/tv_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_Start"
+        android:gravity="center"
+        android:text="生成施肥推荐卡！"
+        android:textSize="30sp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btn_Start"
+        android:layout_width="240dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dip"
+        android:background="@drawable/background_view_rounded_single"
+        android:text="马 上 进 入" />
+
+</RelativeLayout>

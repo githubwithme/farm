@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="wgh_module_mpchartlib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/wgh_module_mpchartlib.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

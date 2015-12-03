@@ -1,0 +1,168 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.farm.ui.NCZ_MainActivity" >
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dip" />
+
+    <LinearLayout
+        android:id="@+id/main_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:orientation="horizontal" >
+
+        <TableLayout
+            android:id="@+id/tl_home"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/imgbtn_home"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1.5"
+                android:background="@null"
+                android:clickable="false"
+                android:contentDescription=""
+                android:src="@drawable/btn_home_selector" />
+
+            <TextView
+                android:id="@+id/tv_home"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="首页"
+                android:textColor="@color/menu_textcolor"
+                android:textSize="@dimen/home_menu_textsize" />
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tl_product"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/imgbtn_product"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1.5"
+                android:background="@null"
+                android:clickable="false"
+                android:contentDescription=""
+                android:src="@drawable/selector_menu_patrol" />
+
+            <TextView
+                android:id="@+id/tv_product"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="生产"
+                android:textColor="@color/menu_textcolor"
+                android:textSize="@dimen/home_menu_textsize" />
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tl_money"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/imgbtn_money"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1.5"
+                android:background="@null"
+                android:clickable="false"
+                android:contentDescription=""
+                android:src="@drawable/selector_menu_data" />
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="财务"
+                android:textColor="@color/menu_textcolor"
+                android:textSize="@dimen/home_menu_textsize" />
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tl_sale"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/imgbtn_sale"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1.5"
+                android:background="@null"
+                android:clickable="false"
+                android:contentDescription=""
+                android:src="@drawable/selector_message" />
+
+            <TextView
+                android:id="@+id/tv_sale"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="销售"
+                android:textColor="@color/menu_textcolor"
+                android:textSize="@dimen/home_menu_textsize" />
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tl_me"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/imgbtn_me"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1.5"
+                android:background="@null"
+                android:clickable="false"
+                android:contentDescription=""
+                android:src="@drawable/selector_message" />
+
+            <TextView
+                android:id="@+id/tv_me"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="我"
+                android:textColor="@color/menu_textcolor"
+                android:textSize="@dimen/home_menu_textsize" />
+        </TableLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/main_bottom"
+        android:background="@color/line_color" />
+
+</RelativeLayout>

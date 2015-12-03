@@ -1,0 +1,74 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="titlebar_height">50dp</dimen>
+    <dimen name="searchview_height">40dp</dimen>
+    <dimen name="titlebar_textsize">18sp</dimen>
+    <dimen name="tonggao_height">150dp</dimen>
+    <dimen name="menu_height">55dp</dimen>
+    <dimen name="line">1px</dimen>
+    <dimen name="home_textsize_find">14sp</dimen>
+    <dimen name="home_textsize_other">12sp</dimen>
+    <dimen name="home_menu_textsize">12sp</dimen>
+    <dimen name="actionbar_textsize">16sp</dimen>
+    <!-- popuwindow高度 -->
+    <dimen name="popuwindow_height">60dip</dimen>
+    <dimen name="text_size_15">15.0dip</dimen>
+    <dimen name="text_size_14">14.0dip</dimen>
+    <dimen name="text_size_12">12.0dip</dimen>
+    <dimen name="text_size_10">10.0dip</dimen>
+    <!-- 通告高度 -->
+    <dimen name="height_tonggao">80dip</dimen>
+    <dimen name="height_dot">20dip</dimen>
+    <!-- 列表中的图片高度 -->
+    <dimen name="height_imgage_inlist">120dip</dimen>
+    <dimen name="width_imgage_inlist">120dip</dimen>
+    <!-- 按钮高度 -->
+    <dimen name="height_imgbtn_edit">20dip</dimen>
+    <dimen name="width_imgbtn_eidt">40dip</dimen>
+    <dimen name="date_textsize">12sp</dimen>
+    <!-- 审核状态栏高度 -->
+    <dimen name="height_review">30dip</dimen>
+    <!-- 字段栏高度 -->
+    <dimen name="height_colum">60dip</dimen>
+    <!-- 字段提示栏宽度度 -->
+    <dimen name="width_colum">80dip</dimen>
+    <dimen name="width_columlength">110dip</dimen>
+    <!-- 设置栏高度 -->
+    <dimen name="height_setting">60dip</dimen>
+    <!-- 设置栏提示宽度 -->
+    <dimen name="width_setting">40dip</dimen>
+    <!-- 设置栏提示高度 -->
+    <dimen name="height_setting_column">40dip</dimen>
+    <!-- 设置栏标题宽度 -->
+    <dimen name="width_setting_title">80dip</dimen>
+    <!-- 设置栏文字大小 -->
+    <dimen name="textsize_setting">15sp</dimen>
+    <!-- 字段文字大小 -->
+    <dimen name="textsize_colum">16sp</dimen>
+    <dimen name="textsize_cmd">12sp</dimen>
+    <dimen name="textsize_cmd_name">14sp</dimen>
+    <dimen name="textsize_workstation">12sp</dimen>
+    <dimen name="message_content_padding">13dip</dimen>
+    <dimen name="message_content_padding_left">18.5dip</dimen>
+    <dimen name="height_line">1dip</dimen>
+    <dimen name="height_selector">45dip</dimen>
+    <dimen name="size_40">40dip</dimen>
+    <dimen name="size_20">20dip</dimen>
+    <dimen name="size_10">10dip</dimen>
+    <dimen name="size_15">15dip</dimen>
+    <dimen name="size_22">22dip</dimen>
+    <dimen name="size_35">35dip</dimen>
+    <dimen name="size_12">12dip</dimen>
+    <dimen name="size_14">14dip</dimen>
+    <dimen name="size_13">13dip</dimen>
+    <dimen name="size_18">18dip</dimen>
+    <dimen name="size_16">16dip</dimen>
+    <dimen name="size_11">11dip</dimen>
+    <dimen name="size_60">60dip</dimen>
+    <dimen name="size_80">80dip</dimen>
+    <dimen name="size_150">150dip</dimen>
+
+</resources>

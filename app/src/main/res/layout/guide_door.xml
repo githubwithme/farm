@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dip"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo1" />
+
+    <LinearLayout
+        android:id="@+id/ll_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/anim_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="农场易"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="10dip"
+            android:layout_height="10dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:background="@drawable/umeng_socialize_follow_on" />
+
+        <TextView
+            android:id="@+id/tv_gl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="轻松管理"
+            android:textColor="@color/red"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dip"
+        android:gravity="center"
+        android:text="Copyright@广州海川信息科技"
+        android:textColor="@color/black"
+        android:textSize="9sp" />
+
+</RelativeLayout>

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+    android:paddingBottom="15dip"
+    android:paddingLeft="15dip"
+    android:paddingRight="15dip"
+    android:paddingTop="5dip" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_review"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dip"
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/direct_index_selected" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="树高"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+
+            <View
+                android:layout_width="10dip"
+                android:layout_height="0.1px"
+                android:layout_gravity="center"
+                android:background="@color/red" />
+
+            <TextView
+                android:id="@+id/tv_hNum"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="暂无"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dip"
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/direct_index_selected" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="围径"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+
+            <View
+                android:layout_width="10dip"
+                android:layout_height="0.1px"
+                android:layout_gravity="center"
+                android:background="@color/red" />
+
+            <TextView
+                android:id="@+id/tv_wNum"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="暂无"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_review"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dip"
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/direct_index_selected" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="叶色"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+
+            <View
+                android:layout_width="10dip"
+                android:layout_height="0.1px"
+                android:layout_gravity="center"
+                android:background="@color/red" />
+
+            <TextView
+                android:id="@+id/tv_yColor"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="暂无"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dip"
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/direct_index_selected" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="叶片斜度"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+
+            <View
+                android:layout_width="10dip"
+                android:layout_height="0.1px"
+                android:layout_gravity="center"
+                android:background="@color/red" />
+
+            <TextView
+                android:id="@+id/tv_xNum"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="暂无"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_review"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dip"
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/direct_index_selected" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="叶数"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+
+            <View
+                android:layout_width="10dip"
+                android:layout_height="0.1px"
+                android:layout_gravity="center"
+                android:background="@color/red" />
+
+            <TextView
+                android:id="@+id/tv_yNum"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="暂无"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dip"
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/direct_index_selected" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="抽蕾时间"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+
+            <View
+                android:layout_width="10dip"
+                android:layout_height="0.1px"
+                android:layout_gravity="center"
+                android:background="@color/red" />
+
+            <TextView
+                android:id="@+id/tv_cDate"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="暂无"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_review"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dip"
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/direct_index_selected" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="种植留芽时间"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+
+            <View
+                android:layout_width="10dip"
+                android:layout_height="0.1px"
+                android:layout_gravity="center"
+                android:background="@color/red" />
+
+            <TextView
+                android:id="@+id/tv_zDate"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="暂无"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

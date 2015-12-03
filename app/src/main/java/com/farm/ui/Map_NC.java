@@ -1,0 +1,20 @@
+package com.farm.ui;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+import com.farm.R;
+
+import org.androidannotations.annotations.EActivity;
+
+@EActivity(R.layout.map_nc)
+public class Map_NC extends Activity
+{
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		getActionBar().hide();
+	}
+}

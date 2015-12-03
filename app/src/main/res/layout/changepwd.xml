@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/bg_titlebar" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/titlebar_height"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="修改密码"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:layout_margin="10dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_60"
+            android:text="旧密码" />
+
+        <EditText
+            android:id="@+id/et_oldpwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_60"
+            android:hint="请输入旧密码"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:layout_margin="10dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_60"
+            android:text="新密码" />
+
+        <EditText
+            android:id="@+id/et_newpwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_60"
+            android:hint="请输入新密码"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:layout_margin="10dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_60"
+            android:text="新密码" />
+
+        <EditText
+            android:id="@+id/et_confirmnewpwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_60"
+            android:hint="请重新输入新密码"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_sure"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:hint="确定" />
+
+</LinearLayout>

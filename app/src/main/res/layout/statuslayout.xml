@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <View
+        android:layout_width="40dip"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:background="@color/light_blue" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/iv_status"
+            android:layout_width="25dip"
+            android:layout_height="25dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/item_collection_unselect" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/iv_status"
+            android:gravity="center"
+            android:src="@drawable/item_collection_unselect"
+            android:text="已审" />
+
+        <TextView
+            android:id="@+id/tv_roles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_status"
+            android:gravity="center"
+            android:src="@drawable/item_collection_unselect"
+            android:text="会计" />
+    </RelativeLayout>
+
+</LinearLayout>

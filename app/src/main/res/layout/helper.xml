@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/bg_blue" >
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dip"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="帮助"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize" />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="20dip"
+        android:hint="1、程序异常退出如何处理？" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginLeft="10dip"
+        android:hint="2、程序界面出现重叠如何处理？" />
+
+</LinearLayout>

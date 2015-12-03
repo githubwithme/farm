@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.farm.widget.swipelistview.RotateYView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rotate_y_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/message_icon"
+        android:layout_width="10dip"
+        android:layout_height="10dip"
+        android:scaleType="center"
+        android:src="@drawable/point_round"
+        tools:ignore="ContentDescription" />
+
+</com.farm.widget.swipelistview.RotateYView>

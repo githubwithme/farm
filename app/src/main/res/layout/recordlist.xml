@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/bg_titlebar" >
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dip"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="语音聊天"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize" />
+
+        <Button
+            android:id="@+id/btn_newtip"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="有更新"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <com.farm.widget.PullToRefreshListView
+        android:id="@+id/frame_listview_news"
+        style="@style/widget_listview"
+        android:dividerHeight="1px"
+        android:transcriptMode="alwaysScroll" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip" >
+
+        <com.customview.RecordButton
+            android:id="@+id/btn_record"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/selector_talk" />
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:layout_marginRight="60dip"
+            android:layout_toRightOf="@id/btn_record"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="请输入内容..."
+            android:textColor="@color/black"
+            android:textSize="@dimen/titlebar_textsize" />
+
+        <Button
+            android:id="@+id/btn_sent"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_alignParentRight="true"
+            android:background="@color/bg_yellow"
+            android:text="发送" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,127 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.farm.ui.NCZ_MainActivity" >
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dip" />
+
+    <LinearLayout
+        android:id="@+id/main_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:orientation="horizontal" >
+
+        <TableLayout
+            android:id="@+id/tl_home"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1.5" >
+
+                <ImageButton
+                    android:id="@+id/imgbtn_home"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/btn_home_selector"
+                    android:clickable="false"
+                    android:contentDescription="" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_home"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="首页"
+                android:textColor="@color/menu_textcolor"
+                android:textSize="@dimen/home_menu_textsize" />
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tl_plant"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1.5" >
+
+                <ImageButton
+                    android:id="@+id/imgbtn_plant"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/selector_menu_patrol"
+                    android:clickable="false"
+                    android:contentDescription="" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_plant"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="苗情"
+                android:textColor="@color/menu_textcolor"
+                android:textSize="@dimen/home_menu_textsize" />
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tl_me"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1.5" >
+
+                <ImageButton
+                    android:id="@+id/imgbtn_me"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/selector_message"
+                    android:clickable="false"
+                    android:contentDescription="" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_me"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="我"
+                android:textColor="@color/menu_textcolor"
+                android:textSize="@dimen/home_menu_textsize" />
+        </TableLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/main_bottom"
+        android:background="@color/line_color" />
+
+</RelativeLayout>

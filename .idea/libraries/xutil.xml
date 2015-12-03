@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="xutil">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/xutil.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

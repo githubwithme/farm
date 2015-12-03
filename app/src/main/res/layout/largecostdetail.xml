@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:minHeight="100dip"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/bg_titlebar" >
+
+        <ImageButton
+            android:id="@+id/btn_account"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dip"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/ic_back" />
+
+        <LinearLayout
+            android:id="@+id/ll_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="大额费用详情"
+                android:textColor="@color/white"
+                android:textSize="@dimen/titlebar_textsize" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_color" >
+        </View>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginTop="10dip"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_cmdname_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="申请号："
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd_name" />
+
+            <TextView
+                android:id="@+id/tv_cmdname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="SQ25425444"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd_name" />
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:minWidth="60dip"
+                android:text="已拨付"
+                android:textColor="@color/red"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_yq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="武鸣园区："
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <TextView
+                android:id="@+id/tv_sqr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_yq"
+                android:gravity="left|center_vertical"
+                android:text="张三"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <TextView
+                android:id="@+id/tv_sqje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:minWidth="60dip"
+                android:text="5000元"
+                android:textColor="@color/red"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/tv_sqje"
+                android:gravity="center"
+                android:minWidth="60dip"
+                android:text="申请金额："
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="用途:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="工资发放"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="10dip"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="15dip"
+                android:layout_height="15dip"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_cmdname"
+                android:minWidth="60dip"
+                android:src="@drawable/tab_opp2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="费用类别："
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="小额申请"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <ImageView
+                android:id="@+id/iv_bzzl"
+                android:layout_width="15dip"
+                android:layout_height="15dip"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_cmdname"
+                android:minWidth="60dip"
+                android:src="@drawable/lately2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="申请时间："
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+
+            <TextView
+                android:id="@+id/tv_bzzl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="2015-10-11"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_cmd" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="40dp" />
+
+</LinearLayout>

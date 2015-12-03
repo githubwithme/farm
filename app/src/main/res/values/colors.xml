@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="semitransparent">#92bbbbbb</color>
+    <color name="white">#ffffff</color>
+    <!-- 圆形样式颜色 -->
+    <color name="base_start_color_pressed">#ff3590c4</color>
+    <color name="base_end_color_pressed">#ff2570ba</color>
+    <color name="rounded_container_border">#dcdcdc</color>
+    <color name="search_rounded_border">#000000</color>
+    <color name="base_start_color_default">#FFFFFF</color>
+    <color name="base_end_color_default">#FFFFFF</color>
+    <!-- 编辑按钮背景色 -->
+    <color name="rounded_container_border_edit">#ff0000</color>
+    <color name="start_color_default">#FF0000</color>
+    <color name="end_color_default">#FF0000</color>
+    <color name="start_color_green">#669900</color>
+    <color name="end_color_green">#669900</color>
+    <color name="border_color_green">#669900</color>
+    <color name="bg_selector">#FFFAFA</color>
+    <!-- 分割线颜色 -->
+    <color name="line_color">#dcdcdc</color>
+    <color name="line_color_black">#000000</color>
+    <!-- listview分割线颜色 -->
+    <color name="divider_color">#FFFAFA</color>
+    <!-- actionbar按钮文字颜色 -->
+    <color name="actionbar_textcolor">#000000</color>
+
+    <!-- 首页文字颜色 -->
+    <color name="transparent">#00000000</color>
+    <!-- 首页文字颜色 -->
+    <color name="gray">#909090</color>
+    <color name="darkgray">#959595</color>
+    <color name="find_textcolor">#000000</color>
+    <color name="hasfind_textcolor">#909090</color>
+    <color name="menu_textcolor">#333333</color>
+    <color name="textcolor_titlebar">#333333</color>
+    <color name="listitem_transparent">#00000000</color>
+    <color name="red">#ff0000</color>
+    <color name="black">#000000</color>
+    <color name="light_blue">#6593cb</color>
+    <color name="listitem_black">#ff000000</color>
+    <color name="province_line_border">#C7C7C7</color>
+    <color name="bg_selectitem">#FAFAFA</color>
+    <color name="bg_text_small">#bdbdbd</color>
+    <color name="bg_text">#333333</color>
+    <color name="bg_work">#fed15c </color>
+    <color name="bg_titlebar">#ffffff</color>
+    <color name="bg_yellow">#ea871c</color>
+    <color name="bg_green">#4fcf72</color>
+    <color name="bg_blue">#59aeef</color>
+    <color name="bg_sq">#dec149</color>
+    <color name="bg_plant">#1ab394</color>
+    <color name="bg_job">#23c6c8</color>
+    <color name="bg_ask">#f8ac59</color>
+    <!-- 颜色主要 -->
+    <color name="bg_main1">#2c2c2c</color>
+    <color name="bg_main3">#343434</color>
+    <color name="bg_main4">#262a36</color>
+    <color name="bg_main5">#323f50</color>
+    <color name="bg_main">#252525</color>
+    <color name="bg_main6">#455565</color>
+    <color name="bg_main_deep">#1e1e1e</color>
+    <color name="bg_maintextcolor">#ffffff</color>
+    <color name="bg_main2">#455565</color>
+
+</resources>

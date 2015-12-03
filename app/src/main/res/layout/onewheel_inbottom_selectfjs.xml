@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+   <RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="340dip"
+    android:layout_alignParentBottom="true" >
+    
+    <LinearLayout
+        android:id="@+id/ll_contain"
+        android:layout_width="match_parent"
+        android:layout_height="220dip"
+        android:layout_alignParentBottom="true" 
+        android:background="@drawable/background_view_rounded_single"
+        android:orientation="horizontal" >
+        <com.wheel.WheelView
+            android:id="@+id/firstItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </com.wheel.WheelView>
+    </LinearLayout>   
+    <TextView
+        android:id="@+id/tv_tip"
+	    android:layout_width="match_parent"
+	    android:layout_height="60dip"
+	    android:textColor="#000000"
+	    android:gravity="center"
+	    android:background="#dcdcdc"
+	    android:layout_above="@id/ll_contain"
+	    android:text="请选择每层房间数量"/>
+    <LinearLayout       
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:layout_above="@id/tv_tip"
+        android:background="#ffffbb33">
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+             android:background="@null"
+            android:text="确定"/>
+        <View 
+	        android:layout_width="0.5dip"
+	        android:layout_height="match_parent"
+	        android:background="#dcdcdc"/>
+        <Button
+            android:id="@+id/cancleButton"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+             android:textColor="#ffffff"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:text="取消" />
+    </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

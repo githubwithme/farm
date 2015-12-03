@@ -1,0 +1,98 @@
+<resources>
+
+    <style name="AppBaseTheme" parent="android:Theme.Light" />
+
+    <style name="AppTheme" parent="AppBaseTheme" />
+    <!-- 右进右出 -->
+    <style name="rightinrightout" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/in_right</item>
+        <item name="android:windowExitAnimation">@anim/out_right</item>
+    </style>
+    <!-- 左进左出 -->
+    <style name="leftinleftout" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/in_left</item>
+        <item name="android:windowExitAnimation">@anim/out_left</item>
+    </style>
+    <!-- 左进右出 -->
+    <style name="leftinrightout" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/in_left</item>
+        <item name="android:windowExitAnimation">@anim/out_right</item>
+    </style>
+    <!-- 右进左出 -->
+    <style name="rightinleftout" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/in_right</item>
+        <item name="android:windowExitAnimation">@anim/out_left</item>
+    </style>
+    <!-- 下进下出 -->
+    <style name="bottominbottomout" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/out_bottom</item>
+    </style>
+    <!-- 上进上出 -->
+    <style name="topintopout" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/in_top</item>
+        <item name="android:windowExitAnimation">@anim/out_top</item>
+    </style>
+
+    <style name="widget_listview">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:listSelector">@drawable/listview_item_selector</item>
+        <item name="android:divider">@color/divider_color</item>
+        <item name="android:dividerHeight">5.0dip</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:scrollingCache">false</item>
+    </style>
+
+    <style name="loading_small" parent="@android:style/Widget.ProgressBar.Small">
+        <item name="android:indeterminateDrawable">@anim/loading</item>
+        <item name="android:layout_width">21dip</item>
+        <item name="android:layout_height">21dip</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="dot_style">
+        <item name="android:layout_width">5dip</item>
+        <item name="android:layout_height">5dip</item>
+        <item name="android:background">@drawable/dot_normal</item>
+        <item name="android:layout_marginLeft">1.5dip</item>
+        <item name="android:layout_marginRight">1.5dip</item>
+    </style>
+
+    <style name="MyDialog" parent="@android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="Dialogstyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <!-- 显示对话框时当前的屏幕是否变暗 -->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="shareDialogTheme" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/mystyle</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 背景有灰度 -->
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="mystyle" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/slide_from_bottom</item>
+        <item name="@android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+
+</resources>

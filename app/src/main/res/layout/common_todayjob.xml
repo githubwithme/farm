@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_selectitem"
+        android:minHeight="30dip" >
+
+        <TextView
+            android:id="@+id/tv_todaywork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:gravity="left"
+            android:text="今日工作"
+            android:textColor="@color/gray"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tv_worknumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:layout_toRightOf="@id/tv_todaywork"
+            android:gravity="center"
+            android:text="未知"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:minWidth="60dip"
+            android:text="更多"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="11sp" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ListView
+            android:id="@+id/lv_work"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:cacheColorHint="#00000000"
+            android:divider="@color/line_color"
+            android:dividerHeight="1px"
+            android:fastScrollEnabled="true"
+            android:listSelector="#00000000"
+            android:scrollbars="none"
+            android:visibility="gone" />
+
+        <com.farm.widget.PullToRefreshListView
+            android:id="@+id/frame_listview_news"
+            style="@style/widget_listview"
+            android:divider="@color/bg_selectitem"
+            android:dividerHeight="1px" />
+
+        <LinearLayout
+            android:id="@+id/ll_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/iv_nowork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@null"
+                android:src="@drawable/nowork" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dip"
+                android:text="您还没添加任何工作喔!" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="110dip"
+            android:layout_height="30dip"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="10dip"
+            android:layout_marginRight="10dip"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_nature"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_bordergreen_containgreen_noright"
+                android:text="自发"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_bordergreen_containgreen_noleft" >
+
+                <Button
+                    android:id="@+id/btn_cmd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:text="指令"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                <FrameLayout
+                    android:id="@+id/fl_cmdnumber_new"
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone" >
+
+                    <com.farm.widget.CircleImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@color/red"
+                        app:border_color="@color/red"
+                        app:border_width="0dp" />
+
+                    <TextView
+                        android:id="@+id/tv_cmdnumber_new"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size_10" />
+                </FrameLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

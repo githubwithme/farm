@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btn_standardprocommand"
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:background="@null"
+        android:text="标准生产指令"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:background="#dcdc" />
+
+    <Button
+        android:id="@+id/btn_nonstandardprocommand"
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:background="@null"
+        android:text="非标准生产指令"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:background="#dcdc" />
+
+    <Button
+        android:id="@+id/btn_nonprocommand"
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:background="@null"
+        android:text="非生产指令"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:background="#dcdc" />
+
+</LinearLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:orientation="vertical"
+    android:paddingLeft="10dp" >
+
+    <RelativeLayout
+        android:id="@+id/moreitem_layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#ffffffff" >
+
+        <TextView
+            android:id="@+id/moreitem_txt"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="40dip"
+            android:text="全部分类"
+            android:gravity="center"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/moreitem_img"
+            android:layout_width="15dip"
+            android:layout_height="15dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:src="@drawable/item_collection_unselect" />
+    </RelativeLayout>
+
+</LinearLayout>

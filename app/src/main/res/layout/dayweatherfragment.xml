@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="65dip"
+    android:background="@color/bg_selectitem" >
+
+    <RelativeLayout
+        android:id="@+id/rl_weather"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+
+        <RelativeLayout
+            android:id="@+id/rl_img"
+            android:layout_width="90dip"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:id="@+id/img_weather"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_weather" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/rl_img"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_tip_tempH"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="最高温度:"
+                    android:textColor="@color/light_blue"
+                    android:textSize="@dimen/size_11" />
+
+                <TextView
+                    android:id="@+id/tv_tempH"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="26.5℃"
+                    android:textColor="@color/light_blue"
+                    android:textSize="@dimen/size_11" />
+
+                <TextView
+                    android:id="@+id/tv_tip_tempL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:gravity="center"
+                    android:text="最低温度:"
+                    android:textColor="@color/light_blue"
+                    android:textSize="@dimen/size_11" />
+
+                <TextView
+                    android:id="@+id/tv_tempL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="26.5℃"
+                    android:textColor="@color/light_blue"
+                    android:textSize="@dimen/size_11" />
+
+                <TextView
+                    android:id="@+id/tv_tip_weather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:gravity="center"
+                    android:text="天气："
+                    android:textColor="@color/light_blue"
+                    android:textSize="@dimen/size_11" />
+
+                <TextView
+                    android:id="@+id/tv_weather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:gravity="center"
+                    android:text="东南风"
+                    android:textColor="@color/light_blue"
+                    android:textSize="@dimen/size_11" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_tip_tempM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="平均温度:"
+                    android:textColor="@color/light_blue"
+                    android:textSize="@dimen/size_11" />
+
+                <TextView
+                    android:id="@+id/tv_tempM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_toRightOf="@id/tv_tip_tempM"
+                    android:text="26.5℃"
+                    android:textColor="@color/light_blue"
+                    android:textSize="@dimen/size_11" />
+
+                <TextView
+                    android:id="@+id/tv_tip_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:layout_toRightOf="@id/tv_tempM"
+                    android:text="来自："
+                    android:textColor="@color/light_blue"
+                    android:textSize="@dimen/size_11" />
+
+                <TextView
+                    android:id="@+id/tv_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginRight="10dip"
+                    android:layout_toRightOf="@id/tv_tip_from"
+                    android:text="中国天气网"
+                    android:textColor="@color/light_blue"
+                    android:textSize="@dimen/size_11" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal" >
+
+        <ProgressBar
+            android:id="@+id/pb_getweather"
+            style="@style/loading_small"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_tip_getweather"
+            android:layout_width="80dip"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="获取天气中..."
+            android:textColor="@color/bg_blue"
+            android:textSize="@dimen/size_11" />
+    </LinearLayout>
+
+</FrameLayout>

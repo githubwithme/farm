@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dip"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/ll_zg"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/quick_set_create_agent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dip"
+            android:gravity="center"
+            android:text="值岗"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_bwl"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/quick_set_create_report" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dip"
+            android:gravity="center"
+            android:text="备忘录"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14" />
+    </LinearLayout>
+
+</LinearLayout>
