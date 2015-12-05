@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants"
-    android:orientation="vertical" >
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical" >
 
     <View
         android:layout_width="match_parent"
@@ -29,8 +29,8 @@
 
                 <com.farm.widget.CircleImageView
                     android:id="@+id/circle_img"
-                    android:layout_width="45dip"
-                    android:layout_height="45dip"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dip"
@@ -193,7 +193,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dip"
-                                android:background="@drawable/menu_account_black" />
+                                android:background="@drawable/gz_black" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -273,7 +273,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dip"
-                                android:background="@drawable/menu_dashboard_black" />
+                                android:background="@drawable/zz_black" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -352,7 +352,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dip"
-                                android:background="@drawable/menu_patrol_black" />
+                                android:background="@drawable/ml_black" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -457,7 +457,7 @@
                                     android:layout_height="25dip"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
-                                    android:background="@drawable/menu_patrol_black" />
+                                    android:background="@drawable/zz_black" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -536,7 +536,7 @@
                                     android:layout_height="25dip"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
-                                    android:background="@drawable/menu_account_black" />
+                                    android:background="@drawable/gz_black" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -615,7 +615,7 @@
                                     android:layout_height="25dip"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
-                                    android:background="@drawable/menu_patrol_black" />
+                                    android:background="@drawable/ml_black" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -694,7 +694,7 @@
                                     android:layout_height="25dip"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
-                                    android:background="@drawable/menu_dashboard_black" />
+                                    android:background="@drawable/sq_black" />
                             </RelativeLayout>
 
                             <RelativeLayout
