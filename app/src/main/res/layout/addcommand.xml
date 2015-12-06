@@ -2,6 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -16,7 +19,7 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/back" />
 
         <ProgressBar
             android:id="@+id/main_head_progress"
@@ -32,7 +35,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="新建标准生产指令"
-            android:textColor="@color/white"
+            android:textColor="@color/bg_text"
             android:textSize="@dimen/titlebar_textsize" />
 
         <Button
@@ -45,10 +48,13 @@
             android:background="@null"
             android:gravity="center"
             android:text="保存"
-            android:textColor="@color/white"
+            android:textColor="@color/bg_text"
             android:textSize="@dimen/size_14" />
     </RelativeLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
     <FrameLayout
         android:id="@+id/top_container"
         android:layout_width="match_parent"
@@ -57,6 +63,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -114,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
                     android:layout_marginTop="5dip"
-                    android:background="@color/bg_yellow" />
+                    android:background="@color/line_color" />
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -147,7 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
                     android:layout_marginTop="5dip"
-                    android:background="@color/bg_yellow" />
+                    android:background="@color/line_color" />
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -180,7 +187,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
                     android:layout_marginTop="5dip"
-                    android:background="@color/bg_yellow" />
+                    android:background="@color/line_color" />
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -212,7 +219,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
                     android:layout_marginTop="5dip"
-                    android:background="@color/bg_yellow" />
+                    android:background="@color/line_color" />
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -244,7 +251,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
                     android:layout_marginTop="5dip"
-                    android:background="@color/bg_yellow" />
+                    android:background="@color/line_color" />
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -277,7 +284,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
                     android:layout_marginTop="5dip"
-                    android:background="@color/bg_yellow" />
+                    android:background="@color/line_color" />
                 <!-- 树高(m) -->
 
                 <TableRow
@@ -311,7 +318,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
                     android:layout_marginTop="5dip"
-                    android:background="@color/bg_yellow" />
+                    android:background="@color/line_color" />
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -343,7 +350,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
                     android:layout_marginTop="5dip"
-                    android:background="@color/bg_yellow" />
+                    android:background="@color/line_color" />
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -376,7 +383,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5px"
                 android:layout_marginTop="5dip"
-                android:background="@color/bg_yellow" />
+                android:background="@color/line_color" />
 
             <FrameLayout
                 android:id="@+id/container"

@@ -99,8 +99,8 @@ public class NCZ_CostFragment extends Fragment implements OnClickListener
 	@Click
 	void ll_tab()
 	{
-		iv_dowm_tab.setBackground(getResources().getDrawable(R.drawable.ic_up));
-		showPop_title();
+//		iv_dowm_tab.setBackground(getResources().getDrawable(R.drawable.ic_up));
+//		showPop_title();
 
 	}
 
