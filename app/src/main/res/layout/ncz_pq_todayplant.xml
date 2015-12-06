@@ -24,7 +24,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:text="观察株列表"
-                android:textColor="@color/white"
+                android:textColor="@color/bg_text"
                 android:textSize="@dimen/titlebar_textsize" />
         </LinearLayout>
 
@@ -36,7 +36,7 @@
             android:layout_centerVertical="true"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/ic_search" />
+            android:src="@drawable/search" />
 
         <ImageButton
             android:id="@+id/btn_add"
@@ -46,7 +46,7 @@
             android:layout_toLeftOf="@id/btn_search"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/ic_plus" />
+            android:src="@drawable/plus" />
     </RelativeLayout>
 
     <View

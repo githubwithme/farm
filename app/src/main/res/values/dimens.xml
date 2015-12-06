@@ -32,7 +32,9 @@
     <!-- 审核状态栏高度 -->
     <dimen name="height_review">30dip</dimen>
     <!-- 字段栏高度 -->
-    <dimen name="height_colum">60dip</dimen>
+    <dimen name="height_colum">60dip</dimen>    <!-- 字段栏高度 -->
+    <dimen name="height_titlebar_icon">20dip</dimen>
+    <dimen name="width_titlebar_icon">20dip</dimen>
     <!-- 字段提示栏宽度度 -->
     <dimen name="width_colum">80dip</dimen>
     <dimen name="width_columlength">110dip</dimen>
