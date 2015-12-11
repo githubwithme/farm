@@ -193,7 +193,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dip"
-                                android:background="@drawable/gz_black" />
+                                android:background="@drawable/temp1" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -273,7 +273,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dip"
-                                android:background="@drawable/zz_black" />
+                                android:background="@drawable/temp2" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -352,7 +352,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dip"
-                                android:background="@drawable/ml_black" />
+                                android:background="@drawable/temp3" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -457,7 +457,7 @@
                                     android:layout_height="25dip"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
-                                    android:background="@drawable/zz_black" />
+                                    android:background="@drawable/temp4" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -536,7 +536,7 @@
                                     android:layout_height="25dip"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
-                                    android:background="@drawable/gz_black" />
+                                    android:background="@drawable/temp5" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -615,7 +615,7 @@
                                     android:layout_height="25dip"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
-                                    android:background="@drawable/ml_black" />
+                                    android:background="@drawable/temp6" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -694,7 +694,7 @@
                                     android:layout_height="25dip"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
-                                    android:background="@drawable/sq_black" />
+                                    android:background="@drawable/temp7" />
                             </RelativeLayout>
 
                             <RelativeLayout

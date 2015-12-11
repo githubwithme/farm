@@ -68,6 +68,7 @@
                 android:layout_width="15dip"
                 android:layout_alignParentRight="true"
                 android:layout_height="15dip"
+                android:visibility="gone"
                 android:background="@drawable/downward"
                 />
         </RelativeLayout>
@@ -130,7 +131,7 @@
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:background="@drawable/gz_black"/>
+                        android:background="@drawable/temp1"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -211,7 +212,7 @@
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:background="@drawable/zz_black"/>
+                        android:background="@drawable/temp2"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -291,7 +292,7 @@
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:background="@drawable/ml_black"/>
+                        android:background="@drawable/temp3"/>
                 </RelativeLayout>
 
                 <RelativeLayout
