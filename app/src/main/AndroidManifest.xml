@@ -103,6 +103,7 @@
         <!-- 片管UI -->
         <activity android:name="com.farm.ui.PG_MainActivity_" />
         <!-- 共用UI -->
+        <activity android:name="com.farm.ui.Common_PQYQCommandList_" />
         <activity android:name="com.farm.ui.Map_NC_" />
         <activity android:name="com.farm.ui.AnalysisProductActivity_" />
         <activity android:name="com.farm.ui.AnalysisSaleActivity_" />

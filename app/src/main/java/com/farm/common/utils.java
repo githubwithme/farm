@@ -1,12 +1,15 @@
 package com.farm.common;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -20,10 +23,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * @author :sima
- * @version :1.0
- * @createTime：2015-8-9 下午9:27:19
- * @description :常用工具类
+ * 2015-8-9 下午9:27:19
+ * 常用工具类
  */
 public class utils
 {
@@ -48,16 +49,14 @@ public class utils
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 		Date curDate = new Date(System.currentTimeMillis());
-		String str = formatter.format(curDate);
-		return str;
+		return formatter.format(curDate);
 	}
 
 	public static String getToday()
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date curDate = new Date(System.currentTimeMillis());
-		String str = formatter.format(curDate);
-		return str;
+		return formatter.format(curDate);
 	}
 
 	public static String parseDateToDateString(Date date)
@@ -264,7 +263,44 @@ public class utils
 		}
 		return statusHeight;
 	}
+	/**
+	 * 判断GPS是否开启，GPS或者AGPS开启一个就认为是开启的
+	 *
+	 * @param context
+	 * @return true 表示开启
+	 */
+	public static final boolean isOPen(final Context context)
+	{
+		LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		// 通过GPS卫星定位，定位级别可以精确到街（通过24颗卫星定位，在室外和空旷的地方定位准确、速度快）
+		boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		// 通过WLAN或移动网络(3G/2G)确定的位置（也称作AGPS，辅助GPS定位。主要用于在室内或遮盖物（建筑群或茂密的深林等）密集的地方定位）
+		boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+		if (gps || network)
+		{
+			return true;
+		}
 
+		return false;
+	}
+
+	/**
+	 * 强制帮用户打开GPS
+	 */
+	public static final void openGPS(Context context)
+	{
+		Intent GPSIntent = new Intent();
+		GPSIntent.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+		GPSIntent.addCategory("android.intent.category.ALTERNATIVE");
+		GPSIntent.setData(Uri.parse("custom:3"));
+		try
+		{
+			PendingIntent.getBroadcast(context, 0, GPSIntent, 0).send();
+		} catch (PendingIntent.CanceledException e)
+		{
+			e.printStackTrace();
+		}
+	}
 	public static int openGPSSettings(Activity context)
 	{
 		// 获取位置管理服务
