@@ -175,7 +175,7 @@
         android:layout_width="match_parent"
         android:layout_height="120dip"
         android:layout_margin="5dip"
-        android:background="@drawable/bg_cmd_add1"
+        android:background="@drawable/bg_cmd_add"
         >
 
         <TextView
