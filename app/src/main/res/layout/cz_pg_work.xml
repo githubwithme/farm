@@ -25,6 +25,7 @@
             android:id="@+id/btn_addspontaneitywork"
             android:layout_width="@dimen/height_titlebar_icon"
             android:layout_height="@dimen/width_titlebar_icon"
+            android:visibility="gone"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
