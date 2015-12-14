@@ -1,31 +1,54 @@
-apply plugin: 'com.android.application'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+    }
+}
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
 
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+def AAVersion = '3.2'
+
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    apt "org.androidannotations:androidannotations:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
+
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0].processResources.manifestFile
+    }
+}
 android {
     compileSdkVersion 22
-    buildToolsVersion "23.0.1"
-
+    buildToolsVersion "20.0.0"//高于这个版本会出现图片异常
+//    useLibrary "org.apache.http.legacy"//compileSdkVersion 23为23时需要此，不然会找不到org.apache.http
     defaultConfig {
         applicationId "com.farm"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
     }
 
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
-
-dependencies {
-    compile 'com.android.support:support-v4:+'
-    compile files('libs/androidannotations-api-3.2.jar')
-    compile files('libs/fastjson-1.1.34.android.jar')
-    compile files('libs/picasso-2.4.0.jar')
-    compile files('libs/TencentLocationSDK_v4.3.0_r196568.jar')
-    compile files('libs/TencentMapSDK_Raster_v1.1.2.15850.jar')
-    compile files('libs/universal-image-loader-1.9.4-with-sources.jar')
-    compile files('libs/wgh_module_mpchartlib.jar')
-    compile files('libs/xutil.jar')
+    lintOptions {
+        abortOnError false
+    }
 }

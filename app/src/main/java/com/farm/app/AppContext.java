@@ -12,10 +12,8 @@ import com.farm.common.SqliteDb;
 import com.farm.common.StringUtils;
 
 /**
- * @author :sima
- * @version :
- * @createTime：2015-8-6 下午1:50:43
- * @description :全局应用程序类：用于保存和调用全局应用配置及访问网络数据
+ * 2015-8-6 下午1:50:43
+ * 全局应用程序类：用于保存和调用全局应用配置及访问网络数据
  */
 public class AppContext extends Application
 {
@@ -40,7 +38,8 @@ public class AppContext extends Application
 	public static final int PAGE_SIZE = 10;// 默认分页大小
 	public static final int PAGE_SIZE_RECORD = 10000;// 默认分页大小
 	public static final int PAGE_SIZE_YQPQ = 10000;// 默认分页大小
-
+	String LOCATION_X = "";// 当前坐标
+	String LOCATION_Y = "";// 当前坐标
 	@Override
 	public void onCreate()
 	{
@@ -51,7 +50,21 @@ public class AppContext extends Application
 		// 发送以前没发送的报告(可选)
 		appException.sendPreviousReportsToServer();
 	}
+	public void setLOCATION_X(String lOCATION_X) {
+		LOCATION_X = lOCATION_X;
+	}
 
+	public String getLOCATION_X() {
+		return LOCATION_X;
+	}
+
+	public void setLOCATION_Y(String lOCATION_Y) {
+		LOCATION_Y = lOCATION_Y;
+	}
+
+	public String getLOCATION_Y() {
+		return LOCATION_Y;
+	}
 	/**
 	 * 应用程序是否发出提示音
 	 * 
