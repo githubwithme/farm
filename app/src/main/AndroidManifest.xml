@@ -103,6 +103,10 @@
         <!-- 片管UI -->
         <activity android:name="com.farm.ui.PG_MainActivity_" />
         <!-- 共用UI -->
+        <activity android:name="com.farm.ui.Register_StepTwo_" />
+        <activity android:name="com.farm.ui.Register_StepThree_" />
+        <activity android:name="com.farm.ui.Register_StepOne_" />
+        <activity android:name="com.farm.ui.FindPassword_" />
         <activity android:name="com.farm.ui.Common_PQYQCommandList_" />
         <activity android:name="com.farm.ui.Map_NC_" />
         <activity android:name="com.farm.ui.AnalysisProductActivity_" />
