@@ -35,7 +35,6 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.SqliteDb;
-import com.farm.widget.CircleImageView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -53,7 +52,8 @@ import java.util.List;
 
 @SuppressLint("NewApi")
 @EActivity(R.layout.login)
-public class Login extends Activity {
+public class Login extends Activity
+{
 
     @ViewById
     LinearLayout login;
@@ -65,7 +65,7 @@ public class Login extends Activity {
     EditText et_name;
     @ViewById
     EditText et_psw;
-//    @ViewById
+    //    @ViewById
 //    CircleImageView btn_login;
     @ViewById
     LinearLayout ll_login;
@@ -78,26 +78,53 @@ public class Login extends Activity {
     List<commembertab> list;
 
     @Click
-    void iv_down() {
+    void register()
+    {
+        Intent intent = new Intent(Login.this, Register_StepOne_.class);
+        startActivity(intent);
+    }
+
+    @Click
+    void vistor()
+    {
+        Intent intent = new Intent(Login.this, NCZ_MainActivity_.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Click
+    void btn_forgetpdw()
+    {
+        Intent intent = new Intent(Login.this, FindPassword_.class);
+        startActivity(intent);
+    }
+    @Click
+    void iv_down()
+    {
         list = SqliteDb.getUserList(this, commembertab.class);
         showPop_tab();
     }
 
     @Click
-    void login() {
-        if (!et_name.getText().toString().equals("") && !et_psw.getText().toString().equals("")) {
+    void login()
+    {
+        if (!et_name.getText().toString().equals("") && !et_psw.getText().toString().equals(""))
+        {
             ll_login.setVisibility(View.GONE);
             pb_logining.setVisibility(View.VISIBLE);
             startLogin(et_name.getText().toString(), et_psw.getText().toString());
-        } else {
+        } else
+        {
             Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
         }
     }
 
     @AfterViews
-    void afterOncreate() {
+    void afterOncreate()
+    {
         commembertab commembertab = AppContext.getUserInfo(this);
-        if (commembertab != null && !commembertab.getuserPwd().equals("")) {
+        if (commembertab != null && !commembertab.getuserPwd().equals(""))
+        {
             ll_login.setVisibility(View.GONE);
             cb_autologin.setChecked(true);
             pb_logining.setVisibility(View.VISIBLE);
@@ -108,30 +135,37 @@ public class Login extends Activity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
     }
 
-    private void startLogin(final String username, final String psw) {
+    private void startLogin(final String username, final String psw)
+    {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("username", username);
         params.addQueryStringParameter("userpwd", psw);
         params.addQueryStringParameter("action", "userLogin");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<commembertab> listData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         listData = JSON.parseArray(result.getRows().toJSONString(), commembertab.class);
-                        if (listData == null) {
+                        if (listData == null)
+                        {
                             Toast.makeText(Login.this, "用户名或密码错误!", Toast.LENGTH_SHORT).show();
-                        } else {
+                        } else
+                        {
                             String level = listData.get(0).getnlevel().toString();
                             if (level.equals("0"))// 农场主
                             {
@@ -153,7 +187,8 @@ public class Login extends Activity {
                                 Intent intent = new Intent(Login.this, PG_MainActivity_.class);
                                 startActivity(intent);
                                 finish();
-                            } else {
+                            } else
+                            {
                                 Toast.makeText(Login.this, "该用户已被锁定，暂不能登陆!", Toast.LENGTH_SHORT).show();
                                 return;
                             }
@@ -162,22 +197,26 @@ public class Login extends Activity {
                             Editor editor = sp.edit();
                             editor.putString("userName", commembertab.getuserName());
                             editor.commit();
-                            if (cb_autologin.isChecked()) {
+                            if (cb_autologin.isChecked())
+                            {
                                 commembertab.setAutoLogin("1");
                                 commembertab.setuserPwd(psw);
                                 SqliteDb.save(Login.this, commembertab);
-                            } else {
+                            } else
+                            {
                                 commembertab.setAutoLogin("0");
                                 commembertab.setuserPwd("");
                                 SqliteDb.save(Login.this, commembertab);
                             }
                         }
-                    } else {
+                    } else
+                    {
                         Toast.makeText(Login.this, "用户名或密码错误!", Toast.LENGTH_SHORT).show();
                         ll_login.setVisibility(View.VISIBLE);
                         pb_logining.setVisibility(View.GONE);
                     }
-                } else {
+                } else
+                {
                     Toast.makeText(Login.this, "连接数据服务器出错了!", Toast.LENGTH_SHORT).show();
                     ll_login.setVisibility(View.VISIBLE);
                     pb_logining.setVisibility(View.GONE);
@@ -185,7 +224,8 @@ public class Login extends Activity {
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 Toast.makeText(Login.this, "连接服务器出错了!", Toast.LENGTH_SHORT).show();
                 ll_login.setVisibility(View.VISIBLE);
                 pb_logining.setVisibility(View.GONE);
@@ -194,13 +234,17 @@ public class Login extends Activity {
 
     }
 
-    public void showPop_tab() {
+    public void showPop_tab()
+    {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         popupWindowView_tab = layoutInflater.inflate(R.layout.popup_userlist, null);// 外层
-        popupWindowView_tab.setOnKeyListener(new OnKeyListener() {
+        popupWindowView_tab.setOnKeyListener(new OnKeyListener()
+        {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (popupWindow_tab.isShowing())) {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (popupWindow_tab.isShowing()))
+                {
                     popupWindow_tab.dismiss();
                     iv_down.setBackground(getResources().getDrawable(R.drawable.downward));
                     return true;
@@ -208,10 +252,13 @@ public class Login extends Activity {
                 return false;
             }
         });
-        popupWindowView_tab.setOnTouchListener(new OnTouchListener() {
+        popupWindowView_tab.setOnTouchListener(new OnTouchListener()
+        {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (popupWindow_tab.isShowing()) {
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (popupWindow_tab.isShowing())
+                {
                     popupWindow_tab.dismiss();
                     iv_down.setBackground(getResources().getDrawable(R.drawable.downward));
                 }
@@ -223,9 +270,11 @@ public class Login extends Activity {
         popupWindow_tab.setOutsideTouchable(true);
         ListView listview = (ListView) popupWindowView_tab.findViewById(R.id.lv_yq);
         listview.setAdapter(new yqAdapter(this, list));
-        listview.setOnItemClickListener(new OnItemClickListener() {
+        listview.setOnItemClickListener(new OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3) {
+            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3)
+            {
                 et_name.setText(list.get(postion).getuserName());
                 iv_down.setBackground(getResources().getDrawable(R.drawable.downward));
                 popupWindow_tab.dismiss();
@@ -233,30 +282,36 @@ public class Login extends Activity {
         });
     }
 
-    public class yqAdapter extends BaseAdapter {
+    public class yqAdapter extends BaseAdapter
+    {
         List<commembertab> listItems;
         private LayoutInflater listContainer;
 
-        class ListItemView {
+        class ListItemView
+        {
             public TextView tv_yq;
         }
 
-        public yqAdapter(Context context, List<commembertab> list) {
+        public yqAdapter(Context context, List<commembertab> list)
+        {
             this.listContainer = LayoutInflater.from(context);
             this.listItems = list;
         }
 
         HashMap<Integer, View> lmap = new HashMap<Integer, View>();
 
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
             ListItemView listItemView = null;
-            if (lmap.get(position) == null) {
+            if (lmap.get(position) == null)
+            {
                 convertView = listContainer.inflate(R.layout.userlist_item, null);
                 listItemView = new ListItemView();
                 listItemView.tv_yq = (TextView) convertView.findViewById(R.id.tv_yq);
                 lmap.put(position, convertView);
                 convertView.setTag(listItemView);
-            } else {
+            } else
+            {
                 convertView = lmap.get(position);
                 listItemView = (ListItemView) convertView.getTag();
             }
@@ -265,17 +320,20 @@ public class Login extends Activity {
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return listItems.size();
         }
 
         @Override
-        public Object getItem(int arg0) {
+        public Object getItem(int arg0)
+        {
             return null;
         }
 
         @Override
-        public long getItemId(int arg0) {
+        public long getItemId(int arg0)
+        {
             return 0;
         }
     }
