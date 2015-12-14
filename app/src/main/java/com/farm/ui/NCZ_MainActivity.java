@@ -47,7 +47,7 @@ public class NCZ_MainActivity extends BaseActivity
 	int cmd_videoNum;
 	Fragment mContent = new Fragment();
 	NCZ_MainFragment mainFragment;
-	NCZ_CostFragment ncz_CostFragment;
+	AnalysisActivity analysisActivity;
 	NCZ_CommandList ncz_CommandList;
 	// NCZ_SaleFragment ncz_SaleFragment;
 	// SaleList saleList;
@@ -165,7 +165,7 @@ public class NCZ_MainActivity extends BaseActivity
 		tl_product.setSelected(false);
 		tl_sale.setSelected(false);
 		tl_money.setSelected(true);
-		switchContent(mContent, ncz_CostFragment);
+		switchContent(mContent, analysisActivity);
 
 	}
 
@@ -223,7 +223,7 @@ public class NCZ_MainActivity extends BaseActivity
 		bundle.putString("workuserid", commembertab.getId());
 		ncz_CommandList.setArguments(bundle);
 		productBatchList = new ProductBatchList_();
-		ncz_CostFragment = new NCZ_CostFragment_();
+		analysisActivity = new AnalysisActivity();
 		iFragment = new IFragment_();
 		timethread = new TimeThread();
 		timethread.setStop(false);

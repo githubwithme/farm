@@ -50,6 +50,7 @@
             </intent-filter>
         </activity>
         <!-- 农场主UI -->
+        <activity android:name="com.farm.ui.NCZ_CostFragment_" />
         <activity android:name="com.farm.ui.NCZ_PQ_TodayCommand_" />
         <activity android:name="com.farm.ui.NCZ_PQ_TodayJob_" />
         <activity android:name="com.farm.ui.NCZ_CZ_CommandDetail_" />
@@ -127,7 +128,6 @@
         <activity android:name="com.farm.ui.Common_MoreJob_" />
         <activity android:name="com.farm.ui.Common_CommandFeedBack_" />
         <activity android:name="com.farm.ui.Common_CommandDetail_" />
-        <activity android:name="com.farm.ui.AnalysisActivity_" />
         <activity android:name="com.farm.ui.AnalysisActivityTemp_" />
 
         <!-- 服务 -->

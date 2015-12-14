@@ -74,7 +74,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="100dip"
-        android:background="@drawable/bg_cmd_add"/>
+        android:background="@drawable/bg_cmd_add1"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
