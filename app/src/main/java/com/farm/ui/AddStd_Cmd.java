@@ -11,6 +11,7 @@ import com.farm.R;
 import com.farm.adapter.FragmentViewPagerAdapter;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -35,13 +36,31 @@ public class AddStd_Cmd extends FragmentActivity
     @ViewById
     android.support.v4.view.ViewPager vPager;
 
+    @Click
+    void text_one()
+    {
+        vPager.setCurrentItem(0);
+    }
+
+    @Click
+    void text_two()
+    {
+        vPager.setCurrentItem(1);
+    }
+
+    @Click
+    void text_three()
+    {
+        vPager.setCurrentItem(2);
+    }
+
     @AfterViews
     void afterOncreate()
     {
         fragmentList = new ArrayList<Fragment>();
-        AddStd_Cmd_StepOne addStd_cmd_stepOne=new AddStd_Cmd_StepOne();
-        AddStd_Cmd_StepThree addStd_cmd_stepThree=new AddStd_Cmd_StepThree();
-        AddStd_Cmd_StepTwo addStd_cmd_stepTwo=new AddStd_Cmd_StepTwo();
+        AddStd_Cmd_StepOne addStd_cmd_stepOne = new AddStd_Cmd_StepOne();
+        AddStd_Cmd_StepThree addStd_cmd_stepThree = new AddStd_Cmd_StepThree();
+        AddStd_Cmd_StepTwo addStd_cmd_stepTwo = new AddStd_Cmd_StepTwo();
         fragmentList.add(addStd_cmd_stepOne);
         fragmentList.add(addStd_cmd_stepTwo);
         fragmentList.add(addStd_cmd_stepThree);
@@ -65,6 +84,7 @@ public class AddStd_Cmd extends FragmentActivity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
     }
+
     private void setBackground(int pos)
     {
         image_one.setBackgroundResource(R.drawable.line);

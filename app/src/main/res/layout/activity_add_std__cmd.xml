@@ -70,10 +70,10 @@
                 android:textStyle="bold"/>
 
             <View
-                android:layout_width="1px"
-                android:layout_height="12dip"
+                android:layout_width="15dip"
+                android:layout_height="18dip"
                 android:layout_gravity="center"
-                android:background="@color/line_color"/>
+                android:background="@drawable/next_black"/>
 
             <TextView
                 android:id="@+id/text_two"
@@ -87,10 +87,10 @@
                 android:textStyle="bold"/>
 
             <View
-                android:layout_width="1px"
-                android:layout_height="12dip"
+                android:layout_width="15dip"
+                android:layout_height="18dip"
                 android:layout_gravity="center"
-                android:background="@color/line_color"/>
+                android:background="@drawable/next_black"/>
 
 
             <TextView
