@@ -32,8 +32,8 @@ apt {
 }
 android {
     compileSdkVersion 22
-    buildToolsVersion "20.0.0"//¸ßÓÚÕâ¸ö°æ±¾»á³öÏÖÍ¼Æ¬Òì³£
-//    useLibrary "org.apache.http.legacy"//compileSdkVersion 23Îª23Ê±ĞèÒª´Ë£¬²»È»»áÕÒ²»µ½org.apache.http
+    buildToolsVersion "20.0.0"//é«˜äºè¿™ä¸ªç‰ˆæœ¬ä¼šå‡ºç°å›¾ç‰‡å¼‚å¸¸
+//    useLibrary "org.apache.http.legacy"//compileSdkVersion 23ä¸º23æ—¶éœ€è¦æ­¤ï¼Œä¸ç„¶ä¼šæ‰¾ä¸åˆ°org.apache.http
     defaultConfig {
         applicationId "com.farm"
         minSdkVersion 15
