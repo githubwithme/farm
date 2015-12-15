@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.android.tools.build:gradle:1.5.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     }
 }
@@ -22,7 +22,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
-
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
 }
 
 apt {
@@ -31,13 +32,13 @@ apt {
     }
 }
 android {
-    compileSdkVersion 22
-    buildToolsVersion "20.0.0"//高于这个版本会出现图片异常
-//    useLibrary "org.apache.http.legacy"//compileSdkVersion 23为23时需要此，不然会找不到org.apache.http
+    compileSdkVersion 23
+    useLibrary 'org.apache.http.legacy'
+    buildToolsVersion "23.0.2"
     defaultConfig {
         applicationId "com.farm"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }

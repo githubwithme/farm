@@ -22,9 +22,17 @@ public class TrayNotification
 
 		Intent intent = new Intent(context, Login_.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		PendingIntent contentItent = PendingIntent.getActivity(context, 0, intent, 0);
+		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
-		notification.setLatestEventInfo(context, "农场易", title, contentItent);
+		Notification.Builder builder = new Notification.Builder(context)
+				.setAutoCancel(true)
+				.setContentTitle(title)
+				.setContentText("欢迎使用")
+				.setContentIntent(pendingIntent)
+				.setSmallIcon(iconId)
+				.setWhen(System.currentTimeMillis())
+				.setOngoing(true);
+		notification=builder.getNotification();
 		manager.notify(0, notification);
 	}
 
