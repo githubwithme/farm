@@ -11,19 +11,17 @@ import android.widget.Button;
 
 import com.farm.R;
 import com.farm.app.AppContext;
-import com.farm.bean.Dictionary_wheel;
 
 import java.util.HashMap;
 
-public class AddStd_Cmd_StepOne_Adapter extends BaseAdapter
+public class AddStd_Cmd_StepTwo_Adapter extends BaseAdapter
 {
     private Context context;// 运行上下文
     private LayoutInflater listContainer;// 视图容器
-    Dictionary_wheel dictionary_wheel;
     ListItemView listItemView = null;
-    String[] firstItemName;
+    String[] secondItemName;
 
-    String item="";
+    String item = "";
 
     static class ListItemView
     {
@@ -31,17 +29,16 @@ public class AddStd_Cmd_StepOne_Adapter extends BaseAdapter
 
     }
 
-    public AddStd_Cmd_StepOne_Adapter(Context context, Dictionary_wheel data)
+    public AddStd_Cmd_StepTwo_Adapter(Context context, String[] data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
-        firstItemName = data.getFirstItemName();
-        dictionary_wheel=data;
+        secondItemName = data;
     }
 
     public int getCount()
     {
-        return firstItemName.length;
+        return secondItemName.length;
     }
 
     public Object getItem(int arg0)
@@ -58,13 +55,13 @@ public class AddStd_Cmd_StepOne_Adapter extends BaseAdapter
 
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        item = firstItemName[position];
+        item = secondItemName[position];
         // 自定义视图
 
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.add_std_cmd_stepone_item, null);
+            convertView = listContainer.inflate(R.layout.add_std_cmd_steptwo_item, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.btn_zl = (Button) convertView.findViewById(R.id.btn_zl);
@@ -75,10 +72,7 @@ public class AddStd_Cmd_StepOne_Adapter extends BaseAdapter
                 {
                     Intent intent = new Intent();
                     intent.setAction(AppContext.ACTION_CURRENTITEM);
-                    intent.putExtra("INDEX", 0);
-                    String fn=dictionary_wheel.getFirstItemName()[v.getId()];
-                    String[] sn=dictionary_wheel.getSecondItemName().get(fn);
-                    intent.putExtra("SN",sn);
+                    intent.putExtra("INDEX", 1);
                     context.sendBroadcast(intent);
                 }
             });
