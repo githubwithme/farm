@@ -76,14 +76,15 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     {
         fragmentList = new ArrayList<Fragment>();
         AddStd_Cmd_StepOne_Temp addStd_cmd_stepOne = new AddStd_Cmd_StepOne_Temp_();
-        AddStd_Cmd_StepThree addStd_cmd_stepThree = new AddStd_Cmd_StepThree_();
+        AddStd_Cmd_StepTwo addStd_cmd_stepTwo=new AddStd_Cmd_StepTwo_();
+//        AddStd_Cmd_StepThree addStd_cmd_stepThree = new AddStd_Cmd_StepThree_();
         AddStd_Cmd_StepFour addStd_cmd_stepFour = new AddStd_Cmd_StepFour_();
         AddStd_Cmd_StepFive addStd_cmd_stepFive = new AddStd_Cmd_StepFive_();
         AddStd_Cmd_StepSix addStd_cmd_stepSix = new AddStd_Cmd_StepSix_();
 
 
         fragmentList.add(addStd_cmd_stepOne);
-        fragmentList.add(addStd_cmd_stepThree);
+        fragmentList.add(addStd_cmd_stepTwo);
         fragmentList.add(addStd_cmd_stepFour);
         fragmentList.add(addStd_cmd_stepFive);
         fragmentList.add(addStd_cmd_stepSix);
