@@ -1,7 +1,7 @@
 package com.farm.adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,12 +10,13 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.farm.R;
-import com.farm.app.AppContext;
+import com.farm.com.custominterface.FragmentCallBack;
 
 import java.util.HashMap;
 
 public class AddStd_Cmd_StepTwo_Adapter extends BaseAdapter
 {
+    FragmentCallBack fragmentCallBack;
     private Context context;// 运行上下文
     private LayoutInflater listContainer;// 视图容器
     ListItemView listItemView = null;
@@ -29,11 +30,12 @@ public class AddStd_Cmd_StepTwo_Adapter extends BaseAdapter
 
     }
 
-    public AddStd_Cmd_StepTwo_Adapter(Context context, String[] data)
+    public AddStd_Cmd_StepTwo_Adapter(Context context, String[] data, FragmentCallBack fragmentCallBack)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         secondItemName = data;
+        this.fragmentCallBack=fragmentCallBack;
     }
 
     public int getCount()
@@ -68,12 +70,12 @@ public class AddStd_Cmd_StepTwo_Adapter extends BaseAdapter
             listItemView.btn_zl.setId(position);
             listItemView.btn_zl.setOnClickListener(new OnClickListener()
             {
-                @Override public void onClick(View v)
+                @Override
+                public void onClick(View v)
                 {
-                    Intent intent = new Intent();
-                    intent.setAction(AppContext.ACTION_CURRENTITEM);
-                    intent.putExtra("INDEX", 1);
-                    context.sendBroadcast(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("INDEX", 1);
+                    fragmentCallBack.callbackFun2(bundle);
                 }
             });
             // 设置控件集到convertView

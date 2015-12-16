@@ -1,7 +1,7 @@
 package com.farm.adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.farm.R;
-import com.farm.app.AppContext;
 import com.farm.bean.Dictionary_wheel;
+import com.farm.com.custominterface.FragmentCallBack;
 
 import java.util.HashMap;
 
@@ -22,8 +22,8 @@ public class AddStd_Cmd_StepOne_Adapter extends BaseAdapter
     Dictionary_wheel dictionary_wheel;
     ListItemView listItemView = null;
     String[] firstItemName;
-
-    String item="";
+    FragmentCallBack fragmentCallBack;
+    String item = "";
 
     static class ListItemView
     {
@@ -31,12 +31,13 @@ public class AddStd_Cmd_StepOne_Adapter extends BaseAdapter
 
     }
 
-    public AddStd_Cmd_StepOne_Adapter(Context context, Dictionary_wheel data)
+    public AddStd_Cmd_StepOne_Adapter(Context context, Dictionary_wheel data, FragmentCallBack fragmentCallBack)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         firstItemName = data.getFirstItemName();
-        dictionary_wheel=data;
+        dictionary_wheel = data;
+        this.fragmentCallBack = fragmentCallBack;
     }
 
     public int getCount()
@@ -71,15 +72,23 @@ public class AddStd_Cmd_StepOne_Adapter extends BaseAdapter
             listItemView.btn_zl.setId(position);
             listItemView.btn_zl.setOnClickListener(new OnClickListener()
             {
-                @Override public void onClick(View v)
+                @Override
+                public void onClick(View v)
                 {
-                    Intent intent = new Intent();
-                    intent.setAction(AppContext.ACTION_CURRENTITEM);
-                    intent.putExtra("INDEX", 0);
-                    String fn=dictionary_wheel.getFirstItemName()[v.getId()];
-                    String[] sn=dictionary_wheel.getSecondItemName().get(fn);
-                    intent.putExtra("SN",sn);
-                    context.sendBroadcast(intent);
+                    String fn = dictionary_wheel.getFirstItemName()[v.getId()];
+                    String[] sn = dictionary_wheel.getSecondItemName().get(fn);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("INDEX",0);
+                    bundle.putStringArray("SN",sn);
+                    fragmentCallBack.callbackFun2(bundle);
+
+//                    Intent intent = new Intent();
+//                    intent.setAction(AppContext.ACTION_CURRENTITEM);
+//                    intent.putExtra("INDEX", 0);
+//                    String fn=dictionary_wheel.getFirstItemName()[v.getId()];
+//                    String[] sn=dictionary_wheel.getSecondItemName().get(fn);
+//                    intent.putExtra("SN",sn);
+//                    context.sendBroadcast(intent);
                 }
             });
             // 设置控件集到convertView

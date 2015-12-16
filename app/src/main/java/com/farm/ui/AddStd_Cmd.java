@@ -1,9 +1,5 @@
 package com.farm.ui;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +9,6 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.FragmentViewPagerAdapter;
-import com.farm.app.AppContext;
 import com.farm.com.custominterface.FragmentCallBack;
 
 import org.androidannotations.annotations.AfterViews;
@@ -76,7 +71,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
         AddStd_Cmd_StepOne addStd_cmd_stepOne = new AddStd_Cmd_StepOne_();
 
         AddStd_Cmd_StepTwo addStd_cmd_stepTwo = new AddStd_Cmd_StepTwo_();
-        String[] sn=new String[]{""};
+        String[] sn = new String[]{""};
         Bundle bundle = new Bundle();
         bundle.putStringArray("SN", sn);
         addStd_cmd_stepTwo.setArguments(bundle);
@@ -112,39 +107,8 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-
-        IntentFilter intentFilter = new IntentFilter(AppContext.ACTION_CURRENTITEM);
-        registerReceiver(setCurrentItemReceiver_yz, intentFilter);
-
     }
 
-    BroadcastReceiver setCurrentItemReceiver_yz = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            int currentItem = intent.getIntExtra("INDEX", 0);
-            switch (currentItem)
-            {
-                case 0:
-                    String[] sn = intent.getStringArrayExtra("SN");
-                    Bundle bundle = new Bundle();
-                    bundle.putStringArray("SN", sn);
-                    AddStd_Cmd_StepTwo addStd_cmd_stepTwo = new AddStd_Cmd_StepTwo_();
-                    addStd_cmd_stepTwo.setArguments(bundle);
-                    fragmentList.set(currentItem + 1, addStd_cmd_stepTwo);
-                    vPager.setCurrentItem(currentItem + 1);
-                    break;
-                case 1:
-                    vPager.setCurrentItem(currentItem + 1);
-                    break;
-                case 2:
-//                    vPager.setCurrentItem(currentItem + 1);
-                    break;
-            }
-
-        }
-    };
 
     private void setBackground(int pos)
     {
@@ -226,6 +190,26 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     @Override
     public void callbackFun2(Bundle arg)
     {
-//        changeButtonColor();//通过回调方式调用Activity中的方法
+        int currentItem = arg.getInt("INDEX");
+        switch (currentItem)
+        {
+            case 0:
+                String[] sn = arg.getStringArray("SN");
+                Bundle bundle = new Bundle();
+                bundle.putStringArray("SN", sn);
+                AddStd_Cmd_StepTwo addStd_cmd_stepTwo = new AddStd_Cmd_StepTwo_();
+                addStd_cmd_stepTwo.setArguments(bundle);
+                fragmentList.set(currentItem + 1, addStd_cmd_stepTwo);
+                vPager.setCurrentItem(currentItem + 1);
+                break;
+            case 1:
+                vPager.setCurrentItem(currentItem + 1);
+                break;
+            case 2:
+                vPager.setCurrentItem(currentItem + 1);
+            case 3:
+                vPager.setCurrentItem(currentItem + 1);
+                break;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.farm.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.Model;
+import com.farm.com.custominterface.FragmentCallBack;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -27,6 +29,7 @@ import org.androidannotations.annotations.ViewById;
 @EFragment
 public class AddStd_Cmd_StepThree extends Fragment
 {
+    FragmentCallBack fragmentCallBack = null;
     SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
     private String[] list;
@@ -86,7 +89,7 @@ public class AddStd_Cmd_StepThree extends Fragment
 
         for (int i = 0; i < list.length; i++)
         {
-            View view = inflater.inflate(R.layout.item_list_layout, null);
+            View view = inflater.inflate(R.layout.item_addstd_cmd_good, null);
             view.setId(i);
             view.setOnClickListener(toolsItemListener);
             TextView textView = (TextView) view.findViewById(R.id.text);
@@ -126,8 +129,7 @@ public class AddStd_Cmd_StepThree extends Fragment
         @Override
         public void onPageSelected(int arg0)
         {
-            if (goods_pager.getCurrentItem() != arg0)
-                goods_pager.setCurrentItem(arg0);
+            if (goods_pager.getCurrentItem() != arg0) goods_pager.setCurrentItem(arg0);
             if (currentItem != arg0)
             {
                 changeTextColor(arg0);
@@ -151,7 +153,6 @@ public class AddStd_Cmd_StepThree extends Fragment
      * ViewPager 加载选项卡
      *
      * @author Administrator
-     *
      */
     private class ShopAdapter extends FragmentPagerAdapter
     {
@@ -163,7 +164,7 @@ public class AddStd_Cmd_StepThree extends Fragment
         @Override
         public Fragment getItem(int index)
         {
-            Fragment fragment = new ProTypeFragment();
+            Fragment fragment = new GoodList_Cmd_Fragment();
             Bundle bundle = new Bundle();
             bundle.putInt("index", index);
             fragment.setArguments(bundle);
@@ -207,4 +208,11 @@ public class AddStd_Cmd_StepThree extends Fragment
         tools_scrlllview.smoothScrollTo(0, x);
     }
 
+    @Override
+    public void onAttach(Activity activity)
+    {
+        // TODO Auto-generated method stub
+        super.onAttach(activity);
+        fragmentCallBack = (AddStd_Cmd) activity;
+    }
 }

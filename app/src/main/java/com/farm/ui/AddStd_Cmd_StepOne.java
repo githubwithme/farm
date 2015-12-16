@@ -1,5 +1,6 @@
 package com.farm.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.DictionaryHelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -34,8 +36,10 @@ import java.util.List;
 /**
  * Created by ${hmj} on 2015/12/15.
  */
-@EFragment public class AddStd_Cmd_StepOne extends Fragment
+@EFragment
+public class AddStd_Cmd_StepOne extends Fragment
 {
+    FragmentCallBack fragmentCallBack = null;
     @ViewById ListView lv;
     AddStd_Cmd_StepOne_Adapter addStd_cmd_stepOne_adapter;
     private List<Dictionary> listData = new ArrayList<Dictionary>();
@@ -43,12 +47,14 @@ import java.util.List;
     Dictionary dic_comm;
     Dictionary_wheel dictionary_wheel;
 
-    @AfterViews void afterOncreate()
+    @AfterViews
+    void afterOncreate()
     {
         getCommandlist();
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.add_std__cmd__step_one, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
@@ -64,7 +70,8 @@ import java.util.List;
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
-            @Override public void onSuccess(ResponseInfo<String> responseInfo)
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
                 List<Dictionary> lsitNewData = null;
@@ -79,8 +86,9 @@ import java.util.List;
                         {
                             dic_comm = lsitNewData.get(0);
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic_comm);
-                            addStd_cmd_stepOne_adapter = new AddStd_Cmd_StepOne_Adapter(getActivity(), dictionary_wheel);
+                            addStd_cmd_stepOne_adapter = new AddStd_Cmd_StepOne_Adapter(getActivity(), dictionary_wheel,fragmentCallBack);
                             lv.setAdapter(addStd_cmd_stepOne_adapter);
+//                            fragmentCallBack.callbackFun2(null);
                         }
 
                     } else
@@ -94,10 +102,19 @@ import java.util.List;
                 }
             }
 
-            @Override public void onFailure(HttpException error, String msg)
+            @Override
+            public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
+    }
+
+    @Override
+    public void onAttach(Activity activity)
+    {
+        // TODO Auto-generated method stub
+        super.onAttach(activity);
+        fragmentCallBack = (AddStd_Cmd) activity;
     }
 }

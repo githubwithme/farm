@@ -1,5 +1,6 @@
 package com.farm.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,7 @@ public class AddStd_Cmd_StepTwo extends BaseFragment
     @AfterViews
     void afterOncreate()
     {
-        addStd_cmd_stepTwo_adapter = new AddStd_Cmd_StepTwo_Adapter(getActivity(), secondItem);
+        addStd_cmd_stepTwo_adapter = new AddStd_Cmd_StepTwo_Adapter(getActivity(), secondItem,fragmentCallBack);
         lv_steptwo.setAdapter(addStd_cmd_stepTwo_adapter);
     }
 
@@ -61,5 +62,11 @@ public class AddStd_Cmd_StepTwo extends BaseFragment
             return;
         }
 
+    }
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+        fragmentCallBack = (AddStd_Cmd) activity;
     }
 }
