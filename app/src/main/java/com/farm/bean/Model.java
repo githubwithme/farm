@@ -17,8 +17,8 @@ public class Model
 
 	public static final String[] toolsList = {"消耗型物资", "循环型物资", "无机肥", "有机肥", "农药",  "其他" };
 
-	public static final int[] iconList = { R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl, R.drawable.icon_fl,
-			R.drawable.icon_fl, R.drawable.icon_fl };
+	public static final int[] iconList = { R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg, R.drawable.noimg,
+			R.drawable.noimg, R.drawable.noimg };
 
 	// 父listview的图片数据数组
 	public static int[] EXPANDABLE_LISTVIEW_IMG = new int[] { R.drawable.ic_category_40, R.drawable.star, R.drawable.star, R.drawable.star };

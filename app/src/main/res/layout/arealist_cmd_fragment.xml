@@ -25,7 +25,10 @@
         android:layout_centerInParent="true"
         android:horizontalSpacing="10dp"
         android:numColumns="3"
+        android:layout_marginRight="15dip"
+        android:layout_marginLeft="15dip"
+        android:layout_marginTop="15dip"
         android:scrollbars="none"
-        android:verticalSpacing="10dp"/>
+        android:verticalSpacing="20dp"/>
 
 </LinearLayout>

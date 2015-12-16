@@ -5,12 +5,7 @@
     android:gravity="center"
     android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/typeicon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:contentDescription="@null"
-        android:scaleType="fitXY" />
+
 
     <TextView
         android:id="@+id/typename"

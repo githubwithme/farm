@@ -12,25 +12,25 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.adapter.AddStd_cmd_stepfour_GridViewAdapter;
+import com.farm.adapter.AddStd_cmd_steponestemp_GridViewAdapter;
 import com.farm.bean.Type;
 import com.farm.com.custominterface.FragmentCallBack;
 
-public class AreaList_Cmd_Fragment extends Fragment
+public class CmdList_Cmd_Fragment extends Fragment
 {
     FragmentCallBack fragmentCallBack = null;
     //    private ArrayList<Type> list;
     private GridView gridView;
-    private AddStd_cmd_stepfour_GridViewAdapter adapter;
+    private AddStd_cmd_steponestemp_GridViewAdapter adapter;
     private Type type;
-        private String typename;
-//    private int icon;
+    private String typename;
+    //    private int icon;
     String[] sn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.arealist_cmd_fragment, null);
+        View view = inflater.inflate(R.layout.cmdlist_cmd_fragment, null);
         gridView = (GridView) view.findViewById(R.id.listView);
 //        int index = getArguments().getInt("index");
         typename = getArguments().getString("FN");
@@ -39,7 +39,7 @@ public class AreaList_Cmd_Fragment extends Fragment
 
         ((TextView) view.findViewById(R.id.toptype)).setText(typename);
 //        GetTypeList();
-        adapter = new AddStd_cmd_stepfour_GridViewAdapter(getActivity(), sn);
+        adapter = new AddStd_cmd_steponestemp_GridViewAdapter(getActivity(), sn);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new OnItemClickListener()
         {
@@ -47,7 +47,7 @@ public class AreaList_Cmd_Fragment extends Fragment
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
             {
                 Bundle bundle = new Bundle();
-                bundle.putInt("INDEX", 2);
+                bundle.putInt("INDEX", 0);
                 fragmentCallBack.callbackFun2(bundle);
             }
         });

@@ -9,24 +9,26 @@
         android:id="@+id/toptype"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
         android:layout_gravity="center"
-        android:textSize="12sp"
-        />
+        android:layout_margin="15dp"
+        android:textSize="12sp"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/line_color"/>
+
     <GridView
         android:id="@+id/listView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:horizontalSpacing="10dp"
-        android:layout_marginTop="15dip"
         android:numColumns="3"
+        android:layout_marginRight="15dip"
+        android:layout_marginLeft="15dip"
+        android:layout_marginTop="20dip"
         android:scrollbars="none"
-        android:verticalSpacing="15dp"/>
+        android:verticalSpacing="40dp"/>
 
 </LinearLayout>

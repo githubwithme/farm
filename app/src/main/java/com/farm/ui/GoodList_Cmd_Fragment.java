@@ -48,7 +48,7 @@ public class GoodList_Cmd_Fragment extends Fragment
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
             {
                 Bundle bundle = new Bundle();
-                bundle.putInt("INDEX", 2);
+                bundle.putInt("INDEX", 1);
                 fragmentCallBack.callbackFun2(bundle);
             }
         });
