@@ -71,18 +71,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
         this.map = dictionary_wheel.getSecondItemName();
 
 
-        adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
-        gridview.setAdapter(adapter);
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
-            {
-                Bundle bundle = new Bundle();
-                bundle.putInt("INDEX", 1);
-                CustomExpandableListAdapter.this.fragmentCallBack.callbackFun2(bundle);
-            }
-        });
+
 
     }
 
@@ -236,6 +225,18 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
                         list_goods = JSON.parseArray(result.getRows().toJSONString(), goodslisttab.class);
                         if (list_goods != null)
                         {
+                            adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
+                            gridview.setAdapter(adapter);
+                            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                            {
+                                @Override
+                                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+                                {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt("INDEX", 1);
+                                    CustomExpandableListAdapter.this.fragmentCallBack.callbackFun2(bundle);
+                                }
+                            });
                             adapter.notifyDataSetChanged();
                         } else
                         {
