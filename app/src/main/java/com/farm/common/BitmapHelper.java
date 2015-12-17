@@ -35,6 +35,25 @@ public class BitmapHelper
 
 	private static BitmapUtils bitmapUtils;
 
+	public static void loadImage(Context context, ImageView imageView, String ZPDZ)
+	{
+		if (bitmapUtils == null)
+		{
+			bitmapUtils = new BitmapUtils(context);
+		}
+		// bitmapUtils.configDefaultLoadingImage(R.drawable.loading_0);
+		// bitmapUtils.configDefaultLoadFailedImage(R.drawable.loading_0);
+		bitmapUtils.configDefaultBitmapConfig(Bitmap.Config.RGB_565);
+		bitmapUtils.configDefaultBitmapMaxSize(BitmapCommonUtils.getScreenSize(context).scaleDown(3));
+		bitmapUtils.display(imageView, ZPDZ);
+		// 加载网络图片
+		// bitmapUtils.display(imageView,
+		// "http://bbs.lidroid.com/static/image/common/logo.png");
+		// 加载本地图片(路径以/开头， 绝对路径)
+		// bitmapUtils.display(imageView, "/sdcard/test.jpg");
+		// 加载assets中的图片(路径以assets开头)
+		// bitmapUtils.display(imageView, "assets/img/wallpaper.jpg");
+	}
 	/**
 	 * @description:设置图片自适应imageview
 	 * @createTime：2015-8-20 下午7:01:43

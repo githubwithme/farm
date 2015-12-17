@@ -7,21 +7,34 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.CustomExpandableListAdapter;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
+import com.farm.bean.Dictionary;
+import com.farm.bean.Dictionary_wheel;
+import com.farm.bean.Result;
+import com.farm.bean.commembertab;
 import com.farm.com.custominterface.FragmentCallBack;
+import com.farm.common.DictionaryHelper;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ${hmj} on 2015/12/15.
@@ -29,146 +42,86 @@ import java.util.Map;
 @EFragment
 public class AddStd_Cmd_StepTwo extends Fragment
 {
-    List<String> parent = null;
-    Map<String, List<String>> map = null;
+    String[] fn;
+    Dictionary_wheel dictionary_wheel;
+    Dictionary dic;
+    commembertab commembertab;
+    private Context context;// 运行上下文
+    String[] parent = null;
+    HashMap<String, String[]> map = null;
     FragmentCallBack fragmentCallBack = null;
     @ViewById
-    ExpandableListView mainlistview ;
+    ExpandableListView mainlistview;
+    @ViewById
+    GridView gridview_goods;
+    @ViewById
+    TextView tv_head;
 
 
     @AfterViews
     void afterOncreate()
     {
-        initData();
-        mainlistview.setAdapter(new MyAdapter());
+        getCommandlist();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.add_std__cmd__step_two, container, false);
+        commembertab = AppContext.getUserInfo(getActivity());
         return rootView;
     }
 
-    // 初始化数据
-    public void initData()
+
+    private void getCommandlist()
     {
-        parent = new ArrayList<String>();
-        parent.add("parent1");
-        parent.add("parent2");
-        parent.add("parent3");
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("name", "getWZ");
+        params.addQueryStringParameter("action", "getDict");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<Dictionary> lsitNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        String aa = result.getRows().toJSONString();
+                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
+                        if (lsitNewData != null)
+                        {
+                            dic = lsitNewData.get(0);
+                            dictionary_wheel = DictionaryHelper.getDictionary_Command(dic);
+                            CustomExpandableListAdapter customExpandableListAdapter = new CustomExpandableListAdapter(getActivity(), dictionary_wheel, mainlistview, gridview_goods,tv_head, fragmentCallBack);
+                            mainlistview.setAdapter(customExpandableListAdapter);
+                        }
 
-        map = new HashMap<String, List<String>>();
+                    } else
+                    {
 
-        List<String> list1 = new ArrayList<String>();
-        list1.add("child1-1");
-        list1.add("child1-2");
-        list1.add("child1-3");
-        map.put("parent1", list1);
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+            }
 
-        List<String> list2 = new ArrayList<String>();
-        list2.add("child2-1");
-        list2.add("child2-2");
-        list2.add("child2-3");
-        map.put("parent2", list2);
-
-        List<String> list3 = new ArrayList<String>();
-        list3.add("child3-1");
-        list3.add("child3-2");
-        list3.add("child3-3");
-        map.put("parent3", list3);
-
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
     }
 
-    class MyAdapter extends BaseExpandableListAdapter
-    {
-
-        //得到子item需要关联的数据
-        @Override
-        public Object getChild(int groupPosition, int childPosition)
-        {
-            String key = parent.get(groupPosition);
-            return (map.get(key).get(childPosition));
-        }
-
-        //得到子item的ID
-        @Override
-        public long getChildId(int groupPosition, int childPosition)
-        {
-            return childPosition;
-        }
-
-        //设置子item的组件
-        @Override
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
-        {
-            String key = AddStd_Cmd_StepTwo.this.parent.get(groupPosition);
-            String info = map.get(key).get(childPosition);
-            if (convertView == null)
-            {
-                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.layout_children_goods, null);
-            }
-            TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
-            tv.setText(info);
-            return convertView;
-        }
-
-        //获取当前父item下的子item的个数
-        @Override
-        public int getChildrenCount(int groupPosition)
-        {
-            String key = parent.get(groupPosition);
-            int size = map.get(key).size();
-            return size;
-        }
-
-        //获取当前父item的数据
-        @Override
-        public Object getGroup(int groupPosition)
-        {
-            return parent.get(groupPosition);
-        }
-
-        @Override
-        public int getGroupCount()
-        {
-            return parent.size();
-        }
-
-        @Override
-        public long getGroupId(int groupPosition)
-        {
-            return groupPosition;
-        }
-
-        //设置父item组件
-        @Override
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
-        {
-            if (convertView == null)
-            {
-                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.layout_parent_goods, null);
-            }
-            TextView tv = (TextView) convertView.findViewById(R.id.parent_textview);
-            tv.setText(AddStd_Cmd_StepTwo.this.parent.get(groupPosition));
-            return convertView;
-        }
-
-        @Override
-        public boolean hasStableIds()
-        {
-            return true;
-        }
-
-        @Override
-        public boolean isChildSelectable(int groupPosition, int childPosition)
-        {
-            return true;
-        }
-
-    }
 
     @Override
     public void onAttach(Activity activity)

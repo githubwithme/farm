@@ -54,5 +54,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- 多媒体 -->
-
+    <item name="tag_fi" type="id"></item>
+    <item name="tag_fn" type="id"></item>
+    <item name="tag_si" type="id"></item>
+    <item name="tag_sn" type="id"></item>
+    <item name="tag_childsize" type="id"></item>
 </resources>

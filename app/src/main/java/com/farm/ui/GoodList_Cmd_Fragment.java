@@ -12,35 +12,37 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.adapter.GridViewAdapter;
-import com.farm.bean.Model;
-import com.farm.bean.Type;
+import com.farm.adapter.AddStd_Cmd_goodslistdapter;
+import com.farm.bean.goodslisttab;
 import com.farm.com.custominterface.FragmentCallBack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GoodList_Cmd_Fragment extends Fragment
 {
     FragmentCallBack fragmentCallBack = null;
-    private ArrayList<Type> list;
     private GridView gridView;
-    private GridViewAdapter adapter;
-    private Type type;
-    private String typename;
-    private int icon;
+    private AddStd_Cmd_goodslistdapter adapter;
+    private String fn;
+    private String sn;
+    private int fi;
+    private int si;
+    List<goodslisttab> list_goods = new ArrayList<goodslisttab>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.goodlist_cmd_fragment, null);
         gridView = (GridView) view.findViewById(R.id.listView);
-        int index = getArguments().getInt("index");
-        typename = Model.toolsList[index];
-        icon = Model.iconList[index];
+        fi = getArguments().getInt("fi");
+        si = getArguments().getInt("si");
+        fn = getArguments().getString("FN");
+        sn = getArguments().getString("SN");
+        list_goods = getArguments().getParcelableArrayList("beanlist");
 
-        ((TextView) view.findViewById(R.id.toptype)).setText(typename);
-        GetTypeList();
-        adapter = new GridViewAdapter(getActivity(), list);
+        ((TextView) view.findViewById(R.id.toptype)).setText(fn + "-" + sn);
+        adapter = new AddStd_Cmd_goodslistdapter(getActivity(), list_goods);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new OnItemClickListener()
         {
@@ -56,15 +58,7 @@ public class GoodList_Cmd_Fragment extends Fragment
         return view;
     }
 
-    private void GetTypeList()
-    {
-        list = new ArrayList<Type>();
-        for (int i = 1; i < 23; i++)
-        {
-            type = new Type(i, typename + i, icon);
-            list.add(type);
-        }
-    }
+
     @Override
     public void onAttach(Activity activity)
     {
