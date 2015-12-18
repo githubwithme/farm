@@ -6,19 +6,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.AddStd_Cmd_StepOne_Adapter;
+import com.farm.adapter.AddPlantObservationAdapter;
+import com.farm.adapter.AddPlantObservation_StepTwo_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
-import com.farm.bean.commembertab;
+import com.farm.bean.planttab;
 import com.farm.com.custominterface.FragmentCallBack;
-import com.farm.common.DictionaryHelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -27,6 +28,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -34,39 +36,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by ${hmj} on 2015/12/15.
+ * Created by ${hmj} on 2015/12/18.
  */
 @EFragment
-public class AddStd_Cmd_StepOne extends Fragment
+public class AddPlantObservation_StepThree extends Fragment
 {
     FragmentCallBack fragmentCallBack = null;
-    @ViewById ListView lv;
-    AddStd_Cmd_StepOne_Adapter addStd_cmd_stepOne_adapter;
+    @ViewById
+    ListView lv_plant;
+    @ViewById
+    Button btn_next;
+    AddPlantObservation_StepTwo_Adapter addStd_cmd_stepOne_adapter;
     private List<Dictionary> listData = new ArrayList<Dictionary>();
-    commembertab commembertab;
+    com.farm.bean.commembertab commembertab;
     Dictionary dic_comm;
     Dictionary_wheel dictionary_wheel;
+
+    @Click
+    void btn_next()
+    {
+        Bundle bundle = new Bundle();
+        bundle.putInt("INDEX",2);
+        fragmentCallBack.callbackFun2(bundle);
+    }
 
     @AfterViews
     void afterOncreate()
     {
-        getCommandlist();
+        getPlantlist();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.add_std__cmd__step_one, container, false);
+        View rootView = inflater.inflate(R.layout.addplantobservation__step_three, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
         return rootView;
     }
 
-    private void getCommandlist()
+    private void getPlantlist()
     {
         RequestParams params = new RequestParams();
+        params.addQueryStringParameter("areaid", "4");
+        params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("name", "Zuoye");
-        params.addQueryStringParameter("action", "getDict");
+        params.addQueryStringParameter("username", commembertab.getuserName());
+        params.addQueryStringParameter("orderby", "regDate desc");
+        params.addQueryStringParameter("strWhere", "");
+        params.addQueryStringParameter("page_size", String.valueOf(AppContext.PAGE_SIZE));
+        params.addQueryStringParameter("page_index", String.valueOf(0));
+        params.addQueryStringParameter("action", "plantGetList");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -74,21 +93,17 @@ public class AddStd_Cmd_StepOne extends Fragment
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<Dictionary> lsitNewData = null;
+                List<planttab> lsitNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        String aa = result.getRows().toJSONString();
-                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
+                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), planttab.class);
                         if (lsitNewData != null)
                         {
-                            dic_comm = lsitNewData.get(0);
-                            dictionary_wheel = DictionaryHelper.getDictionary_Command(dic_comm);
-                            addStd_cmd_stepOne_adapter = new AddStd_Cmd_StepOne_Adapter(getActivity(), dictionary_wheel,fragmentCallBack);
-                            lv.setAdapter(addStd_cmd_stepOne_adapter);
-//                            fragmentCallBack.callbackFun2(null);
+                            AddPlantObservationAdapter addPlantObservationAdapter = new AddPlantObservationAdapter(getActivity(), lsitNewData);
+                            lv_plant.setAdapter(addPlantObservationAdapter);
                         }
 
                     } else

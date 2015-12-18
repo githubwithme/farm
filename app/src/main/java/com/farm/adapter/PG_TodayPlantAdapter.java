@@ -20,7 +20,7 @@ import com.farm.bean.commembertab;
 import com.farm.bean.planttab;
 import com.farm.common.BitmapHelper;
 import com.farm.common.SqliteDb;
-import com.farm.ui.AddPlantObservationRecord_;
+import com.farm.ui.AddPlantObservation_;
 import com.farm.ui.RecordList_;
 
 import java.util.HashMap;
@@ -137,7 +137,7 @@ public class PG_TodayPlantAdapter extends BaseAdapter
 				@Override
 				public void onClick(View v)
 				{
-					Intent intent = new Intent(context, AddPlantObservationRecord_.class);
+					Intent intent = new Intent(context, AddPlantObservation_.class);
 					intent.putExtra("bean", listItems.get(v.getId()));
 					context.startActivity(intent);
 				}

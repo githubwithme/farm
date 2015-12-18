@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 
+ *
  */
 public class CZ_PQ_TodayPlantAdapter extends BaseAdapter
 {
@@ -52,7 +52,7 @@ public class CZ_PQ_TodayPlantAdapter extends BaseAdapter
 
 	/**
 	 * 实例化Adapter
-	 * 
+	 *
 	 * @param context
 	 * @param data
 	 * @param context
