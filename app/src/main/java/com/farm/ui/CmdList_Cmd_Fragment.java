@@ -14,17 +14,20 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.adapter.AddStd_cmd_steponestemp_GridViewAdapter;
 import com.farm.bean.Type;
+import com.farm.bean.commandtab;
 import com.farm.com.custominterface.FragmentCallBack;
 
 public class CmdList_Cmd_Fragment extends Fragment
 {
     FragmentCallBack fragmentCallBack = null;
-    //    private ArrayList<Type> list;
+    commandtab commandtab;
     private GridView gridView;
     private AddStd_cmd_steponestemp_GridViewAdapter adapter;
     private Type type;
     private String typename;
+    private String FI;
     //    private int icon;
+    String[] SI;
     String[] sn;
 
     @Override
@@ -32,20 +35,24 @@ public class CmdList_Cmd_Fragment extends Fragment
     {
         View view = inflater.inflate(R.layout.cmdlist_cmd_fragment, null);
         gridView = (GridView) view.findViewById(R.id.listView);
-//        int index = getArguments().getInt("index");
         typename = getArguments().getString("FN");
+        FI = getArguments().getString("FI");
+        commandtab = getArguments().getParcelable("bean");
         sn = getArguments().getStringArray("SN");
-//        icon = Model.iconList[index];
+        SI = getArguments().getStringArray("SI");
 
         ((TextView) view.findViewById(R.id.toptype)).setText(typename);
-//        GetTypeList();
         adapter = new AddStd_cmd_steponestemp_GridViewAdapter(getActivity(), sn);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new OnItemClickListener()
         {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+            public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
             {
+//                commandtab.setstdJobType(FI);
+//                commandtab.setstdJobTypeName(typename);
+//                commandtab.setstdJobId(SI[pos]);
+//                commandtab.setstdJobName(sn[pos]);
                 Bundle bundle = new Bundle();
                 bundle.putInt("INDEX", 0);
                 fragmentCallBack.callbackFun2(bundle);

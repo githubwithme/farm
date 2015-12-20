@@ -17,6 +17,7 @@ import org.androidannotations.annotations.EFragment;
 @EFragment
 public class AddStd_Cmd_StepSix extends Fragment
 {
+    com.farm.bean.commandtab commandtab;
     @AfterViews
     void afterOncreate()
     {
@@ -26,6 +27,7 @@ public class AddStd_Cmd_StepSix extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.add_std__cmd__step_six, container, false);
+        commandtab = getArguments().getParcelable("bean");
         return rootView;
     }
 }

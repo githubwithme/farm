@@ -17,6 +17,7 @@ import com.farm.common.StringUtils;
  */
 public class AppContext extends Application
 {
+	public final static String BELONG_ADD_CMD_AREA = "BELONG_ADD_CMD_AREA";
 	public final static String ACTION_CURRENTITEM = "ACTION_CURRENTITEM";
 	public final static String ACTION_REFRESH_ANIMAL = "REFRESH_ANIMAL";
 	public final static String ACTION_REFRESH_PEST = "REFRESH_PEST";

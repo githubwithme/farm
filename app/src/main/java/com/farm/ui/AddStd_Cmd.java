@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.FragmentViewPagerAdapter;
+import com.farm.bean.commandtab;
 import com.farm.com.custominterface.FragmentCallBack;
 
 import org.androidannotations.annotations.AfterViews;
@@ -21,18 +22,30 @@ import java.util.ArrayList;
 @EActivity(R.layout.activity_add_std__cmd)
 public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
 {
+    commandtab commandtab;
     private ArrayList<Fragment> fragmentList;
-    @ViewById TextView text_one;
-    @ViewById TextView text_three;
-    @ViewById TextView text_four;
-    @ViewById TextView text_five;
-    @ViewById TextView text_six;
-    @ViewById ImageView image_one;
-    @ViewById ImageView image_three;
-    @ViewById ImageView image_four;
-    @ViewById ImageView image_five;
-    @ViewById ImageView image_six;
-    @ViewById android.support.v4.view.ViewPager vPager;
+    @ViewById
+    TextView text_one;
+    @ViewById
+    TextView text_three;
+    @ViewById
+    TextView text_four;
+    @ViewById
+    TextView text_five;
+    @ViewById
+    TextView text_six;
+    @ViewById
+    ImageView image_one;
+    @ViewById
+    ImageView image_three;
+    @ViewById
+    ImageView image_four;
+    @ViewById
+    ImageView image_five;
+    @ViewById
+    ImageView image_six;
+    @ViewById
+    android.support.v4.view.ViewPager vPager;
 
     @Click
     void imgbtn_back()
@@ -74,18 +87,31 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     @AfterViews
     void afterOncreate()
     {
+        Bundle bundle=new Bundle();
+        bundle.putParcelable("bean",commandtab);
         fragmentList = new ArrayList<Fragment>();
         AddStd_Cmd_StepOne_Temp addStd_cmd_stepOne = new AddStd_Cmd_StepOne_Temp_();
-        AddStd_Cmd_StepTwo addStd_cmd_stepTwo=new AddStd_Cmd_StepTwo_();
-//        AddStd_Cmd_StepThree addStd_cmd_stepThree = new AddStd_Cmd_StepThree_();
-        AddStd_Cmd_StepFour addStd_cmd_stepFour = new AddStd_Cmd_StepFour_();
+        addStd_cmd_stepOne.setArguments(bundle);
+
+        AddStd_Cmd_StepTwo addStd_cmd_stepTwo = new AddStd_Cmd_StepTwo_();
+        addStd_cmd_stepTwo.setArguments(bundle);
+
+//        AddStd_Cmd_StepFour addStd_cmd_stepFour = new AddStd_Cmd_StepFour_();
+//        addStd_cmd_stepFour.setArguments(bundle);
+//        AddStd_Cmd_Step_Area addStd_cmd_step_area = new AddStd_Cmd_Step_Area_();
+        AddStd_Cmd_StepThree_Temp addStd_cmd_stepThree_temp =new AddStd_Cmd_StepThree_Temp_();
+        addStd_cmd_stepThree_temp.setArguments(bundle);
+
         AddStd_Cmd_StepFive addStd_cmd_stepFive = new AddStd_Cmd_StepFive_();
+        addStd_cmd_stepFive.setArguments(bundle);
+
         AddStd_Cmd_StepSix addStd_cmd_stepSix = new AddStd_Cmd_StepSix_();
+        addStd_cmd_stepSix.setArguments(bundle);
 
 
         fragmentList.add(addStd_cmd_stepOne);
         fragmentList.add(addStd_cmd_stepTwo);
-        fragmentList.add(addStd_cmd_stepFour);
+        fragmentList.add(addStd_cmd_stepThree_temp);
         fragmentList.add(addStd_cmd_stepFive);
         fragmentList.add(addStd_cmd_stepSix);
 
@@ -108,6 +134,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        commandtab=new commandtab();
         getActionBar().hide();
     }
 
@@ -189,6 +216,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     {
 //        switchFragment();//通过回调方式切换
     }
+
 
     @Override
     public void callbackFun2(Bundle arg)

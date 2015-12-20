@@ -37,13 +37,14 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by ${hmj} on 2015/12/15.
  */
 @EFragment
-public class AddStd_Cmd_StepOne_Temp extends Fragment
+public class AddStd_Cmd_StepThree_Temp extends Fragment
 {
     commembertab commembertab;
     commandtab commandtab;
@@ -64,21 +65,21 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
     @ViewById ImageView iv_dowm_tab;
     @ViewById ScrollView cmd_tools_scrlllview;
     @ViewById LinearLayout cmd_tools;
-    @ViewById ViewPager cmd_pager;
+    @ViewById ViewPager area_pager;
 
     @AfterViews
     void afterOncreate()
     {
         shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
         inflater = LayoutInflater.from(getActivity());
-        getCommandlist();
+        getArealist();
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.add_std__cmd__step_one_temp, container, false);
+        View rootView = inflater.inflate(R.layout.add_std__cmd__step_three_temp, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
         commandtab = getArguments().getParcelable("bean");
         return rootView;
@@ -111,7 +112,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
 
         for (int i = 0; i < list.length; i++)
         {
-            View view = inflater.inflate(R.layout.item_addstd_cmdlist, null);
+            View view = inflater.inflate(R.layout.item_addstd_cmd_area, null);
             view.setId(i);
             view.setOnClickListener(toolsItemListener);
             TextView textView = (TextView) view.findViewById(R.id.text);
@@ -128,7 +129,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
         @Override
         public void onClick(View v)
         {
-            cmd_pager.setCurrentItem(v.getId());
+            area_pager.setCurrentItem(v.getId());
         }
     };
 
@@ -138,8 +139,8 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
      */
     private void initPager()
     {
-        cmd_pager.setAdapter(shopAdapter);
-        cmd_pager.setOnPageChangeListener(onPageChangeListener);
+        area_pager.setAdapter(shopAdapter);
+        area_pager.setOnPageChangeListener(onPageChangeListener);
     }
 
     /**
@@ -151,7 +152,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
         @Override
         public void onPageSelected(int arg0)
         {
-            if (cmd_pager.getCurrentItem() != arg0) cmd_pager.setCurrentItem(arg0);
+            if (area_pager.getCurrentItem() != arg0) area_pager.setCurrentItem(arg0);
             if (currentItem != arg0)
             {
                 changeTextColor(arg0);
@@ -186,7 +187,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
         @Override
         public Fragment getItem(int index)
         {
-            Fragment fragment = new CmdList_Cmd_Fragment();
+            Fragment fragment = new Area_Cmd_Fragment();
             Bundle bundle = new Bundle();
             bundle.putInt("index", index);
             bundle.putParcelable("bean", commandtab);
@@ -234,11 +235,12 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
         int x = (views[clickPosition].getTop());
         cmd_tools_scrlllview.smoothScrollTo(0, x);
     }
-    private void getCommandlist()
+    private void getArealist()
     {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("name", "Zuoye");
+        params.addQueryStringParameter("name", "getstdPark");
         params.addQueryStringParameter("action", "getDict");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -246,28 +248,24 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
-                String a = responseInfo.result;
                 List<Dictionary> lsitNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        String aa = result.getRows().toJSONString();
                         lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
                         if (lsitNewData != null)
                         {
                             dic_area = lsitNewData.get(0);
-                            dic_area.setBELONG("片区执行");
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic_area);
                             fn = dictionary_wheel.getFirstItemName();
                             showToolsView(fn);
                             initPager();
                         }
-
                     } else
                     {
-
+                        lsitNewData = new ArrayList<Dictionary>();
                     }
                 } else
                 {
@@ -279,12 +277,11 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
+                String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
     }
-
-
 
     @Override
     public void onAttach(Activity activity)

@@ -18,13 +18,14 @@ import com.farm.com.custominterface.FragmentCallBack;
 
 public class AreaList_Cmd_Fragment extends Fragment
 {
+    com.farm.bean.commandtab commandtab;
     FragmentCallBack fragmentCallBack = null;
-    //    private ArrayList<Type> list;
     private GridView gridView;
     private AddStd_cmd_stepfour_GridViewAdapter adapter;
     private Type type;
-        private String typename;
-//    private int icon;
+    private String FI;
+    private String typename;
+    String[] SI;
     String[] sn;
 
     @Override
@@ -32,13 +33,13 @@ public class AreaList_Cmd_Fragment extends Fragment
     {
         View view = inflater.inflate(R.layout.arealist_cmd_fragment, null);
         gridView = (GridView) view.findViewById(R.id.listView);
-//        int index = getArguments().getInt("index");
+        commandtab = getArguments().getParcelable("bean");
+        FI = getArguments().getString("FI");
         typename = getArguments().getString("FN");
+        SI = getArguments().getStringArray("SI");
         sn = getArguments().getStringArray("SN");
-//        icon = Model.iconList[index];
 
         ((TextView) view.findViewById(R.id.toptype)).setText(typename);
-//        GetTypeList();
         adapter = new AddStd_cmd_stepfour_GridViewAdapter(getActivity(), sn);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new OnItemClickListener()
@@ -46,6 +47,7 @@ public class AreaList_Cmd_Fragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
             {
+
                 Bundle bundle = new Bundle();
                 bundle.putInt("INDEX", 2);
                 fragmentCallBack.callbackFun2(bundle);

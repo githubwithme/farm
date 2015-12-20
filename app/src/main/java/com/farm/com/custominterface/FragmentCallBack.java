@@ -10,4 +10,5 @@ public interface FragmentCallBack
     public void callbackFun1(Bundle arg);
 
     public void callbackFun2(Bundle arg);
+
 }

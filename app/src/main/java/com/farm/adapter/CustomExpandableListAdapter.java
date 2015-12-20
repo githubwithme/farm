@@ -17,6 +17,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
+import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
 import com.farm.com.custominterface.FragmentCallBack;
@@ -37,6 +38,7 @@ import java.util.List;
  */
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter
 {
+    commandtab commandtab;
     private int currentItem = 0;
     //    ShopAdapter shopAdapter;
     List<goodslisttab> list_goods = new ArrayList<goodslisttab>();
@@ -57,10 +59,10 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
     GridView gridview;
     TextView tv_head;
 
-    public CustomExpandableListAdapter(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview,   GridView gridview,TextView tv_head, FragmentCallBack fragmentCallBack)
+    public CustomExpandableListAdapter(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview, GridView gridview, TextView tv_head, FragmentCallBack fragmentCallBack, commandtab commandtab)
     {
-        this.tv_head=tv_head;
-        this.gridview=gridview;
+        this.tv_head = tv_head;
+        this.gridview = gridview;
         this.fragmentCallBack = fragmentCallBack;
         this.dictionary_wheel = dictionary_wheel;
         this.mainlistview = mainlistview;
@@ -69,8 +71,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
         this.map_id = dictionary_wheel.getSecondItemID();
         this.parentData = dictionary_wheel.getFirstItemName();
         this.map = dictionary_wheel.getSecondItemName();
-
-
+        this.commandtab = commandtab;
 
 
     }
@@ -119,7 +120,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
                 currentChildId = (Integer) v.getTag(R.id.tag_si);
                 currentChildName = (String) v.getTag(R.id.tag_sn);
                 currentChildsize = (Integer) v.getTag(R.id.tag_childsize);
-                tv_head.setText(currentParentName+"-"+currentChildName);
+                tv_head.setText(currentParentName + "-" + currentChildName);
                 getGoodslist();
             }
         });
@@ -230,8 +231,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
                             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
                             {
                                 @Override
-                                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+                                public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
                                 {
+                                    commandtab.setnongziName(list_goods.get(pos).getgoodsName());
                                     Bundle bundle = new Bundle();
                                     bundle.putInt("INDEX", 1);
                                     CustomExpandableListAdapter.this.fragmentCallBack.callbackFun2(bundle);

@@ -19,6 +19,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
+import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.DictionaryHelper;
@@ -42,6 +43,7 @@ import java.util.List;
 @EFragment
 public class AddStd_Cmd_StepTwo extends Fragment
 {
+    commandtab commandtab;
     String[] fn;
     Dictionary_wheel dictionary_wheel;
     Dictionary dic;
@@ -70,6 +72,7 @@ public class AddStd_Cmd_StepTwo extends Fragment
     {
         View rootView = inflater.inflate(R.layout.add_std__cmd__step_two, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
+        commandtab = getArguments().getParcelable("bean");
         return rootView;
     }
 
@@ -99,7 +102,7 @@ public class AddStd_Cmd_StepTwo extends Fragment
                         {
                             dic = lsitNewData.get(0);
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic);
-                            CustomExpandableListAdapter customExpandableListAdapter = new CustomExpandableListAdapter(getActivity(), dictionary_wheel, mainlistview, gridview_goods,tv_head, fragmentCallBack);
+                            CustomExpandableListAdapter customExpandableListAdapter = new CustomExpandableListAdapter(getActivity(), dictionary_wheel, mainlistview, gridview_goods,tv_head, fragmentCallBack,commandtab);
                             mainlistview.setAdapter(customExpandableListAdapter);
                         }
 

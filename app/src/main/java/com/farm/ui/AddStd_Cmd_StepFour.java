@@ -45,6 +45,7 @@ import java.util.List;
 @EFragment
 public class AddStd_Cmd_StepFour extends Fragment
 {
+    com.farm.bean.commandtab commandtab;
     String[] fn;
     Dictionary_wheel dictionary_wheel;
     Dictionary dic_park;
@@ -77,6 +78,7 @@ public class AddStd_Cmd_StepFour extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.add_std__cmd__step_four, container, false);
+        commandtab = getArguments().getParcelable("bean");
         return rootView;
     }
 
@@ -185,7 +187,10 @@ public class AddStd_Cmd_StepFour extends Fragment
             Fragment fragment = new AreaList_Cmd_Fragment();
             Bundle bundle = new Bundle();
             bundle.putInt("index", index);
-            bundle.putString("FN", fn[index]);
+            bundle.putParcelable("bean", commandtab);
+            bundle.putString("FN", dictionary_wheel.getFirstItemName()[index]);
+            bundle.putString("FI", dictionary_wheel.getFirstItemID()[index]);
+            bundle.putStringArray("SI", dictionary_wheel.getSecondItemID().get(fn[index]));
             bundle.putStringArray("SN", dictionary_wheel.getSecondItemName().get(fn[index]));
             fragment.setArguments(bundle);
             return fragment;
