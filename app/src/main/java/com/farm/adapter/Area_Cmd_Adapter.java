@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -66,6 +67,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
             listItemView = new ListItemView();
             listItemView.txt = (TextView) convertView.findViewById(R.id.moreitem_txt);
             listItemView.img = (ImageView) convertView.findViewById(R.id.moreitem_img);
+            listItemView.ll_sl = (LinearLayout) convertView.findViewById(R.id.ll_sl);
             listItemView.txt.setText(secondItemName[arg0]);
 
             lmap.put(arg0, convertView);
@@ -89,6 +91,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
             listItemView.img.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.item_collection_unselect));
             listItemView.img.setTag(false);
             deleteSelectRecords(AppContext.BELONG_ADD_CMD_AREA, firstType, secondItemName[position]);
+            listItemView.ll_sl.setVisibility(View.GONE);
         } else
         // 没选中
         {
@@ -96,6 +99,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
             listItemView.img.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.item_collection_selected));
             listItemView.img.setTag(true);
             saveSelectRecords(AppContext.BELONG_ADD_CMD_AREA, firstid, firstType, secondItemName[position], secondItemName[position]);
+            listItemView.ll_sl.setVisibility(View.VISIBLE);
         }
     }
 
@@ -103,6 +107,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
     { // 自定义控件集合
         TextView txt;
         ImageView img;
+        LinearLayout ll_sl;
     }
 
     public void saveSelectRecords(String BELONG, String firstid, String firsttype, String secondid, String secondType)

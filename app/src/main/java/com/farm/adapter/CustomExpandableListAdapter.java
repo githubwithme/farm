@@ -51,8 +51,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
     HashMap<String, String[]> map_id = null;
     String currentParentName = "";
     String currentChildName = "";
-    int currentParentId = 0;
-    int currentChildId = 0;
+    String currentParentId = "";
+    String currentChildId = "";
     int currentChildsize = 0;
     FragmentCallBack fragmentCallBack;
     private AddStd_Cmd_goodslistdapter adapter;
@@ -72,7 +72,11 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
         this.parentData = dictionary_wheel.getFirstItemName();
         this.map = dictionary_wheel.getSecondItemName();
         this.commandtab = commandtab;
-
+//        mainlistview.setSelectedChild(0, 0, true);
+//        tv_head.setText(parentData[1] + "-" + map.get(parentData[1])[1]);
+        currentParentId = parentId[1];
+        currentChildId = map_id.get(parentId[1])[1];
+        getGoodslist();
 
     }
 
@@ -105,9 +109,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
         }
         TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
         tv.setText(info);
-        tv.setTag(R.id.tag_fi, groupPosition);
+        tv.setTag(R.id.tag_fi, parentId[groupPosition]);
         tv.setTag(R.id.tag_fn, key);
-        tv.setTag(R.id.tag_si, childPosition);
+        tv.setTag(R.id.tag_si, map_id.get(parentId[groupPosition])[childPosition] );
         tv.setTag(R.id.tag_sn, info);
         tv.setTag(R.id.tag_childsize, childData.length);
         tv.setOnClickListener(new View.OnClickListener()
@@ -115,12 +119,12 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View v)
             {
-                currentParentId = (Integer) v.getTag(R.id.tag_fi);
+                currentParentId = (String) v.getTag(R.id.tag_fi);
                 currentParentName = (String) v.getTag(R.id.tag_fn);
-                currentChildId = (Integer) v.getTag(R.id.tag_si);
+                currentChildId = (String) v.getTag(R.id.tag_si);
                 currentChildName = (String) v.getTag(R.id.tag_sn);
                 currentChildsize = (Integer) v.getTag(R.id.tag_childsize);
-                tv_head.setText(currentParentName + "-" + currentChildName);
+
                 getGoodslist();
             }
         });
@@ -207,8 +211,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
         commembertab commembertab = AppContext.getUserInfo(context);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("wz1", String.valueOf(currentParentId));
-        params.addQueryStringParameter("wz2", String.valueOf(currentChildId));
+        params.addQueryStringParameter("wz1", currentParentId);
+        params.addQueryStringParameter("wz2", currentChildId);
         params.addQueryStringParameter("action", "getGoodsList");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -226,6 +230,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
                         list_goods = JSON.parseArray(result.getRows().toJSONString(), goodslisttab.class);
                         if (list_goods != null)
                         {
+                            tv_head.setText(currentParentName + "-" + currentChildName);
                             adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
                             gridview.setAdapter(adapter);
                             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
