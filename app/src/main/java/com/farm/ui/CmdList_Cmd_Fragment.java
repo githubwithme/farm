@@ -9,24 +9,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.AddStd_cmd_steponestemp_GridViewAdapter;
 import com.farm.bean.Type;
-import com.farm.bean.commandtab;
 import com.farm.com.custominterface.FragmentCallBack;
 
 public class CmdList_Cmd_Fragment extends Fragment
 {
     FragmentCallBack fragmentCallBack = null;
-    commandtab commandtab;
     private GridView gridView;
     private AddStd_cmd_steponestemp_GridViewAdapter adapter;
     private Type type;
     private String typename;
     private String FI;
-    //    private int icon;
     String[] SI;
     String[] sn;
 
@@ -37,11 +33,11 @@ public class CmdList_Cmd_Fragment extends Fragment
         gridView = (GridView) view.findViewById(R.id.listView);
         typename = getArguments().getString("FN");
         FI = getArguments().getString("FI");
-        commandtab = getArguments().getParcelable("bean");
         sn = getArguments().getStringArray("SN");
         SI = getArguments().getStringArray("SI");
 
-        ((TextView) view.findViewById(R.id.toptype)).setText(typename);
+
+
         adapter = new AddStd_cmd_steponestemp_GridViewAdapter(getActivity(), sn);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new OnItemClickListener()
@@ -53,9 +49,14 @@ public class CmdList_Cmd_Fragment extends Fragment
 //                commandtab.setstdJobTypeName(typename);
 //                commandtab.setstdJobId(SI[pos]);
 //                commandtab.setstdJobName(sn[pos]);
+//                tv_top.setText("已经选择:"+typename+"-"+sn[pos]);
                 Bundle bundle = new Bundle();
                 bundle.putInt("INDEX", 0);
                 fragmentCallBack.callbackFun2(bundle);
+
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("type","已经选择:"+typename+"-"+sn[pos]);
+                fragmentCallBack.callbackFun_setText(bundle1);
             }
         });
 

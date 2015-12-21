@@ -9,8 +9,9 @@
 
     <TextView
         android:id="@+id/typename"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dip"
+        android:background="@drawable/background_view_rounded_single"
+        android:layout_height="40dip"
         android:gravity="center"
         android:textSize="12sp" />
 

@@ -8,17 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.Area_Cmd_Adapter;
 import com.farm.bean.Type;
-import com.farm.bean.commandtab;
+import com.farm.bean.commandtab_single;
 import com.farm.com.custominterface.FragmentCallBack;
 
 public class Area_Cmd_Fragment extends Fragment
 {
     FragmentCallBack fragmentCallBack = null;
-    commandtab commandtab;
     private ListView morelist;
     private Area_Cmd_Adapter area_cmd_adapter;
     private Type type;
@@ -27,23 +27,26 @@ public class Area_Cmd_Fragment extends Fragment
     //    private int icon;
     String[] SI;
     String[] SN;
+    TextView toptype;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.area_cmd_fragment, null);
         morelist = (ListView) view.findViewById(R.id.morelist);
+        toptype = (TextView) view.findViewById(R.id.toptype);
         FN = getArguments().getString("FN");
         FI = getArguments().getString("FI");
-        commandtab = getArguments().getParcelable("bean");
         SN = getArguments().getStringArray("SN");
         SI = getArguments().getStringArray("SI");
 
-        area_cmd_adapter = new Area_Cmd_Adapter(getActivity(),fragmentCallBack, FI, FN, SI, SN,commandtab);
+        toptype.setText(FN + "目前" + commandtab_single.getInstance().getnongziName() + "剩余量为:" + "");
+        area_cmd_adapter = new Area_Cmd_Adapter(getActivity(), fragmentCallBack, FI, FN, SI, SN);
         morelist.setAdapter(area_cmd_adapter);
         morelist.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
@@ -59,7 +62,6 @@ public class Area_Cmd_Fragment extends Fragment
     @Override
     public void onAttach(Activity activity)
     {
-        // TODO Auto-generated method stub
         super.onAttach(activity);
         fragmentCallBack = (AddStd_Cmd) activity;
     }

@@ -3,7 +3,18 @@
               android:layout_width="match_parent"
               android:layout_height="55dp"
               android:orientation="vertical">
+    <TextView
+        android:id="@+id/toptype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:textSize="14sp"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
     <ListView
         android:id="@+id/morelist"
         android:layout_width="match_parent"

@@ -34,8 +34,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
-                android:textSize="12sp"
-                />
+                android:text="请选择肥料"
+                android:textSize="14sp"/>
 
             <View
                 android:layout_width="match_parent"

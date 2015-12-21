@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -22,7 +23,6 @@ import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
-import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.DictionaryHelper;
@@ -34,6 +34,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -47,7 +48,6 @@ import java.util.List;
 public class AddStd_Cmd_StepThree_Temp extends Fragment
 {
     commembertab commembertab;
-    commandtab commandtab;
     String[] fn;
     Dictionary_wheel dictionary_wheel;
     Dictionary dic_park;
@@ -62,10 +62,36 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
     private int currentItem = 0;
     private ShopAdapter shopAdapter;
 
-    @ViewById ImageView iv_dowm_tab;
-    @ViewById ScrollView cmd_tools_scrlllview;
-    @ViewById LinearLayout cmd_tools;
-    @ViewById ViewPager area_pager;
+    @ViewById
+    ImageView iv_dowm_tab;
+    @ViewById
+    Button btn_next;
+    @ViewById
+    ScrollView cmd_tools_scrlllview;
+    @ViewById
+    LinearLayout cmd_tools;
+    @ViewById
+    ViewPager area_pager;
+
+    @Click
+    void btn_next()
+    {
+        Bundle bundle = new Bundle();
+        bundle.putInt("INDEX", 2);
+        fragmentCallBack.callbackFun2(bundle);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser)
+    {
+        if (isVisibleToUser)
+        {
+            shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
+            inflater = LayoutInflater.from(getActivity());
+            getArealist();
+        }
+        super.setUserVisibleHint(isVisibleToUser);
+    }
 
     @AfterViews
     void afterOncreate()
@@ -81,25 +107,9 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
     {
         View rootView = inflater.inflate(R.layout.add_std__cmd__step_three_temp, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
-        commandtab = getArguments().getParcelable("bean");
         return rootView;
     }
 
-    public void switchContent(Fragment from, Fragment to)
-    {
-        if (mContent != to)
-        {
-            mContent = to;
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            if (!to.isAdded())
-            { // 先判断是否被add过
-                transaction.hide(from).add(R.id.cmd_top_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else
-            {
-                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
-            }
-        }
-    }
 
     /**
      * 动态生成显示items中的textview
@@ -190,7 +200,6 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
             Fragment fragment = new Area_Cmd_Fragment();
             Bundle bundle = new Bundle();
             bundle.putInt("index", index);
-            bundle.putParcelable("bean", commandtab);
             bundle.putString("FN", dictionary_wheel.getFirstItemName()[index]);
             bundle.putString("FI", dictionary_wheel.getFirstItemID()[index]);
             bundle.putStringArray("SI", dictionary_wheel.getSecondItemID().get(fn[index]));
@@ -219,10 +228,18 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
             {
                 tvList[i].setBackgroundColor(0x00000000);
                 tvList[i].setTextColor(0xFF000000);
+
+                TextPaint tp = tvList[i].getPaint();
+                tvList[i].setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_7));
+                tp.setFakeBoldText(false);
             }
         }
         tvList[id].setBackgroundColor(0xFFFFFFFF);
         tvList[id].setTextColor(0xFFFF5D5E);
+
+        tvList[id].setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_7));
+        TextPaint tp = tvList[id].getPaint();
+        tp.setFakeBoldText(true);
     }
 
     /**
@@ -235,6 +252,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
         int x = (views[clickPosition].getTop());
         cmd_tools_scrlllview.smoothScrollTo(0, x);
     }
+
     private void getArealist()
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());

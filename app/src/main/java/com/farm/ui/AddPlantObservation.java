@@ -177,6 +177,13 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
     {
 //        switchFragment();//通过回调方式切换
     }
+    @Override
+    public void callbackFun_setText(Bundle arg)
+    {
+    }    @Override
+    public void stepTwo_setHeadText(Bundle arg)
+    {
+    }
 
     @Override
     public void callbackFun2(Bundle arg)

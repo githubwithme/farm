@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.app.AppContext;
 import com.farm.bean.SelectRecords;
-import com.farm.bean.commandtab;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
 
@@ -20,7 +19,6 @@ import java.util.HashMap;
 
 public class Area_Cmd_Adapter extends BaseAdapter
 {
-    commandtab commandtab;
     private Context context;
     private int position = 0;
     // Holder hold;
@@ -30,9 +28,8 @@ public class Area_Cmd_Adapter extends BaseAdapter
     String[] secondItemid;
     String[] secondItemName;
 
-    public Area_Cmd_Adapter(Context context, FragmentCallBack fragmentCallBack, String firstid, String firstType, String[] secondItemid, String[] secondItemName,commandtab commandtab)
+    public Area_Cmd_Adapter(Context context, FragmentCallBack fragmentCallBack, String firstid, String firstType, String[] secondItemid, String[] secondItemName )
     {
-        this.commandtab= commandtab;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.context = context;
         this.secondItemid = secondItemid;

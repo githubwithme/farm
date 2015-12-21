@@ -51,7 +51,7 @@ import com.lidroid.xutils.db.annotation.Table;
     {
     }
 
-    public commembertab_singleton getInstance()
+    public static commembertab_singleton getInstance()
     {
         return singleton;
     }

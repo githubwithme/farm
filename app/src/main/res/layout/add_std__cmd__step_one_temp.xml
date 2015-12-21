@@ -5,16 +5,6 @@
               android:orientation="vertical">
 
 
-    <FrameLayout
-        android:id="@+id/cmd_top_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line_color"/>
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -43,11 +33,34 @@
             android:layout_height="match_parent"
             android:background="@color/line_color"/>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/cmd_pager"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/toptype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:text="请选择指令"
+                android:textSize="14sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/line_color"/>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/cmd_pager"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </LinearLayout>

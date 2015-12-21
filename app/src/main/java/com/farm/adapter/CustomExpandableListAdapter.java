@@ -2,6 +2,7 @@ package com.farm.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
-import com.farm.bean.commandtab;
+import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
 import com.farm.com.custominterface.FragmentCallBack;
@@ -38,7 +39,8 @@ import java.util.List;
  */
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter
 {
-    commandtab commandtab;
+    TextView tempParentView;
+    TextView tempChildView;
     private int currentItem = 0;
     //    ShopAdapter shopAdapter;
     List<goodslisttab> list_goods = new ArrayList<goodslisttab>();
@@ -57,11 +59,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
     FragmentCallBack fragmentCallBack;
     private AddStd_Cmd_goodslistdapter adapter;
     GridView gridview;
-    TextView tv_head;
 
-    public CustomExpandableListAdapter(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview, GridView gridview, TextView tv_head, FragmentCallBack fragmentCallBack, commandtab commandtab)
+    public CustomExpandableListAdapter(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview, GridView gridview, TextView tv_head, FragmentCallBack fragmentCallBack)
     {
-        this.tv_head = tv_head;
         this.gridview = gridview;
         this.fragmentCallBack = fragmentCallBack;
         this.dictionary_wheel = dictionary_wheel;
@@ -71,12 +71,10 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
         this.map_id = dictionary_wheel.getSecondItemID();
         this.parentData = dictionary_wheel.getFirstItemName();
         this.map = dictionary_wheel.getSecondItemName();
-        this.commandtab = commandtab;
-//        mainlistview.setSelectedChild(0, 0, true);
-//        tv_head.setText(parentData[1] + "-" + map.get(parentData[1])[1]);
-        currentParentId = parentId[1];
-        currentChildId = map_id.get(parentId[1])[1];
-        getGoodslist();
+        currentParentId = parentId[0];
+        currentChildId = map_id.get(parentId[0])[0];
+        currentParentName = parentData[0];
+        currentChildName = map.get(parentData[0])[0];
 
     }
 
@@ -108,10 +106,23 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.layout_children_goods, null);
         }
         TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
+        if (groupPosition == 0 && childPosition == 0)
+        {
+//            TextView textView = (TextView) parent.getChildAt(0);
+//            textView.setTextColor(0xFFFF5D5E);
+//            TextPaint tp = textView.getPaint();
+//            tp.setFakeBoldText(true);
+
+            tv.setTextColor(0xFFFF5D5E);
+            TextPaint tp = tv.getPaint();
+            tp.setFakeBoldText(true);
+            getGoodslist();
+            tempChildView=tv;
+        }
         tv.setText(info);
         tv.setTag(R.id.tag_fi, parentId[groupPosition]);
         tv.setTag(R.id.tag_fn, key);
-        tv.setTag(R.id.tag_si, map_id.get(parentId[groupPosition])[childPosition] );
+        tv.setTag(R.id.tag_si, map_id.get(parentId[groupPosition])[childPosition]);
         tv.setTag(R.id.tag_sn, info);
         tv.setTag(R.id.tag_childsize, childData.length);
         tv.setOnClickListener(new View.OnClickListener()
@@ -119,12 +130,23 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View v)
             {
+                if (tempChildView != null)
+                {
+                    tempChildView.setTextColor(context.getResources().getColor(R.color.bg_text));
+                    TextPaint tp = tempChildView.getPaint();
+                    tp.setFakeBoldText(false);
+                }
+
+                TextView textView = (TextView) v;
+                textView.setTextColor(0xFFFF5D5E);
+                TextPaint tp = textView.getPaint();
+                tp.setFakeBoldText(true);
+                tempChildView = textView;
                 currentParentId = (String) v.getTag(R.id.tag_fi);
                 currentParentName = (String) v.getTag(R.id.tag_fn);
                 currentChildId = (String) v.getTag(R.id.tag_si);
                 currentChildName = (String) v.getTag(R.id.tag_sn);
                 currentChildsize = (Integer) v.getTag(R.id.tag_childsize);
-
                 getGoodslist();
             }
         });
@@ -190,6 +212,28 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.layout_parent_goods, null);
         }
         TextView tv = (TextView) convertView.findViewById(R.id.parent_textview);
+
+        tv.setTag(groupPosition);
+        tv.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mainlistview.expandGroup(Integer.valueOf(v.getTag().toString()));
+                if (tempParentView != null)
+                {
+                    tempParentView.setTextColor(context.getResources().getColor(R.color.bg_text));
+                    TextPaint tp = tempParentView.getPaint();
+                    tp.setFakeBoldText(false);
+                }
+
+                TextView textView = (TextView) v;
+                textView.setTextColor(0xFFFF5D5E);
+                TextPaint tp = textView.getPaint();
+                tp.setFakeBoldText(true);
+                tempParentView = textView;
+            }
+        });
         tv.setText(parentData[groupPosition]);
         return convertView;
     }
@@ -230,7 +274,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
                         list_goods = JSON.parseArray(result.getRows().toJSONString(), goodslisttab.class);
                         if (list_goods != null)
                         {
-                            tv_head.setText(currentParentName + "-" + currentChildName);
                             adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
                             gridview.setAdapter(adapter);
                             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -238,21 +281,29 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
                                 @Override
                                 public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
                                 {
-                                    commandtab.setnongziName(list_goods.get(pos).getgoodsName());
+                                    commandtab_single.getInstance().setnongziName(list_goods.get(pos).getgoodsName());
                                     Bundle bundle = new Bundle();
                                     bundle.putInt("INDEX", 1);
                                     CustomExpandableListAdapter.this.fragmentCallBack.callbackFun2(bundle);
+
+                                    Bundle bundle1 = new Bundle();
+                                    bundle1.putString("type", "已选择：" + currentParentName + "-" + currentChildName + "-" + list_goods.get(pos).getgoodsName().toString());
+                                    CustomExpandableListAdapter.this.fragmentCallBack.stepTwo_setHeadText(bundle1);
                                 }
                             });
                             adapter.notifyDataSetChanged();
                         } else
                         {
                             list_goods = new ArrayList<goodslisttab>();
+                            adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
+                            gridview.setAdapter(adapter);
                         }
 
                     } else
                     {
                         list_goods = new ArrayList<goodslisttab>();
+                        adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
+                        gridview.setAdapter(adapter);
                     }
                 } else
                 {

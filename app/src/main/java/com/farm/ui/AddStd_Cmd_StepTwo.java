@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,6 @@ import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
-import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.DictionaryHelper;
@@ -43,7 +43,6 @@ import java.util.List;
 @EFragment
 public class AddStd_Cmd_StepTwo extends Fragment
 {
-    commandtab commandtab;
     String[] fn;
     Dictionary_wheel dictionary_wheel;
     Dictionary dic;
@@ -72,7 +71,6 @@ public class AddStd_Cmd_StepTwo extends Fragment
     {
         View rootView = inflater.inflate(R.layout.add_std__cmd__step_two, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
-        commandtab = getArguments().getParcelable("bean");
         return rootView;
     }
 
@@ -102,8 +100,13 @@ public class AddStd_Cmd_StepTwo extends Fragment
                         {
                             dic = lsitNewData.get(0);
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic);
-                            CustomExpandableListAdapter customExpandableListAdapter = new CustomExpandableListAdapter(getActivity(), dictionary_wheel, mainlistview, gridview_goods,tv_head, fragmentCallBack,commandtab);
+
+//                            String[] parentData = dictionary_wheel.getFirstItemName();
+//                            HashMap<String, String[]> map = dictionary_wheel.getSecondItemName();
+//                            setHeadText(parentData[0]+map.get(parentData[0])[0]);
+                            CustomExpandableListAdapter customExpandableListAdapter = new CustomExpandableListAdapter(getActivity(), dictionary_wheel, mainlistview, gridview_goods, tv_head, fragmentCallBack);
                             mainlistview.setAdapter(customExpandableListAdapter);
+                            mainlistview.expandGroup(0);
                         }
 
                     } else
@@ -125,6 +128,14 @@ public class AddStd_Cmd_StepTwo extends Fragment
         });
     }
 
+    public void setHeadText(String string)
+    {
+        tv_head.setText(string);
+        tv_head.setTextColor(0xFFFF5D5E);
+//        tv_head.setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_9));
+        TextPaint tp = tv_head.getPaint();
+        tp.setFakeBoldText(true);
+    }
 
     @Override
     public void onAttach(Activity activity)

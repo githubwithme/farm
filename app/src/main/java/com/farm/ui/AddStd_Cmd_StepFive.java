@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.farm.R;
+import com.farm.bean.commandtab_single;
 import com.farm.com.custominterface.FragmentCallBack;
 
 import org.androidannotations.annotations.AfterViews;
@@ -31,16 +32,15 @@ public class AddStd_Cmd_StepFive extends Fragment
     TextView tv_timelimit;
     @ViewById
     EditText et_note;
-    com.farm.bean.commandtab commandtab;
     FragmentCallBack fragmentCallBack = null;
 
     @Click
     void btn_next()
     {
-        commandtab.setimportance("");
-        commandtab.setcommComDate(tv_timelimit.getText().toString());//期限
-        commandtab.setcommDays(tv_workday.getText().toString());
-        commandtab.setcommNote(et_note.getText().toString());
+        commandtab_single.getInstance().setimportance("");
+        commandtab_single.getInstance().setcommComDate(tv_timelimit.getText().toString());//期限
+        commandtab_single.getInstance().setcommDays(tv_workday.getText().toString());
+        commandtab_single.getInstance().setcommNote(et_note.getText().toString());
         Bundle bundle = new Bundle();
         bundle.putInt("INDEX", 3);
         fragmentCallBack.callbackFun2(bundle);
@@ -56,7 +56,6 @@ public class AddStd_Cmd_StepFive extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.add_std__cmd__step_five, container, false);
-        commandtab = getArguments().getParcelable("bean");
         return rootView;
     }
 

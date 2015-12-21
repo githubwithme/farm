@@ -11,4 +11,11 @@ public interface FragmentCallBack
 
     public void callbackFun2(Bundle arg);
 
+    public void callbackFun_setText(Bundle arg);
+
+    public void stepTwo_setHeadText(Bundle arg);
+
+
+
+
 }
