@@ -63,9 +63,10 @@
     <style name="MyDialog" parent="@android:Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@drawable/background_view_rounded_single</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
     <style name="Dialogstyle">
