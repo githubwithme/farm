@@ -81,17 +81,18 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
         fragmentCallBack.callbackFun2(bundle);
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser)
-    {
-        if (isVisibleToUser)
-        {
-            shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
-            inflater = LayoutInflater.from(getActivity());
-            getArealist();
-        }
-        super.setUserVisibleHint(isVisibleToUser);
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser)
+//    {
+//        if (isVisibleToUser)
+//        {
+//            shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
+//            inflater = LayoutInflater.from(getActivity());
+//            getArealist();
+//        }
+//        super.setUserVisibleHint(isVisibleToUser);
+//    }
+
 
     @AfterViews
     void afterOncreate()
@@ -299,6 +300,12 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                 AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
+    }
+
+    public void update()
+    {
+        shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
+        area_pager.setAdapter(shopAdapter);
     }
 
     @Override

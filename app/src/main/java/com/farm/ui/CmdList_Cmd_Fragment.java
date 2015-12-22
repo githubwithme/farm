@@ -13,6 +13,7 @@ import android.widget.GridView;
 import com.farm.R;
 import com.farm.adapter.AddStd_cmd_steponestemp_GridViewAdapter;
 import com.farm.bean.Type;
+import com.farm.bean.commandtab_single;
 import com.farm.com.custominterface.FragmentCallBack;
 
 public class CmdList_Cmd_Fragment extends Fragment
@@ -37,7 +38,6 @@ public class CmdList_Cmd_Fragment extends Fragment
         SI = getArguments().getStringArray("SI");
 
 
-
         adapter = new AddStd_cmd_steponestemp_GridViewAdapter(getActivity(), sn);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new OnItemClickListener()
@@ -45,17 +45,17 @@ public class CmdList_Cmd_Fragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
             {
-//                commandtab.setstdJobType(FI);
-//                commandtab.setstdJobTypeName(typename);
-//                commandtab.setstdJobId(SI[pos]);
-//                commandtab.setstdJobName(sn[pos]);
-//                tv_top.setText("已经选择:"+typename+"-"+sn[pos]);
+                commandtab_single commandtab_single = com.farm.bean.commandtab_single.getInstance();
+                commandtab_single.setstdJobType(FI);
+                commandtab_single.setstdJobTypeName(typename);
+                commandtab_single.setstdJobId(SI[pos]);
+                commandtab_single.setstdJobName(sn[pos]);
                 Bundle bundle = new Bundle();
                 bundle.putInt("INDEX", 0);
                 fragmentCallBack.callbackFun2(bundle);
 
                 Bundle bundle1 = new Bundle();
-                bundle1.putString("type","已经选择:"+typename+"-"+sn[pos]);
+                bundle1.putString("type", "已经选择:" + typename + "-" + sn[pos]);
                 fragmentCallBack.callbackFun_setText(bundle1);
             }
         });

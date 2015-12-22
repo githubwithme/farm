@@ -17,8 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:layout_marginTop="10dip"
-        android:layout_marginLeft="10dip"
         android:orientation="vertical">
 
         <LinearLayout
@@ -31,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dip"
                 android:layout_marginRight="20dip"
+                android:layout_marginTop="10dip"
                 android:stretchColumns="1">
 
 
@@ -45,7 +44,7 @@
                         android:gravity="left|center_vertical"
                         android:inputType="number"
                         android:text="重要性"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <TextView
@@ -54,9 +53,10 @@
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="3"
                         android:background="@null"
-                        android:gravity="left|center_vertical"
+                        android:gravity="right|center_vertical"
                         android:hint="请选择重要性"
                         android:paddingLeft="40dip"
+                        android:paddingRight="10dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
                 </TableRow>
@@ -78,7 +78,7 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:text="作业天数"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <TextView
@@ -87,9 +87,10 @@
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="2"
                         android:background="@null"
-                        android:gravity="left|center_vertical"
+                        android:gravity="right|center_vertical"
                         android:hint="请选择天数"
                         android:paddingLeft="40dip"
+                        android:paddingRight="10dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
 
@@ -111,7 +112,7 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:text="作业期限"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <TextView
@@ -120,9 +121,10 @@
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="3"
                         android:background="@null"
-                        android:gravity="left|center_vertical"
+                        android:gravity="right|center_vertical"
                         android:hint="请选择期限"
                         android:paddingLeft="40dip"
+                        android:paddingRight="10dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
                 </TableRow>
@@ -143,7 +145,7 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:text="说明"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <EditText
@@ -152,9 +154,10 @@
                         android:layout_height="120dip"
                         android:layout_span="3"
                         android:background="@null"
-                        android:gravity="left|center_vertical"
+                        android:gravity="right|center_vertical"
                         android:hint="请输入说明"
                         android:paddingLeft="40dip"
+                        android:paddingRight="10dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
                 </TableRow>
@@ -175,8 +178,8 @@
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="20dip"
                 android:background="@drawable/background_view_rounded_single"
-                android:textColor="@color/bg_text"
-                android:text="下一步"/>
+                android:text="下一步"
+                android:textColor="@color/bg_text"/>
         </LinearLayout>
     </ScrollView>
 

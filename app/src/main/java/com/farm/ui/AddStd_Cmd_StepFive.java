@@ -90,7 +90,7 @@ public class AddStd_Cmd_StepFive extends Fragment
     @Click
     void btn_next()
     {
-        commandtab_single.getInstance().setimportance("");
+        commandtab_single.getInstance().setimportance(importance);
         commandtab_single.getInstance().setcommComDate(tv_timelimit.getText().toString());//期限
         commandtab_single.getInstance().setcommDays(tv_workday.getText().toString());
         commandtab_single.getInstance().setcommNote(et_note.getText().toString());

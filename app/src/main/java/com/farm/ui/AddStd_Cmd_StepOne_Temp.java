@@ -192,7 +192,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
             bundle.putInt("index", index);
             bundle.putString("FN", dictionary_wheel.getFirstItemName()[index]);
             bundle.putString("FI", dictionary_wheel.getFirstItemID()[index]);
-            bundle.putStringArray("SI", dictionary_wheel.getSecondItemID().get(fn[index]));
+            bundle.putStringArray("SI", dictionary_wheel.getSecondItemID().get(dictionary_wheel.getFirstItemID()[index]));
             bundle.putStringArray("SN", dictionary_wheel.getSecondItemName().get(fn[index]));
             fragment.setArguments(bundle);
             return fragment;
