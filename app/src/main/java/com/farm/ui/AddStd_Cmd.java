@@ -247,13 +247,11 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
                 break;
             case 1:
                 vPager.setCurrentItem(currentItem + 1);
-//                adapter.updateData(currentItem + 1);
                 break;
             case 2:
                 vPager.setCurrentItem(currentItem + 1);
             case 3:
                 vPager.setCurrentItem(currentItem + 1);
-//                adapter.updateData(currentItem + 1);
                 break;
             case 4:
                 vPager.setCurrentItem(currentItem + 1);

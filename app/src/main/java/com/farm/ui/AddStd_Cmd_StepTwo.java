@@ -141,7 +141,7 @@ public class AddStd_Cmd_StepTwo extends Fragment
     public void onAttach(Activity activity)
     {
         super.onAttach(activity);
-        fragmentCallBack = (AddStd_Cmd) activity;
+        fragmentCallBack = (FragmentCallBack) activity;
     }
 
 }

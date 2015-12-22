@@ -54,7 +54,7 @@ public class CustomDialog_ListView extends Dialog
     {
         super.onCreate(savedInstanceState);
         this.setContentView(layout);
-        this.setCanceledOnTouchOutside(false);
+        this.setCanceledOnTouchOutside(true);
         lv = (ListView) findViewById(R.id.lv);
         lv.setAdapter(new Dialog_ListViewAdapter());
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()

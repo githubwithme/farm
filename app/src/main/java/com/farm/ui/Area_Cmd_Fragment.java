@@ -30,7 +30,6 @@ public class Area_Cmd_Fragment extends Fragment
     TextView toptype;
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -42,7 +41,7 @@ public class Area_Cmd_Fragment extends Fragment
         SN = getArguments().getStringArray("SN");
         SI = getArguments().getStringArray("SI");
 
-        toptype.setText(FN + "目前" + commandtab_single.getInstance().getnongziName() + "剩余量为:" + "");
+        toptype.setText(FN + " : " + "目前" + "“" + commandtab_single.getInstance().getnongziName() + "”" + "剩余量为:" + "");
         area_cmd_adapter = new Area_Cmd_Adapter(getActivity(), fragmentCallBack, FI, FN, SI, SN);
         morelist.setAdapter(area_cmd_adapter);
         morelist.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -50,8 +49,10 @@ public class Area_Cmd_Fragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                area_cmd_adapter.setSelectItem(position);
-                area_cmd_adapter.notifyDataSetChanged();
+//                deleteSelectRecords(BELONG, firstItemName, secondItemName.get(position));
+//                saveSelectRecords(BELONG, firstItemId, firstItemName, secondItemid.get(position), secondItemName.get(position));
+//                area_cmd_adapter.setSelectItem(position);
+//                area_cmd_adapter.notifyDataSetChanged();
             }
         });
         morelist.setChoiceMode(ListView.CHOICE_MODE_SINGLE);

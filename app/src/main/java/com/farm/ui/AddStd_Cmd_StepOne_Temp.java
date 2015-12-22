@@ -298,6 +298,6 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
     {
         // TODO Auto-generated method stub
         super.onAttach(activity);
-        fragmentCallBack = (AddStd_Cmd) activity;
+        fragmentCallBack = (FragmentCallBack) activity;
     }
 }

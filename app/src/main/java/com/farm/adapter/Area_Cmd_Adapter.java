@@ -5,8 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -14,11 +19,13 @@ import com.farm.app.AppContext;
 import com.farm.bean.SelectRecords;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
+import com.farm.widget.CustomDialog_FLSL;
 
 import java.util.HashMap;
 
 public class Area_Cmd_Adapter extends BaseAdapter
 {
+    CustomDialog_FLSL customDialog_flsl;
     private Context context;
     private int position = 0;
     // Holder hold;
@@ -28,7 +35,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
     String[] secondItemid;
     String[] secondItemName;
 
-    public Area_Cmd_Adapter(Context context, FragmentCallBack fragmentCallBack, String firstid, String firstType, String[] secondItemid, String[] secondItemName )
+    public Area_Cmd_Adapter(Context context, FragmentCallBack fragmentCallBack, String firstid, String firstType, String[] secondItemid, String[] secondItemName)
     {
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.context = context;
@@ -64,8 +71,28 @@ public class Area_Cmd_Adapter extends BaseAdapter
             listItemView = new ListItemView();
             listItemView.txt = (TextView) convertView.findViewById(R.id.moreitem_txt);
             listItemView.img = (ImageView) convertView.findViewById(R.id.moreitem_img);
+            listItemView.cb_area = (CheckBox) convertView.findViewById(R.id.cb_area);
             listItemView.ll_sl = (LinearLayout) convertView.findViewById(R.id.ll_sl);
+
             listItemView.txt.setText(secondItemName[arg0]);
+            listItemView.cb_area.setText(secondItemName[arg0]);
+            listItemView.cb_area.setTag(arg0);
+            listItemView.cb_area.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+            {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    int pos = Integer.valueOf(buttonView.getTag().toString());
+                    ListItemView listItemView = (ListItemView) lmap.get(pos).getTag();
+                    if (isChecked)
+                    {
+                        showDialog_flsl();
+                    } else
+                    {
+                        deleteSelectRecords(AppContext.BELONG_ADD_CMD_AREA, firstType, secondItemName[position]);
+                    }
+                }
+            });
 
             lmap.put(arg0, convertView);
             convertView.setTag(listItemView);
@@ -104,6 +131,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
     { // 自定义控件集合
         TextView txt;
         ImageView img;
+        CheckBox cb_area;
         LinearLayout ll_sl;
     }
 
@@ -126,5 +154,22 @@ public class Area_Cmd_Adapter extends BaseAdapter
         SqliteDb.deleteRecordtemp(context, SelectRecords.class, BELONG, firsttype, secondType);
     }
 
+    public void showDialog_flsl()
+    {
+        final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_flsl, null);
+        customDialog_flsl = new CustomDialog_FLSL(context, R.style.MyDialog, dialog_layout);
+        EditText et_flsl = (EditText) dialog_layout.findViewById(R.id.et_flsl);
+        Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                saveSelectRecords(AppContext.BELONG_ADD_CMD_AREA, firstid, firstType, secondItemName[position], secondItemName[position]);
+                customDialog_flsl.dismiss();
+            }
+        });
+        customDialog_flsl.show();
+    }
 
 }

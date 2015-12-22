@@ -23,7 +23,6 @@ import java.util.ArrayList;
 public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
 {
     FragmentViewPagerAdapter adapter;
-    AddStd_Cmd_StepOne_Temp addStd_cmd_stepOne;
     AddStd_Cmd_StepTwo addStd_cmd_stepTwo;
     AddStd_Cmd_StepThree_Temp addStd_cmd_stepThree_temp;
     AddStd_Cmd_StepFive addStd_cmd_stepFive;
@@ -55,12 +54,6 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
         finish();
     }
 
-    @Click
-    void text_one()
-    {
-        vPager.setCurrentItem(0);
-    }
-
 
     @Click
     void text_three()
@@ -90,13 +83,11 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
     void afterOncreate()
     {
         fragmentList = new ArrayList<Fragment>();
-        addStd_cmd_stepOne = new AddStd_Cmd_StepOne_Temp_();
         addStd_cmd_stepTwo = new AddStd_Cmd_StepTwo_();
         addStd_cmd_stepThree_temp = new AddStd_Cmd_StepThree_Temp_();
         addStd_cmd_stepFive = new AddStd_Cmd_StepFive_();
         addStd_cmd_stepSix = new AddStd_Cmd_StepSix_();
 
-        fragmentList.add(addStd_cmd_stepOne);
         fragmentList.add(addStd_cmd_stepTwo);
         fragmentList.add(addStd_cmd_stepThree_temp);
         fragmentList.add(addStd_cmd_stepFive);
@@ -115,16 +106,14 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
                 setBackground(i);
                 switch (i)
                 {
-                    case 0:
-                        break;
                     case 1:
                         break;
                     case 2:
-                        adapter.updateData(i);
+//                        adapter.updateData(i);
                     case 3:
                         break;
                     case 4:
-                        adapter.updateData(i);
+//                        adapter.updateData(i);
                         break;
                 }
             }
@@ -158,34 +147,26 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
 
         switch (pos)
         {
-
-
-            case 1:
+            case 0:
                 image_three.setBackgroundResource(R.drawable.green_line);
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setBackgroundResource(R.drawable.tag_next);
                 break;
-            case 2:
+            case 1:
                 image_four.setBackgroundResource(R.drawable.green_line);
-                text_three.setTextColor(Color.parseColor("#FFFFFF"));
                 text_four.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setBackgroundResource(R.drawable.tag_red);
                 text_four.setBackgroundResource(R.drawable.tag_next);
                 break;
-            case 3:
+            case 2:
                 image_five.setBackgroundResource(R.drawable.green_line);
-                text_three.setTextColor(Color.parseColor("#FFFFFF"));
-                text_four.setTextColor(Color.parseColor("#FFFFFF"));
                 text_five.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setBackgroundResource(R.drawable.tag_red);
                 text_four.setBackgroundResource(R.drawable.tag_red);
                 text_five.setBackgroundResource(R.drawable.tag_next);
                 break;
-            case 4:
+            case 3:
                 image_six.setBackgroundResource(R.drawable.green_line);
-                text_three.setTextColor(Color.parseColor("#FFFFFF"));
-                text_four.setTextColor(Color.parseColor("#FFFFFF"));
-                text_five.setTextColor(Color.parseColor("#FFFFFF"));
                 text_six.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setBackgroundResource(R.drawable.tag_red);
                 text_four.setBackgroundResource(R.drawable.tag_red);
@@ -205,15 +186,12 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
     @Override
     public void callbackFun_setText(Bundle arg)
     {
-        String st = arg.getString("type");
-        addStd_cmd_stepOne.setTopType(st);
     }
 
     @Override
     public void stepTwo_setHeadText(Bundle arg)
     {
-        String st = arg.getString("type");
-        addStd_cmd_stepTwo.setHeadText(st);
+
     }
 
 
@@ -223,18 +201,13 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
         int currentItem = arg.getInt("INDEX");
         switch (currentItem)
         {
-            case 0:
-                vPager.setCurrentItem(currentItem + 1);
-                break;
             case 1:
                 vPager.setCurrentItem(currentItem + 1);
-//                adapter.updateData(currentItem + 1);
                 break;
             case 2:
                 vPager.setCurrentItem(currentItem + 1);
             case 3:
                 vPager.setCurrentItem(currentItem + 1);
-//                adapter.updateData(currentItem + 1);
                 break;
             case 4:
                 vPager.setCurrentItem(currentItem + 1);
