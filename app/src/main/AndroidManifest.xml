@@ -154,6 +154,10 @@
             android:name=".ui.AddNotStd_Cmd_"
             android:label="添加非标准生产指令">
         </activity>
+        <activity
+            android:name=".ui.Goods_"
+            android:label="库存">
+        </activity>
     </application>
 
 </manifest>

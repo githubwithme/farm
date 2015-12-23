@@ -134,8 +134,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_img"
-                                android:layout_width="@dimen/size_35"
-                                android:layout_height="@dimen/size_35"
+                                android:layout_width="@dimen/size_45"
+                                android:layout_height="@dimen/size_45"
                                 android:layout_centerInParent="true"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dip"
@@ -188,8 +188,8 @@
                             android:minHeight="60dip" >
 
                             <ImageView
-                                android:layout_width="@dimen/size_35"
-                                android:layout_height="@dimen/size_35"
+                                android:layout_width="@dimen/size_45"
+                                android:layout_height="@dimen/size_45"
                                 android:layout_centerInParent="true"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dip"
@@ -268,8 +268,8 @@
                             android:minHeight="60dip" >
 
                             <ImageView
-                                android:layout_width="@dimen/size_35"
-                                android:layout_height="@dimen/size_35"
+                                android:layout_width="@dimen/size_45"
+                                android:layout_height="@dimen/size_45"
                                 android:layout_centerInParent="true"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dip"
@@ -347,8 +347,8 @@
                             android:minHeight="60dip" >
 
                             <ImageView
-                                android:layout_width="@dimen/size_35"
-                                android:layout_height="@dimen/size_35"
+                                android:layout_width="@dimen/size_45"
+                                android:layout_height="@dimen/size_45"
                                 android:layout_centerInParent="true"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dip"
@@ -453,8 +453,8 @@
                                 android:minHeight="60dip" >
 
                                 <ImageView
-                                    android:layout_width="@dimen/size_35"
-                                    android:layout_height="@dimen/size_35"
+                                    android:layout_width="@dimen/size_45"
+                                    android:layout_height="@dimen/size_45"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
                                     android:background="@drawable/miaoqing" />
@@ -532,8 +532,8 @@
                                 android:minHeight="60dip" >
 
                                 <ImageView
-                                    android:layout_width="@dimen/size_35"
-                                    android:layout_height="@dimen/size_35"
+                                    android:layout_width="@dimen/size_45"
+                                    android:layout_height="@dimen/size_45"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
                                     android:background="@drawable/shengchan" />
@@ -611,8 +611,8 @@
                                 android:minHeight="60dip" >
 
                                 <ImageView
-                                    android:layout_width="@dimen/size_35"
-                                    android:layout_height="@dimen/size_35"
+                                    android:layout_width="@dimen/size_45"
+                                    android:layout_height="@dimen/size_45"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
                                     android:background="@drawable/zhining" />
@@ -690,8 +690,8 @@
                                 android:minHeight="60dip" >
 
                                 <ImageView
-                                    android:layout_width="@dimen/size_35"
-                                    android:layout_height="@dimen/size_35"
+                                    android:layout_width="@dimen/size_45"
+                                    android:layout_height="@dimen/size_45"
                                     android:layout_centerInParent="true"
                                     android:layout_margin="5dip"
                                     android:background="@drawable/shengqing" />

@@ -64,6 +64,8 @@
     <dimen name="size_15">15dip</dimen>
     <dimen name="size_22">22dip</dimen>
     <dimen name="size_35">35dip</dimen>
+    <dimen name="size_45">45dip</dimen>
+    <dimen name="size_50">50dip</dimen>
     <dimen name="size_12">12dip</dimen>
     <dimen name="size_14">14dip</dimen>
     <dimen name="size_13">13dip</dimen>
