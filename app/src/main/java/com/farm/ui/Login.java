@@ -25,6 +25,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,8 @@ public class Login extends Activity
 
     @ViewById
     LinearLayout login;
+    @ViewById
+    RelativeLayout rl_down;
     @ViewById
     CheckBox cb_autologin;
     @ViewById
@@ -98,8 +101,9 @@ public class Login extends Activity
         Intent intent = new Intent(Login.this, FindPassword_.class);
         startActivity(intent);
     }
+
     @Click
-    void iv_down()
+    void rl_down()
     {
         list = SqliteDb.getUserList(this, commembertab.class);
         showPop_tab();

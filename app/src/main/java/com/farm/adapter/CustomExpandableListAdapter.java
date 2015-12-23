@@ -108,11 +108,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
         TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
         if (groupPosition == 0 && childPosition == 0)
         {
-//            TextView textView = (TextView) parent.getChildAt(0);
-//            textView.setTextColor(0xFFFF5D5E);
-//            TextPaint tp = textView.getPaint();
-//            tp.setFakeBoldText(true);
-
             tv.setTextColor(0xFFFF5D5E);
             TextPaint tp = tv.getPaint();
             tp.setFakeBoldText(true);

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_AddNotStd_Cmd;
-import com.farm.bean.commandtab;
+import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab_singleton;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.widget.MyDialog;
@@ -35,7 +35,6 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
     AddStd_Cmd_StepFive addStd_cmd_stepFive;
     AddNotStd_Cmd_StepSix addStd_cmd_stepSix;
     commembertab_singleton commembertab_singleton;
-    commandtab commandtab=new commandtab();
     private ArrayList<Fragment> fragmentList;
     @ViewById
     TextView text_three;
@@ -194,7 +193,8 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
     @Override
     public void stepTwo_setHeadText(Bundle arg)
     {
-
+        String st = arg.getString("type");
+        addStd_cmd_stepTwo.setHeadText(st);
     }
 
 
@@ -245,6 +245,7 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
                 {
                     case R.id.btn_sure:
                         myDialog.dismiss();
+                        commandtab_single.getInstance().clearAll();
                         finish();
                         break;
                     case R.id.btn_cancle:

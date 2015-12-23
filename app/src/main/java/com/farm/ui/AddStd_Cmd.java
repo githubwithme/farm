@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.FragmentViewPagerAdapter;
-import com.farm.bean.commembertab_singleton;
+import com.farm.bean.commandtab_single;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.widget.MyDialog;
 
@@ -27,14 +27,13 @@ import java.util.ArrayList;
 public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
 {
     MyDialog myDialog;
-    int currentItem=0;
+    int currentItem = 0;
     FragmentViewPagerAdapter adapter;
     AddStd_Cmd_StepOne_Temp addStd_cmd_stepOne;
     AddStd_Cmd_StepTwo addStd_cmd_stepTwo;
     AddStd_Cmd_StepThree_Temp addStd_cmd_stepThree_temp;
     AddStd_Cmd_StepFive addStd_cmd_stepFive;
     AddStd_Cmd_StepSix addStd_cmd_stepSix;
-    commembertab_singleton commembertab_singleton;
     private ArrayList<Fragment> fragmentList;
     @ViewById
     TextView text_one;
@@ -122,7 +121,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
             @Override
             public void onExtraPageSelected(int i)
             {
-                currentItem=i;
+                currentItem = i;
                 setBackground(i);
 
             }
@@ -256,6 +255,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
         super.onDestroy();
         finish();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
@@ -279,6 +279,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
                 {
                     case R.id.btn_sure:
                         myDialog.dismiss();
+                        commandtab_single.getInstance().clearAll();
                         finish();
                         break;
                     case R.id.btn_cancle:
