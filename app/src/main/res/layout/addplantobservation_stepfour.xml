@@ -26,7 +26,7 @@
                 android:gravity="left|center_vertical"
                 android:paddingLeft="10dip"
                 android:text="假茎表现"
-                android:textColor="@color/black"
+                android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
 
             <TableLayout
@@ -48,17 +48,17 @@
                         android:gravity="left|center_vertical"
                         android:inputType="number"
                         android:text="干净度"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <TextView
-                        android:id="@+id/tv_area"
+                        android:id="@+id/tv_jj_gjd"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint=""
+                        android:hint="请选择干净度"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
@@ -81,17 +81,17 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:text="光泽"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <TextView
-                        android:id="@+id/tv_selectcmd"
+                        android:id="@+id/tv_jj_gz"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint=""
+                        android:hint="请选择光泽"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
@@ -113,17 +113,17 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:text="折断"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
-                    <EditText
-                        android:id="@+id/et_nz"
+                    <TextView
+                        android:id="@+id/tv_jj_zd"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint=""
+                        android:hint="请选择折断情况"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
@@ -145,17 +145,17 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:text="叶鞘无剥离"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
-                    <EditText
-                        android:id="@+id/et_yl"
+                    <TextView
+                        android:id="@+id/tv_jj_yswbl"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint=""
+                        android:hint="请选择剥离情况"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
@@ -171,7 +171,7 @@
                 android:gravity="left|center_vertical"
                 android:paddingLeft="10dip"
                 android:text="叶表现"
-                android:textColor="@color/black"
+                android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
 
             <TableLayout
@@ -193,16 +193,17 @@
                         android:gravity="left|center_vertical"
                         android:inputType="number"
                         android:text="叶色"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <TextView
+                        android:id="@+id/tv_y_ys"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint=""
+                        android:hint="请选择叶色"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
@@ -225,16 +226,17 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:text="硬度"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <TextView
+                        android:id="@+id/tv_y_yd"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint=""
+                        android:hint="请选择硬度"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
@@ -256,7 +258,7 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:text="干净度"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <EditText
@@ -265,7 +267,7 @@
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint=""
+                        android:hint="请选择干净度"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
@@ -287,16 +289,16 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:text="折叶"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
-                    <EditText
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint=""
+                        android:hint="请选择折叶情况"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
@@ -312,7 +314,7 @@
                 android:gravity="left|center_vertical"
                 android:paddingLeft="10dip"
                 android:text="根系表现"
-                android:textColor="@color/black"
+                android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
 
             <TableLayout
@@ -334,7 +336,7 @@
                         android:gravity="left|center_vertical"
                         android:inputType="number"
                         android:text="根数量"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <TextView
@@ -343,7 +345,7 @@
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint=""
+                        android:hint="请选择根数量"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
@@ -366,7 +368,7 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:text="白根"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <TextView
@@ -375,7 +377,7 @@
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint=""
+                        android:hint="请选择白根情况"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
@@ -397,16 +399,16 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:text="线虫"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
-                    <EditText
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint=""
+                        android:hint="请选择线虫情况"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
