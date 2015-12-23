@@ -522,4 +522,9 @@ public class commandtab_single implements Parcelable
 	{
 		return 0;
 	}
+
+	public void clearAll()
+	{
+		singleton = new commandtab_single();
+	}
 }
