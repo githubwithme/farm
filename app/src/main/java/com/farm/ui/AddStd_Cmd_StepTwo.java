@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -57,13 +60,19 @@ public class AddStd_Cmd_StepTwo extends Fragment
     GridView gridview_goods;
     @ViewById
     TextView tv_head;
-
+    @ViewById
+    RelativeLayout rl_pb;
+    @ViewById
+    LinearLayout ll_tip;
+    @ViewById
+    ProgressBar pb;
+    @ViewById
+    TextView tv_tip;
 
     @AfterViews
     void afterOncreate()
     {
         getCommandlist();
-
     }
 
     @Override
@@ -94,16 +103,13 @@ public class AddStd_Cmd_StepTwo extends Fragment
                 {
                     if (result.getAffectedRows() != 0)
                     {
+                        rl_pb.setVisibility(View.GONE);
                         String aa = result.getRows().toJSONString();
                         lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
                         if (lsitNewData != null)
                         {
                             dic = lsitNewData.get(0);
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic);
-
-//                            String[] parentData = dictionary_wheel.getFirstItemName();
-//                            HashMap<String, String[]> map = dictionary_wheel.getSecondItemName();
-//                            setHeadText(parentData[0]+map.get(parentData[0])[0]);
                             CustomExpandableListAdapter customExpandableListAdapter = new CustomExpandableListAdapter(getActivity(), dictionary_wheel, mainlistview, gridview_goods, tv_head, fragmentCallBack);
                             mainlistview.setAdapter(customExpandableListAdapter);
                             mainlistview.expandGroup(0);
@@ -111,11 +117,15 @@ public class AddStd_Cmd_StepTwo extends Fragment
 
                     } else
                     {
-
+                        ll_tip.setVisibility(View.VISIBLE);
+                        tv_tip.setText("暂无数据！");
+                        pb.setVisibility(View.GONE);
                     }
                 } else
                 {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    ll_tip.setVisibility(View.VISIBLE);
+                    tv_tip.setText("数据加载异常！");
+                    pb.setVisibility(View.GONE);
                     return;
                 }
             }
@@ -123,7 +133,9 @@ public class AddStd_Cmd_StepTwo extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                ll_tip.setVisibility(View.VISIBLE);
+                tv_tip.setText("网络连接异常！");
+                pb.setVisibility(View.GONE);
             }
         });
     }
@@ -132,7 +144,6 @@ public class AddStd_Cmd_StepTwo extends Fragment
     {
         tv_head.setText(string);
         tv_head.setTextColor(0xFFFF5D5E);
-//        tv_head.setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_9));
         TextPaint tp = tv_head.getPaint();
         tp.setFakeBoldText(true);
     }

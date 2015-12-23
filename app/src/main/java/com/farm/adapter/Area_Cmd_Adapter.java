@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +23,9 @@ import java.util.HashMap;
 
 public class Area_Cmd_Adapter extends BaseAdapter
 {
+    Button btn_sure;
+    EditText et_flsl;
+    ListItemView currentlistItemView;
     CustomDialog_FLSL customDialog_flsl;
     private Context context;
     private int position = 0;
@@ -69,12 +70,9 @@ public class Area_Cmd_Adapter extends BaseAdapter
         {
             convertView = listContainer.inflate(R.layout.area_cmd_adapter, null);
             listItemView = new ListItemView();
-            listItemView.txt = (TextView) convertView.findViewById(R.id.moreitem_txt);
-            listItemView.img = (ImageView) convertView.findViewById(R.id.moreitem_img);
+            listItemView.tv_flsl = (TextView) convertView.findViewById(R.id.tv_flsl);
             listItemView.cb_area = (CheckBox) convertView.findViewById(R.id.cb_area);
-            listItemView.ll_sl = (LinearLayout) convertView.findViewById(R.id.ll_sl);
 
-            listItemView.txt.setText(secondItemName[arg0]);
             listItemView.cb_area.setText(secondItemName[arg0]);
             listItemView.cb_area.setTag(arg0);
             listItemView.cb_area.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
@@ -83,7 +81,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     int pos = Integer.valueOf(buttonView.getTag().toString());
-                    ListItemView listItemView = (ListItemView) lmap.get(pos).getTag();
+                    currentlistItemView = (ListItemView) lmap.get(pos).getTag();
                     if (isChecked)
                     {
                         showDialog_flsl();
@@ -104,35 +102,12 @@ public class Area_Cmd_Adapter extends BaseAdapter
         return convertView;
     }
 
-    public void setSelectItem(int position)
-    {
-        this.position = position;
-        ListItemView listItemView = (ListItemView) lmap.get(position).getTag();
-        Boolean isselected = (Boolean) listItemView.img.getTag();
-        if (isselected != null && isselected)// 已选中
-        {
-            listItemView.txt.setTextColor(0xFF666666);
-            listItemView.img.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.item_collection_unselect));
-            listItemView.img.setTag(false);
-            deleteSelectRecords(AppContext.BELONG_ADD_CMD_AREA, firstType, secondItemName[position]);
-            listItemView.ll_sl.setVisibility(View.GONE);
-        } else
-        // 没选中
-        {
-            listItemView.txt.setTextColor(0xFFFF8C00);// 设置第一项选择后的颜色
-            listItemView.img.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.item_collection_selected));
-            listItemView.img.setTag(true);
-            saveSelectRecords(AppContext.BELONG_ADD_CMD_AREA, firstid, firstType, secondItemName[position], secondItemName[position]);
-            listItemView.ll_sl.setVisibility(View.VISIBLE);
-        }
-    }
+
 
     static class ListItemView
     { // 自定义控件集合
-        TextView txt;
-        ImageView img;
+        TextView tv_flsl;
         CheckBox cb_area;
-        LinearLayout ll_sl;
     }
 
     public void saveSelectRecords(String BELONG, String firstid, String firsttype, String secondid, String secondType)
@@ -158,13 +133,15 @@ public class Area_Cmd_Adapter extends BaseAdapter
     {
         final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_flsl, null);
         customDialog_flsl = new CustomDialog_FLSL(context, R.style.MyDialog, dialog_layout);
-        EditText et_flsl = (EditText) dialog_layout.findViewById(R.id.et_flsl);
-        Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+        et_flsl = (EditText) dialog_layout.findViewById(R.id.et_flsl);
+        btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         btn_sure.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                currentlistItemView.tv_flsl.setVisibility(View.VISIBLE);
+                currentlistItemView.tv_flsl.setText(et_flsl.getText().toString()+"kg");
                 saveSelectRecords(AppContext.BELONG_ADD_CMD_AREA, firstid, firstType, secondItemName[position], secondItemName[position]);
                 customDialog_flsl.dismiss();
             }

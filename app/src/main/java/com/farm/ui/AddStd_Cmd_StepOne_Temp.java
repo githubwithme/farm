@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -69,11 +71,18 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
     ViewPager cmd_pager;
     @ViewById
     TextView toptype;
+    @ViewById
+    RelativeLayout rl_pb;
+    @ViewById
+    LinearLayout ll_tip;
+    @ViewById
+    ProgressBar pb;
+    @ViewById
+    TextView tv_tip;
 
     @AfterViews
     void afterOncreate()
     {
-        shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
         inflater = LayoutInflater.from(getActivity());
         getCommandlist();
     }
@@ -116,11 +125,6 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
             tvList[i] = textView;
             views[i] = view;
         }
-//        toptype.setText(list[0]);
-//        toptype.setTextColor(0xFFFF5D5E);
-//        toptype.setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_9));
-//        TextPaint tp = toptype.getPaint();
-//        tp.setFakeBoldText(true);
         changeTextColor(0);
     }
 
@@ -139,6 +143,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
      */
     private void initPager()
     {
+        shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
         cmd_pager.setAdapter(shopAdapter);
         cmd_pager.setOnPageChangeListener(onPageChangeListener);
     }
@@ -251,6 +256,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
+
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
@@ -261,6 +267,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
                 {
                     if (result.getAffectedRows() != 0)
                     {
+                        rl_pb.setVisibility(View.GONE);
                         String aa = result.getRows().toJSONString();
                         lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
                         if (lsitNewData != null)
@@ -275,11 +282,15 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
 
                     } else
                     {
-
+                        ll_tip.setVisibility(View.VISIBLE);
+                        tv_tip.setText("暂无数据！");
+                        pb.setVisibility(View.GONE);
                     }
                 } else
                 {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    ll_tip.setVisibility(View.VISIBLE);
+                    tv_tip.setText("数据加载异常！");
+                    pb.setVisibility(View.GONE);
                     return;
                 }
             }
@@ -287,7 +298,9 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                ll_tip.setVisibility(View.VISIBLE);
+                tv_tip.setText("网络连接异常！");
+                pb.setVisibility(View.GONE);
             }
         });
     }
@@ -296,7 +309,6 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
     @Override
     public void onAttach(Activity activity)
     {
-        // TODO Auto-generated method stub
         super.onAttach(activity);
         fragmentCallBack = (FragmentCallBack) activity;
     }
