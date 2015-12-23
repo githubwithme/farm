@@ -214,4 +214,10 @@ public class AddStd_Cmd_StepFive extends Fragment
         super.onAttach(activity);
         fragmentCallBack = (FragmentCallBack) activity;
     }
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        getActivity().finish();
+    }
 }

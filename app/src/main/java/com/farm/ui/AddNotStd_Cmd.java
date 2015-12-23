@@ -4,13 +4,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.adapter.FragmentViewPagerAdapter;
+import com.farm.adapter.ViewPagerAdapter_AddNotStd_Cmd;
+import com.farm.bean.commandtab;
 import com.farm.bean.commembertab_singleton;
 import com.farm.com.custominterface.FragmentCallBack;
+import com.farm.widget.MyDialog;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -22,12 +27,15 @@ import java.util.ArrayList;
 @EActivity(R.layout.activity_add_notstd__cmd)
 public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
 {
-    FragmentViewPagerAdapter adapter;
+    MyDialog myDialog;
+    int currentItem = 0;
+    ViewPagerAdapter_AddNotStd_Cmd adapter;
     AddStd_Cmd_StepTwo addStd_cmd_stepTwo;
     AddStd_Cmd_StepThree_Temp addStd_cmd_stepThree_temp;
     AddStd_Cmd_StepFive addStd_cmd_stepFive;
-    AddStd_Cmd_StepSix addStd_cmd_stepSix;
+    AddNotStd_Cmd_StepSix addStd_cmd_stepSix;
     commembertab_singleton commembertab_singleton;
+    commandtab commandtab=new commandtab();
     private ArrayList<Fragment> fragmentList;
     @ViewById
     TextView text_three;
@@ -58,25 +66,25 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
     @Click
     void text_three()
     {
-        vPager.setCurrentItem(1);
+        vPager.setCurrentItem(0);
     }
 
     @Click
     void text_four()
     {
-        vPager.setCurrentItem(2);
+        vPager.setCurrentItem(1);
     }
 
     @Click
     void text_five()
     {
-        vPager.setCurrentItem(3);
+        vPager.setCurrentItem(2);
     }
 
     @Click
     void text_six()
     {
-        vPager.setCurrentItem(4);
+        vPager.setCurrentItem(3);
     }
 
     @AfterViews
@@ -86,7 +94,7 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
         addStd_cmd_stepTwo = new AddStd_Cmd_StepTwo_();
         addStd_cmd_stepThree_temp = new AddStd_Cmd_StepThree_Temp_();
         addStd_cmd_stepFive = new AddStd_Cmd_StepFive_();
-        addStd_cmd_stepSix = new AddStd_Cmd_StepSix_();
+        addStd_cmd_stepSix = new AddNotStd_Cmd_StepSix_();
 
         fragmentList.add(addStd_cmd_stepTwo);
         fragmentList.add(addStd_cmd_stepThree_temp);
@@ -96,26 +104,15 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
         setBackground(0);
         //关闭预加载，默认一次只加载一个Fragment
         vPager.setOffscreenPageLimit(0);
-        adapter = new FragmentViewPagerAdapter(AddNotStd_Cmd.this.getSupportFragmentManager(), vPager, fragmentList);
+        adapter = new ViewPagerAdapter_AddNotStd_Cmd(AddNotStd_Cmd.this.getSupportFragmentManager(), vPager, fragmentList);
 
-        adapter.setOnExtraPageChangeListener(new FragmentViewPagerAdapter.OnExtraPageChangeListener()
+        adapter.setOnExtraPageChangeListener(new ViewPagerAdapter_AddNotStd_Cmd.OnExtraPageChangeListener()
         {
             @Override
             public void onExtraPageSelected(int i)
             {
+                currentItem = i;
                 setBackground(i);
-                switch (i)
-                {
-                    case 1:
-                        break;
-                    case 2:
-//                        adapter.updateData(i);
-                    case 3:
-                        break;
-                    case 4:
-//                        adapter.updateData(i);
-                        break;
-                }
             }
         });
     }
@@ -154,12 +151,15 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
                 break;
             case 1:
                 image_four.setBackgroundResource(R.drawable.green_line);
+                text_three.setTextColor(Color.parseColor("#FFFFFF"));
                 text_four.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setBackgroundResource(R.drawable.tag_red);
                 text_four.setBackgroundResource(R.drawable.tag_next);
                 break;
             case 2:
                 image_five.setBackgroundResource(R.drawable.green_line);
+                text_three.setTextColor(Color.parseColor("#FFFFFF"));
+                text_four.setTextColor(Color.parseColor("#FFFFFF"));
                 text_five.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setBackgroundResource(R.drawable.tag_red);
                 text_four.setBackgroundResource(R.drawable.tag_red);
@@ -167,6 +167,9 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
                 break;
             case 3:
                 image_six.setBackgroundResource(R.drawable.green_line);
+                text_three.setTextColor(Color.parseColor("#FFFFFF"));
+                text_four.setTextColor(Color.parseColor("#FFFFFF"));
+                text_five.setTextColor(Color.parseColor("#FFFFFF"));
                 text_six.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setBackgroundResource(R.drawable.tag_red);
                 text_four.setBackgroundResource(R.drawable.tag_red);
@@ -198,21 +201,58 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
     @Override
     public void callbackFun2(Bundle arg)
     {
-        int currentItem = arg.getInt("INDEX");
+        vPager.setCurrentItem(currentItem + 1);
         switch (currentItem)
         {
+            case 0:
+                break;
             case 1:
-                vPager.setCurrentItem(currentItem + 1);
-                break;
+                adapter.updateData(currentItem);
             case 2:
-                vPager.setCurrentItem(currentItem + 1);
-            case 3:
-                vPager.setCurrentItem(currentItem + 1);
                 break;
-            case 4:
-                vPager.setCurrentItem(currentItem + 1);
+            case 3:
+                adapter.updateData(currentItem);
                 break;
         }
     }
 
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        finish();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            showExistTip();
+        }
+        return false;
+
+    }
+
+    private void showExistTip()
+    {
+        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(AddNotStd_Cmd.this, R.style.MyDialog, dialog_layout, "添加非标准生产指令", "确定取消添加吗？", "退出", "取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        myDialog.dismiss();
+                        finish();
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.dismiss();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
 }

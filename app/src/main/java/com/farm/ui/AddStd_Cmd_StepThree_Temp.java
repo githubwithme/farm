@@ -314,4 +314,10 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
         super.onAttach(activity);
         fragmentCallBack = (FragmentCallBack) activity;
     }
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        getActivity().finish();
+    }
 }

@@ -522,7 +522,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 pw_command.dismiss();
                 break;
             case R.id.btn_nonstandardprocommand:
-                intent = new Intent(getActivity(), AddStd_Cmd_.class);
+                intent = new Intent(getActivity(), AddNotStd_Cmd_.class);
                 startActivity(intent);
                 pw_command.dismiss();
                 break;

@@ -36,12 +36,10 @@ import java.util.List;
  * Created by ${hmj} on 2015/12/15.
  */
 @EFragment
-public class AddStd_Cmd_StepSix extends Fragment
+public class AddNotStd_Cmd_StepSix extends Fragment
 {
     @ViewById
     TextView tv_importance;
-    @ViewById
-    TextView tv_selectcmd;
     @ViewById
     TextView tv_workday;
     @ViewById
@@ -70,7 +68,7 @@ public class AddStd_Cmd_StepSix extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.add_std__cmd__step_six, container, false);
+        View rootView = inflater.inflate(R.layout.add_notstd__cmd__step_six, container, false);
         return rootView;
     }
 
@@ -79,7 +77,6 @@ public class AddStd_Cmd_StepSix extends Fragment
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
         tv_importance.setText(commandtab_single.getimportance());
         tv_nz.setText(commandtab_single.getnongziName());
-        tv_selectcmd.setText(commandtab_single.getstdJobTypeName() + "-" + commandtab_single.getstdJobName());
         tv_workday.setText(commandtab_single.getcommDays());
         tv_note.setText(commandtab_single.getcommNote());
         tv_timelimit.setText(commandtab_single.getcommComDate());

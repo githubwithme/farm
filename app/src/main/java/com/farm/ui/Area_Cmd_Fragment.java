@@ -64,6 +64,6 @@ public class Area_Cmd_Fragment extends Fragment
     public void onAttach(Activity activity)
     {
         super.onAttach(activity);
-        fragmentCallBack = (AddStd_Cmd) activity;
+        fragmentCallBack = (FragmentCallBack) activity;
     }
 }

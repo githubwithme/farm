@@ -4,13 +4,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.FragmentViewPagerAdapter;
 import com.farm.bean.commembertab_singleton;
 import com.farm.com.custominterface.FragmentCallBack;
+import com.farm.widget.MyDialog;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -22,6 +26,8 @@ import java.util.ArrayList;
 @EActivity(R.layout.activity_add_std__cmd)
 public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
 {
+    MyDialog myDialog;
+    int currentItem=0;
     FragmentViewPagerAdapter adapter;
     AddStd_Cmd_StepOne_Temp addStd_cmd_stepOne;
     AddStd_Cmd_StepTwo addStd_cmd_stepTwo;
@@ -116,21 +122,9 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
             @Override
             public void onExtraPageSelected(int i)
             {
+                currentItem=i;
                 setBackground(i);
-                switch (i)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        adapter.updateData(i);
-                    case 3:
-                        break;
-                    case 4:
-                        adapter.updateData(i);
-                        break;
-                }
+
             }
         });
     }
@@ -239,24 +233,60 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     @Override
     public void callbackFun2(Bundle arg)
     {
-        int currentItem = arg.getInt("INDEX");
+        vPager.setCurrentItem(currentItem + 1);
         switch (currentItem)
         {
             case 0:
-                vPager.setCurrentItem(currentItem + 1);
                 break;
             case 1:
-                vPager.setCurrentItem(currentItem + 1);
                 break;
             case 2:
-                vPager.setCurrentItem(currentItem + 1);
+                adapter.updateData(currentItem);
             case 3:
-                vPager.setCurrentItem(currentItem + 1);
                 break;
             case 4:
-                vPager.setCurrentItem(currentItem + 1);
+                adapter.updateData(currentItem);
                 break;
         }
     }
 
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        finish();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            showExistTip();
+        }
+        return false;
+
+    }
+
+    private void showExistTip()
+    {
+        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(AddStd_Cmd.this, R.style.MyDialog, dialog_layout, "添加标准生产指令", "确定取消添加吗？", "退出", "取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        myDialog.dismiss();
+                        finish();
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.dismiss();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
 }

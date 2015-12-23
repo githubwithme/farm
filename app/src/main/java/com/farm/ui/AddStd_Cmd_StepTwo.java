@@ -155,4 +155,10 @@ public class AddStd_Cmd_StepTwo extends Fragment
         fragmentCallBack = (FragmentCallBack) activity;
     }
 
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        getActivity().finish();
+    }
 }
