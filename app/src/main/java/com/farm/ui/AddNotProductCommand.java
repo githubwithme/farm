@@ -99,11 +99,14 @@ public class AddNotProductCommand extends Activity implements OnClickListener
     @Click
     void tv_importance()
     {
-//		String[] firstItemid = new String[] { "0", "1", "2" };
-//		String[] firstItemData = new String[] { "一般", "重要", "非常重要" };
-//		OneWheel.showWheel(this, firstItemid, firstItemData, tv_importance);
-
-        showDialog_Importance();
+        JSONObject jsonObject = utils.parseJsonFile(AddNotProductCommand.this, "dictionary.json");
+        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("importance"));
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < jsonArray.size(); i++)
+        {
+            list.add(jsonArray.getString(i));
+        }
+        showDialog_Importance(list);
     }
 
     @Click
@@ -436,10 +439,10 @@ public class AddNotProductCommand extends Activity implements OnClickListener
 
     Fragment mContent_top = new Fragment();
 
-    public void showDialog_Importance()
+    public void showDialog_Importance(List<String> list)
     {
         View dialog_layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(this, R.style.MyDialog, dialog_layout, dic_comm.getFirstItemName(), dic_comm.getFirstItemID(), new CustomDialog_ListView.CustomDialogListener()
+        customDialog_listView = new CustomDialog_ListView(AddNotProductCommand.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)

@@ -276,7 +276,11 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
                                 @Override
                                 public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
                                 {
-                                    commandtab_single.getInstance().setnongziName(list_goods.get(pos).getgoodsName());
+                                    commandtab_single commandtab_single = com.farm.bean.commandtab_single.getInstance();
+                                    commandtab_single.setnongziName(list_goods.get(pos).getgoodsName());
+                                    commandtab_single.setNongziId(list_goods.get(pos).getId());
+                                    commandtab_single.setNongzigg(list_goods.get(pos).getgoodsSpec());
+                                    commandtab_single.setNongzidw(list_goods.get(pos).getgoodsunit());
                                     Bundle bundle = new Bundle();
                                     bundle.putInt("INDEX", 1);
                                     CustomExpandableListAdapter.this.fragmentCallBack.callbackFun2(bundle);

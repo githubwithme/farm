@@ -16,7 +16,8 @@ import com.lidroid.xutils.db.annotation.Table;
  *
  * @version 1.0
  */
-@Table(name = "commembertab") public class commembertab_singleton implements Parcelable
+@Table(name = "commembertab_singleton")
+public class commembertab_singleton implements Parcelable
 {
     @Id @NoAutoIncrement public String Id;
     public String uId;

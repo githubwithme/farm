@@ -22,12 +22,16 @@ public class Area_Cmd_Fragment extends Fragment
     private ListView morelist;
     private Area_Cmd_Adapter area_cmd_adapter;
     private Type type;
+    private String GOODSNUMBER;
     private String FN;
     private String FI;
     //    private int icon;
     String[] SI;
     String[] SN;
     TextView toptype;
+    TextView tv_dw;
+    TextView tv_number;
+    TextView tv_gg;
 
 
     @Override
@@ -36,12 +40,19 @@ public class Area_Cmd_Fragment extends Fragment
         View view = inflater.inflate(R.layout.area_cmd_fragment, null);
         morelist = (ListView) view.findViewById(R.id.morelist);
         toptype = (TextView) view.findViewById(R.id.toptype);
+        tv_number = (TextView) view.findViewById(R.id.tv_number);
+        tv_dw = (TextView) view.findViewById(R.id.tv_dw);
+        tv_gg = (TextView) view.findViewById(R.id.tv_gg);
+        GOODSNUMBER = getArguments().getString("GOODSNUMBER");
         FN = getArguments().getString("FN");
         FI = getArguments().getString("FI");
         SN = getArguments().getStringArray("SN");
         SI = getArguments().getStringArray("SI");
 
-        toptype.setText(FN + " : " + "目前" + "“" + commandtab_single.getInstance().getnongziName() + "”" + "剩余量为:" + "");
+        toptype.setText(FN + " - " + "“" + commandtab_single.getInstance().getnongziName() + "”");
+        tv_number.setText(GOODSNUMBER);
+        tv_dw.setText(commandtab_single.getInstance().getNongzidw());
+        tv_gg.setText(commandtab_single.getInstance().getNongzigg());
         area_cmd_adapter = new Area_Cmd_Adapter(getActivity(), fragmentCallBack, FI, FN, SI, SN);
         morelist.setAdapter(area_cmd_adapter);
         morelist.setOnItemClickListener(new AdapterView.OnItemClickListener()

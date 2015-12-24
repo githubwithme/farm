@@ -15,7 +15,7 @@ import com.lidroid.xutils.db.annotation.Table;
  * 
  * @version 1.0
  */
-@Table(name = "commandtab")
+@Table(name = "commandtab_single")
 public class commandtab_single implements Parcelable
 {
 	public String Id;
@@ -27,17 +27,17 @@ public class commandtab_single implements Parcelable
 	public String stdJobName;
 	public String nongziName;
 	public String amount;
-	public String commNote;
-	public String execLevel;
+	public String commNote="";
+	public String execLevel="";
 	public String commFromID;
 	public String commFromName;
 	public String commFromVPath;
-	public String commDays;
-	public String commComDate;
+	public String commDays="";
+	public String commComDate="";
 	public String isDelete;
 	public String DeleteDate;
 	public String AYear;
-	public String importance;
+	public String importance="";
 	// 自定义
 	public String statusid;
 	public String parkId;
@@ -54,7 +54,30 @@ public class commandtab_single implements Parcelable
 	public String iCount;
 	public String comvidioCount;
 	public String vidioCount;
+	public String nongziId;
+	public String nongzigg;
+	public String nongzidw;
 
+
+	public void setNongzidw(String nongzidw)
+	{
+		this.nongzidw = nongzidw;
+	}
+
+	public String getNongzidw()
+	{
+		return nongzidw;
+	}
+
+	public void setNongzigg(String nongzigg)
+	{
+		this.nongzigg = nongzigg;
+	}
+
+	public String getNongzigg()
+	{
+		return nongzigg;
+	}
 
 	private static commandtab_single singleton = new commandtab_single();
 
@@ -65,6 +88,17 @@ public class commandtab_single implements Parcelable
 	public static commandtab_single getInstance()
 	{
 		return singleton;
+	}
+
+
+	public void setNongziId(String nongziId)
+	{
+		this.nongziId = nongziId;
+	}
+
+	public String getNongziId()
+	{
+		return nongziId;
 	}
 
 	public void setVidioCount(String vidioCount)
@@ -467,6 +501,9 @@ public class commandtab_single implements Parcelable
 			p.setiCount(source.readString());
 			p.setComvidioCount(source.readString());
 			p.setVidioCount(source.readString());
+			p.setNongziId(source.readString());
+			p.setNongzigg(source.readString());
+			p.setNongzidw(source.readString());
 			return p;
 		}
 
@@ -515,6 +552,9 @@ public class commandtab_single implements Parcelable
 		p.writeString(iCount);
 		p.writeString(comvidioCount);
 		p.writeString(vidioCount);
+		p.writeString(nongziId);
+		p.writeString(nongzigg);
+		p.writeString(nongzidw);
 	}
 
 	@Override

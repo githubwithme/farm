@@ -1,16 +1,22 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.planttab;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,7 +34,7 @@ public class AddPlantObservationAdapter extends BaseAdapter
     static class ListItemView
     { // 自定义控件集合
 
-        public TextView tv_one;
+        public LinearLayout ll;
 
     }
 
@@ -61,7 +67,6 @@ public class AddPlantObservationAdapter extends BaseAdapter
         return 0;
     }
 
-    HashMap<Integer, View> lmap = new HashMap<Integer, View>();
 
     /**
      * ListView Item设置
@@ -69,24 +74,64 @@ public class AddPlantObservationAdapter extends BaseAdapter
     public View getView(int position, View convertView, ViewGroup parent)
     {
         planttab = listItems.get(position);
-        // 自定义视图
+        convertView = listContainer.inflate(R.layout.addplantobservationadapter, null);
+        listItemView = new ListItemView();
+        listItemView.ll = (LinearLayout) convertView.findViewById(R.id.ll);
 
-        if (lmap.get(position) == null)
+        for (int i = 0; i < 9; i++)
         {
-            // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.addplantobservationadapter, null);
-            listItemView = new ListItemView();
-            // 获取控件对象
-            listItemView.tv_one = (TextView) convertView.findViewById(R.id.tv_one);
-            // 设置控件集到convertView
-            lmap.put(position, convertView);
-            convertView.setTag(listItemView);
-        } else
-        {
-            convertView = lmap.get(position);
-            listItemView = (ListItemView) convertView.getTag();
+            if (i == 0)
+            {
+                TextView tv = new TextView(context);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(120, 120, 0);
+                lp.setMargins(0, 0, 0, 0);
+                lp.gravity = Gravity.CENTER_HORIZONTAL;
+                tv.setLayoutParams(lp);
+                listItemView.ll.addView(tv);
+                tv.setText(planttab.getplantName());
+                tv.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.bg_city_search_normal));
+            } else
+            {
+                EditText et = new EditText(context);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(120, 120, 0);
+                lp.setMargins(0, 0, 0, 0);
+                lp.gravity = Gravity.CENTER_HORIZONTAL;
+                et.setLayoutParams(lp);
+                int inputType = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL;
+                et.setInputType(inputType);
+                et.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.bg_city_search_normal));
+
+//                et.setTag(R.id.tag_fn, key);
+                listItemView.ll.addView(et);
+
+                et.addTextChangedListener(new TextWatcher()
+                {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                    {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count)
+                    {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s)
+                    {
+                        //此处即监听EditText输入
+                        String input = s.toString();
+                        if (!TextUtils.isEmpty(input))
+                        {
+//                           String currentParentId = (String) v.getTag(R.id.tag_fi);
+                        }
+                    }
+                });
+            }
+
         }
-        listItemView.tv_one.setText(planttab.getplantName());
         return convertView;
     }
 }

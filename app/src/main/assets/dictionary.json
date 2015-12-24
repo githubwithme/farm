@@ -3,6 +3,12 @@
 
   "jj_gz":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["鲜艳","暗淡","正常"]}],"other":[]},
 
+  "gcd":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["观测点1","观测点2","观测点3"]}],"other":[]},
+
+  "gcq":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["生长前期","生长中期","生长后期"]}],"other":[]},
+
+"importance":[ "一般", "重要", "非常重要" ],
+
 "number":["1","2","3","4","5","6"],
 
 "color":["嫩绿色","黄色","青绿色","灰色","白色","深绿色","泥色","粉红色","黑色"],

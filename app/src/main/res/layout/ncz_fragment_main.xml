@@ -50,6 +50,7 @@
             <FrameLayout
                 android:id="@+id/img_container"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="170dip"
                 android:background="@drawable/gg" />
 

@@ -12,8 +12,8 @@ import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.HaveReadRecord;
 import com.farm.bean.Result;
+import com.farm.bean.SelectCmdArea;
 import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
@@ -111,6 +111,7 @@ public class AddNotStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("stdJobId", commandtab_single.getstdJobId());
         params.addQueryStringParameter("stdJobName", commandtab_single.getstdJobName());
         params.addQueryStringParameter("importance", commandtab_single.getimportance());
+        params.addQueryStringParameter("execLevel", "1");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -128,16 +129,18 @@ public class AddNotStd_Cmd_StepSix extends Fragment
                         AppContext.makeToast(getActivity(), "error_connectDataBase");
                     } else
                     {
-                        HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD);
-                        if (haveReadRecord != null)
-                        {
-                            SqliteDb.updateHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD, String.valueOf((Integer.valueOf(haveReadRecord.getNum()) + 1)));
-                        } else
-                        {
-                            SqliteDb.saveHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD, "1");
-                        }
+//                        HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD);
+//                        if (haveReadRecord != null)
+//                        {
+//                            SqliteDb.updateHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD, String.valueOf((Integer.valueOf(haveReadRecord.getNum()) + 1)));
+//                        } else
+//                        {
+//                            SqliteDb.saveHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD, "1");
+//                        }
                         Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
                         getActivity().finish();
+                        commandtab_single.getInstance().clearAll();
+                        SqliteDb.deleteAllSelectCmdArea(getActivity(), SelectCmdArea.class);
                     }
 
                 } else

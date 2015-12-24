@@ -10,26 +10,15 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
-import com.farm.app.AppConfig;
-import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
-import com.farm.bean.Result;
 import com.farm.bean.commandtab_single;
-import com.farm.bean.commembertab;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDatepicker;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -54,7 +43,15 @@ public class AddStd_Cmd_StepFive extends Fragment
     @Click
     void tv_importance()
     {
-        getCommandlist();
+        List<String> list_id = new ArrayList<String>();
+        list_id.add("0");
+        list_id.add("1");
+        list_id.add("2");
+        List<String> list_data = new ArrayList<String>();
+        list_data.add("一般");
+        list_data.add("重要");
+        list_data.add("非常重要");
+        showDialog_Importance(list_id, list_data);
     }
 
     @Click
@@ -90,7 +87,7 @@ public class AddStd_Cmd_StepFive extends Fragment
     @Click
     void btn_next()
     {
-        commandtab_single.getInstance().setimportance(importance);
+        commandtab_single.getInstance().setimportance(importance_id);
         commandtab_single.getInstance().setcommComDate(tv_timelimit.getText().toString());//期限
         commandtab_single.getInstance().setcommDays(tv_workday.getText().toString());
         commandtab_single.getInstance().setcommNote(et_note.getText().toString());
@@ -112,53 +109,6 @@ public class AddStd_Cmd_StepFive extends Fragment
         return rootView;
     }
 
-    private void getCommandlist()
-    {
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("name", "Zuoye");
-        params.addQueryStringParameter("action", "getDict");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<Dictionary> lsitNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        String aa = result.getRows().toJSONString();
-                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
-                        if (lsitNewData != null)
-                        {
-                            dic_comm = lsitNewData.get(0);
-                            showDialog_Importance();
-                        }
-
-                    } else
-                    {
-                        lsitNewData = new ArrayList<Dictionary>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
-            }
-        });
-    }
 
     public void showDialog_workday(List<String> list)
     {
@@ -175,30 +125,15 @@ public class AddStd_Cmd_StepFive extends Fragment
         customDialog_listView.show();
     }
 
-    public void showDialog_Importance()
+    public void showDialog_Importance(List<String> list_id, List<String> listdata)
     {
         View dialog_layout = (RelativeLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(getActivity(), R.style.MyDialog, dialog_layout, dic_comm.getFirstItemName(), dic_comm.getFirstItemID(), new CustomDialog_ListView.CustomDialogListener()
+        customDialog_listView = new CustomDialog_ListView(getActivity(), R.style.MyDialog, dialog_layout, listdata, list_id, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
             {
-                importance_id = bundle.getString("id");
-                importance = bundle.getString("name");
-                tv_importance.setText(importance);
-            }
-        });
-        customDialog_listView.show();
-    }
 
-    public void showDialog_litmitday()
-    {
-        View dialog_layout = (RelativeLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(getActivity(), R.style.MyDialog, dialog_layout, dic_comm.getFirstItemName(), dic_comm.getFirstItemID(), new CustomDialog_ListView.CustomDialogListener()
-        {
-            @Override
-            public void OnClick(Bundle bundle)
-            {
                 importance_id = bundle.getString("id");
                 importance = bundle.getString("name");
                 tv_importance.setText(importance);
@@ -214,6 +149,7 @@ public class AddStd_Cmd_StepFive extends Fragment
         super.onAttach(activity);
         fragmentCallBack = (FragmentCallBack) activity;
     }
+
     @Override
     public void onDestroyView()
     {

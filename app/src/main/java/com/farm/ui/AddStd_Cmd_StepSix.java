@@ -12,8 +12,8 @@ import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.HaveReadRecord;
 import com.farm.bean.Result;
+import com.farm.bean.SelectCmdArea;
 import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
@@ -30,6 +30,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,6 +56,7 @@ public class AddStd_Cmd_StepSix extends Fragment
     commandtab_single commandtab_single;
     com.farm.bean.commandtab commandtab;
 
+    List<SelectCmdArea> list_SelectCmdArea=new ArrayList<SelectCmdArea>();
     @Click
     void btn_sure()
     {
@@ -92,18 +94,25 @@ public class AddStd_Cmd_StepSix extends Fragment
 
     private void commandTabAdd()
     {
-
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
+
+        list_SelectCmdArea = SqliteDb.getSelectCmdArea(getActivity(), SelectCmdArea.class);
+        String tempid = "";
+        String tempname = "";
+        for (int i = 0; i < list_SelectCmdArea.size(); i++)
+        {
+            tempid = tempid + list_SelectCmdArea.get(i).getFirstid() + ":" + list_SelectCmdArea.get(i).getSecondid()+ ":" + list_SelectCmdArea.get(i).getGoodsnumber() + ",";
+            tempname = tempname + list_SelectCmdArea.get(i).getFirsttype() + ":" + list_SelectCmdArea.get(i).getSecondtype() + ",";
+        }
+        params.addQueryStringParameter("areaId", tempid.substring(0, tempid.length() - 1));
+        params.addQueryStringParameter("areaName", tempname.substring(0, tempname.length() - 1));
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("userName", commembertab.getrealName());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "commandTabAdd");
-
-        params.addQueryStringParameter("parkId", "");
-        params.addQueryStringParameter("parkName", "");
-        params.addQueryStringParameter("areaId", "");
-        params.addQueryStringParameter("areaName", "");
+        params.addQueryStringParameter("parkId", commandtab_single.getparkId());
+        params.addQueryStringParameter("parkName", commandtab_single.getparkName());
         params.addQueryStringParameter("nongziName", commandtab_single.getnongziName());
         params.addQueryStringParameter("amount", "");
         params.addQueryStringParameter("commNote", commandtab_single.getcommNote());
@@ -114,6 +123,7 @@ public class AddStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("stdJobId", commandtab_single.getstdJobId());
         params.addQueryStringParameter("stdJobName", commandtab_single.getstdJobName());
         params.addQueryStringParameter("importance", commandtab_single.getimportance());
+        params.addQueryStringParameter("execLevel", "1");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -131,16 +141,18 @@ public class AddStd_Cmd_StepSix extends Fragment
                         AppContext.makeToast(getActivity(), "error_connectDataBase");
                     } else
                     {
-                        HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD);
-                        if (haveReadRecord != null)
-                        {
-                            SqliteDb.updateHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD, String.valueOf((Integer.valueOf(haveReadRecord.getNum()) + 1)));
-                        } else
-                        {
-                            SqliteDb.saveHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD, "1");
-                        }
+//                        HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD);
+//                        if (haveReadRecord != null)
+//                        {
+//                            SqliteDb.updateHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD, String.valueOf((Integer.valueOf(haveReadRecord.getNum()) + 1)));
+//                        } else
+//                        {
+//                            SqliteDb.saveHaveReadRecord(getActivity(), AppContext.TAG_NCZ_CMD, "1");
+//                        }
                         Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
                         getActivity().finish();
+                        commandtab_single.getInstance().clearAll();
+                        SqliteDb.deleteAllSelectCmdArea(getActivity(), SelectCmdArea.class);
                     }
 
                 } else

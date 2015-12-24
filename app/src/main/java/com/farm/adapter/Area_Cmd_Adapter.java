@@ -13,8 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.app.AppContext;
-import com.farm.bean.SelectRecords;
+import com.farm.bean.SelectCmdArea;
+import com.farm.bean.commandtab_single;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
 import com.farm.widget.CustomDialog_FLSL;
@@ -25,6 +25,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
 {
     Button btn_sure;
     EditText et_flsl;
+    TextView tv_dw;
     ListItemView currentlistItemView;
     CustomDialog_FLSL customDialog_flsl;
     private Context context;
@@ -84,10 +85,11 @@ public class Area_Cmd_Adapter extends BaseAdapter
                     currentlistItemView = (ListItemView) lmap.get(pos).getTag();
                     if (isChecked)
                     {
-                        showDialog_flsl();
+                        showDialog_flsl(pos);
+
                     } else
                     {
-                        deleteSelectRecords(AppContext.BELONG_ADD_CMD_AREA, firstType, secondItemName[position]);
+                        deleteSelectRecords(firstType, secondItemName[pos]);
                     }
                 }
             });
@@ -103,46 +105,48 @@ public class Area_Cmd_Adapter extends BaseAdapter
     }
 
 
-
     static class ListItemView
     { // 自定义控件集合
         TextView tv_flsl;
         CheckBox cb_area;
     }
 
-    public void saveSelectRecords(String BELONG, String firstid, String firsttype, String secondid, String secondType)
+    public void saveSelectCmdArea(String firstid, String firsttype, String secondid, String secondType, String goodsnumber)
     {
-        SelectRecords selectRecords = new SelectRecords();
-        selectRecords.setBELONG(BELONG);
-        selectRecords.setFirstid(firstid);
-        selectRecords.setFirsttype(firsttype);
-        selectRecords.setSecondid(secondid);
-        selectRecords.setSecondtype(secondType);
-        selectRecords.setThirdid("");
-        selectRecords.setThirdtype("");
-        selectRecords.setId(1);
-        SqliteDb.save(context, selectRecords);
+        SelectCmdArea selectCmdArea = new SelectCmdArea();
+        selectCmdArea.setFirstid(firstid);
+        selectCmdArea.setFirsttype(firsttype);
+        selectCmdArea.setSecondid(secondid);
+        selectCmdArea.setSecondtype(secondType);
+        selectCmdArea.setThirdid("");
+        selectCmdArea.setThirdtype("");
+        selectCmdArea.setGoodsnumber(goodsnumber);
+        selectCmdArea.setId(1);
+        SqliteDb.save(context, selectCmdArea);
     }
 
-    public void deleteSelectRecords(String BELONG, String firsttype, String secondType)
+    public void deleteSelectRecords(String firsttype, String secondType)
     {
-        SqliteDb.deleteRecordtemp(context, SelectRecords.class, BELONG, firsttype, secondType);
+        SqliteDb.deleteSelectCmdArea(context, SelectCmdArea.class, firsttype, secondType);
     }
 
-    public void showDialog_flsl()
+    public void showDialog_flsl(final int pos)
     {
         final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_flsl, null);
         customDialog_flsl = new CustomDialog_FLSL(context, R.style.MyDialog, dialog_layout);
+        tv_dw = (TextView) dialog_layout.findViewById(R.id.tv_dw);
         et_flsl = (EditText) dialog_layout.findViewById(R.id.et_flsl);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+        tv_dw.setText(commandtab_single.getInstance().getNongzidw());
         btn_sure.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+//                SqliteDb.
                 currentlistItemView.tv_flsl.setVisibility(View.VISIBLE);
-                currentlistItemView.tv_flsl.setText(et_flsl.getText().toString()+"kg");
-                saveSelectRecords(AppContext.BELONG_ADD_CMD_AREA, firstid, firstType, secondItemName[position], secondItemName[position]);
+                currentlistItemView.tv_flsl.setText(et_flsl.getText().toString() + commandtab_single.getInstance().getNongzidw());
+                saveSelectCmdArea(firstid, firstType, secondItemid[pos], secondItemName[pos], et_flsl.getText().toString());
                 customDialog_flsl.dismiss();
             }
         });

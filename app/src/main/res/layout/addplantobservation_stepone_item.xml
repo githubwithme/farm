@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:focusable="false"
-              android:focusableInTouchMode="false"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
               android:orientation="vertical">
 
     <Button
         android:id="@+id/btn_zl"
         android:layout_width="80dip"
         android:layout_height="60dip"
-        android:background="@drawable/background_view_rounded_single"
-        android:text="@string/hello_world"
+        android:background="@drawable/btn_selector"
+        android:text=""
         android:layout_gravity="center"/>
 </LinearLayout>

@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="45dip"
-                android:background="@color/line_color"
+                android:background="@color/bg_selectitem"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="10dip"
                 android:text="假茎表现"
@@ -167,7 +167,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="45dip"
-                android:background="@color/line_color"
+                android:background="@color/bg_selectitem"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="10dip"
                 android:text="叶表现"
@@ -310,7 +310,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="45dip"
-                android:background="@color/line_color"
+                android:background="@color/bg_selectitem"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="10dip"
                 android:text="根系表现"

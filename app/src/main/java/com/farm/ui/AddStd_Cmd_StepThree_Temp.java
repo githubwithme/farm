@@ -23,6 +23,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
+import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.DictionaryHelper;
@@ -39,6 +40,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -55,6 +57,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
     FragmentCallBack fragmentCallBack = null;
     SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
+    HashMap<String, String> goodsNumber;
     private String[] list;
     private TextView[] tvList;
     private View[] views;
@@ -81,23 +84,10 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
         fragmentCallBack.callbackFun2(bundle);
     }
 
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser)
-//    {
-//        if (isVisibleToUser)
-//        {
-//            shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
-//            inflater = LayoutInflater.from(getActivity());
-//            getArealist();
-//        }
-//        super.setUserVisibleHint(isVisibleToUser);
-//    }
-
 
     @AfterViews
     void afterOncreate()
     {
-        shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
         inflater = LayoutInflater.from(getActivity());
         getArealist();
     }
@@ -150,6 +140,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
      */
     private void initPager()
     {
+        shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
         area_pager.setAdapter(shopAdapter);
         area_pager.setOnPageChangeListener(onPageChangeListener);
     }
@@ -201,9 +192,10 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
             Fragment fragment = new Area_Cmd_Fragment();
             Bundle bundle = new Bundle();
             bundle.putInt("index", index);
+            bundle.putString("GOODSNUMBER", goodsNumber.get(dictionary_wheel.getFirstItemID()[index]));
             bundle.putString("FN", dictionary_wheel.getFirstItemName()[index]);
             bundle.putString("FI", dictionary_wheel.getFirstItemID()[index]);
-            bundle.putStringArray("SI", dictionary_wheel.getSecondItemID().get(fn[index]));
+            bundle.putStringArray("SI", dictionary_wheel.getSecondItemID().get(dictionary_wheel.getFirstItemID()[index]));
             bundle.putStringArray("SN", dictionary_wheel.getSecondItemName().get(fn[index]));
             fragment.setArguments(bundle);
             return fragment;
@@ -280,8 +272,60 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic_area);
                             fn = dictionary_wheel.getFirstItemName();
                             showToolsView(fn);
-                            initPager();
                         }
+                    } else
+                    {
+                        lsitNewData = new ArrayList<Dictionary>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
+
+    private void getGoodsSum()
+    {
+        commandtab_single commandtab_single = com.farm.bean.commandtab_single.getInstance();
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        String aa = commandtab_single.getNongziId();
+        params.addQueryStringParameter("goodsId", commandtab_single.getNongziId());
+        params.addQueryStringParameter("action", "getGoodsSum");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                List<Dictionary> lsitNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+
+                    if (result.getAffectedRows() != 0)
+                    {
+                        String aa=result.getRows().toJSONString();
+                        int size = result.getRows().size();
+                        goodsNumber = new HashMap<String, String>();
+                        for (int i = 0; i < size; i++)
+                        {
+                            String parkId = result.getRows().getJSONObject(i).getString("parkId");
+                            String goodsSum = result.getRows().getJSONObject(i).getString("goodsSum");
+                            String parkName = result.getRows().getJSONObject(i).getString("parkName");
+                            goodsNumber.put(parkId, goodsSum);
+                        }
+                        initPager();
                     } else
                     {
                         lsitNewData = new ArrayList<Dictionary>();
@@ -304,8 +348,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
 
     public void update()
     {
-        shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
-        area_pager.setAdapter(shopAdapter);
+        getGoodsSum();
     }
 
     @Override
@@ -314,6 +357,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
         super.onAttach(activity);
         fragmentCallBack = (FragmentCallBack) activity;
     }
+
     @Override
     public void onDestroyView()
     {

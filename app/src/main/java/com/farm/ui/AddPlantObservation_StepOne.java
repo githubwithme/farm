@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.AddPlantObservation_StepOne_Adapter;
 import com.farm.app.AppConfig;
@@ -17,7 +18,8 @@ import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
 import com.farm.com.custominterface.FragmentCallBack;
-import com.farm.common.DictionaryHelper;
+import com.farm.common.utils;
+import com.farm.widget.CustomDialog_ListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -38,6 +40,10 @@ import java.util.List;
 @EFragment
 public class AddPlantObservation_StepOne extends Fragment
 {
+    CustomDialog_ListView customDialog_listView;
+    String  from="";
+    String  gcdid="";
+    String  gcd="";
     FragmentCallBack fragmentCallBack = null;
     @ViewById
     ListView lv;
@@ -47,10 +53,12 @@ public class AddPlantObservation_StepOne extends Fragment
     Dictionary dic_comm;
     Dictionary_wheel dictionary_wheel;
 
+
     @AfterViews
     void afterOncreate()
     {
-        getCommandlist();
+//        getCommandlist();
+        getTestData("gcd");
     }
 
     @Override
@@ -60,7 +68,15 @@ public class AddPlantObservation_StepOne extends Fragment
         commembertab = AppContext.getUserInfo(getActivity());
         return rootView;
     }
-
+    private void getTestData(String from)
+    {
+        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
+        Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
+        List<Dictionary> lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
+        dic_comm = lsitNewData.get(0);
+        addStd_cmd_stepOne_adapter = new AddPlantObservation_StepOne_Adapter(getActivity(), dic_comm, fragmentCallBack);
+        lv.setAdapter(addStd_cmd_stepOne_adapter);
+    }
     private void getCommandlist()
     {
         RequestParams params = new RequestParams();
@@ -85,8 +101,7 @@ public class AddPlantObservation_StepOne extends Fragment
                         if (lsitNewData != null)
                         {
                             dic_comm = lsitNewData.get(0);
-                            dictionary_wheel = DictionaryHelper.getDictionary_Command(dic_comm);
-                            addStd_cmd_stepOne_adapter = new AddPlantObservation_StepOne_Adapter(getActivity(), dictionary_wheel,fragmentCallBack);
+                            addStd_cmd_stepOne_adapter = new AddPlantObservation_StepOne_Adapter(getActivity(), dic_comm, fragmentCallBack);
                             lv.setAdapter(addStd_cmd_stepOne_adapter);
                         }
 
@@ -108,6 +123,7 @@ public class AddPlantObservation_StepOne extends Fragment
             }
         });
     }
+
 
     @Override
     public void onAttach(Activity activity)

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.FragmentViewPagerAdapter;
-import com.farm.bean.commandtab_single;
+import com.farm.bean.plantgrowthtab_single;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.widget.MyDialog;
 
@@ -237,7 +237,7 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
                 {
                     case R.id.btn_sure:
                         myDialog.dismiss();
-                        commandtab_single.getInstance().clearAll();
+                        plantgrowthtab_single.getInstance().clearAll();
                         finish();
                         break;
                     case R.id.btn_cancle:

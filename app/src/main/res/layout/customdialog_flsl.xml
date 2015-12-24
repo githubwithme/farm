@@ -46,6 +46,16 @@
                 android:textColorHint="@color/gray"
                 android:textSize="@dimen/size_14"/>
 
+            <TextView
+                android:id="@+id/tv_dw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/gray"
+                android:layout_marginBottom="30dip"
+                android:layout_toRightOf="@id/et_flsl"
+                android:layout_above="@id/line"/>
+
             <Button
                 android:id="@+id/btn_sure"
                 android:layout_width="150dip"

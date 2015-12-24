@@ -54,7 +54,7 @@
         </activity>
         <!-- 农场主UI -->
         <activity android:name=".ui.NCZ_CostFragment_"/>
-        <activity android:name=".ui.AddPlantObservation_"/>
+        <activity android:name=".ui.AddPlantObservation_" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.NCZ_PQ_TodayCommand_"/>
         <activity android:name=".ui.NCZ_PQ_TodayJob_"/>
         <activity android:name=".ui.NCZ_CZ_CommandDetail_"/>
