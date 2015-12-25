@@ -12,9 +12,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.app.AppContext;
 import com.farm.app.AppManager;
-import com.farm.bean.commembertab;
 import com.farm.widget.MyDialog;
 import com.farm.widget.MyDialog.CustomDialogListener;
 
@@ -29,7 +27,7 @@ public class PG_MainActivity extends Activity
 	MyDialog myDialog;
 	Fragment mContent = new Fragment();
 	PG_MainFragment mainFragment;
-	PG_TodayPlant pg_TodayPlant;
+	PG_GddList pg_gddList;
 	PG_EveryDayAssessList pg_EveryDayAssessList;
 	IFragment iFragment;
 	@ViewById
@@ -76,7 +74,7 @@ public class PG_MainActivity extends Activity
 		tl_home.setSelected(false);
 		tl_plant.setSelected(true);
 		tl_me.setSelected(false);
-		switchContent(mContent, pg_TodayPlant);
+		switchContent(mContent, pg_gddList);
 	}
 
 	@Click
@@ -107,11 +105,7 @@ public class PG_MainActivity extends Activity
 		getActionBar().hide();
 		AppManager.getAppManager().addActivity(this);
 		mainFragment = new PG_MainFragment_();
-		pg_TodayPlant = new PG_TodayPlant_();
-		Bundle bundle = new Bundle();
-		commembertab commembertab = AppContext.getUserInfo(this);
-		bundle.putString("areaid", commembertab.getareaId());
-		pg_TodayPlant.setArguments(bundle);
+		pg_gddList = new PG_GddList_();
 		pg_EveryDayAssessList = new PG_EveryDayAssessList_();
 		iFragment = new IFragment_();
 	}

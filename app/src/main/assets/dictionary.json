@@ -1,4 +1,10 @@
 {
+  "gcjl":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":1,"uId":12,"regDate":"2015-12-25 13:31:04","gcdId":"2","gcq":"1","jjbx":"3","ybx":"4","gxbx":"1","lbx":"1","ghbx":"1","csgbx":"1","cygbx":"1","szfx":"1","cjUserID":"20","cjUserName":"2m","plantGrowth":[{"id":1,"uId":12,"yNum":"22"},{"id":2,"uId":12,"yNum":"32"}]}],"other":[]},
+
+"gcjllist":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":1,"uId":12,"regDate":"2015-12-25 13:31:04","gcdId":"2","gcq":"1","jjbx":"3","ybx":"4","gxbx":"1","lbx":"1","ghbx":"1","csgbx":"1","cygbx":"1","szfx":"1","cjUserID":"20","cjUserName":"2m","imgurl":[""]}],"other":[]},
+
+  "img_url":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":"2","uId":12,"plantgcdName":"观测点1","regDate":"2015-12-15 09:31:59","parkId":"8","parkName":"武鸣园区","areaId":"4","areaName":"第一片区","x":"0","y":"0","imgurl":[""],"newDate":"2015-12-25 15:48:02"}],"other":[]},
+
   "jj_gjd":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["干净","有灰尘","肮脏"]}],"other":[]},
 
   "jj_gz":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["鲜艳","暗淡","正常"]}],"other":[]},

@@ -8,13 +8,13 @@ import com.lidroid.xutils.db.annotation.Table;
 import java.util.List;
 
 /**
- * 
+ *
  * Description: plantgrowthtab 实体类</p>
- * 
+ *
  * Copyright: Copyright (c) 2015
- * 
+ *
  * Company: 广州海川信息科技有限公司
- * 
+ *
  * @version 1.0
  */
 @Table(name = "plantgrowthtab")

@@ -126,7 +126,8 @@ public class PG_TodayPlant extends Fragment
 		appContext = (AppContext) getActivity().getApplication();
 		IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
 		getActivity().registerReceiver(receiver_update, intentfilter_update);
-		areaid = getArguments().getString("areaid");
+		commembertab commembertab=AppContext.getUserInfo(getActivity());
+		areaid =commembertab.getareaId();
 		timethread = new TimeThread();
 		timethread.setStop(false);
 		timethread.setSleep(false);

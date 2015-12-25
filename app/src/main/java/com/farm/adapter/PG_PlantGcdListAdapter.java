@@ -15,11 +15,9 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.HaveReadRecord;
+import com.farm.bean.PlantGcd;
 import com.farm.bean.commembertab;
-import com.farm.bean.planttab;
 import com.farm.common.BitmapHelper;
-import com.farm.common.SqliteDb;
 import com.farm.ui.AddPlantObservation_;
 import com.farm.ui.RecordList_;
 
@@ -29,14 +27,14 @@ import java.util.List;
 /**
  *
  */
-public class PG_TodayPlantAdapter extends BaseAdapter
+public class PG_PlantGcdListAdapter extends BaseAdapter
 {
 	ListItemView listItemView = null;
 	String audiopath;
 	private Context context;// 运行上下文
-	private List<planttab> listItems;// 数据集合
+	private List<PlantGcd> listItems;// 数据集合
 	private LayoutInflater listContainer;// 视图容器
-	planttab planttab;
+	PlantGcd PlantGcd;
 
 	static class ListItemView
 	{ // 自定义控件集合
@@ -57,7 +55,7 @@ public class PG_TodayPlantAdapter extends BaseAdapter
 	 * @param data
 	 * @param context
 	 */
-	public PG_TodayPlantAdapter(Context context, List<planttab> data)
+	public PG_PlantGcdListAdapter(Context context, List<PlantGcd> data)
 	{
 		this.context = context;
 		this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -86,13 +84,13 @@ public class PG_TodayPlantAdapter extends BaseAdapter
 	 */
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		planttab = listItems.get(position);
+		PlantGcd = listItems.get(position);
 		// 自定义视图
 
 		if (lmap.get(position) == null)
 		{
 			// 获取list_item布局文件的视图
-			convertView = listContainer.inflate(R.layout.pg_todayplantadapter, null);
+			convertView = listContainer.inflate(R.layout.pg_plantgcdlistadapter, null);
 			listItemView = new ListItemView();
 			// 获取控件对象
 			listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
@@ -115,17 +113,6 @@ public class PG_TodayPlantAdapter extends BaseAdapter
 				@Override
 				public void onClick(View v)
 				{
-					planttab plant = listItems.get(v.getId());
-					HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(context, plant.getId());
-					if (haveReadRecord != null)
-					{
-						SqliteDb.updateHaveReadRecord(context, plant.getId(), plant.getPlantvidioCount());
-						FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_new;
-						fl_new.setVisibility(View.GONE);
-					} else
-					{
-						SqliteDb.saveHaveReadRecord(context, plant.getId(), plant.getPlantvidioCount());
-					}
 					Intent intent = new Intent(context, RecordList_.class);
 					intent.putExtra("type", "3");
 					intent.putExtra("workid", listItems.get(v.getId()).getId());
@@ -150,39 +137,13 @@ public class PG_TodayPlantAdapter extends BaseAdapter
 			convertView = lmap.get(position);
 			listItemView = (ListItemView) convertView.getTag();
 		}
-		if (planttab.getImgUrl() != null && !planttab.getImgUrl().get(0).equals(""))
+		if (PlantGcd.getImgUrl() != null && !PlantGcd.getImgUrl().get(0).equals(""))
 		{
-			BitmapHelper.setImageView(context, listItemView.img, AppConfig.baseurl + planttab.getImgUrl().get(0));
+			BitmapHelper.setImageView(context, listItemView.img, AppConfig.baseurl + PlantGcd.getImgUrl().get(0));
 		}
 		// 设置文字和图片
-		HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(context, planttab.getId());
-		if (haveReadRecord != null)
-		{
-			String num = haveReadRecord.getNum();
-			if (num != null && !num.equals("") && (Integer.valueOf(num) < Integer.valueOf(planttab.getPlantvidioCount())))
-			{
-				int num_new = Integer.valueOf(planttab.getPlantvidioCount()) - Integer.valueOf(num);
-				listItemView.fl_new.setVisibility(View.VISIBLE);
-				listItemView.tv_new.setText(String.valueOf(num_new));
-			}
-		} else
-		{
-			SqliteDb.saveHaveReadRecord(context, planttab.getId(), planttab.getPlantvidioCount());
-		}
-		String a = planttab.getIsobser();
-		if (planttab.getIsobser().equals("0"))
-		{
-			listItemView.iv_addplant.setBackgroundColor(context.getResources().getColor(R.color.red));
-			listItemView.iv_addplant.setText("未观测");
-		} else
-		{
-		}
-		if (planttab.getplantType().equals("1"))
-		{
-			listItemView.tv_type.setText("异常");
-		}
-		listItemView.tv_plantname.setText(planttab.getplantName());
-		listItemView.tv_time.setText("最近：" + planttab.getGrowthDate().substring(5, planttab.getregDate().lastIndexOf(":")));
+		listItemView.tv_plantname.setText(PlantGcd.getPlantgcdName());
+		listItemView.tv_time.setText("最近：" + PlantGcd.getregDate().substring(5, PlantGcd.getregDate().lastIndexOf(":")));
 		return convertView;
 	}
 }

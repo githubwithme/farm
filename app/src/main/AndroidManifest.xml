@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.farm"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="1"
-    android:versionName="1.3">
+<manifest package="com.farm"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:versionCode="1"
+          android:versionName="1.3">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -54,7 +53,9 @@
         </activity>
         <!-- 农场主UI -->
         <activity android:name=".ui.NCZ_CostFragment_"/>
-        <activity android:name=".ui.AddPlantObservation_" android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".ui.AddPlantObservation_"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.NCZ_PQ_TodayCommand_"/>
         <activity android:name=".ui.NCZ_PQ_TodayJob_"/>
         <activity android:name=".ui.NCZ_CZ_CommandDetail_"/>
@@ -108,6 +109,8 @@
         <!-- 片管UI -->
         <activity android:name=".ui.PG_MainActivity_"/>
         <!-- 共用UI -->
+        <activity android:name=".ui.ObservationRecordActivity_"/>
+        <activity android:name=".ui.GrowthTreeActivity_"/>
         <activity android:name=".ui.Register_StepTwo_"/>
         <activity android:name=".ui.Register_StepThree_"/>
         <activity android:name=".ui.Register_StepOne_"/>
@@ -157,6 +160,10 @@
         <activity
             android:name=".ui.Goods_"
             android:label="库存">
+        </activity>
+        <activity
+            android:name=".ui.ObservationRecordActivity"
+            android:label="@string/title_activity_observation_record">
         </activity>
     </application>
 

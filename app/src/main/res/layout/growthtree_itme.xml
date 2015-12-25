@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="80dip"
+        android:layout_height="55dip"
+        android:layout_gravity="center"
+        android:background="@drawable/top"
+        android:scaleType="center"
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dip" >
+
+        <ImageView
+            android:id="@+id/ic_center"
+            android:layout_width="80dip"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/centerleft"
+            android:scaleType="center"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:id="@+id/ll_left"
+            android:layout_width="140dip"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/ic_center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/iv_img_left"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_margin="10dip"
+                android:layout_weight="1"
+                android:background="@drawable/noimg"
+                android:scaleType="center"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tv_sg_left"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="树高：暂无"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_ys_left"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="叶树：暂无"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_wj_left"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="围径：暂无"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_cjtime_left"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="2015-9-22"
+                    android:textColor="@color/gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_right"
+            android:layout_width="140dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dip"
+            android:layout_toRightOf="@id/ic_center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/iv_img_right"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_margin="10dip"
+                android:layout_weight="1"
+                android:background="@drawable/noimg"
+                android:scaleType="center"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tv_sg_right"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="树高：暂无"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_ys_right"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="树高：暂无"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_wj_right"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="围径：暂无"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_cjtime_right"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="2015-9-22"
+                    android:textColor="@color/gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_bottom"
+        android:layout_width="80dip"
+        android:layout_height="70dip"
+        android:layout_gravity="center"
+        android:background="@drawable/bottom"
+        android:scaleType="center"
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
+
+</LinearLayout>
