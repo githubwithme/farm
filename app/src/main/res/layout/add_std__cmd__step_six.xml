@@ -284,7 +284,7 @@
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="20dip"
                 android:background="@drawable/background_view_rounded_single"
-                android:text="确定"
+                android:text="发布"
                 android:textColor="@color/bg_text"/>
         </LinearLayout>
     </ScrollView>

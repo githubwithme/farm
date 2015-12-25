@@ -52,9 +52,9 @@
             android:id="@+id/btn_add"
             android:layout_width="40dip"
             android:layout_height="40dip"
-            android:layout_toLeftOf="@id/btn_search"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dip"
+            android:layout_toLeftOf="@id/btn_search"
             android:background="@null"
             android:contentDescription=""
             android:src="@drawable/plus"/>
@@ -74,7 +74,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="100dip"
-        android:background="@drawable/bg_cmd_add1"/>
+        android:background="@drawable/bg_cmd_add1"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -117,8 +118,8 @@
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="15dip"
             android:layout_marginRight="15dip"
-            android:visibility="gone"
-            android:background="@drawable/ic_add_red"/>
+            android:background="@drawable/ic_add_red"
+            android:visibility="gone"/>
     </FrameLayout>
 
 </LinearLayout>

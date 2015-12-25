@@ -137,7 +137,7 @@ public class IFragment extends Fragment
 	{
 		getListData();
 		commembertab commembertab = AppContext.getUserInfo(getActivity());
-		BitmapHelper.setImageViewBackground(getActivity(), circle_img, "http://img.popoho.com/UploadPic/2010-12/201012297441441.png");
+		BitmapHelper.setImageViewBackground(getActivity(), circle_img, commembertab.getimgurl());
 	}
 
 	@Override

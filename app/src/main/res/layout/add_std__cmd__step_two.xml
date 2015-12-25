@@ -82,16 +82,15 @@
                 android:layout_height="1px"
                 android:background="@color/line_color"/>
 
-            <GridView
-                android:id="@+id/gridview_goods"
+            <ListView
+                android:id="@+id/list_goods"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="15dip"
-                android:horizontalSpacing="10dp"
-                android:numColumns="3"
+                android:divider="@color/transparent"
+                android:dividerHeight="0dip"
                 android:scrollbars="none"
-                android:verticalSpacing="15dp"/>
+                />
 
         </LinearLayout>
     </LinearLayout>

@@ -11,8 +11,8 @@
         android:id="@+id/typename"
         android:layout_width="70dip"
         android:background="@drawable/background_view_rounded_single"
-        android:layout_height="40dip"
+        android:layout_height="50dip"
         android:gravity="center"
-        android:textSize="12sp" />
+        android:textSize="@dimen/size_14" />
 
 </LinearLayout>

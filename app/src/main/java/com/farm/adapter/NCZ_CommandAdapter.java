@@ -151,20 +151,20 @@ public class NCZ_CommandAdapter extends BaseAdapter
 		if (commandtab.getimportance().equals("0"))
 		{
 			listItemView.tv_importance.setText("一般");
-			// listItemView.circle_img.setBackground(context.getResources().getDrawable(R.drawable.bg_importance1));
+//			 listItemView.circle_img.setBackground(context.getResources().getDrawable(R.drawable.bg_importance1));
 		} else if (commandtab.getimportance().equals("1"))
 		{
 			listItemView.tv_importance.setText("重要");
-			// listItemView.circle_img.setBackground(context.getResources().getDrawable(R.drawable.bg_importance2));
+//			 listItemView.circle_img.setBackground(context.getResources().getDrawable(R.drawable.bg_importance2));
 		} else if (commandtab.getimportance().equals("2"))
 		{
 			listItemView.tv_importance.setText("非常重要");
-			listItemView.circle_img.setBackground(context.getResources().getDrawable(R.drawable.bg_importance3));
+//			listItemView.circle_img.setBackground(context.getResources().getDrawable(R.drawable.bg_importance3));
 		} else if (commandtab.getimportance().equals("3"))
 		{
 			listItemView.tv_importance.setTextColor(context.getResources().getColor(R.color.bg_text));
 			listItemView.tv_importance.setText("未知");
-			// listItemView.circle_img.setBorderColor(context.getResources().getColor(R.color.bg_text));
+//			 listItemView.circle_img.setBorderColor(context.getResources().getColor(R.color.bg_text));
 		}
 		return convertView;
 	}

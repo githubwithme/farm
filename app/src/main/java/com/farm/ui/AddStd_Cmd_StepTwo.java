@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -57,7 +57,7 @@ public class AddStd_Cmd_StepTwo extends Fragment
     @ViewById
     ExpandableListView mainlistview;
     @ViewById
-    GridView gridview_goods;
+    ListView list_goods;
     @ViewById
     TextView tv_head;
     @ViewById
@@ -110,7 +110,7 @@ public class AddStd_Cmd_StepTwo extends Fragment
                         {
                             dic = lsitNewData.get(0);
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic);
-                            CustomExpandableListAdapter customExpandableListAdapter = new CustomExpandableListAdapter(getActivity(), dictionary_wheel, mainlistview, gridview_goods, tv_head, fragmentCallBack);
+                            CustomExpandableListAdapter customExpandableListAdapter = new CustomExpandableListAdapter(getActivity(), dictionary_wheel, mainlistview, list_goods, tv_head, fragmentCallBack);
                             mainlistview.setAdapter(customExpandableListAdapter);
                             mainlistview.expandGroup(0);
                         }

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -18,10 +18,12 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
+import com.farm.bean.SelectCmdArea;
 import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
 import com.farm.com.custominterface.FragmentCallBack;
+import com.farm.common.SqliteDb;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -58,11 +60,11 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
     int currentChildsize = 0;
     FragmentCallBack fragmentCallBack;
     private AddStd_Cmd_goodslistdapter adapter;
-    GridView gridview;
+    ListView listview;
 
-    public CustomExpandableListAdapter(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview, GridView gridview, TextView tv_head, FragmentCallBack fragmentCallBack)
+    public CustomExpandableListAdapter(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview,ListView listview, TextView tv_head, FragmentCallBack fragmentCallBack)
     {
-        this.gridview = gridview;
+        this.listview = listview;
         this.fragmentCallBack = fragmentCallBack;
         this.dictionary_wheel = dictionary_wheel;
         this.mainlistview = mainlistview;
@@ -270,12 +272,14 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
                         if (list_goods != null)
                         {
                             adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
-                            gridview.setAdapter(adapter);
-                            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                            listview.setAdapter(adapter);
+                            listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
                             {
                                 @Override
                                 public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
                                 {
+                                    SqliteDb.deleteAllSelectCmdArea(context, SelectCmdArea.class);
+
                                     commandtab_single commandtab_single = com.farm.bean.commandtab_single.getInstance();
                                     commandtab_single.setnongziName(list_goods.get(pos).getgoodsName());
                                     commandtab_single.setNongziId(list_goods.get(pos).getId());
@@ -295,14 +299,14 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
                         {
                             list_goods = new ArrayList<goodslisttab>();
                             adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
-                            gridview.setAdapter(adapter);
+                            listview.setAdapter(adapter);
                         }
 
                     } else
                     {
                         list_goods = new ArrayList<goodslisttab>();
                         adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
-                        gridview.setAdapter(adapter);
+                        listview.setAdapter(adapter);
                     }
                 } else
                 {

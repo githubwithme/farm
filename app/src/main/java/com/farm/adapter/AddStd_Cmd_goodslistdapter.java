@@ -61,8 +61,12 @@ public class AddStd_Cmd_goodslistdapter extends BaseAdapter
         if (list != null && list.size() > 0)
         {
             goodslisttab = list.get(position);
-            BitmapHelper.setImageViewBackground(context, view.icon,"http://pic4.nipic.com/20090827/3095621_083213047918_2.jpg");
+            if (!goodslisttab.getImgurl().equals(""))
+            {
+                BitmapHelper.setImageViewBackground(context, view.icon, goodslisttab.getImgurl());
+            }
             view.name.setText(goodslisttab.getgoodsName());
+            view.tv_gg.setText("规格："+goodslisttab.getgoodsSpec());
         }
 
         return convertView;
@@ -72,11 +76,13 @@ public class AddStd_Cmd_goodslistdapter extends BaseAdapter
     {
         private ImageView icon;
         private TextView name;
+        private TextView tv_gg;
 
         public Holder(View view)
         {
             icon = (ImageView) view.findViewById(R.id.typeicon);
             name = (TextView) view.findViewById(R.id.typename);
+            tv_gg = (TextView) view.findViewById(R.id.tv_gg);
         }
     }
 

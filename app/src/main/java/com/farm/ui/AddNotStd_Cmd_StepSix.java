@@ -121,10 +121,10 @@ public class AddNotStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("commNote", commandtab_single.getcommNote());
         params.addQueryStringParameter("commDays", commandtab_single.getcommDays());
         params.addQueryStringParameter("commComDate", commandtab_single.getcommComDate());
-        params.addQueryStringParameter("stdJobType", commandtab_single.getstdJobType());
-        params.addQueryStringParameter("stdJobTypeName", commandtab_single.getstdJobTypeName());
-        params.addQueryStringParameter("stdJobId", commandtab_single.getstdJobId());
-        params.addQueryStringParameter("stdJobName", commandtab_single.getstdJobName());
+        params.addQueryStringParameter("stdJobType", "0");
+        params.addQueryStringParameter("stdJobTypeName", "");
+        params.addQueryStringParameter("stdJobId", "0");
+        params.addQueryStringParameter("stdJobName", "");
         params.addQueryStringParameter("importance", commandtab_single.getimportance());
         params.addQueryStringParameter("execLevel", "1");
         HttpUtils http = new HttpUtils();
