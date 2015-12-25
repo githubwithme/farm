@@ -57,7 +57,18 @@ public class commandtab_single implements Parcelable
 	public String nongziId;
 	public String nongzigg;
 	public String nongzidw;
+	public String importancetype;
 
+
+	public String getImportancetype()
+	{
+		return importancetype;
+	}
+
+	public void setImportancetype(String importancetype)
+	{
+		this.importancetype = importancetype;
+	}
 
 	public void setNongzidw(String nongzidw)
 	{
@@ -504,6 +515,7 @@ public class commandtab_single implements Parcelable
 			p.setNongziId(source.readString());
 			p.setNongzigg(source.readString());
 			p.setNongzidw(source.readString());
+			p.setImportancetype(source.readString());
 			return p;
 		}
 
@@ -555,6 +567,7 @@ public class commandtab_single implements Parcelable
 		p.writeString(nongziId);
 		p.writeString(nongzigg);
 		p.writeString(nongzidw);
+		p.writeString(importancetype);
 	}
 
 	@Override

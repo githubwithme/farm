@@ -90,6 +90,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
                     } else
                     {
                         deleteSelectRecords(firstType, secondItemName[pos]);
+                        currentlistItemView.tv_flsl.setVisibility(View.GONE);
                     }
                 }
             });
@@ -121,6 +122,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
         selectCmdArea.setThirdid("");
         selectCmdArea.setThirdtype("");
         selectCmdArea.setGoodsnumber(goodsnumber);
+        selectCmdArea.setGoodsdw(commandtab_single.getInstance().getNongzidw());
         selectCmdArea.setId(1);
         SqliteDb.save(context, selectCmdArea);
     }

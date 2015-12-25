@@ -76,12 +76,12 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:paddingLeft="10dip"
-                        android:text="已选择区域"
+                        android:text="已选区域及肥料用量"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
 
                     <TextView
-                        android:id="@+id/tv_area"
+                        android:id="@+id/tv_flyl"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_colum"
                         android:layout_span="3"
@@ -93,6 +93,8 @@
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
                 </TableRow>
+
+
 
                 <View
                     android:layout_width="match_parent"

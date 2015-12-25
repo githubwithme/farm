@@ -30,6 +30,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +39,7 @@ import java.util.List;
 @EFragment
 public class AddNotStd_Cmd_StepSix extends Fragment
 {
+    List<SelectCmdArea> list_SelectCmdArea=new ArrayList<SelectCmdArea>();
     @ViewById
     TextView tv_importance;
     @ViewById
@@ -47,9 +49,12 @@ public class AddNotStd_Cmd_StepSix extends Fragment
     @ViewById
     TextView tv_timelimit;
     @ViewById
-    TextView tv_area;
-    @ViewById
     TextView tv_note;
+    @ViewById
+    TextView tv_flyl;
+    String tempareaId = "";
+    String tempflyl = "";
+    String tempareaName = "";
     commandtab_single commandtab_single;
     com.farm.bean.commandtab commandtab;
 
@@ -74,9 +79,20 @@ public class AddNotStd_Cmd_StepSix extends Fragment
 
     public void showData()
     {
+        tempareaId = "";
+        tempareaName = "";
+        tempflyl = "";
+        list_SelectCmdArea = SqliteDb.getSelectCmdArea(getActivity(), SelectCmdArea.class);
+        for (int i = 0; i < list_SelectCmdArea.size(); i++)
+        {
+            tempareaId = tempareaId + list_SelectCmdArea.get(i).getFirstid() + ":" + list_SelectCmdArea.get(i).getSecondid() + ":" + list_SelectCmdArea.get(i).getGoodsnumber() + ",";
+            tempareaName = tempareaName + list_SelectCmdArea.get(i).getFirsttype() + ":" + list_SelectCmdArea.get(i).getSecondtype() + ",";
+            tempflyl = tempflyl + list_SelectCmdArea.get(i).getFirsttype() + ":" + list_SelectCmdArea.get(i).getSecondtype() + ":" + list_SelectCmdArea.get(i).getGoodsnumber() +list_SelectCmdArea.get(i).getGoodsdw() + "\n";
+        }
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
-        tv_importance.setText(commandtab_single.getimportance());
+        tv_importance.setText(commandtab_single.getImportancetype());
         tv_nz.setText(commandtab_single.getnongziName());
+        tv_flyl.setText(tempflyl);
         tv_workday.setText(commandtab_single.getcommDays());
         tv_note.setText(commandtab_single.getcommNote());
         tv_timelimit.setText(commandtab_single.getcommComDate());
@@ -96,11 +112,10 @@ public class AddNotStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("userName", commembertab.getrealName());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "commandTabAdd");
-
+        params.addQueryStringParameter("areaId", tempareaId.substring(0, tempareaId.length() - 1));
+        params.addQueryStringParameter("areaName", tempareaName.substring(0, tempareaName.length() - 1));
         params.addQueryStringParameter("parkId", "");
         params.addQueryStringParameter("parkName", "");
-        params.addQueryStringParameter("areaId", "");
-        params.addQueryStringParameter("areaName", "");
         params.addQueryStringParameter("nongziName", commandtab_single.getnongziName());
         params.addQueryStringParameter("amount", "");
         params.addQueryStringParameter("commNote", commandtab_single.getcommNote());

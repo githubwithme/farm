@@ -135,6 +135,8 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+        commandtab_single.getInstance().clearAll();
+        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, SelectCmdArea.class);
     }
 
 

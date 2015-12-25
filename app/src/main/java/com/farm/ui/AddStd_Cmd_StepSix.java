@@ -50,13 +50,16 @@ public class AddStd_Cmd_StepSix extends Fragment
     @ViewById
     TextView tv_timelimit;
     @ViewById
-    TextView tv_area;
-    @ViewById
     TextView tv_note;
+    @ViewById
+    TextView tv_flyl;
     commandtab_single commandtab_single;
     com.farm.bean.commandtab commandtab;
+    String tempareaId = "";
+    String tempflyl = "";
+    String tempareaName = "";
+    List<SelectCmdArea> list_SelectCmdArea = new ArrayList<SelectCmdArea>();
 
-    List<SelectCmdArea> list_SelectCmdArea=new ArrayList<SelectCmdArea>();
     @Click
     void btn_sure()
     {
@@ -78,8 +81,19 @@ public class AddStd_Cmd_StepSix extends Fragment
 
     public void showData()
     {
+        tempareaId = "";
+        tempareaName = "";
+        tempflyl = "";
+        list_SelectCmdArea = SqliteDb.getSelectCmdArea(getActivity(), SelectCmdArea.class);
+        for (int i = 0; i < list_SelectCmdArea.size(); i++)
+        {
+            tempareaId = tempareaId + list_SelectCmdArea.get(i).getFirstid() + ":" + list_SelectCmdArea.get(i).getSecondid() + ":" + list_SelectCmdArea.get(i).getGoodsnumber() + ",";
+            tempareaName = tempareaName + list_SelectCmdArea.get(i).getFirsttype() + ":" + list_SelectCmdArea.get(i).getSecondtype() + ",";
+            tempflyl = tempflyl + list_SelectCmdArea.get(i).getFirsttype() + ":" + list_SelectCmdArea.get(i).getSecondtype() + ":" + list_SelectCmdArea.get(i).getGoodsnumber() + list_SelectCmdArea.get(i).getGoodsdw() + "\n";
+        }
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
-        tv_importance.setText(commandtab_single.getimportance());
+        tv_importance.setText(commandtab_single.getImportancetype());
+        tv_flyl.setText(tempflyl);
         tv_nz.setText(commandtab_single.getnongziName());
         tv_selectcmd.setText(commandtab_single.getstdJobTypeName() + "-" + commandtab_single.getstdJobName());
         tv_workday.setText(commandtab_single.getcommDays());
@@ -96,17 +110,8 @@ public class AddStd_Cmd_StepSix extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-
-        list_SelectCmdArea = SqliteDb.getSelectCmdArea(getActivity(), SelectCmdArea.class);
-        String tempid = "";
-        String tempname = "";
-        for (int i = 0; i < list_SelectCmdArea.size(); i++)
-        {
-            tempid = tempid + list_SelectCmdArea.get(i).getFirstid() + ":" + list_SelectCmdArea.get(i).getSecondid()+ ":" + list_SelectCmdArea.get(i).getGoodsnumber() + ",";
-            tempname = tempname + list_SelectCmdArea.get(i).getFirsttype() + ":" + list_SelectCmdArea.get(i).getSecondtype() + ",";
-        }
-        params.addQueryStringParameter("areaId", tempid.substring(0, tempid.length() - 1));
-        params.addQueryStringParameter("areaName", tempname.substring(0, tempname.length() - 1));
+        params.addQueryStringParameter("areaId", tempareaId.substring(0, tempareaId.length() - 1));
+        params.addQueryStringParameter("areaName", tempareaName.substring(0, tempareaName.length() - 1));
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("userName", commembertab.getrealName());
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -169,6 +174,7 @@ public class AddStd_Cmd_StepSix extends Fragment
             }
         });
     }
+
     @Override
     public void onDestroyView()
     {

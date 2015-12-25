@@ -12,9 +12,11 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_AddNotStd_Cmd;
+import com.farm.bean.SelectCmdArea;
 import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab_singleton;
 import com.farm.com.custominterface.FragmentCallBack;
+import com.farm.common.SqliteDb;
 import com.farm.widget.MyDialog;
 
 import org.androidannotations.annotations.AfterViews;
@@ -121,6 +123,8 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+        commandtab_single.getInstance().clearAll();
+        SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd.this, SelectCmdArea.class);
     }
 
 

@@ -33,7 +33,7 @@ public class CustomDialog_FLSL extends Dialog
     {
         super.onCreate(savedInstanceState);
         this.setContentView(layout);
-        this.setCanceledOnTouchOutside(true);
+        this.setCanceledOnTouchOutside(false);
     }
 
 

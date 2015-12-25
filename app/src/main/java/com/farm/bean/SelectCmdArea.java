@@ -25,7 +25,18 @@ public class SelectCmdArea extends Entity
 	String thirdid;
 	String thirdtype;
 	String goodsnumber;
+	String goodsdw;
 
+
+	public String getGoodsdw()
+	{
+		return goodsdw;
+	}
+
+	public void setGoodsdw(String goodsdw)
+	{
+		this.goodsdw = goodsdw;
+	}
 
 	public void setGoodsnumber(String goodsnumber)
 	{
