@@ -53,7 +53,7 @@ public class Area_Cmd_Fragment extends Fragment
         tv_number.setText(GOODSNUMBER);
         tv_dw.setText(commandtab_single.getInstance().getNongzidw());
         tv_gg.setText(commandtab_single.getInstance().getNongzigg());
-        area_cmd_adapter = new Area_Cmd_Adapter(getActivity(), fragmentCallBack, FI, FN, SI, SN);
+        area_cmd_adapter = new Area_Cmd_Adapter(getActivity(), fragmentCallBack, FI, FN, SI, SN,GOODSNUMBER);
         morelist.setAdapter(area_cmd_adapter);
         morelist.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {

@@ -78,8 +78,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="80dip"
-        android:layout_marginRight="15dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
         android:layout_marginTop="10dip"
         android:background="@drawable/background_view_rounded_single"
         android:orientation="horizontal">
@@ -126,12 +126,12 @@
                     android:minHeight="50dip">
 
                     <ImageView
-                        android:layout_width="@dimen/size_35"
-                        android:layout_height="@dimen/size_35"
+                        android:layout_width="@dimen/size_50"
+                        android:layout_height="@dimen/size_50"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:background="@drawable/shengchan"/>
+                        android:background="@drawable/ic_gz"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -207,12 +207,12 @@
                     android:minHeight="50dip">
 
                     <ImageView
-                        android:layout_width="@dimen/size_35"
-                        android:layout_height="@dimen/size_35"
+                        android:layout_width="@dimen/size_50"
+                        android:layout_height="@dimen/size_50"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:background="@drawable/miaoqing"/>
+                        android:background="@drawable/ic_mq"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -287,12 +287,12 @@
                     android:minHeight="50dip">
 
                     <ImageView
-                        android:layout_width="@dimen/size_35"
-                        android:layout_height="@dimen/size_35"
+                        android:layout_width="@dimen/size_50"
+                        android:layout_height="@dimen/size_50"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:background="@drawable/zhining"/>
+                        android:background="@drawable/ic_zl"/>
                 </RelativeLayout>
 
                 <RelativeLayout

@@ -20,6 +20,7 @@ import com.farm.common.SqliteDb;
 import com.farm.widget.CustomDialog_FLSL;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Area_Cmd_Adapter extends BaseAdapter
 {
@@ -32,14 +33,17 @@ public class Area_Cmd_Adapter extends BaseAdapter
     private int position = 0;
     // Holder hold;
     private LayoutInflater listContainer;// 视图容器
+    int goodsNumber;
     String firstid;
     String firstType;
     String[] secondItemid;
     String[] secondItemName;
+    int acountnumber = 0;
 
-    public Area_Cmd_Adapter(Context context, FragmentCallBack fragmentCallBack, String firstid, String firstType, String[] secondItemid, String[] secondItemName)
+    public Area_Cmd_Adapter(Context context, FragmentCallBack fragmentCallBack, String firstid, String firstType, String[] secondItemid, String[] secondItemName, String goodsNumber)
     {
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
+        this.goodsNumber = Integer.valueOf(goodsNumber);
         this.context = context;
         this.secondItemid = secondItemid;
         this.secondItemName = secondItemName;
@@ -145,11 +149,26 @@ public class Area_Cmd_Adapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-//                SqliteDb.
-                currentlistItemView.tv_flsl.setVisibility(View.VISIBLE);
-                currentlistItemView.tv_flsl.setText(et_flsl.getText().toString() + commandtab_single.getInstance().getNongzidw());
                 saveSelectCmdArea(firstid, firstType, secondItemid[pos], secondItemName[pos], et_flsl.getText().toString());
-                customDialog_flsl.dismiss();
+                List<SelectCmdArea> list_SelectCmdArea = SqliteDb.getSelectCmdArea(context, SelectCmdArea.class);
+                acountnumber = 0;
+                for (int i = 0; i < list_SelectCmdArea.size(); i++)
+                {
+                    acountnumber = acountnumber + Integer.valueOf(list_SelectCmdArea.get(i).getGoodsnumber());
+                }
+                if (acountnumber > goodsNumber)
+                {
+                    currentlistItemView.tv_flsl.setVisibility(View.VISIBLE);
+                    currentlistItemView.tv_flsl.setText(et_flsl.getText().toString() + commandtab_single.getInstance().getNongzidw() + " " + "【不足】");
+
+                    customDialog_flsl.dismiss();
+                } else
+                {
+                    currentlistItemView.tv_flsl.setVisibility(View.VISIBLE);
+                    currentlistItemView.tv_flsl.setText(et_flsl.getText().toString() + commandtab_single.getInstance().getNongzidw());
+                    customDialog_flsl.dismiss();
+                }
+
             }
         });
         customDialog_flsl.show();
