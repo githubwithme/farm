@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:descendantFocusability="blocksDescendants"
+              android:descendantFocusability="afterDescendants"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
@@ -9,7 +9,6 @@
         android:id="@+id/btn_zl"
         android:layout_width="80dip"
         android:layout_height="60dip"
-        android:focusable = "false"
         android:background="@drawable/btn_selector"
         android:text=""
         android:layout_gravity="center"/>

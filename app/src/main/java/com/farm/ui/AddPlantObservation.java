@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,21 +30,14 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
     int currentItem;
     private ArrayList<Fragment> fragmentList;
     @ViewById
-    TextView text_one;
-    @ViewById
     TextView text_three;
     @ViewById
     TextView text_four;
     @ViewById
     TextView text_five;
     @ViewById
-    ImageView image_one;
-    @ViewById
-    ImageView image_three;
-    @ViewById
-    ImageView image_four;
-    @ViewById
-    ImageView image_five;
+    TextView text_six;
+
     @ViewById
     android.support.v4.view.ViewPager vPager;
 
@@ -55,50 +47,44 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
         finish();
     }
 
-    @Click
-    void text_one()
-    {
-        vPager.setCurrentItem(0);
-    }
-
 
     @Click
     void text_three()
     {
-        vPager.setCurrentItem(1);
+        vPager.setCurrentItem(0);
     }
 
     @Click
     void text_four()
     {
-        vPager.setCurrentItem(2);
+        vPager.setCurrentItem(1);
     }
 
     @Click
     void text_five()
     {
-        vPager.setCurrentItem(3);
+        vPager.setCurrentItem(2);
     }
 
     @Click
     void text_six()
     {
-        vPager.setCurrentItem(4);
+        vPager.setCurrentItem(3);
     }
 
     @AfterViews
     void afterOncreate()
     {
         fragmentList = new ArrayList<Fragment>();
-        AddPlantObservation_StepOne addPlantObservation_stepOne = new AddPlantObservation_StepOne_();
         AddPlantObservation_StepTwo addPlantObservation_stepTwo = new AddPlantObservation_StepTwo_();
         AddPlantObservation_StepThree addPlantObservation_stepThree = new AddPlantObservation_StepThree_();
         AddPlantObservation_stepfour addPlantObservation_stepfour = new AddPlantObservation_stepfour_();
+        AddPlantObservation_stepFive addPlantObservation_stepFive = new AddPlantObservation_stepFive_();
 
-        fragmentList.add(addPlantObservation_stepOne);
         fragmentList.add(addPlantObservation_stepTwo);
         fragmentList.add(addPlantObservation_stepThree);
         fragmentList.add(addPlantObservation_stepfour);
+        fragmentList.add(addPlantObservation_stepFive);
 
         setBackground(0);
         //关闭预加载，默认一次只加载一个Fragment
@@ -126,55 +112,45 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
 
     private void setBackground(int pos)
     {
-        image_one.setBackgroundResource(R.drawable.line);
-        image_three.setBackgroundResource(R.drawable.line);
-        image_four.setBackgroundResource(R.drawable.line);
-        image_five.setBackgroundResource(R.drawable.line);
-
-        text_one.setBackgroundResource(R.color.white);
         text_three.setBackgroundResource(R.color.white);
         text_four.setBackgroundResource(R.color.white);
         text_five.setBackgroundResource(R.color.white);
+        text_six.setBackgroundResource(R.color.white);
 
-        text_one.setTextColor(Color.parseColor("#5B5B5B"));
         text_three.setTextColor(Color.parseColor("#5B5B5B"));
         text_four.setTextColor(Color.parseColor("#5B5B5B"));
         text_five.setTextColor(Color.parseColor("#5B5B5B"));
+        text_six.setTextColor(Color.parseColor("#5B5B5B"));
 
         switch (pos)
         {
             case 0:
-                image_one.setBackgroundResource(R.drawable.green_line);
-                text_one.setTextColor(Color.parseColor("#FFFFFF"));
-                text_one.setBackgroundResource(R.drawable.tag_next);
-                break;
-
-            case 1:
-                image_three.setBackgroundResource(R.drawable.green_line);
-                text_one.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
-                text_one.setBackgroundResource(R.drawable.tag_red);
                 text_three.setBackgroundResource(R.drawable.tag_next);
                 break;
-            case 2:
-                image_four.setBackgroundResource(R.drawable.green_line);
-                text_one.setTextColor(Color.parseColor("#FFFFFF"));
+            case 1:
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
                 text_four.setTextColor(Color.parseColor("#FFFFFF"));
-                text_one.setBackgroundResource(R.drawable.tag_red);
                 text_three.setBackgroundResource(R.drawable.tag_red);
                 text_four.setBackgroundResource(R.drawable.tag_next);
                 break;
-            case 3:
-                image_five.setBackgroundResource(R.drawable.green_line);
-                text_one.setTextColor(Color.parseColor("#FFFFFF"));
+            case 2:
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
                 text_four.setTextColor(Color.parseColor("#FFFFFF"));
                 text_five.setTextColor(Color.parseColor("#FFFFFF"));
-                text_one.setBackgroundResource(R.drawable.tag_red);
                 text_three.setBackgroundResource(R.drawable.tag_red);
                 text_four.setBackgroundResource(R.drawable.tag_red);
                 text_five.setBackgroundResource(R.drawable.tag_next);
+                break;
+            case 3:
+                text_three.setTextColor(Color.parseColor("#FFFFFF"));
+                text_four.setTextColor(Color.parseColor("#FFFFFF"));
+                text_five.setTextColor(Color.parseColor("#FFFFFF"));
+                text_six.setTextColor(Color.parseColor("#FFFFFF"));
+                text_three.setBackgroundResource(R.drawable.tag_red);
+                text_four.setBackgroundResource(R.drawable.tag_red);
+                text_five.setBackgroundResource(R.drawable.tag_red);
+                text_six.setBackgroundResource(R.drawable.tag_next);
                 break;
 
         }
@@ -208,12 +184,14 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
             case 1:
                 break;
             case 2:
+                break;
             case 3:
                 break;
             case 4:
                 break;
         }
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
