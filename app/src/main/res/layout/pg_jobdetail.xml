@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/ll_jobdetail"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:orientation="vertical">
+<LinearLayout
+    android:id="@+id/ll_jobdetail"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dip"
+            android:layout_marginLeft="10dip"
             android:background="@null"
             android:contentDescription=""
             android:src="@drawable/back"/>
@@ -52,8 +53,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dip"
-        android:layout_marginTop="10dip"
+        android:layout_margin="10dip"
+        android:background="@drawable/background_view_rounded_single"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -68,6 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
                 android:gravity="center"
                 android:text="作业内容："
                 android:textColor="@color/black"
@@ -110,6 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="重要性："
                     android:textColor="@color/black"
@@ -143,6 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="农资："
                     android:textColor="@color/black"
@@ -177,6 +181,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="用量："
                     android:textColor="@color/black"
@@ -210,6 +215,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="期限："
                     android:textColor="@color/black"
@@ -244,6 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dip"
                 android:gravity="center"
                 android:text="说明:"
                 android:textColor="@color/black"
@@ -277,6 +284,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dip"
                 android:gravity="center"
                 android:text="评分:"
                 android:textColor="@color/black"
@@ -310,6 +318,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dip"
                 android:gravity="center"
                 android:text="评分说明:"
                 android:textColor="@color/black"
@@ -320,8 +329,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:gravity="center"
+                android:gravity="right"
                 android:text="暂无"
+                android:layout_marginRight="10dip"
                 android:textColor="@color/bg_yellow"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>

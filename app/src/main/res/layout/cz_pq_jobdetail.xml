@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:id="@+id/ll_jobdetail"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar" >
+        android:background="@color/bg_titlebar">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -17,7 +19,7 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back" />
+            android:src="@drawable/back"/>
 
         <TextView
             android:id="@+id/tv_title"
@@ -27,48 +29,50 @@
             android:gravity="center"
             android:text="工作详情"
             android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize" />
+            android:textSize="@dimen/titlebar_textsize"/>
+
         <Button
             android:id="@+id/btn_score"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:background="@null"
             android:layout_marginRight="10dip"
+            android:background="@null"
+            android:gravity="center"
             android:text="评分"
             android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize" />
+            android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dip"
-        android:layout_marginTop="10dip"
-        android:orientation="vertical" >
+        android:layout_margin="10dip"
+        android:background="@drawable/background_view_rounded_single"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             android:minHeight="50dip"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_jobname_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
                 android:gravity="center"
                 android:text="作业内容："
-                android:textColor="@color/black"
-                android:textSize="@dimen/size_14" />
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_14"/>
 
             <TextView
                 android:id="@+id/tv_jobname"
@@ -81,36 +85,37 @@
                 android:gravity="right"
                 android:text="蕉蕾喷雾"
                 android:textColor="@color/bg_yellow"
-                android:textSize="@dimen/size_14" />
+                android:textSize="@dimen/size_14"/>
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
         <LinearLayout
             android:id="@+id/ll_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="50dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_tip_importance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="重要性："
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/size_14" />
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
 
                 <TextView
                     android:id="@+id/tv_importance"
@@ -121,29 +126,30 @@
                     android:gravity="right"
                     android:text="暂无"
                     android:textColor="@color/bg_yellow"
-                    android:textSize="@dimen/size_14" />
+                    android:textSize="@dimen/size_14"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color" />
+                android:background="@color/line_color"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="50dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_tip_nz"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="农资："
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/size_14" />
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
 
                 <TextView
                     android:id="@+id/tv_nz"
@@ -154,30 +160,31 @@
                     android:gravity="right"
                     android:text="钾肥"
                     android:textColor="@color/bg_yellow"
-                    android:textSize="@dimen/size_14" />
+                    android:textSize="@dimen/size_14"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color" />
+                android:background="@color/line_color"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:minHeight="50dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_tip_yl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="用量："
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/size_14" />
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
 
                 <TextView
                     android:id="@+id/tv_yl"
@@ -188,29 +195,30 @@
                     android:gravity="right"
                     android:text="150kg"
                     android:textColor="@color/bg_yellow"
-                    android:textSize="@dimen/size_14" />
+                    android:textSize="@dimen/size_14"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color" />
+                android:background="@color/line_color"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:minHeight="50dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="期限："
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/size_14" />
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
 
                 <TextView
                     android:id="@+id/tv_qx"
@@ -221,30 +229,31 @@
                     android:gravity="right"
                     android:text="2015-10-11"
                     android:textColor="@color/bg_yellow"
-                    android:textSize="@dimen/size_14" />
+                    android:textSize="@dimen/size_14"/>
             </LinearLayout>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             android:minHeight="50dip"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dip"
                 android:gravity="center"
                 android:text="说明:"
-                android:textColor="@color/black"
-                android:textSize="@dimen/size_14" />
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_14"/>
 
             <TextView
                 android:id="@+id/tv_note"
@@ -255,29 +264,30 @@
                 android:gravity="right"
                 android:text="暂无"
                 android:textColor="@color/bg_yellow"
-                android:textSize="@dimen/size_14" />
+                android:textSize="@dimen/size_14"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             android:minHeight="50dip"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dip"
                 android:gravity="center"
                 android:text="评分:"
-                android:textColor="@color/black"
-                android:textSize="@dimen/size_14" />
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_14"/>
 
             <TextView
                 android:id="@+id/tv_score"
@@ -288,39 +298,41 @@
                 android:gravity="right"
                 android:text="暂无"
                 android:textColor="@color/bg_yellow"
-                android:textSize="@dimen/size_14" />
+                android:textSize="@dimen/size_14"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             android:minHeight="50dip"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dip"
                 android:gravity="center"
                 android:text="评分说明:"
-                android:textColor="@color/black"
-                android:textSize="@dimen/size_14" />
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_14"/>
 
             <TextView
                 android:id="@+id/tv_scorenote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:gravity="center"
+                android:layout_marginRight="10dip"
+                android:gravity="right"
                 android:text="暂无"
                 android:textColor="@color/bg_yellow"
-                android:textSize="@dimen/size_14" />
+                android:textSize="@dimen/size_14"/>
         </LinearLayout>
     </LinearLayout>
 

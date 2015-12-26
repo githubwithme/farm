@@ -42,8 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/view_line"
-        android:layout_marginLeft="20dip"
-        android:layout_marginTop="10dip">
+        android:layout_margin="10dip"
+        android:background="@drawable/background_view_rounded_single">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,9 +62,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="作业类型："
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
                 <TextView
@@ -89,7 +90,7 @@
                     android:background="@null"
                     android:gravity="left"
                     android:src="@drawable/feed_voice_3"
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"
                     android:visibility="gone"/>
             </RelativeLayout>
@@ -107,9 +108,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="作业内容："
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
                 <TextView
@@ -137,9 +139,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="重要性："
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
                 <TextView
@@ -168,9 +171,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="农资："
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
                 <TextView
@@ -198,9 +202,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="用量："
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
                 <TextView
@@ -226,9 +231,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="作业天数："
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
                 <TextView
@@ -254,9 +260,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="期限："
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
                 <TextView
@@ -282,9 +289,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="说明:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
                 <TextView
@@ -310,9 +318,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
                     android:gravity="center"
                     android:text="来自:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
                 <TextView
