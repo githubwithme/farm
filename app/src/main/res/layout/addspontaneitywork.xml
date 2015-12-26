@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar" >
+        android:background="@color/bg_titlebar">
 
         <ImageButton
             android:id="@+id/imgbtn_back"
@@ -16,7 +17,7 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back" />
+            android:src="@drawable/back"/>
 
         <ProgressBar
             android:id="@+id/main_head_progress"
@@ -24,7 +25,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5.0dip"
             android:layout_toRightOf="@id/imgbtn_back"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +34,7 @@
             android:gravity="center"
             android:text="新建自发性活动"
             android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize" />
+            android:textSize="@dimen/titlebar_textsize"/>
 
         <Button
             android:id="@+id/btn_save"
@@ -46,35 +47,35 @@
             android:gravity="center"
             android:text="保存"
             android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize" />
+            android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
-        android:background="@color/gray" />
+        android:background="@color/gray"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dip"
                 android:layout_marginRight="20dip"
-                android:stretchColumns="1" >
+                android:stretchColumns="1">
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="@dimen/width_colum"
@@ -84,7 +85,7 @@
                         android:gravity="left|center_vertical"
                         android:text="生产活动："
                         android:textColor="@color/black"
-                        android:textSize="@dimen/size_14" />
+                        android:textSize="@dimen/size_14"/>
 
                     <EditText
                         android:id="@+id/et_jobname"
@@ -96,19 +97,19 @@
                         android:hint="请输入生产活动"
                         android:paddingLeft="10dip"
                         android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14" />
+                        android:textSize="@dimen/size_14"/>
                 </TableRow>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5px"
                     android:layout_marginTop="5dip"
-                    android:background="@color/gray" />
+                    android:background="@color/gray"/>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="@dimen/width_colum"
@@ -116,7 +117,7 @@
                         android:gravity="left|center_vertical"
                         android:text="说明"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/size_14" />
+                        android:textSize="@dimen/size_14"/>
 
                     <EditText
                         android:id="@+id/et_jobnote"
@@ -128,7 +129,7 @@
                         android:hint="请输入说明"
                         android:paddingLeft="10dip"
                         android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14" />
+                        android:textSize="@dimen/size_14"/>
                 </TableRow>
             </TableLayout>
 
@@ -136,7 +137,7 @@
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:orientation="vertical"/>
         </LinearLayout>
     </ScrollView>
 

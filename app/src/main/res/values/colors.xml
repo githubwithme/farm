@@ -42,6 +42,7 @@
     <color name="listitem_black">#ff000000</color>
     <color name="province_line_border">#C7C7C7</color>
     <color name="bg_selectitem">#FAFAFA</color>
+    <color name="color_orange">#ffd350</color>
     <color name="bg_text_small">#bdbdbd</color>
     <color name="bg_text">#333333</color>
     <color name="bg_work">#fed15c </color>

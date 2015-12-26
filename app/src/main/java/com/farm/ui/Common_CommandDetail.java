@@ -129,6 +129,7 @@ public class Common_CommandDetail extends Activity
 				tv_qx.setText(commandtab.getcommComDate());
 			}
 		}
+		tv_zyts.setText(commandtab.getcommDays());
 		tv_note.setText(commandtab.getcommNote());
 		tv_from.setText(commandtab.getcommFromName());
 		if (commandtab.getimportance().equals("0"))
