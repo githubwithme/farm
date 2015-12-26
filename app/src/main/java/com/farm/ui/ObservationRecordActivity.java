@@ -12,11 +12,14 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
+import com.farm.adapter.AddPlantObservationAdapter_MakeSure;
 import com.farm.app.AppConfig;
 import com.farm.bean.PlantGcjl;
 import com.farm.bean.Result;
 import com.farm.bean.plantgrowthtab;
+import com.farm.bean.planttab;
 import com.farm.common.utils;
+import com.farm.widget.CustomListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -45,9 +48,11 @@ public class ObservationRecordActivity extends Activity
     @ViewById
     TextView tv_tip;
     @ViewById
-    TextView tv_szq;
+    TextView tv_gcq;
     @ViewById
     ImageButton imgbtn_back;
+    @ViewById
+    CustomListView lv;
 
     @Click
     void imgbtn_back()
@@ -128,6 +133,14 @@ public class ObservationRecordActivity extends Activity
     private void showData()
     {
         plantgrowthtab plantgrowthtab = lsitNewData.get(0).getPlantGrowth().get(1);
-        tv_szq.setText(plantgrowthtab.getyNum());
+        tv_gcq.setText(plantgrowthtab.getyNum());
+
+        JSONObject jsonObject = utils.parseJsonFile(ObservationRecordActivity.this, "dictionary.json");
+        List<planttab> lsitNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("plantlist"), Result.class).getRows().toJSONString(), planttab.class);
+        if (lsitNewData != null)
+        {
+            AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(ObservationRecordActivity.this, lsitNewData);
+            lv.setAdapter(addPlantObservationAdapter);
+        }
     }
 }

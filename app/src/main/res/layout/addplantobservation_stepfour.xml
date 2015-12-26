@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+    >
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="60dip"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -29,140 +30,17 @@
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
 
-            <TableLayout
+            <EditText
+                android:id="@+id/et_jj"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dip"
-                android:layout_marginRight="20dip"
-                android:stretchColumns="1">
-
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:inputType="number"
-                        android:text="干净度"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:id="@+id/tv_jj_gjd"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="left|center_vertical"
-                        android:hint="请选择干净度"
-                        android:paddingLeft="40dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:layout_marginTop="5dip"
-                    android:background="@color/line_color"/>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:text="光泽"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:id="@+id/tv_jj_gz"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="left|center_vertical"
-                        android:hint="请选择光泽"
-                        android:paddingLeft="40dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:layout_marginTop="5dip"
-                    android:background="@color/line_color"/>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:text="折断"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:id="@+id/tv_jj_zd"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="left|center_vertical"
-                        android:hint="请选择折断情况"
-                        android:paddingLeft="40dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:layout_marginTop="5dip"
-                    android:background="@color/line_color"/>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:text="叶鞘无剥离"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:id="@+id/tv_jj_yswbl"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="left|center_vertical"
-                        android:hint="请选择剥离情况"
-                        android:paddingLeft="40dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-
-            </TableLayout>
+                android:layout_height="120dip"
+                android:layout_margin="5dip"
+                android:background="@drawable/background_view_rounded_single"
+                android:gravity="center"
+                android:hint="请输入假茎表现"
+                android:inputType="text"
+                android:textColor="@color/bg_yellow"
+                android:textSize="@dimen/size_14"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -174,138 +52,17 @@
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
 
-            <TableLayout
+            <EditText
+                android:id="@+id/et_y"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dip"
-                android:layout_marginRight="20dip"
-                android:stretchColumns="1">
-
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:inputType="number"
-                        android:text="叶色"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:id="@+id/tv_y_ys"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="left|center_vertical"
-                        android:hint="请选择叶色"
-                        android:paddingLeft="40dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:layout_marginTop="5dip"
-                    android:background="@color/line_color"/>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:text="硬度"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:id="@+id/tv_y_yd"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="left|center_vertical"
-                        android:hint="请选择硬度"
-                        android:paddingLeft="40dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:layout_marginTop="5dip"
-                    android:background="@color/line_color"/>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:text="干净度"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="left|center_vertical"
-                        android:hint="请选择干净度"
-                        android:paddingLeft="40dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:layout_marginTop="5dip"
-                    android:background="@color/line_color"/>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:text="折叶"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="left|center_vertical"
-                        android:hint="请选择折叶情况"
-                        android:paddingLeft="40dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-
-            </TableLayout>
+                android:layout_height="120dip"
+                android:layout_margin="5dip"
+                android:background="@drawable/background_view_rounded_single"
+                android:gravity="center"
+                android:hint="请输入叶表现"
+                android:inputType="text"
+                android:textColor="@color/bg_yellow"
+                android:textSize="@dimen/size_14"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -317,130 +74,27 @@
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
 
-            <TableLayout
+            <EditText
+                android:id="@+id/et_gx"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dip"
-                android:layout_marginRight="20dip"
-                android:stretchColumns="1">
-
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:inputType="number"
-                        android:text="根数量"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="left|center_vertical"
-                        android:hint="请选择根数量"
-                        android:paddingLeft="40dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:layout_marginTop="5dip"
-                    android:background="@color/line_color"/>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:text="白根"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="left|center_vertical"
-                        android:hint="请选择白根情况"
-                        android:paddingLeft="40dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:layout_marginTop="5dip"
-                    android:background="@color/line_color"/>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:text="线虫"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="left|center_vertical"
-                        android:hint="请选择线虫情况"
-                        android:paddingLeft="40dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-
-            </TableLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5px"
-                android:layout_marginTop="5dip"
-                android:background="@color/line_color"/>
-
-            <FrameLayout
-                android:id="@+id/container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"/>
-
-            <Button
-                android:id="@+id/btn_sure"
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:layout_marginBottom="20dip"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="20dip"
+                android:layout_height="120dip"
+                android:layout_margin="5dip"
                 android:background="@drawable/background_view_rounded_single"
-                android:text="确定"
-                android:textColor="@color/bg_text"/>
+                android:gravity="center"
+                android:hint="请输入根系表现"
+                android:inputType="text"
+                android:textColor="@color/bg_yellow"
+                android:textSize="@dimen/size_14"/>
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dip"
+        android:background="@drawable/background_view_rounded_single"
+        android:text="下一步"
+        android:textColor="@color/bg_text"/>
+</RelativeLayout>
