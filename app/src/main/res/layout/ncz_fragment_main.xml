@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar" >
+        android:background="@color/bg_titlebar">
 
         <TextView
             android:id="@+id/tv_title"
@@ -21,7 +21,7 @@
             android:textColor="@color/textcolor_titlebar"
             android:textSize="@dimen/titlebar_textsize"
             android:textStyle="bold"
-            android:typeface="sans" />
+            android:typeface="sans"/>
 
         <Button
             android:id="@+id/btn_zg"
@@ -31,53 +31,59 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
             android:background="@drawable/people_black"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="gone"/>
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
     <ScrollView
         android:id="@+id/sl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <FrameLayout
                 android:id="@+id/img_container"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="170dip"
-                android:background="@drawable/gg" />
+                android:background="@drawable/gg"
+                android:visibility="gone"/>
 
             <FrameLayout
                 android:id="@+id/menu_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dip" />
+                android:layout_marginTop="20dip"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:orientation="horizontal"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="40dip"
                         android:layout_height="40dip"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/quick_set_create_agent" />
+                        android:background="@drawable/quick_set_create_agent"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -86,20 +92,20 @@
                         android:gravity="center"
                         android:text="生产"
                         android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14" />
+                        android:textSize="@dimen/size_14"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="40dip"
                         android:layout_height="40dip"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/quick_set_create_opportunity" />
+                        android:background="@drawable/quick_set_create_opportunity"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -108,20 +114,20 @@
                         android:gravity="center"
                         android:text="销售"
                         android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14" />
+                        android:textSize="@dimen/size_14"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="40dip"
                         android:layout_height="40dip"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/quick_set_create_report" />
+                        android:background="@drawable/quick_set_create_report"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -130,7 +136,7 @@
                         android:gravity="center"
                         android:text="库存"
                         android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14" />
+                        android:textSize="@dimen/size_14"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -138,11 +144,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="2px"
                 android:layout_marginTop="5dip"
-                android:background="@color/bg_selectitem" />
+                android:background="@color/bg_selectitem"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_day"
@@ -153,13 +159,13 @@
                     android:text="10月1日 星期四"
                     android:textColor="@color/white"
                     android:textSize="24sp"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <FrameLayout
                 android:id="@+id/container_todayjob"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
         </LinearLayout>
     </ScrollView>
 

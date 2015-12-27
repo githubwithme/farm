@@ -431,13 +431,21 @@ public class NCZ_YQPQAdapter extends BaseAdapter
 
         listItemView.tv_czname.setText(parktab.getRealName());
         listItemView.tv_yqname.setText(parktab.getparkName());
-        listItemView.tv_plant.setText("园区苗情" + parktab.getPlantGrowCount());
-        listItemView.tv_sq.setText("园区申请" + parktab.getAskCount());
-        listItemView.tv_cmd.setText("园区指令" + parktab.getCommandCount());
-        listItemView.tv_job.setText("园区工作" + parktab.getJobCount());
-        listItemView.tv_plantnumber.setText("片区苗情" + parktab.getAreaplantGrowCount());
-        listItemView.tv_worknumber.setText("片区工作" + parktab.getAreajobCount());
-        listItemView.tv_cmdnumber.setText("片区指令" + parktab.getAreacommandCount());
+//        listItemView.tv_plant.setText("园区苗情" + parktab.getPlantGrowCount());
+//        listItemView.tv_sq.setText("园区申请" + parktab.getAskCount());
+//        listItemView.tv_cmd.setText("园区指令" + parktab.getCommandCount());
+//        listItemView.tv_job.setText("园区工作" + parktab.getJobCount());
+//        listItemView.tv_plantnumber.setText("片区苗情" + parktab.getAreaplantGrowCount());
+//        listItemView.tv_worknumber.setText("片区工作" + parktab.getAreajobCount());
+//        listItemView.tv_cmdnumber.setText("片区指令" + parktab.getAreacommandCount());
+
+        listItemView.tv_plant.setText("园区苗情");
+        listItemView.tv_sq.setText("场长申请");
+        listItemView.tv_cmd.setText("场长指令");
+        listItemView.tv_job.setText("场长工作");
+        listItemView.tv_plantnumber.setText("片区苗情");
+        listItemView.tv_worknumber.setText("片管工作");
+        listItemView.tv_cmdnumber.setText("片管指令");
 
         listItemView.tv_temph.setText(parktab.getTMPL() + "-" + parktab.getTMPH());
         BitmapHelper.setImageViewBackground(context, listItemView.circle_img, AppConfig.baseurl + parktab.getImgurl());
