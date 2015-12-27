@@ -70,6 +70,7 @@ public class GrowthTreeActivity extends Activity
     void btn_add()
     {
         Intent intent = new Intent(GrowthTreeActivity.this, AddPlantObservation_.class);
+        intent.putExtra("gcdid", gcdid);
         startActivity(intent);
     }
 

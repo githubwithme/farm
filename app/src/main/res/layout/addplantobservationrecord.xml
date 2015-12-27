@@ -17,7 +17,7 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/back" />
 
         <ProgressBar
             android:id="@+id/main_head_progress"
@@ -33,7 +33,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="添加苗情"
-            android:textColor="@color/white"
+            android:textColor="@color/bg_text"
             android:textSize="@dimen/titlebar_textsize" />
 
         <Button
@@ -46,7 +46,7 @@
             android:background="@null"
             android:gravity="center"
             android:text="保存"
-            android:textColor="@color/white"
+            android:textColor="@color/bg_text"
             android:textSize="@dimen/size_14" />
 
         <ProgressBar

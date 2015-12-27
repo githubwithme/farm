@@ -18,6 +18,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
+import com.farm.bean.FJ_SCFJ;
 import com.farm.bean.Result;
 import com.farm.bean.planttab;
 import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
@@ -76,6 +77,11 @@ public class AddPlantObservation_StepThree extends Fragment
             addPlantObservationAdapter = new AddPlantObservationAdapter(getActivity(), lsitNewData);
             lv_plant.setAdapter(addPlantObservationAdapter);
         }
+    }
+
+    public List<FJ_SCFJ> getFJ_SCFJList()
+    {
+        return addPlantObservationAdapter.getFJ_SCFJList();
     }
 
     public List<planttab> getPlanttabList()

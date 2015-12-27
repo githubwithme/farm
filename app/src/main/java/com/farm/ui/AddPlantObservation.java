@@ -26,6 +26,7 @@ import java.util.List;
 @EActivity(R.layout.addplantobservation)
 public class AddPlantObservation extends FragmentActivity implements FragmentCallBack_AddPlantObservation
 {
+    String gcdid = "";
     MyDialog myDialog;
     PagerAdapter_AddPlantObservation adapter;
     int currentItem;
@@ -107,6 +108,7 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        gcdid = getIntent().getStringExtra("gcdid");
         getActionBar().hide();
     }
 
@@ -175,6 +177,12 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
     }
 
     @Override
+    public String getGcdId()
+    {
+        return gcdid;
+    }
+
+    @Override
     public Fragment getFragment(Bundle arg)
     {
         int index = Integer.valueOf(arg.getString("index"));
@@ -186,7 +194,6 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
     @Override
     public void callbackFun2(Bundle arg)
     {
-        vPager.setCurrentItem(currentItem + 1);
         switch (currentItem)
         {
             case 0:
@@ -202,6 +209,7 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
                 break;
 
         }
+        vPager.setCurrentItem(currentItem + 1);//要放到后面，否则切换之后currentitem会变
     }
 
     @Override

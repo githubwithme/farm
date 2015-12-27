@@ -52,6 +52,20 @@ public class AddPlantObservation_stepfour extends Fragment
         return rootView;
     }
 
+    public String getJJBB()
+    {
+        return et_jj.getText().toString();
+    }
+
+    public String getYBX()
+    {
+        return et_y.getText().toString();
+    }
+
+    public String getGXBX()
+    {
+        return et_gx.getText().toString();
+    }
 
     @Override
     public void onAttach(Activity activity)

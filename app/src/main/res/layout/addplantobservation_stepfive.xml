@@ -186,14 +186,31 @@
         </RelativeLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/btn_save"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="45dip"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dip"
-        android:background="@drawable/background_view_rounded_single"
-        android:text="保存"
-        android:textColor="@color/bg_text"
-        android:textSize="@dimen/size_14"/>
+        android:layout_margin="10dip">
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:background="@drawable/background_view_rounded_single"
+            android:text="保存"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <ProgressBar
+            android:id="@+id/pb_upload"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:background="@drawable/background_view_rounded_single"
+            android:text="保存"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"
+            android:visibility="gone"/>
+    </FrameLayout>
+
+
 </RelativeLayout>

@@ -18,7 +18,7 @@ public interface FragmentCallBack_AddPlantObservation
 
     public Fragment getFragment(Bundle arg);
 
-
+    public String getGcdId();
 
 
 }

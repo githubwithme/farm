@@ -24,7 +24,7 @@ public class planttab implements Parcelable// 和数据库表不一致
 	public String uId;
 	public String regDate;
 	public String plantName;
-	public String plantType;
+	public String plantType="";
 	public String parkId;
 	public String parkName;
 	public String areaId;

@@ -19,6 +19,7 @@ import java.util.List;
 
 public class AddPlantObservation_StepTwo_Adapter extends BaseAdapter
 {
+    String currentItem = "";
     Button tempButton;
     private Context context;// 运行上下文
     private LayoutInflater listContainer;// 视图容器
@@ -78,12 +79,14 @@ public class AddPlantObservation_StepTwo_Adapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
+
                     if (tempButton != null)
                     {
                         tempButton.setSelected(false);
                     }
                     tempButton = (Button) v;
                     v.setSelected(true);
+                    currentItem = tempButton.getText().toString();
                     plantgc_single plantgc_single = com.farm.bean.plantgc_single.getInstance();
                     plantgc_single.setGcq(tempButton.getText().toString());
                     String fn = dic_comm.getFirstItemName().get(v.getId());
@@ -104,5 +107,10 @@ public class AddPlantObservation_StepTwo_Adapter extends BaseAdapter
         listItemView.btn_zl.setText(item);
 
         return convertView;
+    }
+
+    public String getCurrentItem()
+    {
+        return currentItem;
     }
 }

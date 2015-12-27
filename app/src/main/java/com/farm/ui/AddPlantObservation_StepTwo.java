@@ -62,15 +62,22 @@ public class AddPlantObservation_StepTwo extends Fragment
         commembertab = AppContext.getUserInfo(getActivity());
         return rootView;
     }
+
     private void getTestData(String from)
     {
         JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
         Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
         List<Dictionary> lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
         dic_comm = lsitNewData.get(0);
-        addStd_cmd_stepOne_adapter = new AddPlantObservation_StepTwo_Adapter(getActivity(), dic_comm,fragmentCallBack);
+        addStd_cmd_stepOne_adapter = new AddPlantObservation_StepTwo_Adapter(getActivity(), dic_comm, fragmentCallBack);
         lv.setAdapter(addStd_cmd_stepOne_adapter);
     }
+
+    public String getGcq()
+    {
+        return addStd_cmd_stepOne_adapter.getCurrentItem();
+    }
+
     private void getCommandlist()
     {
         RequestParams params = new RequestParams();
@@ -95,7 +102,7 @@ public class AddPlantObservation_StepTwo extends Fragment
                         if (lsitNewData != null)
                         {
                             dic_comm = lsitNewData.get(0);
-                            addStd_cmd_stepOne_adapter = new AddPlantObservation_StepTwo_Adapter(getActivity(), dic_comm,fragmentCallBack);
+                            addStd_cmd_stepOne_adapter = new AddPlantObservation_StepTwo_Adapter(getActivity(), dic_comm, fragmentCallBack);
                             lv.setAdapter(addStd_cmd_stepOne_adapter);
                         }
 
