@@ -36,6 +36,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -64,6 +65,13 @@ public class GrowthTreeActivity extends Activity
     @ViewById
     TextView tv_tip;
     TreeAdapter treeAdapter;
+
+    @Click
+    void btn_add()
+    {
+        Intent intent = new Intent(GrowthTreeActivity.this, AddPlantObservation_.class);
+        startActivity(intent);
+    }
 
     @AfterViews
     void afterOncreate()
@@ -211,7 +219,7 @@ public class GrowthTreeActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                        int pos=v.getId();
+                        int pos = v.getId();
                         Intent intent = new Intent(GrowthTreeActivity.this, ObservationRecordActivity_.class);
                         intent.putExtra("gcid", listItems.get(pos).getId());
                         GrowthTreeActivity.this.startActivity(intent);
@@ -222,7 +230,7 @@ public class GrowthTreeActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                        int pos=v.getId();
+                        int pos = v.getId();
                         Intent intent = new Intent(GrowthTreeActivity.this, ObservationRecordActivity_.class);
                         intent.putExtra("gcid", listItems.get(pos).getId());
                         GrowthTreeActivity.this.startActivity(intent);

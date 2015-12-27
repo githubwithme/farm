@@ -1,5 +1,6 @@
 package com.farm.ui;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
@@ -19,19 +20,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
-import com.farm.adapter.PG_PlantGcdListAdapter;
+import com.farm.adapter.PG_TodayPlantAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.PlantGcd;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.bean.planttab;
 import com.farm.common.DictionaryHelper;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
-import com.farm.common.utils;
 import com.farm.widget.NewDataToast;
 import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
@@ -43,7 +43,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -51,16 +51,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-@EFragment
-public class PG_GddList extends Fragment
+@EActivity(R.layout.pg_plantlist)
+public class PG_PlantList extends Activity
 {
+    PlantGcd plantGcd;
     Dictionary dictionary;
     TimeThread timethread;
     SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
-    private PG_PlantGcdListAdapter listAdapter;
+    private PG_TodayPlantAdapter listAdapter;
     private int listSumData;
-    private List<PlantGcd> listData = new ArrayList<PlantGcd>();
+    private List<planttab> listData = new ArrayList<planttab>();
     private AppContext appContext;
     private View list_footer;
     private TextView list_foot_more;
@@ -85,8 +86,14 @@ public class PG_GddList extends Fragment
     @Click
     void btn_add()
     {
-        Intent intent = new Intent(getActivity(), AddGcd_.class);
-        getActivity().startActivity(intent);
+        Intent intent = new Intent(PG_PlantList.this, AddPlant_.class);
+        PG_PlantList.this.startActivity(intent);
+    }
+
+    @Click
+    void imgbtn_back()
+    {
+        finish();
     }
 
     @Override
@@ -106,12 +113,12 @@ public class PG_GddList extends Fragment
     @AfterViews
     void afterOncreate()
     {
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        commembertab commembertab = AppContext.getUserInfo(PG_PlantList.this);
         if (commembertab.getnlevel().toString().equals("0"))
         {
             btn_add.setVisibility(View.GONE);
         }
-        dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "PG_MQ");
+        dictionary = DictionaryHelper.getDictionaryFromAssess(PG_PlantList.this, "PG_MQ");
         selectorUi = new SelectorFragment_();
         Bundle bundle = new Bundle();
         bundle.putSerializable("bean", dictionary);
@@ -121,20 +128,22 @@ public class PG_GddList extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.pg_plantgcdlist, container, false);
-        appContext = (AppContext) getActivity().getApplication();
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();
+        appContext = (AppContext) PG_PlantList.this.getApplication();
+        plantGcd = getIntent().getParcelableExtra("bean");
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        getActivity().registerReceiver(receiver_update, intentfilter_update);
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        PG_PlantList.this.registerReceiver(receiver_update, intentfilter_update);
+        commembertab commembertab = AppContext.getUserInfo(PG_PlantList.this);
         areaid = commembertab.getareaId();
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
         timethread.start();
-        return rootView;
     }
+
 
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
@@ -162,16 +171,9 @@ public class PG_GddList extends Fragment
         }
     }
 
-    private void getTestData(String from)
-    {
-        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
-        Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
-        List<PlantGcd> lsitNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcd.class);
-    }
-
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        commembertab commembertab = AppContext.getUserInfo(PG_PlantList.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("areaid", areaid);
         params.addQueryStringParameter("userid", commembertab.getId());
@@ -181,7 +183,7 @@ public class PG_GddList extends Fragment
         params.addQueryStringParameter("strWhere", "");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "getGCDList");
+        params.addQueryStringParameter("action", "plantGetList");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -189,22 +191,20 @@ public class PG_GddList extends Fragment
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<PlantGcd> listNewData = null;
+                List<planttab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-//						listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcd.class);
-                        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
-                        listNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("img_url"), Result.class).getRows().toJSONString(), PlantGcd.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), planttab.class);
                     } else
                     {
-                        listNewData = new ArrayList<PlantGcd>();
+                        listNewData = new ArrayList<planttab>();
                     }
                 } else
                 {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    AppContext.makeToast(PG_PlantList.this, "error_connectDataBase");
                     return;
                 }
                 // 数据处理
@@ -224,12 +224,12 @@ public class PG_GddList extends Fragment
                                 {
                                     if (listData.size() > 0)// 页面切换时，若之前列表中已有数据，则往上面添加，并判断去除重复
                                     {
-                                        for (PlantGcd PlantGcd1 : listNewData)
+                                        for (planttab planttab1 : listNewData)
                                         {
                                             boolean b = false;
-                                            for (PlantGcd PlantGcd2 : listData)
+                                            for (planttab planttab2 : listData)
                                             {
-                                                if (PlantGcd1.getId().equals(PlantGcd2.getId()))
+                                                if (planttab1.getId().equals(planttab2.getId()))
                                                 {
                                                     b = true;
                                                     break;
@@ -254,10 +254,10 @@ public class PG_GddList extends Fragment
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                NewDataToast.makeText(PG_PlantList.this, getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else
                             {
-                                // NewDataToast.makeText(getActivity(),
+                                // NewDataToast.makeText(PG_PlantList.this,
                                 // getString(R.string.new_data_toast_none), false,
                                 // R.raw.newdatatoast).show();
                             }
@@ -270,18 +270,18 @@ public class PG_GddList extends Fragment
                                 listSumData += size;
                                 if (listNewData.size() > 0)
                                 {
-                                    for (PlantGcd PlantGcd1 : listNewData)
+                                    for (planttab planttab1 : listNewData)
                                     {
                                         boolean b = false;
-                                        for (PlantGcd PlantGcd2 : listData)
+                                        for (planttab planttab2 : listData)
                                         {
-                                            if (PlantGcd1.getId().equals(PlantGcd2.getId()))
+                                            if (planttab1.getId().equals(planttab2.getId()))
                                             {
                                                 b = true;
                                                 break;
                                             }
                                         }
-                                        if (!b) listData.add(PlantGcd1);
+                                        if (!b) listData.add(planttab1);
                                     }
                                 } else
                                 {
@@ -313,7 +313,7 @@ public class PG_GddList extends Fragment
                     // 有异常--显示加载出错 & 弹出错误消息
                     lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                     more.setText(R.string.load_error);
-                    AppContext.makeToast(getActivity(), "load_error");
+                    AppContext.makeToast(PG_PlantList.this, "load_error");
                 }
                 if (adapter.getCount() == 0)
                 {
@@ -336,15 +336,15 @@ public class PG_GddList extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                AppContext.makeToast(PG_PlantList.this, "error_connectServer");
             }
         });
     }
 
     private void initAnimalListView()
     {
-        listAdapter = new PG_PlantGcdListAdapter(getActivity(), listData);
-        list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
+        listAdapter = new PG_TodayPlantAdapter(PG_PlantList.this, listData);
+        list_footer = PG_PlantList.this.getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         frame_listview_news.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
@@ -369,11 +369,11 @@ public class PG_GddList extends Fragment
                 // }
                 // if (animal == null)
                 // return;
-                PlantGcd PlantGcd = listData.get(position - 1);
-                if (PlantGcd == null) return;
-                Intent intent = new Intent(getActivity(), GrowthTreeActivity_.class);
-                intent.putExtra("gcdid", PlantGcd.getId()); // 因为list中添加了头部,因此要去掉一个
-                getActivity().startActivity(intent);
+                planttab planttab = listData.get(position - 1);
+                if (planttab == null) return;
+                Intent intent = new Intent(PG_PlantList.this, ShowPlant_.class);
+                intent.putExtra("bean", planttab); // 因为list中添加了头部,因此要去掉一个
+                PG_PlantList.this.startActivity(intent);
             }
         });
         frame_listview_news.setOnScrollListener(new AbsListView.OnScrollListener()
@@ -530,9 +530,9 @@ public class PG_GddList extends Fragment
     }
 
     @Override
-    public void onDestroyView()
+    public void onDestroy()
     {
-        super.onDestroyView();
+        super.onDestroy();
         timethread.setStop(true);
         timethread.interrupt();
         timethread = null;

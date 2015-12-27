@@ -17,7 +17,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
-import com.farm.com.custominterface.FragmentCallBack;
+import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
 import com.lidroid.xutils.HttpUtils;
@@ -44,7 +44,7 @@ public class AddPlantObservation_StepOne extends Fragment
     String  from="";
     String  gcdid="";
     String  gcd="";
-    FragmentCallBack fragmentCallBack = null;
+    FragmentCallBack_AddPlantObservation fragmentCallBack = null;
     @ViewById
     ListView lv;
     AddPlantObservation_StepOne_Adapter addStd_cmd_stepOne_adapter;
@@ -130,6 +130,6 @@ public class AddPlantObservation_StepOne extends Fragment
     {
         // TODO Auto-generated method stub
         super.onAttach(activity);
-        fragmentCallBack = (AddPlantObservation) activity;
+        fragmentCallBack = (FragmentCallBack_AddPlantObservation) activity;
     }
 }

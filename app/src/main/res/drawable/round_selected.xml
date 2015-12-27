@@ -24,8 +24,8 @@
 
                 <gradient
                     android:angle="270.0"
-                    android:endColor="@color/bg_text_small"
-                    android:startColor="@color/bg_text_small" />
+                    android:endColor="@color/color_orange"
+                    android:startColor="@color/color_orange" />
 
                 <corners android:radius="5.0dip" />
             </shape>

@@ -18,7 +18,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.PlantGcd;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
-import com.farm.ui.AddPlantObservation_;
+import com.farm.ui.PG_PlantList_;
 import com.farm.ui.RecordList_;
 
 import java.util.HashMap;
@@ -39,7 +39,7 @@ public class PG_PlantGcdListAdapter extends BaseAdapter
 	static class ListItemView
 	{ // 自定义控件集合
 		public ImageView img;
-		public Button iv_addplant;
+		public Button btn_plantlist;
 		public TextView tv_plantname;
 		public TextView tv_time;
 		public TextView tv_type;
@@ -100,13 +100,13 @@ public class PG_PlantGcdListAdapter extends BaseAdapter
 			listItemView.tv_plantname = (TextView) convertView.findViewById(R.id.tv_plantname);
 			listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
 			listItemView.img = (ImageView) convertView.findViewById(R.id.img);
-			listItemView.iv_addplant = (Button) convertView.findViewById(R.id.iv_addplant);
-			listItemView.iv_addplant.setId(position);
+			listItemView.btn_plantlist = (Button) convertView.findViewById(R.id.btn_plantlist);
+			listItemView.btn_plantlist.setId(position);
 			listItemView.iv_record.setId(position);
 			commembertab commembertab = AppContext.getUserInfo(context);
 			if (commembertab.getnlevel().equals("0"))// 农场主去掉添加功能
 			{
-				listItemView.iv_addplant.setVisibility(View.GONE);
+				listItemView.btn_plantlist.setVisibility(View.GONE);
 			}
 			listItemView.iv_record.setOnClickListener(new OnClickListener()
 			{
@@ -119,12 +119,12 @@ public class PG_PlantGcdListAdapter extends BaseAdapter
 					context.startActivity(intent);
 				}
 			});
-			listItemView.iv_addplant.setOnClickListener(new OnClickListener()
+			listItemView.btn_plantlist.setOnClickListener(new OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					Intent intent = new Intent(context, AddPlantObservation_.class);
+					Intent intent = new Intent(context, PG_PlantList_.class);
 					intent.putExtra("bean", listItems.get(v.getId()));
 					context.startActivity(intent);
 				}

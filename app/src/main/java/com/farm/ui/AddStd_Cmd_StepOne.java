@@ -115,6 +115,6 @@ public class AddStd_Cmd_StepOne extends Fragment
     {
         // TODO Auto-generated method stub
         super.onAttach(activity);
-        fragmentCallBack = (AddPlantObservation) activity;
+        fragmentCallBack = (FragmentCallBack) activity;
     }
 }

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.farm.R;
-import com.farm.com.custominterface.FragmentCallBack;
+import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -22,7 +22,7 @@ import org.androidannotations.annotations.ViewById;
 @EFragment
 public class AddPlantObservation_stepfour extends Fragment
 {
-    FragmentCallBack fragmentCallBack;
+    FragmentCallBack_AddPlantObservation fragmentCallBack;
     @ViewById
     EditText et_jj;
     @ViewById
@@ -57,6 +57,6 @@ public class AddPlantObservation_stepfour extends Fragment
     public void onAttach(Activity activity)
     {
         super.onAttach(activity);
-        fragmentCallBack = (FragmentCallBack) activity;
+        fragmentCallBack = (FragmentCallBack_AddPlantObservation) activity;
     }
 }

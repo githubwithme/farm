@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.farm.R;
 import com.farm.bean.Dictionary;
-import com.farm.com.custominterface.FragmentCallBack;
+import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +24,7 @@ public class AddPlantObservation_StepOne_Adapter extends BaseAdapter
     Dictionary dic_comm;
     ListItemView listItemView = null;
     List<String> firstItemName;
-    FragmentCallBack fragmentCallBack;
+    FragmentCallBack_AddPlantObservation fragmentCallBack;
     String item = "";
 
     static class ListItemView
@@ -33,7 +33,7 @@ public class AddPlantObservation_StepOne_Adapter extends BaseAdapter
 
     }
 
-    public AddPlantObservation_StepOne_Adapter(Context context, Dictionary dic_comm, FragmentCallBack fragmentCallBack)
+    public AddPlantObservation_StepOne_Adapter(Context context, Dictionary dic_comm, FragmentCallBack_AddPlantObservation fragmentCallBack)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文

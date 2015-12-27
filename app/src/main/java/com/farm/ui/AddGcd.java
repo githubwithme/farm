@@ -2,8 +2,8 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -27,7 +27,7 @@ import org.androidannotations.annotations.ViewById;
 public class AddGcd extends Activity
 {
     @ViewById
-    Button imgbtn_back;
+    ImageButton imgbtn_back;
     @ViewById
     EditText et_plantName;
     @ViewById
@@ -100,7 +100,6 @@ public class AddGcd extends Activity
             @Override
             public void onFailure(HttpException arg0, String arg1)
             {
-                AppContext.makeToast(AddGcd.this, "error_connectServer");
                 AppContext.makeToast(AddGcd.this, "error_connectServer");
             }
         });

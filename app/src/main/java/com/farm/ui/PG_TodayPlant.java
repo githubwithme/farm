@@ -83,7 +83,7 @@ public class PG_TodayPlant extends Fragment
 	@Click
 	void btn_add()
 	{
-		Intent intent = new Intent(getActivity(), AddGcd_.class);
+		Intent intent = new Intent(getActivity(), AddPlant_.class);
 		getActivity().startActivity(intent);
 	}
 

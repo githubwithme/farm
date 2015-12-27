@@ -108,6 +108,7 @@
         <activity android:name=".ui.CZ_PQ_TodayPlant_"/>
         <!-- 片管UI -->
         <activity android:name=".ui.PG_MainActivity_"/>
+        <activity android:name=".ui.PG_PlantList_"/>
         <activity android:name=".ui.AddGcd_"/>
         <!-- 共用UI -->
         <activity android:name=".ui.ObservationRecordActivity_"/>

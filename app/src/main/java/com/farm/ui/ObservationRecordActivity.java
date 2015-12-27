@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
-import com.farm.adapter.AddPlantObservationAdapter_MakeSure;
+import com.farm.adapter.PlantObservationAdapter;
 import com.farm.app.AppConfig;
 import com.farm.bean.PlantGcjl;
 import com.farm.bean.Result;
@@ -139,7 +139,7 @@ public class ObservationRecordActivity extends Activity
         List<planttab> lsitNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("plantlist"), Result.class).getRows().toJSONString(), planttab.class);
         if (lsitNewData != null)
         {
-            AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(ObservationRecordActivity.this, lsitNewData);
+            PlantObservationAdapter addPlantObservationAdapter = new PlantObservationAdapter(ObservationRecordActivity.this, lsitNewData);
             lv.setAdapter(addPlantObservationAdapter);
         }
     }

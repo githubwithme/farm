@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
         android:background="@color/bg_titlebar">
+
+        <ImageButton
+            android:id="@+id/imgbtn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/titlebar_height"
+            android:layout_marginLeft="5dip"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/back"/>
 
         <LinearLayout
             android:id="@+id/ll_tab"
@@ -58,8 +68,10 @@
     <ListView
         android:id="@+id/lv_tree"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/line"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dip"
+        android:layout_marginTop="@dimen/titlebar_height"
         android:divider="@null"/>
 
     <TextView

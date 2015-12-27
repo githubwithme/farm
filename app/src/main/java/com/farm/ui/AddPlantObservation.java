@@ -10,9 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.adapter.FragmentViewPagerAdapter;
+import com.farm.adapter.PagerAdapter_AddPlantObservation;
 import com.farm.bean.plantgrowthtab_single;
-import com.farm.com.custominterface.FragmentCallBack;
+import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
 import com.farm.widget.MyDialog;
 
 import org.androidannotations.annotations.AfterViews;
@@ -21,12 +21,13 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @EActivity(R.layout.addplantobservation)
-public class AddPlantObservation extends FragmentActivity implements FragmentCallBack
+public class AddPlantObservation extends FragmentActivity implements FragmentCallBack_AddPlantObservation
 {
     MyDialog myDialog;
-    FragmentViewPagerAdapter adapter;
+    PagerAdapter_AddPlantObservation adapter;
     int currentItem;
     private ArrayList<Fragment> fragmentList;
     @ViewById
@@ -89,9 +90,9 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
         setBackground(0);
         //关闭预加载，默认一次只加载一个Fragment
         vPager.setOffscreenPageLimit(1);
-        adapter = new FragmentViewPagerAdapter(AddPlantObservation.this.getSupportFragmentManager(), vPager, fragmentList);
+        adapter = new PagerAdapter_AddPlantObservation(AddPlantObservation.this.getSupportFragmentManager(), vPager, fragmentList);
 
-        adapter.setOnExtraPageChangeListener(new FragmentViewPagerAdapter.OnExtraPageChangeListener()
+        adapter.setOnExtraPageChangeListener(new PagerAdapter_AddPlantObservation.OnExtraPageChangeListener()
         {
             @Override
             public void onExtraPageSelected(int i)
@@ -174,6 +175,15 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
     }
 
     @Override
+    public Fragment getFragment(Bundle arg)
+    {
+        int index = Integer.valueOf(arg.getString("index"));
+        Fragment fragment = adapter.getFragment(index);
+        return fragment;
+    }
+
+
+    @Override
     public void callbackFun2(Bundle arg)
     {
         vPager.setCurrentItem(currentItem + 1);
@@ -184,11 +194,13 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
             case 1:
                 break;
             case 2:
+                AddPlantObservation_stepFive fragment = (AddPlantObservation_stepFive) adapter.getFragment(3);
+                List<Fragment> list_fragment = (List<Fragment>) adapter.getAllFragment();
+                fragment.updateData(list_fragment);
                 break;
             case 3:
                 break;
-            case 4:
-                break;
+
         }
     }
 
