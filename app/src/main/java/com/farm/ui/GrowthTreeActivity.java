@@ -18,7 +18,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
@@ -26,7 +25,6 @@ import com.farm.bean.PlantGcjl;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
-import com.farm.common.utils;
 import com.farm.widget.swipelistview.ExpandAniLinearLayout;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -127,9 +125,9 @@ public class GrowthTreeActivity extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-//                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcjl.class);
-                        JSONObject jsonObject = utils.parseJsonFile(GrowthTreeActivity.this, "dictionary.json");
-                        listNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("gcjllist"), Result.class).getRows().toJSONString(), PlantGcjl.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcjl.class);
+//                        JSONObject jsonObject = utils.parseJsonFile(GrowthTreeActivity.this, "dictionary.json");
+//                        listNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("gcjllist"), Result.class).getRows().toJSONString(), PlantGcjl.class);
 
                         treeAdapter = new TreeAdapter(GrowthTreeActivity.this, listNewData);
                         lv_tree.setAdapter(treeAdapter);
@@ -259,12 +257,12 @@ public class GrowthTreeActivity extends Activity
                 listItemView.ll_right.setVisibility(View.VISIBLE);
                 listItemView.tv_cjtime_right.setText(PlantGcjl.getRegDate().substring(0, PlantGcjl.getRegDate().lastIndexOf(" ")));
                 listItemView.tv_sg_right.setVisibility(View.VISIBLE);
-                listItemView.tv_sg_right.setText("叶表现：" + PlantGcjl.getYbx());
-                listItemView.tv_wj_right.setText("假茎表现：" + PlantGcjl.getJjbx());
-                listItemView.tv_ys_right.setText("根茎表现：" + PlantGcjl.getGxbx());
+                listItemView.tv_sg_right.setText("树高：" + PlantGcjl.gethNum()+"m");
+                listItemView.tv_wj_right.setText("围径：" + PlantGcjl.getwNum()+"m");
+                listItemView.tv_ys_right.setText("叶数：" + PlantGcjl.getyNum()+"m");
                 if (PlantGcjl.getImgUrl().size() != 0)
                 {
-                    BitmapHelper.setImageView(context, listItemView.iv_img_right, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
+                    BitmapHelper.setImageViewBackground(context, listItemView.iv_img_right, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
                 }
 
             } else
@@ -272,13 +270,13 @@ public class GrowthTreeActivity extends Activity
                 listItemView.ic_center.setBackground(getResources().getDrawable(resleft[(int) (Math.random() * resleft.length)]));
                 listItemView.ll_left.setVisibility(View.VISIBLE);
                 listItemView.tv_cjtime_left.setText(PlantGcjl.getRegDate().substring(0, PlantGcjl.getRegDate().lastIndexOf(" ")));
-                listItemView.tv_sg_left.setText("叶表现：" + PlantGcjl.getYbx());
-                listItemView.tv_wj_left.setText("假茎表现：" + PlantGcjl.getJjbx());
-                listItemView.tv_ys_left.setText("根茎表现：" + PlantGcjl.getGxbx());
+                listItemView.tv_sg_left.setText("树高：" + PlantGcjl.gethNum()+"m");
+                listItemView.tv_wj_left.setText("围径：" + PlantGcjl.getwNum()+"m");
+                listItemView.tv_ys_left.setText("叶数：" + PlantGcjl.getyNum()+"m");
 
                 if (PlantGcjl.getImgUrl().size() != 0)
                 {
-                    BitmapHelper.setImageView(context, listItemView.iv_img_left, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
+                    BitmapHelper.setImageViewBackground(context, listItemView.iv_img_left, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
                 }
             }
             return convertView;

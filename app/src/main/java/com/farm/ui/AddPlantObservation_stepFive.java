@@ -13,18 +13,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.AddPlantObservationAdapter_MakeSure;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.FJ_SCFJ;
+import com.farm.bean.PlantGcjl;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
-import com.farm.bean.planttab;
+import com.farm.bean.plantgrowthtab;
 import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
-import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -49,12 +48,13 @@ import java.util.concurrent.CountDownLatch;
 @EFragment
 public class AddPlantObservation_stepFive extends Fragment
 {
-    List<planttab> list_planttab;
+    List<plantgrowthtab> list_plantgrowthtab = new ArrayList<>();
     CountDownLatch latch;
     List<FJ_SCFJ> list_fj_scfj = new ArrayList<>();
     AddPlantObservation_stepfour addPlantObservation_stepfour;
     AddPlantObservation_StepThree addPlantObservation_stepThree;
     AddPlantObservation_StepTwo addPlantObservation_stepTwo;
+    String gcjlid;
     String gcq;
     String GXBX;
     String JJBX;
@@ -87,13 +87,8 @@ public class AddPlantObservation_stepFive extends Fragment
     @AfterViews
     void afterOncreate()
     {
-        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
-        List<planttab> lsitNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("plantlist"), Result.class).getRows().toJSONString(), planttab.class);
-        if (lsitNewData != null)
-        {
-            AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(getActivity(), lsitNewData, list_fj_scfj);
-            lv.setAdapter(addPlantObservationAdapter);
-        }
+        AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(getActivity(), list_plantgrowthtab, list_fj_scfj);
+        lv.setAdapter(addPlantObservationAdapter);
     }
 
     @Override
@@ -114,8 +109,8 @@ public class AddPlantObservation_stepFive extends Fragment
         YBX = addPlantObservation_stepfour.getYBX();
         GXBX = addPlantObservation_stepfour.getGXBX();
 
-        list_planttab = addPlantObservation_stepThree.getPlanttabList();
-        AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(getActivity(), list_planttab, list_fj_scfj);
+        list_plantgrowthtab = addPlantObservation_stepThree.getPlanttabList();
+        AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(getActivity(), list_plantgrowthtab, list_fj_scfj);
         lv.setAdapter(addPlantObservationAdapter);
 
 
@@ -153,26 +148,27 @@ public class AddPlantObservation_stepFive extends Fragment
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<jobtab> listData = null;
+                List<PlantGcjl> listData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    listData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                    listData = JSON.parseArray(result.getRows().toJSONString(), PlantGcjl.class);
                     if (listData == null)
                     {
                         AppContext.makeToast(getActivity(), "error_connectDataBase");
                     } else
                     {
-                        if (list_fj_scfj.size() > 0 || list_planttab.size() > 0)
+                        gcjlid = listData.get(0).getId();
+                        if (list_fj_scfj.size() > 0 || list_plantgrowthtab.size() > 0)
                         {
-                            latch = new CountDownLatch(list_fj_scfj.size() + list_planttab.size());
+                            latch = new CountDownLatch(list_fj_scfj.size() + list_plantgrowthtab.size());
                             for (int j = 0; j < list_fj_scfj.size(); j++)
                             {
-                                uploadMedia(listData.get(0).getId(), list_fj_scfj.get(j).getFJBDLJ());
+                                uploadMedia(listData.get(0).getId(), list_fj_scfj.get(j).getFJBDLJ(),list_fj_scfj.get(j).getFJID());
                             }
-                            for (int j = 0; j < list_planttab.size(); j++)
+                            for (int j = 0; j < list_plantgrowthtab.size(); j++)
                             {
-                                savePlant(list_planttab.get(j));
+                                savePlant(list_plantgrowthtab.get(j));
                             }
                         } else
                         {
@@ -200,7 +196,7 @@ public class AddPlantObservation_stepFive extends Fragment
         });
     }
 
-    private void savePlant(planttab planttab)
+    private void savePlant(plantgrowthtab plantgrowthtab)
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
@@ -209,21 +205,22 @@ public class AddPlantObservation_stepFive extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("parkId", commembertab.getparkId());
         params.addQueryStringParameter("parkName", commembertab.getparkName());
-        params.addQueryStringParameter("areaId", planttab.getareaId());
-        params.addQueryStringParameter("areaName", planttab.getareaName());
+        params.addQueryStringParameter("areaId", commembertab.getareaId());
+        params.addQueryStringParameter("areaName", commembertab.getareaName());
         params.addQueryStringParameter("action", "plantGrowthTabAdd");
 
-        params.addQueryStringParameter("yNum", planttab.getyNum());
-        params.addQueryStringParameter("wNum", planttab.getwNum());
-        params.addQueryStringParameter("hNum", planttab.gethNum());
-        params.addQueryStringParameter("xNum", planttab.getxNum());
-        params.addQueryStringParameter("yColor", planttab.getyColor());
+        params.addQueryStringParameter("yNum", plantgrowthtab.getyNum());
+        params.addQueryStringParameter("wNum", plantgrowthtab.getwNum());
+        params.addQueryStringParameter("hNum", plantgrowthtab.gethNum());
+        params.addQueryStringParameter("xNum", plantgrowthtab.getxNum());
+        params.addQueryStringParameter("yColor", plantgrowthtab.getyColor());
         params.addQueryStringParameter("Ext1", "");
-        params.addQueryStringParameter("cDate", planttab.getcDate());
-        params.addQueryStringParameter("zDate", planttab.getzDate());
-        params.addQueryStringParameter("plantId", planttab.getId());
-        params.addQueryStringParameter("plantName", planttab.getplantName());
-        params.addQueryStringParameter("plantType", planttab.getplantType());
+        params.addQueryStringParameter("cDate", plantgrowthtab.getcDate());
+        params.addQueryStringParameter("zDate", plantgrowthtab.getzDate());
+        params.addQueryStringParameter("gcjlid", gcjlid);
+        params.addQueryStringParameter("plantId", plantgrowthtab.getplantId());
+        params.addQueryStringParameter("plantName", plantgrowthtab.getplantName());
+        params.addQueryStringParameter("plantType", plantgrowthtab.getplantType());
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -263,12 +260,13 @@ public class AddPlantObservation_stepFive extends Fragment
         });
     }
 
-    private void uploadMedia(String id, String path)
+    private void uploadMedia(String plantgrowthId, String path,String plantId)
     {
         File file = new File(path);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "UpLoadFilePlantImg");
-        params.addQueryStringParameter("plantgrowthId", id);
+        params.addQueryStringParameter("plantgrowthId", plantgrowthId);
+        params.addQueryStringParameter("plantId", plantId);
         params.addQueryStringParameter("file", file.getName());
         params.setBodyEntity(new FileUploadEntity(file, "text/html"));
         HttpUtils http = new HttpUtils();

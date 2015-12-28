@@ -274,7 +274,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     private void showExistTip()
     {
         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(AddStd_Cmd.this, R.style.MyDialog, dialog_layout, "添加标准生产指令", "确定取消添加吗？", "退出", "取消", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(AddStd_Cmd.this, R.style.MyDialog, dialog_layout, "取消标准生产指令", "确定取消吗？", "是", "否", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)

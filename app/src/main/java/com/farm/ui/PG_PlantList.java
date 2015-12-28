@@ -54,6 +54,7 @@ import java.util.List;
 @EActivity(R.layout.pg_plantlist)
 public class PG_PlantList extends Activity
 {
+    String gcdid="";
     PlantGcd plantGcd;
     Dictionary dictionary;
     TimeThread timethread;
@@ -82,11 +83,14 @@ public class PG_PlantList extends Activity
     PullToRefreshListView frame_listview_news;
 
     String areaid;
+    String gcdName;
 
     @Click
     void btn_add()
     {
         Intent intent = new Intent(PG_PlantList.this, AddPlant_.class);
+        intent.putExtra("gcdid",gcdid);
+        intent.putExtra("gcdName",gcdName);
         PG_PlantList.this.startActivity(intent);
     }
 
@@ -134,6 +138,8 @@ public class PG_PlantList extends Activity
         getActionBar().hide();
         appContext = (AppContext) PG_PlantList.this.getApplication();
         plantGcd = getIntent().getParcelableExtra("bean");
+        gcdid = getIntent().getStringExtra("gcdid");
+        gcdName = getIntent().getStringExtra("gcdName");
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
         PG_PlantList.this.registerReceiver(receiver_update, intentfilter_update);
         commembertab commembertab = AppContext.getUserInfo(PG_PlantList.this);
@@ -181,9 +187,10 @@ public class PG_PlantList extends Activity
         params.addQueryStringParameter("username", commembertab.getuserName());
         params.addQueryStringParameter("orderby", "regDate desc");
         params.addQueryStringParameter("strWhere", "");
+        params.addQueryStringParameter("gcdid", gcdid);
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "plantGetList");
+        params.addQueryStringParameter("action", "plantGetListByGCD");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

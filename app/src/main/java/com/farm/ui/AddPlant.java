@@ -38,6 +38,8 @@ public class AddPlant extends Activity
 	@ViewById
 	CheckBox cb_plantType;
 	String areaid;
+	String gcdid;
+	String gcdName;
 
 	@Click
 	void imgbtn_addpicture()
@@ -58,7 +60,8 @@ public class AddPlant extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		areaid = getIntent().getStringExtra("areaid");
+		gcdid = getIntent().getStringExtra("gcdid");
+		gcdName = getIntent().getStringExtra("gcdName");
 		getActionBar().hide();
 	}
 
@@ -71,7 +74,9 @@ public class AddPlant extends Activity
 		params.addQueryStringParameter("uid", commembertab.getuId());
 		params.addQueryStringParameter("parkId", commembertab.getparkId());
 		params.addQueryStringParameter("parkName", commembertab.getparkName());
-		params.addQueryStringParameter("areaId", areaid);
+		params.addQueryStringParameter("areaId", commembertab.getareaId());
+		params.addQueryStringParameter("gcdId", gcdid);
+		params.addQueryStringParameter("gcdName", gcdName);
 		params.addQueryStringParameter("areaName", commembertab.getareaName());
 		params.addQueryStringParameter("action", "plantAdd");
 

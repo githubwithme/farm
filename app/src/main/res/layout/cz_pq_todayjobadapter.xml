@@ -114,9 +114,9 @@
 
                     <ImageView
                         android:id="@+id/iv_record"
-                        android:layout_width="20dip"
-                        android:layout_height="25dip"
-                        android:background="@drawable/icon_record" />
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:background="@drawable/add_voice_pressed" />
 
                     <FrameLayout
                         android:id="@+id/fl_new"

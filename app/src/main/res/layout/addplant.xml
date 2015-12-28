@@ -17,7 +17,7 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/back" />
 
         <ProgressBar
             android:id="@+id/main_head_progress"
@@ -33,7 +33,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="添加苗情"
-            android:textColor="@color/white"
+            android:textColor="@color/bg_text"
             android:textSize="@dimen/titlebar_textsize" />
 
         <Button
@@ -46,14 +46,14 @@
             android:background="@null"
             android:gravity="center"
             android:text="保存"
-            android:textColor="@color/white"
+            android:textColor="@color/bg_text"
             android:textSize="@dimen/size_14" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
-        android:background="@color/bg_yellow" />
+        android:background="@color/line_color" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                     android:gravity="right|center_vertical"
                     android:paddingRight="10dip"
                     android:text="是否为异常株"
-                    android:textColor="@color/bg_yellow"
+                    android:textColor="@color/gray"
                     android:textSize="@dimen/size_14" />
             </RelativeLayout>
         </TableLayout>

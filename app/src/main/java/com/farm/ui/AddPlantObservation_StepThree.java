@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.AddPlantObservationAdapter;
 import com.farm.adapter.AddPlantObservation_StepTwo_Adapter;
@@ -20,9 +19,9 @@ import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.FJ_SCFJ;
 import com.farm.bean.Result;
+import com.farm.bean.plantgrowthtab;
 import com.farm.bean.planttab;
 import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
-import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -69,14 +68,14 @@ public class AddPlantObservation_StepThree extends Fragment
     @AfterViews
     void afterOncreate()
     {
-//        getPlantlist();
-        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
-        List<planttab> lsitNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("plantlist"), Result.class).getRows().toJSONString(), planttab.class);
-        if (lsitNewData != null)
-        {
-            addPlantObservationAdapter = new AddPlantObservationAdapter(getActivity(), lsitNewData);
-            lv_plant.setAdapter(addPlantObservationAdapter);
-        }
+        getPlantlist();
+//        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
+//        List<planttab> lsitNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("plantlist"), Result.class).getRows().toJSONString(), planttab.class);
+//        if (lsitNewData != null)
+//        {
+//        addPlantObservationAdapter = new AddPlantObservationAdapter(getActivity(), lsitNewData);
+//        lv_plant.setAdapter(addPlantObservationAdapter);
+//        }
     }
 
     public List<FJ_SCFJ> getFJ_SCFJList()
@@ -84,7 +83,7 @@ public class AddPlantObservation_StepThree extends Fragment
         return addPlantObservationAdapter.getFJ_SCFJList();
     }
 
-    public List<planttab> getPlanttabList()
+    public List<plantgrowthtab> getPlanttabList()
     {
         return addPlantObservationAdapter.getPlanttabList();
     }
@@ -106,38 +105,39 @@ public class AddPlantObservation_StepThree extends Fragment
         params.addQueryStringParameter("username", commembertab.getuserName());
         params.addQueryStringParameter("orderby", "regDate desc");
         params.addQueryStringParameter("strWhere", "");
+        params.addQueryStringParameter("gcdid", fragmentCallBack.getGcdId());
         params.addQueryStringParameter("page_size", String.valueOf(AppContext.PAGE_SIZE));
         params.addQueryStringParameter("page_index", String.valueOf(0));
-        params.addQueryStringParameter("action", "plantGetList");
+        params.addQueryStringParameter("action", "plantGetListByGCD");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
-//                String a = responseInfo.result;
-//                List<planttab> lsitNewData = null;
-//                Result result = JSON.parseObject(responseInfo.result, Result.class);
-//                if (result.getResultCode() == 1)
-//                {
-//                    if (result.getAffectedRows() != 0)
-//                    {
-//                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), planttab.class);
-//                        if (lsitNewData != null)
-//                        {
-//                            AddPlantObservationAdapter addPlantObservationAdapter = new AddPlantObservationAdapter(getActivity(), lsitNewData);
-//                            lv_plant.setAdapter(addPlantObservationAdapter);
-//                        }
-//
-//                    } else
-//                    {
-//
-//                    }
-//                } else
-//                {
-//                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-//                    return;
-//                }
+                String a = responseInfo.result;
+                List<planttab> lsitNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), planttab.class);
+                        if (lsitNewData != null)
+                        {
+                            addPlantObservationAdapter = new AddPlantObservationAdapter(getActivity(), lsitNewData);
+                            lv_plant.setAdapter(addPlantObservationAdapter);
+                        }
+
+                    } else
+                    {
+
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
             }
 
             @Override

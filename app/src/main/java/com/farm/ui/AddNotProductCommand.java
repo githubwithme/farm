@@ -100,13 +100,20 @@ public class AddNotProductCommand extends Activity implements OnClickListener
     void tv_importance()
     {
         JSONObject jsonObject = utils.parseJsonFile(AddNotProductCommand.this, "dictionary.json");
+        JSONArray jsonArray_id= JSONArray.parseArray(jsonObject.getString("importance_id"));
         JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("importance"));
+
         List<String> list = new ArrayList<String>();
+        List<String> list_id = new ArrayList<String>();
         for (int i = 0; i < jsonArray.size(); i++)
         {
             list.add(jsonArray.getString(i));
         }
-        showDialog_Importance(list);
+        for (int i = 0; i < jsonArray_id.size(); i++)
+        {
+            list_id.add(jsonArray_id.getString(i));
+        }
+        showDialog_Importance(list_id,list);
     }
 
     @Click
@@ -271,7 +278,7 @@ public class AddNotProductCommand extends Activity implements OnClickListener
         params.addQueryStringParameter("stdJobTypeName", "");
         params.addQueryStringParameter("stdJobId", "-1");
         params.addQueryStringParameter("stdJobName", "");
-        params.addQueryStringParameter("importance", importance);
+        params.addQueryStringParameter("importance", importance_id);
         params.addQueryStringParameter("execLevel", level);
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -439,10 +446,10 @@ public class AddNotProductCommand extends Activity implements OnClickListener
 
     Fragment mContent_top = new Fragment();
 
-    public void showDialog_Importance(List<String> list)
+    public void showDialog_Importance(List<String> list_id,List<String> list)
     {
         View dialog_layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(AddNotProductCommand.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
+        customDialog_listView = new CustomDialog_ListView(AddNotProductCommand.this, R.style.MyDialog, dialog_layout, list, list_id, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)

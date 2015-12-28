@@ -3,6 +3,8 @@
 
 "gcjllist":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":1,"uId":12,"regDate":"2015-12-25 13:31:04","gcdId":"2","gcq":"1","jjbx":"3","ybx":"4","gxbx":"1","lbx":"1","ghbx":"1","csgbx":"1","cygbx":"1","szfx":"1","cjUserID":"20","cjUserName":"2m","imgurl":[""]}],"other":[]},
 
+  "plantgrowthlist":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":"2","uId":12,"plantName":"植株1"},{"id":"3","uId":12,"plantName":"植株2"}],"other":[]},
+
   "plantlist":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":"2","uId":12,"plantName":"植株1"},{"id":"3","uId":12,"plantName":"植株2"}],"other":[]},
 
   "img_url":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":"2","uId":12,"plantgcdName":"观测点1","regDate":"2015-12-15 09:31:59","parkId":"8","parkName":"武鸣园区","areaId":"4","areaName":"第一片区","x":"0","y":"0","imgurl":[""],"newDate":"2015-12-25 15:48:02"}],"other":[]},
@@ -17,7 +19,9 @@
 
 "importance":[ "一般", "重要", "非常重要" ],
 
-"number":["1","2","3","4","5","6"],
+"importance_id":[ "0", "1", "2" ],
+
+"number":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],
 
 "color":["嫩绿色","黄色","青绿色","灰色","白色","深绿色","泥色","粉红色","黑色"],
 

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_selectitem"
-        android:minHeight="30dip" >
+        android:minHeight="40dip" >
 
         <TextView
             android:id="@+id/tv_todaywork"
@@ -20,7 +20,7 @@
             android:gravity="left"
             android:text="今日工作"
             android:textColor="@color/gray"
-            android:textSize="11sp" />
+            android:textSize="@dimen/size_14" />
 
         <TextView
             android:id="@+id/tv_worknumber"
@@ -32,7 +32,7 @@
             android:gravity="center"
             android:text="未知"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="11sp" />
+            android:textSize="@dimen/size_14" />
 
         <TextView
             android:id="@+id/tv_more"
@@ -44,7 +44,7 @@
             android:minWidth="60dip"
             android:text="更多"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="11sp" />
+            android:textSize="@dimen/size_14" />
     </RelativeLayout>
 
     <FrameLayout

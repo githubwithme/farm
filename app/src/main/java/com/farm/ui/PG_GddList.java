@@ -195,9 +195,9 @@ public class PG_GddList extends Fragment
                 {
                     if (result.getAffectedRows() != 0)
                     {
-//						listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcd.class);
-                        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
-                        listNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("img_url"), Result.class).getRows().toJSONString(), PlantGcd.class);
+						listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcd.class);
+//                        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
+//                        listNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("img_url"), Result.class).getRows().toJSONString(), PlantGcd.class);
                     } else
                     {
                         listNewData = new ArrayList<PlantGcd>();

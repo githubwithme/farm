@@ -110,7 +110,7 @@ public class DictionarySecondAdapter extends BaseAdapter
 			listItemView.txt.setTextColor(0xFFFF8C00);// 设置第一项选择后的颜色
 			listItemView.img.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.item_collection_selected));
 			listItemView.img.setTag(true);
-			saveSelectRecords(BELONG, firstid, firstType, secondItemName.get(position), secondItemName.get(position));
+			saveSelectRecords(BELONG, firstid, firstType, secondItemid.get(position), secondItemName.get(position));
 
 		}
 	}

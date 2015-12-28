@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.FJ_SCFJ;
-import com.farm.bean.planttab;
+import com.farm.bean.plantgrowthtab;
 import com.farm.common.BitmapHelper;
 
 import java.util.List;
@@ -26,9 +26,9 @@ public class AddPlantObservationAdapter_MakeSure extends BaseAdapter
     ListItemView listItemView = null;
     String audiopath;
     private Context context;// 运行上下文
-    private List<planttab> listItems;// 数据集合
+    private List<plantgrowthtab> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
-    planttab planttab;
+    plantgrowthtab plantgrowthtab;
 
     static class ListItemView
     { // 自定义控件集合
@@ -39,9 +39,9 @@ public class AddPlantObservationAdapter_MakeSure extends BaseAdapter
         public TextView tv_wj;
         public TextView tv_ys;
         public TextView tv_lys;
-        public TextView tv_lysj;
-        public TextView tv_clsj;
         public CheckBox cb_sfyz;
+        public CheckBox cb_sfly;
+        public CheckBox cb_sfcl;
 
     }
 
@@ -52,7 +52,7 @@ public class AddPlantObservationAdapter_MakeSure extends BaseAdapter
      * @param data
      * @param context
      */
-    public AddPlantObservationAdapter_MakeSure(Context context, List<planttab> data, List<FJ_SCFJ> list_fj_scfj)
+    public AddPlantObservationAdapter_MakeSure(Context context, List<plantgrowthtab> data, List<FJ_SCFJ> list_fj_scfj)
     {
         this.context = context;
         this.list_fj_scfj = list_fj_scfj;
@@ -81,7 +81,7 @@ public class AddPlantObservationAdapter_MakeSure extends BaseAdapter
      */
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        planttab = listItems.get(position);
+        plantgrowthtab = listItems.get(position);
         convertView = listContainer.inflate(R.layout.addplantobservationadapter_makesure, null);
         listItemView = new ListItemView();
         listItemView.tv_plantname = (TextView) convertView.findViewById(R.id.tv_plantname);
@@ -90,25 +90,40 @@ public class AddPlantObservationAdapter_MakeSure extends BaseAdapter
         listItemView.tv_wj = (TextView) convertView.findViewById(R.id.tv_wj);
         listItemView.tv_ys = (TextView) convertView.findViewById(R.id.tv_ys);
         listItemView.tv_lys = (TextView) convertView.findViewById(R.id.tv_lys);
-        listItemView.tv_lysj = (TextView) convertView.findViewById(R.id.tv_lysj);
-        listItemView.tv_clsj = (TextView) convertView.findViewById(R.id.tv_clsj);
+        listItemView.cb_sfly = (CheckBox) convertView.findViewById(R.id.cb_sfly);
+        listItemView.cb_sfcl = (CheckBox) convertView.findViewById(R.id.cb_sfcl);
         listItemView.cb_sfyz = (CheckBox) convertView.findViewById(R.id.cb_sfyz);
-        listItemView.tv_plantname.setText(planttab.getplantName());
-        listItemView.tv_zg.setText(planttab.gethNum());
-        listItemView.tv_wj.setText(planttab.getwNum());
-        listItemView.tv_ys.setText(planttab.getyNum());
-        listItemView.tv_lys.setText(planttab.getxNum());
-        listItemView.tv_lysj.setText(planttab.getzDate());
-        listItemView.tv_clsj.setText(planttab.getcDate());
-        if (planttab.getplantType().equals("1"))
+        listItemView.tv_plantname.setText(plantgrowthtab.getplantName());
+        listItemView.tv_zg.setText(plantgrowthtab.gethNum());
+        listItemView.tv_wj.setText(plantgrowthtab.getwNum());
+        listItemView.tv_ys.setText(plantgrowthtab.getyNum());
+        listItemView.tv_lys.setText(plantgrowthtab.getxNum());
+        if (plantgrowthtab.getplantType().equals("1"))
         {
             listItemView.cb_sfyz.setChecked(true);
+        } else
+        {
+            listItemView.cb_sfyz.setChecked(false);
+        }
+        if (plantgrowthtab.getcDate().equals("1"))
+        {
+            listItemView.cb_sfcl.setChecked(true);
+        } else
+        {
+            listItemView.cb_sfcl.setChecked(false);
+        }
+        if (plantgrowthtab.getzDate().equals("1"))
+        {
+            listItemView.cb_sfly.setChecked(true);
+        } else
+        {
+            listItemView.cb_sfly.setChecked(false);
         }
 
 
         for (int i = 0; i < list_fj_scfj.size(); i++)
         {
-            if (list_fj_scfj.get(i).getFJID().equals(planttab.getId()))
+            if (list_fj_scfj.get(i).getFJID().equals(plantgrowthtab.getplantId()))
             {
                 ImageView imageView = new ImageView(context);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);

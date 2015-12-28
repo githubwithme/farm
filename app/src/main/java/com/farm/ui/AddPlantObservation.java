@@ -226,7 +226,7 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
     private void showExistTip()
     {
         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(AddPlantObservation.this, R.style.MyDialog, dialog_layout, "取消植株观测", "取消？", "取消", "不", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(AddPlantObservation.this, R.style.MyDialog, dialog_layout, "取消观测", "确定取消吗？", "是", "否", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)

@@ -125,7 +125,8 @@ public class PG_PlantGcdListAdapter extends BaseAdapter
 				public void onClick(View v)
 				{
 					Intent intent = new Intent(context, PG_PlantList_.class);
-					intent.putExtra("bean", listItems.get(v.getId()));
+					intent.putExtra("gcdid", listItems.get(v.getId()).getId());
+					intent.putExtra("gcdName", listItems.get(v.getId()).getPlantgcdName());
 					context.startActivity(intent);
 				}
 			});

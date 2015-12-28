@@ -34,9 +34,53 @@ public class PlantGcjl implements Parcelable
     public String szfx;
     public String cjUserID;
     public String cjUserName;
+    public String yNum;
+    public String hNum;
+    public String wNum;
+    public String xNum;
     public List<String> imgUrl;
     public List<plantgrowthtab> plantGrowth;
 
+
+    public String getxNum()
+    {
+        return xNum;
+    }
+
+    public void setxNum(String xNum)
+    {
+        this.xNum = xNum;
+    }
+
+    public String getwNum()
+    {
+        return wNum;
+    }
+
+    public void setwNum(String wNum)
+    {
+        this.wNum = wNum;
+    }
+
+    public String gethNum()
+    {
+        return hNum;
+    }
+
+    public void sethNum(String hNum)
+    {
+        this.hNum = hNum;
+    }
+
+    public String getyNum()
+    {
+        return yNum;
+    }
+
+    public void setyNum(String yNum)
+    {
+        this.yNum = yNum;
+    }
 
     public List<plantgrowthtab> getPlantGrowth()
     {
@@ -240,6 +284,10 @@ public class PlantGcjl implements Parcelable
             p.setSzfx(source.readString());
             p.setCjUserID(source.readString());
             p.setCjUserName(source.readString());
+            p.setyNum(source.readString());
+            p.sethNum(source.readString());
+            p.setwNum(source.readString());
+            p.setxNum(source.readString());
             p.imgUrl = source.readArrayList(List.class.getClassLoader());
             p.plantGrowth =source.readArrayList(plantgrowthtab.class.getClassLoader());
             return p;
@@ -270,6 +318,10 @@ public class PlantGcjl implements Parcelable
         p.writeString(szfx);
         p.writeString(cjUserID);
         p.writeString(cjUserName);
+        p.writeString(yNum);
+        p.writeString(hNum);
+        p.writeString(wNum);
+        p.writeString(xNum);
         p.writeList(imgUrl);
         p.writeList(plantGrowth);
 

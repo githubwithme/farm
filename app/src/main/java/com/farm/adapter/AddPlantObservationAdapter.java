@@ -19,9 +19,9 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.FJ_SCFJ;
+import com.farm.bean.plantgrowthtab;
 import com.farm.bean.planttab;
 import com.farm.common.BitmapHelper;
-import com.farm.widget.MyDatepicker;
 import com.farm.widget.MyDialog;
 import com.media.HomeFragmentActivity;
 import com.media.MediaChooser;
@@ -48,20 +48,21 @@ public class AddPlantObservationAdapter extends BaseAdapter
     String audiopath;
     private Context context;// 运行上下文
     private List<planttab> listItems;// 数据集合
+    private List<plantgrowthtab> list_plantgrowthtab = new ArrayList<>();// 数据集合
     private LayoutInflater listContainer;// 视图容器
     planttab planttab;
 
     static class ListItemView
     { // 自定义控件集合
 
-        public TextView tv_lysj;
         public TextView tv_plantname;
         public EditText et_zg;
         public EditText et_wj;
         public EditText et_ys;
         public EditText et_lys;
         public CheckBox cb_sfyz;
-        public TextView tv_clsj;
+        public CheckBox cb_sfly;
+        public CheckBox cb_sfcl;
         public ImageButton imgbtn_addpicture;
         public LinearLayout ll_picture;
 
@@ -114,9 +115,9 @@ public class AddPlantObservationAdapter extends BaseAdapter
             listItemView.et_wj = (EditText) convertView.findViewById(R.id.et_wj);
             listItemView.et_ys = (EditText) convertView.findViewById(R.id.et_ys);
             listItemView.et_lys = (EditText) convertView.findViewById(R.id.et_lys);
-            listItemView.tv_lysj = (TextView) convertView.findViewById(R.id.tv_lysj);
+            listItemView.cb_sfly = (CheckBox) convertView.findViewById(R.id.cb_sfly);
             listItemView.cb_sfyz = (CheckBox) convertView.findViewById(R.id.cb_sfyz);
-            listItemView.tv_clsj = (TextView) convertView.findViewById(R.id.tv_clsj);
+            listItemView.cb_sfcl = (CheckBox) convertView.findViewById(R.id.cb_sfcl);
             listItemView.imgbtn_addpicture = (ImageButton) convertView.findViewById(R.id.imgbtn_addpicture);
             listItemView.ll_picture = (LinearLayout) convertView.findViewById(R.id.ll_picture);
             listItemView.tv_plantname.setText(planttab.getplantName());
@@ -135,30 +136,7 @@ public class AddPlantObservationAdapter extends BaseAdapter
                     context.startActivity(intent);
                 }
             });
-            listItemView.tv_lysj.setTag(position);
-            listItemView.tv_lysj.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    currentItem = Integer.valueOf(v.getTag().toString());
-                    TextView tv_lysj = ((ListItemView) (lmap.get(currentItem).getTag())).tv_lysj;
-                    MyDatepicker myDatepicker = new MyDatepicker(context, tv_lysj);
-                    myDatepicker.getDialog().show();
-                }
-            });
-            listItemView.tv_clsj.setTag(position);
-            listItemView.tv_clsj.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    currentItem = Integer.valueOf(v.getTag().toString());
-                    TextView tv_clsj = ((ListItemView) (lmap.get(currentItem).getTag())).tv_clsj;
-                    MyDatepicker myDatepicker = new MyDatepicker(context, tv_clsj);
-                    myDatepicker.getDialog().show();
-                }
-            });
+
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -175,35 +153,50 @@ public class AddPlantObservationAdapter extends BaseAdapter
         return list_FJ_SCFJ;
     }
 
-    public List<planttab> getPlanttabList()
+    public List<plantgrowthtab> getPlanttabList()
     {
+        list_plantgrowthtab=new ArrayList<>();
         for (int i = 0; i < lmap.size(); i++)
         {
+            plantgrowthtab plantgrowthtab = new plantgrowthtab();
             EditText et_zg = ((ListItemView) (lmap.get(i).getTag())).et_zg;
             EditText et_wj = ((ListItemView) (lmap.get(i).getTag())).et_wj;
             EditText et_ys = ((ListItemView) (lmap.get(i).getTag())).et_ys;
             EditText et_lys = ((ListItemView) (lmap.get(i).getTag())).et_lys;
-            TextView tv_lysj = ((ListItemView) (lmap.get(i).getTag())).tv_lysj;
-            TextView tv_clsj = ((ListItemView) (lmap.get(i).getTag())).tv_clsj;
+            CheckBox cb_sfly = ((ListItemView) (lmap.get(i).getTag())).cb_sfly;
+            CheckBox cb_sfcl = ((ListItemView) (lmap.get(i).getTag())).cb_sfcl;
             CheckBox cb_sfyz = ((ListItemView) (lmap.get(i).getTag())).cb_sfyz;
 
-            listItems.get(i).sethNum(et_zg.getText().toString());
-            listItems.get(i).setyNum(et_ys.getText().toString());
-            listItems.get(i).setwNum(et_wj.getText().toString());
-            listItems.get(i).setxNum(et_lys.getText().toString());
-            listItems.get(i).setcDate(tv_clsj.getText().toString());
-            listItems.get(i).setzDate(tv_lysj.getText().toString());
+            plantgrowthtab.setplantId(listItems.get(i).getId());
+            plantgrowthtab.setplantName(listItems.get(i).getplantName());
+            plantgrowthtab.sethNum(et_zg.getText().toString());
+            plantgrowthtab.setyNum(et_ys.getText().toString());
+            plantgrowthtab.setwNum(et_wj.getText().toString());
+            plantgrowthtab.setxNum(et_lys.getText().toString());
             if (cb_sfyz.isChecked())
             {
-                listItems.get(i).setplantType("1");//1为异株
+                plantgrowthtab.setplantType("1");//1为异株
             } else
             {
-                listItems.get(i).setplantType("0");//1为异株
+                plantgrowthtab.setplantType("0");//1为异株
             }
-
-
+            if (cb_sfly.isChecked())
+            {
+                plantgrowthtab.setzDate("1");
+            } else
+            {
+                plantgrowthtab.setzDate("0");
+            }
+            if (cb_sfcl.isChecked())
+            {
+                plantgrowthtab.setcDate("1");//1为异株
+            } else
+            {
+                plantgrowthtab.setcDate("0");//1为异株
+            }
+            list_plantgrowthtab.add(plantgrowthtab);
         }
-        return listItems;
+        return list_plantgrowthtab;
     }
 
     BroadcastReceiver imageBroadcastReceiver = new BroadcastReceiver()
