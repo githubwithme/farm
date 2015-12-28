@@ -145,17 +145,19 @@ public class NCZ_CZ_TodayCommandAdapter extends BaseAdapter
 		if (commandtab.getimportance().equals("0"))
 		{
 			listItemView.tv_importance.setText("一般");
+			listItemView.circle_img.setImageResource(R.color.bg_blue);
 		} else if (commandtab.getimportance().equals("1"))
 		{
 			listItemView.tv_importance.setText("重要");
+			listItemView.circle_img.setImageResource(R.color.bg_green);
 		} else if (commandtab.getimportance().equals("2"))
 		{
 			listItemView.tv_importance.setText("非常重要");
+			listItemView.circle_img.setImageResource(R.color.color_orange);
 		} else if (commandtab.getimportance().equals("3"))
 		{
-			listItemView.tv_importance.setTextColor(context.getResources().getColor(R.color.bg_blue));
 			listItemView.tv_importance.setText("未知");
-			listItemView.circle_img.setBorderColor(context.getResources().getColor(R.color.bg_blue));
+			listItemView.circle_img.setImageResource(R.color.bg_job);
 		}
 		return convertView;
 	}

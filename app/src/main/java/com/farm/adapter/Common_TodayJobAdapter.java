@@ -157,18 +157,19 @@ public class Common_TodayJobAdapter extends BaseAdapter
 		if (jobtab.getImportance().equals("0"))
 		{
 			listItemView.tv_importance.setText("一般");
+			listItemView.circle_img.setImageResource(R.color.bg_blue);
 		} else if (jobtab.getImportance().equals("1"))
 		{
 			listItemView.tv_importance.setText("重要");
+			listItemView.circle_img.setImageResource(R.color.bg_green);
 		} else if (jobtab.getImportance().equals("2"))
 		{
 			listItemView.tv_importance.setText("非常重要");
+			listItemView.circle_img.setImageResource(R.color.color_orange);
 		} else if (jobtab.getImportance().equals("3"))
 		{
-			listItemView.tv_importance.setTextColor(context.getResources().getColor(R.color.bg_blue));
 			listItemView.tv_importance.setText("自");
-			listItemView.circle_img.setBorderColor(context.getResources().getColor(R.color.bg_blue));
-			// listItemView.circle_img.setImageDrawable(context.getResources().getDrawable(R.drawable.circle_blue));
+			listItemView.circle_img.setImageResource(R.color.bg_job);
 		}
 
 		listItemView.tv_time.setText(jobtab.getregDate().substring(0, jobtab.getregDate().lastIndexOf(":")));

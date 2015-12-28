@@ -131,22 +131,6 @@
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
                         android:background="@drawable/icon_gz"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dip">
-
-                    <TextView
-                        android:id="@+id/tv_worknumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_12"
-                        android:visibility="gone"/>
 
                     <FrameLayout
                         android:id="@+id/fl_worknumber_new"
@@ -173,6 +157,24 @@
                             android:textColor="@color/white"
                             android:textSize="@dimen/size_10"/>
                     </FrameLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip">
+
+                    <TextView
+                        android:id="@+id/tv_worknumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_12"
+                        android:visibility="gone"/>
+
+
                 </RelativeLayout>
             </LinearLayout>
 
@@ -213,21 +215,6 @@
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
                         android:background="@drawable/icon_zz"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_plantnumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_12"
-                        android:visibility="gone"/>
 
                     <FrameLayout
                         android:id="@+id/fl_plantnumber_new"
@@ -254,6 +241,23 @@
                             android:textColor="@color/white"
                             android:textSize="@dimen/size_10"/>
                     </FrameLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_plantnumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_12"
+                        android:visibility="gone"/>
+
+
                 </RelativeLayout>
             </LinearLayout>
 
@@ -294,21 +298,6 @@
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
                         android:background="@drawable/icon_zl"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_cmdnumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_12"
-                        android:visibility="gone"/>
 
                     <FrameLayout
                         android:id="@+id/fl_cmdnumber_new"
@@ -335,6 +324,23 @@
                             android:textColor="@color/white"
                             android:textSize="@dimen/size_10"/>
                     </FrameLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_cmdnumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_12"
+                        android:visibility="gone"/>
+
+
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

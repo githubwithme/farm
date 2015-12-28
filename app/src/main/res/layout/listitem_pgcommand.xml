@@ -18,8 +18,8 @@
         android:orientation="vertical" >
 
         <FrameLayout
-            android:layout_width="24dip"
-            android:layout_height="24dip"
+            android:layout_width="45dip"
+            android:layout_height="45dip"
             android:layout_centerInParent="true" >
 
             <com.farm.widget.CircleImageView
@@ -28,8 +28,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:src="@color/white"
-                app:border_color="@color/bg_yellow"
-                app:border_width="1dp" />
+                app:border_color="@color/transparent"
+                app:border_width="0dp" />
 
             <TextView
                 android:id="@+id/tv_importance"
@@ -38,7 +38,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="1"
-                android:textColor="@color/bg_yellow"
+                android:textColor="@color/white"
                 android:textSize="8sp" />
         </FrameLayout>
     </RelativeLayout>

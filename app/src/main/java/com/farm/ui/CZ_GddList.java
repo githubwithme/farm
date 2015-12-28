@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_PlantGcdListAdapter;
+import com.farm.adapter.CZ_PlantGcdListAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
@@ -50,14 +50,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-@EActivity(R.layout.ncz_plantgcdlist)
-public class NCZ_GddList extends Activity
+@EActivity(R.layout.cz_plantgcdlist)
+public class CZ_GddList extends Activity
 {
     Dictionary dictionary;
     TimeThread timethread;
     SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
-    private NCZ_PlantGcdListAdapter listAdapter;
+    private CZ_PlantGcdListAdapter listAdapter;
     private int listSumData;
     private List<PlantGcd> listData = new ArrayList<PlantGcd>();
     private AppContext appContext;
@@ -84,8 +84,8 @@ public class NCZ_GddList extends Activity
     @Click
     void btn_add()
     {
-        Intent intent = new Intent(NCZ_GddList.this, AddGcd_.class);
-        NCZ_GddList.this.startActivity(intent);
+        Intent intent = new Intent(CZ_GddList.this, AddGcd_.class);
+        CZ_GddList.this.startActivity(intent);
     }
 
     @Override
@@ -105,12 +105,12 @@ public class NCZ_GddList extends Activity
     @AfterViews
     void afterOncreate()
     {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_GddList.this);
+        commembertab commembertab = AppContext.getUserInfo(CZ_GddList.this);
         if (commembertab.getnlevel().toString().equals("0"))
         {
             btn_add.setVisibility(View.GONE);
         }
-        dictionary = DictionaryHelper.getDictionaryFromAssess(NCZ_GddList.this, "PG_MQ");
+        dictionary = DictionaryHelper.getDictionaryFromAssess(CZ_GddList.this, "PG_MQ");
         selectorUi = new SelectorFragment_();
         Bundle bundle = new Bundle();
         bundle.putSerializable("bean", dictionary);
@@ -125,9 +125,9 @@ public class NCZ_GddList extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        appContext = (AppContext) NCZ_GddList.this.getApplication();
+        appContext = (AppContext) CZ_GddList.this.getApplication();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        NCZ_GddList.this.registerReceiver(receiver_update, intentfilter_update);
+        CZ_GddList.this.registerReceiver(receiver_update, intentfilter_update);
         areaid = getIntent().getStringExtra("areaid");
         timethread = new TimeThread();
         timethread.setStop(false);
@@ -165,7 +165,7 @@ public class NCZ_GddList extends Activity
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_GddList.this);
+        commembertab commembertab = AppContext.getUserInfo(CZ_GddList.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("areaid", areaid);
         params.addQueryStringParameter("userid", commembertab.getId());
@@ -198,7 +198,7 @@ public class NCZ_GddList extends Activity
                     }
                 } else
                 {
-                    AppContext.makeToast(NCZ_GddList.this, "error_connectDataBase");
+                    AppContext.makeToast(CZ_GddList.this, "error_connectDataBase");
                     return;
                 }
                 // 数据处理
@@ -248,7 +248,7 @@ public class NCZ_GddList extends Activity
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(NCZ_GddList.this, getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                NewDataToast.makeText(CZ_GddList.this, getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else
                             {
                                 // NewDataToast.makeText(NCZ_GddList.this,
@@ -307,7 +307,7 @@ public class NCZ_GddList extends Activity
                     // 有异常--显示加载出错 & 弹出错误消息
                     lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                     more.setText(R.string.load_error);
-                    AppContext.makeToast(NCZ_GddList.this, "load_error");
+                    AppContext.makeToast(CZ_GddList.this, "load_error");
                 }
                 if (adapter.getCount() == 0)
                 {
@@ -330,15 +330,15 @@ public class NCZ_GddList extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_GddList.this, "error_connectServer");
+                AppContext.makeToast(CZ_GddList.this, "error_connectServer");
             }
         });
     }
 
     private void initAnimalListView()
     {
-        listAdapter = new NCZ_PlantGcdListAdapter(NCZ_GddList.this, listData);
-        list_footer = NCZ_GddList.this.getLayoutInflater().inflate(R.layout.listview_footer, null);
+        listAdapter = new CZ_PlantGcdListAdapter(CZ_GddList.this, listData);
+        list_footer = CZ_GddList.this.getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         frame_listview_news.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
@@ -365,9 +365,9 @@ public class NCZ_GddList extends Activity
                 // return;
                 PlantGcd PlantGcd = listData.get(position - 1);
                 if (PlantGcd == null) return;
-                Intent intent = new Intent(NCZ_GddList.this, NCZ_GrowthTreeActivity_.class);
+                Intent intent = new Intent(CZ_GddList.this, NCZ_GrowthTreeActivity_.class);
                 intent.putExtra("gcdid", PlantGcd.getId()); // 因为list中添加了头部,因此要去掉一个
-                NCZ_GddList.this.startActivity(intent);
+                CZ_GddList.this.startActivity(intent);
             }
         });
         frame_listview_news.setOnScrollListener(new AbsListView.OnScrollListener()

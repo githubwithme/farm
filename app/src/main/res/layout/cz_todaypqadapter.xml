@@ -42,7 +42,7 @@
                 android:gravity="left|center_vertical"
                 android:text="片区01"
                 android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_12"/>
+                android:textSize="@dimen/size_14"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -59,16 +59,17 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="张三"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/size_12"/>
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/iv_userinfo"
                 android:layout_width="15dip"
-                android:layout_alignParentRight="true"
                 android:layout_height="15dip"
+                android:layout_alignParentRight="true"
                 android:background="@drawable/downward"
+                android:visibility="gone"
                 />
         </RelativeLayout>
     </RelativeLayout>
@@ -77,10 +78,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="80dip"
-        android:layout_marginRight="15dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
         android:layout_marginTop="10dip"
-        android:background="@drawable/background_view_rounded_single"
         android:orientation="horizontal">
 
         <TextView
@@ -102,8 +102,8 @@
 
 
             <LinearLayout
-                android:layout_width="0dip"
                 android:id="@+id/ll_pgwork"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -125,12 +125,12 @@
                     android:minHeight="50dip">
 
                     <ImageView
-                        android:layout_width="25dip"
-                        android:layout_height="25dip"
+                        android:layout_width="50dip"
+                        android:layout_height="50dip"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:background="@drawable/gz_black"/>
+                        android:background="@drawable/icon_gz"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -145,7 +145,8 @@
                         android:gravity="center"
                         android:text="0"
                         android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_12"/>
+                        android:textSize="@dimen/size_14"
+                        android:visibility="gone"/>
 
                     <FrameLayout
                         android:id="@+id/fl_worknumber_new"
@@ -206,12 +207,12 @@
                     android:minHeight="50dip">
 
                     <ImageView
-                        android:layout_width="25dip"
-                        android:layout_height="25dip"
+                        android:layout_width="50dip"
+                        android:layout_height="50dip"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:background="@drawable/zz_black"/>
+                        android:background="@drawable/icon_zz"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -225,7 +226,8 @@
                         android:gravity="center"
                         android:text="0"
                         android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_12"/>
+                        android:textSize="@dimen/size_14"
+                        android:visibility="gone"/>
 
                     <FrameLayout
                         android:id="@+id/fl_plantnumber_new"
@@ -286,12 +288,12 @@
                     android:minHeight="50dip">
 
                     <ImageView
-                        android:layout_width="25dip"
-                        android:layout_height="25dip"
+                        android:layout_width="50dip"
+                        android:layout_height="50dip"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:background="@drawable/ml_black"/>
+                        android:background="@drawable/icon_zl"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -305,7 +307,8 @@
                         android:gravity="center"
                         android:text="0"
                         android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_12"/>
+                        android:textSize="@dimen/size_14"
+                        android:visibility="gone"/>
 
                     <FrameLayout
                         android:id="@+id/fl_cmdnumber_new"

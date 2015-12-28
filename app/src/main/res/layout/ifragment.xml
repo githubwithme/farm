@@ -16,7 +16,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="我"
-            android:textColor="@color/white"
+            android:textColor="@color/bg_text"
             android:textSize="@dimen/titlebar_textsize" />
     </RelativeLayout>
 
@@ -85,11 +85,11 @@
 
                 <ImageView
                     android:id="@+id/iv_share"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dip"
-                    android:background="@drawable/menu_partner" />
+                    android:background="@drawable/temp1" />
 
                 <ImageView
                     android:layout_width="12dip"
@@ -118,17 +118,18 @@
                 android:layout_marginLeft="15sp"
                 android:layout_marginRight="15sp"
                 android:background="@color/line_color" />
-            <RelativeLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_80" >
 
                 <ImageView
                     android:id="@+id/iv_gy"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dip"
-                    android:background="@drawable/menu_account" />
+                    android:background="@drawable/temp2" />
 
                 <ImageView
                     android:layout_width="12dip"
@@ -164,11 +165,11 @@
 
                 <ImageView
                     android:id="@+id/iv_bz"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dip"
-                    android:background="@drawable/menu_dashboard" />
+                    android:background="@drawable/temp3" />
 
                 <TextView
                     android:id="@+id/tv_bz"
@@ -203,11 +204,11 @@
 
                 <ImageView
                     android:id="@+id/iv_yj"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dip"
-                    android:background="@drawable/menu_partner" />
+                    android:background="@drawable/temp4" />
 
                 <TextView
                     android:id="@+id/tv_yj"
@@ -242,11 +243,11 @@
 
                 <ImageView
                     android:id="@+id/iv_changepwd"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dip"
-                    android:background="@drawable/menu_patrol" />
+                    android:background="@drawable/temp5" />
 
                 <TextView
                     android:id="@+id/tv_changepwd"
@@ -292,7 +293,7 @@
                         android:layout_height="@dimen/size_20"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dip"
-                        android:background="@drawable/menu_product" />
+                        android:background="@drawable/temp6" />
                 </FrameLayout>
 
                 <TextView
@@ -356,11 +357,11 @@
 
                 <ImageView
                     android:id="@+id/iv_exist"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dip"
-                    android:background="@drawable/menu_product" />
+                    android:background="@drawable/temp7" />
 
                 <TextView
                     android:id="@+id/tv_exist"

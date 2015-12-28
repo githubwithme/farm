@@ -43,6 +43,7 @@ import com.farm.common.SqliteDb;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
 import com.farm.common.utils;
+import com.farm.widget.CircleImageView;
 import com.farm.widget.NewDataToast;
 import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
@@ -596,6 +597,7 @@ public class Common_SelectCommand extends Activity implements OnClickListener
 			public TextView tv_time;
 			public Button btn_sure;
 			public FrameLayout fl_new;
+			public CircleImageView circle_img;
 			public TextView tv_new;
 		}
 
@@ -644,6 +646,7 @@ public class Common_SelectCommand extends Activity implements OnClickListener
 				listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
 				listItemView.tv_jd = (TextView) convertView.findViewById(R.id.tv_jd);
 				listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+				listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
 				listItemView.cb_add.setId(position);
 				listItemView.btn_sure.setId(position);
 				listItemView.iv_record.setId(position);
@@ -749,12 +752,15 @@ public class Common_SelectCommand extends Activity implements OnClickListener
 			if (commandtab.getimportance().equals("0"))
 			{
 				listItemView.tv_importance.setText("一般");
+				listItemView.circle_img.setImageResource(R.color.bg_blue);
 			} else if (commandtab.getimportance().equals("1"))
 			{
 				listItemView.tv_importance.setText("重要");
+				listItemView.circle_img.setImageResource(R.color.bg_green);
 			} else if (commandtab.getimportance().equals("2"))
 			{
 				listItemView.tv_importance.setText("非常重要");
+				listItemView.circle_img.setImageResource(R.color.color_orange);
 			}
 			listItemView.tv_time.setText(commandtab.getregDate().substring(0, commandtab.getregDate().lastIndexOf(":")));
 			return convertView;

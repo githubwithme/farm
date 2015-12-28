@@ -20,6 +20,7 @@
     <color name="bg_selector">#FFFAFA</color>
     <!-- 分割线颜色 -->
     <color name="line_color">#dcdcdc</color>
+    <color name="light_gray">#f0f7f6</color>
     <color name="line_color_black">#000000</color>
     <!-- listview分割线颜色 -->
     <color name="divider_color">#FFFAFA</color>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar" >
+        android:background="@color/bg_titlebar">
 
         <Button
             android:id="@+id/btn_back"
@@ -16,14 +16,14 @@
             android:layout_height="20dip"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dip"
-            android:background="@drawable/back" />
+            android:background="@drawable/back"/>
 
         <LinearLayout
             android:id="@+id/ll_tab"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -33,7 +33,7 @@
                 android:gravity="center"
                 android:text="分析统计"
                 android:textColor="@color/textcolor_titlebar"
-                android:textSize="@dimen/titlebar_textsize" />
+                android:textSize="@dimen/titlebar_textsize"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -41,24 +41,25 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dip" >
+            android:layout_height="50dip"
+            android:background="@color/color_orange">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dip"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -66,33 +67,24 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:text="各园区销售、生产、库存关联分析"
-                    android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_18" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_18"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dip"
-                    android:gravity="center"
-                    android:text="每天数据统计"
-                    android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_13" />
             </LinearLayout>
         </RelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="250dip"
+            android:layout_height="220dip"
             android:layout_marginLeft="15dip"
             android:layout_marginRight="15dip"
-            android:background="@color/white" >
+            android:background="@color/white">
 
             <LinearLayout
                 android:id="@+id/chart_day"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:orientation="vertical">
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
@@ -101,50 +93,50 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dip"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="60dip"
-        android:background="@color/white"
+        android:layout_height="50dip"
+        android:background="@color/color_orange"
         android:gravity="center"
         android:text="销售分析是的发生的方式发生"
-        android:textColor="@color/bg_text"
-        android:textSize="@dimen/size_13" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_14"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
             android:minHeight="80dip"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:id="@+id/rl_xs"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_weight="1" >
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/iv_xs"
                     android:layout_width="22dip"
                     android:layout_height="22dip"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/menu_account" />
+                    android:background="@drawable/menu_account"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -154,29 +146,29 @@
                     android:gravity="center"
                     android:text="销售分析"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_13" />
+                    android:textSize="@dimen/size_13"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/line_color" />
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:id="@+id/rl_cw"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_weight="1" >
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/iv_cw"
                     android:layout_width="22dip"
                     android:layout_height="22dip"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/menu_account" />
+                    android:background="@drawable/menu_account"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -186,29 +178,29 @@
                     android:gravity="center"
                     android:text="财务分析"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_13" />
+                    android:textSize="@dimen/size_13"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/line_color" />
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:id="@+id/rl_cp"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_weight="1" >
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/iv_cp"
                     android:layout_width="22dip"
                     android:layout_height="22dip"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/menu_account" />
+                    android:background="@drawable/menu_account"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -218,37 +210,37 @@
                     android:gravity="center"
                     android:text="产品分析"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_13" />
+                    android:textSize="@dimen/size_13"/>
             </RelativeLayout>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
             android:minHeight="80dip"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:id="@+id/rl_gz"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_weight="1" >
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/iv_gz"
                     android:layout_width="22dip"
                     android:layout_height="22dip"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/menu_account" />
+                    android:background="@drawable/menu_account"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -258,29 +250,29 @@
                     android:gravity="center"
                     android:text="工作分析"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_13" />
+                    android:textSize="@dimen/size_13"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/line_color" />
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:id="@+id/rl_zz"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_weight="1" >
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/iv_zz"
                     android:layout_width="22dip"
                     android:layout_height="22dip"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/menu_account" />
+                    android:background="@drawable/menu_account"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -290,29 +282,29 @@
                     android:gravity="center"
                     android:text="植株分析"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_13" />
+                    android:textSize="@dimen/size_13"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/line_color" />
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:id="@+id/rl_kc"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_weight="1" >
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/iv_kc"
                     android:layout_width="22dip"
                     android:layout_height="22dip"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/menu_account" />
+                    android:background="@drawable/menu_account"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -322,13 +314,13 @@
                     android:gravity="center"
                     android:text="库存分析"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_13" />
+                    android:textSize="@dimen/size_13"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/line_color" />
+                android:background="@color/line_color"/>
         </LinearLayout>
     </LinearLayout>
 

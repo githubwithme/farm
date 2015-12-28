@@ -101,6 +101,7 @@
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
         <activity android:name=".ui.CZ_PQ_TodayCommand_"/>
+        <activity android:name=".ui.CZ_GddList_"/>
         <activity android:name=".ui.CZ_PQ_CommandDetail_"/>
         <activity android:name=".ui.CZ_PQ_JobDetail_"/>
         <activity android:name=".ui.CZ_ToDayPQ_"/>
