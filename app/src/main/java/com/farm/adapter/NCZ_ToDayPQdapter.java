@@ -19,9 +19,9 @@ import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
 import com.farm.common.SqliteDb;
+import com.farm.ui.NCZ_GddList_;
 import com.farm.ui.NCZ_PQ_TodayCommand_;
 import com.farm.ui.NCZ_PQ_TodayJob_;
-import com.farm.ui.NCZ_PQ_TodayPlant_;
 import com.farm.widget.CircleImageView;
 
 import java.util.HashMap;
@@ -160,8 +160,8 @@ public class NCZ_ToDayPQdapter extends BaseAdapter
 					{
 						saveHaveReadData(area.getWorkuserid(), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_cmd));
 					}
-					Intent intent = new Intent(context, NCZ_PQ_TodayPlant_.class);
-					intent.putExtra("bean", listItems.get(v.getId()));// 因为list中添加了头部,因此要去掉一个
+					Intent intent = new Intent(context, NCZ_GddList_.class);
+					intent.putExtra("areaid", listItems.get(v.getId()).getid());// 因为list中添加了头部,因此要去掉一个
 					context.startActivity(intent);
 				}
 			});
