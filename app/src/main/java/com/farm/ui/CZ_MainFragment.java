@@ -55,12 +55,6 @@ public class CZ_MainFragment extends Fragment
 	@ViewById
 	TextView tv_title;
 	@ViewById
-	TextView tv_plantnumber;
-	@ViewById
-	TextView tv_worknumber;
-	@ViewById
-	TextView tv_cmdnumber;
-	@ViewById
 	TextView tv_plantnumber_new;
 	@ViewById
 	TextView tv_cmdnumber_new;
@@ -181,9 +175,6 @@ public class CZ_MainFragment extends Fragment
 							{
 								saveHaveReadData(areatab.getWorkuserid(),String.valueOf(allCount_plant),  String.valueOf(allCount_job), String.valueOf(allCount_cmd));
 							}
-							tv_worknumber.setText(areatab.getJobCount());
-							tv_plantnumber.setText(areatab.getPlantGrowCount());
-							tv_cmdnumber.setText(areatab.getCommandCount());
 						}
 					} else
 					{

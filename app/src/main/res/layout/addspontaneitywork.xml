@@ -53,7 +53,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
-        android:background="@color/gray"/>
+        android:background="@color/line_color"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -70,6 +70,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dip"
                 android:layout_marginRight="20dip"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/background_view_rounded_single"
                 android:stretchColumns="1">
 
                 <TableRow
@@ -80,17 +82,20 @@
                     <TextView
                         android:layout_width="@dimen/width_colum"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10dip"
                         android:focusable="true"
+
                         android:focusableInTouchMode="true"
                         android:gravity="left|center_vertical"
                         android:text="生产活动："
-                        android:textColor="@color/black"
+                        android:textColor="@color/bg_text"
                         android:textSize="@dimen/size_14"/>
 
                     <EditText
                         android:id="@+id/et_jobname"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_colum"
+                        android:layout_marginRight="10dip"
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="right|center_vertical"
@@ -102,9 +107,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:layout_marginTop="5dip"
-                    android:background="@color/gray"/>
+                    android:layout_height="1px"
+                    android:background="@color/line_color"/>
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -114,15 +118,17 @@
                     <TextView
                         android:layout_width="@dimen/width_colum"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10dip"
                         android:gravity="left|center_vertical"
                         android:text="说明"
-                        android:textColor="@color/black"
+                        android:textColor="@color/bg_text"
                         android:textSize="@dimen/size_14"/>
 
                     <EditText
                         android:id="@+id/et_jobnote"
                         android:layout_width="match_parent"
-                        android:layout_height="120dip"
+                        android:layout_height="100dip"
+                        android:layout_marginRight="10dip"
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="right|center_vertical"

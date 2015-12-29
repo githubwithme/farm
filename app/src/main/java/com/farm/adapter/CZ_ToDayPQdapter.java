@@ -43,9 +43,6 @@ public class CZ_ToDayPQdapter extends BaseAdapter
 		public TextView tv_worknumber_new;
 		public TextView tv_cmdnumber_new;
 		public TextView tv_pq;
-		public TextView tv_worknumber;
-		public TextView tv_cmdnumber;
-		public TextView tv_plantnumber;
 		public TextView tv_username;
 		public LinearLayout ll_pgwork;
 		public LinearLayout ll_plant;
@@ -102,9 +99,6 @@ public class CZ_ToDayPQdapter extends BaseAdapter
 			listItemView.tv_plantnumber_new = (TextView) convertView.findViewById(R.id.tv_plantnumber_new);
 			listItemView.tv_worknumber_new = (TextView) convertView.findViewById(R.id.tv_worknumber_new);
 			listItemView.tv_pq = (TextView) convertView.findViewById(R.id.tv_pq);
-			listItemView.tv_plantnumber = (TextView) convertView.findViewById(R.id.tv_plantnumber);
-			listItemView.tv_worknumber = (TextView) convertView.findViewById(R.id.tv_worknumber);
-			listItemView.tv_cmdnumber = (TextView) convertView.findViewById(R.id.tv_cmdnumber);
 			listItemView.tv_username = (TextView) convertView.findViewById(R.id.tv_username);
 			listItemView.iv_userimg = (CircleImageView) convertView.findViewById(R.id.iv_userimg);
 			// 设置控件集到convertView
@@ -228,9 +222,6 @@ public class CZ_ToDayPQdapter extends BaseAdapter
 			saveHaveReadData(areatab.getWorkuserid(), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_cmd));
 		}
 		listItemView.tv_pq.setText(areatab.getareaName());
-		listItemView.tv_worknumber.setText(areatab.getJobCount());
-		listItemView.tv_plantnumber.setText(areatab.getPlantGrowCount());
-		listItemView.tv_cmdnumber.setText(areatab.getCommandCount());
 		if (areatab.getRealName().equals(""))
 		{
 			listItemView.tv_username.setText("暂无");

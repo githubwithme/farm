@@ -31,7 +31,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/color_orange">
 
         <TextView
             android:id="@+id/tv_day"
@@ -48,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_selectitem"
-        android:minHeight="30dip">
+        android:minHeight="35dip">
 
         <TextView
             android:id="@+id/tv_tip_jrpq"
@@ -59,7 +60,7 @@
             android:gravity="left"
             android:text="今日片区"
             android:textColor="@color/gray"
-            android:textSize="11sp"/>
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/tv_number_jrpq"
@@ -71,15 +72,14 @@
             android:gravity="center"
             android:text="未知"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="11sp"/>
+            android:textSize="14sp"/>
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dip"
+        android:layout_height="60dip"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
-        android:background="@drawable/shape_round_zy"
         android:orientation="horizontal">
 
         <TableLayout
@@ -102,51 +102,38 @@
                     <ImageView
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dip"
+                        android:layout_margin="5dip"
                         android:layout_weight="1"
                         android:contentDescription=""
-                        android:src="@drawable/zy"/>
+                        android:src="@drawable/icon_gz"/>
 
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2.5">
+                    <FrameLayout
+                        android:id="@+id/fl_worknumber_new"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_alignParentRight="true"
+                        android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/tv_worknumber"
+                        <com.farm.widget.CircleImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:src="@color/red"
+                            app:border_color="@color/red"
+                            app:border_width="0dp"/>
+
+                        <TextView
+                            android:id="@+id/tv_worknumber_new"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="0"
+                            android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/size_18"/>
+                            android:textSize="@dimen/size_10"/>
+                    </FrameLayout>
 
-                        <FrameLayout
-                            android:id="@+id/fl_worknumber_new"
-                            android:layout_width="15dip"
-                            android:layout_height="15dip"
-                            android:layout_alignParentRight="true"
-                            android:visibility="gone">
 
-                            <com.farm.widget.CircleImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:src="@color/red"
-                                app:border_color="@color/red"
-                                app:border_width="0dp"/>
-
-                            <TextView
-                                android:id="@+id/tv_worknumber_new"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:text=""
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/size_10"/>
-                        </FrameLayout>
-                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -158,51 +145,36 @@
                     <ImageView
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dip"
+                        android:layout_margin="5dip"
                         android:layout_weight="1"
                         android:contentDescription=""
-                        android:src="@drawable/mq"/>
+                        android:src="@drawable/icon_zz"/>
 
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2.5">
+                    <FrameLayout
+                        android:id="@+id/fl_plantnumber_new"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_alignParentRight="true"
+                        android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/tv_plantnumber"
+                        <com.farm.widget.CircleImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:src="@color/red"
+                            app:border_color="@color/red"
+                            app:border_width="0dp"/>
+
+                        <TextView
+                            android:id="@+id/tv_plantnumber_new"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="0"
+                            android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/size_18"/>
-
-                        <FrameLayout
-                            android:id="@+id/fl_plantnumber_new"
-                            android:layout_width="15dip"
-                            android:layout_height="15dip"
-                            android:layout_alignParentRight="true"
-                            android:visibility="gone">
-
-                            <com.farm.widget.CircleImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:src="@color/red"
-                                app:border_color="@color/red"
-                                app:border_width="0dp"/>
-
-                            <TextView
-                                android:id="@+id/tv_plantnumber_new"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:text=""
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/size_10"/>
-                        </FrameLayout>
-                    </RelativeLayout>
+                            android:textSize="@dimen/size_10"/>
+                    </FrameLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -214,51 +186,36 @@
                     <ImageView
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dip"
+                        android:layout_margin="5dip"
                         android:layout_weight="1"
                         android:contentDescription=""
-                        android:src="@drawable/zl"/>
+                        android:src="@drawable/icon_zl"/>
 
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2.5">
+                    <FrameLayout
+                        android:id="@+id/fl_cmdnumber_new"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_alignParentRight="true"
+                        android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/tv_cmdnumber"
+                        <com.farm.widget.CircleImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:src="@color/red"
+                            app:border_color="@color/red"
+                            app:border_width="0dp"/>
+
+                        <TextView
+                            android:id="@+id/tv_cmdnumber_new"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="0"
+                            android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/size_18"/>
-
-                        <FrameLayout
-                            android:id="@+id/fl_cmdnumber_new"
-                            android:layout_width="15dip"
-                            android:layout_height="15dip"
-                            android:layout_alignParentRight="true"
-                            android:visibility="gone">
-
-                            <com.farm.widget.CircleImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:src="@color/red"
-                                app:border_color="@color/red"
-                                app:border_width="0dp"/>
-
-                            <TextView
-                                android:id="@+id/tv_cmdnumber_new"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:text=""
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/size_10"/>
-                        </FrameLayout>
-                    </RelativeLayout>
+                            android:textSize="@dimen/size_10"/>
+                    </FrameLayout>
                 </LinearLayout>
 
                 <RelativeLayout

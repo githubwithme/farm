@@ -15,7 +15,7 @@
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/quick_set_create_agent" />
+            android:background="@drawable/quick_set_create_zg" />
 
         <TextView
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/quick_set_create_report" />
+            android:background="@drawable/quick_set_create_bwl" />
 
         <TextView
             android:layout_width="match_parent"
