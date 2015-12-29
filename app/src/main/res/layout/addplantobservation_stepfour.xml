@@ -1,100 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-    >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/white"
+             android:focusable="true"
+             android:focusableInTouchMode="true">
 
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dip"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <ExpandableListView
+            android:id="@+id/mainlistview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@color/bg_selectitem"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="10dip"
-                android:text="假茎表现"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/size_14"/>
-
-            <EditText
-                android:id="@+id/et_jj"
-                android:layout_width="match_parent"
-                android:layout_height="100dip"
-                android:layout_margin="5dip"
-                android:background="@drawable/background_view_rounded_single"
-                android:gravity="center"
-                android:hint="请输入假茎表现"
-                android:inputType="text"
-                android:textColor="@color/bg_yellow"
-                android:textSize="@dimen/size_14"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@color/bg_selectitem"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="10dip"
-                android:text="叶表现"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/size_14"/>
-
-            <EditText
-                android:id="@+id/et_y"
-                android:layout_width="match_parent"
-                android:layout_height="100dip"
-                android:layout_margin="5dip"
-                android:background="@drawable/background_view_rounded_single"
-                android:gravity="center"
-                android:hint="请输入叶表现"
-                android:inputType="text"
-                android:textColor="@color/bg_yellow"
-                android:textSize="@dimen/size_14"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@color/bg_selectitem"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="10dip"
-                android:text="根系表现"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/size_14"/>
-
-            <EditText
-                android:id="@+id/et_gx"
-                android:layout_width="match_parent"
-                android:layout_height="100dip"
-                android:layout_margin="5dip"
-                android:background="@drawable/background_view_rounded_single"
-                android:gravity="center"
-                android:hint="请输入根系表现"
-                android:inputType="text"
-                android:textColor="@color/bg_yellow"
-                android:textSize="@dimen/size_14"/>
-        </LinearLayout>
-    </ScrollView>
+            android:layout_weight="2.5"
+            android:groupIndicator="@null"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
-        android:layout_height="50dip"
-        android:layout_alignParentBottom="true"
+        android:layout_height="45dip"
+        android:layout_gravity="bottom"
         android:layout_margin="10dip"
         android:background="@drawable/background_view_rounded_single"
         android:text="下一步"
-        android:textColor="@color/bg_text"/>
-</RelativeLayout>
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_14"/>
+</FrameLayout>

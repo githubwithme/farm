@@ -11,6 +11,28 @@ public class Dictionary implements Serializable
     List<String> firstItemID;
     List<List<String>> secondItemName;
     List<List<String>> secondItemID;
+    List<List<List<String>>> ThirdItemName;
+    List<List<List<String>>> ThirdItemID;
+
+    public List<List<List<String>>> getThirdItemName()
+    {
+        return ThirdItemName;
+    }
+
+    public void setThirdItemName(List<List<List<String>>> thirdItemName)
+    {
+        ThirdItemName = thirdItemName;
+    }
+
+    public List<List<List<String>>> getThirdItemID()
+    {
+        return ThirdItemID;
+    }
+
+    public void setThirdItemID(List<List<List<String>>> thirdItemID)
+    {
+        ThirdItemID = thirdItemID;
+    }
 
     public void setBELONG(String bELONG)
     {

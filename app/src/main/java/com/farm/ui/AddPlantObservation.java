@@ -199,11 +199,15 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
             case 0:
                 break;
             case 1:
+                AddPlantObservation_StepTwo fragment1 = (AddPlantObservation_StepTwo) adapter.getFragment(0);
+                String gcq = fragment1.getGcq();
+                AddPlantObservation_stepfour fragment2 = (AddPlantObservation_stepfour) adapter.getFragment(2);
+                fragment2.updateData(gcq, "香蕉");
                 break;
             case 2:
-                AddPlantObservation_stepFive fragment = (AddPlantObservation_stepFive) adapter.getFragment(3);
+                AddPlantObservation_stepFive fragment3 = (AddPlantObservation_stepFive) adapter.getFragment(3);
                 List<Fragment> list_fragment = (List<Fragment>) adapter.getAllFragment();
-                fragment.updateData(list_fragment);
+                fragment3.updateData(list_fragment);
                 break;
             case 3:
                 break;

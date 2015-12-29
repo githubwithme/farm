@@ -49,7 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_selectitem"
-        android:minHeight="35dip">
+        android:minHeight="35dip"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_tip_jrpq"

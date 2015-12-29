@@ -49,7 +49,6 @@
             android:src="@drawable/search"/>
 
         <ImageButton
-            android:id="@+id/btn_add"
             android:layout_width="40dip"
             android:layout_height="40dip"
             android:layout_centerVertical="true"
@@ -57,7 +56,8 @@
             android:layout_toLeftOf="@id/btn_search"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/plus"/>
+            android:src="@drawable/plus"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <View
@@ -113,13 +113,15 @@
             android:dividerHeight="0dip"/>
 
         <ImageButton
+            android:id="@+id/btn_add"
             android:layout_width="55dip"
             android:layout_height="55dip"
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="15dip"
             android:layout_marginRight="15dip"
-            android:background="@drawable/ic_add_red"
-            android:visibility="gone"/>
+            android:background="@drawable/speedy"
+            />
+
     </FrameLayout>
 
 </LinearLayout>

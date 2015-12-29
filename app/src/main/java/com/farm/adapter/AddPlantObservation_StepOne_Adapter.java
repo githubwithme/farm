@@ -33,6 +33,7 @@ public class AddPlantObservation_StepOne_Adapter extends BaseAdapter
 
     }
 
+
     public AddPlantObservation_StepOne_Adapter(Context context, Dictionary dic_comm, FragmentCallBack_AddPlantObservation fragmentCallBack)
     {
         this.context = context;
@@ -85,7 +86,6 @@ public class AddPlantObservation_StepOne_Adapter extends BaseAdapter
                     tempButton = (Button) v;
                     v.setSelected(true);
                     String fn = dic_comm.getFirstItemName().get(v.getId());
-//                    plantgrowthtab_single.getInstance().set
                     Bundle bundle = new Bundle();
                     bundle.putInt("INDEX", 0);
                     fragmentCallBack.callbackFun2(bundle);

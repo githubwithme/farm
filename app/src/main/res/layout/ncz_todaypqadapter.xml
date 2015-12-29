@@ -165,6 +165,14 @@
                     android:layout_marginBottom="10dip">
 
                     <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="片区工作"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
+
+                    <TextView
                         android:id="@+id/tv_worknumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -246,7 +254,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="片区苗情"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
                     <TextView
                         android:id="@+id/tv_plantnumber"
                         android:layout_width="match_parent"
@@ -329,7 +343,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="片区指令"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
                     <TextView
                         android:id="@+id/tv_cmdnumber"
                         android:layout_width="match_parent"

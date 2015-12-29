@@ -105,9 +105,9 @@ public class AddPlantObservation_stepFive extends Fragment
         addPlantObservation_stepfour = (AddPlantObservation_stepfour) (list_fragment.get(2));
 
         list_fj_scfj = addPlantObservation_stepThree.getFJ_SCFJList();
-        JJBX = addPlantObservation_stepfour.getJJBB();
-        YBX = addPlantObservation_stepfour.getYBX();
-        GXBX = addPlantObservation_stepfour.getGXBX();
+//        JJBX = addPlantObservation_stepfour.getJJBB();
+//        YBX = addPlantObservation_stepfour.getYBX();
+//        GXBX = addPlantObservation_stepfour.getGXBX();
 
         list_plantgrowthtab = addPlantObservation_stepThree.getPlanttabList();
         AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(getActivity(), list_plantgrowthtab, list_fj_scfj);
