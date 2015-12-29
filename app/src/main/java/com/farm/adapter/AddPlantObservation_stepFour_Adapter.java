@@ -19,6 +19,7 @@ import com.farm.bean.goodslisttab;
 import com.farm.widget.CustomDialog_ListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -70,6 +71,18 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
         return childPosition;
     }
 
+    HashMap<Integer, HashMap<Integer, View>> lmap = new HashMap<Integer, HashMap<Integer, View>>();
+    HashMap<Integer, View> map = new HashMap<>();
+    //    HashMap<Integer, View> map = new HashMap<>();
+    //    HashMap<Integer, View> lmap = new HashMap<Integer, View>();
+    ListItemView listItemView = null;
+
+    static class ListItemView
+    {
+        public TextView tv_tip;
+        public TextView tv;
+    }
+
     //设置子item的组件
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
@@ -77,31 +90,51 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
         String key = firstItemName.get(groupPosition);
         List<String> childData = secondItemName.get(groupPosition);
         String info = childData.get(childPosition);
-        if (convertView == null)
+        View v = null;
+        if (lmap.get(groupPosition) != null)
+        {
+            HashMap<Integer, View> map1 = lmap.get(groupPosition);
+            v = lmap.get(groupPosition).get(childPosition);
+        }
+        if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_children_plantobservation, null);
-        }
-        TextView tv_tip = (TextView) convertView.findViewById(R.id.tv_tip);
-        TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
-        tv_tip.setText(info);
-        tv.setText("请选择" + info);
-        tv.setTag(R.id.tag_fi, firstItemName.get(groupPosition));
-        tv.setTag(R.id.tag_fn, key);
-        tv.setTag(R.id.tag_si, secondItemName.get(groupPosition).get(childPosition));
-        tv.setTag(R.id.tag_sn, info);
-        tv.setTag(R.id.tag_ti, ThirdItemName.get(groupPosition).get(childPosition));
-        tv.setTag(R.id.tag_tn, ThirdItemName.get(groupPosition).get(childPosition));
-        tv.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+            listItemView = new ListItemView();
+            listItemView.tv_tip = (TextView) convertView.findViewById(R.id.tv_tip);
+            listItemView.tv = (TextView) convertView.findViewById(R.id.second_textview);
+            convertView.setTag(listItemView);
+
+            map.put(childPosition, convertView);
+            lmap.put(groupPosition, map);
+            if (isLastChild)
             {
-                currentTextView = (TextView) v;
-                List<String> list = (List<String>) v.getTag(R.id.tag_ti);
-                showDialog(list);
+                map = new HashMap<>();
             }
-        });
+
+            listItemView.tv_tip.setText(info);
+            listItemView.tv.setText("请选择" + info);
+            listItemView.tv.setTag(R.id.tag_fi, firstItemName.get(groupPosition));
+            listItemView.tv.setTag(R.id.tag_fn, key);
+            listItemView.tv.setTag(R.id.tag_si, secondItemName.get(groupPosition).get(childPosition));
+            listItemView.tv.setTag(R.id.tag_sn, info);
+            listItemView.tv.setTag(R.id.tag_ti, ThirdItemName.get(groupPosition).get(childPosition));
+            listItemView.tv.setTag(R.id.tag_tn, ThirdItemName.get(groupPosition).get(childPosition));
+            listItemView.tv.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    currentTextView = (TextView) v;
+                    List<String> list = (List<String>) v.getTag(R.id.tag_ti);
+                    showDialog(list);
+                }
+            });
+        } else
+        {
+            convertView = lmap.get(groupPosition).get(childPosition);
+            listItemView = (ListItemView) convertView.getTag();
+        }
         return convertView;
     }
 
