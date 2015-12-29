@@ -70,7 +70,7 @@ public class AddPlantObservation_stepfour extends Fragment
 
     public void updateData(String gcq, String zw)
     {
-        getCommandlist(gcq,zw);
+        getCommandlist(gcq, zw);
     }
 
     private void getCommandlist(String gcq, String zw)
@@ -100,6 +100,10 @@ public class AddPlantObservation_stepfour extends Fragment
                             Dictionary dic = lsitNewData.get(0);
                             AddPlantObservation_stepFour_Adapter customExpandableListAdapter = new AddPlantObservation_stepFour_Adapter(getActivity(), dic, mainlistview);
                             mainlistview.setAdapter(customExpandableListAdapter);
+                            for (int i = 0; i < dic.getFirstItemName().size(); i++)
+                            {
+                                mainlistview.expandGroup(i);
+                            }
                         }
 
                     } else

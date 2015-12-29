@@ -58,6 +58,8 @@
     <item name="tag_fn" type="id"></item>
     <item name="tag_si" type="id"></item>
     <item name="tag_sn" type="id"></item>
+    <item name="tag_ti" type="id"></item>
+    <item name="tag_tn" type="id"></item>
     <item name="tag_childsize" type="id"></item>
     <string name="title_activity_observation_record">ObservationRecordActivity</string>
 </resources>
