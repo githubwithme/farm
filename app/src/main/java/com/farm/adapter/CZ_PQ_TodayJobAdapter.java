@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.HaveReadRecord;
+import com.farm.app.AppContext;
+import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
-import com.farm.common.SqliteDb;
 import com.farm.ui.RecordList_;
 import com.farm.widget.CircleImageView;
 
@@ -38,6 +38,7 @@ public class CZ_PQ_TodayJobAdapter extends BaseAdapter
 		public TextView tv_importance;
 		public CircleImageView circle_img;
 		public TextView tv_time;
+		public FrameLayout fl_new_item;
 		public FrameLayout fl_new;
 		public TextView tv_new;
 		public ImageView iv_record;
@@ -78,6 +79,7 @@ public class CZ_PQ_TodayJobAdapter extends BaseAdapter
 			convertView = listContainer.inflate(R.layout.cz_pq_todayjobadapter, null);
 			listItemView = new ListItemView();
 			// 获取控件对象
+			listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
 			listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
 			listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
 			listItemView.tv_jobname = (TextView) convertView.findViewById(R.id.tv_jobname);
@@ -94,16 +96,8 @@ public class CZ_PQ_TodayJobAdapter extends BaseAdapter
 				public void onClick(View v)
 				{
 					jobtab job = listItems.get(v.getId());
-					HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(context, job.getId());
-					if (haveReadRecord != null)
-					{
-						SqliteDb.updateHaveReadRecord(context, job.getId(), job.getJobvidioCount());
-						FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_new;
-						fl_new.setVisibility(View.GONE);
-					} else
-					{
-						SqliteDb.saveHaveReadRecord(context, job.getId(), job.getJobvidioCount());
-					}
+					commembertab commembertab = AppContext.getUserInfo(context);
+					AppContext.updateStatus(context, "1", job.getId(), "1", commembertab.getId());
 					Intent intent = new Intent(context, RecordList_.class);
 					intent.putExtra("type", "1");
 					intent.putExtra("workid", listItems.get(v.getId()).getId());
@@ -132,28 +126,20 @@ public class CZ_PQ_TodayJobAdapter extends BaseAdapter
 		{
 			listItemView.tv_jobname.setText(jobtab.getstdJobTypeName() + "-" + jobtab.getstdJobName());
 		}
-		HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(context, jobtab.getId());
-		if (haveReadRecord != null)
+		if (Integer.valueOf(jobtab.getJobCount()) > 0)
 		{
-			String num = haveReadRecord.getNum();
-			if (num != null && !num.equals("") && (Integer.valueOf(num) < Integer.valueOf(jobtab.getJobvidioCount())))
-			{
-				int num_new = Integer.valueOf(jobtab.getJobvidioCount()) - Integer.valueOf(num);
-				listItemView.fl_new.setVisibility(View.VISIBLE);
-				listItemView.tv_new.setText(String.valueOf(num_new));
-			}
+			listItemView.fl_new_item.setVisibility(View.VISIBLE);
 		} else
 		{
-			SqliteDb.saveHaveReadRecord(context, jobtab.getId(), jobtab.getJobvidioCount());
+			listItemView.fl_new_item.setVisibility(View.GONE);
 		}
-		// if (jobtab.getstdJobType().equals("0"))
-		// {
-		// listItemView.tv_jobname.setText(jobtab.getnongziName());
-		// } else
-		// {
-		// listItemView.tv_jobname.setText(jobtab.getstdJobTypeName() + "-" +
-		// jobtab.getstdJobName());
-		// }
+		if (Integer.valueOf(jobtab.getJobvidioCount()) > 0)
+		{
+			listItemView.fl_new.setVisibility(View.VISIBLE);
+		} else
+		{
+			listItemView.fl_new.setVisibility(View.GONE);
+		}
 		if (jobtab.getImportance().equals("0"))
 		{
 			listItemView.tv_importance.setText("一般");

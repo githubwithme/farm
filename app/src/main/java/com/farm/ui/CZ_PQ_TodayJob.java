@@ -319,6 +319,8 @@ public class CZ_PQ_TodayJob extends Activity
 				jobtab jobtab = listData.get(position - 1);
 				if (jobtab == null)
 					return;
+				commembertab commembertab = AppContext.getUserInfo(CZ_PQ_TodayJob.this);
+				AppContext.updateStatus(CZ_PQ_TodayJob.this, "0", jobtab.getId(), "1", commembertab.getId());
 				Intent intent = new Intent(CZ_PQ_TodayJob.this, CZ_PQ_JobDetail_.class);
 				intent.putExtra("bean", jobtab);// 因为list中添加了头部,因此要去掉一个
 				startActivity(intent);

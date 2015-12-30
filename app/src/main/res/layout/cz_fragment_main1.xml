@@ -78,40 +78,54 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dip"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:orientation="horizontal">
 
-        <TableLayout
-            android:id="@+id/tl_jrqp"
+        <LinearLayout
+            android:id="@+id/ll_jrpq"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1">
 
-                <LinearLayout
-                    android:id="@+id/ll_pgwork"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+            <LinearLayout
+                android:id="@+id/ll_pgwork"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_pqgz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="片区工作"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_13"
+                    android:visibility="gone"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:minHeight="50dip">
 
                     <ImageView
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
+                        android:layout_width="@dimen/size_50"
+                        android:layout_height="@dimen/size_50"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:layout_weight="1"
-                        android:contentDescription=""
-                        android:src="@drawable/icon_gz"/>
+                        android:background="@drawable/icon_gz"/>
 
                     <FrameLayout
                         android:id="@+id/fl_worknumber_new"
-                        android:layout_width="15dip"
-                        android:layout_height="15dip"
+                        android:layout_width="10dip"
+                        android:layout_height="10dip"
                         android:layout_alignParentRight="true"
                         android:visibility="gone">
 
@@ -126,35 +140,84 @@
                         <TextView
                             android:id="@+id/tv_worknumber_new"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/size_10"/>
                     </FrameLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="片区工作"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
+
+                    <TextView
+                        android:id="@+id/tv_worknumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_12"
+                        android:visibility="gone"/>
 
 
-                </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_plant"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dip"
+                android:layout_marginTop="30dip"
+                android:background="@color/line_color"/>
+
+            <LinearLayout
+                android:id="@+id/ll_plant"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_pqmq"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="片区植株"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_13"
+                    android:visibility="gone"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:minHeight="50dip">
 
                     <ImageView
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
+                        android:layout_width="@dimen/size_50"
+                        android:layout_height="@dimen/size_50"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:layout_weight="1"
-                        android:contentDescription=""
-                        android:src="@drawable/icon_zz"/>
+                        android:background="@drawable/icon_zz"/>
 
                     <FrameLayout
                         android:id="@+id/fl_plantnumber_new"
-                        android:layout_width="15dip"
-                        android:layout_height="15dip"
+                        android:layout_width="10dip"
+                        android:layout_height="10dip"
                         android:layout_alignParentRight="true"
                         android:visibility="gone">
 
@@ -169,33 +232,83 @@
                         <TextView
                             android:id="@+id/tv_plantnumber_new"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/size_10"/>
                     </FrameLayout>
-                </LinearLayout>
+                </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_cmd"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="片区苗情"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
+
+                    <TextView
+                        android:id="@+id/tv_plantnumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_12"
+                        android:visibility="gone"/>
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dip"
+                android:layout_marginTop="30dip"
+                android:background="@color/line_color"/>
+
+            <LinearLayout
+                android:id="@+id/ll_cmd"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_pqzl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="片区指令"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_13"
+                    android:visibility="gone"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:minHeight="50dip">
 
                     <ImageView
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
+                        android:layout_width="@dimen/size_50"
+                        android:layout_height="@dimen/size_50"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
                         android:layout_margin="5dip"
-                        android:layout_weight="1"
-                        android:contentDescription=""
-                        android:src="@drawable/icon_zl"/>
+                        android:background="@drawable/icon_zl"/>
 
                     <FrameLayout
                         android:id="@+id/fl_cmdnumber_new"
-                        android:layout_width="15dip"
-                        android:layout_height="15dip"
+                        android:layout_width="10dip"
+                        android:layout_height="10dip"
                         android:layout_alignParentRight="true"
                         android:visibility="gone">
 
@@ -210,32 +323,43 @@
                         <TextView
                             android:id="@+id/tv_cmdnumber_new"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/size_10"/>
                     </FrameLayout>
-                </LinearLayout>
+                </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/ll_jrpq"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/iv_goto"
-                        android:layout_width="20dip"
-                        android:layout_height="20dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/ic_next_white"
-                        android:gravity="center"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="片区指令"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
+
+                    <TextView
+                        android:id="@+id/tv_cmdnumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_12"
+                        android:visibility="gone"/>
+
+
                 </RelativeLayout>
-            </TableRow>
-        </TableLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <FrameLayout

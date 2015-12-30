@@ -2,7 +2,6 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,7 +56,6 @@ public class CZ_PG_Assess extends Activity
 	@AfterViews
 	void afterOncreate()
 	{
-		// switchContent(mContent, audioFragment);
 		rg_score.setOnCheckedChangeListener(new OnCheckedChangeListener()
 		{
 			@Override
@@ -80,21 +78,6 @@ public class CZ_PG_Assess extends Activity
 
 	Fragment mContent = new Fragment();
 
-	public void switchContent(Fragment from, Fragment to)
-	{
-		if (mContent != to)
-		{
-			mContent = to;
-			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-			if (!to.isAdded())
-			{ // 先判断是否被add过
-				transaction.hide(from).add(R.id.container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-			} else
-			{
-				transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
-			}
-		}
-	}
 
 	private void addScore()
 	{
