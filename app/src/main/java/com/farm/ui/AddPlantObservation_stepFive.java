@@ -7,16 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.AddPlantObservationAdapter_MakeSure;
+import com.farm.adapter.AddPlantObservation_stepFive_bx_Adapter;
+import com.farm.adapter.AddPlantObservation_stepFive_zz_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.Dictionary;
 import com.farm.bean.FJ_SCFJ;
 import com.farm.bean.PlantGcjl;
 import com.farm.bean.Result;
@@ -24,6 +26,7 @@ import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
 import com.farm.bean.plantgrowthtab;
 import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
+import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -48,6 +51,9 @@ import java.util.concurrent.CountDownLatch;
 @EFragment
 public class AddPlantObservation_stepFive extends Fragment
 {
+    AddPlantObservation_stepFive_bx_Adapter addPlantObservation_stepFive_bx_adapter;
+    AddPlantObservation_stepFive_zz_Adapter addPlantObservation_stepFive_zz_adapter;
+    Dictionary dic;
     List<plantgrowthtab> list_plantgrowthtab = new ArrayList<>();
     CountDownLatch latch;
     List<FJ_SCFJ> list_fj_scfj = new ArrayList<>();
@@ -56,25 +62,25 @@ public class AddPlantObservation_stepFive extends Fragment
     AddPlantObservation_StepTwo addPlantObservation_stepTwo;
     String gcjlid;
     String gcq;
-    String GXBX;
-    String JJBX;
-    String YBX;
+    String GXBX="";
+    String JJBX="";
+    String YBX="";
+    String LDBX="";
+    String GSBX="";
+    String CSGBX="";
+    String CYGBX="";
     List<Fragment> list_fragment;
     FragmentCallBack_AddPlantObservation fragmentCallBack = null;
     @ViewById
-    ListView lv;
-    @ViewById
     TextView tv_gcq;
-    @ViewById
-    TextView tv_jj;
-    @ViewById
-    TextView tv_y;
-    @ViewById
-    TextView tv_gx;
     @ViewById
     ProgressBar pb_upload;
     @ViewById
     Button btn_save;
+    @ViewById
+    ExpandableListView expanded_bx;
+    @ViewById
+    ExpandableListView expanded_zz;
 
     @Click
     void btn_save()
@@ -87,8 +93,8 @@ public class AddPlantObservation_stepFive extends Fragment
     @AfterViews
     void afterOncreate()
     {
-        AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(getActivity(), list_plantgrowthtab, list_fj_scfj);
-        lv.setAdapter(addPlantObservationAdapter);
+//        AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(getActivity(), list_plantgrowthtab, list_fj_scfj);
+//        lv.setAdapter(addPlantObservationAdapter);
     }
 
     @Override
@@ -98,27 +104,96 @@ public class AddPlantObservation_stepFive extends Fragment
         return rootView;
     }
 
-    public void updateData(List<Fragment> list_fragment)
+    public void updateData(List<Fragment> list_fragment, Dictionary dictionary)
     {
+        dic = dictionary;
+        addPlantObservation_stepFive_bx_adapter = new AddPlantObservation_stepFive_bx_Adapter(getActivity(), dic, expanded_bx);
+        expanded_bx.setAdapter(addPlantObservation_stepFive_bx_adapter);
+//        utils.setListViewHeightBasedOnChildren(expanded_bx);
+        utils.setListViewHeight(expanded_bx);
+//        for (int i = 0; i < dic.getFirstItemName().size(); i++)
+//        {
+//            expanded_bx.expandGroup(i);
+//        }
+
         addPlantObservation_stepTwo = (AddPlantObservation_StepTwo) (list_fragment.get(0));
         addPlantObservation_stepThree = (AddPlantObservation_StepThree) (list_fragment.get(1));
         addPlantObservation_stepfour = (AddPlantObservation_stepfour) (list_fragment.get(2));
 
         list_fj_scfj = addPlantObservation_stepThree.getFJ_SCFJList();
-//        JJBX = addPlantObservation_stepfour.getJJBB();
-//        YBX = addPlantObservation_stepfour.getYBX();
-//        GXBX = addPlantObservation_stepfour.getGXBX();
 
         list_plantgrowthtab = addPlantObservation_stepThree.getPlanttabList();
-        AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(getActivity(), list_plantgrowthtab, list_fj_scfj);
-        lv.setAdapter(addPlantObservationAdapter);
+//        AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(getActivity(), list_plantgrowthtab, list_fj_scfj);
+//        lv.setAdapter(addPlantObservationAdapter);
 
-
+        addPlantObservation_stepFive_zz_adapter = new AddPlantObservation_stepFive_zz_Adapter(getActivity(), expanded_zz, list_plantgrowthtab, list_fj_scfj);
+        expanded_zz.setAdapter(addPlantObservation_stepFive_zz_adapter);
+//        utils.setListViewHeightBasedOnChildren(expanded_zz);
+        utils.setListViewHeight(expanded_zz);
+//        for (int i = 0; i < list_plantgrowthtab.size(); i++)
+//        {
+//            expanded_zz.expandGroup(i);
+//        }
         gcq = addPlantObservation_stepTwo.getGcq();
         tv_gcq.setText(gcq);
-        tv_jj.setText(JJBX);
-        tv_y.setText(YBX);
-        tv_gx.setText(GXBX);
+
+
+        List<String> firstItemName = dic.getFirstItemName();
+        List<List<String>> secondItemName = dic.getSecondItemName();
+        List<List<List<String>>> thirdItemID = dic.getThirdItemID();
+        for (int i = 0; i < firstItemName.size(); i++)
+        {
+            if (firstItemName.get(i).equals("假茎表现"))
+            {
+                for (int j = 0; j < secondItemName.get(i).size(); j++)
+                {
+                    JJBX = JJBX + secondItemName.get(i).get(j) + ":" + thirdItemID.get(i).get(j).get(0) + ",";
+                }
+            }
+            if (firstItemName.get(i).equals("叶表现"))
+            {
+                for (int j = 0; j < secondItemName.get(i).size(); j++)
+                {
+                    YBX = YBX + secondItemName.get(i).get(j) + ":" + thirdItemID.get(i).get(j).get(0) + ",";
+                }
+            }
+            if (firstItemName.get(i).equals("根系表现"))
+            {
+                for (int j = 0; j < secondItemName.get(i).size(); j++)
+                {
+                    GXBX = GXBX + secondItemName.get(i).get(j) + ":" + thirdItemID.get(i).get(j).get(0) + ",";
+                }
+            }
+            if (firstItemName.get(i).equals("蕾的表现"))
+            {
+                for (int j = 0; j < secondItemName.get(i).size(); j++)
+                {
+                    LDBX = LDBX + secondItemName.get(i).get(j) + ":" + thirdItemID.get(i).get(j).get(0) + ",";
+                }
+            }
+            if (firstItemName.get(i).equals("果穗表现"))
+            {
+                for (int j = 0; j < secondItemName.get(i).size(); j++)
+                {
+                    GSBX = GSBX + secondItemName.get(i).get(j) + ":" + thirdItemID.get(i).get(j).get(0) + ",";
+                }
+            }
+            if (firstItemName.get(i).equals("采收果表现"))
+            {
+                for (int j = 0; j < secondItemName.get(i).size(); j++)
+                {
+                    CSGBX = CSGBX + secondItemName.get(i).get(j) + ":" + thirdItemID.get(i).get(j).get(0) + ",";
+                }
+            }
+            if (firstItemName.get(i).equals("储运果表现"))
+            {
+                for (int j = 0; j < secondItemName.get(i).size(); j++)
+                {
+                    CYGBX = CYGBX + secondItemName.get(i).get(j) + ":" + thirdItemID.get(i).get(j).get(0) + ",";
+                }
+            }
+
+        }
     }
 
     private void saveData()
@@ -133,9 +208,16 @@ public class AddPlantObservation_stepFive extends Fragment
 
         params.addQueryStringParameter("gcdid", fragmentCallBack.getGcdId());
         params.addQueryStringParameter("gcq", gcq);
-        params.addQueryStringParameter("jjbx", JJBX);
-        params.addQueryStringParameter("ybx", YBX);
-        params.addQueryStringParameter("gxbx", GXBX);
+        params.addQueryStringParameter("jjbx", JJBX.substring(0, JJBX.length() - 1));
+        params.addQueryStringParameter("ybx", YBX.substring(0, YBX.length() - 1));
+        params.addQueryStringParameter("gxbx", GXBX.substring(0, GXBX.length() - 1));
+
+        params.addQueryStringParameter("ldbx", LDBX.substring(0, LDBX.length() - 1));
+        params.addQueryStringParameter("gsbx", GSBX.substring(0, GSBX.length() - 1));
+        params.addQueryStringParameter("csgbx", CSGBX.substring(0, CSGBX.length() - 1));
+        params.addQueryStringParameter("cygbx", CYGBX.substring(0, CYGBX.length() - 1));
+
+
         params.addQueryStringParameter("lbx", "");
         params.addQueryStringParameter("ghbx", "");
         params.addQueryStringParameter("csgbx", "");
@@ -164,7 +246,7 @@ public class AddPlantObservation_stepFive extends Fragment
                             latch = new CountDownLatch(list_fj_scfj.size() + list_plantgrowthtab.size());
                             for (int j = 0; j < list_fj_scfj.size(); j++)
                             {
-                                uploadMedia(listData.get(0).getId(), list_fj_scfj.get(j).getFJBDLJ(),list_fj_scfj.get(j).getFJID());
+                                uploadMedia(listData.get(0).getId(), list_fj_scfj.get(j).getFJBDLJ(), list_fj_scfj.get(j).getFJID());
                             }
                             for (int j = 0; j < list_plantgrowthtab.size(); j++)
                             {
@@ -260,7 +342,7 @@ public class AddPlantObservation_stepFive extends Fragment
         });
     }
 
-    private void uploadMedia(String plantgrowthId, String path,String plantId)
+    private void uploadMedia(String plantgrowthId, String path, String plantId)
     {
         File file = new File(path);
         RequestParams params = new RequestParams();

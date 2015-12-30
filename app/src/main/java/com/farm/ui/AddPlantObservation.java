@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.PagerAdapter_AddPlantObservation;
+import com.farm.bean.Dictionary;
 import com.farm.bean.plantgrowthtab_single;
 import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
 import com.farm.widget.MyDialog;
@@ -205,9 +206,11 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
                 fragment2.updateData(gcq, "香蕉");
                 break;
             case 2:
+                AddPlantObservation_stepfour fragment4 = (AddPlantObservation_stepfour) adapter.getFragment(2);
+                Dictionary dic = fragment4.getDic();
                 AddPlantObservation_stepFive fragment3 = (AddPlantObservation_stepFive) adapter.getFragment(3);
                 List<Fragment> list_fragment = (List<Fragment>) adapter.getAllFragment();
-                fragment3.updateData(list_fragment);
+                fragment3.updateData(list_fragment, dic);
                 break;
             case 3:
                 break;

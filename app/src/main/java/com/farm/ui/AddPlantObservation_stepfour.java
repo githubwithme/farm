@@ -38,7 +38,7 @@ import java.util.List;
 @EFragment
 public class AddPlantObservation_stepfour extends Fragment
 {
-
+    AddPlantObservation_stepFour_Adapter customExpandableListAdapter;
     FragmentCallBack_AddPlantObservation fragmentCallBack;
     @ViewById
     Button btn_next;
@@ -73,6 +73,11 @@ public class AddPlantObservation_stepfour extends Fragment
         getCommandlist(gcq, zw);
     }
 
+    public Dictionary getDic()
+    {
+        return customExpandableListAdapter.getDictionary();
+    }
+
     private void getCommandlist(String gcq, String zw)
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
@@ -98,7 +103,7 @@ public class AddPlantObservation_stepfour extends Fragment
                         if (lsitNewData != null)
                         {
                             Dictionary dic = lsitNewData.get(0);
-                            AddPlantObservation_stepFour_Adapter customExpandableListAdapter = new AddPlantObservation_stepFour_Adapter(getActivity(), dic, mainlistview);
+                            customExpandableListAdapter = new AddPlantObservation_stepFour_Adapter(getActivity(), dic, mainlistview);
                             mainlistview.setAdapter(customExpandableListAdapter);
                             for (int i = 0; i < dic.getFirstItemName().size(); i++)
                             {

@@ -1,15 +1,12 @@
 package com.farm.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -25,10 +22,8 @@ import java.util.List;
  * Created by ${hmj} on 2015/12/17.
  * 适配肥料选择界面的左边导航栏
  */
-public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdapter
+public class AddPlantObservation_stepFive_bx_Adapter extends BaseExpandableListAdapter
 {
-    int currentgroupPosition = 0;
-    int currentchildPosition = 0;
     TextView currentTextView;
     CustomDialog_ListView customDialog_listView;
     private int currentItem = 0;
@@ -41,11 +36,12 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
     List<List<String>> secondItemName;
     List<List<String>> secondItemID;
     List<List<List<String>>> ThirdItemName;
+    List<List<List<String>>> ThirdItemID;
     int currentChildsize = 0;
     private GoodsAdapter adapter;
     ListView list;
 
-    public AddPlantObservation_stepFour_Adapter(Context context, Dictionary dictionary, ExpandableListView mainlistview)
+    public AddPlantObservation_stepFive_bx_Adapter(Context context, Dictionary dictionary, ExpandableListView mainlistview)
     {
         this.tempDic = dictionary;
         this.mainlistview = mainlistview;
@@ -53,6 +49,8 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
         firstItemName = dictionary.getFirstItemName();
         secondItemName = dictionary.getSecondItemName();
         ThirdItemName = dictionary.getThirdItemName();
+        ThirdItemID = dictionary.getThirdItemID();
+
     }
 
     //得到子item需要关联的数据
@@ -81,10 +79,8 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
 
     //设置子item的组件
     @Override
-    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
-        tempDic.getThirdItemID().get(groupPosition).get(childPosition).clear();
-        tempDic.getThirdItemID().get(groupPosition).get(childPosition).add("该项未选填");
         String key = firstItemName.get(groupPosition);
         List<String> childData = secondItemName.get(groupPosition);
         String info = childData.get(childPosition);
@@ -97,7 +93,7 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.layout_children_plantobservation, null);
+            convertView = inflater.inflate(R.layout.layout_children_bx, null);
             listItemView = new ListItemView();
             listItemView.tv_tip = (TextView) convertView.findViewById(R.id.tv_tip);
             listItemView.tv = (TextView) convertView.findViewById(R.id.second_textview);
@@ -111,25 +107,8 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
             }
 
             listItemView.tv_tip.setText(info);
-            listItemView.tv.setText("请选择" + info);
-            listItemView.tv.setTag(R.id.tag_fi, firstItemName.get(groupPosition));
-            listItemView.tv.setTag(R.id.tag_fn, key);
-            listItemView.tv.setTag(R.id.tag_si, secondItemName.get(groupPosition).get(childPosition));
-            listItemView.tv.setTag(R.id.tag_sn, info);
-            listItemView.tv.setTag(R.id.tag_ti, ThirdItemName.get(groupPosition).get(childPosition));
-            listItemView.tv.setTag(R.id.tag_tn, ThirdItemName.get(groupPosition).get(childPosition));
-            listItemView.tv.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    currentTextView = (TextView) v;
-                    List<String> list = (List<String>) v.getTag(R.id.tag_tn);
-                    currentgroupPosition = groupPosition;
-                    currentchildPosition = childPosition;
-                    showDialog(list);
-                }
-            });
+            listItemView.tv.setText(ThirdItemID.get(groupPosition).get(childPosition).get(0));
+
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -154,6 +133,7 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
 //            mainlistview.expandGroup(i);
 //        }
 //        mainlistview.expandGroup(groupPosition);
+
         super.onGroupExpanded(groupPosition);
     }
 
@@ -199,7 +179,7 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
         if (convertView == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.layout_parent_plantobservation, null);
+            convertView = inflater.inflate(R.layout.layout_parent_bx, null);
         }
         TextView tv = (TextView) convertView.findViewById(R.id.parent_textview);
 
@@ -209,8 +189,13 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
             @Override
             public void onClick(View v)
             {
-//                mainlistview.expandGroup(Integer.valueOf(v.getTag().toString()));
-//                TextView textView = (TextView) v;
+                if (mainlistview.isGroupExpanded(Integer.valueOf(v.getTag().toString())))
+                {
+                    mainlistview.collapseGroup(Integer.valueOf(v.getTag().toString()));
+                } else
+                {
+                    mainlistview.expandGroup(Integer.valueOf(v.getTag().toString()));
+                }
             }
         });
         tv.setText(firstItemName.get(groupPosition));
@@ -227,29 +212,5 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
     public boolean isChildSelectable(int groupPosition, int childPosition)
     {
         return true;
-    }
-
-    public void showDialog(List<String> list)
-    {
-        View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
-        {
-            @Override
-            public void OnClick(Bundle bundle)
-            {
-                tempDic.getThirdItemID().get(currentgroupPosition).get(currentchildPosition).clear();
-                tempDic.getThirdItemID().get(currentgroupPosition).get(currentchildPosition).add(bundle.getString("name"));
-                currentTextView.setText(bundle.getString("name"));
-                currentTextView.setTextColor(context.getResources().getColor(R.color.bg_yellow));
-                TextPaint tp = currentTextView.getPaint();
-                tp.setFakeBoldText(true);
-            }
-        });
-        customDialog_listView.show();
-    }
-
-    public Dictionary getDictionary()
-    {
-        return tempDic;
     }
 }

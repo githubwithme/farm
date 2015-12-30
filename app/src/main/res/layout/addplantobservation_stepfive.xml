@@ -10,10 +10,11 @@
         android:layout_marginTop="10dip"
         android:background="@color/white">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/ll_top"
@@ -57,133 +58,31 @@
                         android:textSize="@dimen/size_14"/>
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dip"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:inputType="numberDecimal"
-                        android:text="假茎表现"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
-
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/line_color"/>
-
-                    <TextView
-                        android:id="@+id/tv_jj"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:inputType="numberDecimal"
-                        android:text=""
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/size_14"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dip"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:inputType="numberDecimal"
-                        android:text="叶表现"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
-
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/line_color"/>
-
-                    <TextView
-                        android:id="@+id/tv_y"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:inputType="numberDecimal"
-                        android:text=""
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/size_14"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dip"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:inputType="numberDecimal"
-                        android:text="根系表现"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
-
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/line_color"/>
-
-                    <TextView
-                        android:id="@+id/tv_gx"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:inputType="numberDecimal"
-                        android:text=""
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/size_14"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
             </LinearLayout>
 
-            <com.farm.widget.CustomListView
-                android:id="@+id/lv"
+            <com.farm.widget.CustomExpandableListView
+                android:id="@+id/expanded_bx"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_top"
-                android:layout_gravity="center"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
                 android:layout_marginTop="10dip"
-                android:divider="@color/transparent"
-                android:dividerHeight="0dip"/>
-        </RelativeLayout>
+                android:background="@drawable/background_view_rounded_single"
+                android:groupIndicator="@null"/>
+
+            <com.farm.widget.CustomExpandableListView
+                android:id="@+id/expanded_zz"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/background_view_rounded_single"
+                android:groupIndicator="@null"/>
+
+
+        </LinearLayout>
     </ScrollView>
 
     <FrameLayout
