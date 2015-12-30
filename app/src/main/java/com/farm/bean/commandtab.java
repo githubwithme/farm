@@ -54,8 +54,18 @@ public class commandtab implements Parcelable
 	public String iCount;
 	public String comvidioCount;
 	public String vidioCount;
+	public String comCount;
 
-	
+	public String getComCount()
+	{
+		return comCount;
+	}
+
+	public void setComCount(String comCount)
+	{
+		this.comCount = comCount;
+	}
+
 	public void setVidioCount(String vidioCount)
 	{
 		this.vidioCount = vidioCount;
@@ -456,6 +466,7 @@ public class commandtab implements Parcelable
 			p.setiCount(source.readString());
 			p.setComvidioCount(source.readString());
 			p.setVidioCount(source.readString());
+			p.setComCount(source.readString());
 			return p;
 		}
 
@@ -504,6 +515,7 @@ public class commandtab implements Parcelable
 		p.writeString(iCount);
 		p.writeString(comvidioCount);
 		p.writeString(vidioCount);
+		p.writeString(comCount);
 	}
 
 	@Override

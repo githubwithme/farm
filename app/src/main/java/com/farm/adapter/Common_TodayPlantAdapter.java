@@ -15,11 +15,9 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.HaveReadRecord;
 import com.farm.bean.commembertab;
 import com.farm.bean.planttab;
 import com.farm.common.BitmapHelper;
-import com.farm.common.SqliteDb;
 import com.farm.ui.AddPlantObservationRecord_;
 import com.farm.ui.RecordList_;
 
@@ -46,6 +44,7 @@ public class Common_TodayPlantAdapter extends BaseAdapter
 		public TextView tv_time;
 		public TextView tv_type;
 		public FrameLayout fl_new;
+		public FrameLayout fl_new_item;
 		public TextView tv_new;
 		public ImageView iv_record;
 	}
@@ -95,6 +94,7 @@ public class Common_TodayPlantAdapter extends BaseAdapter
 			convertView = listContainer.inflate(R.layout.pg_todayplantadapter, null);
 			listItemView = new ListItemView();
 			// 获取控件对象
+			listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
 			listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
 			listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
 			listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
@@ -116,16 +116,8 @@ public class Common_TodayPlantAdapter extends BaseAdapter
 				public void onClick(View v)
 				{
 					planttab plant = listItems.get(v.getId());
-					HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(context, plant.getId());
-					if (haveReadRecord != null)
-					{
-						SqliteDb.updateHaveReadRecord(context, plant.getId(), plant.getPlantvidioCount());
-						FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_new;
-						fl_new.setVisibility(View.GONE);
-					} else
-					{
-						SqliteDb.saveHaveReadRecord(context, plant.getId(), plant.getPlantvidioCount());
-					}
+					commembertab commembertab = AppContext.getUserInfo(context);
+					AppContext.updateStatus(context, "1", plant.getId(), "1", commembertab.getId());
 					Intent intent = new Intent(context, RecordList_.class);
 					intent.putExtra("type", "3");
 					intent.putExtra("workid", listItems.get(v.getId()).getId());
@@ -155,21 +147,7 @@ public class Common_TodayPlantAdapter extends BaseAdapter
 			BitmapHelper.setImageView(context, listItemView.img, AppConfig.baseurl + planttab.getImgUrl().get(0));
 		}
 		// 设置文字和图片
-		HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(context, planttab.getId());
-		if (haveReadRecord != null)
-		{
-			String num = haveReadRecord.getNum();
-			if (num != null && !num.equals("") && (Integer.valueOf(num) < Integer.valueOf(planttab.getPlantvidioCount())))
-			{
-				int num_new = Integer.valueOf(planttab.getPlantvidioCount()) - Integer.valueOf(num);
-				listItemView.fl_new.setVisibility(View.VISIBLE);
-				listItemView.tv_new.setText(String.valueOf(num_new));
-			}
-		} else
-		{
-			SqliteDb.saveHaveReadRecord(context, planttab.getId(), planttab.getPlantvidioCount());
-		}
-		String a = planttab.getIsobser();
+
 		if (planttab.getIsobser().equals("0"))
 		{
 			listItemView.iv_addplant.setBackgroundColor(context.getResources().getColor(R.color.red));
@@ -180,6 +158,20 @@ public class Common_TodayPlantAdapter extends BaseAdapter
 		if (planttab.getplantType().equals("1"))
 		{
 			listItemView.tv_type.setText("异常");
+		}
+		if (Integer.valueOf(planttab.getPlantCount()) > 0)
+		{
+			listItemView.fl_new_item.setVisibility(View.VISIBLE);
+		} else
+		{
+			listItemView.fl_new_item.setVisibility(View.GONE);
+		}
+		if (Integer.valueOf(planttab.getPlantvidioCount()) > 0)
+		{
+			listItemView.fl_new.setVisibility(View.VISIBLE);
+		} else
+		{
+			listItemView.fl_new.setVisibility(View.GONE);
 		}
 		listItemView.tv_plantname.setText(planttab.getplantName());
 		listItemView.tv_time.setText("最近：" + planttab.getGrowthDate().substring(5, planttab.getregDate().lastIndexOf(":")));

@@ -298,6 +298,8 @@ public class NCZ_CZ_ToDayJob extends Activity
 				jobtab jobtab = listData.get(position - 1);
 				if (jobtab == null)
 					return;
+				commembertab commembertab = AppContext.getUserInfo(NCZ_CZ_ToDayJob.this);
+				AppContext.updateStatus(NCZ_CZ_ToDayJob.this, "0", jobtab.getId(), "1", commembertab.getId());
 				Intent intent = new Intent(NCZ_CZ_ToDayJob.this, NCZ_CZ_JobDetail_.class);
 				intent.putExtra("bean", jobtab);// 因为list中添加了头部,因此要去掉一个
 				startActivity(intent);

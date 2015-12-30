@@ -77,16 +77,7 @@ public class CZ_MainFragment extends Fragment
 		fl_plantnumber_new.setVisibility(View.GONE);
 		fl_cmdnumber_new.setVisibility(View.GONE);
 		fl_worknumber_new.setVisibility(View.GONE);
-		HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + areatab.getWorkuserid());
-		if (haveReadNumber != null)
-		{
-			updateHaveReadData(areatab.getWorkuserid(), "pq_plantnum", String.valueOf(allCount_plant));
-			updateHaveReadData(areatab.getWorkuserid(), "pq_jobnum", String.valueOf(allCount_job));
-			updateHaveReadData(areatab.getWorkuserid(), "pq_cmdnum", String.valueOf(allCount_cmd));
-		} else
-		{
-			saveHaveReadData(areatab.getWorkuserid(),String.valueOf(allCount_plant),  String.valueOf(allCount_job), String.valueOf(allCount_cmd));
-		}
+
 		Intent intent = new Intent(getActivity(), CZ_ToDayPQ_.class);
 		intent.putExtra("parkid", commembertab.getparkId());
 		startActivity(intent);
@@ -144,37 +135,13 @@ public class CZ_MainFragment extends Fragment
 						if (listNewData != null)
 						{
 							areatab = listNewData.get(0);
-							HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + areatab.getWorkuserid());
-							if (haveReadNumber != null)
-							{
-								String num_job = haveReadNumber.getPq_jobnum();
-								String num_plant = haveReadNumber.getPq_plantnum();
-								String num_cmd = haveReadNumber.getPq_cmdnum();
-								allCount_plant = Integer.valueOf(areatab.getPlantGrowCount()) + Integer.valueOf(areatab.getPlantGrowVideoCount());
-								allCount_job = Integer.valueOf(areatab.getJobCount()) + Integer.valueOf(areatab.getJobVideoCount());
-								allCount_cmd = Integer.valueOf(areatab.getCommandCount()) + Integer.valueOf(areatab.getCommandVideoCount());
-								if (num_plant != null && !num_plant.equals("") && (Integer.valueOf(num_plant) < allCount_plant))
-								{
-									int num = allCount_plant - Integer.valueOf(num_plant);
-									fl_plantnumber_new.setVisibility(View.VISIBLE);
-									tv_plantnumber_new.setText(String.valueOf(num));
-								}
-								if (num_job != null && !num_job.equals("") && (Integer.valueOf(num_job) < allCount_job))
-								{
-									int num = allCount_job - Integer.valueOf(num_job);
-									fl_worknumber_new.setVisibility(View.VISIBLE);
-									tv_worknumber_new.setText(String.valueOf(num));
-								}
-								if (num_cmd != null && !num_cmd.equals("") && (Integer.valueOf(num_cmd) < allCount_cmd))
-								{
-									int num = allCount_cmd - Integer.valueOf(num_cmd);
-									fl_cmdnumber_new.setVisibility(View.VISIBLE);
-									tv_cmdnumber_new.setText(String.valueOf(num));
-								}
-							} else
-							{
-								saveHaveReadData(areatab.getWorkuserid(),String.valueOf(allCount_plant),  String.valueOf(allCount_job), String.valueOf(allCount_cmd));
-							}
+//							if (Integer.valueOf(areatab.getJobCount()) > 0)
+//							{
+//								listItemView.fl_new_item.setVisibility(View.VISIBLE);
+//							} else
+//							{
+//								listItemView.fl_new_item.setVisibility(View.GONE);
+//							}
 						}
 					} else
 					{

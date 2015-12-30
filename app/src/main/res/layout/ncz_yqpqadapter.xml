@@ -194,8 +194,8 @@
 
                             <FrameLayout
                                 android:id="@+id/fl_worknumber_new"
-                                android:layout_width="15dip"
-                                android:layout_height="15dip"
+                                android:layout_width="10dip"
+                                android:layout_height="10dip"
                                 android:layout_alignParentRight="true"
                                 android:visibility="gone">
 
@@ -276,8 +276,8 @@
 
                             <FrameLayout
                                 android:id="@+id/fl_plantnumber_new"
-                                android:layout_width="15dip"
-                                android:layout_height="15dip"
+                                android:layout_width="10dip"
+                                android:layout_height="10dip"
                                 android:layout_alignParentRight="true"
                                 android:visibility="gone">
 
@@ -357,8 +357,8 @@
 
                             <FrameLayout
                                 android:id="@+id/fl_cmdnumber_new"
-                                android:layout_width="15dip"
-                                android:layout_height="15dip"
+                                android:layout_width="10dip"
+                                android:layout_height="10dip"
                                 android:layout_alignParentRight="true"
                                 android:visibility="gone">
 
@@ -464,8 +464,8 @@
 
                                 <FrameLayout
                                     android:id="@+id/fl_sq_new"
-                                    android:layout_width="15dip"
-                                    android:layout_height="15dip"
+                                    android:layout_width="10dip"
+                                    android:layout_height="10dip"
                                     android:layout_alignParentRight="true"
                                     android:visibility="gone">
 
@@ -546,8 +546,8 @@
 
                                 <FrameLayout
                                     android:id="@+id/fl_job_new"
-                                    android:layout_width="15dip"
-                                    android:layout_height="15dip"
+                                    android:layout_width="10dip"
+                                    android:layout_height="10dip"
                                     android:layout_alignParentRight="true"
                                     android:visibility="gone">
 
@@ -628,8 +628,8 @@
 
                                 <FrameLayout
                                     android:id="@+id/fl_plant_new"
-                                    android:layout_width="15dip"
-                                    android:layout_height="15dip"
+                                    android:layout_width="10dip"
+                                    android:layout_height="10dip"
                                     android:layout_alignParentRight="true"
                                     android:visibility="gone">
 
@@ -709,8 +709,8 @@
 
                                 <FrameLayout
                                     android:id="@+id/fl_cmd_new"
-                                    android:layout_width="15dip"
-                                    android:layout_height="15dip"
+                                    android:layout_width="10dip"
+                                    android:layout_height="10dip"
                                     android:layout_alignParentRight="true"
                                     android:visibility="gone">
 

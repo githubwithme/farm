@@ -186,25 +186,6 @@ public class NCZ_YQPQAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_cmd_new;
-                    fl_new.setVisibility(View.GONE);
-                    parktab park = listItems.get(v.getId());
-
-                    int allCount_plant = Integer.valueOf(park.getPlantGrowCount()) + Integer.valueOf(park.getPlantGrowVideoCount());
-                    int allCount_job = Integer.valueOf(park.getJobCount()) + Integer.valueOf(park.getJobVideoCount());
-                    int allCount_ask = Integer.valueOf(park.getAskCount()) + Integer.valueOf(park.getAskVideoCount());
-                    int allCount_areaplant = Integer.valueOf(park.getAreaplantGrowCount()) + Integer.valueOf(park.getAreaplantGrowVideoCount());
-                    int allCount_areajob = Integer.valueOf(park.getAreajobCount()) + Integer.valueOf(park.getAreajobVideoCount());
-                    int allCount_areacmd = Integer.valueOf(park.getAreacommandCount()) + Integer.valueOf(park.getAreacommandVideoCount());
-                    int allCount_cmd = Integer.valueOf(park.getCommandCount()) + Integer.valueOf(park.getCommandVideoCount());
-                    HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + park.getWorkuserid());
-                    if (haveReadNumber != null)
-                    {
-                        updateHaveReadData(park.getWorkuserid(), "cmdnum", String.valueOf(allCount_cmd));// "asknum"为字段名称
-                    } else
-                    {
-                        saveHaveReadData(park.getWorkuserid(), String.valueOf(allCount_areacmd), String.valueOf(allCount_areaplant), String.valueOf(allCount_areajob), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_ask), String.valueOf(allCount_cmd));
-                    }
                     Intent intent = new Intent(context, NCZ_CZ_TodayCommand_.class);
                     intent.putExtra("workuserid", listItems.get(v.getId()).getWorkuserid());
                     context.startActivity(intent);
@@ -215,30 +196,6 @@ public class NCZ_YQPQAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_sq_new;
-                    fl_new.setVisibility(View.GONE);
-                    parktab park = listItems.get(v.getId());
-                    int allCount_plant = Integer.valueOf(park.getPlantGrowCount()) + Integer.valueOf(park.getPlantGrowVideoCount());
-                    int allCount_job = Integer.valueOf(park.getJobCount()) + Integer.valueOf(park.getJobVideoCount());
-                    int allCount_ask = Integer.valueOf(park.getAskCount()) + Integer.valueOf(park.getAskVideoCount());
-                    int allCount_areaplant = Integer.valueOf(park.getAreaplantGrowCount()) + Integer.valueOf(park.getAreaplantGrowVideoCount());
-                    int allCount_areajob = Integer.valueOf(park.getAreajobCount()) + Integer.valueOf(park.getAreajobVideoCount());
-                    int allCount_areacmd = Integer.valueOf(park.getAreacommandCount()) + Integer.valueOf(park.getAreacommandVideoCount());
-                    int allCount_cmd = Integer.valueOf(park.getCommandCount()) + Integer.valueOf(park.getCommandVideoCount());
-                    HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + park.getWorkuserid());
-                    if (haveReadNumber != null)
-                    {
-                        updateHaveReadData(park.getWorkuserid(), "asknum", String.valueOf(allCount_ask));// "asknum"为字段名称
-                    } else
-                    {
-                        saveHaveReadData(park.getWorkuserid(), String.valueOf(allCount_areacmd), String.valueOf(allCount_areaplant), String.valueOf(allCount_areajob), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_ask), String.valueOf(allCount_cmd));
-                    }
-
-                    // Intent intent = new Intent(context,
-                    // WeatherActivity_.class);
-                    // intent.putExtra("parkid",
-                    // listItems.get(v.getId()).getid());
-                    // context.startActivity(intent);
                 }
             });
             listItemView.ll_job.setOnClickListener(new OnClickListener()
@@ -246,24 +203,6 @@ public class NCZ_YQPQAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_job_new;
-                    fl_new.setVisibility(View.GONE);
-                    parktab park = listItems.get(v.getId());
-                    int allCount_plant = Integer.valueOf(park.getPlantGrowCount()) + Integer.valueOf(park.getPlantGrowVideoCount());
-                    int allCount_job = Integer.valueOf(park.getJobCount()) + Integer.valueOf(park.getJobVideoCount());
-                    int allCount_ask = Integer.valueOf(park.getAskCount()) + Integer.valueOf(park.getAskVideoCount());
-                    int allCount_areaplant = Integer.valueOf(park.getAreaplantGrowCount()) + Integer.valueOf(park.getAreaplantGrowVideoCount());
-                    int allCount_areajob = Integer.valueOf(park.getAreajobCount()) + Integer.valueOf(park.getAreajobVideoCount());
-                    int allCount_areacmd = Integer.valueOf(park.getAreacommandCount()) + Integer.valueOf(park.getAreacommandVideoCount());
-                    int allCount_cmd = Integer.valueOf(park.getCommandCount()) + Integer.valueOf(park.getCommandVideoCount());
-                    HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + park.getWorkuserid());
-                    if (haveReadNumber != null)
-                    {
-                        updateHaveReadData(park.getWorkuserid(), "jobnum", String.valueOf(allCount_job));
-                    } else
-                    {
-                        saveHaveReadData(park.getWorkuserid(), String.valueOf(allCount_areacmd), String.valueOf(allCount_areaplant), String.valueOf(allCount_areajob), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_ask), String.valueOf(allCount_cmd));
-                    }
 
                     Intent intent = new Intent(context, NCZ_CZ_ToDayJob_.class);
                     intent.putExtra("workuserid", listItems.get(v.getId()).getWorkuserid());
@@ -275,25 +214,6 @@ public class NCZ_YQPQAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_plant_new;
-                    fl_new.setVisibility(View.GONE);
-                    parktab park = listItems.get(v.getId());
-                    int allCount_plant = Integer.valueOf(park.getPlantGrowCount()) + Integer.valueOf(park.getPlantGrowVideoCount());
-                    int allCount_job = Integer.valueOf(park.getJobCount()) + Integer.valueOf(park.getJobVideoCount());
-                    int allCount_ask = Integer.valueOf(park.getAskCount()) + Integer.valueOf(park.getAskVideoCount());
-                    int allCount_areaplant = Integer.valueOf(park.getAreaplantGrowCount()) + Integer.valueOf(park.getAreaplantGrowVideoCount());
-                    int allCount_areajob = Integer.valueOf(park.getAreajobCount()) + Integer.valueOf(park.getAreajobVideoCount());
-                    int allCount_areacmd = Integer.valueOf(park.getAreacommandCount()) + Integer.valueOf(park.getAreacommandVideoCount());
-                    int allCount_cmd = Integer.valueOf(park.getCommandCount()) + Integer.valueOf(park.getCommandVideoCount());
-                    HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + park.getWorkuserid());
-                    if (haveReadNumber != null)
-                    {
-                        updateHaveReadData(park.getWorkuserid(), "plantnum", String.valueOf(allCount_plant));
-                        // ((TextView) v).setText("");
-                    } else
-                    {
-                        saveHaveReadData(park.getWorkuserid(), String.valueOf(allCount_areacmd), String.valueOf(allCount_areaplant), String.valueOf(allCount_areajob), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_ask), String.valueOf(allCount_cmd));
-                    }
                     Intent intent = new Intent(context, NCZ_CZ_ToDayPlant_.class);
                     intent.putExtra("parkid", listItems.get(v.getId()).getid());
                     intent.putExtra("workuserid", listItems.get(v.getId()).getWorkuserid());
@@ -327,30 +247,6 @@ public class NCZ_YQPQAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    FrameLayout fl_worknew = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_worknumber_new;
-                    FrameLayout fl_plantnew = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_plantnumber_new;
-                    FrameLayout fl_cmdnew = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_cmdnumber_new;
-                    fl_worknew.setVisibility(View.GONE);
-                    fl_plantnew.setVisibility(View.GONE);
-                    fl_cmdnew.setVisibility(View.GONE);
-                    parktab park = listItems.get(v.getId());
-                    int allCount_plant = Integer.valueOf(park.getPlantGrowCount()) + Integer.valueOf(park.getPlantGrowVideoCount());
-                    int allCount_job = Integer.valueOf(park.getJobCount()) + Integer.valueOf(park.getJobVideoCount());
-                    int allCount_ask = Integer.valueOf(park.getAskCount()) + Integer.valueOf(park.getAskVideoCount());
-                    int allCount_areaplant = Integer.valueOf(park.getAreaplantGrowCount()) + Integer.valueOf(park.getAreaplantGrowVideoCount());
-                    int allCount_areajob = Integer.valueOf(park.getAreajobCount()) + Integer.valueOf(park.getAreajobVideoCount());
-                    int allCount_areacmd = Integer.valueOf(park.getAreacommandCount()) + Integer.valueOf(park.getAreacommandVideoCount());
-                    int allCount_cmd = Integer.valueOf(park.getCommandCount()) + Integer.valueOf(park.getCommandVideoCount());
-                    HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + park.getWorkuserid());
-                    if (haveReadNumber != null)
-                    {
-                        updateHaveReadData(park.getWorkuserid(), "pq_plantnum", String.valueOf(allCount_areaplant));
-                        updateHaveReadData(park.getWorkuserid(), "pq_jobnum", String.valueOf(allCount_areajob));
-                        updateHaveReadData(park.getWorkuserid(), "pq_cmdnum", String.valueOf(allCount_areacmd));
-                    } else
-                    {
-                        saveHaveReadData(park.getWorkuserid(), String.valueOf(allCount_areacmd), String.valueOf(allCount_areaplant), String.valueOf(allCount_areajob), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_ask), String.valueOf(allCount_cmd));
-                    }
                     Intent intent = new Intent(context, NCZ_ToDayPQ_.class);
                     intent.putExtra("parkid", listItems.get(v.getId()).getid());
                     context.startActivity(intent);
@@ -364,81 +260,53 @@ public class NCZ_YQPQAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
-        int allCount_plant = Integer.valueOf(parktab.getPlantGrowCount()) + Integer.valueOf(parktab.getPlantGrowVideoCount());
-        int allCount_cmd = Integer.valueOf(parktab.getCommandCount()) + Integer.valueOf(parktab.getCommandVideoCount());
-        int allCount_job = Integer.valueOf(parktab.getJobCount()) + Integer.valueOf(parktab.getJobVideoCount());
-        int allCount_ask = Integer.valueOf(parktab.getAskCount()) + Integer.valueOf(parktab.getAskVideoCount());
-        int allCount_areaplant = Integer.valueOf(parktab.getAreaplantGrowCount()) + Integer.valueOf(parktab.getAreaplantGrowVideoCount());
-        int allCount_areajob = Integer.valueOf(parktab.getAreajobCount()) + Integer.valueOf(parktab.getAreajobVideoCount());
-        int allCount_areacmd = Integer.valueOf(parktab.getAreacommandCount()) + Integer.valueOf(parktab.getAreacommandVideoCount());
-        HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + parktab.getWorkuserid());
-        if (haveReadNumber != null)
-        {
-            String num_cmd = haveReadNumber.getCmdnum();
-            String num_job = haveReadNumber.getJobnum();
-            String num_sq = haveReadNumber.getAsknum();
-            String num_plant = haveReadNumber.getPlantnum();
-            String num_pqplant = haveReadNumber.getPq_plantnum();
-            String num_pqjob = haveReadNumber.getPq_jobnum();
-            String num_pgcmd = haveReadNumber.getPq_cmdnum();
-            if (num_cmd != null && !num_cmd.equals("") && (Integer.valueOf(num_cmd) < allCount_cmd))
-            {
-                int num = allCount_cmd - Integer.valueOf(num_cmd);
-                listItemView.fl_cmd_new.setVisibility(View.VISIBLE);
-                listItemView.tv_cmd_new.setText(String.valueOf(num));
-            }
-            if (num_sq != null && !num_sq.equals("") && (Integer.valueOf(num_sq) < allCount_ask))
-            {
-                int num = allCount_ask - Integer.valueOf(num_job);
-                listItemView.fl_sq_new.setVisibility(View.VISIBLE);
-                listItemView.tv_sq_new.setText(String.valueOf(num));
-            }
-            if (num_job != null && !num_job.equals("") && (Integer.valueOf(num_job) < allCount_job))
-            {
-                int num = allCount_job - Integer.valueOf(num_job);
-                listItemView.fl_job_new.setVisibility(View.VISIBLE);
-                listItemView.tv_job_new.setText(String.valueOf(num));
-            }
-            if (num_plant != null && !num_plant.equals("") && (Integer.valueOf(num_plant) < allCount_plant))
-            {
-                int num = allCount_plant - Integer.valueOf(num_plant);
-                listItemView.fl_plant_new.setVisibility(View.VISIBLE);
-                listItemView.tv_plant_new.setText(String.valueOf(num));
-            }
-            if (num_pqplant != null && !num_pqplant.equals("") && (Integer.valueOf(num_pqplant) < allCount_areaplant))
-            {
-                int num = allCount_areaplant - Integer.valueOf(num_pqplant);
-                listItemView.fl_plantnumber_new.setVisibility(View.VISIBLE);
-                listItemView.tv_plantnumber_new.setText(String.valueOf(num));
-            }
-            if (num_pqjob != null && !num_pqjob.equals("") && (Integer.valueOf(num_pqjob) < allCount_areajob))
-            {
-                int num = allCount_areajob - Integer.valueOf(num_pqjob);
-                listItemView.fl_worknumber_new.setVisibility(View.VISIBLE);
-                listItemView.tv_worknumber_new.setText(String.valueOf(num));
-            }
-            if (num_pgcmd != null && !num_pgcmd.equals("") && (Integer.valueOf(num_pgcmd) < allCount_areacmd))
-            {
-                int num = allCount_areacmd - Integer.valueOf(num_pgcmd);
-                listItemView.fl_cmdnumber_new.setVisibility(View.VISIBLE);
-                listItemView.tv_cmdnumber_new.setText(String.valueOf(num));
-            }
-        } else
-        {
-            saveHaveReadData(parktab.getWorkuserid(), String.valueOf(allCount_areacmd), String.valueOf(allCount_areaplant), String.valueOf(allCount_areajob), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_ask), String.valueOf(allCount_cmd));
-        }
 
 
         listItemView.tv_czname.setText(parktab.getRealName());
         listItemView.tv_yqname.setText(parktab.getparkName());
-//        listItemView.tv_plant.setText("园区苗情" + parktab.getPlantGrowCount());
-//        listItemView.tv_sq.setText("园区申请" + parktab.getAskCount());
-//        listItemView.tv_cmd.setText("园区指令" + parktab.getCommandCount());
-//        listItemView.tv_job.setText("园区工作" + parktab.getJobCount());
-//        listItemView.tv_plantnumber.setText("片区苗情" + parktab.getAreaplantGrowCount());
-//        listItemView.tv_worknumber.setText("片区工作" + parktab.getAreajobCount());
-//        listItemView.tv_cmdnumber.setText("片区指令" + parktab.getAreacommandCount());
 
+        if (Integer.valueOf(parktab.getCommandCount()) > 0)
+        {
+            listItemView.fl_cmd_new.setVisibility(View.VISIBLE);
+        } else
+        {
+            listItemView.fl_cmd_new.setVisibility(View.GONE);
+        }
+        if (Integer.valueOf(parktab.getJobCount()) > 0)
+        {
+            listItemView.fl_job_new.setVisibility(View.VISIBLE);
+        } else
+        {
+            listItemView.fl_job_new.setVisibility(View.GONE);
+        }
+        if (Integer.valueOf(parktab.getPlantGrowCount()) > 0)
+        {
+            listItemView.fl_plant_new.setVisibility(View.VISIBLE);
+        } else
+        {
+            listItemView.fl_plant_new.setVisibility(View.GONE);
+        }
+        if (Integer.valueOf(parktab.getAreajobCount()) > 0)
+        {
+            listItemView.fl_worknumber_new.setVisibility(View.VISIBLE);
+        } else
+        {
+            listItemView.fl_worknumber_new.setVisibility(View.GONE);
+        }
+        if (Integer.valueOf(parktab.getAreaplantGrowCount()) > 0)
+        {
+            listItemView.fl_plantnumber_new.setVisibility(View.VISIBLE);
+        } else
+        {
+            listItemView.fl_plantnumber_new.setVisibility(View.GONE);
+        }
+        if (Integer.valueOf(parktab.getAreacommandCount()) > 0)
+        {
+            listItemView.fl_cmdnumber_new.setVisibility(View.VISIBLE);
+        } else
+        {
+            listItemView.fl_cmdnumber_new.setVisibility(View.GONE);
+        }
         listItemView.tv_plant.setText("园区苗情");
         listItemView.tv_sq.setText("场长申请");
         listItemView.tv_cmd.setText("场长指令");

@@ -122,20 +122,7 @@ public class NCZ_ToDayPQdapter extends BaseAdapter
 				@Override
 				public void onClick(View v)
 				{
-					FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_cmdnumber_new;
-					fl_new.setVisibility(View.GONE);
-					areatab area = listItems.get(v.getId());
-					int allCount_plant = Integer.valueOf(area.getPlantGrowCount()) + Integer.valueOf(area.getPlantGrowVideoCount());
-					int allCount_job = Integer.valueOf(area.getJobCount()) + Integer.valueOf(area.getJobVideoCount());
-					int allCount_cmd = Integer.valueOf(area.getCommandCount()) + Integer.valueOf(area.getCommandVideoCount());
-					HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + area.getWorkuserid());
-					if (haveReadNumber != null)
-					{
-						updateHaveReadData(area.getWorkuserid(), "pq_cmdnum", String.valueOf(allCount_cmd));
-					} else
-					{
-						saveHaveReadData(area.getWorkuserid(), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_cmd));
-					}
+
 					Intent intent = new Intent(context, NCZ_PQ_TodayCommand_.class);
 					intent.putExtra("workuserid", listItems.get(v.getId()).getWorkuserid());// 因为list中添加了头部,因此要去掉一个
 					context.startActivity(intent);
@@ -146,20 +133,7 @@ public class NCZ_ToDayPQdapter extends BaseAdapter
 				@Override
 				public void onClick(View v)
 				{
-					FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_plantnumber_new;
-					fl_new.setVisibility(View.GONE);
-					areatab area = listItems.get(v.getId());
-					int allCount_plant = Integer.valueOf(area.getPlantGrowCount()) + Integer.valueOf(area.getPlantGrowVideoCount());
-					int allCount_job = Integer.valueOf(area.getJobCount()) + Integer.valueOf(area.getJobVideoCount());
-					int allCount_cmd = Integer.valueOf(area.getCommandCount()) + Integer.valueOf(area.getCommandVideoCount());
-					HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + area.getWorkuserid());
-					if (haveReadNumber != null)
-					{
-						updateHaveReadData(area.getWorkuserid(), "pq_plantnum", String.valueOf(allCount_plant));
-					} else
-					{
-						saveHaveReadData(area.getWorkuserid(), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_cmd));
-					}
+
 					Intent intent = new Intent(context, NCZ_GddList_.class);
 					intent.putExtra("areaid", listItems.get(v.getId()).getid());// 因为list中添加了头部,因此要去掉一个
 					context.startActivity(intent);
@@ -171,20 +145,7 @@ public class NCZ_ToDayPQdapter extends BaseAdapter
 				@Override
 				public void onClick(View v)
 				{
-					FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_worknumber_new;
-					fl_new.setVisibility(View.GONE);
-					areatab area = listItems.get(v.getId());
-					int allCount_plant = Integer.valueOf(area.getPlantGrowCount()) + Integer.valueOf(area.getPlantGrowVideoCount());
-					int allCount_job = Integer.valueOf(area.getJobCount()) + Integer.valueOf(area.getJobVideoCount());
-					int allCount_cmd = Integer.valueOf(area.getCommandCount()) + Integer.valueOf(area.getCommandVideoCount());
-					HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + area.getWorkuserid());
-					if (haveReadNumber != null)
-					{
-						updateHaveReadData(area.getWorkuserid(), "pq_jobnum", String.valueOf(allCount_job));
-					} else
-					{
-						saveHaveReadData(area.getWorkuserid(), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_cmd));
-					}
+
 					Intent intent = new Intent(context, NCZ_PQ_TodayJob_.class);
 					intent.putExtra("bean", listItems.get(v.getId()));// 因为list中添加了头部,因此要去掉一个
 					context.startActivity(intent);
@@ -196,36 +157,29 @@ public class NCZ_ToDayPQdapter extends BaseAdapter
 			listItemView = (ListItemView) convertView.getTag();
 		}
 		// 设置文字和图片
-		int allCount_plant = Integer.valueOf(areatab.getPlantGrowCount()) + Integer.valueOf(areatab.getPlantGrowVideoCount());
-		int allCount_job = Integer.valueOf(areatab.getJobCount()) + Integer.valueOf(areatab.getJobVideoCount());
-		int allCount_cmd = Integer.valueOf(areatab.getCommandCount()) + Integer.valueOf(areatab.getCommandVideoCount());
-		HaveReadNumber haveReadNumber = getHaveReadData(commembertab.getId() + areatab.getWorkuserid());
-		if (haveReadNumber != null)
+		if (Integer.valueOf(areatab.getJobCount()) > 0)
 		{
-			String num_job = haveReadNumber.getPq_jobnum();
-			String num_plant = haveReadNumber.getPq_plantnum();
-			String num_cmd = haveReadNumber.getPq_cmdnum();
-			if (num_plant != null && !num_plant.equals("") && (Integer.valueOf(num_plant) < allCount_plant))
-			{
-				int num = allCount_plant - Integer.valueOf(num_plant);
-				listItemView.fl_plantnumber_new.setVisibility(View.VISIBLE);
-				listItemView.tv_plantnumber_new.setText(String.valueOf(num));
-			}
-			if (num_job != null && !num_job.equals("") && (Integer.valueOf(num_job) < allCount_job))
-			{
-				int num = allCount_job - Integer.valueOf(num_job);
-				listItemView.fl_worknumber_new.setVisibility(View.VISIBLE);
-				listItemView.tv_worknumber_new.setText(String.valueOf(num));
-			}
-			if (num_cmd != null && !num_cmd.equals("") && (Integer.valueOf(num_cmd) < allCount_cmd))
-			{
-				int num = allCount_cmd - Integer.valueOf(num_cmd);
-				listItemView.fl_cmdnumber_new.setVisibility(View.VISIBLE);
-				listItemView.tv_cmdnumber_new.setText(String.valueOf(num));
-			}
-		} else
+			listItemView.fl_worknumber_new.setVisibility(View.VISIBLE);
+		}
+		else
 		{
-			saveHaveReadData(areatab.getWorkuserid(), String.valueOf(allCount_plant), String.valueOf(allCount_job), String.valueOf(allCount_cmd));
+			listItemView.fl_worknumber_new.setVisibility(View.GONE);
+		}
+		if (Integer.valueOf(areatab.getPlantGrowCount()) > 0)
+		{
+			listItemView.fl_plantnumber_new.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			listItemView.fl_plantnumber_new.setVisibility(View.GONE);
+		}
+		if (Integer.valueOf(areatab.getCommandCount()) > 0)
+		{
+			listItemView.fl_cmdnumber_new.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			listItemView.fl_cmdnumber_new.setVisibility(View.GONE);
 		}
 		listItemView.tv_pq.setText(areatab.getareaName());
 		listItemView.tv_worknumber.setText(areatab.getJobCount());

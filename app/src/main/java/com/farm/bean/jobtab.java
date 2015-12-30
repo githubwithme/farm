@@ -52,6 +52,18 @@ public class jobtab implements Parcelable
 	// 自定义
 	public String importance;
 	public String jobvidioCount;
+	public String jobCount;
+
+
+	public String getJobCount()
+	{
+		return jobCount;
+	}
+
+	public void setJobCount(String jobCount)
+	{
+		this.jobCount = jobCount;
+	}
 
 	public void setJobvidioCount(String jobvidioCount)
 	{
@@ -433,6 +445,7 @@ public class jobtab implements Parcelable
 			p.setcommFromVPath(source.readString());
 			p.setImportance(source.readString());
 			p.setJobvidioCount(source.readString());
+			p.setJobCount(source.readString());
 			return p;
 		}
 
@@ -479,6 +492,7 @@ public class jobtab implements Parcelable
 		p.writeString(commFromVPath);
 		p.writeString(importance);
 		p.writeString(jobvidioCount);
+		p.writeString(jobCount);
 	}
 
 	@Override
