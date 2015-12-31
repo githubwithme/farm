@@ -9,12 +9,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.SelectCmdArea;
 import com.farm.bean.commandtab_single;
+import com.farm.bean.goodslisttab;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
 import com.farm.widget.CustomDialog_FLSL;
@@ -24,41 +26,46 @@ import java.util.List;
 
 public class Area_Cmd_Adapter extends BaseAdapter
 {
+    InputGoodsAdapter inputGoodsAdapter;
     Button btn_sure;
+    ListView lv;
     EditText et_flsl;
     TextView tv_dw;
     ListItemView currentlistItemView;
     CustomDialog_FLSL customDialog_flsl;
     private Context context;
+    int currentPostion = 0;
     private int position = 0;
     // Holder hold;
     private LayoutInflater listContainer;// 视图容器
-    int goodsNumber;
+    List<goodslisttab> list;
     String firstid;
     String firstType;
-    String[] secondItemid;
-    String[] secondItemName;
+    List<String> secondItemid;
+    List<String> secondItemName;
+    List<String> thirdItemName;
     int acountnumber = 0;
 
-    public Area_Cmd_Adapter(Context context, FragmentCallBack fragmentCallBack, String firstid, String firstType, String[] secondItemid, String[] secondItemName, String goodsNumber)
+    public Area_Cmd_Adapter(Context context, FragmentCallBack fragmentCallBack, String firstid, String firstType, List<String> secondItemid, List<String> secondItemName, List<String> thirdItemName, List<goodslisttab> list)
     {
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
-        this.goodsNumber = Integer.valueOf(goodsNumber);
+        this.list = list;
         this.context = context;
         this.secondItemid = secondItemid;
         this.secondItemName = secondItemName;
+        this.thirdItemName = thirdItemName;
         this.firstid = firstid;
         this.firstType = firstType;
     }
 
     public int getCount()
     {
-        return secondItemName.length;
+        return secondItemName.size();
     }
 
     public Object getItem(int position)
     {
-        return secondItemName[position];
+        return secondItemName.get(position);
     }
 
     public long getItemId(int position)
@@ -75,25 +82,26 @@ public class Area_Cmd_Adapter extends BaseAdapter
         {
             convertView = listContainer.inflate(R.layout.area_cmd_adapter, null);
             listItemView = new ListItemView();
+            listItemView.tv_tip_full = (TextView) convertView.findViewById(R.id.tv_tip_full);
             listItemView.tv_flsl = (TextView) convertView.findViewById(R.id.tv_flsl);
             listItemView.cb_area = (CheckBox) convertView.findViewById(R.id.cb_area);
 
-            listItemView.cb_area.setText(secondItemName[arg0]);
+            listItemView.cb_area.setText(secondItemName.get(arg0));
             listItemView.cb_area.setTag(arg0);
             listItemView.cb_area.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
-                    int pos = Integer.valueOf(buttonView.getTag().toString());
-                    currentlistItemView = (ListItemView) lmap.get(pos).getTag();
+                    currentPostion = Integer.valueOf(buttonView.getTag().toString());
+                    currentlistItemView = (ListItemView) lmap.get(currentPostion).getTag();
                     if (isChecked)
                     {
-                        showDialog_flsl(pos);
+                        showDialog_flsl(currentPostion);
 
                     } else
                     {
-                        deleteSelectRecords(firstType, secondItemName[pos]);
+                        deleteSelectRecords(firstType, secondItemName.get(currentPostion));
                         currentlistItemView.tv_flsl.setVisibility(View.GONE);
                     }
                 }
@@ -112,6 +120,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
 
     static class ListItemView
     { // 自定义控件集合
+        TextView tv_tip_full;
         TextView tv_flsl;
         CheckBox cb_area;
     }
@@ -138,10 +147,11 @@ public class Area_Cmd_Adapter extends BaseAdapter
 
     public void showDialog_flsl(final int pos)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_flsl, null);
+        final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.inputgoodsnumberadapter, null);
         customDialog_flsl = new CustomDialog_FLSL(context, R.style.MyDialog, dialog_layout);
-        tv_dw = (TextView) dialog_layout.findViewById(R.id.tv_dw);
-        et_flsl = (EditText) dialog_layout.findViewById(R.id.et_flsl);
+        lv = (ListView) dialog_layout.findViewById(R.id.lv);
+        inputGoodsAdapter = new InputGoodsAdapter(context, list);
+        lv.setAdapter(inputGoodsAdapter);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         tv_dw.setText(commandtab_single.getInstance().getNongzidw());
         btn_sure.setOnClickListener(new View.OnClickListener()
@@ -149,26 +159,45 @@ public class Area_Cmd_Adapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                saveSelectCmdArea(firstid, firstType, secondItemid[pos], secondItemName[pos], et_flsl.getText().toString());
-                List<SelectCmdArea> list_SelectCmdArea = SqliteDb.getSelectCmdArea(context, SelectCmdArea.class);
-                acountnumber = 0;
-                for (int i = 0; i < list_SelectCmdArea.size(); i++)
+                List<goodslisttab> list = inputGoodsAdapter.getGoosList();
+                SqliteDb.saveAll(context, list);
+//                acountnumber = 0;
+//                String number = "";
+//                String small_dw = "";
+//                String large_dw = "";
+//                for (int i = 0; i < list.size(); i++)
+//                {
+//                    goodslisttab goodslisttab = list.get(i);
+//                    String[] goodsspc = goodslisttab.getgoodsSpec().split("/");
+//                    number = goodsspc[0];
+//                    small_dw = goodsspc[1];
+//                    large_dw = goodsspc[2];
+//                    acountnumber = acountnumber + Integer.valueOf(list.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
+//                }
+//                int neednumber = acountnumber / Integer.valueOf(small_dw);
+//                int allnumber = Integer.valueOf(list.get(currentPostion).getGoodsSum());
+//                if (neednumber > allnumber)
+//                {
+//                    currentlistItemView.tv_tip_full.setText(list.get + " " + "【不足】");
+//                } else
+//                {
+//                    currentlistItemView.tv_flsl.setText(et_flsl.getText().toString() + commandtab_single.getInstance().getNongzidw());
+//                    customDialog_flsl.dismiss();
+//                }
+                for (int i = 0; i < list.size(); i++)
                 {
-                    acountnumber = acountnumber + Integer.valueOf(list_SelectCmdArea.get(i).getGoodsnumber());
-                }
-                if (acountnumber > goodsNumber)
-                {
+                    goodslisttab goodslisttab = list.get(i);
+                    int acountnumber = 0;
+                    String[] goodsspc = goodslisttab.getgoodsSpec().split("/");
+                    String number = goodsspc[0];
+                    String small_dw = goodsspc[1];
+                    String large_dw = goodsspc[2];
+                    acountnumber = acountnumber + Integer.valueOf(list.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
+                    int neednumber = acountnumber / Integer.valueOf(small_dw);
                     currentlistItemView.tv_flsl.setVisibility(View.VISIBLE);
-                    currentlistItemView.tv_flsl.setText(et_flsl.getText().toString() + commandtab_single.getInstance().getNongzidw() + " " + "【不足】");
-
-                    customDialog_flsl.dismiss();
-                } else
-                {
-                    currentlistItemView.tv_flsl.setVisibility(View.VISIBLE);
-                    currentlistItemView.tv_flsl.setText(et_flsl.getText().toString() + commandtab_single.getInstance().getNongzidw());
-                    customDialog_flsl.dismiss();
+                    currentlistItemView.tv_flsl.setText(goodslisttab.getgoodsName() + ":" + goodslisttab.getYL() + small_dw + "/株" + "共需" + neednumber + goodslisttab.getgoodsunit());
                 }
-
+                customDialog_flsl.dismiss();
             }
         });
         customDialog_flsl.show();

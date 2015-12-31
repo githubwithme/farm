@@ -597,6 +597,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
+                String a=responseInfo.result;
                 List<Dictionary> lsitNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表

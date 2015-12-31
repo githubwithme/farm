@@ -3,27 +3,97 @@ package com.farm.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.lidroid.xutils.db.annotation.Id;
+import com.lidroid.xutils.db.annotation.NoAutoIncrement;
 import com.lidroid.xutils.db.annotation.Table;
 
 @Table(name = "goodslisttab")
 public class goodslisttab implements Parcelable
 {
-    public String Id;
-    public String uID;
-    public String regDate;
-    public String goodsName;
-    public String goodsunit;
-    public String goodsSpec;
-    public String goodsNote;
-    public String goodsProducer;
-    public String goodsTypeID;
-    public String userDefTypeID;
-    public String daysBeforeWarning;
-    public String levelOfWarning;
-    public String isDelete;
-    public String DeleteDate;
-    public String imgurl;
+    @Id
+    @NoAutoIncrement
+    public String id="";
+    public String uID="";
+    public String regDate="";
+    public String goodsName="";
+    public String goodsunit="";
+    public String goodsSpec="";
+    public String goodsNote="";
+    public String goodsProducer="";
+    public String goodsTypeID="";
+    public String userDefTypeID="";
+    public String daysBeforeWarning="";
+    public String levelOfWarning="";
+    public String isDelete="";
+    public String DeleteDate="";
+    public String imgurl="";
+    public String goodsSum="";
+    public String parkId="";
+    public String parkName="";
+    public String areaId="";
+    public String areaName="";
+    public String YL="";
 
+
+    public String getYL()
+    {
+        return YL;
+    }
+
+    public void setYL(String YL)
+    {
+        this.YL = YL;
+    }
+
+    public String getAreaName()
+    {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName)
+    {
+        this.areaName = areaName;
+    }
+
+    public String getAreaId()
+    {
+        return areaId;
+    }
+
+    public void setAreaId(String areaId)
+    {
+        this.areaId = areaId;
+    }
+
+    public String getParkName()
+    {
+        return parkName;
+    }
+
+    public void setParkName(String parkName)
+    {
+        this.parkName = parkName;
+    }
+
+    public String getParkId()
+    {
+        return parkId;
+    }
+
+    public void setParkId(String parkId)
+    {
+        this.parkId = parkId;
+    }
+
+    public String getGoodsSum()
+    {
+        return goodsSum;
+    }
+
+    public void setGoodsSum(String goodsSum)
+    {
+        this.goodsSum = goodsSum;
+    }
 
     public void setImgurl(String imgurl)
     {
@@ -35,14 +105,15 @@ public class goodslisttab implements Parcelable
         return imgurl;
     }
 
+
     public String getId()
     {
-        return Id;
+        return id;
     }
 
-    public void setId(String Id)
+    public void setId(String id)
     {
-        this.Id = Id;
+        this.id = id;
     }
 
     public String getuID()
@@ -206,6 +277,12 @@ public class goodslisttab implements Parcelable
             p.setisDelete(source.readString());
             p.setDeleteDate(source.readString());
             p.setImgurl(source.readString());
+            p.setGoodsSum(source.readString());
+            p.setParkId(source.readString());
+            p.setParkName(source.readString());
+            p.setAreaId(source.readString());
+            p.setAreaName(source.readString());
+            p.setYL(source.readString());
             return p;
         }
 
@@ -219,7 +296,7 @@ public class goodslisttab implements Parcelable
     @Override
     public void writeToParcel(Parcel p, int arg1)
     {
-        p.writeString(Id);
+        p.writeString(id);
         p.writeString(uID);
         p.writeString(regDate);
         p.writeString(goodsName);
@@ -234,6 +311,13 @@ public class goodslisttab implements Parcelable
         p.writeString(isDelete);
         p.writeString(DeleteDate);
         p.writeString(imgurl);
+        p.writeString(goodsSum);
+        p.writeString(parkId);
+        p.writeString(goodsSum);
+        p.writeString(areaId);
+        p.writeString(areaName);
+        p.writeString(YL);
+
     }
 
     @Override

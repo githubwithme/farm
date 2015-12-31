@@ -8,6 +8,7 @@ import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,6 +35,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -46,6 +48,7 @@ import java.util.List;
 @EFragment
 public class AddStd_Cmd_StepTwo extends Fragment
 {
+    CustomExpandableListAdapter customExpandableListAdapter;
     String[] fn;
     Dictionary_wheel dictionary_wheel;
     Dictionary dic;
@@ -68,6 +71,16 @@ public class AddStd_Cmd_StepTwo extends Fragment
     ProgressBar pb;
     @ViewById
     TextView tv_tip;
+    @ViewById
+    Button btn_next;
+
+    @Click
+    void btn_next()
+    {
+        Bundle bundle = new Bundle();
+        bundle.putInt("INDEX", 0);
+        fragmentCallBack.callbackFun2(bundle);
+    }
 
     @AfterViews
     void afterOncreate()
@@ -110,7 +123,7 @@ public class AddStd_Cmd_StepTwo extends Fragment
                         {
                             dic = lsitNewData.get(0);
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic);
-                            CustomExpandableListAdapter customExpandableListAdapter = new CustomExpandableListAdapter(getActivity(), dictionary_wheel, mainlistview, list_goods, tv_head, fragmentCallBack);
+                            customExpandableListAdapter = new CustomExpandableListAdapter(getActivity(), dictionary_wheel, mainlistview, list_goods, tv_head, fragmentCallBack);
                             mainlistview.setAdapter(customExpandableListAdapter);
                             mainlistview.expandGroup(0);
                         }

@@ -1,12 +1,10 @@
 package com.farm.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -18,12 +16,9 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
-import com.farm.bean.SelectCmdArea;
-import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
 import com.farm.com.custominterface.FragmentCallBack;
-import com.farm.common.SqliteDb;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -62,7 +57,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
     private AddStd_Cmd_goodslistdapter adapter;
     ListView listview;
 
-    public CustomExpandableListAdapter(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview,ListView listview, TextView tv_head, FragmentCallBack fragmentCallBack)
+    public CustomExpandableListAdapter(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview, ListView listview, TextView tv_head, FragmentCallBack fragmentCallBack)
     {
         this.listview = listview;
         this.fragmentCallBack = fragmentCallBack;
@@ -77,7 +72,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
         currentChildId = map_id.get(parentId[0])[0];
         currentParentName = parentData[0];
         currentChildName = map.get(parentData[0])[0];
-
+        adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
+        listview.setAdapter(adapter);
     }
 
     //得到子item需要关联的数据
@@ -114,7 +110,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
             TextPaint tp = tv.getPaint();
             tp.setFakeBoldText(true);
             getGoodslist();
-            tempChildView=tv;
+            tempChildView = tv;
         }
         tv.setText(info);
         tv.setTag(R.id.tag_fi, parentId[groupPosition]);
@@ -267,33 +263,33 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        String aa = result.getRows().toJSONString();
-                        list_goods = JSON.parseArray(result.getRows().toJSONString(), goodslisttab.class);
+                        list_goods.clear();
+                        List<goodslisttab> list= JSON.parseArray(result.getRows().toJSONString(), goodslisttab.class);
+                        list_goods.addAll(list);
                         if (list_goods != null)
                         {
-                            adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
-                            listview.setAdapter(adapter);
-                            listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                            {
-                                @Override
-                                public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
-                                {
-                                    SqliteDb.deleteAllSelectCmdArea(context, SelectCmdArea.class);
-
-                                    commandtab_single commandtab_single = com.farm.bean.commandtab_single.getInstance();
-                                    commandtab_single.setnongziName(list_goods.get(pos).getgoodsName());
-                                    commandtab_single.setNongziId(list_goods.get(pos).getId());
-                                    commandtab_single.setNongzigg(list_goods.get(pos).getgoodsSpec());
-                                    commandtab_single.setNongzidw(list_goods.get(pos).getgoodsunit());
-                                    Bundle bundle = new Bundle();
-                                    bundle.putInt("INDEX", 1);
-                                    CustomExpandableListAdapter.this.fragmentCallBack.callbackFun2(bundle);
-
-                                    Bundle bundle1 = new Bundle();
-                                    bundle1.putString("type", "已选择：" + currentParentName + "-" + currentChildName + "-" + list_goods.get(pos).getgoodsName().toString());
-                                    CustomExpandableListAdapter.this.fragmentCallBack.stepTwo_setHeadText(bundle1);
-                                }
-                            });
+                            adapter.notifyDataSetChanged();
+//                            listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//                            {
+//                                @Override
+//                                public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
+//                                {
+//                                    SqliteDb.deleteAllSelectCmdArea(context, SelectCmdArea.class);
+//
+//                                    commandtab_single commandtab_single = com.farm.bean.commandtab_single.getInstance();
+//                                    commandtab_single.setnongziName(list_goods.get(pos).getgoodsName());
+//                                    commandtab_single.setNongziId(list_goods.get(pos).getId());
+//                                    commandtab_single.setNongzigg(list_goods.get(pos).getgoodsSpec());
+//                                    commandtab_single.setNongzidw(list_goods.get(pos).getgoodsunit());
+//                                    Bundle bundle = new Bundle();
+//                                    bundle.putInt("INDEX", 1);
+//                                    CustomExpandableListAdapter.this.fragmentCallBack.callbackFun2(bundle);
+//
+//                                    Bundle bundle1 = new Bundle();
+//                                    bundle1.putString("type", "已选择：" + currentParentName + "-" + currentChildName + "-" + list_goods.get(pos).getgoodsName().toString());
+//                                    CustomExpandableListAdapter.this.fragmentCallBack.stepTwo_setHeadText(bundle1);
+//                                }
+//                            });
                             adapter.notifyDataSetChanged();
                         } else
                         {

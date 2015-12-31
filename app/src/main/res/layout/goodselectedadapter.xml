@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="45dip">
+
+    <TextView
+        android:id="@+id/tv_fl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dip"
+        android:gravity="left"
+        android:text="肥料"
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_14"/>
+
+    <TextView
+        android:id="@+id/tv_tip_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@+id/tv_fl"
+        android:gravity="left"
+        android:text="剩余："
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_14"/>
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@+id/tv_tip_number"
+        android:gravity="left"
+        android:text="肥料"
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_14"/>
+
+    <TextView
+        android:id="@+id/tv_tip_gg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@+id/tv_number"
+        android:gravity="left"
+        android:text="规格："
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_14"/>
+
+    <TextView
+        android:id="@+id/tv_gg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@+id/tv_tip_gg"
+        android:gravity="left"
+        android:text="肥料"
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_14"/>
+</RelativeLayout>

@@ -2,6 +2,7 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,16 +18,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
-import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
 import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab;
+import com.farm.bean.goodslisttab;
 import com.farm.com.custominterface.FragmentCallBack;
-import com.farm.common.DictionaryHelper;
+import com.farm.common.SqliteDb;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -49,16 +51,15 @@ import java.util.List;
 @EFragment
 public class AddStd_Cmd_StepThree_Temp extends Fragment
 {
+    List<goodslisttab> list_goods;
     commembertab commembertab;
-    String[] fn;
-    Dictionary_wheel dictionary_wheel;
     Dictionary dic_park;
     Dictionary dic_area;
     FragmentCallBack fragmentCallBack = null;
     SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
-    HashMap<String, String> goodsNumber;
-    private String[] list;
+    HashMap<String, List<goodslisttab>> map_goods;
+    private List<String> list;
     private TextView[] tvList;
     private View[] views;
     private LayoutInflater inflater;
@@ -105,19 +106,19 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
     /**
      * 动态生成显示items中的textview
      */
-    private void showToolsView(String[] data)
+    private void showToolsView(List<String> data)
     {
         list = data;
-        tvList = new TextView[list.length];
-        views = new View[list.length];
+        tvList = new TextView[list.size()];
+        views = new View[list.size()];
 
-        for (int i = 0; i < list.length; i++)
+        for (int i = 0; i < list.size(); i++)
         {
             View view = inflater.inflate(R.layout.item_addstd_cmd_area, null);
             view.setId(i);
             view.setOnClickListener(toolsItemListener);
             TextView textView = (TextView) view.findViewById(R.id.text);
-            textView.setText(list[i]);
+            textView.setText(list.get(i));
             cmd_tools.addView(view);
             tvList[i] = textView;
             views[i] = view;
@@ -192,11 +193,13 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
             Fragment fragment = new Area_Cmd_Fragment();
             Bundle bundle = new Bundle();
             bundle.putInt("index", index);
-            bundle.putString("GOODSNUMBER", goodsNumber.get(dictionary_wheel.getFirstItemID()[index]));
-            bundle.putString("FN", dictionary_wheel.getFirstItemName()[index]);
-            bundle.putString("FI", dictionary_wheel.getFirstItemID()[index]);
-            bundle.putStringArray("SI", dictionary_wheel.getSecondItemID().get(dictionary_wheel.getFirstItemID()[index]));
-            bundle.putStringArray("SN", dictionary_wheel.getSecondItemName().get(fn[index]));
+            bundle.putParcelableArrayList("GOODS", (ArrayList<? extends Parcelable>) map_goods.get(dic_area.getFirstItemID().get(index)));
+            bundle.putString("FN", dic_area.getFirstItemName().get(index));
+            bundle.putString("FI", dic_area.getFirstItemID().get(index));
+            bundle.putStringArrayList("SI", (ArrayList<String>) dic_area.getSecondItemID().get(index));
+            bundle.putStringArrayList("SN", (ArrayList<String>) dic_area.getSecondItemName().get(index));
+//            bundle.putStringArray("TI", dic_area.getThirdItemID().get(index).get());
+//            bundle.putStringArray("TN", dic_area.getSecondItemName().get(fn[index]));
             fragment.setArguments(bundle);
             return fragment;
         }
@@ -204,7 +207,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
         @Override
         public int getCount()
         {
-            return list.length;
+            return list.size();
         }
     }
 
@@ -269,9 +272,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                         if (lsitNewData != null)
                         {
                             dic_area = lsitNewData.get(0);
-                            dictionary_wheel = DictionaryHelper.getDictionary_Command(dic_area);
-                            fn = dictionary_wheel.getFirstItemName();
-                            showToolsView(fn);
+                            showToolsView(dic_area.getFirstItemName());
                         }
                     } else
                     {
@@ -295,12 +296,19 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
 
     private void getGoodsSum()
     {
+        String goodsid = "";
+        String goodsname = "";
+        for (int i = 0; i < list_goods.size(); i++)
+        {
+            goodsid = goodsid + list_goods.get(i).getId() + ",";
+            goodsname = goodsname + list_goods.get(i).getgoodsName() + ",";
+        }
         commandtab_single commandtab_single = com.farm.bean.commandtab_single.getInstance();
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         String aa = commandtab_single.getNongziId();
-        params.addQueryStringParameter("goodsId", commandtab_single.getNongziId());
+        params.addQueryStringParameter("goodsId", goodsid.substring(0, goodsid.length() - 1));
         params.addQueryStringParameter("action", "getGoodsSum");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -312,18 +320,22 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-
                     if (result.getAffectedRows() != 0)
                     {
-                        String aa=result.getRows().toJSONString();
+                        String aa = result.getRows().toJSONString();
                         int size = result.getRows().size();
-                        goodsNumber = new HashMap<String, String>();
+                        map_goods = new HashMap<String, List<goodslisttab>>();
                         for (int i = 0; i < size; i++)
                         {
                             String parkId = result.getRows().getJSONObject(i).getString("parkId");
-                            String goodsSum = result.getRows().getJSONObject(i).getString("goodsSum");
+                            JSONArray jsonarray = result.getRows().getJSONObject(i).getJSONArray("goodsSum");
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            for (int j = 0; j < jsonarray.size(); j++)
+                            {
+                                list_goods.get(j).setGoodsSum(jsonarray.get(j).toString());
+                            }
                             String parkName = result.getRows().getJSONObject(i).getString("parkName");
-                            goodsNumber.put(parkId, goodsSum);
+                            map_goods.put(parkId, list_goods);
                         }
                         initPager();
                     } else
@@ -348,8 +360,10 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
 
     public void update()
     {
+        list_goods = SqliteDb.getGoods(getActivity(), goodslisttab.class);
         getGoodsSum();
     }
+
 
     @Override
     public void onAttach(Activity activity)

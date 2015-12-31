@@ -23,16 +23,26 @@
             android:textSize="@dimen/size_14"/>
 
 
-        <TextView
-            android:id="@+id/tv_flsl"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/bg_text"
-            android:textSize="14sp"/>
-
-
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_flsl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dip"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/bg_text"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tv_tip_full"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dip"
+        android:gravity="right"
+        android:text=""
+        android:textColor="@color/bg_text"
+        android:textSize="14sp"/>
 
 </LinearLayout>

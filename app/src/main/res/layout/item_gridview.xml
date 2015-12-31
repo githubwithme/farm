@@ -16,10 +16,17 @@
         android:background="@color/white"
         android:orientation="horizontal">
 
+        <CheckBox
+            android:id="@+id/cb_fl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
         <RelativeLayout
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
             android:orientation="vertical">
 
 
