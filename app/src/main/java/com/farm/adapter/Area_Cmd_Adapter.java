@@ -23,7 +23,6 @@ import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
 import com.farm.widget.CustomDialog_FLSL;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -91,23 +90,23 @@ public class Area_Cmd_Adapter extends BaseAdapter
 
             listItemView.cb_area.setText(secondItemName.get(arg0));
             Bundle bundle = new Bundle();
-            bundle.putString("index", arg0);
+            bundle.putString("index", String.valueOf(arg0));
             bundle.putString("pi", firstid);
             bundle.putString("pn", firstType);
-            listItemView.cb_area.setTag(arg0);
+            listItemView.cb_area.setTag(bundle);
             listItemView.cb_area.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     Bundle bundle = (Bundle) buttonView.getTag();
-                    currentPostion = Integer.valueOf( bundle.getString("index").toString());
-                    String pi =bundle.getString("pi");
-                    String pn =bundle.getString("pn");
+                    currentPostion = Integer.valueOf(bundle.getString("index").toString());
+                    String pi = bundle.getString("pi");
+                    String pn = bundle.getString("pn");
                     currentlistItemView = (ListItemView) lmap.get(currentPostion).getTag();
                     if (isChecked)
                     {
-                        showDialog_flsl(currentPostion,pi,pn);
+                        showDialog_flsl(currentPostion, pi, pn);
                     } else
                     {
                         deleteSelectRecords(firstType, secondItemName.get(currentPostion));
@@ -154,7 +153,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
         SqliteDb.deleteSelectCmdArea(context, SelectCmdArea.class, firsttype, secondType);
     }
 
-    public void showDialog_flsl(final int pos, String pi , String pn)
+    public void showDialog_flsl(final int pos, String pi, String pn)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_inputflsl, null);
         customDialog_flsl = new CustomDialog_FLSL(context, R.style.MyDialog, dialog_layout);
@@ -168,29 +167,28 @@ public class Area_Cmd_Adapter extends BaseAdapter
             public void onClick(View v)
             {
                 String goodsYL = "";
-                String goodssum = "";
-                List<goodslisttab_flsl> list_goodslisttab_flsl = new ArrayList<goodslisttab_flsl>();
+                String goodsnote = "";
+//                List<goodslisttab_flsl> list_goodslisttab_flsl = new ArrayList<goodslisttab_flsl>();
+                goodslisttab_flsl goodslisttab_flsl = new goodslisttab_flsl();
                 List<goodslisttab> list_goodslisttab = inputGoodsAdapter.getGoosList();
                 for (int i = 0; i < list_goodslisttab.size(); i++)
                 {
-                    goodslisttab_flsl goodslisttab_flsl = new goodslisttab_flsl();
                     goodslisttab goodslisttab = list_goodslisttab.get(i);
-
-                    goodslisttab_flsl.setId(goodslisttab.getId());
+                    goodslisttab_flsl.setId(goodslisttab.getParkId() + ":" + goodslisttab.getAreaId() + ":" + goodslisttab.getId());
                     goodslisttab_flsl.setParkId(goodslisttab.getParkId());
                     goodslisttab_flsl.setParkName(goodslisttab.getParkName());
                     goodslisttab_flsl.setAreaId(goodslisttab.getAreaId());
                     goodslisttab_flsl.setAreaName(goodslisttab.getAreaName());
-                    goodslisttab_flsl.setGoodsSum(goodslisttab.getAreaName());
-                    goodsYL = goodsYL + goodslisttab.getId() + ":" + goodslisttab.getYL() + ",";
-                    goodssum = goodssum + goodslisttab.getgoodsName() + ":" + goodslisttab.getYL() + ",";
+                    goodslisttab_flsl.setGoodsSum(goodslisttab.getGoodsSum());
+                    goodsYL = goodsYL + goodslisttab.getYL() + ";";
+                    goodsYL.substring(0,goodsYL.length()-1);
+                    goodsnote = goodsnote + goodslisttab.getgoodsName() + ":" + goodslisttab.getYL() + ",";
                     goodslisttab_flsl.setYL(goodsYL);
-                    goodslisttab_flsl.setGoodsSum(goodssum);
+                    goodslisttab_flsl.setgoodsNote(goodsnote);
                     goodslisttab_flsl.setgoodsunit(goodslisttab.getgoodsunit());
                     goodslisttab_flsl.setgoodsSpec(goodslisttab.getgoodsSpec());
-                    list_goodslisttab_flsl.add(goodslisttab_flsl);
                 }
-                SqliteDb.saveAll(context, list_goodslisttab_flsl);
+                SqliteDb.save(context, goodslisttab_flsl);
 //                acountnumber = 0;
 //                String number = "";
 //                String small_dw = "";

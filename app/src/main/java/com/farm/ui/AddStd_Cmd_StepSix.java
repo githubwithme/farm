@@ -58,6 +58,7 @@ public class AddStd_Cmd_StepSix extends Fragment
     commandtab_single commandtab_single;
     com.farm.bean.commandtab commandtab;
     String nongzi = "";
+    String nongziId = "";
     String tempareaId = "";
     String tempflyl = "";
     String tempareaName = "";
@@ -86,6 +87,7 @@ public class AddStd_Cmd_StepSix extends Fragment
     public void showData()
     {
         nongzi = "";
+        nongziId = "";
         tempareaId = "";
         tempareaName = "";
         tempflyl = "";
@@ -94,17 +96,18 @@ public class AddStd_Cmd_StepSix extends Fragment
         for (int i = 0; i < list_goodslisttab.size(); i++)
         {
             nongzi = nongzi + list_goodslisttab.get(i).getgoodsName() + ",";
+            nongziId = nongziId + list_goodslisttab.get(i).getId() + ",";
         }
         for (int i = 0; i < list_SelectCmdArea.size(); i++)
         {
-            tempareaId = tempareaId + list_SelectCmdArea.get(i).getParkId() + ":" + list_SelectCmdArea.get(i).getAreaId() + ":" + list_SelectCmdArea.get(i).getYL() + ";";
+            tempareaId = tempareaId + list_SelectCmdArea.get(i).getParkId() + ":" + list_SelectCmdArea.get(i).getAreaId() + ":" + list_SelectCmdArea.get(i).getYL() + ",";
             tempareaName = tempareaName + list_SelectCmdArea.get(i).getParkName() + ":" + list_SelectCmdArea.get(i).getAreaName() + ",";
-            tempflyl = tempflyl + list_SelectCmdArea.get(i).getParkName() + ":" + list_SelectCmdArea.get(i).getAreaName() + ":" + list_SelectCmdArea.get(i).getGoodsSum() + list_SelectCmdArea.get(i).getgoodsSpec() + "\n";
+            tempflyl = tempflyl + list_SelectCmdArea.get(i).getParkName() + ":" + list_SelectCmdArea.get(i).getAreaName() + ":" + list_SelectCmdArea.get(i).getgoodsNote() + list_SelectCmdArea.get(i).getgoodsSpec() + "\n";
         }
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
         tv_importance.setText(commandtab_single.getImportancetype());
         tv_flyl.setText(tempflyl);
-        tv_nz.setText(nongzi);
+        tv_nz.setText(nongzi.substring(0,nongzi.length()-1));
         tv_selectcmd.setText(commandtab_single.getstdJobTypeName() + "-" + commandtab_single.getstdJobName());
         tv_workday.setText(commandtab_single.getcommDays());
         tv_note.setText(commandtab_single.getcommNote());
@@ -129,7 +132,7 @@ public class AddStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("parkId", commandtab_single.getparkId());
         params.addQueryStringParameter("parkName", commandtab_single.getparkName());
         params.addQueryStringParameter("nongziName", nongzi.substring(0, nongzi.length() - 1));
-        params.addQueryStringParameter("amount", "");
+        params.addQueryStringParameter("amount", nongziId.substring(0,nongziId.length()-1));
         params.addQueryStringParameter("commNote", commandtab_single.getcommNote());
         params.addQueryStringParameter("commDays", commandtab_single.getcommDays());
         params.addQueryStringParameter("commComDate", commandtab_single.getcommComDate());
