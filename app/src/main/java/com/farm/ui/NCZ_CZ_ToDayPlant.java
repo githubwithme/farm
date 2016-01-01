@@ -290,6 +290,8 @@ public class NCZ_CZ_ToDayPlant extends Activity
 				planttab planttab = listData.get(position - 1);
 				if (planttab == null)
 					return;
+				commembertab commembertab = AppContext.getUserInfo(NCZ_CZ_ToDayPlant.this);
+				AppContext.updateStatus(NCZ_CZ_ToDayPlant.this, "0", planttab.getId(), "3", commembertab.getId());
 				Intent intent = new Intent(NCZ_CZ_ToDayPlant.this, ShowPlant_.class);
 				intent.putExtra("bean", planttab); // 因为list中添加了头部,因此要去掉一个
 				NCZ_CZ_ToDayPlant.this.startActivity(intent);

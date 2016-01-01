@@ -66,6 +66,40 @@
                     android:layout_height="0.5px"
                     android:layout_marginTop="5dip"
                     android:background="@color/line_color"/>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/width_colum"
+                        android:layout_height="match_parent"
+                        android:gravity="left|center_vertical"
+                        android:text="开始时间"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/size_14"/>
+
+                    <TextView
+                        android:id="@+id/tv_timelimit"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_colum"
+                        android:layout_span="3"
+                        android:background="@null"
+                        android:gravity="right|center_vertical"
+                        android:hint="请开始时间"
+                        android:paddingLeft="40dip"
+                        android:paddingRight="10dip"
+                        android:textColor="@color/bg_yellow"
+                        android:textSize="@dimen/size_14"/>
+                </TableRow>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5px"
+                    android:layout_marginTop="5dip"
+                    android:background="@color/line_color"/>
                 <!-- 树高(m) -->
 
                 <TableRow
@@ -102,38 +136,6 @@
                     android:layout_marginTop="5dip"
                     android:background="@color/line_color"/>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="@dimen/width_colum"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:text="作业期限"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:id="@+id/tv_timelimit"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_colum"
-                        android:layout_span="3"
-                        android:background="@null"
-                        android:gravity="right|center_vertical"
-                        android:hint="请选择期限"
-                        android:paddingLeft="40dip"
-                        android:paddingRight="10dip"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:layout_marginTop="5dip"
-                    android:background="@color/line_color"/>
 
                 <TableRow
                     android:layout_width="match_parent"

@@ -43,6 +43,7 @@ public class PG_PlantGcdListAdapter extends BaseAdapter
 		public TextView tv_plantname;
 		public TextView tv_time;
 		public TextView tv_type;
+		public FrameLayout fl_new_item;
 		public FrameLayout fl_new;
 		public TextView tv_new;
 		public ImageView iv_record;
@@ -93,6 +94,7 @@ public class PG_PlantGcdListAdapter extends BaseAdapter
 			convertView = listContainer.inflate(R.layout.pg_plantgcdlistadapter, null);
 			listItemView = new ListItemView();
 			// 获取控件对象
+			listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
 			listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
 			listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
 			listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
@@ -113,6 +115,9 @@ public class PG_PlantGcdListAdapter extends BaseAdapter
 				@Override
 				public void onClick(View v)
 				{
+					PlantGcd plantGcd = listItems.get(v.getId());
+					commembertab commembertab = AppContext.getUserInfo(context);
+					AppContext.updateStatus(context, "1", plantGcd.getId(), "3", commembertab.getId());
 					Intent intent = new Intent(context, RecordList_.class);
 					intent.putExtra("type", "3");
 					intent.putExtra("workid", listItems.get(v.getId()).getId());
@@ -143,6 +148,20 @@ public class PG_PlantGcdListAdapter extends BaseAdapter
 			BitmapHelper.setImageView(context, listItemView.img, AppConfig.baseurl + PlantGcd.getImgUrl().get(0));
 		}
 		// 设置文字和图片
+		if (Integer.valueOf(PlantGcd.getGrowthCount()) > 0)
+		{
+			listItemView.fl_new_item.setVisibility(View.VISIBLE);
+		} else
+		{
+			listItemView.fl_new_item.setVisibility(View.GONE);
+		}
+		if (Integer.valueOf(PlantGcd.getGrowthvidioCount()) > 0)
+		{
+			listItemView.fl_new.setVisibility(View.VISIBLE);
+		} else
+		{
+			listItemView.fl_new.setVisibility(View.GONE);
+		}
 		listItemView.tv_plantname.setText(PlantGcd.getPlantgcdName());
 		listItemView.tv_time.setText("最近：" + PlantGcd.getregDate().substring(5, PlantGcd.getregDate().lastIndexOf(":")));
 		return convertView;

@@ -195,7 +195,7 @@ public class PG_GddList extends Fragment
                 {
                     if (result.getAffectedRows() != 0)
                     {
-						listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcd.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcd.class);
 //                        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
 //                        listNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("img_url"), Result.class).getRows().toJSONString(), PlantGcd.class);
                     } else
@@ -371,6 +371,8 @@ public class PG_GddList extends Fragment
                 // return;
                 PlantGcd PlantGcd = listData.get(position - 1);
                 if (PlantGcd == null) return;
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                AppContext.updateStatus(getActivity(), "0", PlantGcd.getId(), "3", commembertab.getId());
                 Intent intent = new Intent(getActivity(), GrowthTreeActivity_.class);
                 intent.putExtra("gcdid", PlantGcd.getId()); // 因为list中添加了头部,因此要去掉一个
                 getActivity().startActivity(intent);

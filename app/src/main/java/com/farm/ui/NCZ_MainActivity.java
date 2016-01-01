@@ -249,7 +249,6 @@ public class NCZ_MainActivity extends BaseActivity
 
 	private void getCmdVideoNum()
 	{
-
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("workuserid", commembertab.getId());
 		params.addQueryStringParameter("action", "commandGetVidioCountByNCZ");
@@ -273,7 +272,7 @@ public class NCZ_MainActivity extends BaseActivity
 							if (num != null && !num.equals("") && (Integer.valueOf(num) < cmd_videoNum))
 							{
 								int num_new = cmd_videoNum - Integer.valueOf(num);
-								fl_new.setVisibility(View.VISIBLE);
+//								fl_new.setVisibility(View.VISIBLE);
 								tv_new.setText(String.valueOf(num_new));
 							}
 						} else

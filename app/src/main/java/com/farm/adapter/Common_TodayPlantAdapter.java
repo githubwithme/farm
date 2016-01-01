@@ -117,7 +117,7 @@ public class Common_TodayPlantAdapter extends BaseAdapter
 				{
 					planttab plant = listItems.get(v.getId());
 					commembertab commembertab = AppContext.getUserInfo(context);
-					AppContext.updateStatus(context, "1", plant.getId(), "1", commembertab.getId());
+					AppContext.updateStatus(context, "1", plant.getId(), "3", commembertab.getId());
 					Intent intent = new Intent(context, RecordList_.class);
 					intent.putExtra("type", "3");
 					intent.putExtra("workid", listItems.get(v.getId()).getId());

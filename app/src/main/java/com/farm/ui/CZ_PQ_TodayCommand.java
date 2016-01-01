@@ -361,7 +361,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                 commandtab commandtab = listData.get(position - 1);
                 if (commandtab == null) return;
                 commembertab commembertab = AppContext.getUserInfo(CZ_PQ_TodayCommand.this);
-                AppContext.updateStatus(CZ_PQ_TodayCommand.this, "0", commandtab.getId(), "1", commembertab.getId());
+                AppContext.updateStatus(CZ_PQ_TodayCommand.this, "0", commandtab.getId(), "2", commembertab.getId());
                 Intent intent = new Intent(CZ_PQ_TodayCommand.this, CZ_PQ_CommandDetail_.class);
                 intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);

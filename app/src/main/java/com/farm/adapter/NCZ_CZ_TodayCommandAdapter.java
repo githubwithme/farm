@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.HaveReadRecord;
+import com.farm.app.AppContext;
 import com.farm.bean.commandtab;
-import com.farm.common.SqliteDb;
+import com.farm.bean.commembertab;
 import com.farm.ui.RecordList_;
 import com.farm.widget.CircleImageView;
 
@@ -38,6 +38,7 @@ public class NCZ_CZ_TodayCommandAdapter extends BaseAdapter
 		public CircleImageView circle_img;
 		public ImageView iv_record;
 		public FrameLayout fl_new;
+		public FrameLayout fl_new_item;
 		public TextView tv_new;
 	}
 
@@ -76,6 +77,7 @@ public class NCZ_CZ_TodayCommandAdapter extends BaseAdapter
 			convertView = listContainer.inflate(R.layout.ncz_cz_todaycommandadapter, null);
 			listItemView = new ListItemView();
 			// 获取控件对象
+			listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
 			listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
 			listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
 			listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
@@ -93,16 +95,8 @@ public class NCZ_CZ_TodayCommandAdapter extends BaseAdapter
 				public void onClick(View v)
 				{
 					commandtab command = listItems.get(v.getId());
-					HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(context, command.getId());
-					if (haveReadRecord != null)
-					{
-						SqliteDb.updateHaveReadRecord(context, command.getId(), command.getComvidioCount());
-						FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_new;
-						fl_new.setVisibility(View.GONE);
-					} else
-					{
-						SqliteDb.saveHaveReadRecord(context, command.getId(), command.getComvidioCount());
-					}
+					commembertab commembertab = AppContext.getUserInfo(context);
+					AppContext.updateStatus(context, "1", command.getId(), "2", commembertab.getId());
 					Intent intent = new Intent(context, RecordList_.class);
 					intent.putExtra("type", "2");
 					intent.putExtra("workid", listItems.get(v.getId()).getId());
@@ -118,20 +112,21 @@ public class NCZ_CZ_TodayCommandAdapter extends BaseAdapter
 			listItemView = (ListItemView) convertView.getTag();
 		}
 		// 设置文字和图片
-		HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(context, commandtab.getId());
-		if (haveReadRecord != null)
+		if (Integer.valueOf(commandtab.getComCount()) > 0)
 		{
-			String num = haveReadRecord.getNum();
-			if (num != null && !num.equals("") && (Integer.valueOf(num) < Integer.valueOf(commandtab.getComvidioCount())))
-			{
-				int num_new = Integer.valueOf(commandtab.getComvidioCount()) - Integer.valueOf(num);
-				listItemView.fl_new.setVisibility(View.VISIBLE);
-				listItemView.tv_new.setText(String.valueOf(num_new));
-			}
+			listItemView.fl_new_item.setVisibility(View.VISIBLE);
 		} else
 		{
-			SqliteDb.saveHaveReadRecord(context, commandtab.getId(), commandtab.getComvidioCount());
+			listItemView.fl_new_item.setVisibility(View.GONE);
 		}
+		if (Integer.valueOf(commandtab.getComvidioCount()) > 0)
+		{
+			listItemView.fl_new.setVisibility(View.VISIBLE);
+		} else
+		{
+			listItemView.fl_new.setVisibility(View.GONE);
+		}
+
 		if (commandtab.getstdJobType().equals("0") || commandtab.getstdJobType().equals("-1"))
 		{
 			listItemView.tv_cmdname.setText(commandtab.getcommNote().toString());

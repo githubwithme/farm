@@ -96,7 +96,7 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 				{
 					commandtab command = listItems.get(v.getId());
 					commembertab commembertab = AppContext.getUserInfo(context);
-					AppContext.updateStatus(context, "1", command.getId(), "1", commembertab.getId());
+					AppContext.updateStatus(context, "1", command.getId(), "2", commembertab.getId());
 					Intent intent = new Intent(context, RecordList_.class);
 					intent.putExtra("type", "2");
 					intent.putExtra("workid", listItems.get(v.getId()).getId());
@@ -119,7 +119,7 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 		{
 			listItemView.fl_new_item.setVisibility(View.GONE);
 		}
-		if (Integer.valueOf(commandtab.getVidioCount()) > 0)
+		if (Integer.valueOf(commandtab.getComvidioCount()) > 0)
 		{
 			listItemView.fl_new.setVisibility(View.VISIBLE);
 		} else
