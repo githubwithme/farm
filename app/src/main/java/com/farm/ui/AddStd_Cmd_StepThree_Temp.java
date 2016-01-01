@@ -199,7 +199,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
             bundle.putStringArrayList("SI", (ArrayList<String>) dic_area.getSecondItemID().get(index));
             bundle.putStringArrayList("SN", (ArrayList<String>) dic_area.getSecondItemName().get(index));
 //            bundle.putStringArray("TI", dic_area.getThirdItemID().get(index).get());
-//            bundle.putStringArray("TN", dic_area.getSecondItemName().get(fn[index]));
+            bundle.putStringArrayList("TN", (ArrayList<String>) dic_area.getThirdItemName().get(0).get(index));
             fragment.setArguments(bundle);
             return fragment;
         }
@@ -316,6 +316,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
+                String a=responseInfo.result;
                 List<Dictionary> lsitNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表

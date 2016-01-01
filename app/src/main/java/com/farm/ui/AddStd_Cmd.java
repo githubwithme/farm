@@ -14,6 +14,8 @@ import com.farm.R;
 import com.farm.adapter.FragmentViewPagerAdapter;
 import com.farm.bean.SelectCmdArea;
 import com.farm.bean.commandtab_single;
+import com.farm.bean.goodslisttab;
+import com.farm.bean.goodslisttab_flsl;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
 import com.farm.widget.MyDialog;
@@ -284,7 +286,9 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
                     case R.id.btn_sure:
                         myDialog.dismiss();
                         commandtab_single.getInstance().clearAll();
-                        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this,SelectCmdArea.class);
+                        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, SelectCmdArea.class);
+                        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this,goodslisttab.class);
+                        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this,goodslisttab_flsl.class);
                         finish();
                         break;
                     case R.id.btn_cancle:

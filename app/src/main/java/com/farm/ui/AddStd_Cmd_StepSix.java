@@ -16,6 +16,8 @@ import com.farm.bean.Result;
 import com.farm.bean.SelectCmdArea;
 import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab;
+import com.farm.bean.goodslisttab;
+import com.farm.bean.goodslisttab_flsl;
 import com.farm.bean.jobtab;
 import com.farm.common.SqliteDb;
 import com.lidroid.xutils.HttpUtils;
@@ -55,10 +57,12 @@ public class AddStd_Cmd_StepSix extends Fragment
     TextView tv_flyl;
     commandtab_single commandtab_single;
     com.farm.bean.commandtab commandtab;
+    String nongzi = "";
     String tempareaId = "";
     String tempflyl = "";
     String tempareaName = "";
-    List<SelectCmdArea> list_SelectCmdArea = new ArrayList<SelectCmdArea>();
+    List<goodslisttab_flsl> list_SelectCmdArea = new ArrayList<goodslisttab_flsl>();
+    List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
 
     @Click
     void btn_sure()
@@ -81,20 +85,26 @@ public class AddStd_Cmd_StepSix extends Fragment
 
     public void showData()
     {
+        nongzi = "";
         tempareaId = "";
         tempareaName = "";
         tempflyl = "";
-        list_SelectCmdArea = SqliteDb.getSelectCmdArea(getActivity(), SelectCmdArea.class);
+        list_goodslisttab = SqliteDb.getSelectCmdArea(getActivity(), goodslisttab.class);
+        list_SelectCmdArea = SqliteDb.getSelectCmdArea(getActivity(), goodslisttab_flsl.class);
+        for (int i = 0; i < list_goodslisttab.size(); i++)
+        {
+            nongzi = nongzi + list_goodslisttab.get(i).getgoodsName() + ",";
+        }
         for (int i = 0; i < list_SelectCmdArea.size(); i++)
         {
-            tempareaId = tempareaId + list_SelectCmdArea.get(i).getFirstid() + ":" + list_SelectCmdArea.get(i).getSecondid() + ":" + list_SelectCmdArea.get(i).getGoodsnumber() + ",";
-            tempareaName = tempareaName + list_SelectCmdArea.get(i).getFirsttype() + ":" + list_SelectCmdArea.get(i).getSecondtype() + ",";
-            tempflyl = tempflyl + list_SelectCmdArea.get(i).getFirsttype() + ":" + list_SelectCmdArea.get(i).getSecondtype() + ":" + list_SelectCmdArea.get(i).getGoodsnumber() + list_SelectCmdArea.get(i).getGoodsdw() + "\n";
+            tempareaId = tempareaId + list_SelectCmdArea.get(i).getParkId() + ":" + list_SelectCmdArea.get(i).getAreaId() + ":" + list_SelectCmdArea.get(i).getYL() + ";";
+            tempareaName = tempareaName + list_SelectCmdArea.get(i).getParkName() + ":" + list_SelectCmdArea.get(i).getAreaName() + ",";
+            tempflyl = tempflyl + list_SelectCmdArea.get(i).getParkName() + ":" + list_SelectCmdArea.get(i).getAreaName() + ":" + list_SelectCmdArea.get(i).getGoodsSum() + list_SelectCmdArea.get(i).getgoodsSpec() + "\n";
         }
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
         tv_importance.setText(commandtab_single.getImportancetype());
         tv_flyl.setText(tempflyl);
-        tv_nz.setText(commandtab_single.getnongziName());
+        tv_nz.setText(nongzi);
         tv_selectcmd.setText(commandtab_single.getstdJobTypeName() + "-" + commandtab_single.getstdJobName());
         tv_workday.setText(commandtab_single.getcommDays());
         tv_note.setText(commandtab_single.getcommNote());
@@ -118,7 +128,7 @@ public class AddStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("action", "commandTabAdd");
         params.addQueryStringParameter("parkId", commandtab_single.getparkId());
         params.addQueryStringParameter("parkName", commandtab_single.getparkName());
-        params.addQueryStringParameter("nongziName", commandtab_single.getnongziName());
+        params.addQueryStringParameter("nongziName", nongzi.substring(0, nongzi.length() - 1));
         params.addQueryStringParameter("amount", "");
         params.addQueryStringParameter("commNote", commandtab_single.getcommNote());
         params.addQueryStringParameter("commDays", commandtab_single.getcommDays());

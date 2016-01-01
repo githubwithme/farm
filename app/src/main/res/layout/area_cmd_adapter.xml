@@ -27,10 +27,14 @@
 
     <TextView
         android:id="@+id/tv_flsl"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dip"
-        android:gravity="center"
+        android:layout_gravity="right"
+        android:layout_marginRight="40dip"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/background_view_rounded_single"
+        android:gravity="left"
+        android:padding="10dip"
         android:text=""
         android:textColor="@color/bg_text"
         android:textSize="14sp"/>
@@ -39,9 +43,9 @@
         android:id="@+id/tv_tip_full"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dip"
         android:gravity="right"
         android:text=""
+
         android:textColor="@color/bg_text"
         android:textSize="14sp"/>
 

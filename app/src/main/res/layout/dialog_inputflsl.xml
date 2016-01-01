@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:gravity="center"
+        android:text="请填写肥料数量"
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_14"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
+
+    <ListView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="300dip"/>
+
+
+    <Button
+        android:id="@+id/btn_sure"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:layout_gravity="bottom"
+        android:background="@drawable/background_view_rounded_single"
+        android:text="下一步"/>
+</LinearLayout>
