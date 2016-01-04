@@ -55,7 +55,7 @@ public class GoodsSelected_Adapter extends BaseAdapter
             listItemView.tv_gg = (TextView) convertView.findViewById(R.id.tv_gg);
 
             listItemView.tv_fl.setText(list.get(arg0).getgoodsName());
-            listItemView.tv_number.setText(list.get(arg0).getGoodsSum());
+            listItemView.tv_number.setText(list.get(arg0).getGoodsSum()+"  "+list.get(arg0).getgoodsunit());
             listItemView.tv_gg.setText(list.get(arg0).getgoodsSpec());
 
             lmap.put(arg0, convertView);

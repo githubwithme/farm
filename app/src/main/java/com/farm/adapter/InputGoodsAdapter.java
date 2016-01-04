@@ -69,7 +69,13 @@ public class InputGoodsAdapter extends BaseAdapter
             bundle.putString("an", areaName);
             listItemView.tv_fl.setTag(bundle);
             listItemView.tv_fl.setText(list.get(arg0).getgoodsName());
-            listItemView.tv_dw.setText(list.get(arg0).getgoodsSpec());
+//            listItemView.tv_dw.setText(list.get(arg0).getgoodsSpec());
+
+            String[] goodsspc = list.get(arg0).getgoodsSpec().split("/");
+            String number = goodsspc[0];
+            String small_dw = goodsspc[1];
+            String large_dw = goodsspc[2];
+            listItemView.tv_dw.setText(small_dw+"/株");
 
             lmap.put(arg0, convertView);
             convertView.setTag(listItemView);
@@ -94,12 +100,20 @@ public class InputGoodsAdapter extends BaseAdapter
         for (int i = 0; i < list.size(); i++)
         {
             ListItemView listItemView = (ListItemView) lmap.get(i).getTag();
-            Bundle bundle = (Bundle) listItemView.tv_fl.getTag();
-            list.get(i).setYL(listItemView.et_number.getText().toString());
-            list.get(i).setParkId(bundle.get("pi").toString());
-            list.get(i).setParkName(bundle.get("pn").toString());
-            list.get(i).setAreaId(bundle.get("ai").toString());
-            list.get(i).setAreaName(bundle.get("an").toString());
+            String aa=listItemView.et_number.getText().toString();
+            if (listItemView.et_number.getText().toString().equals(""))
+            {
+                return null;
+            } else
+            {
+                Bundle bundle = (Bundle) listItemView.tv_fl.getTag();
+                list.get(i).setYL(listItemView.et_number.getText().toString());
+                list.get(i).setParkId(bundle.get("pi").toString());
+                list.get(i).setParkName(bundle.get("pn").toString());
+                list.get(i).setAreaId(bundle.get("ai").toString());
+                list.get(i).setAreaName(bundle.get("an").toString());
+            }
+
         }
         return list;
     }

@@ -57,6 +57,7 @@ public class AddStd_Cmd_StepSix extends Fragment
     TextView tv_flyl;
     commandtab_single commandtab_single;
     com.farm.bean.commandtab commandtab;
+    String nongzi_temp = "";
     String nongzi = "";
     String nongziId = "";
     String tempareaId = "";
@@ -97,17 +98,18 @@ public class AddStd_Cmd_StepSix extends Fragment
         {
             nongzi = nongzi + list_goodslisttab.get(i).getgoodsName() + ",";
             nongziId = nongziId + list_goodslisttab.get(i).getId() + ",";
+            nongzi_temp = nongzi_temp + list_goodslisttab.get(i).getgoodsName() + "\n";
         }
         for (int i = 0; i < list_SelectCmdArea.size(); i++)
         {
             tempareaId = tempareaId + list_SelectCmdArea.get(i).getParkId() + ":" + list_SelectCmdArea.get(i).getAreaId() + ":" + list_SelectCmdArea.get(i).getYL() + ",";
             tempareaName = tempareaName + list_SelectCmdArea.get(i).getParkName() + ":" + list_SelectCmdArea.get(i).getAreaName() + ",";
-            tempflyl = tempflyl + list_SelectCmdArea.get(i).getParkName() + ":" + list_SelectCmdArea.get(i).getAreaName() + ":" + list_SelectCmdArea.get(i).getgoodsNote() + list_SelectCmdArea.get(i).getgoodsSpec() + "\n";
+            tempflyl = tempflyl + list_SelectCmdArea.get(i).getParkName() + "：" + list_SelectCmdArea.get(i).getAreaName() + "\n"+ list_SelectCmdArea.get(i).getgoodsNote() + "\n";
         }
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
         tv_importance.setText(commandtab_single.getImportancetype());
         tv_flyl.setText(tempflyl);
-        tv_nz.setText(nongzi.substring(0,nongzi.length()-1));
+        tv_nz.setText(nongzi_temp.substring(0,nongzi.length()-1));
         tv_selectcmd.setText(commandtab_single.getstdJobTypeName() + "-" + commandtab_single.getstdJobName());
         tv_workday.setText(commandtab_single.getcommDays());
         tv_note.setText(commandtab_single.getcommNote());

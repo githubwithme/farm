@@ -93,11 +93,20 @@
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dip"
+            android:orientation="horizontal">
+
+
             <TextView
                 android:id="@+id/tv_yl_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dip"
                 android:gravity="center"
                 android:text="用量："
                 android:textColor="@color/bg_text"
@@ -112,11 +121,21 @@
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dip"
+            android:orientation="horizontal">
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="期限："
+                android:text="开始："
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
 
@@ -140,7 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="说明:"
+                android:text="说明："
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
 

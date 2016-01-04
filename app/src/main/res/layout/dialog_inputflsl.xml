@@ -22,7 +22,9 @@
         android:id="@+id/lv"
         android:layout_width="match_parent"
         android:layout_gravity="center"
-        android:layout_height="300dip"/>
+        android:dividerHeight="0dip"
+        android:divider="@color/transparent"
+        android:layout_height="200dip"/>
 
 
     <Button
@@ -31,5 +33,5 @@
         android:layout_height="45dip"
         android:layout_gravity="bottom"
         android:background="@drawable/background_view_rounded_single"
-        android:text="下一步"/>
+        android:text="确定"/>
 </LinearLayout>

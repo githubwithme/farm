@@ -17,7 +17,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dip"
             android:checked="false"
-            android:paddingLeft="60dip"
+            android:paddingLeft="30dip"
             android:text=""
             android:textColor="@color/gray"
             android:textSize="@dimen/size_14"/>

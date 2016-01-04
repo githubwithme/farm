@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.farm.R;
 import com.farm.bean.SelectCmdArea;
@@ -88,7 +89,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
             listItemView.tv_flsl = (TextView) convertView.findViewById(R.id.tv_flsl);
             listItemView.cb_area = (CheckBox) convertView.findViewById(R.id.cb_area);
 
-            listItemView.cb_area.setText(secondItemName.get(arg0));
+            listItemView.cb_area.setText(secondItemName.get(arg0) + "    " + "共" + thirdItemName.get(arg0) + "株");
             Bundle bundle = new Bundle();
             bundle.putString("index", String.valueOf(arg0));
             bundle.putString("pi", firstid);
@@ -171,6 +172,11 @@ public class Area_Cmd_Adapter extends BaseAdapter
 //                List<goodslisttab_flsl> list_goodslisttab_flsl = new ArrayList<goodslisttab_flsl>();
                 goodslisttab_flsl goodslisttab_flsl = new goodslisttab_flsl();
                 List<goodslisttab> list_goodslisttab = inputGoodsAdapter.getGoosList();
+                if (list_goodslisttab == null)
+                {
+                    Toast.makeText(context, "请填写肥料数量", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 for (int i = 0; i < list_goodslisttab.size(); i++)
                 {
                     goodslisttab goodslisttab = list_goodslisttab.get(i);
@@ -180,13 +186,19 @@ public class Area_Cmd_Adapter extends BaseAdapter
                     goodslisttab_flsl.setAreaId(goodslisttab.getAreaId());
                     goodslisttab_flsl.setAreaName(goodslisttab.getAreaName());
                     goodslisttab_flsl.setGoodsSum(goodslisttab.getGoodsSum());
-                    goodsYL = goodsYL + goodslisttab.getYL() + ";";
-                    goodsYL.substring(0,goodsYL.length()-1);
-                    goodsnote = goodsnote + goodslisttab.getgoodsName() + ":" + goodslisttab.getYL() + ",";
-                    goodslisttab_flsl.setYL(goodsYL);
-                    goodslisttab_flsl.setgoodsNote(goodsnote);
                     goodslisttab_flsl.setgoodsunit(goodslisttab.getgoodsunit());
                     goodslisttab_flsl.setgoodsSpec(goodslisttab.getgoodsSpec());
+
+                    goodsYL = goodsYL + goodslisttab.getYL() + ";";
+                    goodsYL.substring(0, goodsYL.length() - 1);
+                    goodslisttab_flsl.setYL(goodsYL);
+
+                    String[] goodsspc = goodslisttab.getgoodsSpec().split("/");
+                    String number = goodsspc[0];
+                    String small_dw = goodsspc[1];
+                    String large_dw = goodsspc[2];
+                    goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL()+"   "+ small_dw+"/株"+"\n";
+                    goodslisttab_flsl.setgoodsNote(goodsnote);
                 }
                 SqliteDb.save(context, goodslisttab_flsl);
 //                acountnumber = 0;
@@ -221,12 +233,10 @@ public class Area_Cmd_Adapter extends BaseAdapter
                     String number = goodsspc[0];
                     String small_dw = goodsspc[1];
                     String large_dw = goodsspc[2];
-                    String a = list_goodslisttab.get(i).getYL();
-                    String b = thirdItemName.get(currentPostion);
                     acountnumber = acountnumber + Integer.valueOf(list_goodslisttab.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
                     int neednumber = acountnumber / Integer.valueOf(number);
                     currentlistItemView.tv_flsl.setVisibility(View.VISIBLE);
-                    result = result + goodslisttab.getgoodsName() + ":" + goodslisttab.getYL() + small_dw + "/株" + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n\n";
+                    result = result + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + small_dw + "/株" + "    " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n\n";
                 }
                 currentlistItemView.tv_flsl.setText(result);
                 customDialog_flsl.dismiss();

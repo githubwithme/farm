@@ -316,7 +316,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
-                String a=responseInfo.result;
+                String a = responseInfo.result;
                 List<Dictionary> lsitNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
@@ -329,14 +329,33 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                         for (int i = 0; i < size; i++)
                         {
                             String parkId = result.getRows().getJSONObject(i).getString("parkId");
+                            String parkName = result.getRows().getJSONObject(i).getString("parkName");
                             JSONArray jsonarray = result.getRows().getJSONObject(i).getJSONArray("goodsSum");
                             HashMap<String, String> map = new HashMap<String, String>();
-                            for (int j = 0; j < jsonarray.size(); j++)
+                            List<goodslisttab> list = new ArrayList<goodslisttab>();
+                            for (int k = 0; k < list_goods.size(); k++)
                             {
-                                list_goods.get(j).setGoodsSum(jsonarray.get(j).toString());
+                                goodslisttab goodslisttab = new goodslisttab();
+                                goodslisttab.setParkId(parkId);
+                                goodslisttab.setParkName(parkName);
+                                goodslisttab.setdaysBeforeWarning(list_goods.get(k).getdaysBeforeWarning());
+                                goodslisttab.setgoodsName(list_goods.get(k).getgoodsName());
+                                goodslisttab.setgoodsNote(list_goods.get(k).getgoodsNote());
+                                goodslisttab.setgoodsProducer(list_goods.get(k).getgoodsProducer());
+                                goodslisttab.setgoodsSpec(list_goods.get(k).getgoodsSpec());
+                                goodslisttab.setGoodsSum(jsonarray.get(k).toString());
+                                goodslisttab.setgoodsTypeID(list_goods.get(k).getgoodsTypeID());
+                                goodslisttab.setgoodsunit(list_goods.get(k).getgoodsunit());
+                                goodslisttab.setId(list_goods.get(k).getId());
+                                goodslisttab.setImgurl(list_goods.get(k).getImgurl());
+                                goodslisttab.setisDelete(list_goods.get(k).getisDelete());
+                                goodslisttab.setlevelOfWarning(list_goods.get(k).getlevelOfWarning());
+                                goodslisttab.setregDate(list_goods.get(k).getregDate());
+                                goodslisttab.setuID(list_goods.get(k).getuID());
+                                goodslisttab.setuserDefTypeID(list_goods.get(k).getuserDefTypeID());
+                                list.add(goodslisttab);
                             }
-                            String parkName = result.getRows().getJSONObject(i).getString("parkName");
-                            map_goods.put(parkId, list_goods);
+                            map_goods.put(parkId, list);
                         }
                         initPager();
                     } else
