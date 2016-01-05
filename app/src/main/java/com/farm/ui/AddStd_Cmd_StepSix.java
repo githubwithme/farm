@@ -89,6 +89,7 @@ public class AddStd_Cmd_StepSix extends Fragment
     {
         nongzi = "";
         nongziId = "";
+        nongzi_temp = "";
         tempareaId = "";
         tempareaName = "";
         tempflyl = "";
@@ -109,7 +110,7 @@ public class AddStd_Cmd_StepSix extends Fragment
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
         tv_importance.setText(commandtab_single.getImportancetype());
         tv_flyl.setText(tempflyl);
-        tv_nz.setText(nongzi_temp.substring(0,nongzi.length()-1));
+        tv_nz.setText(nongzi_temp.substring(0,nongzi_temp.length()-1));
         tv_selectcmd.setText(commandtab_single.getstdJobTypeName() + "-" + commandtab_single.getstdJobName());
         tv_workday.setText(commandtab_single.getcommDays());
         tv_note.setText(commandtab_single.getcommNote());
@@ -173,6 +174,8 @@ public class AddStd_Cmd_StepSix extends Fragment
                         getActivity().finish();
                         commandtab_single.getInstance().clearAll();
                         SqliteDb.deleteAllSelectCmdArea(getActivity(), SelectCmdArea.class);
+                        SqliteDb.deleteAllSelectCmdArea(getActivity(), goodslisttab.class);
+                        SqliteDb.deleteAllSelectCmdArea(getActivity(),goodslisttab_flsl.class);
                     }
 
                 } else

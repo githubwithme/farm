@@ -16,6 +16,8 @@ import com.farm.bean.Result;
 import com.farm.bean.SelectCmdArea;
 import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab;
+import com.farm.bean.goodslisttab;
+import com.farm.bean.goodslisttab_flsl;
 import com.farm.bean.jobtab;
 import com.farm.common.SqliteDb;
 import com.lidroid.xutils.HttpUtils;
@@ -39,7 +41,8 @@ import java.util.List;
 @EFragment
 public class AddNotStd_Cmd_StepSix extends Fragment
 {
-    List<SelectCmdArea> list_SelectCmdArea=new ArrayList<SelectCmdArea>();
+    List<goodslisttab_flsl> list_SelectCmdArea = new ArrayList<goodslisttab_flsl>();
+    List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
     @ViewById
     TextView tv_importance;
     @ViewById
@@ -52,6 +55,9 @@ public class AddNotStd_Cmd_StepSix extends Fragment
     TextView tv_note;
     @ViewById
     TextView tv_flyl;
+    String nongzi_temp = "";
+    String nongzi = "";
+    String nongziId = "";
     String tempareaId = "";
     String tempflyl = "";
     String tempareaName = "";
@@ -79,20 +85,31 @@ public class AddNotStd_Cmd_StepSix extends Fragment
 
     public void showData()
     {
+        nongzi = "";
+        nongziId = "";
+        nongzi_temp = "";
+
         tempareaId = "";
         tempareaName = "";
         tempflyl = "";
-        list_SelectCmdArea = SqliteDb.getSelectCmdArea(getActivity(), SelectCmdArea.class);
+        list_goodslisttab = SqliteDb.getSelectCmdArea(getActivity(), goodslisttab.class);
+        list_SelectCmdArea = SqliteDb.getSelectCmdArea(getActivity(), goodslisttab_flsl.class);
+        for (int i = 0; i < list_goodslisttab.size(); i++)
+        {
+            nongzi = nongzi + list_goodslisttab.get(i).getgoodsName() + ",";
+            nongziId = nongziId + list_goodslisttab.get(i).getId() + ",";
+            nongzi_temp = nongzi_temp + list_goodslisttab.get(i).getgoodsName() + "\n";
+        }
         for (int i = 0; i < list_SelectCmdArea.size(); i++)
         {
-            tempareaId = tempareaId + list_SelectCmdArea.get(i).getFirstid() + ":" + list_SelectCmdArea.get(i).getSecondid() + ":" + list_SelectCmdArea.get(i).getGoodsnumber() + ",";
-            tempareaName = tempareaName + list_SelectCmdArea.get(i).getFirsttype() + ":" + list_SelectCmdArea.get(i).getSecondtype() + ",";
-            tempflyl = tempflyl + list_SelectCmdArea.get(i).getFirsttype() + ":" + list_SelectCmdArea.get(i).getSecondtype() + ":" + list_SelectCmdArea.get(i).getGoodsnumber() +list_SelectCmdArea.get(i).getGoodsdw() + "\n";
+            tempareaId = tempareaId + list_SelectCmdArea.get(i).getParkId() + ":" + list_SelectCmdArea.get(i).getAreaId() + ":" + list_SelectCmdArea.get(i).getYL() + ",";
+            tempareaName = tempareaName + list_SelectCmdArea.get(i).getParkName() + ":" + list_SelectCmdArea.get(i).getAreaName() + ",";
+            tempflyl = tempflyl + list_SelectCmdArea.get(i).getParkName() + "：" + list_SelectCmdArea.get(i).getAreaName() + "\n"+ list_SelectCmdArea.get(i).getgoodsNote() + "\n";
         }
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
         tv_importance.setText(commandtab_single.getImportancetype());
-        tv_nz.setText(commandtab_single.getnongziName());
         tv_flyl.setText(tempflyl);
+        tv_nz.setText(nongzi_temp.substring(0,nongzi_temp.length()-1));
         tv_workday.setText(commandtab_single.getcommDays());
         tv_note.setText(commandtab_single.getcommNote());
         tv_timelimit.setText(commandtab_single.getcommComDate());
@@ -116,8 +133,8 @@ public class AddNotStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("areaName", tempareaName.substring(0, tempareaName.length() - 1));
         params.addQueryStringParameter("parkId", "");
         params.addQueryStringParameter("parkName", "");
-        params.addQueryStringParameter("nongziName", commandtab_single.getnongziName());
-        params.addQueryStringParameter("amount", "");
+        params.addQueryStringParameter("nongziName", nongzi.substring(0, nongzi.length() - 1));
+        params.addQueryStringParameter("amount", nongziId.substring(0,nongziId.length()-1));
         params.addQueryStringParameter("commNote", commandtab_single.getcommNote());
         params.addQueryStringParameter("commDays", commandtab_single.getcommDays());
         params.addQueryStringParameter("commComDate", commandtab_single.getcommComDate());
@@ -156,6 +173,8 @@ public class AddNotStd_Cmd_StepSix extends Fragment
                         getActivity().finish();
                         commandtab_single.getInstance().clearAll();
                         SqliteDb.deleteAllSelectCmdArea(getActivity(), SelectCmdArea.class);
+                        SqliteDb.deleteAllSelectCmdArea(getActivity(), goodslisttab.class);
+                        SqliteDb.deleteAllSelectCmdArea(getActivity(),goodslisttab_flsl.class);
                     }
 
                 } else

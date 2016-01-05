@@ -15,6 +15,8 @@ import com.farm.adapter.ViewPagerAdapter_AddNotStd_Cmd;
 import com.farm.bean.SelectCmdArea;
 import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab_singleton;
+import com.farm.bean.goodslisttab;
+import com.farm.bean.goodslisttab_flsl;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
 import com.farm.widget.MyDialog;
@@ -250,6 +252,9 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
                     case R.id.btn_sure:
                         myDialog.dismiss();
                         commandtab_single.getInstance().clearAll();
+                        SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd.this, SelectCmdArea.class);
+                        SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd.this, goodslisttab.class);
+                        SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd.this, goodslisttab_flsl.class);
                         finish();
                         break;
                     case R.id.btn_cancle:

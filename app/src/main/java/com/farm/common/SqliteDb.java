@@ -84,7 +84,7 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.delete(c, WhereBuilder.b("Id", "=", Id));
+            db.delete(c, WhereBuilder.b("id", "=", Id));
         } catch (DbException e)
         {
             e.printStackTrace();

@@ -78,15 +78,12 @@ public class AddStd_Cmd_goodslistdapter extends BaseAdapter
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     goodslisttab goods = (goodslisttab) buttonView.getTag();
-//                    goodslisttab.setregDate("");
-//                    goodslisttab.setImgurl("");
-//                    goodslisttab.setgoodsunit("");
                     if (isChecked)
                     {
                         SqliteDb.save(context, goods);
-                    }
+                    } else
                     {
-//                        SqliteDb.deleteGoods(context, goodslisttab.class, goods.getId());
+                        SqliteDb.deleteGoods(context, goodslisttab.class, goods.getId());
                     }
                 }
             });
