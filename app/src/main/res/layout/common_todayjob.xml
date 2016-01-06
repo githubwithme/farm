@@ -47,6 +47,12 @@
             android:textSize="@dimen/size_14"/>
     </RelativeLayout>
 
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -13,7 +13,18 @@ public class Dictionary implements Serializable
     List<List<String>> secondItemID;
     List<List<List<String>>> thirdItemName;
     List<List<List<String>>> thirdItemID;
+    List<List<List<String>>> thirdItemValue ;
 
+
+    public List<List<List<String>>> getThirdItemValue()
+    {
+        return thirdItemValue;
+    }
+
+    public void setThirdItemValue(List<List<List<String>>> thirdItemValue)
+    {
+        this.thirdItemValue = thirdItemValue;
+    }
 
     public List<List<List<String>>> getThirdItemName()
     {

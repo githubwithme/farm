@@ -1,5 +1,6 @@
 package com.farm.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ import java.util.List;
 @EFragment
 public class AddNotStd_Cmd_StepSix extends Fragment
 {
+    AddNotStd_Cmd fragmentCallBack;
     List<goodslisttab_flsl> list_SelectCmdArea = new ArrayList<goodslisttab_flsl>();
     List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
     @ViewById
@@ -144,6 +146,7 @@ public class AddNotStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("stdJobName", "");
         params.addQueryStringParameter("importance", commandtab_single.getimportance());
         params.addQueryStringParameter("execLevel", "1");
+        params.addQueryStringParameter("", fragmentCallBack.level);
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -190,6 +193,12 @@ public class AddNotStd_Cmd_StepSix extends Fragment
                 AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
+    }
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+        fragmentCallBack = (AddNotStd_Cmd) activity;
     }
     @Override
     public void onDestroyView()

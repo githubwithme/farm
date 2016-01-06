@@ -216,7 +216,6 @@ public class NCZ_MainActivity extends BaseActivity
 		getActionBar().hide();
 		AppManager.getAppManager().addActivity(NCZ_MainActivity.this);
 		commembertab = AppContext.getUserInfo(NCZ_MainActivity.this);
-		AppManager.getAppManager().addActivity(this);
 		mainFragment = new NCZ_MainFragment_();
 		ncz_CommandList = new NCZ_CommandList_();
 		Bundle bundle = new Bundle();

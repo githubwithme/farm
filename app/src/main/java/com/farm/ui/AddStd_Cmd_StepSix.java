@@ -1,5 +1,6 @@
 package com.farm.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ import java.util.List;
 @EFragment
 public class AddStd_Cmd_StepSix extends Fragment
 {
+    AddStd_Cmd fragmentCallBack;
     @ViewById
     TextView tv_importance;
     @ViewById
@@ -135,7 +137,7 @@ public class AddStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("parkId", commandtab_single.getparkId());
         params.addQueryStringParameter("parkName", commandtab_single.getparkName());
         params.addQueryStringParameter("nongziName", nongzi.substring(0, nongzi.length() - 1));
-        params.addQueryStringParameter("amount", nongziId.substring(0,nongziId.length()-1));
+        params.addQueryStringParameter("amount", nongziId.substring(0, nongziId.length() - 1));
         params.addQueryStringParameter("commNote", commandtab_single.getcommNote());
         params.addQueryStringParameter("commDays", commandtab_single.getcommDays());
         params.addQueryStringParameter("commComDate", commandtab_single.getcommComDate());
@@ -145,6 +147,7 @@ public class AddStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("stdJobName", commandtab_single.getstdJobName());
         params.addQueryStringParameter("importance", commandtab_single.getimportance());
         params.addQueryStringParameter("execLevel", "1");
+        params.addQueryStringParameter("", fragmentCallBack.level);
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -192,7 +195,12 @@ public class AddStd_Cmd_StepSix extends Fragment
             }
         });
     }
-
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+        fragmentCallBack = (AddStd_Cmd) activity;
+    }
     @Override
     public void onDestroyView()
     {

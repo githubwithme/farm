@@ -33,10 +33,6 @@ public class CZ_PQ_CommandDetail extends Activity
 	@ViewById
 	TextView tv_nz_tip;
 	@ViewById
-	TextView tv_yl_tip;
-	@ViewById
-	TextView tv_yl;
-	@ViewById
 	TextView tv_qx;
 	@ViewById
 	TextView tv_note;
@@ -50,8 +46,6 @@ public class CZ_PQ_CommandDetail extends Activity
 	ImageButton btn_back;
 	@ViewById
 	LinearLayout ll_nz_tip;
-	@ViewById
-	LinearLayout ll_yl_tip;
 	@ViewById
 	RelativeLayout rl_jobtype_tip;
 	@ViewById
@@ -109,13 +103,18 @@ public class CZ_PQ_CommandDetail extends Activity
 		if (commandtab.getstdJobType().equals("0") || commandtab.getstdJobType().equals("-1"))
 		{
 			ll_nz_tip.setVisibility(View.GONE);
-			ll_yl_tip.setVisibility(View.GONE);
 			rl_jobtype_tip.setVisibility(View.GONE);
 			rl_jobname_tip.setVisibility(View.GONE);
 		} else
 		{
-			tv_nz.setText(commandtab.getnongziName());
-			tv_yl.setText(commandtab.getamount());
+			String[] nongzi = commandtab.getnongziName().split(",");
+			String[] yl = commandtab.getamount().split(",");
+			String flyl = "";
+			for (int i = 0; i < nongzi.length; i++)
+			{
+				flyl = flyl + nongzi[i] + "：" + yl[i] + ";";
+			}
+			tv_nz.setText(flyl);
 			tv_jobtype.setText(commandtab.getstdJobTypeName());
 			tv_jobname.setText(commandtab.getstdJobName());
 		}

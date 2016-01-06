@@ -518,16 +518,19 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
         {
             case R.id.btn_standardprocommand:
                 intent = new Intent(getActivity(), AddStd_Cmd_.class);
+                intent.putExtra("level", "1");
                 startActivity(intent);
                 pw_command.dismiss();
                 break;
             case R.id.btn_nonstandardprocommand:
                 intent = new Intent(getActivity(), AddNotStd_Cmd_.class);
+                intent.putExtra("level", "1");
                 startActivity(intent);
                 pw_command.dismiss();
                 break;
             case R.id.btn_nonprocommand:
                 intent = new Intent(getActivity(), AddNotProductCommand_.class);
+                intent.putExtra("level", "1");
                 startActivity(intent);
                 pw_command.dismiss();
                 break;

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 @EActivity(R.layout.activity_add_std__cmd)
 public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
 {
+    String level = "";
     MyDialog myDialog;
     int currentItem = 0;
     FragmentViewPagerAdapter adapter;
@@ -137,6 +138,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+        level = getIntent().getStringExtra("level");
         commandtab_single.getInstance().clearAll();
         SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, SelectCmdArea.class);
     }
@@ -287,8 +289,8 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
                         myDialog.dismiss();
                         commandtab_single.getInstance().clearAll();
                         SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, SelectCmdArea.class);
-                        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this,goodslisttab.class);
-                        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this,goodslisttab_flsl.class);
+                        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, goodslisttab.class);
+                        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, goodslisttab_flsl.class);
                         finish();
                         break;
                     case R.id.btn_cancle:

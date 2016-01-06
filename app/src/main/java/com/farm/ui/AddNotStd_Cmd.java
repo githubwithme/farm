@@ -31,6 +31,7 @@ import java.util.ArrayList;
 @EActivity(R.layout.activity_add_notstd__cmd)
 public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
 {
+    String level = "";
     MyDialog myDialog;
     int currentItem = 0;
     ViewPagerAdapter_AddNotStd_Cmd adapter;
@@ -125,6 +126,7 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+        level = getIntent().getStringExtra("level");
         commandtab_single.getInstance().clearAll();
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd.this, SelectCmdArea.class);
     }

@@ -5,130 +5,293 @@
               android:background="@color/white"
               android:orientation="vertical">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/imgbtn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/titlebar_height"
-            android:layout_marginLeft="5dip"
-            android:background="@null"
-            android:contentDescription=""
-            android:src="@drawable/back"/>
-
-        <ProgressBar
-            android:id="@+id/main_head_progress"
-            style="@style/loading_small"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5.0dip"
-            android:layout_toRightOf="@id/imgbtn_back"
-            android:visibility="gone"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/titlebar_height"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="评分"
-            android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize"/>
-
-        <Button
-            android:id="@+id/btn_sure"
-            android:layout_width="60dip"
-            android:layout_height="35dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:background="@null"
-            android:gravity="center"
-            android:text="确定"
-            android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize"/>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line_color"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dip"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="60dip"
-            android:layout_height="60dip"
-            android:gravity="center"
-            android:text="评分："
-            android:textSize="@dimen/size_12"/>
-
-        <RadioGroup
-            android:id="@+id/rg_score"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dip"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/rb_y"
-                android:layout_width="0dip"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/titlebar_height"
+                android:background="@color/bg_titlebar">
+
+                <ImageButton
+                    android:id="@+id/imgbtn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/titlebar_height"
+                    android:layout_marginLeft="5dip"
+                    android:background="@null"
+                    android:contentDescription=""
+                    android:src="@drawable/back"/>
+
+                <ProgressBar
+                    android:id="@+id/main_head_progress"
+                    style="@style/loading_small"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_toRightOf="@id/imgbtn_back"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/titlebar_height"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="评分"
+                    android:textColor="@color/textcolor_titlebar"
+                    android:textSize="@dimen/titlebar_textsize"/>
+
+                <Button
+                    android:id="@+id/btn_sure"
+                    android:layout_width="60dip"
+                    android:layout_height="35dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dip"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="确定"
+                    android:textColor="@color/textcolor_titlebar"
+                    android:textSize="@dimen/titlebar_textsize"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/line_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:background="@color/light_gray"
+                    android:gravity="center"
+                    android:text="指令详情"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dip"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="指令："
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                        <TextView
+                            android:id="@+id/tv_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="植保"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dip"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="肥料及用量："
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                        <TextView
+                            android:id="@+id/tv_fl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="钾肥：20kg/株   有机肥：10kg/株"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dip"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="开始时间："
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                        <TextView
+                            android:id="@+id/tv_starttime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="10-15"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dip"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="作业天数："
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                        <TextView
+                            android:id="@+id/tv_zyts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="5天"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dip"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="说明："
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                        <TextView
+                            android:id="@+id/tv_note"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="好好施肥"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dip">
+
+                        <TextView
+                            android:id="@+id/tv_jd_tip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:text="完成率："
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                        <ProgressBar
+                            android:id="@+id/pb_jd"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="90dip"
+                            android:layout_height="4dip"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/tv_jd_tip"
+                            android:max="100"
+                            android:progress="0"/>
+
+                        <TextView
+                            android:id="@+id/tv_jd"
+                            android:layout_width="40dip"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dip"
+                            android:layout_toRightOf="@id/pb_jd"
+                            android:gravity="center"
+                            android:text="0%"
+                            android:textColor="@color/bg_text_small"
+                            android:textSize="@dimen/size_14"/>
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:background="@color/light_gray"
+                    android:gravity="center"
+                    android:text="评分标准"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+
+            </LinearLayout>
+
+            <com.farm.widget.CustomExpandableListView
+                android:id="@+id/expandableListView"
+                android:layout_width="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="优"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/size_12"/>
+                android:groupIndicator="@null"/>
 
-            <RadioButton
-                android:id="@+id/rb_hg"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="合格"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/size_12"/>
-
-            <RadioButton
-                android:id="@+id/rb_bhg"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="不合格"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/size_12"/>
-        </RadioGroup>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/bg_selectitem"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dip"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="60dip"
-            android:layout_height="60dip"
-            android:gravity="center"
-            android:text="说明："
-            android:textSize="@dimen/size_12"/>
-
-        <EditText
-            android:id="@+id/et_note"
-            android:layout_width="match_parent"
-            android:layout_height="60dip"
-            android:background="@null"
-            android:gravity="center"
-            android:hint="请输入说明"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/size_12"/>
-    </LinearLayout>
-
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
