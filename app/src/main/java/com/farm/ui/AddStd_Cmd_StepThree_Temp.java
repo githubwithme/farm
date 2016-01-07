@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
@@ -20,6 +18,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.farm.R;
+import com.farm.adapter.CustomFragmentPagerAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
@@ -64,7 +63,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
     private View[] views;
     private LayoutInflater inflater;
     private int currentItem = 0;
-    private ShopAdapter shopAdapter;
+    private CustomFragmentPagerAdapter customFragmentPagerAdapter;
 
     @ViewById
     ImageView iv_dowm_tab;
@@ -141,9 +140,32 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
      */
     private void initPager()
     {
-        shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
-        area_pager.setAdapter(shopAdapter);
+        List<Fragment> fragments = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++)
+        {
+            Fragment fragment = new Area_Cmd_Fragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("index", i);
+            bundle.putParcelableArrayList("GOODS", (ArrayList<? extends Parcelable>) map_goods.get(dic_area.getFirstItemID().get(i)));
+            bundle.putString("FN", dic_area.getFirstItemName().get(i));
+            bundle.putString("FI", dic_area.getFirstItemID().get(i));
+            bundle.putStringArrayList("SI", (ArrayList<String>) dic_area.getSecondItemID().get(i));
+            bundle.putStringArrayList("SN", (ArrayList<String>) dic_area.getSecondItemName().get(i));
+//            bundle.putStringArray("TI", dic_area.getThirdItemID().get(index).get());
+            bundle.putStringArrayList("TN", (ArrayList<String>) dic_area.getThirdItemName().get(0).get(i));
+            fragment.setArguments(bundle);
+            fragments.add(fragment);
+        }
+        customFragmentPagerAdapter = new CustomFragmentPagerAdapter(getActivity().getSupportFragmentManager(), list, fragments);
+        area_pager.setAdapter(customFragmentPagerAdapter);
         area_pager.setOnPageChangeListener(onPageChangeListener);
+//        customFragmentPagerAdapter.setFragments(fragments);
+        customFragmentPagerAdapter.notifyDataSetChanged();
+
+
+//        shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
+//        area_pager.setAdapter(shopAdapter);
+//        area_pager.setOnPageChangeListener(onPageChangeListener);
     }
 
     /**
@@ -180,36 +202,36 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
      *
      * @author Administrator
      */
-    private class ShopAdapter extends FragmentPagerAdapter
-    {
-        public ShopAdapter(FragmentManager fm)
-        {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int index)
-        {
-            Fragment fragment = new Area_Cmd_Fragment();
-            Bundle bundle = new Bundle();
-            bundle.putInt("index", index);
-            bundle.putParcelableArrayList("GOODS", (ArrayList<? extends Parcelable>) map_goods.get(dic_area.getFirstItemID().get(index)));
-            bundle.putString("FN", dic_area.getFirstItemName().get(index));
-            bundle.putString("FI", dic_area.getFirstItemID().get(index));
-            bundle.putStringArrayList("SI", (ArrayList<String>) dic_area.getSecondItemID().get(index));
-            bundle.putStringArrayList("SN", (ArrayList<String>) dic_area.getSecondItemName().get(index));
-//            bundle.putStringArray("TI", dic_area.getThirdItemID().get(index).get());
-            bundle.putStringArrayList("TN", (ArrayList<String>) dic_area.getThirdItemName().get(0).get(index));
-            fragment.setArguments(bundle);
-            return fragment;
-        }
-
-        @Override
-        public int getCount()
-        {
-            return list.size();
-        }
-    }
+//    private class ShopAdapter extends FragmentPagerAdapter
+//    {
+//        public ShopAdapter(FragmentManager fm)
+//        {
+//            super(fm);
+//        }
+//
+//        @Override
+//        public Fragment getItem(int index)
+//        {
+//            Fragment fragment = new Area_Cmd_Fragment();
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("index", index);
+//            bundle.putParcelableArrayList("GOODS", (ArrayList<? extends Parcelable>) map_goods.get(dic_area.getFirstItemID().get(index)));
+//            bundle.putString("FN", dic_area.getFirstItemName().get(index));
+//            bundle.putString("FI", dic_area.getFirstItemID().get(index));
+//            bundle.putStringArrayList("SI", (ArrayList<String>) dic_area.getSecondItemID().get(index));
+//            bundle.putStringArrayList("SN", (ArrayList<String>) dic_area.getSecondItemName().get(index));
+////            bundle.putStringArray("TI", dic_area.getThirdItemID().get(index).get());
+//            bundle.putStringArrayList("TN", (ArrayList<String>) dic_area.getThirdItemName().get(0).get(index));
+//            fragment.setArguments(bundle);
+//            return fragment;
+//        }
+//
+//        @Override
+//        public int getCount()
+//        {
+//            return list.size();
+//        }
+//    }
 
     /**
      * 改变textView的颜色

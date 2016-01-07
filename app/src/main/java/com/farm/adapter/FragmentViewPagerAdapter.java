@@ -145,7 +145,7 @@ public class FragmentViewPagerAdapter extends PagerAdapter implements OnPageChan
 
     public void updateData(int item)
     {
-        Fragment fragment = fragmentManager.findFragmentByTag(tagList.get(item));
+        Fragment fragment = fragmentManager.findFragmentByTag(tagList.get(item+1));
         if (fragment != null)
         {
             switch (item)
@@ -153,14 +153,16 @@ public class FragmentViewPagerAdapter extends PagerAdapter implements OnPageChan
                 case 0:
                     break;
                 case 1:
-                    break;
-                case 2:
                     ((AddStd_Cmd_StepThree_Temp) fragment).update();
                     break;
+                case 2:
+
+                    break;
                 case 3:
+                    ((AddStd_Cmd_StepSix) fragment).update();
                     break;
                 case 4:
-                    ((AddStd_Cmd_StepSix) fragment).update();
+
                     break;
                 default:
                     break;

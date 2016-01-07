@@ -240,21 +240,24 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     @Override
     public void callbackFun2(Bundle arg)
     {
-        vPager.setCurrentItem(currentItem + 1);
+
         switch (currentItem)
         {
             case 0:
                 break;
             case 1:
+                adapter.updateData(currentItem);
                 break;
             case 2:
-                adapter.updateData(currentItem);
+
             case 3:
+                adapter.updateData(currentItem);
                 break;
             case 4:
-                adapter.updateData(currentItem);
+
                 break;
         }
+        vPager.setCurrentItem(currentItem + 1);
     }
 
     @Override
