@@ -3,7 +3,9 @@ package com.farm.ui;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,6 +49,8 @@ public class CZ_PG_Assess extends Activity
     @ViewById
     Button btn_sure;
     @ViewById
+    EditText et_note;
+    @ViewById
     TextView tv_comment;
     @ViewById
     TextView tv_fl;
@@ -70,7 +74,7 @@ public class CZ_PG_Assess extends Activity
     @AfterViews
     void afterOncreate()
     {
-        getCommand();
+//        getCommand();
         getCommandlist();
     }
 
@@ -87,12 +91,18 @@ public class CZ_PG_Assess extends Activity
 
     private void addScore()
     {
-//       Dictionary dic= cz_pg_assess_expandAdapter.getDictionary();
-//        String
-//        for (int i = 0; i <; i++)
-//        {
-//
-//        }
+        List<View> list_view = cz_pg_assess_expandAdapter.getListView();
+        String bz = "";
+        for (int i = 0; i < list_view.size(); i++)
+        {
+            Bundle bundle = (Bundle) list_view.get(i).getTag();
+            bz = bz + bundle.get("id");
+        }
+        if (bz.equals(""))
+        {
+            Toast.makeText(CZ_PG_Assess.this, "请先评分", Toast.LENGTH_SHORT).show();
+            return;
+        }
         commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userid", commembertab.getId());
@@ -100,8 +110,8 @@ public class CZ_PG_Assess extends Activity
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "jobTabAssessByID");
         params.addQueryStringParameter("jobID", jobtab.getId());
-        params.addQueryStringParameter("assessScore", String.valueOf(getScore(scoreselected)));
-        params.addQueryStringParameter("assessNote","");
+        params.addQueryStringParameter("assessScore", bz);
+        params.addQueryStringParameter("assessNote", et_note.getText().toString());
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -195,7 +205,7 @@ public class CZ_PG_Assess extends Activity
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)
         {
-            flyl = flyl + nongzi[i] + "：" + yl[i] + ";";
+            flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + ";";
         }
         tv_comment.setText(commandtab.getstdJobTypeName() + "-" + commandtab.getstdJobName());
         tv_fl.setText(flyl);
@@ -204,6 +214,7 @@ public class CZ_PG_Assess extends Activity
         tv_starttime.setText(commandtab.getcommComDate());
         pb_jd.setProgress(0);
     }
+
     private void getCommandlist()
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_PG_Assess.this);
@@ -231,10 +242,10 @@ public class CZ_PG_Assess extends Activity
                             Dictionary dic = lsitNewData.get(0);
                             cz_pg_assess_expandAdapter = new CZ_PG_Assess_ExpandAdapter(CZ_PG_Assess.this, dic, expandableListView);
                             expandableListView.setAdapter(cz_pg_assess_expandAdapter);
-                            for (int i = 0; i < dic.getFirstItemName().size(); i++)
-                            {
-                                expandableListView.expandGroup(i);
-                            }
+//                            for (int i = 0; i < dic.getFirstItemName().size(); i++)
+//                            {
+//                                expandableListView.expandGroup(i);
+//                            }
                         }
 
                     } else
@@ -255,6 +266,7 @@ public class CZ_PG_Assess extends Activity
             }
         });
     }
+
     private int getScore(String score)
     {
         if (score.equals("优"))

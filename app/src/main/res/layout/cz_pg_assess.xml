@@ -5,65 +5,69 @@
               android:background="@color/white"
               android:orientation="vertical">
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/bg_titlebar">
+
+        <ImageButton
+            android:id="@+id/imgbtn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/titlebar_height"
+            android:layout_marginLeft="5dip"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/back"/>
+
+        <ProgressBar
+            android:id="@+id/main_head_progress"
+            style="@style/loading_small"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5.0dip"
+            android:layout_toRightOf="@id/imgbtn_back"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/titlebar_height"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="评分"
+            android:textColor="@color/textcolor_titlebar"
+            android:textSize="@dimen/titlebar_textsize"/>
+
+        <Button
+            android:id="@+id/btn_sure"
+            android:layout_width="60dip"
+            android:layout_height="35dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@null"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/textcolor_titlebar"
+            android:textSize="@dimen/titlebar_textsize"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/titlebar_height"
-                android:background="@color/bg_titlebar">
-
-                <ImageButton
-                    android:id="@+id/imgbtn_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/titlebar_height"
-                    android:layout_marginLeft="5dip"
-                    android:background="@null"
-                    android:contentDescription=""
-                    android:src="@drawable/back"/>
-
-                <ProgressBar
-                    android:id="@+id/main_head_progress"
-                    style="@style/loading_small"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5.0dip"
-                    android:layout_toRightOf="@id/imgbtn_back"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/titlebar_height"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"
-                    android:text="评分"
-                    android:textColor="@color/textcolor_titlebar"
-                    android:textSize="@dimen/titlebar_textsize"/>
-
-                <Button
-                    android:id="@+id/btn_sure"
-                    android:layout_width="60dip"
-                    android:layout_height="35dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dip"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:text="确定"
-                    android:textColor="@color/textcolor_titlebar"
-                    android:textSize="@dimen/titlebar_textsize"/>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/line_color"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,7 +79,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="45dip"
-                    android:background="@color/light_gray"
+                    android:background="@color/color_orange"
                     android:gravity="center"
                     android:text="指令详情"
                     android:textColor="@color/bg_text"
@@ -275,7 +279,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="45dip"
-                    android:background="@color/light_gray"
+                    android:background="@color/color_orange"
                     android:gravity="center"
                     android:text="评分标准"
                     android:textColor="@color/bg_text"
@@ -287,10 +291,36 @@
             <com.farm.widget.CustomExpandableListView
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:layout_height="match_parent"
-                android:groupIndicator="@null"/>
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:background="@color/color_orange"
+                    android:gravity="center"
+                    android:text="评分说明"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_note"
+                android:layout_width="match_parent"
+                android:layout_height="80dip"
+                android:background="@drawable/background_view_rounded_single"
+                android:gravity="center"
+                android:hint="请输入评分说明"
+                android:textColor="@color/red"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/size_sp_14"/>
 
         </LinearLayout>
     </ScrollView>

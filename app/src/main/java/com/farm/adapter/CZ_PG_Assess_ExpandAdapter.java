@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.bean.Dictionary;
 import com.farm.bean.goodslisttab;
-import com.farm.widget.CustomDialog_ListView;
+import com.farm.widget.CustomDialog_ListView_Assess;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,32 +27,35 @@ import java.util.List;
  */
 public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
 {
+    List<View> list_view = new ArrayList<>();
     int currentgroupPosition = 0;
     int currentchildPosition = 0;
     TextView currentTextView;
-    CustomDialog_ListView customDialog_listView;
+    CustomDialog_ListView_Assess customDialog_listView;
     private int currentItem = 0;
     List<goodslisttab> list_goods = new ArrayList<goodslisttab>();
     ExpandableListView mainlistview;
-    Dictionary tempDic = new Dictionary();
     private Context context;// 运行上下文
     List<String> firstItemName;
     List<String> firstItemID;
     List<List<String>> secondItemName;
     List<List<String>> secondItemID;
     List<List<List<String>>> ThirdItemName;
+    List<List<List<String>>> ThirdItemId;
+    List<List<List<String>>> ThirdItemValues;
     int currentChildsize = 0;
     private GoodsAdapter adapter;
     ListView list;
 
     public CZ_PG_Assess_ExpandAdapter(Context context, Dictionary dictionary, ExpandableListView mainlistview)
     {
-        this.tempDic = dictionary;
         this.mainlistview = mainlistview;
         this.context = context;
         firstItemName = dictionary.getFirstItemName();
         secondItemName = dictionary.getSecondItemName();
         ThirdItemName = dictionary.getThirdItemName();
+        ThirdItemId = dictionary.getThirdItemID();
+        ThirdItemValues = dictionary.getThirdItemValue();
     }
 
     //得到子item需要关联的数据
@@ -83,8 +86,8 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
-        tempDic.getThirdItemID().get(groupPosition).get(childPosition).clear();
-        tempDic.getThirdItemID().get(groupPosition).get(childPosition).add("该项未选填");
+//        tempDic.getThirdItemID().get(groupPosition).get(childPosition).clear();
+//        tempDic.getThirdItemID().get(groupPosition).get(childPosition).add("-1");
         String key = firstItemName.get(groupPosition);
         List<String> childData = secondItemName.get(groupPosition);
         String info = childData.get(childPosition);
@@ -116,8 +119,9 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
             listItemView.tv.setTag(R.id.tag_fn, key);
             listItemView.tv.setTag(R.id.tag_si, secondItemName.get(groupPosition).get(childPosition));
             listItemView.tv.setTag(R.id.tag_sn, info);
-            listItemView.tv.setTag(R.id.tag_ti, ThirdItemName.get(groupPosition).get(childPosition));
+            listItemView.tv.setTag(R.id.tag_ti, ThirdItemId.get(groupPosition).get(childPosition));
             listItemView.tv.setTag(R.id.tag_tn, ThirdItemName.get(groupPosition).get(childPosition));
+            listItemView.tv.setTag(R.id.tag_val, ThirdItemValues.get(groupPosition).get(childPosition));
             listItemView.tv.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -125,9 +129,11 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
                 {
                     currentTextView = (TextView) v;
                     List<String> list = (List<String>) v.getTag(R.id.tag_tn);
+                    List<String> listid = (List<String>) v.getTag(R.id.tag_ti);
+                    List<String> listvalues = (List<String>) v.getTag(R.id.tag_val);
                     currentgroupPosition = groupPosition;
                     currentchildPosition = childPosition;
-                    showDialog(list);
+                    showDialog(list, listid, listvalues);
                 }
             });
         } else
@@ -209,8 +215,13 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View v)
             {
-//                mainlistview.expandGroup(Integer.valueOf(v.getTag().toString()));
-//                TextView textView = (TextView) v;
+                if (mainlistview.isGroupExpanded(Integer.valueOf(v.getTag().toString())))
+                {
+                    mainlistview.collapseGroup(Integer.valueOf(v.getTag().toString()));
+                } else
+                {
+                    mainlistview.expandGroup(Integer.valueOf(v.getTag().toString()));
+                }
             }
         });
         tv.setText(firstItemName.get(groupPosition));
@@ -229,27 +240,37 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
         return true;
     }
 
-    public void showDialog(List<String> list)
+    public void showDialog(List<String> list, List<String> listid, List<String> listvalues)
     {
         View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
+        customDialog_listView = new CustomDialog_ListView_Assess(context, R.style.MyDialog, dialog_layout, list, listid, listvalues, new CustomDialog_ListView_Assess.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
             {
-                tempDic.getThirdItemID().get(currentgroupPosition).get(currentchildPosition).clear();
-                tempDic.getThirdItemID().get(currentgroupPosition).get(currentchildPosition).add(bundle.getString("name"));
                 currentTextView.setText(bundle.getString("name"));
                 currentTextView.setTextColor(context.getResources().getColor(R.color.bg_yellow));
                 TextPaint tp = currentTextView.getPaint();
                 tp.setFakeBoldText(true);
+
+                currentTextView.setTag(bundle);
+                for (int i = 0; i < list_view.size(); i++)
+                {
+                    if (currentTextView.getId() == list_view.get(i).getId())
+                    {
+                        list_view.remove(i);
+                        list_view.add(currentTextView);
+                        return;
+                    }
+                }
+                list_view.add(currentTextView);
             }
         });
         customDialog_listView.show();
     }
 
-    public Dictionary getDictionary()
+    public List<View> getListView()
     {
-        return tempDic;
+        return list_view;
     }
 }
