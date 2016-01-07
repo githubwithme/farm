@@ -103,6 +103,11 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     @AfterViews
     void afterOncreate()
     {
+        commandtab_single.getInstance().clearAll();
+        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, SelectCmdArea.class);
+        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, goodslisttab.class);
+        SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, goodslisttab_flsl.class);
+
         fragmentList = new ArrayList<Fragment>();
         addStd_cmd_stepOne = new AddStd_Cmd_StepOne_Temp_();
         addStd_cmd_stepTwo = new AddStd_Cmd_StepTwo_();

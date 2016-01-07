@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.farm.bean.Result;
 import com.farm.bean.commandtab_single;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
+import com.farm.bean.goodslisttab_flsl;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
 import com.lidroid.xutils.HttpUtils;
@@ -50,6 +52,7 @@ import java.util.List;
 @EFragment
 public class AddStd_Cmd_StepThree_Temp extends Fragment
 {
+    List<Fragment> fragments;
     List<goodslisttab> list_goods;
     commembertab commembertab;
     Dictionary dic_park;
@@ -130,7 +133,15 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
         @Override
         public void onClick(View v)
         {
-            area_pager.setCurrentItem(v.getId());
+//            area_pager.setCurrentItem(v.getId());
+            int i = v.getId();
+            switchContent(mContent, fragments.get(i));
+            if (currentItem != i)
+            {
+                changeTextColor(i);
+                changeTextLocation(i);
+            }
+            currentItem = i;
         }
     };
 
@@ -140,7 +151,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
      */
     private void initPager()
     {
-        List<Fragment> fragments = new ArrayList<>();
+        fragments = new ArrayList<>();
         for (int i = 0; i < list.size(); i++)
         {
             Fragment fragment = new Area_Cmd_Fragment();
@@ -156,11 +167,14 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }
-        customFragmentPagerAdapter = new CustomFragmentPagerAdapter(getActivity().getSupportFragmentManager(), list, fragments);
-        area_pager.setAdapter(customFragmentPagerAdapter);
-        area_pager.setOnPageChangeListener(onPageChangeListener);
+        changeTextColor(0);
+        changeTextLocation(0);
+        switchContent(mContent, fragments.get(0));
+//        customFragmentPagerAdapter = new CustomFragmentPagerAdapter(getActivity().getSupportFragmentManager(), list, fragments);
+//        area_pager.setAdapter(customFragmentPagerAdapter);
+//        area_pager.setOnPageChangeListener(onPageChangeListener);
 //        customFragmentPagerAdapter.setFragments(fragments);
-        customFragmentPagerAdapter.notifyDataSetChanged();
+//        customFragmentPagerAdapter.notifyDataSetChanged();
 
 
 //        shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
@@ -402,10 +416,26 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
 
     public void update()
     {
+        SqliteDb.deleteAllSelectCmdArea(getActivity(), goodslisttab_flsl.class);
         list_goods = SqliteDb.getGoods(getActivity(), goodslisttab.class);
         getGoodsSum();
     }
 
+    public void switchContent(Fragment from, Fragment to)
+    {
+        if (mContent != to)
+        {
+            mContent = to;
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            if (!to.isAdded())
+            { // 先判断是否被add过
+                transaction.hide(from).add(R.id.container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else
+            {
+                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+            }
+        }
+    }
 
     @Override
     public void onAttach(Activity activity)
