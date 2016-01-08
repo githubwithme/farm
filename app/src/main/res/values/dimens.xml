@@ -86,5 +86,11 @@
     <dimen name="size_sp_12">12sp</dimen>
     <dimen name="size_sp_13">13sp</dimen>
     <dimen name="size_sp_14">14sp</dimen>
+    <dimen name="size_sp_15">15sp</dimen>
+    <dimen name="size_sp_16">16sp</dimen>
+    <dimen name="size_sp_17">17sp</dimen>
+    <dimen name="size_sp_18">18sp</dimen>
+    <dimen name="size_sp_19">19sp</dimen>
+    <dimen name="size_sp_20">20sp</dimen>
 
 </resources>

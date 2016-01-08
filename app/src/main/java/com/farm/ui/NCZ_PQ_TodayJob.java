@@ -317,7 +317,7 @@ public class NCZ_PQ_TodayJob extends Activity
                 if (jobtab == null) return;
                 commembertab commembertab = AppContext.getUserInfo(NCZ_PQ_TodayJob.this);
                 AppContext.updateStatus(NCZ_PQ_TodayJob.this, "0", jobtab.getId(), "1", commembertab.getId());
-                Intent intent = new Intent(NCZ_PQ_TodayJob.this, Common_JobDetail_.class);
+                Intent intent = new Intent(NCZ_PQ_TodayJob.this, Common_JobDetail_Show_.class);
                 intent.putExtra("bean", jobtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
             }

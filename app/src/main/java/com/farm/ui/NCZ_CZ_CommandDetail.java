@@ -29,10 +29,6 @@ public class NCZ_CZ_CommandDetail extends Activity
 	@ViewById
 	TextView tv_jobname;
 	@ViewById
-	TextView tv_nz;
-	@ViewById
-	TextView tv_nz_tip;
-	@ViewById
 	TextView tv_yl_tip;
 	@ViewById
 	TextView tv_yl;
@@ -48,8 +44,6 @@ public class NCZ_CZ_CommandDetail extends Activity
 	commandtab commandtab;
 	@ViewById
 	ImageButton btn_back;
-	@ViewById
-	LinearLayout ll_nz_tip;
 	@ViewById
 	LinearLayout ll_yl_tip;
 	@ViewById
@@ -106,29 +100,31 @@ public class NCZ_CZ_CommandDetail extends Activity
 
 	private void showData(commandtab commandtab)
 	{
-		if (commandtab.getstdJobType().equals("0") || commandtab.getstdJobType().equals("-1"))
+		if (commandtab.getstdJobType().equals("-1"))
 		{
-			ll_nz_tip.setVisibility(View.GONE);
 			ll_yl_tip.setVisibility(View.GONE);
 			rl_jobtype_tip.setVisibility(View.GONE);
 			rl_jobname_tip.setVisibility(View.GONE);
-		} else
-		{
-			tv_nz.setText(commandtab.getnongziName());
-			tv_yl.setText(commandtab.getamount());
-			tv_jobtype.setText(commandtab.getstdJobTypeName());
-			tv_jobname.setText(commandtab.getstdJobName());
 		}
-		if (!commandtab.getcommComDate().equals(""))
+		if (commandtab.getstdJobType().equals("0"))
 		{
-			if (commandtab.getcommComDate().length() > 10)
-			{
-				tv_qx.setText(commandtab.getcommComDate().substring(0, commandtab.getcommComDate().lastIndexOf(" ")));
-			} else
-			{
-				tv_qx.setText(commandtab.getcommComDate());
-			}
+			rl_jobtype_tip.setVisibility(View.GONE);
+			rl_jobname_tip.setVisibility(View.GONE);
 		}
+		String[] nongzi = commandtab.getnongziName().split(",");
+		String[] yl = commandtab.getamount().split(";");
+		String flyl = "";
+		for (int i = 0; i < nongzi.length; i++)
+		{
+			flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
+		}
+
+		tv_yl.setText(flyl);
+		tv_jobtype.setText(commandtab.getstdJobTypeName());
+		tv_jobname.setText(commandtab.getstdJobName());
+
+		tv_zyts.setText(commandtab.getcommDays());
+		tv_qx.setText(commandtab.getcommComDate());
 		tv_note.setText(commandtab.getcommNote());
 		tv_from.setText(commandtab.getcommFromName());
 		if (commandtab.getimportance().equals("0"))

@@ -12,7 +12,7 @@
         android:paddingBottom="15dp"
         android:paddingTop="15dp"
         android:textColor="#000"
-        android:textSize="12sp" />
+        android:textSize="@dimen/size_sp_16" />
 
     <ImageView
         android:id="@+id/line"

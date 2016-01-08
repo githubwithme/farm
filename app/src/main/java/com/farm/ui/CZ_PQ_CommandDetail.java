@@ -108,26 +108,18 @@ public class CZ_PQ_CommandDetail extends Activity
 		} else
 		{
 			String[] nongzi = commandtab.getnongziName().split(",");
-			String[] yl = commandtab.getamount().split(",");
+			String[] yl = commandtab.getamount().split(";");
 			String flyl = "";
 			for (int i = 0; i < nongzi.length; i++)
 			{
-				flyl = flyl + nongzi[i] + "：" + yl[i] + ";";
+				flyl = flyl + nongzi[i] + "：" + yl[i] +"/株"+ ";";
 			}
 			tv_nz.setText(flyl);
 			tv_jobtype.setText(commandtab.getstdJobTypeName());
 			tv_jobname.setText(commandtab.getstdJobName());
 		}
-		if (!commandtab.getcommComDate().equals(""))
-		{
-			if (commandtab.getcommComDate().length() > 10)
-			{
-				tv_qx.setText(commandtab.getcommComDate().substring(0, commandtab.getcommComDate().lastIndexOf(" ")));
-			} else
-			{
-				tv_qx.setText(commandtab.getcommComDate());
-			}
-		}
+
+		tv_qx.setText(commandtab.getcommComDate());
 		tv_note.setText(commandtab.getcommNote());
 		tv_from.setText(commandtab.getcommFromName());
 		if (commandtab.getimportance().equals("0"))

@@ -67,8 +67,8 @@
                 android:gravity="center"
                 android:text="1选择指令"
                 android:textColor="@color/white"
-                android:textSize="@dimen/size_14"
-                android:textStyle="bold"/>
+                android:textSize="@dimen/size_sp_15"
+                />
 
 
             <TextView
@@ -79,8 +79,8 @@
                 android:gravity="center"
                 android:text="2选择肥料"
                 android:textColor="#5B5B5B"
-                android:textSize="@dimen/size_14"
-                android:textStyle="bold"/>
+                android:textSize="@dimen/size_sp_15"
+                />
 
 
             <TextView
@@ -91,8 +91,8 @@
                 android:gravity="center"
                 android:text="3选择区域"
                 android:textColor="#5B5B5B"
-                android:textSize="@dimen/size_14"
-                android:textStyle="bold"/>
+                android:textSize="@dimen/size_sp_15"
+                />
 
 
             <TextView
@@ -103,8 +103,8 @@
                 android:gravity="center"
                 android:text="4其他"
                 android:textColor="#5B5B5B"
-                android:textSize="@dimen/size_14"
-                android:textStyle="bold"/>
+                android:textSize="@dimen/size_sp_15"
+                />
 
             <TextView
                 android:id="@+id/text_six"
@@ -114,8 +114,8 @@
                 android:gravity="center"
                 android:text="5确认"
                 android:textColor="#5B5B5B"
-                android:textSize="@dimen/size_14"
-                android:textStyle="bold"/>
+                android:textSize="@dimen/size_sp_15"
+                />
         </LinearLayout>
 
         <LinearLayout

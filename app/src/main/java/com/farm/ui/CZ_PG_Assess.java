@@ -74,7 +74,7 @@ public class CZ_PG_Assess extends Activity
     @AfterViews
     void afterOncreate()
     {
-//        getCommand();
+        getCommand();
         getCommandlist();
     }
 
@@ -96,7 +96,7 @@ public class CZ_PG_Assess extends Activity
         for (int i = 0; i < list_view.size(); i++)
         {
             Bundle bundle = (Bundle) list_view.get(i).getTag();
-            bz = bz + bundle.get("id");
+            bz = bz + bundle.get("id")+",";
         }
         if (bz.equals(""))
         {
@@ -205,7 +205,7 @@ public class CZ_PG_Assess extends Activity
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)
         {
-            flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + ";";
+            flyl = flyl + nongzi[i] + "  ;  ";
         }
         tv_comment.setText(commandtab.getstdJobTypeName() + "-" + commandtab.getstdJobName());
         tv_fl.setText(flyl);

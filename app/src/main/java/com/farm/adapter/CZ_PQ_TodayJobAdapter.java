@@ -115,12 +115,12 @@ public class CZ_PQ_TodayJobAdapter extends BaseAdapter
 		// 设置文字和图片
 		if (jobtab.getstdJobType().equals("0") || jobtab.getstdJobType().equals("-1"))
 		{
-			if (jobtab.getnongziName().equals(""))
+			if (jobtab.getjobNote().equals(""))
 			{
 				listItemView.tv_jobname.setText("暂无说明");
 			} else
 			{
-				listItemView.tv_jobname.setText(jobtab.getnongziName());
+				listItemView.tv_jobname.setText(jobtab.getjobNote());
 			}
 		} else
 		{

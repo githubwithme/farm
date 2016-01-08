@@ -169,14 +169,32 @@ public class Area_Cmd_Adapter extends BaseAdapter
             {
                 String goodsYL = "";
                 String goodsnote = "";
-//                List<goodslisttab_flsl> list_goodslisttab_flsl = new ArrayList<goodslisttab_flsl>();
                 goodslisttab_flsl goodslisttab_flsl = new goodslisttab_flsl();
                 List<goodslisttab> list_goodslisttab = inputGoodsAdapter.getGoosList();
+
+//                String result = "";
+//                Double neednumber = 0d;
+//                for (int i = 0; i < list_goodslisttab.size(); i++)
+//                {
+//                    goodslisttab goodslisttab = list_goodslisttab.get(i);
+//                    Double acountnumber = 0d;
+//                    String[] goodsspc = goodslisttab.getgoodsSpec().split("/");
+//                    String number = goodsspc[0];
+//                    String small_dw = goodsspc[1];
+//                    String large_dw = goodsspc[2];
+//                    acountnumber = Double.valueOf(list_goodslisttab.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
+//                    neednumber = acountnumber / Double.valueOf(number);
+//                    currentlistItemView.tv_flsl.setVisibility(View.VISIBLE);
+//                    result = result + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + small_dw + "/株" + "    " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n\n";
+//                }
+
+
                 if (list_goodslisttab == null)
                 {
                     Toast.makeText(context, "请填写肥料数量", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 for (int i = 0; i < list_goodslisttab.size(); i++)
                 {
                     goodslisttab goodslisttab = list_goodslisttab.get(i);
@@ -188,6 +206,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
                     goodslisttab_flsl.setGoodsSum(goodslisttab.getGoodsSum());
                     goodslisttab_flsl.setgoodsunit(goodslisttab.getgoodsunit());
                     goodslisttab_flsl.setgoodsSpec(goodslisttab.getgoodsSpec());
+                    goodslisttab_flsl.setZZ(thirdItemName.get(currentPostion) + "株");
 
                     goodsYL = goodsYL + goodslisttab.getYL() + ";";
                     goodsYL.substring(0, goodsYL.length() - 1);
@@ -197,7 +216,9 @@ public class Area_Cmd_Adapter extends BaseAdapter
                     String number = goodsspc[0];
                     String small_dw = goodsspc[1];
                     String large_dw = goodsspc[2];
-                    goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL()+"   "+ small_dw+"/株"+"\n";
+                    Double acountnumber = Double.valueOf(list_goodslisttab.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
+                    Double  neednumber = acountnumber / Double.valueOf(number);
+                    goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + small_dw + "/株" + "  " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n";
                     goodslisttab_flsl.setgoodsNote(goodsnote);
                 }
                 SqliteDb.save(context, goodslisttab_flsl);
@@ -224,21 +245,8 @@ public class Area_Cmd_Adapter extends BaseAdapter
 //                    currentlistItemView.tv_flsl.setText(et_flsl.getText().toString() + commandtab_single.getInstance().getNongzidw());
 //                    customDialog_flsl.dismiss();
 //                }
-                String result = "";
-                for (int i = 0; i < list_goodslisttab.size(); i++)
-                {
-                    goodslisttab goodslisttab = list_goodslisttab.get(i);
-                    int acountnumber = 0;
-                    String[] goodsspc = goodslisttab.getgoodsSpec().split("/");
-                    String number = goodsspc[0];
-                    String small_dw = goodsspc[1];
-                    String large_dw = goodsspc[2];
-                    acountnumber = acountnumber + Integer.valueOf(list_goodslisttab.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
-                    int neednumber = acountnumber / Integer.valueOf(number);
-                    currentlistItemView.tv_flsl.setVisibility(View.VISIBLE);
-                    result = result + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + small_dw + "/株" + "    " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n\n";
-                }
-                currentlistItemView.tv_flsl.setText(result);
+
+                currentlistItemView.tv_flsl.setText(goodsnote);
                 customDialog_flsl.dismiss();
             }
         });

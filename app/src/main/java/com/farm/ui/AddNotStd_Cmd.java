@@ -94,6 +94,11 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
     @AfterViews
     void afterOncreate()
     {
+        commandtab_single.getInstance().clearAll();
+        SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd.this, SelectCmdArea.class);
+        SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd.this, goodslisttab.class);
+        SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd.this, goodslisttab_flsl.class);
+
         fragmentList = new ArrayList<Fragment>();
         addStd_cmd_stepTwo = new AddStd_Cmd_StepTwo_();
         addStd_cmd_stepThree_temp = new AddStd_Cmd_StepThree_Temp_();
@@ -230,6 +235,7 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
         super.onDestroy();
         finish();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {

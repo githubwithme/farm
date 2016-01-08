@@ -33,7 +33,18 @@ public class goodslisttab implements Parcelable
     public String areaId="";
     public String areaName="";
     public String YL="";
+    public String ZS="";
 
+
+    public String getZS()
+    {
+        return ZS;
+    }
+
+    public void setZS(String ZS)
+    {
+        this.ZS = ZS;
+    }
 
     public String getYL()
     {
@@ -283,6 +294,7 @@ public class goodslisttab implements Parcelable
             p.setAreaId(source.readString());
             p.setAreaName(source.readString());
             p.setYL(source.readString());
+            p.setZS(source.readString());
             return p;
         }
 
@@ -317,6 +329,7 @@ public class goodslisttab implements Parcelable
         p.writeString(areaId);
         p.writeString(areaName);
         p.writeString(YL);
+        p.writeString(ZS);
 
     }
 

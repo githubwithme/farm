@@ -58,6 +58,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/rl_jobname_tip"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
@@ -71,7 +72,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dip"
                 android:gravity="center"
-                android:text="作业内容："
+                android:text="作业内容"
                 android:textColor="@color/black"
                 android:textSize="@dimen/size_14"/>
 
@@ -95,7 +96,6 @@
             android:background="@color/line_color"/>
 
         <LinearLayout
-            android:id="@+id/ll_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
@@ -114,7 +114,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dip"
                     android:gravity="center"
-                    android:text="重要性："
+                    android:text="重要性"
                     android:textColor="@color/black"
                     android:textSize="@dimen/size_14"/>
 
@@ -130,39 +130,6 @@
                     android:textSize="@dimen/size_14"/>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/line_color"/>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="50dip"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_tip_nz"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dip"
-                    android:gravity="center"
-                    android:text="农资："
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/size_14"/>
-
-                <TextView
-                    android:id="@+id/tv_nz"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dip"
-                    android:gravity="right"
-                    android:text="钾肥"
-                    android:textColor="@color/bg_yellow"
-                    android:textSize="@dimen/size_14"/>
-            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -170,6 +137,7 @@
                 android:background="@color/line_color"/>
 
             <LinearLayout
+                android:id="@+id/ll_yl_tip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
@@ -183,7 +151,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dip"
                     android:gravity="center"
-                    android:text="用量："
+                    android:text="农资及用量"
                     android:textColor="@color/black"
                     android:textSize="@dimen/size_14"/>
 
@@ -217,7 +185,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dip"
                     android:gravity="center"
-                    android:text="期限："
+                    android:text="开始时间"
                     android:textColor="@color/black"
                     android:textSize="@dimen/size_14"/>
 
@@ -252,7 +220,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dip"
                 android:gravity="center"
-                android:text="说明:"
+                android:text="说明"
                 android:textColor="@color/black"
                 android:textSize="@dimen/size_14"/>
 
@@ -286,7 +254,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dip"
                 android:gravity="center"
-                android:text="评分:"
+                android:text="评分"
                 android:textColor="@color/black"
                 android:textSize="@dimen/size_14"/>
 
@@ -320,7 +288,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dip"
                 android:gravity="center"
-                android:text="评分说明:"
+                android:text="评分说明"
                 android:textColor="@color/black"
                 android:textSize="@dimen/size_14"/>
 
@@ -329,9 +297,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dip"
                 android:gravity="right"
                 android:text="暂无"
-                android:layout_marginRight="10dip"
                 android:textColor="@color/bg_yellow"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>

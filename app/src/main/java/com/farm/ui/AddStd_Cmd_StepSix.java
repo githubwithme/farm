@@ -107,7 +107,7 @@ public class AddStd_Cmd_StepSix extends Fragment
         {
             tempareaId = tempareaId + list_SelectCmdArea.get(i).getParkId() + ":" + list_SelectCmdArea.get(i).getAreaId() + ":" + list_SelectCmdArea.get(i).getYL() + ",";
             tempareaName = tempareaName + list_SelectCmdArea.get(i).getParkName() + ":" + list_SelectCmdArea.get(i).getAreaName() + ",";
-            tempflyl = tempflyl + list_SelectCmdArea.get(i).getParkName() + "：" + list_SelectCmdArea.get(i).getAreaName() + "\n"+ list_SelectCmdArea.get(i).getgoodsNote() + "\n";
+            tempflyl = tempflyl + list_SelectCmdArea.get(i).getParkName() + "：" + list_SelectCmdArea.get(i).getAreaName()+"  "+list_SelectCmdArea.get(i).getZZ() + "\n"+ list_SelectCmdArea.get(i).getgoodsNote() + "\n";
         }
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
         tv_importance.setText(commandtab_single.getImportancetype());

@@ -256,7 +256,11 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
                 currentTextView.setTag(bundle);
                 for (int i = 0; i < list_view.size(); i++)
                 {
-                    if (currentTextView.getId() == list_view.get(i).getId())
+                    String fi = (String) currentTextView.getTag(R.id.tag_fi);
+                    String si = (String) currentTextView.getTag(R.id.tag_si);
+                    String list_view_fi = (String) list_view.get(i).getTag(R.id.tag_fi);
+                    String list_view_si = (String) list_view.get(i).getTag(R.id.tag_si);
+                    if (fi.equals(list_view_fi) && si.equals(list_view_si))
                     {
                         list_view.remove(i);
                         list_view.add(currentTextView);

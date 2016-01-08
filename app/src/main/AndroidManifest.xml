@@ -118,6 +118,8 @@
         <activity android:name=".ui.GrowthTreeActivity_"/>
         <activity android:name=".ui.Register_StepTwo_"/>
         <activity android:name=".ui.Register_StepThree_"/>
+        <activity android:name=".ui.Common_JobDetail_Assess_"/>
+        <activity android:name=".ui.Common_JobDetail_Show_"/>
         <activity android:name=".ui.Register_StepOne_"/>
         <activity android:name=".ui.FindPassword_"/>
         <activity android:name=".ui.Common_PQYQCommandList_"/>
