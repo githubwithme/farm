@@ -40,7 +40,18 @@ public class PlantGcjl implements Parcelable
     public String xNum;
     public List<String> imgUrl;
     public List<plantgrowthtab> plantGrowth;
+    public Dictionary bx;
 
+
+    public Dictionary getBx()
+    {
+        return bx;
+    }
+
+    public void setBx(Dictionary bx)
+    {
+        this.bx = bx;
+    }
 
     public String getxNum()
     {
@@ -289,7 +300,8 @@ public class PlantGcjl implements Parcelable
             p.setwNum(source.readString());
             p.setxNum(source.readString());
             p.imgUrl = source.readArrayList(List.class.getClassLoader());
-            p.plantGrowth =source.readArrayList(plantgrowthtab.class.getClassLoader());
+            p.plantGrowth = source.readArrayList(plantgrowthtab.class.getClassLoader());
+            p.bx = source.readParcelable(Dictionary.class.getClassLoader());
             return p;
         }
 
@@ -324,6 +336,7 @@ public class PlantGcjl implements Parcelable
         p.writeString(xNum);
         p.writeList(imgUrl);
         p.writeList(plantGrowth);
+        p.writeParcelable((Parcelable) bx, arg1);
 
     }
 

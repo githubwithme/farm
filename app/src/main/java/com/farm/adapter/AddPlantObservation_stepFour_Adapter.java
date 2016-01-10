@@ -83,8 +83,6 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
-        tempDic.getThirdItemID().get(groupPosition).get(childPosition).clear();
-        tempDic.getThirdItemID().get(groupPosition).get(childPosition).add("该项未选填");
         String key = firstItemName.get(groupPosition);
         List<String> childData = secondItemName.get(groupPosition);
         String info = childData.get(childPosition);
@@ -96,6 +94,9 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
         }
         if (v == null)
         {
+            tempDic.getThirdItemID().get(groupPosition).get(childPosition).clear();
+//            tempDic.getThirdItemID().get(groupPosition).get(childPosition).add("该项未选填");
+            tempDic.getThirdItemID().get(groupPosition).get(childPosition).add(ThirdItemName.get(groupPosition).get(childPosition).get(0));
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_children_plantobservation, null);
             listItemView = new ListItemView();
@@ -111,7 +112,8 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
             }
 
             listItemView.tv_tip.setText(info);
-            listItemView.tv.setText("请选择" + info);
+//            listItemView.tv.setText("请选择" + info);
+            listItemView.tv.setText(ThirdItemName.get(groupPosition).get(childPosition).get(0));
             listItemView.tv.setTag(R.id.tag_fi, firstItemName.get(groupPosition));
             listItemView.tv.setTag(R.id.tag_fn, key);
             listItemView.tv.setTag(R.id.tag_si, secondItemName.get(groupPosition).get(childPosition));

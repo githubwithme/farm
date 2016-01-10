@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
         android:background="@color/bg_titlebar">
@@ -36,35 +37,31 @@
             android:textColor="@color/bg_text"
             android:textSize="@dimen/titlebar_textsize"/>
 
-        <Button
-            android:id="@+id/btn_upload"
-            android:layout_width="60dip"
-            android:layout_height="35dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:background="@null"
-            android:gravity="center"
-            android:text="保存"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14"/>
     </RelativeLayout>
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
-        android:background="@color/bg_yellow"/>
+        android:layout_below="@+id/rl_titlebar"
+        android:background="@color/line_color"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/line"
+        android:layout_marginBottom="@dimen/size_45"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="15dip"
+        android:background="@drawable/background_view_rounded_single"
         android:orientation="vertical">
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dip"
-            android:layout_marginRight="20dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
             android:stretchColumns="1">
 
             <TableRow
@@ -141,4 +138,16 @@
         </TableLayout>
     </ScrollView>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_upload"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/size_10"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/background_view_rounded_single"
+        android:text="确定"
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/text_size_14"/>
+</RelativeLayout>

@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -425,6 +426,9 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
                 {
                     pw_command.dismiss();
+                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    getActivity().getWindow().setAttributes(lp);
                     return true;
                 }
                 return false;
@@ -438,6 +442,9 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 if (pw_command.isShowing())
                 {
                     pw_command.dismiss();
+                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    getActivity().getWindow().setAttributes(lp);
                 }
                 return false;
             }
@@ -445,6 +452,9 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
         pw_command = new PopupWindow(pv_command, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, true);
         pw_command.showAsDropDown(line, 0, 0);
         pw_command.setOutsideTouchable(true);
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = 0.7f;
+        getActivity().getWindow().setAttributes(lp);
         pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(this);
         pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(this);
         pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(this);

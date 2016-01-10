@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -265,6 +266,9 @@ public class SelectorFragment extends Fragment implements OnClickListener
 					popupWindow_selector.dismiss();
 					frame_listview_news.setAlpha(1f);
 					rl_selector.setBackgroundColor(getResources().getColor(R.color.white));
+					WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+					lp.alpha =1f;
+					getActivity().getWindow().setAttributes(lp);
 					return true;
 				}
 				return false;
@@ -281,6 +285,9 @@ public class SelectorFragment extends Fragment implements OnClickListener
 					frame_listview_news.setAlpha(1f);
 					rl_selector.setBackgroundColor(getResources().getColor(R.color.white));
 					iv_up_selector.setBackground(getResources().getDrawable(R.drawable.downward));
+					WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+					lp.alpha = 1f;
+					getActivity().getWindow().setAttributes(lp);
 				}
 				return false;
 			}
@@ -297,7 +304,9 @@ public class SelectorFragment extends Fragment implements OnClickListener
 		ColorDrawable cd = new ColorDrawable(0x000000);
 		popupWindow_selector.setBackgroundDrawable(cd);
 		frame_listview_news.setAlpha(0.2f);
-
+		WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+		lp.alpha = 0.7f;
+		getActivity().getWindow().setAttributes(lp);
 		mainlist = (ListView) popupWindowView_selector.findViewById(R.id.classify_mainlist);
 		morelist = (ListView) popupWindowView_selector.findViewById(R.id.classify_morelist);
 		popupWindowView_selector.findViewById(R.id.btn_reset).setOnClickListener(this);

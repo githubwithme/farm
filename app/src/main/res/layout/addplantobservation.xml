@@ -67,7 +67,7 @@
                 android:padding="10dp"
                 android:text="1观察期"
                 android:textColor="@color/white"
-                android:textSize="@dimen/size_sp_16"
+                android:textSize="@dimen/size_sp_14"
                 />
 
             <View
@@ -87,7 +87,7 @@
                 android:padding="10dp"
                 android:text="2观察情况"
                 android:textColor="#5B5B5B"
-                android:textSize="@dimen/size_sp_16"
+                android:textSize="@dimen/size_sp_14"
                 />
 
             <View
@@ -107,7 +107,7 @@
                 android:padding="10dp"
                 android:text="3其他"
                 android:textColor="#5B5B5B"
-                android:textSize="@dimen/size_sp_16"
+                android:textSize="@dimen/size_sp_14"
                 />
 
             <View
@@ -127,7 +127,7 @@
                 android:padding="10dp"
                 android:text="4确认"
                 android:textColor="#5B5B5B"
-                android:textSize="@dimen/size_sp_16"
+                android:textSize="@dimen/size_sp_14"
                 />
 
 

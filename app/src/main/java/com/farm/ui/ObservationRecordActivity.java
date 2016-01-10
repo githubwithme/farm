@@ -11,11 +11,16 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.PlantObservationAdapter;
+import com.farm.adapter.AddPlantObservation_stepFive_bx_Adapter;
+import com.farm.adapter.AddPlantObservation_stepFive_zz_Adapter;
 import com.farm.app.AppConfig;
+import com.farm.bean.Dictionary;
+import com.farm.bean.FJ_SCFJ;
 import com.farm.bean.PlantGcjl;
 import com.farm.bean.Result;
-import com.farm.widget.CustomListView;
+import com.farm.bean.plantgrowthtab;
+import com.farm.common.utils;
+import com.farm.widget.CustomExpandableListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -28,11 +33,17 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EActivity(R.layout.activity_observation_record)
 public class ObservationRecordActivity extends Activity
 {
+    List<FJ_SCFJ> list_fj_scfj = new ArrayList<>();
+    AddPlantObservation_stepFive_bx_Adapter addPlantObservation_stepFive_bx_adapter;
+    AddPlantObservation_stepFive_zz_Adapter addPlantObservation_stepFive_zz_adapter;
+    Dictionary dic;
+    List<plantgrowthtab> list_plantgrowthtab = new ArrayList<>();
     List<PlantGcjl> lsitNewData = null;
     String gcid;
     @ViewById
@@ -44,17 +55,15 @@ public class ObservationRecordActivity extends Activity
     @ViewById
     TextView tv_tip;
     @ViewById
-    TextView tv_jj;
-    @ViewById
-    TextView tv_y;
-    @ViewById
-    TextView tv_gx;
+    TextView tv_gcsj;
     @ViewById
     TextView tv_gcq;
     @ViewById
     ImageButton imgbtn_back;
     @ViewById
-    CustomListView lv;
+    CustomExpandableListView expanded_bx;
+    @ViewById
+    CustomExpandableListView expanded_zz;
 
     @Click
     void imgbtn_back()
@@ -97,7 +106,7 @@ public class ObservationRecordActivity extends Activity
                         lsitNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcjl.class);
                         if (lsitNewData != null)
                         {
-                            showData();
+                            showData(lsitNewData.get(0));
                         }
 
                     } else
@@ -125,14 +134,21 @@ public class ObservationRecordActivity extends Activity
         });
     }
 
-    private void showData()
+    private void showData(PlantGcjl plantGcjl)
     {
+        tv_gcsj.setText(lsitNewData.get(0).getRegDate());
         tv_gcq.setText(lsitNewData.get(0).getGcq());
-        tv_jj.setText(lsitNewData.get(0).getJjbx());
-        tv_y.setText(lsitNewData.get(0).getYbx());
-        tv_gx.setText(lsitNewData.get(0).getGxbx());
 
-        PlantObservationAdapter addPlantObservationAdapter = new PlantObservationAdapter(ObservationRecordActivity.this, lsitNewData.get(0).getPlantGrowth());
-        lv.setAdapter(addPlantObservationAdapter);
+//        dic = dictionary;
+        addPlantObservation_stepFive_bx_adapter = new AddPlantObservation_stepFive_bx_Adapter(ObservationRecordActivity.this, dic, expanded_bx);
+        expanded_bx.setAdapter(addPlantObservation_stepFive_bx_adapter);
+        utils.setListViewHeight(expanded_bx);
+
+        addPlantObservation_stepFive_zz_adapter = new AddPlantObservation_stepFive_zz_Adapter(ObservationRecordActivity.this, expanded_zz, list_plantgrowthtab, list_fj_scfj);
+        expanded_zz.setAdapter(addPlantObservation_stepFive_zz_adapter);
+        utils.setListViewHeight(expanded_zz);
+
+//        PlantObservationAdapter addPlantObservationAdapter = new PlantObservationAdapter(ObservationRecordActivity.this, lsitNewData.get(0).getPlantGrowth());
+//        lv.setAdapter(addPlantObservationAdapter);
     }
 }

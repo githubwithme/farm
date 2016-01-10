@@ -211,61 +211,54 @@ public class AddPlantObservation_stepFive extends Fragment
 
         if (JJBX == null || JJBX.equals(""))
         {
-            params.addQueryStringParameter("ldbx", "");
+            params.addQueryStringParameter("jjbx", "");
         } else
         {
-            params.addQueryStringParameter("ldbx", JJBX.substring(0, JJBX.length() - 1));
+            params.addQueryStringParameter("jjbx", JJBX.substring(0, JJBX.length() - 1));
         }
         if (YBX == null || YBX.equals(""))
         {
-            params.addQueryStringParameter("ldbx", "");
+            params.addQueryStringParameter("ybx", "");
         } else
         {
-            params.addQueryStringParameter("ldbx", YBX.substring(0, YBX.length() - 1));
+            params.addQueryStringParameter("ybx", YBX.substring(0, YBX.length() - 1));
         }
         if (GXBX == null || GXBX.equals(""))
         {
-            params.addQueryStringParameter("ldbx", "");
+            params.addQueryStringParameter("gxbx", "");
         } else
         {
-            params.addQueryStringParameter("ldbx", GXBX.substring(0, GXBX.length() - 1));
+            params.addQueryStringParameter("gxbx", GXBX.substring(0, GXBX.length() - 1));
         }
 
         if (LDBX == null || LDBX.equals(""))
         {
-            params.addQueryStringParameter("ldbx", "");
+            params.addQueryStringParameter("lbx", "");
         } else
         {
-            params.addQueryStringParameter("ldbx", LDBX.substring(0, LDBX.length() - 1));
+            params.addQueryStringParameter("lbx", LDBX.substring(0, LDBX.length() - 1));
         }
         if (GSBX == null || GSBX.equals(""))
         {
-            params.addQueryStringParameter("ldbx", "");
+            params.addQueryStringParameter("ghbx", "");
         } else
         {
-            params.addQueryStringParameter("ldbx", GSBX.substring(0, GSBX.length() - 1));
+            params.addQueryStringParameter("ghbx", GSBX.substring(0, GSBX.length() - 1));
         }
         if (CSGBX == null || CSGBX.equals(""))
         {
-            params.addQueryStringParameter("ldbx", "");
+            params.addQueryStringParameter("csgbx", "");
         } else
         {
-            params.addQueryStringParameter("ldbx", CSGBX.substring(0, CSGBX.length() - 1));
+            params.addQueryStringParameter("csgbx", CSGBX.substring(0, CSGBX.length() - 1));
         }
         if (CYGBX == null || CYGBX.equals(""))
         {
-            params.addQueryStringParameter("ldbx", "");
+            params.addQueryStringParameter("cygbx", "");
         } else
         {
-            params.addQueryStringParameter("ldbx", CYGBX.substring(0, CYGBX.length() - 1));
+            params.addQueryStringParameter("cygbx", CYGBX.substring(0, CYGBX.length() - 1));
         }
-
-
-
-        params.addQueryStringParameter("lbx", "");
-        params.addQueryStringParameter("ghbx", "");
-        params.addQueryStringParameter("csgbx", "");
-        params.addQueryStringParameter("cygbx", "");
         params.addQueryStringParameter("szfx", "");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

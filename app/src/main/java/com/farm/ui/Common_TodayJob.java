@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -557,6 +558,9 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                 if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
                 {
                     pw_command.dismiss();
+                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    getActivity().getWindow().setAttributes(lp);
                     return true;
                 }
                 return false;
@@ -570,6 +574,9 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                 if (pw_command.isShowing())
                 {
                     pw_command.dismiss();
+                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    getActivity().getWindow().setAttributes(lp);
                 }
                 return false;
             }
@@ -577,6 +584,9 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
         pw_command = new PopupWindow(pv_command, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
         pw_command.showAsDropDown(line, 0, 0);
         pw_command.setOutsideTouchable(true);
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = 0.7f;
+        getActivity().getWindow().setAttributes(lp);
         pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(this);
         pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(this);
         pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(this);

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar" >
+        android:background="@color/bg_titlebar">
 
         <ImageButton
             android:id="@+id/imgbtn_back"
@@ -16,7 +16,7 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back" />
+            android:src="@drawable/back"/>
 
         <ProgressBar
             android:id="@+id/main_head_progress"
@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5.0dip"
             android:layout_toRightOf="@id/imgbtn_back"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_title"
@@ -34,7 +34,7 @@
             android:gravity="center"
             android:text="查看植物"
             android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize" />
+            android:textSize="@dimen/titlebar_textsize"/>
 
         <Button
             android:id="@+id/btn_delete"
@@ -45,42 +45,42 @@
             android:gravity="center"
             android:text="删除"
             android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize" />
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <com.farm.widget.ScrollViewContainer
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <ScrollView
                     android:id="@+id/sl1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <FrameLayout
                             android:id="@+id/img_container"
                             android:layout_width="match_parent"
-                            android:layout_height="350dip"
-                            android:background="@color/white" />
+                            android:layout_height="250dip"
+                            android:background="@color/white"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="8dip"
-                            android:orientation="vertical" >
+                            android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="10dip"
                                 android:layout_marginTop="14dip"
-                                android:orientation="horizontal" >
+                                android:orientation="horizontal">
 
                                 <Button
                                     android:id="@+id/btn_foundation"
@@ -98,13 +98,13 @@
                                     android:background="@null"
                                     android:text="基础信息"
                                     android:textColor="@color/black"
-                                    android:textSize="13sp" />
+                                    android:textSize="13sp"/>
 
                                 <View
                                     android:layout_width="3px"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
-                                    android:background="@color/black" />
+                                    android:background="@color/black"/>
 
                                 <Button
                                     android:id="@+id/btn_other"
@@ -114,7 +114,7 @@
                                     android:background="@null"
                                     android:text="其他信息"
                                     android:textColor="@color/black"
-                                    android:textSize="13sp" />
+                                    android:textSize="13sp"/>
                             </LinearLayout>
 
                             <FrameLayout
@@ -122,7 +122,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="5dip"
-                                android:orientation="vertical" >
+                                android:orientation="vertical">
                             </FrameLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -134,30 +134,30 @@
                     android:layout_below="@id/sl1"
                     android:background="#eeeeee"
                     android:gravity="center"
-                    android:text="继续拖动，查看生长树"
-                    android:textColor="#aaaaaa" />
+                    android:text="继续拖动，查看更多观测记录"
+                    android:textColor="#aaaaaa"/>
             </RelativeLayout>
         </ScrollView>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_gravity="center"
-                    android:background="@color/black" />
+                    android:background="@color/black"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dip"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/btn_video"
@@ -167,7 +167,7 @@
                         android:background="@drawable/selector_navigation_find"
                         android:text="生长树"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <View
                         android:layout_width="1px"
@@ -175,7 +175,7 @@
                         android:layout_gravity="center"
                         android:layout_marginBottom="15dip"
                         android:layout_marginTop="15dip"
-                        android:background="@color/black" />
+                        android:background="@color/black"/>
 
                     <Button
                         android:id="@+id/btn_record"
@@ -185,14 +185,14 @@
                         android:background="@drawable/selector_navigation_find"
                         android:text="分析"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
                 </LinearLayout>
 
                 <FrameLayout
                     android:id="@+id/contain_more"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
                 </FrameLayout>
             </LinearLayout>
         </ScrollView>

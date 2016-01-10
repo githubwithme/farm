@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/white"
-             android:focusable="true"
-             android:focusableInTouchMode="true">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
 
     <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="65dp"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
         android:orientation="horizontal">
 
         <ExpandableListView
@@ -24,10 +29,10 @@
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="45dip"
-        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
         android:layout_margin="10dip"
         android:background="@drawable/background_view_rounded_single"
         android:text="下一步"
         android:textColor="@color/bg_text"
         android:textSize="@dimen/size_14"/>
-</FrameLayout>
+</RelativeLayout>
