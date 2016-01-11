@@ -351,16 +351,22 @@ public class AddPlantObservation_stepFive extends Fragment
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    listData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
-                    if (listData == null)
+//                    listData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+//                    if (listData == null)
+//                    {
+//                        AppContext.makeToast(getActivity(), "error_connectDataBase");
+//                    } else
+//                    {
+//                        Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
+//                        getActivity().finish();
+//                    }
+
+                    if (result.getAffectedRows() != 0)
                     {
-                        AppContext.makeToast(getActivity(), "error_connectDataBase");
+                        showProgress();
                     } else
                     {
-
-                        Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
-                        getActivity().finish();
-
+                        AppContext.makeToast(getActivity(), "error_connectDataBase");
                     }
 
                 } else

@@ -1,6 +1,8 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.farm.bean.plantgrowthtab;
 import com.farm.common.BitmapHelper;
 import com.farm.widget.CustomDialog_ListView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -159,6 +162,19 @@ public class AddPlantObservation_stepFive_zz_Adapter extends BaseExpandableListA
                     imageView.setLayoutParams(lp);
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     BitmapHelper.setImageView(context, imageView, list_fj_scfj.get(i).getFJBDLJ());
+                    imageView.setTag( list_fj_scfj.get(i).getFJBDLJ());
+                    imageView.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            String bdlj=v.getTag().toString();
+                            File file = new File(bdlj);
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(Uri.fromFile(file), "image/*");
+                            context.startActivity(intent);
+                        }
+                    });
                     listItemView.ll_picture.addView(imageView);
                 }
 

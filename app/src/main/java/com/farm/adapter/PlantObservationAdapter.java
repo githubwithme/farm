@@ -1,6 +1,7 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.bean.plantgrowthtab;
 import com.farm.common.BitmapHelper;
+import com.farm.ui.ShowPhotos_;
 
 import java.util.List;
 
@@ -121,6 +123,18 @@ public class PlantObservationAdapter extends BaseAdapter
                 imageView.setLayoutParams(lp);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 BitmapHelper.setImageViewBackground(context, imageView, AppConfig.baseurl + list_img.get(i));
+                imageView.setTag(AppConfig.baseurl + list_img.get(i));
+                imageView.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                      String url=v.getTag().toString();
+                        Intent intent=new Intent(context, ShowPhotos_.class);
+                        intent.putExtra("url",url);
+                        context.startActivity(intent);
+                    }
+                });
                 listItemView.ll_picture.addView(imageView);
             }
         }
