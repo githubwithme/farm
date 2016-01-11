@@ -27,7 +27,7 @@ import java.util.List;
 /**
  *
  */
-public class NCZ_PlantGcdListAdapter extends BaseAdapter
+public class PG_EventListAdapter extends BaseAdapter
 {
 	ListItemView listItemView = null;
 	String audiopath;
@@ -43,8 +43,8 @@ public class NCZ_PlantGcdListAdapter extends BaseAdapter
 		public TextView tv_plantname;
 		public TextView tv_time;
 		public TextView tv_type;
-		public FrameLayout fl_new;
 		public FrameLayout fl_new_item;
+		public FrameLayout fl_new;
 		public TextView tv_new;
 		public ImageView iv_record;
 	}
@@ -56,7 +56,7 @@ public class NCZ_PlantGcdListAdapter extends BaseAdapter
 	 * @param data
 	 * @param context
 	 */
-	public NCZ_PlantGcdListAdapter(Context context, List<PlantGcd> data)
+	public PG_EventListAdapter(Context context, List<PlantGcd> data)
 	{
 		this.context = context;
 		this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -91,7 +91,7 @@ public class NCZ_PlantGcdListAdapter extends BaseAdapter
 		if (lmap.get(position) == null)
 		{
 			// 获取list_item布局文件的视图
-			convertView = listContainer.inflate(R.layout.ncz_plantgcdlistadapter, null);
+			convertView = listContainer.inflate(R.layout.pg_eventlistadapter, null);
 			listItemView = new ListItemView();
 			// 获取控件对象
 			listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
@@ -105,11 +105,11 @@ public class NCZ_PlantGcdListAdapter extends BaseAdapter
 			listItemView.btn_plantlist = (Button) convertView.findViewById(R.id.btn_plantlist);
 			listItemView.btn_plantlist.setId(position);
 			listItemView.iv_record.setId(position);
-//			commembertab commembertab = AppContext.getUserInfo(context);
-//			if (commembertab.getnlevel().equals("0"))// 农场主去掉添加功能
-//			{
-//				listItemView.btn_plantlist.setVisibility(View.GONE);
-//			}
+			commembertab commembertab = AppContext.getUserInfo(context);
+			if (commembertab.getnlevel().equals("0"))// 农场主去掉添加功能
+			{
+				listItemView.btn_plantlist.setVisibility(View.GONE);
+			}
 			listItemView.iv_record.setOnClickListener(new OnClickListener()
 			{
 				@Override
@@ -132,7 +132,6 @@ public class NCZ_PlantGcdListAdapter extends BaseAdapter
 					Intent intent = new Intent(context, PG_PlantList_.class);
 					intent.putExtra("gcdid", listItems.get(v.getId()).getId());
 					intent.putExtra("gcdName", listItems.get(v.getId()).getPlantgcdName());
-					intent.putExtra("bean", listItems.get(v.getId()));
 					context.startActivity(intent);
 				}
 			});

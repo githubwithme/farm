@@ -18,19 +18,11 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.AddPlantObservation_stepFive_bx_Adapter;
-import com.farm.adapter.AddPlantObservation_stepFive_zz_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.Dictionary;
-import com.farm.bean.FJ_SCFJ;
-import com.farm.bean.PlantGcjl;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
-import com.farm.bean.plantgrowthtab;
 import com.farm.bean.planttab;
-import com.farm.common.utils;
-import com.farm.widget.CustomExpandableListView;
 import com.farm.widget.MyDialog;
 import com.farm.widget.MyDialog.CustomDialogListener;
 import com.lidroid.xutils.HttpUtils;
@@ -58,12 +50,6 @@ import java.util.List;
 @EActivity(R.layout.showplant)
 public class ShowPlant extends Activity
 {
-    List<FJ_SCFJ> list_fj_scfj = new ArrayList<>();
-    AddPlantObservation_stepFive_bx_Adapter addPlantObservation_stepFive_bx_adapter;
-    AddPlantObservation_stepFive_zz_Adapter addPlantObservation_stepFive_zz_adapter;
-    Dictionary dic;
-    List<plantgrowthtab> list_plantgrowthtab = new ArrayList<>();
-    List<PlantGcjl> lsitNewData = null;
     TextView tv_wNum;
     TextView tv_yNum;
     TextView tv_hNum;
@@ -98,14 +84,6 @@ public class ShowPlant extends Activity
     FrameLayout fl_contain;
     @ViewById
     FrameLayout contain_more;
-    @ViewById
-    CustomExpandableListView expanded_bx;
-    @ViewById
-    CustomExpandableListView expanded_zz;
-    @ViewById
-    TextView tv_gcsj;
-    @ViewById
-    TextView tv_gcq;
 
     @SuppressLint("NewApi")
     @Override
@@ -128,8 +106,8 @@ public class ShowPlant extends Activity
         btn_video.setSelected(true);
         btn_foundation.setSelected(true);
         btn_foundation.setTextColor(getResources().getColor(R.color.black));
-//        switchcontainer(R.id.fl_contain, mContent_container, foundationFragment);
-//		switchcontainermore(R.id.contain_more, mContent_container_more, treeFragment);
+        switchcontainer(R.id.fl_contain, mContent_container, foundationFragment);
+        switchcontainermore(R.id.contain_more, mContent_container_more, treeFragment);
         show(planttab);
         setImage(planttab.getImgUrl());
     }
@@ -193,17 +171,51 @@ public class ShowPlant extends Activity
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
         {
             View rootView = inflater.inflate(R.layout.foundationfragment_plant, container, false);
-            tv_gcsj.setText(lsitNewData.get(0).getRegDate());
-            tv_gcq.setText(lsitNewData.get(0).getGcq());
+            tv_hNum = (TextView) rootView.findViewById(R.id.tv_hNum);
+            tv_wNum = (TextView) rootView.findViewById(R.id.tv_wNum);
+            tv_yNum = (TextView) rootView.findViewById(R.id.tv_yNum);
+            tv_yColor = (TextView) rootView.findViewById(R.id.tv_yColor);
+            tv_xNum = (TextView) rootView.findViewById(R.id.tv_xNum);
+            tv_cDate = (TextView) rootView.findViewById(R.id.tv_cDate);
+            tv_zDate = (TextView) rootView.findViewById(R.id.tv_zDate);
 
-//        dic = dictionary;
-            addPlantObservation_stepFive_bx_adapter = new AddPlantObservation_stepFive_bx_Adapter(ShowPlant.this, dic, expanded_bx);
-            expanded_bx.setAdapter(addPlantObservation_stepFive_bx_adapter);
-            utils.setListViewHeight(expanded_bx);
+            if (planttab.getGrowthDate().equals(""))
+            {
+                btn_foundation.setText("暂无观察");
+                btn_foundation.setTextColor(getResources().getColor(R.color.red));
+                tv_hNum.setText("");
+                tv_wNum.setText("");
+                tv_yNum.setText("");
+                tv_yColor.setText("");
+                tv_xNum.setText("");
+                tv_cDate.setText("");
+                tv_zDate.setText("");
+            } else
+            {
+                btn_foundation.setText(planttab.getregDate().substring(0, planttab.getregDate().lastIndexOf(" ")) + "观察情况");
+                btn_foundation.setTextColor(getResources().getColor(R.color.red));
+                tv_hNum.setText(planttab.gethNum());
+                tv_wNum.setText(planttab.getwNum());
+                tv_yNum.setText(planttab.getyNum());
+                tv_yColor.setText(planttab.getyColor());
+                tv_xNum.setText(planttab.getxNum());
+                if (planttab.getcDate().equals("False"))
+                {
+                    tv_cDate.setText("未抽蕾");
+                } else
+                {
+                    tv_cDate.setText(planttab.getregDate());
+                }
+                if (planttab.getzDate().equals("False"))
+                {
+                    tv_zDate.setText("未留芽");
+                } else
+                {
+                    tv_zDate.setText(planttab.getregDate());
+                }
 
-            addPlantObservation_stepFive_zz_adapter = new AddPlantObservation_stepFive_zz_Adapter(ShowPlant.this, expanded_zz, list_plantgrowthtab, list_fj_scfj);
-            expanded_zz.setAdapter(addPlantObservation_stepFive_zz_adapter);
-            utils.setListViewHeight(expanded_zz);
+
+            }
 
             return rootView;
         }

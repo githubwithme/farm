@@ -42,6 +42,7 @@ public class AddPlantObservation_stepFive_zz_Adapter extends BaseExpandableListA
     List<plantgrowthtab> list_plantgrowthtab = new ArrayList<>();
     List<FJ_SCFJ> list_fj_scfj = new ArrayList<>();
     List<String> parentData = new ArrayList<>();
+    List<List<plantgrowthtab>> secondItemName = new ArrayList<>();
 
     public AddPlantObservation_stepFive_zz_Adapter(Context context, ExpandableListView expanded_zz, List<plantgrowthtab> list_plantgrowthtab, List<FJ_SCFJ> list_fj_scfj)
     {
@@ -53,6 +54,9 @@ public class AddPlantObservation_stepFive_zz_Adapter extends BaseExpandableListA
         for (int i = 0; i < list_plantgrowthtab.size(); i++)
         {
             parentData.add(list_plantgrowthtab.get(i).getplantName());
+            List<plantgrowthtab> list = new ArrayList<>();
+            list.add(list_plantgrowthtab.get(i));
+            secondItemName.add(list);
         }
     }
 
@@ -60,7 +64,7 @@ public class AddPlantObservation_stepFive_zz_Adapter extends BaseExpandableListA
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        return list_plantgrowthtab.get(groupPosition);
+        return secondItemName.get(groupPosition).get(childPosition);
     }
 
     //得到子item的ID
@@ -90,7 +94,6 @@ public class AddPlantObservation_stepFive_zz_Adapter extends BaseExpandableListA
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
-        plantgrowthtab = list_plantgrowthtab.get(groupPosition);
         View v = null;
         if (lmap.get(groupPosition) != null)
         {
@@ -99,6 +102,7 @@ public class AddPlantObservation_stepFive_zz_Adapter extends BaseExpandableListA
         }
         if (v == null)
         {
+            plantgrowthtab = list_plantgrowthtab.get(groupPosition);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_children_zz, null);
             listItemView = new ListItemView();
@@ -110,6 +114,16 @@ public class AddPlantObservation_stepFive_zz_Adapter extends BaseExpandableListA
             listItemView.cb_sfly = (CheckBox) convertView.findViewById(R.id.cb_sfly);
             listItemView.cb_sfcl = (CheckBox) convertView.findViewById(R.id.cb_sfcl);
             listItemView.cb_sfyz = (CheckBox) convertView.findViewById(R.id.cb_sfyz);
+
+
+            convertView.setTag(listItemView);
+            map.put(childPosition, convertView);
+            lmap.put(groupPosition, map);
+            if (isLastChild)
+            {
+                map = new HashMap<>();
+            }
+
             listItemView.tv_zg.setText(plantgrowthtab.gethNum());
             listItemView.tv_wj.setText(plantgrowthtab.getwNum());
             listItemView.tv_ys.setText(plantgrowthtab.getyNum());
@@ -149,16 +163,6 @@ public class AddPlantObservation_stepFive_zz_Adapter extends BaseExpandableListA
                 }
 
             }
-
-
-            convertView.setTag(listItemView);
-            map.put(childPosition, convertView);
-            lmap.put(groupPosition, map);
-            if (isLastChild)
-            {
-                map = new HashMap<>();
-            }
-
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -197,7 +201,7 @@ public class AddPlantObservation_stepFive_zz_Adapter extends BaseExpandableListA
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        return 1;
+        return secondItemName.get(groupPosition).size();
     }
 
     //获取当前父item的数据
@@ -241,6 +245,7 @@ public class AddPlantObservation_stepFive_zz_Adapter extends BaseExpandableListA
                     expanded_zz.collapseGroup(Integer.valueOf(v.getTag().toString()));
                 } else
                 {
+                    int aa = Integer.valueOf(v.getTag().toString());
                     expanded_zz.expandGroup(Integer.valueOf(v.getTag().toString()));
                 }
             }

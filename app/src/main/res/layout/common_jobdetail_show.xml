@@ -48,14 +48,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@color/color_orange"
-                android:gravity="center"
-                android:text="工作内容"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,6 +55,178 @@
                 android:layout_margin="10dip"
                 android:background="@drawable/background_view_rounded_single"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:background="@color/color_orange"
+                    android:gravity="center"
+                    android:text="评分情况"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_pf_tip"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:minHeight="50dip"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_pf_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="center"
+                        android:text="评分"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
+
+                    <TextView
+                        android:id="@+id/tv_pf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dip"
+                        android:layout_toLeftOf="@id/btn_record"
+                        android:layout_toRightOf="@id/tv_pf_tip"
+                        android:gravity="right"
+                        android:text="暂无"
+                        android:textColor="@color/bg_yellow"
+                        android:textSize="@dimen/size_14"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_pfnr_tip"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:minHeight="50dip"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_pfnr_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="center"
+                        android:text="评分内容"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
+
+                    <TextView
+                        android:id="@+id/tv_pfnr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_toLeftOf="@id/btn_record"
+                        android:layout_toRightOf="@id/tv_pfnr_tip"
+                        android:gravity="left"
+                        android:paddingLeft="20dip"
+                        android:text="暂无"
+                        android:textColor="@color/bg_yellow"
+                        android:textSize="@dimen/size_14"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_pfsm_tip"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:minHeight="50dip"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_pfsm_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="center"
+                        android:text="评分说明"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
+
+                    <TextView
+                        android:id="@+id/tv_pfsm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dip"
+                        android:layout_toLeftOf="@id/btn_record"
+                        android:layout_toRightOf="@id/tv_pfsm_tip"
+                        android:gravity="right"
+                        android:text="暂无"
+                        android:textColor="@color/bg_yellow"
+                        android:textSize="@dimen/size_14"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_pfsm_tip"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:minHeight="50dip"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_fkjg_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="center"
+                        android:text="罚款警告"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
+
+                    <TextView
+                        android:id="@+id/tv_fkjg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dip"
+                        android:layout_toLeftOf="@id/btn_record"
+                        android:layout_toRightOf="@id/tv_fkjg_tip"
+                        android:gravity="right"
+                        android:text="暂无"
+                        android:textColor="@color/bg_yellow"
+                        android:textSize="@dimen/size_14"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:background="@color/color_orange"
+                    android:gravity="center"
+                    android:text="工作详情"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
 
                 <RelativeLayout
                     android:id="@+id/rl_jobname_tip"
@@ -240,39 +404,7 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@color/color_orange"
-                android:gravity="center"
-                android:text="评分情况"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
 
-            <com.farm.widget.CustomExpandableListView
-                android:id="@+id/expandableListView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@color/color_orange"
-                android:gravity="center"
-                android:text="评分说明"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-
-            <TextView
-                android:id="@+id/tv_pfnote"
-                android:layout_width="match_parent"
-                android:layout_height="80dip"
-                android:background="@drawable/background_view_rounded_single"
-                android:gravity="center"
-                android:text="暂无评分说明"
-                android:textColor="@color/red"
-                android:textColorHint="@color/gray"
-                android:textSize="@dimen/size_sp_14"/>
         </LinearLayout>
 
 

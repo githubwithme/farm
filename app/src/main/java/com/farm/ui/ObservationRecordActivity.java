@@ -11,16 +11,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.AddPlantObservation_stepFive_bx_Adapter;
-import com.farm.adapter.AddPlantObservation_stepFive_zz_Adapter;
+import com.farm.adapter.PlantObservationAdapter;
 import com.farm.app.AppConfig;
-import com.farm.bean.Dictionary;
-import com.farm.bean.FJ_SCFJ;
 import com.farm.bean.PlantGcjl;
 import com.farm.bean.Result;
-import com.farm.bean.plantgrowthtab;
-import com.farm.common.utils;
-import com.farm.widget.CustomExpandableListView;
+import com.farm.widget.CustomListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -33,17 +28,11 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @EActivity(R.layout.activity_observation_record)
 public class ObservationRecordActivity extends Activity
 {
-    List<FJ_SCFJ> list_fj_scfj = new ArrayList<>();
-    AddPlantObservation_stepFive_bx_Adapter addPlantObservation_stepFive_bx_adapter;
-    AddPlantObservation_stepFive_zz_Adapter addPlantObservation_stepFive_zz_adapter;
-    Dictionary dic;
-    List<plantgrowthtab> list_plantgrowthtab = new ArrayList<>();
     List<PlantGcjl> lsitNewData = null;
     String gcid;
     @ViewById
@@ -55,15 +44,27 @@ public class ObservationRecordActivity extends Activity
     @ViewById
     TextView tv_tip;
     @ViewById
-    TextView tv_gcsj;
+    TextView tv_jj;
+    @ViewById
+    TextView tv_y;
+    @ViewById
+    TextView tv_gx;
     @ViewById
     TextView tv_gcq;
     @ViewById
+    TextView tv_gcsj;
+    @ViewById
+    TextView tv_lbx;
+    @ViewById
+    TextView tv_gsbx;
+    @ViewById
+    TextView tv_csgbx;
+    @ViewById
+    TextView tv_cygbx;
+    @ViewById
     ImageButton imgbtn_back;
     @ViewById
-    CustomExpandableListView expanded_bx;
-    @ViewById
-    CustomExpandableListView expanded_zz;
+    CustomListView lv;
 
     @Click
     void imgbtn_back()
@@ -106,7 +107,7 @@ public class ObservationRecordActivity extends Activity
                         lsitNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcjl.class);
                         if (lsitNewData != null)
                         {
-                            showData(lsitNewData.get(0));
+                            showData();
                         }
 
                     } else
@@ -134,21 +135,105 @@ public class ObservationRecordActivity extends Activity
         });
     }
 
-    private void showData(PlantGcjl plantGcjl)
+    private void showData()
     {
-        tv_gcsj.setText(lsitNewData.get(0).getRegDate());
         tv_gcq.setText(lsitNewData.get(0).getGcq());
+        tv_gcsj.setText(lsitNewData.get(0).getRegDate());
+        if (lsitNewData.get(0).getJjbx().equals(""))
+        {
+            tv_jj.setText(lsitNewData.get(0).getJjbx());
+        } else
+        {
+            String bx = "";
+            String[] bx_temp = lsitNewData.get(0).getJjbx().split(",");
+            for (int i = 0; i < bx_temp.length; i++)
+            {
+                bx = bx+bx_temp[i] + "\n\n";
+            }
+            tv_jj.setText(bx);
+        }
+        if (lsitNewData.get(0).getYbx().equals(""))
+        {
+            tv_y.setText(lsitNewData.get(0).getYbx());
+        } else
+        {
+            String bx = "";
+            String[] bx_temp = lsitNewData.get(0).getYbx().split(",");
+            for (int i = 0; i < bx_temp.length; i++)
+            {
+                bx = bx+bx_temp[i] + "\n\n";
+            }
+            tv_y.setText(bx);
+        }
+        if (lsitNewData.get(0).getGxbx().equals(""))
+        {
+            tv_gx.setText(lsitNewData.get(0).getGxbx());
+        } else
+        {
+            String bx = "";
+            String[] bx_temp = lsitNewData.get(0).getGxbx().split(",");
+            for (int i = 0; i < bx_temp.length; i++)
+            {
+                bx = bx+bx_temp[i] + "\n\n";
+            }
+            tv_gx.setText(bx);
+        }
+        if (lsitNewData.get(0).getLbx().equals(""))
+        {
+            tv_lbx.setText(lsitNewData.get(0).getLbx());
+        } else
+        {
+            String bx = "";
+            String[] bx_temp = lsitNewData.get(0).getLbx().split(",");
+            for (int i = 0; i < bx_temp.length; i++)
+            {
+                bx =bx+ bx_temp[i] + "\n\n";
+            }
+            tv_lbx.setText(bx);
+        }
+        if (lsitNewData.get(0).getGhbx().equals(""))
+        {
+            tv_gsbx.setText(lsitNewData.get(0).getGhbx());
+        } else
+        {
+            String bx = "";
+            String[] bx_temp = lsitNewData.get(0).getGhbx().split(",");
+            for (int i = 0; i < bx_temp.length; i++)
+            {
+                bx =bx+ bx_temp[i] + "\n\n";
+            }
+            tv_gsbx.setText(bx);
+        }
+        if (lsitNewData.get(0).getCsgbx().equals(""))
+        {
+            tv_csgbx.setText(lsitNewData.get(0).getCsgbx());
+        } else
+        {
+            String bx = "";
+            String[] bx_temp = lsitNewData.get(0).getCsgbx().split(",");
+            for (int i = 0; i < bx_temp.length; i++)
+            {
+                bx = bx+bx_temp[i] + "\n\n";
+            }
+            tv_csgbx.setText(bx);
+        }
+        if (lsitNewData.get(0).getCygbx().equals(""))
+        {
+            tv_cygbx.setText(lsitNewData.get(0).getCygbx());
+        } else
+        {
+            String bx = "";
+            String[] bx_temp = lsitNewData.get(0).getCygbx().split(",");
+            for (int i = 0; i < bx_temp.length; i++)
+            {
+                bx = bx+bx_temp[i] + "\n\n";
+            }
+            tv_cygbx.setText(bx);
+        }
 
-//        dic = dictionary;
-        addPlantObservation_stepFive_bx_adapter = new AddPlantObservation_stepFive_bx_Adapter(ObservationRecordActivity.this, dic, expanded_bx);
-        expanded_bx.setAdapter(addPlantObservation_stepFive_bx_adapter);
-        utils.setListViewHeight(expanded_bx);
 
-        addPlantObservation_stepFive_zz_adapter = new AddPlantObservation_stepFive_zz_Adapter(ObservationRecordActivity.this, expanded_zz, list_plantgrowthtab, list_fj_scfj);
-        expanded_zz.setAdapter(addPlantObservation_stepFive_zz_adapter);
-        utils.setListViewHeight(expanded_zz);
 
-//        PlantObservationAdapter addPlantObservationAdapter = new PlantObservationAdapter(ObservationRecordActivity.this, lsitNewData.get(0).getPlantGrowth());
-//        lv.setAdapter(addPlantObservationAdapter);
+        PlantObservationAdapter addPlantObservationAdapter = new PlantObservationAdapter(ObservationRecordActivity.this, lsitNewData.get(0).getPlantGrowth());
+        lv.setAdapter(addPlantObservationAdapter);
     }
 }

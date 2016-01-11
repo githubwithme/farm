@@ -132,6 +132,7 @@ public class CZ_PlantGcdListAdapter extends BaseAdapter
                     Intent intent = new Intent(context, PG_PlantList_.class);
                     intent.putExtra("gcdid", listItems.get(v.getId()).getId());
                     intent.putExtra("gcdName", listItems.get(v.getId()).getPlantgcdName());
+                    intent.putExtra("bean", listItems.get(v.getId()));
                     context.startActivity(intent);
                 }
             });

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -59,9 +60,15 @@ public class AddPlantObservation_StepThree extends Fragment
     @Click
     void btn_next()
     {
-        Bundle bundle = new Bundle();
-        bundle.putInt("INDEX", 2);
-        fragmentCallBack.callbackFun2(bundle);
+        if (getPlanttabList() == null)
+        {
+            Toast.makeText(getActivity(), "请完整填写相应内容", Toast.LENGTH_SHORT).show();
+        } else
+        {
+            Bundle bundle = new Bundle();
+            bundle.putInt("INDEX", 2);
+            fragmentCallBack.callbackFun2(bundle);
+        }
     }
 
 

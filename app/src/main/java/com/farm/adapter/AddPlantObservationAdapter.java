@@ -155,7 +155,7 @@ public class AddPlantObservationAdapter extends BaseAdapter
 
     public List<plantgrowthtab> getPlanttabList()
     {
-        list_plantgrowthtab=new ArrayList<>();
+        list_plantgrowthtab = new ArrayList<>();
         for (int i = 0; i < lmap.size(); i++)
         {
             plantgrowthtab plantgrowthtab = new plantgrowthtab();
@@ -169,6 +169,22 @@ public class AddPlantObservationAdapter extends BaseAdapter
 
             plantgrowthtab.setplantId(listItems.get(i).getId());
             plantgrowthtab.setplantName(listItems.get(i).getplantName());
+            if (et_zg.getText().toString().equals(""))
+            {
+                return list_plantgrowthtab = null;
+            }
+            if (et_ys.getText().toString().equals(""))
+            {
+                return list_plantgrowthtab = null;
+            }
+            if (et_wj.getText().toString().equals(""))
+            {
+                return list_plantgrowthtab = null;
+            }
+            if (et_lys.getText().toString().equals(""))
+            {
+                return list_plantgrowthtab = null;
+            }
             plantgrowthtab.sethNum(et_zg.getText().toString());
             plantgrowthtab.setyNum(et_ys.getText().toString());
             plantgrowthtab.setwNum(et_wj.getText().toString());

@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.lidroid.xutils.db.annotation.Table;
 
+import java.util.List;
+
 /**
  * 
  * Description: jobtab 实体类</p>
@@ -53,7 +55,18 @@ public class jobtab implements Parcelable
 	public String importance;
 	public String jobvidioCount;
 	public String jobCount;
+	public List<String> PF;
 
+
+	public List<String> getPF()
+	{
+		return PF;
+	}
+
+	public void setPF(List<String> PF)
+	{
+		this.PF = PF;
+	}
 
 	public String getJobCount()
 	{
@@ -446,6 +459,7 @@ public class jobtab implements Parcelable
 			p.setImportance(source.readString());
 			p.setJobvidioCount(source.readString());
 			p.setJobCount(source.readString());
+			p.PF = source.readArrayList(List.class.getClassLoader());
 			return p;
 		}
 
@@ -493,6 +507,7 @@ public class jobtab implements Parcelable
 		p.writeString(importance);
 		p.writeString(jobvidioCount);
 		p.writeString(jobCount);
+		p.writeList(PF);
 	}
 
 	@Override

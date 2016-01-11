@@ -250,39 +250,7 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@color/color_orange"
-                android:gravity="center"
-                android:text="评分情况"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
 
-            <com.farm.widget.CustomExpandableListView
-                android:id="@+id/expandableListView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@color/color_orange"
-                android:gravity="center"
-                android:text="评分说明"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-
-            <TextView
-                android:id="@+id/tv_pfnote"
-                android:layout_width="match_parent"
-                android:layout_height="80dip"
-                android:background="@drawable/background_view_rounded_single"
-                android:gravity="center"
-                android:text="暂无评分说明"
-                android:textColor="@color/red"
-                android:textColorHint="@color/gray"
-                android:textSize="@dimen/size_sp_14"/>
         </LinearLayout>
 
 

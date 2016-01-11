@@ -9,22 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.CZ_PG_JobDetail_ExpandAdapter;
-import com.farm.app.AppConfig;
-import com.farm.app.AppContext;
-import com.farm.bean.Dictionary;
-import com.farm.bean.Result;
-import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
 import com.farm.widget.CustomExpandableListView;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -56,6 +44,14 @@ public class Common_JobDetail_Show extends Activity
     @ViewById
     TextView tv_qx;
     @ViewById
+    TextView tv_pf;
+    @ViewById
+    TextView tv_pfnr;
+    @ViewById
+    TextView tv_fkjg;
+    @ViewById
+    TextView tv_pfsm;
+    @ViewById
     TextView tv_note;
     @ViewById
     TextView tv_pfnote;
@@ -82,13 +78,6 @@ public class Common_JobDetail_Show extends Activity
     void afterOncreate()
     {
         showData(jobtab);
-        // if (!jobtab.getaudioJobExecPath().equals(""))
-        // {
-        // downloadLuYin(AppConfig.baseurl + jobtab.getaudioJobExecPath(),
-        // AppConfig.MEDIA_PATH +
-        // jobtab.getaudioJobExecPath().substring(jobtab.getaudioJobExecPath().lastIndexOf("/"),
-        // jobtab.getaudioJobExecPath().length()));
-        // }
     }
 
     @Override
@@ -121,6 +110,16 @@ public class Common_JobDetail_Show extends Activity
         tv_jobname.setText(jobtab.getstdJobTypeName() + "——" + jobtab.getstdJobName());
         tv_yl.setText(flyl);
         tv_note.setText(jobtab.getjobNote());
+        tv_pf.setText(jobtab.getaudioJobExecPath()+"分");
+        List<String> pfnr = jobtab.getPF();
+        String nr = "";
+        for (int i = 0; i < pfnr.size(); i++)
+        {
+            nr = nr + pfnr.get(i) + "\n\n";
+        }
+        tv_pfnr.setText(nr);
+        tv_pfsm.setText(jobtab.getassessNote());
+        tv_fkjg.setText(jobtab.getaudioJobAssessPath());
 
 
         if (jobtab.getImportance().equals("0"))
@@ -136,56 +135,5 @@ public class Common_JobDetail_Show extends Activity
 
     }
 
-    private void getCommandlist()
-    {
-        commembertab commembertab = AppContext.getUserInfo(Common_JobDetail_Show.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("comid", jobtab.getstdJobId());
-        params.addQueryStringParameter("action", "getcommandPFBZ");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<Dictionary> lsitNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        String aa = result.getRows().toJSONString();
-                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
-                        if (lsitNewData != null)
-                        {
-                            Dictionary dic = lsitNewData.get(0);
-                            cz_pg_assess_expandAdapter = new CZ_PG_JobDetail_ExpandAdapter(Common_JobDetail_Show.this, dic, expandableListView);
-                            expandableListView.setAdapter(cz_pg_assess_expandAdapter);
-//                            for (int i = 0; i < dic.getFirstItemName().size(); i++)
-//                            {
-//                                expandableListView.expandGroup(i);
-//                            }
-                        }
-
-                    } else
-                    {
-
-                    }
-                } else
-                {
-                    AppContext.makeToast(Common_JobDetail_Show.this, "error_connectDataBase");
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(Common_JobDetail_Show.this, "error_connectServer");
-            }
-        });
-    }
 
 }

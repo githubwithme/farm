@@ -10,29 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.CZ_PG_JobDetail_ExpandAdapter;
-import com.farm.app.AppConfig;
-import com.farm.app.AppContext;
-import com.farm.bean.Dictionary;
-import com.farm.bean.Result;
-import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
-import com.farm.widget.CustomExpandableListView;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.List;
 
 @EActivity(R.layout.common_jobdetail_assess)
 public class Common_JobDetail_Assess extends Activity
@@ -44,8 +29,6 @@ public class Common_JobDetail_Assess extends Activity
     LinearLayout ll_yl_tip;
     @ViewById
     LinearLayout ll_more;
-    @ViewById
-    CustomExpandableListView expandableListView;
     @ViewById
     TextView tv_importance;
     @ViewById
@@ -62,8 +45,6 @@ public class Common_JobDetail_Assess extends Activity
     TextView tv_qx;
     @ViewById
     TextView tv_note;
-    @ViewById
-    TextView tv_pfnote;
     @ViewById
     Button btn_score;
 
@@ -89,6 +70,7 @@ public class Common_JobDetail_Assess extends Activity
     void afterOncreate()
     {
         showData(jobtab);
+//        getCommandlist();
         // if (!jobtab.getaudioJobExecPath().equals(""))
         // {
         // downloadLuYin(AppConfig.baseurl + jobtab.getaudioJobExecPath(),
@@ -144,56 +126,5 @@ public class Common_JobDetail_Assess extends Activity
 
     }
 
-    private void getCommandlist()
-    {
-        commembertab commembertab = AppContext.getUserInfo(Common_JobDetail_Assess.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("comid", jobtab.getstdJobId());
-        params.addQueryStringParameter("action", "getcommandPFBZ");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<Dictionary> lsitNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        String aa = result.getRows().toJSONString();
-                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
-                        if (lsitNewData != null)
-                        {
-                            Dictionary dic = lsitNewData.get(0);
-                            cz_pg_assess_expandAdapter = new CZ_PG_JobDetail_ExpandAdapter(Common_JobDetail_Assess.this, dic, expandableListView);
-                            expandableListView.setAdapter(cz_pg_assess_expandAdapter);
-//                            for (int i = 0; i < dic.getFirstItemName().size(); i++)
-//                            {
-//                                expandableListView.expandGroup(i);
-//                            }
-                        }
-
-                    } else
-                    {
-
-                    }
-                } else
-                {
-                    AppContext.makeToast(Common_JobDetail_Assess.this, "error_connectDataBase");
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(Common_JobDetail_Assess.this, "error_connectServer");
-            }
-        });
-    }
 
 }
