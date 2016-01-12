@@ -395,6 +395,10 @@ public class AddPlantObservation_stepFive extends Fragment
         params.addQueryStringParameter("file", file.getName());
         params.setBodyEntity(new FileUploadEntity(file, "text/html"));
         HttpUtils http = new HttpUtils();
+//        http.configRequestThreadPoolSize(15);
+//        http.configRequestRetryCount(15);
+        http.configTimeout(60000);
+        http.configSoTimeout(60000);
         http.send(HttpRequest.HttpMethod.POST, AppConfig.uploadurl, params, new RequestCallBack<String>()
         {
             @Override

@@ -57,7 +57,47 @@
         android:layout_height="1dp"
         android:layout_below="@id/rl_titlebar"
         android:background="@color/line_color"/>
+    <RelativeLayout
+        android:id="@+id/rl_pb"
+        android:layout_below="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+
+        <LinearLayout
+            android:id="@+id/ll_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/about"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dip"
+                android:gravity="center"
+                android:text="加载失败！"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/lv_tree"
@@ -79,14 +119,6 @@
         android:background="@drawable/speedy"/>
 
 
-    <TextView
-        android:id="@+id/tv_tip"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/rl_titlebar"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="还没有添加观察情况呢！"
-        android:visibility="gone"/>
+
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
+              android:orientation="horizontal"
              android:layout_height="match_parent">
 
     <ListView
@@ -9,6 +10,51 @@
         android:layout_gravity="center"
         android:divider="@color/transparent"
         android:dividerHeight="20dip"
-        />
+        android:visibility="gone"/>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btn_szqq"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginTop="10dip"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/size_sp_16"
+            android:background="@drawable/btn_selector"
+            android:text="生长前期"/>
+        <Button
+            android:id="@+id/btn_szzq"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginTop="10dip"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/size_sp_16"
+            android:background="@drawable/btn_selector"
+            android:text="生长中期"/>
+        <Button
+            android:id="@+id/btn_szhq"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginTop="10dip"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/size_sp_16"
+            android:background="@drawable/btn_selector"
+            android:text="生长后期"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

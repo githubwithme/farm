@@ -137,6 +137,10 @@ public class ObservationRecordActivity extends Activity
 
     private void showData()
     {
+
+        PlantObservationAdapter addPlantObservationAdapter = new PlantObservationAdapter(ObservationRecordActivity.this, lsitNewData.get(0).getPlantGrowth());
+        lv.setAdapter(addPlantObservationAdapter);
+
         tv_gcq.setText(lsitNewData.get(0).getGcq());
         tv_gcsj.setText(lsitNewData.get(0).getRegDate());
         if (lsitNewData.get(0).getJjbx().equals(""))
@@ -230,10 +234,8 @@ public class ObservationRecordActivity extends Activity
             }
             tv_cygbx.setText(bx);
         }
+        rl_pb.setVisibility(View.GONE);
 
 
-
-        PlantObservationAdapter addPlantObservationAdapter = new PlantObservationAdapter(ObservationRecordActivity.this, lsitNewData.get(0).getPlantGrowth());
-        lv.setAdapter(addPlantObservationAdapter);
     }
 }

@@ -97,14 +97,13 @@ public class Common_MoreJob extends Activity
 	@AfterViews
 	void afterOncreate()
 	{
-		commembertab commembertab = AppContext.getUserInfo(Common_MoreJob.this);
 		selectorUi = new SelectorFragment_();
 		dictionary = DictionaryHelper.getDictionaryFromAssess(Common_MoreJob.this, "PG_MOREJOB");
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("bean", dictionary);
 		selectorUi.setArguments(bundle);
 		switchContent(mContent, selectorUi);
-		tv_title.setText(commembertab.getrealName());
+		tv_title.setText("更多工作");
 		appContext = (AppContext) getApplication();
 		initAnimalListView();
 	}

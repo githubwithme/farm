@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
@@ -27,6 +28,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -39,20 +41,60 @@ import java.util.List;
 @EFragment
 public class AddPlantObservation_StepTwo extends Fragment
 {
+    Button currentView;
     FragmentCallBack_AddPlantObservation fragmentCallBack = null;
     @ViewById
     ListView lv;
+    @ViewById
+    Button btn_szqq;
+    @ViewById
+    Button btn_szzq;
+    @ViewById
+    Button btn_szhq;
     AddPlantObservation_StepTwo_Adapter addStd_cmd_stepOne_adapter;
     private List<Dictionary> listData = new ArrayList<Dictionary>();
     com.farm.bean.commembertab commembertab;
     Dictionary dic_comm;
     Dictionary_wheel dictionary_wheel;
 
+    @Click
+    void btn_szqq()
+    {
+        currentView=btn_szqq;
+        btn_szqq.setSelected(true);
+        btn_szzq.setSelected(false);
+        btn_szhq.setSelected(false);
+        Bundle bundle = new Bundle();
+        bundle.putInt("INDEX", 0);
+        fragmentCallBack.callbackFun2(bundle);
+    }
+    @Click
+    void btn_szzq()
+    {
+        currentView=btn_szzq;
+        btn_szqq.setSelected(false);
+        btn_szzq.setSelected(true);
+        btn_szhq.setSelected(false);
+        Bundle bundle = new Bundle();
+        bundle.putInt("INDEX", 0);
+        fragmentCallBack.callbackFun2(bundle);
+    }
+    @Click
+    void btn_szhq()
+    {
+        currentView=btn_szhq;
+        btn_szqq.setSelected(false);
+        btn_szzq.setSelected(false);
+        btn_szhq.setSelected(true);
+        Bundle bundle = new Bundle();
+        bundle.putInt("INDEX", 0);
+        fragmentCallBack.callbackFun2(bundle);
+    }
     @AfterViews
     void afterOncreate()
     {
 //        getCommandlist();
-        getTestData("gcq");
+//        getTestData("gcq");
     }
 
     @Override
@@ -75,7 +117,7 @@ public class AddPlantObservation_StepTwo extends Fragment
 
     public String getGcq()
     {
-        return addStd_cmd_stepOne_adapter.getCurrentItem();
+        return currentView.getText().toString();
     }
 
     private void getCommandlist()

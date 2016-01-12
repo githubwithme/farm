@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -60,10 +62,15 @@ public class GrowthTreeActivity extends Activity
     ExpandAniLinearLayout swipe_list_ani;
     @ViewById
     ListView lv_tree;
+    TreeAdapter treeAdapter;
+    @ViewById
+    RelativeLayout rl_pb;
+    @ViewById
+    LinearLayout ll_tip;
+    @ViewById
+    ProgressBar pb;
     @ViewById
     TextView tv_tip;
-    TreeAdapter treeAdapter;
-
     @Click
     void btn_add()
     {
@@ -125,6 +132,7 @@ public class GrowthTreeActivity extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
+
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcjl.class);
 //                        JSONObject jsonObject = utils.parseJsonFile(GrowthTreeActivity.this, "dictionary.json");
 //                        listNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("gcjllist"), Result.class).getRows().toJSONString(), PlantGcjl.class);
@@ -132,14 +140,19 @@ public class GrowthTreeActivity extends Activity
                         treeAdapter = new TreeAdapter(GrowthTreeActivity.this, listNewData);
                         lv_tree.setAdapter(treeAdapter);
                         setListViewHeightBasedOnChildren(lv_tree);
+                        rl_pb.setVisibility(View.GONE);
                     } else
                     {
                         listNewData = new ArrayList<PlantGcjl>();
-                        tv_tip.setVisibility(View.VISIBLE);
+                        ll_tip.setVisibility(View.VISIBLE);
+                        tv_tip.setText("暂无数据！");
+                        pb.setVisibility(View.GONE);
                     }
                 } else
                 {
-                    AppContext.makeToast(GrowthTreeActivity.this, "error_connectDataBase");
+                    ll_tip.setVisibility(View.VISIBLE);
+                    tv_tip.setText("数据加载异常！");
+                    pb.setVisibility(View.GONE);
                     return;
                 }
             }
@@ -147,7 +160,9 @@ public class GrowthTreeActivity extends Activity
             @Override
             public void onFailure(HttpException arg0, String arg1)
             {
-                AppContext.makeToast(GrowthTreeActivity.this, "exception_network");
+                ll_tip.setVisibility(View.VISIBLE);
+                tv_tip.setText("网络连接异常！");
+                pb.setVisibility(View.GONE);
             }
 
         });

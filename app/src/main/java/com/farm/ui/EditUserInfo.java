@@ -2,11 +2,13 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
@@ -27,16 +29,28 @@ import java.util.List;
 @EActivity(R.layout.showuserinfo)
 public class EditUserInfo extends Activity
 {
-
+	commembertab commembertab;
 	@ViewById
 	CircleImageView circle_img;
 	String userid;
-
+	@ViewById
+	TextView tv_name;
+	@ViewById
+	TextView tv_sex;
+	@ViewById
+	TextView tv_zw;
+	@ViewById
+	TextView tv_phone;
+	@ViewById
+	TextView tv_address;
+	@ViewById
+	TextView tv_ssyq;
 	@AfterViews
 	void afterOncreate()
 	{
+		showData(commembertab);
 //		getShowUserInfo(userid);
-		BitmapHelper.setImageViewBackground(EditUserInfo.this, circle_img, "http://img.popoho.com/UploadPic/2010-12/201012297441441.png");
+//		BitmapHelper.setImageViewBackground(EditUserInfo.this, circle_img, "http://img.popoho.com/UploadPic/2010-12/201012297441441.png");
 	}
 
 	@Override
@@ -45,6 +59,7 @@ public class EditUserInfo extends Activity
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
 		userid = getIntent().getStringExtra("userid");
+		 commembertab= AppContext.getUserInfo(EditUserInfo.this);
 	}
 
 	private void getShowUserInfo(String userid)
@@ -94,8 +109,12 @@ public class EditUserInfo extends Activity
 
 	private void showData(commembertab commembertab)
 	{
-		// BitmapHelper.setImageViewBackground(ShowUserInfo.this, circle_img,
-		// "http://img.popoho.com/UploadPic/2010-12/201012297441441.png");
+		tv_name.setText(commembertab.getrealName());
+		tv_sex.setText(commembertab.getrealName());
+		tv_address.setText(commembertab.getcontractName());
+		tv_ssyq.setText(commembertab.getparkName()+"-"+commembertab.getareaName());
+		tv_phone.setText(commembertab.getuserCell());
+		BitmapHelper.setImageViewBackground(EditUserInfo.this, circle_img,AppConfig.baseurl+commembertab.getimgurl());
 	}
 
 }
