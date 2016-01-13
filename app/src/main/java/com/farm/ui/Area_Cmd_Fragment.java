@@ -15,6 +15,7 @@ import com.farm.adapter.GoodsSelected_Adapter;
 import com.farm.bean.Type;
 import com.farm.bean.goodslisttab;
 import com.farm.com.custominterface.FragmentCallBack;
+import com.farm.widget.CustomListView;
 
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class Area_Cmd_Fragment extends Fragment
 {
     List<goodslisttab> list;
     FragmentCallBack fragmentCallBack = null;
-    private ListView morelist;
-    private ListView list_goods;
+    private CustomListView morelist;
+    private CustomListView list_goods;
     private Area_Cmd_Adapter area_cmd_adapter;
     private GoodsSelected_Adapter goodsadapter;
     private Type type;
@@ -43,8 +44,8 @@ public class Area_Cmd_Fragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.area_cmd_fragment, null);
-        morelist = (ListView) view.findViewById(R.id.morelist);
-        list_goods = (ListView) view.findViewById(R.id.list_goods);
+        morelist = (CustomListView) view.findViewById(R.id.morelist);
+        list_goods = (CustomListView) view.findViewById(R.id.list_goods);
 //        toptype = (TextView) view.findViewById(R.id.toptype);
 //        tv_number = (TextView) view.findViewById(R.id.tv_number);
 //        tv_dw = (TextView) view.findViewById(R.id.tv_dw);

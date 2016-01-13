@@ -245,7 +245,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
 //                    currentlistItemView.tv_flsl.setText(et_flsl.getText().toString() + commandtab_single.getInstance().getNongzidw());
 //                    customDialog_flsl.dismiss();
 //                }
-
+                currentlistItemView.tv_flsl.setVisibility(View.VISIBLE);
                 currentlistItemView.tv_flsl.setText(goodsnote);
                 customDialog_flsl.dismiss();
             }

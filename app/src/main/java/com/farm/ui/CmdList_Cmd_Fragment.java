@@ -78,6 +78,6 @@ public class CmdList_Cmd_Fragment extends Fragment
     {
         // TODO Auto-generated method stub
         super.onAttach(activity);
-        fragmentCallBack = (AddStd_Cmd) activity;
+        fragmentCallBack = (FragmentCallBack) activity;
     }
 }

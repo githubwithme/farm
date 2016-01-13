@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -71,6 +72,9 @@ public class GrowthTreeActivity extends Activity
     ProgressBar pb;
     @ViewById
     TextView tv_tip;
+    @ViewById
+    ImageButton btn_add;
+
     @Click
     void btn_add()
     {
@@ -82,6 +86,11 @@ public class GrowthTreeActivity extends Activity
     @AfterViews
     void afterOncreate()
     {
+        commembertab commembertab = AppContext.getUserInfo(GrowthTreeActivity.this);
+        if (!commembertab.getnlevel().equals("2"))
+        {
+            btn_add.setVisibility(View.GONE);
+        }
         lv_tree.setAdapter(new TreeAdapter(GrowthTreeActivity.this, listNewData));
         lv_tree.setOnItemClickListener(new OnItemClickListener()
         {
@@ -272,9 +281,9 @@ public class GrowthTreeActivity extends Activity
                 listItemView.ll_right.setVisibility(View.VISIBLE);
                 listItemView.tv_cjtime_right.setText(PlantGcjl.getRegDate().substring(0, PlantGcjl.getRegDate().lastIndexOf(" ")));
                 listItemView.tv_sg_right.setVisibility(View.VISIBLE);
-                listItemView.tv_sg_right.setText("树高：" + PlantGcjl.gethNum()+"m");
-                listItemView.tv_wj_right.setText("围径：" + PlantGcjl.getwNum()+"m");
-                listItemView.tv_ys_right.setText("叶数：" + PlantGcjl.getyNum()+"m");
+                listItemView.tv_sg_right.setText("树高：" + PlantGcjl.gethNum() + "m");
+                listItemView.tv_wj_right.setText("围径：" + PlantGcjl.getwNum() + "m");
+                listItemView.tv_ys_right.setText("叶数：" + PlantGcjl.getyNum() + "m");
                 if (PlantGcjl.getImgUrl().size() != 0)
                 {
                     BitmapHelper.setImageViewBackground(context, listItemView.iv_img_right, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
@@ -285,9 +294,9 @@ public class GrowthTreeActivity extends Activity
                 listItemView.ic_center.setBackground(getResources().getDrawable(resleft[(int) (Math.random() * resleft.length)]));
                 listItemView.ll_left.setVisibility(View.VISIBLE);
                 listItemView.tv_cjtime_left.setText(PlantGcjl.getRegDate().substring(0, PlantGcjl.getRegDate().lastIndexOf(" ")));
-                listItemView.tv_sg_left.setText("树高：" + PlantGcjl.gethNum()+"m");
-                listItemView.tv_wj_left.setText("围径：" + PlantGcjl.getwNum()+"m");
-                listItemView.tv_ys_left.setText("叶数：" + PlantGcjl.getyNum()+"m");
+                listItemView.tv_sg_left.setText("树高：" + PlantGcjl.gethNum() + "m");
+                listItemView.tv_wj_left.setText("围径：" + PlantGcjl.getwNum() + "m");
+                listItemView.tv_ys_left.setText("叶数：" + PlantGcjl.getyNum() + "m");
 
                 if (PlantGcjl.getImgUrl().size() != 0)
                 {

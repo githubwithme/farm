@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.farm.R;
+import com.farm.widget.CircleImageView;
 
 public class AddStd_cmd_steponestemp_GridViewAdapter extends BaseAdapter
 {
@@ -57,6 +58,7 @@ public class AddStd_cmd_steponestemp_GridViewAdapter extends BaseAdapter
         {
             type = sn[position];
             view.name.setText(type);
+            view.circle_img.setImageResource(R.color.bg_blue);
         }
 
         return convertView;
@@ -65,10 +67,12 @@ public class AddStd_cmd_steponestemp_GridViewAdapter extends BaseAdapter
     private class Holder
     {
         private TextView name;
+        private CircleImageView circle_img;
 
         public Holder(View view)
         {
             name = (TextView) view.findViewById(R.id.typename);
+            circle_img = (CircleImageView) view.findViewById(R.id.circle_img);
         }
     }
 

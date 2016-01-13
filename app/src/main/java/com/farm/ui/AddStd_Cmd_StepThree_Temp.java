@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -73,7 +73,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
     @ViewById
     Button btn_next;
     @ViewById
-    ScrollView cmd_tools_scrlllview;
+    HorizontalScrollView cmd_tools_scrlllview;
     @ViewById
     LinearLayout cmd_tools;
     @ViewById
@@ -121,6 +121,9 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
             view.setOnClickListener(toolsItemListener);
             TextView textView = (TextView) view.findViewById(R.id.text);
             textView.setText(list.get(i));
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+            lp.setMargins(40, 1, 40, 1);
+            textView.setLayoutParams(lp);
             cmd_tools.addView(view);
             tvList[i] = textView;
             views[i] = view;

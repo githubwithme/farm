@@ -44,6 +44,7 @@
             android:layout_width="40dip"
             android:layout_height="40dip"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             android:layout_toLeftOf="@id/btn_search"
             android:background="@null"
             android:contentDescription=""

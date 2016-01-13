@@ -1,6 +1,8 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.farm.bean.FJ_SCFJ;
 import com.farm.bean.plantgrowthtab;
 import com.farm.common.BitmapHelper;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -67,12 +70,12 @@ public class AddPlantObservationAdapter_MakeSure extends BaseAdapter
 
     public Object getItem(int arg0)
     {
-        return null;
+        return listItems.get(arg0);
     }
 
     public long getItemId(int arg0)
     {
-        return 0;
+        return arg0;
     }
 
 
@@ -131,6 +134,19 @@ public class AddPlantObservationAdapter_MakeSure extends BaseAdapter
                 imageView.setLayoutParams(lp);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 BitmapHelper.setImageView(context, imageView, list_fj_scfj.get(i).getFJBDLJ());
+                imageView.setTag(list_fj_scfj.get(i).getFJBDLJ());
+                imageView.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        String bdlj = v.getTag().toString();
+                        File file = new File(bdlj);
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(Uri.fromFile(file), "image/*");
+                        context.startActivity(intent);
+                    }
+                });
                 listItemView.ll_picture.addView(imageView);
             }
 

@@ -54,7 +54,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dip"
+            android:layout_height="40dip"
             android:orientation="horizontal"
             >
 
@@ -65,9 +65,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/tag_next"
                 android:gravity="center"
-                android:text="1选择指令"
+                android:text="1选指令"
                 android:textColor="@color/white"
-                android:textSize="@dimen/size_sp_15"
+                android:textSize="@dimen/size_sp_16"
                 />
 
 
@@ -77,9 +77,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="2选择肥料"
+                android:text="2选肥料"
                 android:textColor="#5B5B5B"
-                android:textSize="@dimen/size_sp_15"
+                android:textSize="@dimen/size_sp_16"
                 />
 
 
@@ -89,9 +89,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="3选择区域"
+                android:text="3选区域"
                 android:textColor="#5B5B5B"
-                android:textSize="@dimen/size_sp_15"
+                android:textSize="@dimen/size_sp_16"
                 />
 
 
@@ -103,8 +103,7 @@
                 android:gravity="center"
                 android:text="4其他"
                 android:textColor="#5B5B5B"
-                android:textSize="@dimen/size_sp_15"
-                />
+                android:textSize="@dimen/size_sp_16"/>
 
             <TextView
                 android:id="@+id/text_six"
@@ -114,7 +113,7 @@
                 android:gravity="center"
                 android:text="5确认"
                 android:textColor="#5B5B5B"
-                android:textSize="@dimen/size_sp_15"
+                android:textSize="@dimen/size_sp_16"
                 />
         </LinearLayout>
 

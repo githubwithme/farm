@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -181,6 +182,7 @@ public class AddPlantObservation_stepFive_bx_Adapter extends BaseExpandableListA
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_parent_bx, null);
         }
+        ImageView iv = (ImageView) convertView.findViewById(R.id.iv);
         TextView tv = (TextView) convertView.findViewById(R.id.parent_textview);
 
         tv.setTag(groupPosition);

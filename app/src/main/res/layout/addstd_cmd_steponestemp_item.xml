@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    android:orientation="vertical" >
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:gravity="center"
+              android:orientation="vertical">
 
 
+    <FrameLayout
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:layout_centerInParent="true">
 
-    <TextView
-        android:id="@+id/typename"
-        android:layout_width="70dip"
-        android:background="@drawable/background_view_rounded_single"
-        android:layout_height="50dip"
-        android:gravity="center"
-        android:textSize="@dimen/size_14" />
+        <com.farm.widget.CircleImageView
+            android:id="@+id/circle_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@color/transparent"
+            app:border_color="@color/transparent"
+            app:border_width="0px"/>
+
+
+        <TextView
+            android:id="@+id/typename"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="13sp"/>
+    </FrameLayout>
+
+
 
 </LinearLayout>

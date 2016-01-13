@@ -485,7 +485,7 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
         switch (v.getId())
         {
             case R.id.btn_standardprocommand:
-                intent = new Intent(getActivity(), AddStd_Cmd_.class);
+                intent = new Intent(getActivity(), AddStd_Cmd_Self_.class);
                 intent.putExtra("level", "0");
                 startActivity(intent);
                 pw_command.dismiss();

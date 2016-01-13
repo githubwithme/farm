@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.AddPlantObservationAdapter_MakeSure;
 import com.farm.adapter.AddPlantObservation_stepFive_bx_Adapter;
 import com.farm.adapter.AddPlantObservation_stepFive_zz_Adapter;
 import com.farm.app.AppConfig;
@@ -27,6 +28,7 @@ import com.farm.bean.jobtab;
 import com.farm.bean.plantgrowthtab;
 import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
 import com.farm.common.utils;
+import com.farm.widget.CustomListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -81,6 +83,8 @@ public class AddPlantObservation_stepFive extends Fragment
     ExpandableListView expanded_bx;
     @ViewById
     ExpandableListView expanded_zz;
+    @ViewById
+    CustomListView lv_zz;
 
     @Click
     void btn_save()
@@ -123,13 +127,13 @@ public class AddPlantObservation_stepFive extends Fragment
         list_fj_scfj = addPlantObservation_stepThree.getFJ_SCFJList();
 
         list_plantgrowthtab = addPlantObservation_stepThree.getPlanttabList();
-//        AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(getActivity(), list_plantgrowthtab, list_fj_scfj);
-//        lv.setAdapter(addPlantObservationAdapter);
+        AddPlantObservationAdapter_MakeSure addPlantObservationAdapter = new AddPlantObservationAdapter_MakeSure(getActivity(), list_plantgrowthtab, list_fj_scfj);
+        lv_zz.setAdapter(addPlantObservationAdapter);
 
-        addPlantObservation_stepFive_zz_adapter = new AddPlantObservation_stepFive_zz_Adapter(getActivity(), expanded_zz, list_plantgrowthtab, list_fj_scfj);
-        expanded_zz.setAdapter(addPlantObservation_stepFive_zz_adapter);
+//        addPlantObservation_stepFive_zz_adapter = new AddPlantObservation_stepFive_zz_Adapter(getActivity(), expanded_zz, list_plantgrowthtab, list_fj_scfj);
+//        expanded_zz.setAdapter(addPlantObservation_stepFive_zz_adapter);
 //        utils.setListViewHeightBasedOnChildren(expanded_zz);
-        utils.setListViewHeight(expanded_zz);
+//        utils.setListViewHeight(expanded_zz);
 //        for (int i = 0; i < list_plantgrowthtab.size(); i++)
 //        {
 //            expanded_zz.expandGroup(i);

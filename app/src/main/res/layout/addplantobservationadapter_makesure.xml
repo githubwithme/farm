@@ -17,29 +17,17 @@
         android:background="@drawable/background_view_rounded_single"
         android:orientation="vertical">
 
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_plantname"
             android:layout_width="match_parent"
             android:layout_height="45dip"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_plantname"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/color_orange"
-                android:gravity="center"
-                android:inputType="numberDecimal"
-                android:text="植株一"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_color"/>
+            android:layout_weight="1"
+            android:background="@color/color_orange"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:text="植株一"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,7 +109,7 @@
                 android:gravity="center"
                 android:inputType="numberDecimal"
                 android:text=""
-                android:textColor="@color/red"
+                android:textColor="@color/bg_yellow"
                 android:textSize="@dimen/size_14"/>
 
             <View
@@ -138,7 +126,7 @@
                 android:gravity="center"
                 android:inputType="numberDecimal"
                 android:text=""
-                android:textColor="@color/red"
+                android:textColor="@color/bg_yellow"
                 android:textSize="@dimen/size_14"/>
 
             <View
@@ -155,7 +143,7 @@
                 android:gravity="center"
                 android:inputType="numberDecimal"
                 android:text=""
-                android:textColor="@color/red"
+                android:textColor="@color/bg_yellow"
                 android:textSize="@dimen/size_14"/>
 
             <View
@@ -172,7 +160,7 @@
                 android:gravity="center"
                 android:inputType="numberDecimal"
                 android:text=""
-                android:textColor="@color/red"
+                android:textColor="@color/bg_yellow"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
 
@@ -186,21 +174,6 @@
             android:layout_height="45dip"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="center"
-                android:inputType="numberDecimal"
-                android:text="是否异株"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line_color"/>
 
             <CheckBox
                 android:id="@+id/cb_sfyz"
@@ -208,97 +181,45 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@null"
+                android:clickable="false"
+                android:enabled="false"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:text="是"
+                android:text="异株"
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
-
-
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_color"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dip"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="center"
-                android:inputType="numberDecimal"
-                android:text="是否抽蕾"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line_color"/>
 
             <CheckBox
                 android:id="@+id/cb_sfcl"
                 android:layout_width="0dip"
+                android:enabled="false"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@null"
+                android:clickable="false"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:text="是"
+                android:text="抽蕾"
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_color"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dip"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="center"
-                android:inputType="numberDecimal"
-                android:text="是否留芽"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line_color"/>
 
             <CheckBox
                 android:id="@+id/cb_sfly"
                 android:layout_width="0dip"
+                android:enabled="false"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@null"
+                android:clickable="false"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:text="是"
+                android:text="留芽"
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
 
 
         </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"

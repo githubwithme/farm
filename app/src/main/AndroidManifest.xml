@@ -56,6 +56,7 @@
         <activity
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".ui.AddStd_Cmd_Self_"/>
         <activity android:name=".ui.NCZ_PQ_TodayCommand_"/>
         <activity android:name=".ui.NCZ_GddList_"/>
         <activity android:name=".ui.NCZ_GrowthTreeActivity_"/>

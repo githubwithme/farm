@@ -224,14 +224,14 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
                 tvList[i].setBackgroundColor(0x00000000);
                 tvList[i].setTextColor(0xFF000000);
                 TextPaint tp = tvList[i].getPaint();
-                tvList[i].setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_7));
+//                tvList[i].setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_7));
                 tp.setFakeBoldText(false);
             }
         }
 
         tvList[id].setBackgroundColor(0xFFFFFFFF);
         tvList[id].setTextColor(0xFFFF5D5E);
-        tvList[id].setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_7));
+//        tvList[id].setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_7));
         TextPaint tp = tvList[id].getPaint();
         tp.setFakeBoldText(true);
     }

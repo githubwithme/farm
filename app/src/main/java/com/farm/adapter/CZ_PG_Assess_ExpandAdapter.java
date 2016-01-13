@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -207,6 +208,7 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_parent_assess, null);
         }
+        ImageView iv = (ImageView) convertView.findViewById(R.id.iv);
         TextView tv = (TextView) convertView.findViewById(R.id.parent_textview);
 
         tv.setTag(groupPosition);

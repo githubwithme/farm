@@ -41,6 +41,7 @@
         <ImageButton
             android:id="@+id/btn_add"
             android:layout_width="40dip"
+            android:visibility="gone"
             android:layout_height="40dip"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/btn_search"

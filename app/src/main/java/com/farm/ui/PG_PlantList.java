@@ -118,7 +118,7 @@ public class PG_PlantList extends Activity
     void afterOncreate()
     {
         commembertab commembertab = AppContext.getUserInfo(PG_PlantList.this);
-        if (commembertab.getnlevel().toString().equals("0"))
+        if (!commembertab.getnlevel().toString().equals("2"))
         {
             btn_add.setVisibility(View.GONE);
         }

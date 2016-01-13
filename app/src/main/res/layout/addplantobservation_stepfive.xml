@@ -76,11 +76,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dip"
+                android:visibility="gone"
                 android:layout_marginRight="20dip"
                 android:layout_marginTop="10dip"
                 android:background="@drawable/background_view_rounded_single"
                 android:groupIndicator="@null"/>
-
+            <com.farm.widget.CustomListView
+                android:id="@+id/lv_zz"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="65dip"
+                android:divider="@color/transparent"
+                android:dividerHeight="0dip"/>
 
         </LinearLayout>
     </ScrollView>

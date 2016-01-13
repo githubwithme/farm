@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/light_gray"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
 
 
     <FrameLayout
@@ -15,8 +15,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dip"
+        android:layout_below="@+id/top_container"
         android:orientation="vertical">
 
         <LinearLayout
@@ -172,17 +173,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"/>
 
-            <Button
-                android:id="@+id/btn_next"
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="20dip"
-                android:background="@drawable/background_view_rounded_single"
-                android:text="下一步"
-                android:textColor="@color/bg_text"/>
+
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginBottom="10dip"
+        android:background="@drawable/background_view_rounded_single"
+        android:text="下一步"
+        android:textColor="@color/bg_text"/>
+</RelativeLayout>

@@ -367,7 +367,7 @@ public class CZ_GddList extends Activity
                 if (PlantGcd == null) return;
                 commembertab commembertab = AppContext.getUserInfo(CZ_GddList.this);
                 AppContext.updateStatus(CZ_GddList.this, "0", PlantGcd.getId(), "3", commembertab.getId());
-                Intent intent = new Intent(CZ_GddList.this, NCZ_GrowthTreeActivity_.class);
+                Intent intent = new Intent(CZ_GddList.this, GrowthTreeActivity_.class);
                 intent.putExtra("gcdid", PlantGcd.getId()); // 因为list中添加了头部,因此要去掉一个
                 CZ_GddList.this.startActivity(intent);
             }
