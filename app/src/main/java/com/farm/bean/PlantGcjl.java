@@ -41,7 +41,40 @@ public class PlantGcjl implements Parcelable
     public List<String> imgUrl;
     public List<plantgrowthtab> plantGrowth;
     public Dictionary bx;
+    public String sfcl;
+    public String sfly;
+    public String sfyz;
 
+
+    public String getSfyz()
+    {
+        return sfyz;
+    }
+
+    public void setSfyz(String sfyz)
+    {
+        this.sfyz = sfyz;
+    }
+
+    public String getSfly()
+    {
+        return sfly;
+    }
+
+    public void setSfly(String sfly)
+    {
+        this.sfly = sfly;
+    }
+
+    public String getSfcl()
+    {
+        return sfcl;
+    }
+
+    public void setSfcl(String sfcl)
+    {
+        this.sfcl = sfcl;
+    }
 
     public Dictionary getBx()
     {
@@ -302,6 +335,9 @@ public class PlantGcjl implements Parcelable
             p.imgUrl = source.readArrayList(List.class.getClassLoader());
             p.plantGrowth = source.readArrayList(plantgrowthtab.class.getClassLoader());
             p.bx = source.readParcelable(Dictionary.class.getClassLoader());
+            p.setSfcl(source.readString());
+            p.setSfly(source.readString());
+            p.setSfyz(source.readString());
             return p;
         }
 
@@ -337,7 +373,9 @@ public class PlantGcjl implements Parcelable
         p.writeList(imgUrl);
         p.writeList(plantGrowth);
         p.writeParcelable((Parcelable) bx, arg1);
-
+        p.writeString(sfcl);
+        p.writeString(sfly);
+        p.writeString(sfyz);
     }
 
     @Override

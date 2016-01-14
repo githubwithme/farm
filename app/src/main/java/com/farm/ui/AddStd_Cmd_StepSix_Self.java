@@ -20,6 +20,7 @@ import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
 import com.farm.bean.goodslisttab_flsl;
 import com.farm.bean.jobtab;
+import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -42,15 +43,13 @@ import java.util.List;
 @EFragment
 public class AddStd_Cmd_StepSix_Self extends Fragment
 {
-    AddStd_Cmd fragmentCallBack;
+    FragmentCallBack fragmentCallBack;
     @ViewById
     TextView tv_importance;
     @ViewById
     TextView tv_selectcmd;
     @ViewById
     TextView tv_workday;
-    @ViewById
-    TextView tv_nz;
     @ViewById
     TextView tv_timelimit;
     @ViewById
@@ -77,7 +76,7 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
     @AfterViews
     void afterOncreate()
     {
-//        showData();
+        showData();
     }
 
     @Override
@@ -112,7 +111,6 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
         tv_importance.setText(commandtab_single.getImportancetype());
         tv_flyl.setText(tempflyl);
-        tv_nz.setText(nongzi_temp.substring(0,nongzi_temp.length()-1));
         tv_selectcmd.setText(commandtab_single.getstdJobTypeName() + "-" + commandtab_single.getstdJobName());
         tv_workday.setText(commandtab_single.getcommDays());
         tv_note.setText(commandtab_single.getcommNote());
@@ -147,7 +145,6 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
         params.addQueryStringParameter("stdJobName", commandtab_single.getstdJobName());
         params.addQueryStringParameter("importance", commandtab_single.getimportance());
         params.addQueryStringParameter("execLevel", "1");
-        params.addQueryStringParameter("", fragmentCallBack.level);
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -199,7 +196,7 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
     public void onAttach(Activity activity)
     {
         super.onAttach(activity);
-        fragmentCallBack = (AddStd_Cmd) activity;
+        fragmentCallBack = (FragmentCallBack) activity;
     }
     @Override
     public void onDestroyView()

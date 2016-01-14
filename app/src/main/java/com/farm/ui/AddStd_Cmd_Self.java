@@ -36,6 +36,7 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
     ViewPagerAdapter_AddStd_Cmd_Self adapter;
     AddStd_Cmd_StepOne_Temp addStd_cmd_stepOne;
     AddStd_Cmd_StepTwo addStd_cmd_stepTwo;
+    AddStd_Cmd_StepThree_Self addStd_cmd_stepThree_self;
     AddStd_Cmd_StepFive addStd_cmd_stepFive;
     AddStd_Cmd_StepSix_Self addStd_cmd_stepSix;
     private ArrayList<Fragment> fragmentList;
@@ -43,6 +44,10 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
     TextView text_one;
     @ViewById
     TextView text_three;
+    @ViewById
+    TextView text_four;
+    @ViewById
+    ImageView image_four;
     @ViewById
     TextView text_five;
     @ViewById
@@ -70,24 +75,27 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
         vPager.setCurrentItem(0);
     }
 
-
     @Click
     void text_three()
     {
         vPager.setCurrentItem(1);
     }
 
-
+    @Click
+    void text_four()
+    {
+        vPager.setCurrentItem(2);
+    }
     @Click
     void text_five()
     {
-        vPager.setCurrentItem(2);
+        vPager.setCurrentItem(3);
     }
 
     @Click
     void text_six()
     {
-        vPager.setCurrentItem(3);
+        vPager.setCurrentItem(4);
     }
 
     @AfterViews
@@ -101,6 +109,7 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
         fragmentList = new ArrayList<Fragment>();
         addStd_cmd_stepOne = new AddStd_Cmd_StepOne_Temp_();
         addStd_cmd_stepTwo = new AddStd_Cmd_StepTwo_();
+        addStd_cmd_stepThree_self = new AddStd_Cmd_StepThree_Self_();
         addStd_cmd_stepFive = new AddStd_Cmd_StepFive_();
         addStd_cmd_stepSix = new AddStd_Cmd_StepSix_Self_();
 
@@ -141,16 +150,19 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
     {
         image_one.setBackgroundResource(R.drawable.line);
         image_three.setBackgroundResource(R.drawable.line);
+        image_four.setBackgroundResource(R.drawable.line);
         image_five.setBackgroundResource(R.drawable.line);
         image_six.setBackgroundResource(R.drawable.line);
 
         text_one.setBackgroundResource(R.color.white);
         text_three.setBackgroundResource(R.color.white);
+        text_four.setBackgroundResource(R.color.white);
         text_five.setBackgroundResource(R.color.white);
         text_six.setBackgroundResource(R.color.white);
 
         text_one.setTextColor(Color.parseColor("#5B5B5B"));
         text_three.setTextColor(Color.parseColor("#5B5B5B"));
+        text_four.setTextColor(Color.parseColor("#5B5B5B"));
         text_five.setTextColor(Color.parseColor("#5B5B5B"));
         text_six.setTextColor(Color.parseColor("#5B5B5B"));
 
@@ -169,28 +181,41 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
                 text_one.setBackgroundResource(R.drawable.tag_red);
                 text_three.setBackgroundResource(R.drawable.tag_next);
                 break;
-
             case 2:
+                image_four.setBackgroundResource(R.drawable.green_line);
+                text_one.setTextColor(Color.parseColor("#FFFFFF"));
+                text_three.setTextColor(Color.parseColor("#FFFFFF"));
+                text_four.setTextColor(Color.parseColor("#FFFFFF"));
+                text_one.setBackgroundResource(R.drawable.tag_red);
+                text_three.setBackgroundResource(R.drawable.tag_red);
+                text_four.setBackgroundResource(R.drawable.tag_next);
+                break;
+            case 3:
                 image_five.setBackgroundResource(R.drawable.green_line);
                 text_one.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
+                text_four.setTextColor(Color.parseColor("#FFFFFF"));
                 text_five.setTextColor(Color.parseColor("#FFFFFF"));
                 text_one.setBackgroundResource(R.drawable.tag_red);
                 text_three.setBackgroundResource(R.drawable.tag_red);
+                text_four.setBackgroundResource(R.drawable.tag_red);
                 text_five.setBackgroundResource(R.drawable.tag_next);
                 break;
-            case 3:
+            case 4:
                 image_six.setBackgroundResource(R.drawable.green_line);
                 text_one.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
+                text_four.setTextColor(Color.parseColor("#FFFFFF"));
                 text_five.setTextColor(Color.parseColor("#FFFFFF"));
                 text_six.setTextColor(Color.parseColor("#FFFFFF"));
                 text_one.setBackgroundResource(R.drawable.tag_red);
                 text_three.setBackgroundResource(R.drawable.tag_red);
+                text_four.setBackgroundResource(R.drawable.tag_red);
                 text_five.setBackgroundResource(R.drawable.tag_red);
                 text_six.setBackgroundResource(R.drawable.tag_next);
                 break;
         }
+
 
     }
 
@@ -224,10 +249,17 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
             case 0:
                 break;
             case 1:
+                AddStd_Cmd_StepThree_Self addStd_cmd_stepThree_self = (AddStd_Cmd_StepThree_Self) adapter.getFragment(currentItem + 1);
+                addStd_cmd_stepThree_self.update();
                 break;
             case 2:
-                adapter.updateData(currentItem);
+
             case 3:
+                AddStd_Cmd_StepSix_Self addStd_cmd_stepSix_self = (AddStd_Cmd_StepSix_Self) adapter.getFragment(currentItem + 1);
+                addStd_cmd_stepSix_self.update();
+                break;
+            case 4:
+
                 break;
         }
         vPager.setCurrentItem(currentItem + 1);

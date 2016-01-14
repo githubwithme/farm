@@ -9,8 +9,6 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.farm.ui.AddStd_Cmd_StepSix_Self;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -142,9 +140,27 @@ public class ViewPagerAdapter_AddStd_Cmd_Self extends PagerAdapter implements On
         }
     }
 
-    public void updateData(int item)
+    public Fragment getFragment(int item)
     {
         Fragment fragment = fragmentManager.findFragmentByTag(tagList.get(item));
+        return fragment;
+    }
+
+    public List<Fragment> getAllFragment()
+    {
+        List<Fragment> list_fragments = new ArrayList<>();
+        for (int i = 0; i < fragments.size(); i++)
+        {
+            Fragment fragment = fragmentManager.findFragmentByTag(tagList.get(i));
+            list_fragments.add(fragment);
+        }
+
+        return list_fragments;
+    }
+
+    public void updateData(int item)
+    {
+        Fragment fragment = fragmentManager.findFragmentByTag(tagList.get(item + 1));
         if (fragment != null)
         {
             switch (item)
@@ -156,7 +172,6 @@ public class ViewPagerAdapter_AddStd_Cmd_Self extends PagerAdapter implements On
                 case 2:
                     break;
                 case 3:
-                    ((AddStd_Cmd_StepSix_Self) fragment).update();
                     break;
 
                 default:

@@ -35,7 +35,7 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@id/ic_center"
             android:orientation="horizontal"
-            android:visibility="gone">
+    >
 
             <ImageView
                 android:id="@+id/iv_img_left"
@@ -96,10 +96,9 @@
             android:id="@+id/ll_right"
             android:layout_width="150dip"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dip"
             android:layout_toRightOf="@id/ic_center"
             android:orientation="horizontal"
-            android:visibility="gone">
+          >
 
             <ImageView
                 android:id="@+id/iv_img_right"
