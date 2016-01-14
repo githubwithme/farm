@@ -41,9 +41,9 @@ public class PlantGcjl implements Parcelable
     public List<String> imgUrl;
     public List<plantgrowthtab> plantGrowth;
     public Dictionary bx;
-    public String sfcl;
-    public String sfly;
-    public String sfyz;
+    public String sfcl="True";
+    public String sfly="";
+    public String sfyz="";
 
 
     public String getSfyz()

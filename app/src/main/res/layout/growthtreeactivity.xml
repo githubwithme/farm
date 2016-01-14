@@ -2,13 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white">
+                android:background="@color/light_gray">
 
     <RelativeLayout
         android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:layout_height="@dimen/titlebar_height">
 
         <ImageButton
             android:id="@+id/imgbtn_back"
@@ -32,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="观察记录列表"
+                android:text="观察记录生长树"
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/titlebar_textsize"/>
         </LinearLayout>
@@ -54,7 +53,7 @@
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0px"
         android:layout_below="@id/rl_titlebar"
         android:background="@color/line_color"/>
     <RelativeLayout
@@ -98,27 +97,35 @@
             android:layout_height="50dip"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_alignParentBottom="true"
+    android:layout_marginTop="@dimen/titlebar_height"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+  android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_ground1"/>
 
     <ListView
         android:id="@+id/lv_tree"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dip"
-        android:layout_marginTop="@dimen/titlebar_height"
         android:divider="@null"/>
+</RelativeLayout>
+
 
     <ImageButton
         android:id="@+id/btn_add"
-        android:layout_width="45dip"
-        android:layout_height="45dip"
-        android:layout_alignParentBottom="true"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dip"
-        android:layout_marginRight="20dip"
+        android:layout_marginTop="5dip"
+        android:layout_marginRight="15dip"
         android:background="@drawable/speedy"/>
-
-
 
 
 </RelativeLayout>
