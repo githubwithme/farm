@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.PlantGcd;
 import com.farm.bean.PlantGcjl;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
@@ -55,7 +56,7 @@ import java.util.List;
 @EActivity(R.layout.growthtreeactivity)
 public class GrowthTreeActivity extends Activity
 {
-    String gcdid;
+    PlantGcd plantGcd;
     int[] resleft = new int[]{R.drawable.centerleft, R.drawable.centerleft1, R.drawable.centerleft2};
     int[] resright = new int[]{R.drawable.centerright, R.drawable.centerright1, R.drawable.centerright2};
     String[] list_img;
@@ -74,13 +75,31 @@ public class GrowthTreeActivity extends Activity
     @ViewById
     TextView tv_tip;
     @ViewById
-    ImageButton btn_add;
+    TextView tv_yq;
+    @ViewById
+    TextView tv_pq;
+    @ViewById
+    TextView tv_zs;
+    @ViewById
+    Button btn_add;
+    @ViewById
+    LinearLayout ll_gk;
 
     @Click
     void btn_add()
     {
         Intent intent = new Intent(GrowthTreeActivity.this, AddPlantObservation_.class);
-        intent.putExtra("gcdid", gcdid);
+        intent.putExtra("gcdid", plantGcd.getId());
+        startActivity(intent);
+    }
+
+    @Click
+    void ll_gk()
+    {
+        Intent intent = new Intent(GrowthTreeActivity.this, PG_PlantList_.class);
+        intent.putExtra("bean",  plantGcd);
+        intent.putExtra("gcdid",  plantGcd.getId());
+        intent.putExtra("gcdName",  plantGcd.getPlantgcdName());
         startActivity(intent);
     }
 
@@ -114,7 +133,7 @@ public class GrowthTreeActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        gcdid = getIntent().getStringExtra("gcdid");
+        plantGcd = getIntent().getParcelableExtra("bean");
     }
 
 
@@ -125,7 +144,7 @@ public class GrowthTreeActivity extends Activity
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("gcdid", gcdid);
+        params.addQueryStringParameter("gcdid",  plantGcd.getId());
         params.addQueryStringParameter("orderby", "regDate desc");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
@@ -151,6 +170,10 @@ public class GrowthTreeActivity extends Activity
                         lv_tree.setAdapter(treeAdapter);
                         setListViewHeightBasedOnChildren(lv_tree);
                         rl_pb.setVisibility(View.GONE);
+
+//                        tv_yq.setText(listNewData.get(0).getPlantGrowth().get(0).getparkName());
+//                        tv_pq.setText(listNewData.get(0).getPlantGrowth().get(0).getareaName());
+//                        tv_zs.setText(listNewData.get(0).getPlantGrowth().size());
                     } else
                     {
                         listNewData = new ArrayList<PlantGcjl>();
@@ -297,9 +320,9 @@ public class GrowthTreeActivity extends Activity
                 listItemView.ll_right.setVisibility(View.VISIBLE);
                 listItemView.tv_cjtime_right.setText(PlantGcjl.getRegDate().substring(0, PlantGcjl.getRegDate().lastIndexOf(" ")));
                 listItemView.tv_sg_right.setVisibility(View.VISIBLE);
-                listItemView.tv_sg_right.setText( PlantGcjl.gethNum() + "m");
+                listItemView.tv_sg_right.setText(PlantGcjl.gethNum() + "m");
                 listItemView.tv_wj_right.setText(PlantGcjl.getwNum() + "m");
-                listItemView.tv_ys_right.setText( PlantGcjl.getyNum() + "m");
+                listItemView.tv_ys_right.setText(PlantGcjl.getyNum() + "片");
                 if (PlantGcjl.getImgUrl().size() != 0)
                 {
                     BitmapHelper.setImageViewBackground(context, listItemView.iv_img_right, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
@@ -320,9 +343,9 @@ public class GrowthTreeActivity extends Activity
                 listItemView.ic_center.setBackground(getResources().getDrawable(resleft[(int) (Math.random() * resleft.length)]));
                 listItemView.ll_left.setVisibility(View.VISIBLE);
                 listItemView.tv_cjtime_left.setText(PlantGcjl.getRegDate().substring(0, PlantGcjl.getRegDate().lastIndexOf(" ")));
-                listItemView.tv_sg_left.setText( PlantGcjl.gethNum() + "m");
-                listItemView.tv_wj_left.setText( PlantGcjl.getwNum() + "m");
-                listItemView.tv_ys_left.setText( PlantGcjl.getyNum() + "m");
+                listItemView.tv_sg_left.setText(PlantGcjl.gethNum() + "m");
+                listItemView.tv_wj_left.setText(PlantGcjl.getwNum() + "m");
+                listItemView.tv_ys_left.setText(PlantGcjl.getyNum() + "片");
 
                 if (PlantGcjl.getImgUrl().size() != 0)
                 {

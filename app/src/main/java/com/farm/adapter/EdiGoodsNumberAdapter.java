@@ -104,7 +104,7 @@ public class EdiGoodsNumberAdapter extends BaseAdapter
         goodslisttab = listItems.get(position);
         if (lmap.get(position) == null)
         {
-            convertView = listContainer.inflate(R.layout.addplantobservationadapter, null);
+            convertView = listContainer.inflate(R.layout.editgoodsnumberadapter, null);
             listItemView = new ListItemView();
             listItemView.tv_plantname = (TextView) convertView.findViewById(R.id.tv_plantname);
             listItemView.et_zg = (EditText) convertView.findViewById(R.id.et_zg);

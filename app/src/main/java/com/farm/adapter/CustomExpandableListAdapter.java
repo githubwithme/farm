@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,6 +39,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
 {
     TextView tempParentView;
     TextView tempChildView;
+    ImageView currentiv_tip = null;
+    ImageView currentiv_point = null;
+    View parentView;
     private int currentItem = 0;
     //    ShopAdapter shopAdapter;
     List<goodslisttab> list_goods = new ArrayList<goodslisttab>();
@@ -72,7 +76,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
         currentChildId = map_id.get(parentId[0])[0];
         currentParentName = parentData[0];
         currentChildName = map.get(parentData[0])[0];
-        adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
+        adapter = new AddStd_Cmd_goodslistdapter(context, currentiv_tip, list_goods);
         listview.setAdapter(adapter);
     }
 
@@ -90,7 +94,16 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
     {
         return childPosition;
     }
+    HashMap<Integer, HashMap<Integer, View>> lmap = new HashMap<Integer, HashMap<Integer, View>>();
+    HashMap<Integer, View> map_view = new HashMap<>();
+    ListItemView listItemView = null;
 
+    static class ListItemView
+    {
+        public ImageView iv_point;
+        public ImageView iv_tip;
+        public TextView tv;
+    }
     //设置子item的组件
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
@@ -98,51 +111,84 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
         String key = parentData[groupPosition];
         String[] childData = map.get(key);
         String info = map.get(key)[childPosition];
-        if (convertView == null)
+        View v = null;
+        if (lmap.get(groupPosition) != null)
+        {
+            HashMap<Integer, View> map1 = lmap.get(groupPosition);
+            v = lmap.get(groupPosition).get(childPosition);
+        }
+        if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_children_goods, null);
-        }
-        TextView tv = (TextView) convertView.findViewById(R.id.second_textview);
-        if (groupPosition == 0 && childPosition == 0)
-        {
-            tv.setTextColor(0xFFFF5D5E);
-            TextPaint tp = tv.getPaint();
-            tp.setFakeBoldText(true);
-            getGoodslist();
-            tempChildView = tv;
-        }
-        tv.setText(info);
-        tv.setTag(R.id.tag_fi, parentId[groupPosition]);
-        tv.setTag(R.id.tag_fn, key);
-        tv.setTag(R.id.tag_si, map_id.get(parentId[groupPosition])[childPosition]);
-        tv.setTag(R.id.tag_sn, info);
-        tv.setTag(R.id.tag_childsize, childData.length);
-        tv.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+            listItemView = new ListItemView();
+            listItemView.iv_tip = (ImageView) convertView.findViewById(R.id.iv_tip);
+            listItemView.iv_point = (ImageView) convertView.findViewById(R.id.iv_point);
+            listItemView.tv = (TextView) convertView.findViewById(R.id.second_textview);
+            if (groupPosition == 0 && childPosition == 0)
             {
-                if (tempChildView != null)
-                {
-                    tempChildView.setTextColor(context.getResources().getColor(R.color.bg_text));
-                    TextPaint tp = tempChildView.getPaint();
-                    tp.setFakeBoldText(false);
-                }
-
-                TextView textView = (TextView) v;
-                textView.setTextColor(0xFFFF5D5E);
-                TextPaint tp = textView.getPaint();
+                listItemView.iv_point.setVisibility(View.VISIBLE);
+                listItemView.tv.setTextColor(0xFFFF5D5E);
+                TextPaint tp = listItemView.tv.getPaint();
                 tp.setFakeBoldText(true);
-                tempChildView = textView;
-                currentParentId = (String) v.getTag(R.id.tag_fi);
-                currentParentName = (String) v.getTag(R.id.tag_fn);
-                currentChildId = (String) v.getTag(R.id.tag_si);
-                currentChildName = (String) v.getTag(R.id.tag_sn);
-                currentChildsize = (Integer) v.getTag(R.id.tag_childsize);
                 getGoodslist();
+                tempChildView = listItemView.tv;
+                currentiv_tip = listItemView.iv_tip;
+                currentiv_point = listItemView.iv_point;
             }
-        });
+            listItemView.tv.setText(info);
+            listItemView.tv.setTag(R.id.tag_fi, parentId[groupPosition]);
+            listItemView. tv.setTag(R.id.tag_fn, key);
+            listItemView.tv.setTag(R.id.tag_si, map_id.get(parentId[groupPosition])[childPosition]);
+            listItemView.tv.setTag(R.id.tag_sn, info);
+            listItemView.tv.setTag(R.id.tag_childsize, childData.length);
+            listItemView.tv.setTag(R.id.tag_parentview, convertView);
+            listItemView.tv.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    if (tempChildView != null)
+                    {
+                        tempChildView.setTextColor(context.getResources().getColor(R.color.bg_text));
+                        TextPaint tp = tempChildView.getPaint();
+                        tp.setFakeBoldText(false);
+                        currentiv_point.setVisibility(View.GONE);
+                    }
+
+
+                    TextView textView = (TextView) v;
+                    textView.setTextColor(0xFFFF5D5E);
+                    TextPaint tp = textView.getPaint();
+                    tp.setFakeBoldText(true);
+
+
+                    currentParentId = (String) v.getTag(R.id.tag_fi);
+                    currentParentName = (String) v.getTag(R.id.tag_fn);
+                    currentChildId = (String) v.getTag(R.id.tag_si);
+                    currentChildName = (String) v.getTag(R.id.tag_sn);
+                    currentChildsize = (Integer) v.getTag(R.id.tag_childsize);
+                    parentView = (View) v.getTag(R.id.tag_parentview);
+                    currentiv_tip = (ImageView) parentView.findViewById(R.id.iv_tip);
+                    currentiv_point = (ImageView) parentView.findViewById(R.id.iv_point);
+                    currentiv_point.setVisibility(View.VISIBLE);
+                    tempChildView = textView;
+                    getGoodslist();
+                }
+            });
+            convertView.setTag(listItemView);
+            map_view.put(childPosition, convertView);
+            lmap.put(groupPosition, map_view);
+            if (isLastChild)
+            {
+                map_view = new HashMap<>();
+            }
+        }else
+        {
+            convertView = lmap.get(groupPosition).get(childPosition);
+            listItemView = (ListItemView) convertView.getTag();
+        }
+
         return convertView;
     }
 
@@ -212,7 +258,14 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View v)
             {
-                mainlistview.expandGroup(Integer.valueOf(v.getTag().toString()));
+                if (mainlistview.isGroupExpanded(Integer.valueOf(v.getTag().toString())))
+                {
+                    mainlistview.collapseGroup(Integer.valueOf(v.getTag().toString()));
+                } else
+                {
+                    mainlistview.expandGroup(Integer.valueOf(v.getTag().toString()));
+                }
+//                mainlistview.expandGroup(Integer.valueOf(v.getTag().toString()));
                 if (tempParentView != null)
                 {
                     tempParentView.setTextColor(context.getResources().getColor(R.color.bg_text));
@@ -264,11 +317,13 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
                     if (result.getAffectedRows() != 0)
                     {
                         list_goods.clear();
-                        List<goodslisttab> list= JSON.parseArray(result.getRows().toJSONString(), goodslisttab.class);
+                        List<goodslisttab> list = JSON.parseArray(result.getRows().toJSONString(), goodslisttab.class);
                         list_goods.addAll(list);
                         if (list_goods != null)
                         {
-                            adapter.notifyDataSetChanged();
+                            adapter = new AddStd_Cmd_goodslistdapter(context, currentiv_tip, list_goods);
+                            listview.setAdapter(adapter);
+//                            adapter.notifyDataSetChanged();
 //                            listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
 //                            {
 //                                @Override
@@ -290,18 +345,18 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter
 //                                    CustomExpandableListAdapter.this.fragmentCallBack.stepTwo_setHeadText(bundle1);
 //                                }
 //                            });
-                            adapter.notifyDataSetChanged();
+//                            adapter.notifyDataSetChanged();
                         } else
                         {
                             list_goods = new ArrayList<goodslisttab>();
-                            adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
+                            adapter = new AddStd_Cmd_goodslistdapter(context, currentiv_tip, list_goods);
                             listview.setAdapter(adapter);
                         }
 
                     } else
                     {
                         list_goods = new ArrayList<goodslisttab>();
-                        adapter = new AddStd_Cmd_goodslistdapter(context, list_goods);
+                        adapter = new AddStd_Cmd_goodslistdapter(context, currentiv_tip, list_goods);
                         listview.setAdapter(adapter);
                     }
                 } else

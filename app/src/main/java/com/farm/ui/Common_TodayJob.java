@@ -88,9 +88,16 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
     @Click
     void btn_nature()
     {
-//		Intent intent = new Intent(getActivity(), Common_AddSpontaneityWork_.class);
-//		startActivity(intent);
-        showPop_addcommand();
+
+        if (commembertab.getnlevel().equals("1"))
+        {
+            Intent intent = new Intent(getActivity(), AddNotProductCommand_CZ_.class);
+            startActivity(intent);
+        } else
+        {
+            showPop_addcommand();
+        }
+
     }
 
     @Click
@@ -497,7 +504,11 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                 pw_command.dismiss();
                 break;
             case R.id.btn_nonprocommand:
-                intent = new Intent(getActivity(), AddNotProductCommand_.class);
+                intent = new Intent(getActivity(), AddNotProductCommand_CZ_.class);
+                if (commembertab.getnlevel()== null)
+                {
+
+                }
                 intent.putExtra("level", "0");
                 startActivity(intent);
                 pw_command.dismiss();

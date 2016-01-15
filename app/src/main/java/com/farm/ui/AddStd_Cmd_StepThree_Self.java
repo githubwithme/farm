@@ -40,6 +40,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,7 +50,7 @@ import java.util.List;
 @EFragment
 public class AddStd_Cmd_StepThree_Self extends Fragment
 {
-    List<goodslisttab> lsitNewData = null;
+    List<goodslisttab> lsitNewData = new ArrayList<>();
     EdiGoodsNumberAdapter ediGoodsNumberAdapter;
     List<Fragment> fragments;
     List<goodslisttab> list_goods;

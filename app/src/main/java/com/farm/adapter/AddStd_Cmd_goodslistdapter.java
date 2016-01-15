@@ -23,10 +23,12 @@ public class AddStd_Cmd_goodslistdapter extends BaseAdapter
     private List<goodslisttab> list;
     private goodslisttab goodslisttab;
     private Context context;
+    ImageView currentiv_tip = null;
 
-    public AddStd_Cmd_goodslistdapter(Context context, List<goodslisttab> list)
+    public AddStd_Cmd_goodslistdapter(Context context, ImageView currentiv_tip, List<goodslisttab> list)
     {
         this.list = list;
+        this.currentiv_tip = currentiv_tip;
         this.context = context;
     }
 
@@ -55,6 +57,7 @@ public class AddStd_Cmd_goodslistdapter extends BaseAdapter
         ListItemView listItemView = null;
         if (lmap.get(position) == null)
         {
+
             convertView = View.inflate(context, R.layout.item_gridview, null);
             listItemView = new ListItemView();
             listItemView.typeicon = (ImageView) convertView.findViewById(R.id.typeicon);
@@ -80,13 +83,43 @@ public class AddStd_Cmd_goodslistdapter extends BaseAdapter
                     goodslisttab goods = (goodslisttab) buttonView.getTag();
                     if (isChecked)
                     {
+
                         SqliteDb.save(context, goods);
+                        if (currentiv_tip != null)
+                        {
+                            currentiv_tip.setVisibility(View.VISIBLE);
+                        }
                     } else
                     {
                         SqliteDb.deleteGoods(context, goodslisttab.class, goods.getId());
+                        currentiv_tip.setVisibility(View.GONE);
+                        List<goodslisttab> list_goodslisttab = SqliteDb.getSelectCmdArea(context, goodslisttab.class);
+                        for (int i = 0; i < list_goodslisttab.size(); i++)
+                        {
+                            if (list_goodslisttab.get(i).getId().equals(goodslisttab.getId()))
+                            {
+                                if (currentiv_tip != null)
+                                {
+                                    currentiv_tip.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        }
                     }
                 }
             });
+            List<goodslisttab> list_goodslisttab = SqliteDb.getSelectCmdArea(context, goodslisttab.class);
+            for (int i = 0; i < list_goodslisttab.size(); i++)
+            {
+                if (list_goodslisttab.get(i).getId().equals(goodslisttab.getId()))
+                {
+                    listItemView.cb_fl.setChecked(true);
+                    if (currentiv_tip != null)
+                    {
+                        currentiv_tip.setVisibility(View.VISIBLE);
+                    }
+
+                }
+            }
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
         } else

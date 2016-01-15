@@ -62,5 +62,8 @@
     <item name="tag_tn" type="id"></item>
     <item name="tag_val" type="id"></item>
     <item name="tag_childsize" type="id"></item>
+    <item name="tag_parentview" type="id"></item>
+    <item name="tag_bean" type="id"></item>
+    <item name="tag_postion" type="id"></item>
     <string name="title_activity_observation_record">ObservationRecordActivity</string>
 </resources>

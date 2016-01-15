@@ -1,64 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="@color/white"
               android:gravity="center"
               android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="70dip"
+        android:layout_height="80dip"
         android:layout_marginBottom="10dip"
-        android:layout_marginLeft="15dip"
-        android:layout_marginRight="15dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="20dip"
         android:layout_marginTop="10dip"
         android:background="@color/white"
         android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/cb_fl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+
 
         <RelativeLayout
+            android:id="@+id/rl_img"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dip"
             android:orientation="vertical">
 
+            <FrameLayout
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:layout_centerInParent="true">
 
-            <ImageView
-                android:id="@+id/typeicon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:src="@drawable/noimg"/>
+                <com.farm.widget.CircleImageView
+                    android:id="@+id/typeicon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/noimg"
+                    app:border_color="@color/transparent"
+                    app:border_width="0px"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/expense_takepicture_select"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_importance"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"/>
+            </FrameLayout>
+
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/ll_fl"
             android:layout_width="match_parent"
-            android:layout_height="60dip"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dip"
-            android:orientation="vertical">
+            android:layout_height="50dip"
+            android:layout_marginRight="25dip"
+            android:layout_toRightOf="@+id/rl_img"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dip"
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dip"
-                android:orientation="horizontal">
+                android:layout_gravity="center">
 
                 <TextView
                     android:id="@+id/typename"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="left|center_vertical"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
                     android:text="植保"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14"/>
@@ -69,7 +92,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_gg"
@@ -84,6 +108,12 @@
 
             </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
+        <CheckBox
+            android:id="@+id/cb_fl"
+            android:layout_width="30dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 
 </LinearLayout>

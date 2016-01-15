@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/iv_point"
+        android:layout_width="5dip"
+        android:layout_height="5dip"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dip"
+        android:visibility="gone"
+        android:background="@drawable/umeng_socialize_follow_on"/>
     <TextView
         android:id="@+id/second_textview"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:paddingLeft="18dip"
-        android:textSize="@dimen/size_14"
-        android:layout_gravity="center"
-        android:gravity="center"/>
-</LinearLayout>
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="ggg"
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_14"/>
+
+    <ImageView
+        android:id="@+id/iv_tip"
+        android:layout_width="20dip"
+        android:visibility="gone"
+        android:layout_height="20dip"
+        android:layout_toRightOf="@+id/second_textview"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dip"
+        android:background="@drawable/icon_xuan"/>
+</RelativeLayout>

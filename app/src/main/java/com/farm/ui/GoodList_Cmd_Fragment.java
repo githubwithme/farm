@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class GoodList_Cmd_Fragment extends Fragment
 {
+    ImageView iv=null;
     FragmentCallBack fragmentCallBack = null;
     private GridView gridView;
     private AddStd_Cmd_goodslistdapter adapter;
@@ -42,7 +44,7 @@ public class GoodList_Cmd_Fragment extends Fragment
         list_goods = getArguments().getParcelableArrayList("beanlist");
 
         ((TextView) view.findViewById(R.id.toptype)).setText(fn + "-" + sn);
-        adapter = new AddStd_Cmd_goodslistdapter(getActivity(), list_goods);
+        adapter = new AddStd_Cmd_goodslistdapter(getActivity(),iv, list_goods);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new OnItemClickListener()
         {

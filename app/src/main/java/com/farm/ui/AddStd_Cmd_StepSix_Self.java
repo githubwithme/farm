@@ -64,7 +64,6 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
     String tempareaId = "";
     String tempflyl = "";
     String tempareaName = "";
-    List<goodslisttab_flsl> list_SelectCmdArea = new ArrayList<goodslisttab_flsl>();
     List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
 
     @Click
@@ -95,18 +94,17 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
         tempareaName = "";
         tempflyl = "";
         list_goodslisttab = SqliteDb.getSelectCmdArea(getActivity(), goodslisttab.class);
-        list_SelectCmdArea = SqliteDb.getSelectCmdArea(getActivity(), goodslisttab_flsl.class);
         for (int i = 0; i < list_goodslisttab.size(); i++)
         {
             nongzi = nongzi + list_goodslisttab.get(i).getgoodsName() + ",";
             nongziId = nongziId + list_goodslisttab.get(i).getId() + ",";
             nongzi_temp = nongzi_temp + list_goodslisttab.get(i).getgoodsName() + "\n";
         }
-        for (int i = 0; i < list_SelectCmdArea.size(); i++)
+        for (int i = 0; i < list_goodslisttab.size(); i++)
         {
-            tempareaId = tempareaId + list_SelectCmdArea.get(i).getParkId() + ":" + list_SelectCmdArea.get(i).getAreaId() + ":" + list_SelectCmdArea.get(i).getYL() + ",";
-            tempareaName = tempareaName + list_SelectCmdArea.get(i).getParkName() + ":" + list_SelectCmdArea.get(i).getAreaName() + ",";
-            tempflyl = tempflyl + list_SelectCmdArea.get(i).getParkName() + "：" + list_SelectCmdArea.get(i).getAreaName()+"  "+list_SelectCmdArea.get(i).getZZ() + "\n"+ list_SelectCmdArea.get(i).getgoodsNote() + "\n";
+            tempareaId = tempareaId + list_goodslisttab.get(i).getParkId() + ":" + list_goodslisttab.get(i).getAreaId() + ":" + list_goodslisttab.get(i).getYL() + ",";
+            tempareaName = tempareaName + list_goodslisttab.get(i).getParkName() + ":" + list_goodslisttab.get(i).getAreaName() + ",";
+            tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+ "\n";
         }
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
         tv_importance.setText(commandtab_single.getImportancetype());

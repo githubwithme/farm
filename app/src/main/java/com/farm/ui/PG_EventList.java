@@ -373,7 +373,7 @@ public class PG_EventList extends Fragment
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.updateStatus(getActivity(), "0", PlantGcd.getId(), "3", commembertab.getId());
                 Intent intent = new Intent(getActivity(), GrowthTreeActivity_.class);
-                intent.putExtra("gcdid", PlantGcd.getId()); // 因为list中添加了头部,因此要去掉一个
+                intent.putExtra("bean", PlantGcd);  // 因为list中添加了头部,因此要去掉一个
                 getActivity().startActivity(intent);
             }
         });
