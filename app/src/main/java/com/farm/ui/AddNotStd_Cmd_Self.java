@@ -36,7 +36,7 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
     ViewPagerAdapter_AddNotStd_Cmd_Self adapter;
     AddStd_Cmd_Self_StepTwo addStd_cmd_self_stepTwo;
     AddStd_Cmd_StepFive addStd_cmd_stepFive;
-    AddStd_Cmd_StepSix_Self addStd_cmd_stepSix;
+    AddNotStd_Cmd_StepSix_Self addStd_cmd_stepSix;
     private ArrayList<Fragment> fragmentList;
     @ViewById
     TextView text_three;
@@ -89,7 +89,7 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
         fragmentList = new ArrayList<Fragment>();
         addStd_cmd_self_stepTwo = new AddStd_Cmd_Self_StepTwo_();
         addStd_cmd_stepFive = new AddStd_Cmd_StepFive_();
-        addStd_cmd_stepSix = new AddStd_Cmd_StepSix_Self_();
+        addStd_cmd_stepSix = new AddNotStd_Cmd_StepSix_Self_();
 
         fragmentList.add(addStd_cmd_self_stepTwo);
         fragmentList.add(addStd_cmd_stepFive);
@@ -195,10 +195,11 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
             case 0:
                 break;
             case 1:
-                AddStd_Cmd_StepSix_Self addStd_cmd_stepSix_self = (AddStd_Cmd_StepSix_Self) adapter.getFragment(currentItem + 1);
-                addStd_cmd_stepSix_self.update();
+                AddNotStd_Cmd_StepSix_Self addNotStd_cmd_stepSix_self = (AddNotStd_Cmd_StepSix_Self) adapter.getFragment(currentItem + 1);
+                addNotStd_cmd_stepSix_self.update();
                 break;
             case 2:
+
 
                 break;
         }

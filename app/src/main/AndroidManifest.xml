@@ -102,6 +102,7 @@
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
         <activity android:name=".ui.CZ_PQ_TodayCommand_"/>
+        <activity android:name=".ui.AddNotStd_Cmd_Self_"/>
         <activity android:name=".ui.AddNotProductCommand_CZ_"/>
         <activity android:name=".ui.CZ_GddList_"/>
         <activity android:name=".ui.CZ_PQ_CommandDetail_"/>

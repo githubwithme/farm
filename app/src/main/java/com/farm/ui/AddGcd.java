@@ -80,9 +80,17 @@ public class AddGcd extends Activity
     @Click
     void btn_upload()
     {
-        btn_upload.setVisibility(View.GONE);
-        pb_upload.setVisibility(View.VISIBLE);
-        AddData();
+
+        if (zzsl.equals("") || et_plantName.getText().equals("") || et_plantNote.getText().equals(""))
+        {
+            Toast.makeText(AddGcd.this, "请先填选相关信息！", Toast.LENGTH_SHORT).show();
+        } else
+        {
+            btn_upload.setVisibility(View.GONE);
+            pb_upload.setVisibility(View.VISIBLE);
+            AddData();
+        }
+
     }
 
     @Override
@@ -130,7 +138,7 @@ public class AddGcd extends Activity
                             latch = new CountDownLatch(sl);
                             for (int i = 0; i < sl; i++)
                             {
-                                AddPlant(gcdid, "植株" + (i+1), "植株" + (i+1)+ "说明");
+                                AddPlant(gcdid, "植株" + (i + 1), "植株" + (i + 1) + "说明");
                             }
 
                         } else
