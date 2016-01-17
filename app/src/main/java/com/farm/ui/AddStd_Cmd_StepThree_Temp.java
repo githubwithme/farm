@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,8 +75,6 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
     HorizontalScrollView cmd_tools_scrlllview;
     @ViewById
     LinearLayout cmd_tools;
-    @ViewById
-    ViewPager area_pager;
 
     @Click
     void btn_next()
@@ -136,7 +133,6 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
         @Override
         public void onClick(View v)
         {
-//            area_pager.setCurrentItem(v.getId());
             int i = v.getId();
             switchContent(mContent, fragments.get(i));
             if (currentItem != i)
@@ -173,82 +169,9 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
         changeTextColor(0);
         changeTextLocation(0);
         switchContent(mContent, fragments.get(0));
-//        customFragmentPagerAdapter = new CustomFragmentPagerAdapter(getActivity().getSupportFragmentManager(), list, fragments);
-//        area_pager.setAdapter(customFragmentPagerAdapter);
-//        area_pager.setOnPageChangeListener(onPageChangeListener);
-//        customFragmentPagerAdapter.setFragments(fragments);
-//        customFragmentPagerAdapter.notifyDataSetChanged();
-
-
-//        shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
-//        area_pager.setAdapter(shopAdapter);
-//        area_pager.setOnPageChangeListener(onPageChangeListener);
     }
 
-    /**
-     * OnPageChangeListener<br/>
-     * 监听ViewPager选项卡变化事的事件
-     */
-    private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener()
-    {
-        @Override
-        public void onPageSelected(int arg0)
-        {
-            if (area_pager.getCurrentItem() != arg0) area_pager.setCurrentItem(arg0);
-            if (currentItem != arg0)
-            {
-                changeTextColor(arg0);
-                changeTextLocation(arg0);
-            }
-            currentItem = arg0;
-        }
 
-        @Override
-        public void onPageScrollStateChanged(int arg0)
-        {
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2)
-        {
-        }
-    };
-
-    /**
-     * ViewPager 加载选项卡
-     *
-     * @author Administrator
-     */
-//    private class ShopAdapter extends FragmentPagerAdapter
-//    {
-//        public ShopAdapter(FragmentManager fm)
-//        {
-//            super(fm);
-//        }
-//
-//        @Override
-//        public Fragment getItem(int index)
-//        {
-//            Fragment fragment = new Area_Cmd_Fragment();
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("index", index);
-//            bundle.putParcelableArrayList("GOODS", (ArrayList<? extends Parcelable>) map_goods.get(dic_area.getFirstItemID().get(index)));
-//            bundle.putString("FN", dic_area.getFirstItemName().get(index));
-//            bundle.putString("FI", dic_area.getFirstItemID().get(index));
-//            bundle.putStringArrayList("SI", (ArrayList<String>) dic_area.getSecondItemID().get(index));
-//            bundle.putStringArrayList("SN", (ArrayList<String>) dic_area.getSecondItemName().get(index));
-////            bundle.putStringArray("TI", dic_area.getThirdItemID().get(index).get());
-//            bundle.putStringArrayList("TN", (ArrayList<String>) dic_area.getThirdItemName().get(0).get(index));
-//            fragment.setArguments(bundle);
-//            return fragment;
-//        }
-//
-//        @Override
-//        public int getCount()
-//        {
-//            return list.size();
-//        }
-//    }
 
     /**
      * 改变textView的颜色

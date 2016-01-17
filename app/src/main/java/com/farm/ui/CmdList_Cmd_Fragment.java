@@ -14,7 +14,10 @@ import com.farm.R;
 import com.farm.adapter.AddStd_cmd_steponestemp_GridViewAdapter;
 import com.farm.bean.Type;
 import com.farm.bean.commandtab_single;
+import com.farm.bean.goodslisttab;
+import com.farm.bean.goodslisttab_flsl;
 import com.farm.com.custominterface.FragmentCallBack;
+import com.farm.common.SqliteDb;
 
 public class CmdList_Cmd_Fragment extends Fragment
 {
@@ -50,6 +53,11 @@ public class CmdList_Cmd_Fragment extends Fragment
                 commandtab_single.setstdJobTypeName(typename);
                 commandtab_single.setstdJobId(SI[pos]);
                 commandtab_single.setstdJobName(sn[pos]);
+
+
+                SqliteDb.deleteAllSelectCmdArea(getActivity(), goodslisttab.class);
+                SqliteDb.deleteAllSelectCmdArea(getActivity(), goodslisttab_flsl.class);
+
                 Bundle bundle = new Bundle();
                 bundle.putInt("INDEX", 0);
                 fragmentCallBack.callbackFun2(bundle);

@@ -249,14 +249,18 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
         switch (currentItem)
         {
             case 0:
+                AddStd_Cmd_StepTwo addStd_cmd_stepTwo = (AddStd_Cmd_StepTwo) adapter.getFragment(currentItem + 1);
+                addStd_cmd_stepTwo.update();
                 break;
             case 1:
-                adapter.updateData(currentItem);
+                AddStd_Cmd_StepThree_Temp addStd_cmd_stepThree_temp = (AddStd_Cmd_StepThree_Temp) adapter.getFragment(currentItem + 1);
+                addStd_cmd_stepThree_temp.update();
                 break;
             case 2:
-
+                break;
             case 3:
-                adapter.updateData(currentItem);
+                AddStd_Cmd_StepSix addStd_cmd_stepSix = (AddStd_Cmd_StepSix) adapter.getFragment(currentItem + 1);
+                addStd_cmd_stepSix.update();
                 break;
             case 4:
 

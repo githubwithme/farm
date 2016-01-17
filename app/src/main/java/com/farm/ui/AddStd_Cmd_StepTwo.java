@@ -168,6 +168,14 @@ public class AddStd_Cmd_StepTwo extends Fragment
         fragmentCallBack = (FragmentCallBack) activity;
     }
 
+
+    public void update()
+    {
+        customExpandableListAdapter = new CustomExpandableListAdapter(getActivity(), dictionary_wheel, mainlistview, list_goods, tv_head, fragmentCallBack);
+        mainlistview.setAdapter(customExpandableListAdapter);
+        mainlistview.expandGroup(0);
+    }
+
     @Override
     public void onDestroyView()
     {

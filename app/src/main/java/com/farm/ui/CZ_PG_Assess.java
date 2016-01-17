@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,8 @@ public class CZ_PG_Assess extends Activity
     CZ_PG_Assess_ExpandAdapter cz_pg_assess_expandAdapter;
     jobtab jobtab;
     // AudioFragment audioFragment;
-    String scoreselected;
+    String scoreselected = "";
+    String assessScore = "";
     @ViewById
     ImageButton imgbtn_home;
     @ViewById
@@ -63,6 +66,8 @@ public class CZ_PG_Assess extends Activity
     @ViewById
     ProgressBar pb_jd;
     @ViewById
+    RadioGroup rg_score;
+    @ViewById
     CustomExpandableListView expandableListView;
 
     @Click
@@ -74,8 +79,17 @@ public class CZ_PG_Assess extends Activity
     @AfterViews
     void afterOncreate()
     {
+        rg_score.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup arg0, int arg1)
+            {
+                RadioButton radioButton = (RadioButton) findViewById(arg0.getCheckedRadioButtonId());
+                scoreselected = (String) radioButton.getText();
+                assessScore = String.valueOf(getScore(scoreselected));
+            }
+        });
         getCommand();
-        getCommandlist();
     }
 
     @Override
@@ -92,13 +106,12 @@ public class CZ_PG_Assess extends Activity
     private void addScore()
     {
         List<View> list_view = cz_pg_assess_expandAdapter.getListView();
-        String bz = "";
         for (int i = 0; i < list_view.size(); i++)
         {
             Bundle bundle = (Bundle) list_view.get(i).getTag();
-            bz = bz + bundle.get("id")+",";
+            assessScore = assessScore + bundle.get("id") + ",";
         }
-        if (bz.equals(""))
+        if (assessScore.equals(""))
         {
             Toast.makeText(CZ_PG_Assess.this, "请先评分", Toast.LENGTH_SHORT).show();
             return;
@@ -110,7 +123,7 @@ public class CZ_PG_Assess extends Activity
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "jobTabAssessByID");
         params.addQueryStringParameter("jobID", jobtab.getId());
-        params.addQueryStringParameter("assessScore", bz);
+        params.addQueryStringParameter("assessScore", assessScore);
         params.addQueryStringParameter("assessNote", et_note.getText().toString());
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -179,6 +192,13 @@ public class CZ_PG_Assess extends Activity
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), commandtab.class);
                         showCommand(listNewData.get(0));
+                        if (listNewData.get(0).getstdJobType().equals("-1") || listNewData.get(0).getstdJobType().equals("0"))
+                        {
+                            rg_score.setVisibility(View.VISIBLE);
+                        } else
+                        {
+                            getCommandlist();
+                        }
                     } else
                     {
                         listNewData = new ArrayList<commandtab>();

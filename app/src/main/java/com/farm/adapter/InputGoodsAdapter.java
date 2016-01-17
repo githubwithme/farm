@@ -62,6 +62,8 @@ public class InputGoodsAdapter extends BaseAdapter
             listItemView.tv_fl = (TextView) convertView.findViewById(R.id.tv_fl);
             listItemView.et_number = (TextView) convertView.findViewById(R.id.et_number);
             listItemView.tv_dw = (TextView) convertView.findViewById(R.id.tv_dw);
+            listItemView.tv_syl = (TextView) convertView.findViewById(R.id.tv_syl);
+            listItemView.tv_spec = (TextView) convertView.findViewById(R.id.tv_spec);
             Bundle bundle = new Bundle();
             bundle.putString("pi", parkid);
             bundle.putString("pn", parkName);
@@ -76,6 +78,8 @@ public class InputGoodsAdapter extends BaseAdapter
             String small_dw = goodsspc[1];
             String large_dw = goodsspc[2];
             listItemView.tv_dw.setText(small_dw+"/株");
+            listItemView.tv_syl.setText( list.get(arg0).getGoodsSum());
+            listItemView.tv_spec.setText( list.get(arg0).getgoodsSpec());
 
             lmap.put(arg0, convertView);
             convertView.setTag(listItemView);
@@ -93,6 +97,8 @@ public class InputGoodsAdapter extends BaseAdapter
         TextView tv_fl;
         TextView et_number;
         TextView tv_dw;
+        TextView tv_syl;
+        TextView tv_spec;
     }
 
     public List<goodslisttab> getGoosList()

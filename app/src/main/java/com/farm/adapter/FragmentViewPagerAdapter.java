@@ -143,9 +143,27 @@ public class FragmentViewPagerAdapter extends PagerAdapter implements OnPageChan
         }
     }
 
+    public Fragment getFragment(int item)
+    {
+        Fragment fragment = fragmentManager.findFragmentByTag(tagList.get(item));
+        return fragment;
+    }
+
+    public List<Fragment> getAllFragment()
+    {
+        List<Fragment> list_fragments = new ArrayList<>();
+        for (int i = 0; i < fragments.size(); i++)
+        {
+            Fragment fragment = fragmentManager.findFragmentByTag(tagList.get(i));
+            list_fragments.add(fragment);
+        }
+
+        return list_fragments;
+    }
+
     public void updateData(int item)
     {
-        Fragment fragment = fragmentManager.findFragmentByTag(tagList.get(item+1));
+        Fragment fragment = fragmentManager.findFragmentByTag(tagList.get(item + 1));
         if (fragment != null)
         {
             switch (item)
