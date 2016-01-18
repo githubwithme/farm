@@ -184,7 +184,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
         {
             if (i != id)
             {
-                tvList[i].setBackgroundColor(0x00000000);
+//                tvList[i].setBackgroundColor(0x00000000);
                 tvList[i].setTextColor(0xFF000000);
 
                 TextPaint tp = tvList[i].getPaint();
@@ -192,7 +192,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                 tp.setFakeBoldText(false);
             }
         }
-        tvList[id].setBackgroundColor(0xFFFFFFFF);
+//        tvList[id].setBackgroundColor(0xFFFFFFFF);
         tvList[id].setTextColor(0xFFFF5D5E);
 
         tvList[id].setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_7));

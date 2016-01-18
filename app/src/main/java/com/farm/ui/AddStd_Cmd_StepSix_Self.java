@@ -102,7 +102,7 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
         }
         for (int i = 0; i < list_goodslisttab.size(); i++)
         {
-            tempareaId = tempareaId + list_goodslisttab.get(i).getParkId() + ":" + list_goodslisttab.get(i).getAreaId() + ":" + list_goodslisttab.get(i).getYL() + ",";
+            tempareaId = tempareaId +  list_goodslisttab.get(i).getYL() + ",";
             tempareaName = tempareaName + list_goodslisttab.get(i).getParkName() + ":" + list_goodslisttab.get(i).getAreaName() + ",";
             tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+ "\n";
         }
@@ -124,14 +124,14 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("areaId", tempareaId.substring(0, tempareaId.length() - 1));
-        params.addQueryStringParameter("areaName", tempareaName.substring(0, tempareaName.length() - 1));
+        params.addQueryStringParameter("areaId", commembertab.getareaId());
+        params.addQueryStringParameter("areaName",commembertab.getareaName());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("userName", commembertab.getrealName());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "commandTabAdd");
-        params.addQueryStringParameter("parkId", commandtab_single.getparkId());
-        params.addQueryStringParameter("parkName", commandtab_single.getparkName());
+        params.addQueryStringParameter("parkId", commembertab.getparkId());
+        params.addQueryStringParameter("parkName", commembertab.getparkName());
         params.addQueryStringParameter("nongziName", nongzi.substring(0, nongzi.length() - 1));
         params.addQueryStringParameter("amount", nongziId.substring(0, nongziId.length() - 1));
         params.addQueryStringParameter("commNote", commandtab_single.getcommNote());

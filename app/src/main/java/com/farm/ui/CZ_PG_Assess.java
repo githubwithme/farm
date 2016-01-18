@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -23,7 +24,6 @@ import com.farm.bean.Result;
 import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
-import com.farm.widget.CustomExpandableListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -68,7 +68,7 @@ public class CZ_PG_Assess extends Activity
     @ViewById
     RadioGroup rg_score;
     @ViewById
-    CustomExpandableListView expandableListView;
+    ExpandableListView expandableListView;
 
     @Click
     void btn_sure()
@@ -262,6 +262,7 @@ public class CZ_PG_Assess extends Activity
                             Dictionary dic = lsitNewData.get(0);
                             cz_pg_assess_expandAdapter = new CZ_PG_Assess_ExpandAdapter(CZ_PG_Assess.this, dic, expandableListView);
                             expandableListView.setAdapter(cz_pg_assess_expandAdapter);
+
 //                            for (int i = 0; i < dic.getFirstItemName().size(); i++)
 //                            {
 //                                expandableListView.expandGroup(i);

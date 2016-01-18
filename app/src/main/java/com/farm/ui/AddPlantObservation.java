@@ -1,5 +1,6 @@
 package com.farm.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,8 @@ import com.farm.bean.Dictionary;
 import com.farm.bean.plantgrowthtab_single;
 import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
 import com.farm.widget.MyDialog;
+import com.media.MediaChooser;
+import com.media.MediaChooserConstants;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -253,4 +256,19 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
         });
         myDialog.show();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == MediaChooserConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE)
+        {// 拍照
+            if (resultCode == RESULT_OK)
+            {
+                Intent intent = new Intent();
+                intent.setAction(MediaChooser.IMAGE_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
+                sendBroadcast(intent);
+            }
+        }
+    }
+
 }

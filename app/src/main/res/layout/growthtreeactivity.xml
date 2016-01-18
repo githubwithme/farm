@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/light_gray">
@@ -31,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="观察记录生长树"
+                android:text="观测点生长树"
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/titlebar_textsize"/>
         </LinearLayout>
@@ -147,6 +148,122 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/titlebar_height">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="武鸣"
+                android:gravity="center"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_16"/>
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="第一片区"
+                android:gravity="center"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_16"/>
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="5株"
+                android:gravity="center"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_16"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:layout_marginTop="10dip"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:id="@+id/fl_pq"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:layout_centerInParent="true">
+
+                <com.farm.widget.CircleImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@color/color_orange"
+                    app:border_color="@color/transparent"
+                    app:border_width="0px"/>
+
+                <TextView
+                    android:id="@+id/tv_pqname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="第一片区"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="60dip"
+                android:layout_toLeftOf="@+id/fl_pq">
+
+                <com.farm.widget.CircleImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@color/color_orange"
+                    app:border_color="@color/transparent"
+                    app:border_width="0px"/>
+
+                <TextView
+                    android:id="@+id/tv_yqname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="武鸣"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="60dip"
+                android:layout_toRightOf="@+id/fl_pq">
+
+                <com.farm.widget.CircleImageView
+                    android:id="@+id/iv_img_left"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@color/color_orange"
+                    app:border_color="@color/transparent"
+                    app:border_width="0px"/>
+
+                <TextView
+                    android:id="@+id/tv_zzs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="5株"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+            </FrameLayout>
+        </RelativeLayout>
 
         <ImageView
             android:layout_width="match_parent"
@@ -159,7 +276,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="20dip"
+            android:layout_marginTop="50dip"
             android:divider="@null"/>
+
         <LinearLayout
             android:id="@+id/ll_gk"
             android:layout_width="90dip"
@@ -167,7 +286,8 @@
             android:layout_marginLeft="15dip"
             android:layout_marginTop="20dip"
             android:background="@drawable/background_view_rounded_single"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -178,17 +298,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="20dip"
                     android:gravity="center"
                     android:text="概况"
-                    android:layout_marginRight="20dip"
                     android:textColor="@color/white"
                     android:textSize="@dimen/size_sp_12"/>
 
                 <ImageView
                     android:layout_width="20dip"
                     android:layout_height="20dip"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:background="@drawable/ic_next_white"/>
 
             </RelativeLayout>

@@ -10,11 +10,11 @@ import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -64,7 +64,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
     @ViewById
     ImageView iv_dowm_tab;
     @ViewById
-    ScrollView cmd_tools_scrlllview;
+    HorizontalScrollView cmd_tools_scrlllview;
     @ViewById
     LinearLayout cmd_tools;
     @ViewById
@@ -120,6 +120,9 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
             view.setId(i);
             view.setOnClickListener(toolsItemListener);
             TextView textView = (TextView) view.findViewById(R.id.text);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+            lp.setMargins(40, 1, 40, 1);
+            textView.setLayoutParams(lp);
             textView.setText(list[i]);
             cmd_tools.addView(view);
             tvList[i] = textView;
@@ -221,7 +224,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
         {
             if (i != id)
             {
-                tvList[i].setBackgroundColor(0x00000000);
+//                tvList[i].setBackgroundColor(0x00000000);
                 tvList[i].setTextColor(0xFF000000);
                 TextPaint tp = tvList[i].getPaint();
 //                tvList[i].setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_7));
@@ -229,7 +232,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
             }
         }
 
-        tvList[id].setBackgroundColor(0xFFFFFFFF);
+//        tvList[id].setBackgroundColor(0xFFFFFFFF);
         tvList[id].setTextColor(0xFFFF5D5E);
 //        tvList[id].setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_7));
         TextPaint tp = tvList[id].getPaint();

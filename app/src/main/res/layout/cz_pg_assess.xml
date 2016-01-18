@@ -61,28 +61,28 @@
         android:layout_height="wrap_content"
         >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_zlnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:descendantFocusability="blocksDescendants"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="45dip"
-                    android:background="@color/color_orange"
-                    android:gravity="left|center_vertical"
-                    android:text="指令详情"
+                    android:background="@color/light_gray"
+                    android:gravity="center"
                     android:paddingLeft="10dip"
+                    android:text="指令详情"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14"/>
 
@@ -305,16 +305,18 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_pfbz"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_zlnr"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="45dip"
-                    android:paddingLeft="10dip"
                     android:background="@color/color_orange"
-                    android:gravity="left|center_vertical"
+                    android:gravity="center"
+                    android:paddingLeft="10dip"
                     android:text="评分标准"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14"/>
@@ -326,6 +328,7 @@
                 android:id="@+id/rg_score"
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
+                android:layout_below="@+id/ll_pfbz"
                 android:orientation="horizontal"
                 android:visibility="gone">
 
@@ -361,20 +364,24 @@
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@+id/rg_score"
+                android:focusable="true"
                 android:groupIndicator="@null"/>
 
             <LinearLayout
+                android:id="@+id/ll_pfsm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/expandableListView"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="45dip"
                     android:background="@color/color_orange"
-                    android:gravity="left|center_vertical"
-                    android:text="评分说明"
+                    android:gravity="center"
                     android:paddingLeft="10dip"
+                    android:text="评分说明"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14"/>
 
@@ -385,6 +392,7 @@
                 android:id="@+id/et_note"
                 android:layout_width="match_parent"
                 android:layout_height="80dip"
+                android:layout_below="@+id/ll_pfsm"
                 android:background="@drawable/background_view_rounded_single"
                 android:gravity="center"
                 android:hint="请输入评分说明"
@@ -392,6 +400,41 @@
                 android:textColorHint="@color/gray"
                 android:textSize="@dimen/size_sp_14"/>
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/et_note"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:background="@color/color_orange"
+                    android:gravity="center"
+                    android:paddingLeft="10dip"
+                    android:text="完成情况"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+                <RadioGroup
+                    android:id="@+id/rg_wcqk"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dip"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_sfwc"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="完成指令"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/size_sp_16"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+        </RelativeLayout>
     </ScrollView>
 </LinearLayout>

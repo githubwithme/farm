@@ -1,11 +1,13 @@
 package com.farm.adapter;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +20,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.farm.R;
+import com.farm.app.AppConfig;
 import com.farm.bean.FJ_SCFJ;
 import com.farm.bean.plantgrowthtab;
 import com.farm.bean.planttab;
 import com.farm.common.BitmapHelper;
 import com.farm.widget.MyDialog;
-import com.media.HomeFragmentActivity;
 import com.media.MediaChooser;
+import com.media.MediaChooserConstants;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +41,7 @@ import java.util.List;
  */
 public class AddPlantObservationAdapter extends BaseAdapter
 {
+    Uri fileUri;
     LinearLayout ll_picture_onclick;
     int index_ll = 0;
     int index_imageview = 0;
@@ -46,7 +52,7 @@ public class AddPlantObservationAdapter extends BaseAdapter
     MyDialog myDialog;
     ListItemView listItemView = null;
     String audiopath;
-    private Context context;// 运行上下文
+    private Activity context;// 运行上下文
     private List<planttab> listItems;// 数据集合
     private List<plantgrowthtab> list_plantgrowthtab = new ArrayList<>();// 数据集合
     private LayoutInflater listContainer;// 视图容器
@@ -75,7 +81,7 @@ public class AddPlantObservationAdapter extends BaseAdapter
      * @param data
      * @param context
      */
-    public AddPlantObservationAdapter(Context context, List<planttab> data)
+    public AddPlantObservationAdapter(Activity context, List<planttab> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -130,10 +136,15 @@ public class AddPlantObservationAdapter extends BaseAdapter
                 {
                     currentItem = Integer.valueOf(v.getTag().toString());
                     current_ll_picture = ((ListItemView) (lmap.get(currentItem).getTag())).ll_picture;
-                    Intent intent = new Intent(context, HomeFragmentActivity.class);
-                    intent.putExtra("type", "picture");
-                    intent.putExtra("From", "plant");
-                    context.startActivity(intent);
+//                    Intent intent = new Intent(context, HomeFragmentActivity.class);
+//                    intent.putExtra("type", "picture");
+//                    intent.putExtra("From", "plant");
+//                    context.startActivity(intent);
+
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    fileUri = getOutputMediaFileUri(MediaChooserConstants.MEDIA_TYPE_IMAGE);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                    context.startActivityForResult(intent, MediaChooserConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
                 }
             });
 
@@ -215,86 +226,202 @@ public class AddPlantObservationAdapter extends BaseAdapter
         return list_plantgrowthtab;
     }
 
+
+
+    private Uri getOutputMediaFileUri(int type)
+    {
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    /**
+     * Create a File for saving an image or video
+     */
+    private static File getOutputMediaFile(int type)
+    {
+
+        File mediaStorageDir = new File(AppConfig.MEDIA_PATH);
+        if (!mediaStorageDir.exists())
+        {
+            if (!mediaStorageDir.mkdirs())
+            {
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile = null;
+        if (type == MediaChooserConstants.MEDIA_TYPE_IMAGE)
+        {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+        } else if (type == MediaChooserConstants.MEDIA_TYPE_VIDEO)
+        {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "VID_" + timeStamp + ".mp4");
+        } else if (type == MediaChooserConstants.MEDIA_TYPE_LUYIN)
+        {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "AUD_" + timeStamp + ".mp3");
+        }
+        return mediaFile;
+    }
+
     BroadcastReceiver imageBroadcastReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(final Context context, Intent intent)
         {
-            List<String> list = intent.getStringArrayListExtra("list");
-            for (int i = 0; i < list.size(); i++)
+            String FJBDLJ = fileUri.toString().replaceFirst("file:///", "/").trim();
+            ImageView imageView = new ImageView(context);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+            lp.setMargins(25, 4, 0, 4);
+            imageView.setLayoutParams(lp);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            BitmapHelper.setImageView(context, imageView, FJBDLJ);
+            Bundle bundle = new Bundle();
+            bundle.putInt("index_ll", currentItem);
+            bundle.putInt("index_imageview", current_ll_picture.getChildCount() + 1);
+            imageView.setTag(bundle);
+
+            FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
+            fj_SCFJ.setFJBDLJ(FJBDLJ);
+            fj_SCFJ.setFJLX("1");
+            fj_SCFJ.setFJID(listItems.get(currentItem).getId());
+            fj_SCFJ.setGLID(currentItem + "-" + (current_ll_picture.getChildCount() + 1));
+
+            list_FJ_SCFJ.add(fj_SCFJ);
+            current_ll_picture.addView(imageView);
+
+            imageView.setOnClickListener(new View.OnClickListener()
             {
-                String FJBDLJ = list.get(i);
-                ImageView imageView = new ImageView(context);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
-                lp.setMargins(25, 4, 0, 4);
-                imageView.setLayoutParams(lp);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                BitmapHelper.setImageView(context, imageView, FJBDLJ);
-                Bundle bundle = new Bundle();
-                bundle.putInt("index_ll", currentItem);
-                bundle.putInt("index_imageview", current_ll_picture.getChildCount() + 1);
-                imageView.setTag(bundle);
-
-                FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
-                fj_SCFJ.setFJBDLJ(FJBDLJ);
-                fj_SCFJ.setFJLX("1");
-                fj_SCFJ.setFJID(listItems.get(currentItem).getId());
-                fj_SCFJ.setGLID(currentItem + "-" + (current_ll_picture.getChildCount() + 1));
-
-                list_FJ_SCFJ.add(fj_SCFJ);
-                current_ll_picture.addView(imageView);
-
-                imageView.setOnClickListener(new View.OnClickListener()
+                @Override
+                public void onClick(View v)
                 {
-                    @Override
-                    public void onClick(View v)
+                    Bundle bundle = (Bundle) v.getTag();
+                    index_ll = bundle.getInt("index_ll");
+                    index_imageview = bundle.getInt("index_imageview");
+                    ll_picture_onclick = ((ListItemView) (lmap.get(index_ll).getTag())).ll_picture;
+                    final int index_zp = ll_picture_onclick.indexOfChild(v);
+                    View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
+                    myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener()
                     {
-                        Bundle bundle = (Bundle) v.getTag();
-                        index_ll = bundle.getInt("index_ll");
-                        index_imageview = bundle.getInt("index_imageview");
-                        ll_picture_onclick = ((ListItemView) (lmap.get(index_ll).getTag())).ll_picture;
-                        final int index_zp = ll_picture_onclick.indexOfChild(v);
-                        View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
-                        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener()
+                        @Override
+                        public void OnClick(View v)
                         {
-                            @Override
-                            public void OnClick(View v)
+                            switch (v.getId())
                             {
-                                switch (v.getId())
-                                {
-                                    case R.id.btn_sure:
-                                        for (int i = 0; i < list_FJ_SCFJ.size(); i++)
+                                case R.id.btn_sure:
+                                    for (int i = 0; i < list_FJ_SCFJ.size(); i++)
+                                    {
+                                        if (list_FJ_SCFJ.get(i).getGLID().equals(index_ll + "-" + index_imageview))
                                         {
-                                            if (list_FJ_SCFJ.get(i).getGLID().equals(index_ll + "-" + index_imageview))
-                                            {
-                                                File file = new File(list_FJ_SCFJ.get(i).getFJBDLJ());
-                                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                                intent.setDataAndType(Uri.fromFile(file), "image/*");
-                                                context.startActivity(intent);
-                                            }
+                                            File file = new File(list_FJ_SCFJ.get(i).getFJBDLJ());
+                                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                                            intent.setDataAndType(Uri.fromFile(file), "image/*");
+                                            context.startActivity(intent);
                                         }
+                                    }
 
 
-                                        break;
-                                    case R.id.btn_cancle:
-                                        ll_picture_onclick.removeViewAt(index_zp);
-                                        for (int i = 0; i < list_FJ_SCFJ.size(); i++)
+                                    break;
+                                case R.id.btn_cancle:
+                                    ll_picture_onclick.removeViewAt(index_zp);
+                                    for (int i = 0; i < list_FJ_SCFJ.size(); i++)
+                                    {
+                                        if (list_FJ_SCFJ.get(i).getGLID().equals(index_ll + "-" + index_imageview))
                                         {
-                                            if (list_FJ_SCFJ.get(i).getGLID().equals(index_ll + "-" + index_imageview))
-                                            {
-                                                list_FJ_SCFJ.remove(index_zp);
-                                            }
+                                            list_FJ_SCFJ.remove(index_zp);
                                         }
+                                    }
 
-                                        myDialog.dismiss();
-                                        break;
-                                }
+                                    myDialog.dismiss();
+                                    break;
                             }
-                        });
-                        myDialog.show();
-                    }
-                });
-            }
+                        }
+                    });
+                    myDialog.show();
+                }
+            });
         }
     };
+//    BroadcastReceiver imageBroadcastReceiver = new BroadcastReceiver()
+//    {
+//        @Override
+//        public void onReceive(final Context context, Intent intent)
+//        {
+//            List<String> list = intent.getStringArrayListExtra("list");
+//            for (int i = 0; i < list.size(); i++)
+//            {
+//                String FJBDLJ = list.get(i);
+//                ImageView imageView = new ImageView(context);
+//                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+//                lp.setMargins(25, 4, 0, 4);
+//                imageView.setLayoutParams(lp);
+//                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//                BitmapHelper.setImageView(context, imageView, FJBDLJ);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("index_ll", currentItem);
+//                bundle.putInt("index_imageview", current_ll_picture.getChildCount() + 1);
+//                imageView.setTag(bundle);
+//
+//                FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
+//                fj_SCFJ.setFJBDLJ(FJBDLJ);
+//                fj_SCFJ.setFJLX("1");
+//                fj_SCFJ.setFJID(listItems.get(currentItem).getId());
+//                fj_SCFJ.setGLID(currentItem + "-" + (current_ll_picture.getChildCount() + 1));
+//
+//                list_FJ_SCFJ.add(fj_SCFJ);
+//                current_ll_picture.addView(imageView);
+//
+//                imageView.setOnClickListener(new View.OnClickListener()
+//                {
+//                    @Override
+//                    public void onClick(View v)
+//                    {
+//                        Bundle bundle = (Bundle) v.getTag();
+//                        index_ll = bundle.getInt("index_ll");
+//                        index_imageview = bundle.getInt("index_imageview");
+//                        ll_picture_onclick = ((ListItemView) (lmap.get(index_ll).getTag())).ll_picture;
+//                        final int index_zp = ll_picture_onclick.indexOfChild(v);
+//                        View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
+//                        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener()
+//                        {
+//                            @Override
+//                            public void OnClick(View v)
+//                            {
+//                                switch (v.getId())
+//                                {
+//                                    case R.id.btn_sure:
+//                                        for (int i = 0; i < list_FJ_SCFJ.size(); i++)
+//                                        {
+//                                            if (list_FJ_SCFJ.get(i).getGLID().equals(index_ll + "-" + index_imageview))
+//                                            {
+//                                                File file = new File(list_FJ_SCFJ.get(i).getFJBDLJ());
+//                                                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                                                intent.setDataAndType(Uri.fromFile(file), "image/*");
+//                                                context.startActivity(intent);
+//                                            }
+//                                        }
+//
+//
+//                                        break;
+//                                    case R.id.btn_cancle:
+//                                        ll_picture_onclick.removeViewAt(index_zp);
+//                                        for (int i = 0; i < list_FJ_SCFJ.size(); i++)
+//                                        {
+//                                            if (list_FJ_SCFJ.get(i).getGLID().equals(index_ll + "-" + index_imageview))
+//                                            {
+//                                                list_FJ_SCFJ.remove(index_zp);
+//                                            }
+//                                        }
+//
+//                                        myDialog.dismiss();
+//                                        break;
+//                                }
+//                            }
+//                        });
+//                        myDialog.show();
+//                    }
+//                });
+//            }
+//        }
+//    };
 }
