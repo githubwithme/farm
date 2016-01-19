@@ -27,6 +27,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.PlantGcd;
 import com.farm.bean.Result;
+import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
 import com.farm.common.DictionaryHelper;
 import com.farm.common.StringUtils;
@@ -79,7 +80,7 @@ public class NCZ_GddList extends Activity
     @ViewById
     PullToRefreshListView frame_listview_news;
 
-    String areaid;
+    areatab areatab;
 
     @Click
     void btn_add()
@@ -106,6 +107,7 @@ public class NCZ_GddList extends Activity
     void afterOncreate()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_GddList.this);
+        tv_title.setText(areatab.getareaName() + "-" + "观测点");
         if (commembertab.getnlevel().toString().equals("0"))
         {
             btn_add.setVisibility(View.GONE);
@@ -128,7 +130,7 @@ public class NCZ_GddList extends Activity
         appContext = (AppContext) NCZ_GddList.this.getApplication();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
         NCZ_GddList.this.registerReceiver(receiver_update, intentfilter_update);
-        areaid = getIntent().getStringExtra("areaid");
+        areatab = getIntent().getParcelableExtra("bean");
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
@@ -162,12 +164,11 @@ public class NCZ_GddList extends Activity
     }
 
 
-
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_GddList.this);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("areaid", areaid);
+        params.addQueryStringParameter("areaid", areatab.getid());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
@@ -189,7 +190,7 @@ public class NCZ_GddList extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-						listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcd.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcd.class);
 //                        JSONObject jsonObject = utils.parseJsonFile(NCZ_GddList.this, "dictionary.json");
 //                        listNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("img_url"), Result.class).getRows().toJSONString(), PlantGcd.class);
                     } else

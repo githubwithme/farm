@@ -81,6 +81,8 @@ public class GrowthTreeActivity extends Activity
     @ViewById
     TextView tv_zs;
     @ViewById
+    TextView tv_title;
+    @ViewById
     Button btn_add;
     @ViewById
     LinearLayout ll_gk;
@@ -97,15 +99,16 @@ public class GrowthTreeActivity extends Activity
     void ll_gk()
     {
         Intent intent = new Intent(GrowthTreeActivity.this, PG_PlantList_.class);
-        intent.putExtra("bean",  plantGcd);
-        intent.putExtra("gcdid",  plantGcd.getId());
-        intent.putExtra("gcdName",  plantGcd.getPlantgcdName());
+        intent.putExtra("bean", plantGcd);
+        intent.putExtra("gcdid", plantGcd.getId());
+        intent.putExtra("gcdName", plantGcd.getPlantgcdName());
         startActivity(intent);
     }
 
     @AfterViews
     void afterOncreate()
     {
+        tv_title.setText(plantGcd.getPlantgcdName()+"—"+"生长树");
         commembertab commembertab = AppContext.getUserInfo(GrowthTreeActivity.this);
         if (!commembertab.getnlevel().equals("2"))
         {
@@ -144,7 +147,7 @@ public class GrowthTreeActivity extends Activity
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("gcdid",  plantGcd.getId());
+        params.addQueryStringParameter("gcdid", plantGcd.getId());
         params.addQueryStringParameter("orderby", "regDate desc");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));

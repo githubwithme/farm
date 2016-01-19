@@ -1,4 +1,6 @@
 {
+  "pfbz":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"firstItemName":["根系表现","假茎表现","叶表现"],"secondItemName":[["根数量","白根","线虫"],["干净度","光泽","折断","叶鞘无剥离","形状"],["叶色","新叶抽出","硬度","干净度","折叶","黄叶数","光泽","手感厚度"]],"thirdItemID":[[["较少","较多","多"],["数量较少","数量较多","很多"],["有","无"]],[["干净","鞘腐病","黑斑","黑斑和鞘腐病"],["对光有反射","对光无反射"],["无","零星发生"],["无","零星发生"],["锥桶型","木桶型","柱型"]],[["全绿","绿白相间","黄绿相间"],["自然松开","扭曲","扭曲折断"],["叶片斜伸弯","叶片平伸弯"],["叶无斑点","一叶有斑点","2叶有斑点","多叶有斑点","病虫斑"],["无折叶","1张折叶","2张折叶","3张以上折叶"],["无","1张","2张","2张以上"],["对光有反射","对光反射无"],["厚","适中","薄"]]],"thirdItemName":[[["较少","较多","多"],["数量较少","数量较多","很多"],["有","无"]],[["干净","鞘腐病","黑斑","黑斑和鞘腐病"],["对光有反射","对光无反射"],["无","零星发生"],["无","零星发生"],["锥桶型","木桶型","柱型"]],[["全绿","绿白相间","黄绿相间"],["自然松开","扭曲","扭曲折断"],["叶片斜伸弯","叶片平伸弯"],["叶无斑点","一叶有斑点","2叶有斑点","多叶有斑点","病虫斑"],["无折叶","1张折叶","2张折叶","3张以上折叶"],["无","1张","2张","2张以上"],["对光有反射","对光反射无"],["厚","适中","薄"]]]}],"other":[]},
+
   "gcjl":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":1,"uId":12,"regDate":"2015-12-25 13:31:04","gcdId":"2","gcq":"1","jjbx":"3","ybx":"4","gxbx":"1","lbx":"1","ghbx":"1","csgbx":"1","cygbx":"1","szfx":"1","cjUserID":"20","cjUserName":"2m","plantGrowth":[{"id":1,"uId":12,"yNum":"22"},{"id":2,"uId":12,"yNum":"32"}]}],"other":[]},
 
 "gcjllist":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":1,"uId":12,"regDate":"2015-12-25 13:31:04","gcdId":"2","gcq":"1","jjbx":"3","ybx":"4","gxbx":"1","lbx":"1","ghbx":"1","csgbx":"1","cygbx":"1","szfx":"1","cjUserID":"20","cjUserName":"2m","imgurl":[""]}],"other":[]},
@@ -6,6 +8,8 @@
   "plantgrowthlist":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":"2","uId":12,"plantName":"植株1"},{"id":"3","uId":12,"plantName":"植株2"}],"other":[]},
 
   "plantlist":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":"2","uId":12,"plantName":"植株1"},{"id":"3","uId":12,"plantName":"植株2"}],"other":[]},
+
+  "event":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"SJID":"2","SJMS":"出现死苗","CLQK":"未处理","SBSJ":"2015-11-13","imgurl":["http://img0.imgtn.bdimg.com/it/u=2495714995,4044705903&fm=206&gp=0.jpg"]},{"SJID":"2","SJMS":"大雨冲毁了观测株","CLQK":"未处理","SBSJ":"2015-6-2","imgurl":["http://img1.imgtn.bdimg.com/it/u=1073654725,3847925794&fm=206&gp=0.jpg"]},{"SJID":"3","SJMS":"肥料被偷了","CLQK":"未处理","SBSJ":"2015-10-16","imgurl":["http://g.hiphotos.baidu.com/image/h%3D220/sign=a8ac8f1b945298221a333ec1e7cb7b3b/4a36acaf2edda3cc92560bfc05e93901203f92b8.jpg"]},{"SJID":"4","SJMS":"蕾果出现异常","CLQK":"未处理","SBSJ":"2015-5-7","imgurl":["http://pic31.nipic.com/20130708/12246968_161410243000_2.jpg"]}],"other":[]},
 
   "img_url":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":"2","uId":12,"plantgcdName":"观测点1","regDate":"2015-12-15 09:31:59","parkId":"8","parkName":"武鸣园区","areaId":"4","areaName":"第一片区","x":"0","y":"0","imgurl":[""],"newDate":"2015-12-25 15:48:02"}],"other":[]},
 

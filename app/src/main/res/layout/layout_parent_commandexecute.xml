@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/parent_textview"
+        android:layout_width="0dip"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="武鸣"
+        android:textColor="@color/bg_text"/>
+
+    <TextView
+        android:layout_width="0dip"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="第一片区"
+        android:textColor="@color/bg_text"/>
+
+    <TextView
+        android:layout_width="0dip"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="已收到"
+        android:textColor="@color/red"/>
+</LinearLayout>

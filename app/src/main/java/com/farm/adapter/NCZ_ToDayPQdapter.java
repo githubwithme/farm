@@ -135,7 +135,7 @@ public class NCZ_ToDayPQdapter extends BaseAdapter
 				{
 
 					Intent intent = new Intent(context, NCZ_GddList_.class);
-					intent.putExtra("areaid", listItems.get(v.getId()).getid());// 因为list中添加了头部,因此要去掉一个
+					intent.putExtra("bean", listItems.get(v.getId()));// 因为list中添加了头部,因此要去掉一个
 					context.startActivity(intent);
 				}
 			});

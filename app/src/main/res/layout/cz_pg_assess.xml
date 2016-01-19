@@ -360,7 +360,7 @@
                     android:textSize="@dimen/size_12"/>
             </RadioGroup>
 
-            <com.farm.widget.CustomExpandableListView
+            <ExpandableListView
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

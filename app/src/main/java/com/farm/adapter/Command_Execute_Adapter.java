@@ -1,8 +1,6 @@
 package com.farm.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +8,12 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.Dictionary;
 import com.farm.bean.goodslisttab;
-import com.farm.widget.CustomDialog_ListView_Assess;
+import com.farm.widget.CustomDialog_ListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,38 +23,35 @@ import java.util.List;
  * Created by ${hmj} on 2015/12/17.
  * 适配肥料选择界面的左边导航栏
  */
-public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
+public class Command_Execute_Adapter extends BaseExpandableListAdapter
 {
-    int totalHeight = 0;
-    List<View> list_view = new ArrayList<>();
-    int currentgroupPosition = 0;
-    int currentchildPosition = 0;
     TextView currentTextView;
-    CustomDialog_ListView_Assess customDialog_listView;
+    CustomDialog_ListView customDialog_listView;
     private int currentItem = 0;
     List<goodslisttab> list_goods = new ArrayList<goodslisttab>();
     ExpandableListView mainlistview;
+    Dictionary tempDic = new Dictionary();
     private Context context;// 运行上下文
     List<String> firstItemName;
     List<String> firstItemID;
     List<List<String>> secondItemName;
     List<List<String>> secondItemID;
     List<List<List<String>>> ThirdItemName;
-    List<List<List<String>>> ThirdItemId;
-    List<List<List<String>>> ThirdItemValues;
+    List<List<List<String>>> ThirdItemID;
     int currentChildsize = 0;
     private GoodsAdapter adapter;
     ListView list;
 
-    public CZ_PG_Assess_ExpandAdapter(Context context, Dictionary dictionary, ExpandableListView mainlistview)
+    public Command_Execute_Adapter(Context context, Dictionary dictionary, ExpandableListView mainlistview)
     {
+        this.tempDic = dictionary;
         this.mainlistview = mainlistview;
         this.context = context;
         firstItemName = dictionary.getFirstItemName();
         secondItemName = dictionary.getSecondItemName();
         ThirdItemName = dictionary.getThirdItemName();
-        ThirdItemId = dictionary.getThirdItemID();
-        ThirdItemValues = dictionary.getThirdItemValue();
+        ThirdItemID = dictionary.getThirdItemID();
+
     }
 
     //得到子item需要关联的数据
@@ -86,11 +80,8 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
 
     //设置子item的组件
     @Override
-    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
-//        tempDic.getThirdItemID().get(groupPosition).get(childPosition).clear();
-//        tempDic.getThirdItemID().get(groupPosition).get(childPosition).add("-1");
-
         String key = firstItemName.get(groupPosition);
         List<String> childData = secondItemName.get(groupPosition);
         String info = childData.get(childPosition);
@@ -103,8 +94,7 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.layout_children_assess, null);
-//            totalHeight += convertView.getMeasuredHeight();
+            convertView = inflater.inflate(R.layout.layout_children_bx, null);
             listItemView = new ListItemView();
             listItemView.tv_tip = (TextView) convertView.findViewById(R.id.tv_tip);
             listItemView.tv = (TextView) convertView.findViewById(R.id.second_textview);
@@ -115,35 +105,11 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
             if (isLastChild)
             {
                 map = new HashMap<>();
-//                ViewGroup.LayoutParams params = mainlistview.getLayoutParams();
-//                params.height = totalHeight + (mainlistview.getDividerHeight() * (mainlistview.getCount() - 1));
-//                mainlistview.setLayoutParams(params);
-//                mainlistview.requestLayout();
             }
 
             listItemView.tv_tip.setText(info);
-            listItemView.tv.setText("请选择" + info);
-            listItemView.tv.setTag(R.id.tag_fi, firstItemName.get(groupPosition));
-            listItemView.tv.setTag(R.id.tag_fn, key);
-            listItemView.tv.setTag(R.id.tag_si, secondItemName.get(groupPosition).get(childPosition));
-            listItemView.tv.setTag(R.id.tag_sn, info);
-            listItemView.tv.setTag(R.id.tag_ti, ThirdItemId.get(groupPosition).get(childPosition));
-            listItemView.tv.setTag(R.id.tag_tn, ThirdItemName.get(groupPosition).get(childPosition));
-            listItemView.tv.setTag(R.id.tag_val, ThirdItemValues.get(groupPosition).get(childPosition));
-            listItemView.tv.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    currentTextView = (TextView) v;
-                    List<String> list = (List<String>) v.getTag(R.id.tag_tn);
-                    List<String> listid = (List<String>) v.getTag(R.id.tag_ti);
-                    List<String> listvalues = (List<String>) v.getTag(R.id.tag_val);
-                    currentgroupPosition = groupPosition;
-                    currentchildPosition = childPosition;
-                    showDialog(list, listid, listvalues);
-                }
-            });
+            listItemView.tv.setText(ThirdItemID.get(groupPosition).get(childPosition).get(0));
+
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -168,7 +134,7 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
 //            mainlistview.expandGroup(i);
 //        }
 //        mainlistview.expandGroup(groupPosition);
-//        totalHeight = utils.getListViewHeight(mainlistview);
+
         super.onGroupExpanded(groupPosition);
     }
 
@@ -185,7 +151,6 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
     {
         String key = firstItemName.get(groupPosition);
         int size = secondItemName.get(groupPosition).size();
-//        totalHeight = utils.getListViewHeight(mainlistview);
         return size;
     }
 
@@ -215,7 +180,7 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
         if (convertView == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.layout_parent_assess, null);
+            convertView = inflater.inflate(R.layout.layout_parent_bx, null);
         }
         ImageView iv = (ImageView) convertView.findViewById(R.id.iv);
         TextView tv = (TextView) convertView.findViewById(R.id.parent_textview);
@@ -249,43 +214,5 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
     public boolean isChildSelectable(int groupPosition, int childPosition)
     {
         return true;
-    }
-
-    public void showDialog(List<String> list, List<String> listid, List<String> listvalues)
-    {
-        View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView_Assess(context, R.style.MyDialog, dialog_layout, list, listid, listvalues, new CustomDialog_ListView_Assess.CustomDialogListener()
-        {
-            @Override
-            public void OnClick(Bundle bundle)
-            {
-                currentTextView.setText(bundle.getString("name"));
-                currentTextView.setTextColor(context.getResources().getColor(R.color.bg_yellow));
-                TextPaint tp = currentTextView.getPaint();
-                tp.setFakeBoldText(true);
-
-                currentTextView.setTag(bundle);
-                for (int i = 0; i < list_view.size(); i++)
-                {
-                    String fi = (String) currentTextView.getTag(R.id.tag_fi);
-                    String si = (String) currentTextView.getTag(R.id.tag_si);
-                    String list_view_fi = (String) list_view.get(i).getTag(R.id.tag_fi);
-                    String list_view_si = (String) list_view.get(i).getTag(R.id.tag_si);
-                    if (fi.equals(list_view_fi) && si.equals(list_view_si))
-                    {
-                        list_view.remove(i);
-                        list_view.add(currentTextView);
-                        return;
-                    }
-                }
-                list_view.add(currentTextView);
-            }
-        });
-        customDialog_listView.show();
-    }
-
-    public List<View> getListView()
-    {
-        return list_view;
     }
 }

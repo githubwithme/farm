@@ -18,15 +18,15 @@ import com.lidroid.xutils.db.annotation.Table;
 @Table(name = "commandtab_single")
 public class commandtab_single implements Parcelable
 {
-	public String Id;
-	public String uId;
-	public String regDate;
-	public String stdJobType;
-	public String stdJobTypeName;
-	public String stdJobId;
-	public String stdJobName;
-	public String nongziName;
-	public String amount;
+	public String Id="";
+	public String uId="";
+	public String regDate="";
+	public String stdJobType="";
+	public String stdJobTypeName="";
+	public String stdJobId="";
+	public String stdJobName="";
+	public String nongziName="";
+	public String amount="";
 	public String commNote="";
 	public String execLevel="";
 	public String commFromID;

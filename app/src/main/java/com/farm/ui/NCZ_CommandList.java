@@ -353,7 +353,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 commandtab commandtab = listData.get(position - 1);
                 if (commandtab == null)
                     return;
-                Intent intent = new Intent(getActivity(), NCZ_CommandDetailList_.class);
+                Intent intent = new Intent(getActivity(), NCZ_CommandDetail_.class);
                 intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
             }

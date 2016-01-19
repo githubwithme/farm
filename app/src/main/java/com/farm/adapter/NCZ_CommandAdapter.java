@@ -43,6 +43,8 @@ public class NCZ_CommandAdapter extends BaseAdapter
         public FrameLayout fl_new_item;
         public FrameLayout fl_new;
         public TextView tv_new;
+        public TextView tv_zf;
+        public TextView tv_type;
     }
 
     public NCZ_CommandAdapter(Context context, List<commandtab> data)
@@ -91,6 +93,8 @@ public class NCZ_CommandAdapter extends BaseAdapter
             listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
             listItemView.tv_cmdname = (TextView) convertView.findViewById(R.id.tv_cmdname);
             listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+            listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
+            listItemView.tv_zf = (TextView) convertView.findViewById(R.id.tv_zf);
 
             listItemView.rl_record.setId(position);
             listItemView.iv_record.setId(position);
@@ -138,6 +142,9 @@ public class NCZ_CommandAdapter extends BaseAdapter
         {
             listItemView.tv_cmdname.setText(commandtab.getstdJobTypeName() + "-" + commandtab.getstdJobName());
         }
+
+//        listItemView.tv_zf.setText();
+//        listItemView.tv_type.setText();
         listItemView.tv_qyts.setText("要求天数-" + commandtab.getcommDays() + "天");
         listItemView.tv_qx.setText("开始 " + commandtab.getcommComDate());
         listItemView.tv_time.setText("发布于 " + commandtab.getregDate().subSequence(0, commandtab.getregDate().lastIndexOf(" ")));

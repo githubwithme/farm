@@ -154,6 +154,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_yqmc"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -162,6 +163,7 @@
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_sp_16"/>
             <TextView
+                android:id="@+id/tv_pqmc"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -171,6 +173,7 @@
                 android:textSize="@dimen/size_sp_16"/>
 
             <TextView
+                android:id="@+id/tv_zzsl"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

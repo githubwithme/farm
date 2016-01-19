@@ -1,6 +1,6 @@
 package com.farm.ui;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
@@ -8,30 +8,37 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
-import com.farm.adapter.PG_TodayPlantAdapter;
+import com.farm.adapter.NCZ_EventAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
-import com.farm.bean.PlantGcd;
+import com.farm.bean.Event;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
-import com.farm.bean.planttab;
 import com.farm.common.DictionaryHelper;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
+import com.farm.common.utils;
 import com.farm.widget.NewDataToast;
 import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
@@ -43,7 +50,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -51,105 +58,71 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-@EActivity(R.layout.pg_plantlist)
-public class PG_PlantList extends Activity
+@SuppressLint("NewApi")
+@EFragment
+public class NCZ_EventList extends Fragment implements OnClickListener
 {
-    String gcdid="";
-    PlantGcd plantGcd;
+    Dictionary dic_test;
     Dictionary dictionary;
     TimeThread timethread;
     SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
-    private PG_TodayPlantAdapter listAdapter;
+    private NCZ_EventAdapter listAdapter;
     private int listSumData;
-    private List<planttab> listData = new ArrayList<planttab>();
+    private List<Event> listData = new ArrayList<Event>();
     private AppContext appContext;
     private View list_footer;
     private TextView list_foot_more;
     private ProgressBar list_foot_progress;
-    // List<String> type_Data = new ArrayList<String>();
-    // List<View> type_laout = new ArrayList<View>();
-    PopupWindow popupWindow_tab;
-    View popupWindowView_tab;
+    PopupWindow pw_tab;
+    View pv_tab;
+    PopupWindow pw_command;
+    View pv_command;
     @ViewById
     TextView tv_title;
     @ViewById
     View line;
     @ViewById
-    ImageButton btn_add;
-    @ViewById
-    ImageButton btn_search;
-    @ViewById
     PullToRefreshListView frame_listview_news;
 
-    String areaid;
-    String gcdName;
+    String workuserid;
 
     @Click
     void btn_add()
     {
-        Intent intent = new Intent(PG_PlantList.this, AddPlant_.class);
-        intent.putExtra("gcdid",gcdid);
-        intent.putExtra("gcdName",gcdName);
-        PG_PlantList.this.startActivity(intent);
-    }
-
-    @Click
-    void imgbtn_back()
-    {
-        finish();
+        showPop_addcommand();
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
-        if (listData.isEmpty())
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-
-        } else
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-        }
     }
 
     @AfterViews
     void afterOncreate()
     {
-        tv_title.setText(plantGcd.getPlantgcdName()+"-"+"观测株");
-        commembertab commembertab = AppContext.getUserInfo(PG_PlantList.this);
-        if (!commembertab.getnlevel().toString().equals("2"))
-        {
-            btn_add.setVisibility(View.GONE);
-        }
-        dictionary = DictionaryHelper.getDictionaryFromAssess(PG_PlantList.this, "PG_MQ");
-        selectorUi = new SelectorFragment_();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", dictionary);
-        selectorUi.setArguments(bundle);
-        switchContent(mContent, selectorUi);
-        initAnimalListView();
+        getArealist();
+        getTestData("event");
+//        initAnimalListView();
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        getActionBar().hide();
-        appContext = (AppContext) PG_PlantList.this.getApplication();
-        plantGcd = getIntent().getParcelableExtra("bean");
-        gcdid = getIntent().getStringExtra("gcdid");
-        gcdName = getIntent().getStringExtra("gcdName");
+        View rootView = inflater.inflate(R.layout.eventlist, container, false);
+        appContext = (AppContext) getActivity().getApplication();
+        dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "NCZ_CMD");
+        selectorUi = new SelectorFragment_();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        PG_PlantList.this.registerReceiver(receiver_update, intentfilter_update);
-        areaid = plantGcd.getareaId();
-        timethread = new TimeThread();
-        timethread.setStop(false);
-        timethread.setSleep(false);
-        timethread.start();
+        getActivity().registerReceiver(receiver_update, intentfilter_update);
+        workuserid = getArguments().getString("workuserid");
+//        timethread = new TimeThread();
+//        timethread.setStop(false);
+//        timethread.setSleep(false);
+//        timethread.start();
+        return rootView;
     }
-
 
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
@@ -169,28 +142,36 @@ public class PG_PlantList extends Activity
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             if (!to.isAdded())
             { // 先判断是否被add过
-                transaction.hide(from).add(R.id.top_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+                transaction.hide(from).add(R.id.top_container_event, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
             } else
             {
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
         }
     }
-
+    private void getTestData(String from)
+    {
+        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
+        Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
+        List<Event> listData = JSON.parseArray(result.getRows().toJSONString(), Event.class);
+        listAdapter = new NCZ_EventAdapter(getActivity(), listData);
+        frame_listview_news.setAdapter(listAdapter);
+    }
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-        commembertab commembertab = AppContext.getUserInfo(PG_PlantList.this);
+        String strWher = DictionaryHelper.getStrWhere_ncz_cmd(getActivity(), dictionary);
+        String orderby = selectorUi.getOrderby();
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("areaid", areaid);
+        params.addQueryStringParameter("workuserid", workuserid);
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("orderby", "regDate desc");
-        params.addQueryStringParameter("strWhere", "");
-        params.addQueryStringParameter("gcdid", gcdid);
+        params.addQueryStringParameter("orderby", orderby);
+        params.addQueryStringParameter("strWhere", strWher);
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "plantGetListByGCD");
+        params.addQueryStringParameter("action", "commandGetListByNCZ");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -198,22 +179,23 @@ public class PG_PlantList extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<planttab> listNewData = null;
+                List<Event> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), planttab.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Event.class);
                     } else
                     {
-                        listNewData = new ArrayList<planttab>();
+                        listNewData = new ArrayList<Event>();
                     }
                 } else
                 {
-                    AppContext.makeToast(PG_PlantList.this, "error_connectDataBase");
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
                     return;
                 }
+
                 // 数据处理
                 int size = listNewData.size();
 
@@ -231,12 +213,12 @@ public class PG_PlantList extends Activity
                                 {
                                     if (listData.size() > 0)// 页面切换时，若之前列表中已有数据，则往上面添加，并判断去除重复
                                     {
-                                        for (planttab planttab1 : listNewData)
+                                        for (Event Event1 : listNewData)
                                         {
                                             boolean b = false;
-                                            for (planttab planttab2 : listData)
+                                            for (Event Event2 : listData)
                                             {
-                                                if (planttab1.getId().equals(planttab2.getId()))
+                                                if (Event1.getSJID().equals(Event2.getSJID()))
                                                 {
                                                     b = true;
                                                     break;
@@ -261,10 +243,10 @@ public class PG_PlantList extends Activity
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(PG_PlantList.this, getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else
                             {
-                                // NewDataToast.makeText(PG_PlantList.this,
+                                // NewDataToast.makeText(getActivity(),
                                 // getString(R.string.new_data_toast_none), false,
                                 // R.raw.newdatatoast).show();
                             }
@@ -277,18 +259,19 @@ public class PG_PlantList extends Activity
                                 listSumData += size;
                                 if (listNewData.size() > 0)
                                 {
-                                    for (planttab planttab1 : listNewData)
+                                    for (Event Event1 : listNewData)
                                     {
                                         boolean b = false;
-                                        for (planttab planttab2 : listData)
+                                        for (Event Event2 : listData)
                                         {
-                                            if (planttab1.getId().equals(planttab2.getId()))
+                                            if (Event1.getSJID().equals(Event2.getSJID()))
                                             {
                                                 b = true;
                                                 break;
                                             }
                                         }
-                                        if (!b) listData.add(planttab1);
+                                        if (!b)
+                                            listData.add(Event1);
                                     }
                                 } else
                                 {
@@ -320,7 +303,7 @@ public class PG_PlantList extends Activity
                     // 有异常--显示加载出错 & 弹出错误消息
                     lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                     more.setText(R.string.load_error);
-                    AppContext.makeToast(PG_PlantList.this, "load_error");
+                    AppContext.makeToast(getActivity(), "load_error");
                 }
                 if (adapter.getCount() == 0)
                 {
@@ -343,15 +326,16 @@ public class PG_PlantList extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_PlantList.this, "error_connectServer");
+                String a = error.getMessage();
+                AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
     }
 
     private void initAnimalListView()
     {
-        listAdapter = new PG_TodayPlantAdapter(PG_PlantList.this, listData);
-        list_footer = PG_PlantList.this.getLayoutInflater().inflate(R.layout.listview_footer, null);
+        listAdapter = new NCZ_EventAdapter(getActivity(), listData);
+        list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         frame_listview_news.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
@@ -361,7 +345,8 @@ public class PG_PlantList extends Activity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 // 点击头部、底部栏无效
-                if (position == 0 || view == list_footer) return;
+                if (position == 0 || view == list_footer)
+                    return;
 
                 // Animal animal = null;
                 // // 判断是否是TextView
@@ -376,11 +361,12 @@ public class PG_PlantList extends Activity
                 // }
                 // if (animal == null)
                 // return;
-                planttab planttab = listData.get(position - 1);
-                if (planttab == null) return;
-                Intent intent = new Intent(PG_PlantList.this, ShowPlant_.class);
-                intent.putExtra("bean", planttab); // 因为list中添加了头部,因此要去掉一个
-                PG_PlantList.this.startActivity(intent);
+                Event Event = listData.get(position - 1);
+                if (Event == null)
+                    return;
+                Intent intent = new Intent(getActivity(), NCZ_CommandDetailList_.class);
+                intent.putExtra("bean", Event);// 因为list中添加了头部,因此要去掉一个
+                startActivity(intent);
             }
         });
         frame_listview_news.setOnScrollListener(new AbsListView.OnScrollListener()
@@ -390,7 +376,8 @@ public class PG_PlantList extends Activity
                 frame_listview_news.onScrollStateChanged(view, scrollState);
 
                 // 数据为空--不用继续下面代码了
-                if (listData.isEmpty()) return;
+                if (listData.isEmpty())
+                    return;
 
                 // 判断是否滚动到底部
                 boolean scrollEnd = false;
@@ -438,7 +425,53 @@ public class PG_PlantList extends Activity
         }
     }
 
-    public class yqAdapter extends BaseAdapter
+    public void showPop_addcommand()
+    {
+        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+        pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
+        pv_command.setOnKeyListener(new OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
+                {
+                    pw_command.dismiss();
+                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    getActivity().getWindow().setAttributes(lp);
+                    return true;
+                }
+                return false;
+            }
+        });
+        pv_command.setOnTouchListener(new OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_command.isShowing())
+                {
+                    pw_command.dismiss();
+                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    getActivity().getWindow().setAttributes(lp);
+                }
+                return false;
+            }
+        });
+        pw_command = new PopupWindow(pv_command, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, true);
+        pw_command.showAsDropDown(line, 0, 0);
+        pw_command.setOutsideTouchable(true);
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = 0.7f;
+        getActivity().getWindow().setAttributes(lp);
+        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(this);
+        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(this);
+        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(this);
+    }
+
+    public class TitleAdapter extends BaseAdapter
     {
         private Context context;
         private List<String> listItems;
@@ -450,7 +483,7 @@ public class PG_PlantList extends Activity
             public TextView tv_yq;
         }
 
-        public yqAdapter(Context context, List<String> data)
+        public TitleAdapter(Context context, List<String> data)
         {
             this.context = context;
             this.listContainer = LayoutInflater.from(context);
@@ -498,6 +531,36 @@ public class PG_PlantList extends Activity
         }
     }
 
+    @Override
+    public void onClick(View v)
+    {
+        Intent intent;
+        switch (v.getId())
+        {
+            case R.id.btn_standardprocommand:
+                intent = new Intent(getActivity(), AddStd_Cmd_.class);
+                intent.putExtra("level", "1");
+                startActivity(intent);
+                pw_command.dismiss();
+                break;
+            case R.id.btn_nonstandardprocommand:
+                intent = new Intent(getActivity(), AddNotStd_Cmd_.class);
+                intent.putExtra("level", "1");
+                startActivity(intent);
+                pw_command.dismiss();
+                break;
+            case R.id.btn_nonprocommand:
+                intent = new Intent(getActivity(), AddNotProductCommand_.class);
+                intent.putExtra("level", "1");
+                startActivity(intent);
+                pw_command.dismiss();
+                break;
+
+            default:
+                break;
+        }
+    }
+
     class TimeThread extends Thread
     {
         private boolean isSleep = true;
@@ -537,11 +600,61 @@ public class PG_PlantList extends Activity
     }
 
     @Override
-    public void onDestroy()
+    public void onDestroyView()
     {
-        super.onDestroy();
+        super.onDestroyView();
         timethread.setStop(true);
         timethread.interrupt();
         timethread = null;
     }
+
+    private void getArealist()
+    {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("name", "getstdPark");
+        params.addQueryStringParameter("action", "getDict");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a=responseInfo.result;
+                List<Dictionary> lsitNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
+                        if (lsitNewData != null)
+                        {
+                            Dictionary dic = DictionaryHelper.getNCZ_CMD_AreaDictionary(getActivity(), lsitNewData.get(0), dictionary);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("bean", dic);
+                            selectorUi.setArguments(bundle);
+                            switchContent(mContent, selectorUi);
+                        }
+                    } else
+                    {
+                        lsitNewData = new ArrayList<Dictionary>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
+
 }

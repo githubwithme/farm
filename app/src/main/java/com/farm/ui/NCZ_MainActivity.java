@@ -47,7 +47,7 @@ public class NCZ_MainActivity extends BaseActivity
 	int cmd_videoNum;
 	Fragment mContent = new Fragment();
 	NCZ_MainFragment mainFragment;
-	AnalysisActivity analysisActivity;
+	NCZ_EventList ncz_eventList;
 	NCZ_CommandList ncz_CommandList;
 	// NCZ_SaleFragment ncz_SaleFragment;
 	// SaleList saleList;
@@ -165,7 +165,7 @@ public class NCZ_MainActivity extends BaseActivity
 		tl_product.setSelected(false);
 		tl_sale.setSelected(false);
 		tl_money.setSelected(true);
-		switchContent(mContent, analysisActivity);
+		switchContent(mContent, ncz_eventList);
 
 	}
 
@@ -216,14 +216,21 @@ public class NCZ_MainActivity extends BaseActivity
 		getActionBar().hide();
 		AppManager.getAppManager().addActivity(NCZ_MainActivity.this);
 		commembertab = AppContext.getUserInfo(NCZ_MainActivity.this);
-		mainFragment = new NCZ_MainFragment_();
-		ncz_CommandList = new NCZ_CommandList_();
+
 		Bundle bundle = new Bundle();
 		bundle.putString("workuserid", commembertab.getId());
-		ncz_CommandList.setArguments(bundle);
+
+		mainFragment = new NCZ_MainFragment_();
 		productBatchList = new ProductBatchList_();
-		analysisActivity = new AnalysisActivity();
+
+		ncz_CommandList = new NCZ_CommandList_();
+		ncz_CommandList.setArguments(bundle);
+
+		ncz_eventList = new NCZ_EventList_();
+		ncz_eventList.setArguments(bundle);
+
 		iFragment = new IFragment_();
+
 		timethread = new TimeThread();
 		timethread.setStop(false);
 		timethread.setSleep(false);

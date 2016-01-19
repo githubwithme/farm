@@ -431,4 +431,19 @@ public class utils
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
+
+    public static int getListViewHeight(ExpandableListView listView)
+    {
+        ListAdapter listAdapter = listView.getAdapter();
+        int totalHeight = 0;
+        int count = listAdapter.getCount();
+        for (int i = 0; i < listAdapter.getCount(); i++)
+        {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        return totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+    }
 }
