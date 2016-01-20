@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
+              android:background="@color/light_gray"
               android:orientation="vertical">
 
 
@@ -59,12 +59,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:background="@color/light_gray" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <LinearLayout
@@ -309,12 +310,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll_zlnr"
+                android:layout_marginTop="3dip"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="45dip"
-                    android:background="@color/color_orange"
+                    android:background="@color/white"
                     android:gravity="center"
                     android:paddingLeft="10dip"
                     android:text="评分标准"
@@ -378,7 +380,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="45dip"
-                    android:background="@color/color_orange"
+                    android:background="@color/white"
                     android:gravity="center"
                     android:paddingLeft="10dip"
                     android:text="评分说明"
@@ -393,7 +395,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dip"
                 android:layout_below="@+id/ll_pfsm"
-                android:background="@drawable/background_view_rounded_single"
+                android:background="@color/light_gray"
                 android:gravity="center"
                 android:hint="请输入评分说明"
                 android:textColor="@color/red"
@@ -409,29 +411,34 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="45dip"
-                    android:background="@color/color_orange"
+                    android:background="@color/white"
                     android:gravity="center"
                     android:paddingLeft="10dip"
-                    android:text="完成情况"
+                    android:text="完成百分比"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14"/>
 
-                <RadioGroup
-                    android:id="@+id/rg_wcqk"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dip"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rb_sfwc"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="完成指令"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/size_sp_16"/>
-
-                </RadioGroup>
+              <RelativeLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="50dip">
+                  <EditText
+                      android:id="@+id/et_jd"
+                      android:layout_centerInParent="true"
+                      android:layout_width="150dip"
+                      android:layout_height="match_parent"
+                      android:textColor="@color/red"
+                      android:inputType="numberDecimal"
+                      android:textSize="@dimen/size_sp_14"
+                      android:gravity="center"/>
+                  <TextView
+                      android:layout_toRightOf="@+id/et_jd"
+                      android:layout_width="wrap_content"
+                      android:layout_height="match_parent"
+                      android:text="%"
+                      android:gravity="center"
+                      android:textColor="@color/bg_text"
+                      android:textSize="@dimen/size_sp_18"/>
+              </RelativeLayout>
 
             </LinearLayout>
 

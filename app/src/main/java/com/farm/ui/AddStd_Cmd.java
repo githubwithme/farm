@@ -109,7 +109,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     @AfterViews
     void afterOncreate()
     {
-        setMenuUnCliable();
+
 
         commandtab_single.getInstance().clearAll();
         SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, SelectCmdArea.class);
@@ -132,6 +132,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
         setBackground(0);
         //关闭预加载，默认一次只加载一个Fragment
         vPager.setOffscreenPageLimit(0);
+        setMenuUnCliable();
         vPager.setIsScrollable(false);
         adapter = new FragmentViewPagerAdapter(AddStd_Cmd.this.getSupportFragmentManager(), vPager, fragmentList);
 

@@ -15,6 +15,7 @@ import com.farm.adapter.PagerAdapter_AddPlantObservation;
 import com.farm.bean.Dictionary;
 import com.farm.bean.plantgrowthtab_single;
 import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
+import com.farm.widget.CustomViewPager;
 import com.farm.widget.MyDialog;
 import com.media.MediaChooser;
 import com.media.MediaChooserConstants;
@@ -45,7 +46,7 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
     TextView text_six;
 
     @ViewById
-    android.support.v4.view.ViewPager vPager;
+    CustomViewPager vPager;
 
     @Click
     void imgbtn_back()
@@ -93,6 +94,8 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
         fragmentList.add(addPlantObservation_stepFive);
 
         setBackground(0);
+        setMenuUnCliable();
+        vPager.setIsScrollable(false);
         //关闭预加载，默认一次只加载一个Fragment
         vPager.setOffscreenPageLimit(1);
         adapter = new PagerAdapter_AddPlantObservation(AddPlantObservation.this.getSupportFragmentManager(), vPager, fragmentList);
@@ -209,6 +212,8 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
                 fragment2.updateData(gcq, "香蕉");
                 break;
             case 2:
+                vPager.setIsScrollable(true);
+                setMenuCliable();
                 AddPlantObservation_stepfour fragment4 = (AddPlantObservation_stepfour) adapter.getFragment(2);
                 Dictionary dic = fragment4.getDic();
                 AddPlantObservation_stepFive fragment3 = (AddPlantObservation_stepFive) adapter.getFragment(3);
@@ -222,6 +227,21 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
         vPager.setCurrentItem(currentItem + 1);//要放到后面，否则切换之后currentitem会变
     }
 
+    private void setMenuCliable()
+    {
+        text_three.setClickable(true);
+        text_four.setClickable(true);
+        text_five.setClickable(true);
+        text_six.setClickable(true);
+
+    }
+    private void setMenuUnCliable()
+    {
+        text_three.setClickable(false);
+        text_four.setClickable(false);
+        text_five.setClickable(false);
+        text_six.setClickable(false);
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
