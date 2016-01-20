@@ -1,7 +1,12 @@
 package com.farm.adapter;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +16,27 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
+import com.farm.bean.Result;
+import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
+import com.farm.bean.jobtab;
+import com.farm.ui.Common_JobDetail_Show_;
 import com.farm.widget.CustomDialog_ListView;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
+import com.swipelistview.SimpleSwipeListener;
+import com.swipelistview.SwipeLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +48,7 @@ import java.util.List;
  */
 public class CommandExecute_Adapter extends BaseExpandableListAdapter
 {
+    SwipeLayout swipeLayout;
     int currentgroupPosition = 0;
     int currentchildPosition = 0;
     TextView currentTextView;
@@ -75,8 +97,59 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
 
     static class ListItemView
     {
-        public TextView tv_tip;
-        public TextView tv;
+        public TextView tv_time;
+        public TextView tv_note;
+        public TextView tv_pf;
+        public TextView tv_jd;
+    }
+
+    private void getListData()
+    {
+        commembertab commembertab = AppContext.getUserInfo(context);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("workuserid", "20");
+        params.addQueryStringParameter("userid", "15");
+        params.addQueryStringParameter("uid", "12");
+        params.addQueryStringParameter("username", "戴泉");
+        params.addQueryStringParameter("orderby", "regDate desc");
+        params.addQueryStringParameter("strWhere", "");
+        params.addQueryStringParameter("page_size", "10");
+        params.addQueryStringParameter("page_index", "10");
+        params.addQueryStringParameter("action", "jobGetList");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<jobtab> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                        Intent intent = new Intent(context, Common_JobDetail_Show_.class);
+                        intent.putExtra("bean", listNewData.get(0));
+                        context.startActivity(intent);
+                    } else
+                    {
+                        listNewData = new ArrayList<jobtab>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s)
+            {
+
+            }
+        });
     }
 
     //设置子item的组件
@@ -100,10 +173,20 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_children_commandexecute, null);
             listItemView = new ListItemView();
-            listItemView.tv_tip = (TextView) convertView.findViewById(R.id.tv_tip);
-            listItemView.tv = (TextView) convertView.findViewById(R.id.second_textview);
+            listItemView.tv_jd = (TextView) convertView.findViewById(R.id.tv_jd);
+            listItemView.tv_pf = (TextView) convertView.findViewById(R.id.tv_pf);
+            listItemView.tv_note = (TextView) convertView.findViewById(R.id.tv_note);
+            listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             convertView.setTag(listItemView);
+            convertView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    getListData();
 
+                }
+            });
             map.put(childPosition, convertView);
             lmap.put(groupPosition, map);
             if (isLastChild)
@@ -111,27 +194,11 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
                 map = new HashMap<>();
             }
 
-//            listItemView.tv_tip.setText(info);
-//            listItemView.tv.setText("请选择" + info);
-//            listItemView.tv.setText(ThirdItemName.get(groupPosition).get(childPosition).get(0));
-            listItemView.tv.setTag(R.id.tag_fi, firstItemName.get(groupPosition));
-            listItemView.tv.setTag(R.id.tag_fn, key);
-            listItemView.tv.setTag(R.id.tag_si, secondItemName.get(groupPosition).get(childPosition));
-            listItemView.tv.setTag(R.id.tag_sn, info);
-            listItemView.tv.setTag(R.id.tag_ti, ThirdItemName.get(groupPosition).get(childPosition));
-            listItemView.tv.setTag(R.id.tag_tn, ThirdItemName.get(groupPosition).get(childPosition));
-            listItemView.tv.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    currentTextView = (TextView) v;
-                    List<String> list = (List<String>) v.getTag(R.id.tag_tn);
-                    currentgroupPosition = groupPosition;
-                    currentchildPosition = childPosition;
-                    showDialog(list);
-                }
-            });
+            listItemView.tv_time.setText(ThirdItemName.get(groupPosition).get(childPosition).get(0));
+            listItemView.tv_jd.setText(ThirdItemName.get(groupPosition).get(childPosition).get(1));
+            listItemView.tv_pf.setText(ThirdItemName.get(groupPosition).get(childPosition).get(2));
+            listItemView.tv_note.setText(ThirdItemName.get(groupPosition).get(childPosition).get(3));
+
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -203,10 +270,64 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_parent_commandexecute, null);
         }
-        TextView tv = (TextView) convertView.findViewById(R.id.parent_textview);
+        TextView tv_call = (TextView) convertView.findViewById(R.id.tv_call);
+        TextView parent_textview = (TextView) convertView.findViewById(R.id.parent_textview);
+        swipeLayout = (SwipeLayout) convertView.findViewById(R.id.swipe);
+        // 当隐藏的删除menu被打开的时候的回调函数
+        swipeLayout.addSwipeListener(new SimpleSwipeListener()
+        {
+            @Override
+            public void onOpen(SwipeLayout layout)
+            {
+                Toast.makeText(context, "Open", Toast.LENGTH_SHORT).show();
+            }
+        });
+        // 双击的回调函数
+        swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener()
+        {
+            @Override
+            public void onDoubleClick(SwipeLayout layout, boolean surface)
+            {
+                Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
+            }
+        });
+        // 添加删除布局的点击事件
+        convertView.findViewById(R.id.ll_menu).setOnClickListener(new View.OnClickListener()
+        {
 
-        tv.setTag(groupPosition);
-        tv.setOnClickListener(new View.OnClickListener()
+            @Override
+            public void onClick(View arg0)
+            {
+                Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
+                // 点击完成之后，关闭删除menu
+                swipeLayout.close();
+            }
+        });
+
+
+        tv_call.setTag(groupPosition);
+        tv_call.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "15989145780"));
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                context.startActivity(intent);
+            }
+        });
+        parent_textview.setTag(groupPosition);
+        parent_textview.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -215,7 +336,7 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
 //                TextView textView = (TextView) v;
             }
         });
-//        tv.setText(firstItemName.get(groupPosition));
+        parent_textview.setText(firstItemName.get(groupPosition));
         return convertView;
     }
 

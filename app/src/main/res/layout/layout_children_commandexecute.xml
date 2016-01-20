@@ -16,7 +16,7 @@
             android:background="@color/bg_text"/>
 
         <TextView
-
+            android:id="@+id/tv_time"
             android:layout_width="80dip"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -30,7 +30,7 @@
 
 
     <TextView
-
+        android:id="@+id/tv_jd"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -41,7 +41,7 @@
         android:textSize="@dimen/size_14"/>
 
     <TextView
-        android:id="@+id/second_textview"
+        android:id="@+id/tv_pf"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -52,7 +52,7 @@
         android:textSize="@dimen/size_14"/>
 
     <TextView
-        android:id="@+id/tv_tip"
+        android:id="@+id/tv_note"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"

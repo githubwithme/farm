@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -389,7 +390,7 @@ public class utils
         return result;
     }
 
-    public static void setListViewHeightBasedOnChildren(ExpandableListView listView)
+    public static void setListViewHeightBasedOnChildren(ListView listView)
     {
         //获取ListView对应的Adapter
         ListAdapter listAdapter = listView.getAdapter();
@@ -414,7 +415,7 @@ public class utils
         listView.setLayoutParams(params);
     }
 
-    public static void setListViewHeight(ExpandableListView listView)
+    public static void setListViewHeight(ListView listView)
     {
         ListAdapter listAdapter = listView.getAdapter();
         int totalHeight = 0;
