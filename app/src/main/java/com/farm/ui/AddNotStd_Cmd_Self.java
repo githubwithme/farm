@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_AddNotStd_Cmd_Self;
@@ -18,6 +19,7 @@ import com.farm.bean.goodslisttab;
 import com.farm.bean.goodslisttab_flsl;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
+import com.farm.widget.CustomViewPager;
 import com.farm.widget.MyDialog;
 
 import org.androidannotations.annotations.AfterViews;
@@ -26,10 +28,13 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @EActivity(R.layout.activity_add_notstd__cmd_self)
 public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCallBack
 {
+    commandtab_single commandtab_single;
+    List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
     String level = "";
     MyDialog myDialog;
     int currentItem = 0;
@@ -51,7 +56,7 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
     @ViewById
     ImageView image_six;
     @ViewById
-    android.support.v4.view.ViewPager vPager;
+    CustomViewPager vPager;
 
     @Click
     void imgbtn_back()
@@ -96,6 +101,8 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
         fragmentList.add(addStd_cmd_stepSix);
 
         setBackground(0);
+        setMenuUnCliable();
+        vPager.setIsScrollable(false);
         //关闭预加载，默认一次只加载一个Fragment
         vPager.setOffscreenPageLimit(0);
         adapter = new ViewPagerAdapter_AddNotStd_Cmd_Self(AddNotStd_Cmd_Self.this.getSupportFragmentManager(), vPager, fragmentList);
@@ -189,21 +196,37 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
     @Override
     public void callbackFun2(Bundle arg)
     {
-
         switch (currentItem)
         {
             case 0:
+                list_goodslisttab= SqliteDb.getSelectCmdArea(AddNotStd_Cmd_Self.this, goodslisttab.class);
+                if (list_goodslisttab.size()>0)
+                {
+                    vPager.setCurrentItem(currentItem + 1);
+                }else
+                {
+                    Toast.makeText(AddNotStd_Cmd_Self.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case 1:
-                AddNotStd_Cmd_StepSix_Self addNotStd_cmd_stepSix_self = (AddNotStd_Cmd_StepSix_Self) adapter.getFragment(currentItem + 1);
-                addNotStd_cmd_stepSix_self.update();
+                commandtab_single = com.farm.bean.commandtab_single.getInstance();
+                if (commandtab_single.getimportance().equals("") || commandtab_single.getcommComDate().equals("") || commandtab_single.getcommDays().equals("") || commandtab_single.getcommNote().equals(""))
+                {
+                    Toast.makeText(AddNotStd_Cmd_Self.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    vPager.setIsScrollable(true);
+                    setMenuCliable();
+                    AddNotStd_Cmd_StepSix_Self addNotStd_cmd_stepSix_self = (AddNotStd_Cmd_StepSix_Self) adapter.getFragment(currentItem + 1);
+                    addNotStd_cmd_stepSix_self.update();
+                    vPager.setCurrentItem(currentItem + 1);
+
+                }
+
                 break;
             case 2:
-
-
                 break;
         }
-        vPager.setCurrentItem(currentItem + 1);
     }
 
     @Override
@@ -223,7 +246,19 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
         return false;
 
     }
+    private void setMenuCliable()
+    {
+        text_three.setClickable(true);
+        text_five.setClickable(true);
+        text_six.setClickable(true);
 
+    }
+    private void setMenuUnCliable()
+    {
+        text_three.setClickable(false);
+        text_five.setClickable(false);
+        text_six.setClickable(false);
+    }
     private void showExistTip()
     {
         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);

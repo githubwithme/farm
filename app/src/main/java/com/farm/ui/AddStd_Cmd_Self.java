@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_AddStd_Cmd_Self;
@@ -18,6 +19,7 @@ import com.farm.bean.goodslisttab;
 import com.farm.bean.goodslisttab_flsl;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
+import com.farm.widget.CustomViewPager;
 import com.farm.widget.MyDialog;
 
 import org.androidannotations.annotations.AfterViews;
@@ -26,10 +28,14 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @EActivity(R.layout.activity_add_std__cmd_self)
 public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBack
 {
+    commandtab_single commandtab_single;
+    List<goodslisttab_flsl> list_SelectCmdArea = new ArrayList<goodslisttab_flsl>();
+    List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
     String level = "";
     MyDialog myDialog;
     int currentItem = 0;
@@ -57,7 +63,7 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
     @ViewById
     ImageView image_six;
     @ViewById
-    android.support.v4.view.ViewPager vPager;
+    CustomViewPager vPager;
 
     @Click
     void imgbtn_back()
@@ -111,6 +117,8 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
         fragmentList.add(addStd_cmd_stepSix);
 
         setBackground(0);
+        setMenuUnCliable();
+        vPager.setIsScrollable(false);
         //关闭预加载，默认一次只加载一个Fragment
         vPager.setOffscreenPageLimit(0);
         adapter = new ViewPagerAdapter_AddStd_Cmd_Self(AddStd_Cmd_Self.this.getSupportFragmentManager(), vPager, fragmentList);
@@ -219,21 +227,41 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
     @Override
     public void callbackFun2(Bundle arg)
     {
-
         switch (currentItem)
         {
             case 0:
+                vPager.setCurrentItem(currentItem + 1);
                 break;
             case 1:
+                list_goodslisttab= SqliteDb.getSelectCmdArea(AddStd_Cmd_Self.this, goodslisttab.class);
+                if (list_goodslisttab.size()>0)
+                {
+                    vPager.setCurrentItem(currentItem + 1);
+                }else
+                {
+                    Toast.makeText(AddStd_Cmd_Self.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case 2:
-                AddStd_Cmd_StepSix_Self addStd_cmd_stepSix_self = (AddStd_Cmd_StepSix_Self) adapter.getFragment(currentItem + 1);
-                addStd_cmd_stepSix_self.update();
+                commandtab_single = com.farm.bean.commandtab_single.getInstance();
+                if (commandtab_single.getimportance().equals("") || commandtab_single.getcommComDate().equals("") || commandtab_single.getcommDays().equals("") || commandtab_single.getcommNote().equals(""))
+                {
+                    Toast.makeText(AddStd_Cmd_Self.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    vPager.setIsScrollable(true);
+                    setMenuCliable();
+                    AddStd_Cmd_StepSix_Self addStd_cmd_stepSix_self = (AddStd_Cmd_StepSix_Self) adapter.getFragment(currentItem + 1);
+                    addStd_cmd_stepSix_self.update();
+                    vPager.setCurrentItem(currentItem + 1);
+
+                }
                 break;
             case 3:
                 break;
         }
-        vPager.setCurrentItem(currentItem + 1);
+
     }
 
     @Override
@@ -242,7 +270,21 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
         super.onDestroy();
         finish();
     }
+    private void setMenuCliable()
+    {
+        text_one.setClickable(true);
+        text_three.setClickable(true);
+        text_five.setClickable(true);
+        text_six.setClickable(true);
 
+    }
+    private void setMenuUnCliable()
+    {
+        text_one.setClickable(false);
+        text_three.setClickable(false);
+        text_five.setClickable(false);
+        text_six.setClickable(false);
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {

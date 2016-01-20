@@ -57,7 +57,7 @@ public class commandtab_single implements Parcelable
 	public String nongziId;
 	public String nongzigg;
 	public String nongzidw;
-	public String importancetype;
+	public String importancetype="";
 
 
 	public String getImportancetype()

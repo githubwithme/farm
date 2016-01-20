@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.farm.R;
 import com.farm.adapter.FragmentViewPagerAdapter;
@@ -18,6 +19,7 @@ import com.farm.bean.goodslisttab;
 import com.farm.bean.goodslisttab_flsl;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.SqliteDb;
+import com.farm.widget.CustomViewPager;
 import com.farm.widget.MyDialog;
 
 import org.androidannotations.annotations.AfterViews;
@@ -26,10 +28,14 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @EActivity(R.layout.activity_add_std__cmd)
 public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
 {
+    commandtab_single commandtab_single;
+    List<goodslisttab_flsl> list_SelectCmdArea = new ArrayList<goodslisttab_flsl>();
+    List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
     String level = "";
     MyDialog myDialog;
     int currentItem = 0;
@@ -61,7 +67,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     @ViewById
     ImageView image_six;
     @ViewById
-    android.support.v4.view.ViewPager vPager;
+    CustomViewPager vPager;
 
     @Click
     void imgbtn_back()
@@ -103,6 +109,8 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
     @AfterViews
     void afterOncreate()
     {
+        setMenuUnCliable();
+
         commandtab_single.getInstance().clearAll();
         SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, SelectCmdArea.class);
         SqliteDb.deleteAllSelectCmdArea(AddStd_Cmd.this, goodslisttab.class);
@@ -124,6 +132,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
         setBackground(0);
         //关闭预加载，默认一次只加载一个Fragment
         vPager.setOffscreenPageLimit(0);
+        vPager.setIsScrollable(false);
         adapter = new FragmentViewPagerAdapter(AddStd_Cmd.this.getSupportFragmentManager(), vPager, fragmentList);
 
         adapter.setOnExtraPageChangeListener(new FragmentViewPagerAdapter.OnExtraPageChangeListener()
@@ -251,22 +260,53 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
             case 0:
                 AddStd_Cmd_StepTwo addStd_cmd_stepTwo = (AddStd_Cmd_StepTwo) adapter.getFragment(currentItem + 1);
                 addStd_cmd_stepTwo.update();
+                vPager.setCurrentItem(currentItem + 1);
                 break;
             case 1:
-                AddStd_Cmd_StepThree_Temp addStd_cmd_stepThree_temp = (AddStd_Cmd_StepThree_Temp) adapter.getFragment(currentItem + 1);
-                addStd_cmd_stepThree_temp.update();
-                break;
-            case 2:
-                break;
-            case 3:
-                AddStd_Cmd_StepSix addStd_cmd_stepSix = (AddStd_Cmd_StepSix) adapter.getFragment(currentItem + 1);
-                addStd_cmd_stepSix.update();
-                break;
-            case 4:
+                list_goodslisttab= SqliteDb.getSelectCmdArea(AddStd_Cmd.this, goodslisttab.class);
+                if (list_goodslisttab.size()>0)
+                {
+                    AddStd_Cmd_StepThree_Temp addStd_cmd_stepThree_temp = (AddStd_Cmd_StepThree_Temp) adapter.getFragment(currentItem + 1);
+                    addStd_cmd_stepThree_temp.update();
+                    vPager.setCurrentItem(currentItem + 1);
+                }else
+                {
+                    Toast.makeText(AddStd_Cmd.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                }
 
                 break;
+            case 2:
+                list_SelectCmdArea = SqliteDb.getSelectCmdArea(AddStd_Cmd.this, goodslisttab_flsl.class);
+                if (list_SelectCmdArea.size()>0)
+                {
+                    vPager.setCurrentItem(currentItem + 1);
+                }else
+                {
+                    Toast.makeText(AddStd_Cmd.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+            case 3:
+                    commandtab_single = com.farm.bean.commandtab_single.getInstance();
+                    if (commandtab_single.getimportance().equals("") || commandtab_single.getcommComDate().equals("") || commandtab_single.getcommDays().equals("") || commandtab_single.getcommNote().equals(""))
+                    {
+                        Toast.makeText(AddStd_Cmd.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    vPager.setIsScrollable(true);
+                    setMenuCliable();
+                    AddStd_Cmd_StepSix addStd_cmd_stepSix = (AddStd_Cmd_StepSix) adapter.getFragment(currentItem + 1);
+                    addStd_cmd_stepSix.update();
+                    vPager.setCurrentItem(currentItem + 1);
+
+                }
+
+                break;
+            case 4:
+                break;
         }
-        vPager.setCurrentItem(currentItem + 1);
+
+
     }
 
     @Override
@@ -287,6 +327,23 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
 
     }
 
+    private void setMenuCliable()
+    {
+         text_one.setClickable(true);
+        text_three.setClickable(true);
+        text_four.setClickable(true);
+        text_five.setClickable(true);
+        text_six.setClickable(true);
+
+    }
+    private void setMenuUnCliable()
+    {
+        text_one.setClickable(false);
+        text_three.setClickable(false);
+        text_four.setClickable(false);
+        text_five.setClickable(false);
+        text_six.setClickable(false);
+    }
     private void showExistTip()
     {
         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
