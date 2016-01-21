@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/light_gray">
+
+    <RelativeLayout
+        android:id="@+id/rl_titlebar"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="@dimen/titlebar_height">
+
+        <ImageButton
+            android:id="@+id/imgbtn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/titlebar_height"
+            android:layout_marginLeft="5dip"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/back"/>
+
+        <LinearLayout
+            android:id="@+id/ll_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="80dip"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:background="@drawable/red_bottom"
+                android:text="观测点"
+                android:textColor="@color/textcolor_titlebar"
+                android:textSize="@dimen/titlebar_textsize"/>
+
+            <TextView
+                android:id="@+id/tv_zz"
+                android:layout_width="80dip"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dip"
+                android:gravity="center"
+                android:text="植株"
+                android:textColor="@color/textcolor_titlebar"
+                android:textSize="@dimen/titlebar_textsize"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/search"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/speedy"
+            android:textSize="@dimen/size_sp_14"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dip"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btn_zz"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:background="@drawable/zz_black"
+                android:textSize="@dimen/size_sp_14"/>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dip"
+                android:background="@color/line_color"/>
+
+            <Button
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_marginLeft="10dip"
+                android:background="@drawable/plus"
+                android:textSize="@dimen/size_sp_14"/>
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/rl_titlebar"
+        android:background="@color/line_color"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_pb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/line">
+
+
+        <LinearLayout
+            android:id="@+id/ll_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/about"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dip"
+                android:gravity="center"
+                android:text="加载失败！"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+
+    <com.farm.widget.CustomViewPager
+        android:id="@+id/vPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/line"
+        android:divider="@null"/>
+
+
+</RelativeLayout>

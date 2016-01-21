@@ -92,6 +92,7 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
         if (commembertab.getnlevel().equals("1"))
         {
             Intent intent = new Intent(getActivity(), AddNotProductCommand_CZ_.class);
+            intent.putExtra("level", "0");
             startActivity(intent);
         } else
         {
@@ -505,11 +506,14 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                 break;
             case R.id.btn_nonprocommand:
                 intent = new Intent(getActivity(), AddNotProductCommand_CZ_.class);
-                if (commembertab.getnlevel()== null)
+                if (commembertab.getnlevel().equals("1"))//园区
                 {
-
+                    intent.putExtra("level", "0");
+                } else if (commembertab.getnlevel().equals("2"))//片区
+                {
+                    intent.putExtra("level", "1");
                 }
-                intent.putExtra("level", "0");
+
                 startActivity(intent);
                 pw_command.dismiss();
                 break;

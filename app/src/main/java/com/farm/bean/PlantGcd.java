@@ -33,7 +33,18 @@ public class PlantGcd implements Parcelable
     public String newDate;
     public String growthCount;
     public String growthvidioCount;
+    public String plants;
 
+
+    public String getPlants()
+    {
+        return plants;
+    }
+
+    public void setPlants(String plants)
+    {
+        this.plants = plants;
+    }
 
     public String getGrowthvidioCount()
     {
@@ -207,6 +218,7 @@ public class PlantGcd implements Parcelable
             p.setNewDate(source.readString());
             p.setGrowthCount(source.readString());
             p.setGrowthvidioCount(source.readString());
+            p.setPlants(source.readString());
             return p;
         }
 
@@ -234,6 +246,7 @@ public class PlantGcd implements Parcelable
         p.writeString(newDate);
         p.writeString(growthCount);
         p.writeString(growthvidioCount);
+        p.writeString(plants);
     }
 
     @Override

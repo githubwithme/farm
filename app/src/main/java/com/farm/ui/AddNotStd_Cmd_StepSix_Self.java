@@ -100,8 +100,8 @@ public class AddNotStd_Cmd_StepSix_Self extends Fragment
         }
         for (int i = 0; i < list_goodslisttab.size(); i++)
         {
-            tempareaId = tempareaId + list_goodslisttab.get(i).getParkId() + ":" + list_goodslisttab.get(i).getAreaId() + ":" + list_goodslisttab.get(i).getYL() + ",";
-            tempareaName = tempareaName + list_goodslisttab.get(i).getParkName() + ":" + list_goodslisttab.get(i).getAreaName() + ",";
+            tempareaId = tempareaId +  list_goodslisttab.get(i).getYL() + ";";
+//            tempareaName = tempareaName + list_goodslisttab.get(i).getParkName() + ":" + list_goodslisttab.get(i).getAreaName() + ",";
             tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+ "\n";
         }
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
@@ -121,8 +121,8 @@ public class AddNotStd_Cmd_StepSix_Self extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("areaId", tempareaId.substring(0, tempareaId.length() - 1));
-        params.addQueryStringParameter("areaName", tempareaName.substring(0, tempareaName.length() - 1));
+        params.addQueryStringParameter("areaId",commembertab.getparkId()+":"+commembertab.getareaId()+":"+tempareaId.substring(0, tempareaId.length() - 1));
+        params.addQueryStringParameter("areaName", commembertab.getparkName() + ":" + commembertab.getareaName());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("userName", commembertab.getrealName());
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -134,12 +134,13 @@ public class AddNotStd_Cmd_StepSix_Self extends Fragment
         params.addQueryStringParameter("commNote", commandtab_single.getcommNote());
         params.addQueryStringParameter("commDays", commandtab_single.getcommDays());
         params.addQueryStringParameter("commComDate", commandtab_single.getcommComDate());
-        params.addQueryStringParameter("stdJobType", commandtab_single.getstdJobType());
+        params.addQueryStringParameter("stdJobType", "0");
         params.addQueryStringParameter("stdJobTypeName", commandtab_single.getstdJobTypeName());
-        params.addQueryStringParameter("stdJobId", commandtab_single.getstdJobId());
+        params.addQueryStringParameter("stdJobId", "0");
         params.addQueryStringParameter("stdJobName", commandtab_single.getstdJobName());
         params.addQueryStringParameter("importance", commandtab_single.getimportance());
         params.addQueryStringParameter("execLevel", "1");
+        params.addQueryStringParameter("commFromVPath", "1");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

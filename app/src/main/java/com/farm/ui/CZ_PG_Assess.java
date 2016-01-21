@@ -63,6 +63,8 @@ public class CZ_PG_Assess extends Activity
     @ViewById
     TextView tv_zyts;
     @ViewById
+    TextView et_jd;
+    @ViewById
     TextView tv_note;
     @ViewById
     ProgressBar pb_jd;
@@ -125,6 +127,7 @@ public class CZ_PG_Assess extends Activity
         params.addQueryStringParameter("action", "jobTabAssessByID");
         params.addQueryStringParameter("jobID", jobtab.getId());
         params.addQueryStringParameter("assessScore", assessScore);
+        params.addQueryStringParameter("percent", et_jd.getText().toString());
         params.addQueryStringParameter("assessNote", et_note.getText().toString());
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

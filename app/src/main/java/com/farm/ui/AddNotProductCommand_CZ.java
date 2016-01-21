@@ -49,6 +49,8 @@ import java.util.concurrent.CountDownLatch;
 @EActivity(R.layout.addnotproductcommand_cz)
 public class AddNotProductCommand_CZ extends Activity implements OnClickListener
 {
+    String tempid = "";
+    String tempname = "";
     String workday;
     CustomDialog_ListView customDialog_listView;
     FirstItemAdapter firstItemAdapter;
@@ -153,8 +155,8 @@ public class AddNotProductCommand_CZ extends Activity implements OnClickListener
         params.addQueryStringParameter("userName", commembertab.getrealName());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "commandTabAdd");
-        params.addQueryStringParameter("areaId","");
-        params.addQueryStringParameter("areaName", "");
+        params.addQueryStringParameter("areaId",commembertab.getparkId()+":"+commembertab.getareaId());
+        params.addQueryStringParameter("areaName", commembertab.getparkName()+":"+commembertab.getareaName());
         params.addQueryStringParameter("parkId", commembertab.getparkId());
         params.addQueryStringParameter("parkName", commembertab.getparkName());
         params.addQueryStringParameter("nongziName", et_note.getText().toString());
@@ -168,6 +170,8 @@ public class AddNotProductCommand_CZ extends Activity implements OnClickListener
         params.addQueryStringParameter("stdJobName", "");
         params.addQueryStringParameter("importance", importance_id);
         params.addQueryStringParameter("execLevel", level);
+        params.addQueryStringParameter("commFromVPath", "1");
+
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
