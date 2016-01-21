@@ -414,24 +414,25 @@
                     android:background="@color/white"
                     android:gravity="center"
                     android:paddingLeft="10dip"
-                    android:text="完成百分比"
+                    android:text="完成指令百分比(当天工作量/指令安排工作量)"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14"/>
 
               <RelativeLayout
                   android:layout_width="match_parent"
                   android:layout_height="50dip">
-                  <EditText
-                      android:id="@+id/et_jd"
+                  <TextView
+                      android:id="@+id/tv_bfb"
                       android:layout_centerInParent="true"
                       android:layout_width="150dip"
+                      android:layout_marginTop="10dip"
                       android:layout_height="match_parent"
                       android:textColor="@color/red"
-                      android:inputType="numberDecimal"
+                      android:background="@drawable/background_view_rounded_single"
                       android:textSize="@dimen/size_sp_14"
                       android:gravity="center"/>
                   <TextView
-                      android:layout_toRightOf="@+id/et_jd"
+                      android:layout_toRightOf="@+id/tv_bfb"
                       android:layout_width="wrap_content"
                       android:layout_height="match_parent"
                       android:text="%"

@@ -67,6 +67,7 @@ import java.util.concurrent.CountDownLatch;
 @EActivity(R.layout.pg_commandlist)
 public class Common_SelectCommand extends Activity implements OnClickListener
 {
+	commembertab commembertab;
 	TimeThread timethread;
 	private List<jobtab> joblist;
 	CountDownLatch latch;
@@ -94,12 +95,21 @@ public class Common_SelectCommand extends Activity implements OnClickListener
 	PullToRefreshListView frame_listview_news;
 	@ViewById
 	ImageButton btn_back;
+	@ViewById
+	ImageButton btn_more;
 	Dictionary dictionary;
 
 	@Click
 	void btn_back()
 	{
 		finish();
+	}
+	@Click
+	void btn_more()
+	{
+		Intent intent=new Intent(Common_SelectCommand.this,Command_more_.class);
+		intent.putExtra("workuserid",commembertab.getId());
+		startActivity(intent);
 	}
 
 	@Click
@@ -136,6 +146,7 @@ public class Common_SelectCommand extends Activity implements OnClickListener
 	{
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
+		commembertab=AppContext.getUserInfo(Common_SelectCommand.this);
 		joblist = getIntent().getParcelableArrayListExtra("jobtablist");
 		appContext = (AppContext) getApplication();
 		IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);

@@ -155,7 +155,7 @@ public class AppContext extends Application
     {
         SharedPreferences sp = context.getSharedPreferences("userInfo", MODE_PRIVATE);
         String userName = sp.getString("userName", "");
-        commembertab commembertab = (com.farm.bean.commembertab) SqliteDb.getCurrentUser(context, commembertab.class, userName);
+        commembertab commembertab = (commembertab) SqliteDb.getCurrentUser(context, commembertab.class, userName);
         return commembertab;
     }
 

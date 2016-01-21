@@ -11,10 +11,13 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.CZ_PG_Assess_ExpandAdapter;
 import com.farm.app.AppConfig;
@@ -25,6 +28,7 @@ import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
 import com.farm.common.utils;
+import com.farm.widget.CustomDialog_ListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -43,6 +47,8 @@ import java.util.List;
 @EActivity(R.layout.cz_pg_assess)
 public class CZ_PG_Assess extends Activity
 {
+    String bfb="20";
+    CustomDialog_ListView customDialog_listView;
     CZ_PG_Assess_ExpandAdapter cz_pg_assess_expandAdapter;
     jobtab jobtab;
     // AudioFragment audioFragment;
@@ -63,7 +69,7 @@ public class CZ_PG_Assess extends Activity
     @ViewById
     TextView tv_zyts;
     @ViewById
-    TextView et_jd;
+    TextView tv_bfb;
     @ViewById
     TextView tv_note;
     @ViewById
@@ -77,11 +83,27 @@ public class CZ_PG_Assess extends Activity
     void btn_sure()
     {
         addScore();
+    }    @Click
+    void tv_bfb()
+    {
+        JSONObject jsonObject = utils.parseJsonFile(CZ_PG_Assess.this, "dictionary.json");
+        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("bfb"));
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < jsonArray.size(); i++)
+        {
+            if (Integer.valueOf(jsonArray.getString(i))>Integer.valueOf(bfb))
+            {
+                list.add(jsonArray.getString(i));
+            }
+
+        }
+        showDialog_workday(list);
     }
 
     @AfterViews
     void afterOncreate()
     {
+        tv_bfb.setText(bfb);
         rg_score.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             @Override
@@ -127,7 +149,7 @@ public class CZ_PG_Assess extends Activity
         params.addQueryStringParameter("action", "jobTabAssessByID");
         params.addQueryStringParameter("jobID", jobtab.getId());
         params.addQueryStringParameter("assessScore", assessScore);
-        params.addQueryStringParameter("percent", et_jd.getText().toString());
+        params.addQueryStringParameter("percent", tv_bfb.getText().toString());
         params.addQueryStringParameter("assessNote", et_note.getText().toString());
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -305,5 +327,19 @@ public class CZ_PG_Assess extends Activity
             return 0;
         }
         return 0;
+    }
+    public void showDialog_workday(List<String> list)
+    {
+        View dialog_layout = (RelativeLayout) CZ_PG_Assess.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(CZ_PG_Assess.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                bfb = bundle.getString("name");
+                tv_bfb.setText(bfb);
+            }
+        });
+        customDialog_listView.show();
     }
 }

@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/light_gray"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -41,6 +41,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_margin="5dip"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -52,167 +53,175 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dip"
-                android:background="@drawable/background_view_rounded_single"
+
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="45dip"
-                    android:background="@color/color_orange"
+                    android:background="@color/white"
                     android:gravity="center"
                     android:text="评分情况"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
 
-                <RelativeLayout
-                    android:id="@+id/rl_pf_tip"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:minHeight="50dip"
-                    android:orientation="horizontal">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_pf_tip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dip"
-                        android:gravity="center"
-                        android:text="评分"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
+    <RelativeLayout
+        android:id="@+id/rl_pf_tip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50dip"
+        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_pf"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dip"
-                        android:layout_toLeftOf="@id/btn_record"
-                        android:layout_toRightOf="@id/tv_pf_tip"
-                        android:gravity="right"
-                        android:text="暂无"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_pf_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:text="评分"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
+        <TextView
+            android:id="@+id/tv_pf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:layout_toLeftOf="@id/btn_record"
+            android:layout_toRightOf="@id/tv_pf_tip"
+            android:gravity="right"
+            android:text="暂无"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
+    </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/rl_pfnr_tip"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:minHeight="50dip"
-                    android:orientation="horizontal">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
-                    <TextView
-                        android:id="@+id/tv_pfnr_tip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dip"
-                        android:gravity="center"
-                        android:text="评分内容"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
+    <RelativeLayout
+        android:id="@+id/rl_pfnr_tip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:minHeight="50dip"
+        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_pfnr"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_toLeftOf="@id/btn_record"
-                        android:layout_toRightOf="@id/tv_pfnr_tip"
-                        android:gravity="left"
-                        android:paddingLeft="20dip"
-                        android:text="暂无"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_pfnr_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:text="评分内容"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
+        <TextView
+            android:id="@+id/tv_pfnr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/btn_record"
+            android:layout_toRightOf="@id/tv_pfnr_tip"
+            android:gravity="left"
+            android:paddingLeft="20dip"
+            android:text="暂无"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
+    </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/rl_pfsm_tip"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:minHeight="50dip"
-                    android:orientation="horizontal">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
-                    <TextView
-                        android:id="@+id/tv_pfsm_tip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dip"
-                        android:gravity="center"
-                        android:text="评分说明"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
+    <RelativeLayout
+        android:id="@+id/rl_pfsm_tip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:minHeight="50dip"
+        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_pfsm"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dip"
-                        android:layout_toLeftOf="@id/btn_record"
-                        android:layout_toRightOf="@id/tv_pfsm_tip"
-                        android:gravity="right"
-                        android:text="暂无"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_pfsm_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:text="评分说明"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
+        <TextView
+            android:id="@+id/tv_pfsm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:layout_toLeftOf="@id/btn_record"
+            android:layout_toRightOf="@id/tv_pfsm_tip"
+            android:gravity="right"
+            android:text="暂无"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
+    </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/rl_pfsm_tip"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:minHeight="50dip"
-                    android:orientation="horizontal">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
-                    <TextView
-                        android:id="@+id/tv_fkjg_tip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dip"
-                        android:gravity="center"
-                        android:text="罚款警告"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
+    <RelativeLayout
+        android:id="@+id/rl_pfsm_tip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:minHeight="50dip"
+        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_fkjg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dip"
-                        android:layout_toLeftOf="@id/btn_record"
-                        android:layout_toRightOf="@id/tv_fkjg_tip"
-                        android:gravity="right"
-                        android:text="暂无"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_fkjg_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:text="罚款警告"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <TextView
+            android:id="@+id/tv_fkjg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:layout_toLeftOf="@id/btn_record"
+            android:layout_toRightOf="@id/tv_fkjg_tip"
+            android:gravity="right"
+            android:text="暂无"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
+    </RelativeLayout>
+
+
+</LinearLayout>
+
 
                 <View
                     android:layout_width="match_parent"
@@ -222,184 +231,194 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="45dip"
-                    android:background="@color/color_orange"
+                    android:background="@color/white"
                     android:gravity="center"
+                    android:layout_marginTop="5dip"
                     android:text="工作详情"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_marginTop="5dip"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/rl_jobname_tip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:minHeight="50dip"
+        android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:id="@+id/rl_jobname_tip"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:minHeight="50dip"
-                    android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_jobname_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:text="作业内容"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
-                    <TextView
-                        android:id="@+id/tv_jobname_tip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dip"
-                        android:gravity="center"
-                        android:text="作业内容"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
+        <TextView
+            android:id="@+id/tv_jobname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:layout_toLeftOf="@id/btn_record"
+            android:layout_toRightOf="@id/tv_jobname_tip"
+            android:gravity="right"
+            android:text="蕉蕾喷雾"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
+    </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/tv_jobname"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dip"
-                        android:layout_toLeftOf="@id/btn_record"
-                        android:layout_toRightOf="@id/tv_jobname_tip"
-                        android:gravity="right"
-                        android:text="蕉蕾喷雾"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
-
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="50dip"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_tip_importance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dip"
-                        android:gravity="center"
-                        android:text="重要性"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
-
-                    <TextView
-                        android:id="@+id/tv_importance"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="10dip"
-                        android:gravity="right"
-                        android:text="暂无"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50dip"
+        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/ll_yl_tip"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:minHeight="50dip"
-                    android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_tip_importance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:text="重要性"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
-                    <TextView
-                        android:id="@+id/tv_tip_yl"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dip"
-                        android:gravity="center"
-                        android:text="农资及用量"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
+        <TextView
+            android:id="@+id/tv_importance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dip"
+            android:gravity="right"
+            android:text="暂无"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
+    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_yl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="10dip"
-                        android:gravity="right"
-                        android:text="150kg"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:minHeight="50dip"
-                    android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/ll_yl_tip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:minHeight="50dip"
+        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dip"
-                        android:gravity="center"
-                        android:text="开始"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
+        <TextView
+            android:id="@+id/tv_tip_yl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:text="农资及用量"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
-                    <TextView
-                        android:id="@+id/tv_qx"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="10dip"
-                        android:gravity="right"
-                        android:text="2015-10-11"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </LinearLayout>
+        <TextView
+            android:id="@+id/tv_yl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dip"
+            android:gravity="right"
+            android:text="150kg"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
+    </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:minHeight="50dip"
-                    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:minHeight="50dip"
+        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dip"
-                        android:gravity="center"
-                        android:text="工作说明"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:text="开始"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
-                    <TextView
-                        android:id="@+id/tv_note"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="10dip"
-                        android:gravity="right"
-                        android:text="暂无"
-                        android:textColor="@color/bg_yellow"
-                        android:textSize="@dimen/size_14"/>
-                </LinearLayout>
+        <TextView
+            android:id="@+id/tv_qx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dip"
+            android:gravity="right"
+            android:text="2015-10-11"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:minHeight="50dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:text="工作说明"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <TextView
+            android:id="@+id/tv_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dip"
+            android:gravity="right"
+            android:text="暂无"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
+    </LinearLayout>
+
+
+</LinearLayout>
+
 
 
             </LinearLayout>
