@@ -23,9 +23,9 @@ import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.PlantGcjl;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.bean.plantgrowthtab;
 import com.farm.bean.planttab;
 import com.farm.common.BitmapHelper;
 import com.farm.widget.CircleImageView;
@@ -59,7 +59,7 @@ public class GrowthTreeFragment_GCZ extends Fragment
     int[] resleft = new int[]{R.drawable.centerleft, R.drawable.centerleft1, R.drawable.centerleft2};
     int[] resright = new int[]{R.drawable.centerright, R.drawable.centerright1, R.drawable.centerright2};
     String[] list_img;
-    List<PlantGcjl> listNewData = new ArrayList<PlantGcjl>();
+    List<plantgrowthtab> listNewData = new ArrayList<plantgrowthtab>();
     @ViewById
     ExpandAniLinearLayout swipe_list_ani;
     @ViewById
@@ -92,7 +92,7 @@ public class GrowthTreeFragment_GCZ extends Fragment
         });
         if (listNewData.isEmpty())
         {
-            getTask(20, 0);
+            getpPlantGrowth(20, 0);
         }
     }
 
@@ -118,18 +118,18 @@ public class GrowthTreeFragment_GCZ extends Fragment
         return rootView;
     }
 
-    private void getTask(final int PAGESIZE, int PAGEINDEX)
+    private void getpPlantGrowth(final int PAGESIZE, int PAGEINDEX)
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("gcdid", "16");
         params.addQueryStringParameter("orderby", "regDate desc");
+        params.addQueryStringParameter("PlantID", planttab.getId());
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "getGCJLList");
+        params.addQueryStringParameter("action", "plantGrowthTabGetListByPlantID");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -143,9 +143,9 @@ public class GrowthTreeFragment_GCZ extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
 
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcjl.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), plantgrowthtab.class);
 //                        JSONObject jsonObject = utils.parseJsonFile(GrowthTreeActivity.this, "dictionary.json");
-//                        listNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("gcjllist"), Result.class).getRows().toJSONString(), PlantGcjl.class);
+//                        listNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("gcjllist"), Result.class).getRows().toJSONString(), plantgrowthtab.class);
 
                         treeAdapter = new TreeAdapter(getActivity(), listNewData);
                         lv_tree.setAdapter(treeAdapter);
@@ -157,7 +157,7 @@ public class GrowthTreeFragment_GCZ extends Fragment
 //                        tv_zs.setText(listNewData.get(0).getPlantGrowth().size());
                     } else
                     {
-                        listNewData = new ArrayList<PlantGcjl>();
+                        listNewData = new ArrayList<plantgrowthtab>();
                         ll_tip.setVisibility(View.VISIBLE);
                         tv_tip.setText("暂无数据！");
                         pb.setVisibility(View.GONE);
@@ -185,9 +185,9 @@ public class GrowthTreeFragment_GCZ extends Fragment
     public class TreeAdapter extends BaseAdapter
     {
         private Context context;
-        private List<PlantGcjl> listItems;
+        private List<plantgrowthtab> listItems;
         private LayoutInflater listContainer;
-        PlantGcjl PlantGcjl;
+        plantgrowthtab plantgrowthtab;
 
         class ListItemView
         {
@@ -215,7 +215,7 @@ public class GrowthTreeFragment_GCZ extends Fragment
             public TextView tv_sfly_right;
         }
 
-        public TreeAdapter(Context context, List<PlantGcjl> data)
+        public TreeAdapter(Context context, List<plantgrowthtab> data)
         {
             this.context = context;
             this.listContainer = LayoutInflater.from(context);
@@ -226,7 +226,7 @@ public class GrowthTreeFragment_GCZ extends Fragment
 
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            PlantGcjl = listItems.get(position);
+            plantgrowthtab = listItems.get(position);
             ListItemView listItemView = null;
             if (lmap.get(position) == null)
             {
@@ -299,49 +299,49 @@ public class GrowthTreeFragment_GCZ extends Fragment
             {
                 listItemView.ic_center.setBackground(getResources().getDrawable(resright[(int) (Math.random() * resright.length)]));
                 listItemView.ll_right.setVisibility(View.VISIBLE);
-                listItemView.tv_cjtime_right.setText(PlantGcjl.getRegDate().substring(0, PlantGcjl.getRegDate().lastIndexOf(" ")));
+                listItemView.tv_cjtime_right.setText(plantgrowthtab.getregDate().substring(0, plantgrowthtab.getregDate().lastIndexOf(" ")));
                 listItemView.tv_sg_right.setVisibility(View.VISIBLE);
-                listItemView.tv_sg_right.setText(PlantGcjl.gethNum() + "m");
-                listItemView.tv_wj_right.setText(PlantGcjl.getwNum() + "m");
-                listItemView.tv_ys_right.setText(PlantGcjl.getyNum() + "片");
-                if (PlantGcjl.getImgUrl().size() != 0)
+                listItemView.tv_sg_right.setText(plantgrowthtab.gethNum() + "m");
+                listItemView.tv_wj_right.setText(plantgrowthtab.getwNum() + "m");
+                listItemView.tv_ys_right.setText(plantgrowthtab.getyNum() + "片");
+                if (plantgrowthtab.getImgUrl().size() != 0)
                 {
-                    BitmapHelper.setImageViewBackground(context, listItemView.iv_img_right, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
+                    BitmapHelper.setImageViewBackground(context, listItemView.iv_img_right, AppConfig.baseurl + plantgrowthtab.getImgUrl().get(0));
                 }
-                if (PlantGcjl.getSfcl().equals("True"))
-                {
-                    listItemView.ll_tip_right.setVisibility(View.VISIBLE);
-                    listItemView.tv_sfcl_right.setVisibility(View.VISIBLE);
-                }
-                if (PlantGcjl.getSfly().equals("True"))
-                {
-                    listItemView.ll_tip_right.setVisibility(View.VISIBLE);
-                    listItemView.tv_sfly_right.setVisibility(View.VISIBLE);
-                }
+//                if (plantgrowthtab.getSfcl().equals("True"))
+//                {
+//                    listItemView.ll_tip_right.setVisibility(View.VISIBLE);
+//                    listItemView.tv_sfcl_right.setVisibility(View.VISIBLE);
+//                }
+//                if (plantgrowthtab.getSfly().equals("True"))
+//                {
+//                    listItemView.ll_tip_right.setVisibility(View.VISIBLE);
+//                    listItemView.tv_sfly_right.setVisibility(View.VISIBLE);
+//                }
 
             } else
             {
                 listItemView.ic_center.setBackground(getResources().getDrawable(resleft[(int) (Math.random() * resleft.length)]));
                 listItemView.ll_left.setVisibility(View.VISIBLE);
-                listItemView.tv_cjtime_left.setText(PlantGcjl.getRegDate().substring(0, PlantGcjl.getRegDate().lastIndexOf(" ")));
-                listItemView.tv_sg_left.setText(PlantGcjl.gethNum() + "m");
-                listItemView.tv_wj_left.setText(PlantGcjl.getwNum() + "m");
-                listItemView.tv_ys_left.setText(PlantGcjl.getyNum() + "片");
+                listItemView.tv_cjtime_left.setText(plantgrowthtab.getregDate().substring(0, plantgrowthtab.getregDate().lastIndexOf(" ")));
+                listItemView.tv_sg_left.setText(plantgrowthtab.gethNum() + "m");
+                listItemView.tv_wj_left.setText(plantgrowthtab.getwNum() + "m");
+                listItemView.tv_ys_left.setText(plantgrowthtab.getyNum() + "片");
 
-                if (PlantGcjl.getImgUrl().size() != 0)
+                if (plantgrowthtab.getImgUrl().size() != 0)
                 {
-                    BitmapHelper.setImageViewBackground(context, listItemView.iv_img_left, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
+                    BitmapHelper.setImageViewBackground(context, listItemView.iv_img_left, AppConfig.baseurl + plantgrowthtab.getImgUrl().get(0));
                 }
-                if (PlantGcjl.getSfcl().equals("True"))
-                {
-                    listItemView.ll_tip_left.setVisibility(View.VISIBLE);
-                    listItemView.tv_sfcl_left.setVisibility(View.VISIBLE);
-                }
-                if (PlantGcjl.getSfly().equals("True"))
-                {
-                    listItemView.ll_tip_left.setVisibility(View.VISIBLE);
-                    listItemView.tv_sfly_left.setVisibility(View.VISIBLE);
-                }
+//                if (plantgrowthtab.getSfcl().equals("True"))
+//                {
+//                    listItemView.ll_tip_left.setVisibility(View.VISIBLE);
+//                    listItemView.tv_sfcl_left.setVisibility(View.VISIBLE);
+//                }
+//                if (plantgrowthtab.getSfly().equals("True"))
+//                {
+//                    listItemView.ll_tip_left.setVisibility(View.VISIBLE);
+//                    listItemView.tv_sfly_left.setVisibility(View.VISIBLE);
+//                }
             }
             return convertView;
         }

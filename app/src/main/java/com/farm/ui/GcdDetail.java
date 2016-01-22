@@ -1,14 +1,18 @@
 package com.farm.ui;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_GcdDetail;
+import com.farm.app.AppContext;
 import com.farm.bean.PlantGcd;
 import com.farm.widget.CustomViewPager;
 
@@ -26,6 +30,7 @@ import java.util.List;
 @EActivity(R.layout.gcddetail)
 public class GcdDetail extends FragmentActivity
 {
+    com.farm.bean.commembertab commembertab;
     PlantGcd plantGcd;
     int currentItem = 0;
     List<android.support.v4.app.Fragment> fragmentList;
@@ -41,6 +46,16 @@ public class GcdDetail extends FragmentActivity
     TextView tv_title;
     @ViewById
     TextView tv_zz;
+    @ViewById
+    Button btn_add;
+
+    @Click
+    void btn_add()
+    {
+        Intent intent = new Intent(GcdDetail.this, AddPlantObservation_.class);
+        intent.putExtra("gcdid", plantGcd.getId());
+        startActivity(intent);
+    }
 
     @Click
     void btn_back()
@@ -63,6 +78,13 @@ public class GcdDetail extends FragmentActivity
     @AfterViews
     void afterOncreate()
     {
+        if (commembertab.getnlevel().equals("0") || commembertab.getnlevel().equals("1"))
+        {
+            btn_add.setVisibility(View.GONE);
+        } else
+        {
+
+        }
         setBackground(0);
         vPager.setOffscreenPageLimit(1);
         vPager.setIsScrollable(true);
@@ -104,9 +126,10 @@ public class GcdDetail extends FragmentActivity
         plantGcd = getIntent().getParcelableExtra("bean");
         bundle.putParcelable("bean", plantGcd);
 
+        commembertab = AppContext.getUserInfo(GcdDetail.this);
         fragmentList = new ArrayList<>();
         growthTreeFragment_gcd = new GrowthTreeFragment_GCD_();
-        growthTreeFragment_zz =GrowthTreeFragment_ZZ.newInstance(0);
+        growthTreeFragment_zz = GrowthTreeFragment_ZZ.newInstance(0);
         growthTreeFragment_gcd.setArguments(bundle);
         growthTreeFragment_zz.setArguments(bundle);
         fragmentList.add(growthTreeFragment_gcd);

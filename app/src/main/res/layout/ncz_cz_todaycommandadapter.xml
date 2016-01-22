@@ -141,7 +141,6 @@
                         android:textSize="@dimen/size_sp_14"/>
 
 
-
                     <FrameLayout
                         android:id="@+id/rl_record"
                         android:layout_width="match_parent"
@@ -153,8 +152,8 @@
                             android:layout_width="25dip"
                             android:layout_height="25dip"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="25dip"
                             android:layout_gravity="right"
+                            android:layout_marginLeft="25dip"
                             android:background="@drawable/record_voice_normal"/>
 
                         <FrameLayout
@@ -191,6 +190,8 @@
                 android:layout_width="10dip"
                 android:layout_height="10dip"
                 android:layout_gravity="right"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
                 android:visibility="gone">
 
                 <com.farm.widget.CircleImageView

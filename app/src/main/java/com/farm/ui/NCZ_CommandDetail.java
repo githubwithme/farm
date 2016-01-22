@@ -41,6 +41,8 @@ public class NCZ_CommandDetail extends Activity
         switchContent(mContent, fragment_commandExecute);
         btn_detail.setBackgroundResource(R.color.white);
         btn_execute.setBackgroundResource(R.color.bg_blue);
+        btn_detail.setBackgroundResource(R.drawable.white);
+        btn_execute.setBackgroundResource(R.drawable.red_bottom);
     }
 
     @Click
@@ -49,6 +51,8 @@ public class NCZ_CommandDetail extends Activity
         switchContent(mContent, fragment_commandDetail);
         btn_detail.setBackgroundResource(R.color.bg_blue);
         btn_execute.setBackgroundResource(R.color.white);
+        btn_detail.setBackgroundResource(R.drawable.red_bottom);
+        btn_execute.setBackgroundResource(R.drawable.white);
 
     }
 
@@ -56,8 +60,8 @@ public class NCZ_CommandDetail extends Activity
     void afterOncreate()
     {
         switchContent(mContent, fragment_commandDetail);
-        btn_detail.setBackgroundResource(R.color.bg_blue);
-        btn_execute.setBackgroundResource(R.color.white);
+        btn_detail.setBackgroundResource(R.drawable.red_bottom);
+        btn_execute.setBackgroundResource(R.drawable.white);
     }
 
     @Override

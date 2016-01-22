@@ -32,9 +32,9 @@
                 android:layout_width="15dip"
                 android:layout_height="15dip"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dip"
+                android:layout_marginRight="25dip"
                 android:layout_toLeftOf="@id/tv_recent"
-                android:src="@drawable/sort" />
+                android:src="@drawable/sort_black" />
 
             <ImageView
                 android:id="@+id/iv_up_recent"
@@ -76,9 +76,9 @@
                 android:layout_width="15dip"
                 android:layout_height="15dip"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dip"
+                android:layout_marginRight="25dip"
                 android:layout_toLeftOf="@id/tv_select"
-                android:src="@drawable/screen" />
+                android:src="@drawable/screen_black" />
 
             <ImageView
                 android:id="@+id/iv_up_selector"

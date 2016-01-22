@@ -99,10 +99,20 @@ public class Common_CommandExecute_Adapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
-        listItemView.tv_time.setText(listItems.get(position).getregDate());
-        listItemView.tv_jd.setText(listItems.get(position).getjobNote());
-        listItemView.tv_pf.setText(listItems.get(position).getjobNote());
-        listItemView.tv_note.setText(listItems.get(position).getjobNote());
+
+        if (jobtab.getPercent().equals(""))
+        {
+            listItemView.tv_time.setText(jobtab.getregDate().substring(5, jobtab.getregDate().lastIndexOf(" ")));
+            listItemView.tv_jd.setText("进行中...");
+            listItemView.tv_pf.setText("");
+            listItemView.tv_note.setText("");
+        } else
+        {
+            listItemView.tv_time.setText(jobtab.getregDate().substring(5, jobtab.getregDate().lastIndexOf(" ")));
+            listItemView.tv_jd.setText("完成" + jobtab.getPercent() + "%");
+            listItemView.tv_pf.setText(jobtab.getaudioJobExecPath() + "分");
+            listItemView.tv_note.setText(jobtab.getassessNote());
+        }
         return convertView;
     }
 

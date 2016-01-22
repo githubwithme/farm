@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -176,6 +175,9 @@ public class GrowthTreeFragment_ZZ extends Fragment
                         for (int i = 0; i < list_plant.size(); i++)
                         {
                             GrowthTreeFragment_GCZ f = GrowthTreeFragment_GCZ.newInstance(i);
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("bean",list_plant.get(i));
+                            f.setArguments(bundle);
                             fragmentList.add(f);
                         }
                         vPager_zz.setOffscreenPageLimit(1);
@@ -218,7 +220,7 @@ public class GrowthTreeFragment_ZZ extends Fragment
         });
     }
 
-    private void getTask(final int PAGESIZE, int PAGEINDEX)
+    private void getpPlantGrowth(final int PAGESIZE, int PAGEINDEX)
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();

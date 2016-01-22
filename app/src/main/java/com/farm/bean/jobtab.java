@@ -56,7 +56,18 @@ public class jobtab implements Parcelable
 	public String jobvidioCount;
 	public String jobCount;
 	public List<String> PF;
+	public String percent;
 
+
+	public String getPercent()
+	{
+		return percent;
+	}
+
+	public void setPercent(String percent)
+	{
+		this.percent = percent;
+	}
 
 	public List<String> getPF()
 	{
@@ -460,6 +471,7 @@ public class jobtab implements Parcelable
 			p.setJobvidioCount(source.readString());
 			p.setJobCount(source.readString());
 			p.PF = source.readArrayList(List.class.getClassLoader());
+			p.setPercent(source.readString());
 			return p;
 		}
 
@@ -508,6 +520,7 @@ public class jobtab implements Parcelable
 		p.writeString(jobvidioCount);
 		p.writeString(jobCount);
 		p.writeList(PF);
+		p.writeString(percent);
 	}
 
 	@Override

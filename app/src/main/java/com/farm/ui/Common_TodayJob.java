@@ -489,6 +489,7 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v)
     {
+        WindowManager.LayoutParams lp;
         Intent intent;
         switch (v.getId())
         {
@@ -497,12 +498,18 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                 intent.putExtra("level", "0");
                 startActivity(intent);
                 pw_command.dismiss();
+                lp = getActivity().getWindow().getAttributes();
+                lp.alpha = 1f;
+                getActivity().getWindow().setAttributes(lp);
                 break;
             case R.id.btn_nonstandardprocommand:
                 intent = new Intent(getActivity(), AddNotStd_Cmd_Self_.class);
                 intent.putExtra("level", "0");
                 startActivity(intent);
                 pw_command.dismiss();
+                lp = getActivity().getWindow().getAttributes();
+                lp.alpha = 1f;
+                getActivity().getWindow().setAttributes(lp);
                 break;
             case R.id.btn_nonprocommand:
                 intent = new Intent(getActivity(), AddNotProductCommand_CZ_.class);
@@ -516,6 +523,9 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
 
                 startActivity(intent);
                 pw_command.dismiss();
+                lp = getActivity().getWindow().getAttributes();
+                lp.alpha = 1f;
+                getActivity().getWindow().setAttributes(lp);
                 break;
 
             default:

@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.lidroid.xutils.db.annotation.Table;
 
+import java.util.List;
+
 /**
  * 
  * Description: commandtab 实体类</p>
@@ -55,6 +57,42 @@ public class commandtab implements Parcelable
 	public String comvidioCount;
 	public String vidioCount;
 	public String comCount;
+	public String phone;
+	public String percent;
+	public List<jobtab> jobList;
+
+
+	public String getPercent()
+	{
+		return percent;
+	}
+
+	public void setPercent(String percent)
+	{
+		this.percent = percent;
+	}
+
+	public List<jobtab> getJobList()
+	{
+		return jobList;
+	}
+
+	public void setJobList(List<jobtab> jobList)
+	{
+		this.jobList = jobList;
+	}
+
+	public String getPhone()
+	{
+		return phone;
+	}
+
+	public void setPhone(String phone)
+	{
+		this.phone = phone;
+	}
+
+
 
 	public String getComCount()
 	{
@@ -467,6 +505,9 @@ public class commandtab implements Parcelable
 			p.setComvidioCount(source.readString());
 			p.setVidioCount(source.readString());
 			p.setComCount(source.readString());
+			p.setPhone(source.readString());
+			p.setPercent(source.readString());
+			p.jobList = source.readArrayList(plantgrowthtab.class.getClassLoader());
 			return p;
 		}
 
@@ -516,6 +557,9 @@ public class commandtab implements Parcelable
 		p.writeString(comvidioCount);
 		p.writeString(vidioCount);
 		p.writeString(comCount);
+		p.writeString(phone);
+		p.writeString(percent);
+		p.writeList(jobList);
 	}
 
 	@Override

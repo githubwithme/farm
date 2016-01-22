@@ -259,8 +259,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                                                 break;
                                             }
                                         }
-                                        if (!b)
-                                            listData.add(commandtab1);
+                                        if (!b) listData.add(commandtab1);
                                     }
                                 } else
                                 {
@@ -334,8 +333,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 // 点击头部、底部栏无效
-                if (position == 0 || view == list_footer)
-                    return;
+                if (position == 0 || view == list_footer) return;
 
                 // Animal animal = null;
                 // // 判断是否是TextView
@@ -351,8 +349,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 // if (animal == null)
                 // return;
                 commandtab commandtab = listData.get(position - 1);
-                if (commandtab == null)
-                    return;
+                if (commandtab == null) return;
                 Intent intent = new Intent(getActivity(), NCZ_CommandDetail_.class);
                 intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
@@ -365,8 +362,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 frame_listview_news.onScrollStateChanged(view, scrollState);
 
                 // 数据为空--不用继续下面代码了
-                if (listData.isEmpty())
-                    return;
+                if (listData.isEmpty()) return;
 
                 // 判断是否滚动到底部
                 boolean scrollEnd = false;
@@ -523,6 +519,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
     @Override
     public void onClick(View v)
     {
+        WindowManager.LayoutParams lp;
         Intent intent;
         switch (v.getId())
         {
@@ -531,18 +528,27 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 intent.putExtra("level", "1");
                 startActivity(intent);
                 pw_command.dismiss();
+                lp = getActivity().getWindow().getAttributes();
+                lp.alpha = 1f;
+                getActivity().getWindow().setAttributes(lp);
                 break;
             case R.id.btn_nonstandardprocommand:
                 intent = new Intent(getActivity(), AddNotStd_Cmd_.class);
                 intent.putExtra("level", "1");
                 startActivity(intent);
                 pw_command.dismiss();
+                lp = getActivity().getWindow().getAttributes();
+                lp.alpha = 1f;
+                getActivity().getWindow().setAttributes(lp);
                 break;
             case R.id.btn_nonprocommand:
                 intent = new Intent(getActivity(), AddNotProductCommand_.class);
                 intent.putExtra("level", "1");
                 startActivity(intent);
                 pw_command.dismiss();
+                lp = getActivity().getWindow().getAttributes();
+                lp.alpha = 1f;
+                getActivity().getWindow().setAttributes(lp);
                 break;
 
             default:
@@ -610,7 +616,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
-                String a=responseInfo.result;
+                String a = responseInfo.result;
                 List<Dictionary> lsitNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表

@@ -54,7 +54,7 @@ public class Common_CommandDetail extends Activity
     @ViewById
     TextView tv_from;
     @ViewById
-ListView lv;
+    ListView lv;
     String filename;
     commandtab commandtab;
     @ViewById
@@ -118,7 +118,7 @@ ListView lv;
         }
 
         tv_yl.setText(flyl);
-        tv_jobname.setText(commandtab.getstdJobTypeName()+"-"+commandtab.getstdJobName());
+        tv_jobname.setText(commandtab.getstdJobTypeName() + "-" + commandtab.getstdJobName());
 
         tv_qx.setText(commandtab.getcommComDate());
         tv_zyts.setText(commandtab.getcommDays());
@@ -136,20 +136,16 @@ ListView lv;
         }
 
     }
+
     private void getJobList()
     {
         commembertab commembertab = AppContext.getUserInfo(Common_CommandDetail.this);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", commembertab.getId());
         params.addQueryStringParameter("commandid", commandtab.getId());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("orderby", "regDate desc");
-        params.addQueryStringParameter("strWhere", "");
-        params.addQueryStringParameter("page_size", String.valueOf(AppContext.PAGE_SIZE));
-        params.addQueryStringParameter("page_index", "1");
-        params.addQueryStringParameter("action", "jobGetList");
+        params.addQueryStringParameter("username", commembertab.getrealName());
+        params.addQueryStringParameter("action", "jobListGetByComID");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -157,18 +153,26 @@ ListView lv;
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<jobtab> listNewData = null;
+                List<commandtab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
-                        Common_CommandExecute_Adapter common_commandExecute_adapter=new Common_CommandExecute_Adapter(Common_CommandDetail.this,listNewData);
-                    lv.setAdapter(common_commandExecute_adapter);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), commandtab.class);
+                        List<jobtab> jobtabs = listNewData.get(0).getJobList();
+                        if (jobtabs == null)
+                        {
+
+                        } else
+                        {
+                            Common_CommandExecute_Adapter common_commandExecute_adapter = new Common_CommandExecute_Adapter(Common_CommandDetail.this, jobtabs);
+                            lv.setAdapter(common_commandExecute_adapter);
+                        }
+
                     } else
                     {
-                        listNewData = new ArrayList<jobtab>();
+                        listNewData = new ArrayList<commandtab>();
                     }
                 } else
                 {

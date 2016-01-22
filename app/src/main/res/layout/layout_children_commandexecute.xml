@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/tv_time"
-            android:layout_width="80dip"
+            android:layout_width="60dip"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@drawable/background_view_rounded_single"
@@ -28,44 +28,53 @@
 
     </FrameLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dip"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_jd"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dip"
-        android:gravity="center"
-        android:text="34%"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/size_14"/>
+        <TextView
+            android:id="@+id/tv_jd"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dip"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="34%"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
 
-    <TextView
-        android:id="@+id/tv_pf"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dip"
-        android:gravity="center"
-        android:text="8分"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/size_14"/>
+        <TextView
+            android:id="@+id/tv_pf"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="8分"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
 
-    <TextView
-        android:id="@+id/tv_note"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dip"
-        android:gravity="center"
-        android:text="这次完成得不错！"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/size_14"/>
+        <TextView
+            android:id="@+id/tv_note"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="这次完成得不错！"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
 
-    <ImageView
-        android:layout_width="8dip"
-        android:layout_height="13dip"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginRight="10dip"
-        android:background="@drawable/next_gray"/>
+        <ImageView
+            android:layout_width="8dip"
+            android:layout_height="13dip"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/next_gray"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
 </LinearLayout>

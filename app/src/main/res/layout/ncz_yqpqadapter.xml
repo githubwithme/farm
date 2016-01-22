@@ -185,6 +185,7 @@
                             android:minHeight="60dip">
 
                             <ImageView
+                                android:id="@+id/iv_pqgz"
                                 android:layout_width="@dimen/size_47"
                                 android:layout_height="@dimen/size_47"
                                 android:layout_centerInParent="true"
@@ -196,7 +197,7 @@
                                 android:id="@+id/fl_worknumber_new"
                                 android:layout_width="10dip"
                                 android:layout_height="10dip"
-                                android:layout_alignParentRight="true"
+                                android:layout_toRightOf="@+id/iv_pqgz"
                                 android:visibility="gone">
 
                                 <com.farm.widget.CircleImageView
@@ -267,6 +268,7 @@
                             android:minHeight="60dip">
 
                             <ImageView
+                                android:id="@+id/iv_pqmq"
                                 android:layout_width="@dimen/size_47"
                                 android:layout_height="@dimen/size_47"
                                 android:layout_centerInParent="true"
@@ -278,7 +280,7 @@
                                 android:id="@+id/fl_plantnumber_new"
                                 android:layout_width="10dip"
                                 android:layout_height="10dip"
-                                android:layout_alignParentRight="true"
+                                android:layout_toRightOf="@+id/iv_pqmq"
                                 android:visibility="gone">
 
                                 <com.farm.widget.CircleImageView
@@ -348,6 +350,7 @@
                             android:minHeight="60dip">
 
                             <ImageView
+                                android:id="@+id/iv_pqzl"
                                 android:layout_width="@dimen/size_47"
                                 android:layout_height="@dimen/size_47"
                                 android:layout_centerInParent="true"
@@ -359,7 +362,7 @@
                                 android:id="@+id/fl_cmdnumber_new"
                                 android:layout_width="10dip"
                                 android:layout_height="10dip"
-                                android:layout_alignParentRight="true"
+                                android:layout_toRightOf="@+id/iv_pqzl"
                                 android:visibility="gone">
 
                                 <com.farm.widget.CircleImageView
@@ -456,6 +459,7 @@
                                 android:minHeight="60dip">
 
                                 <ImageView
+                                    android:id="@+id/iv_yqsq"
                                     android:layout_width="@dimen/size_47"
                                     android:layout_height="@dimen/size_47"
                                     android:layout_centerInParent="true"
@@ -466,7 +470,7 @@
                                     android:id="@+id/fl_sq_new"
                                     android:layout_width="10dip"
                                     android:layout_height="10dip"
-                                    android:layout_alignParentRight="true"
+                                    android:layout_toRightOf="@+id/iv_yqsq"
                                     android:visibility="gone">
 
                                     <com.farm.widget.CircleImageView
@@ -538,6 +542,7 @@
                                 android:minHeight="60dip">
 
                                 <ImageView
+                                    android:id="@+id/iv_yqgz"
                                     android:layout_width="@dimen/size_47"
                                     android:layout_height="@dimen/size_47"
                                     android:layout_centerInParent="true"
@@ -548,7 +553,7 @@
                                     android:id="@+id/fl_job_new"
                                     android:layout_width="10dip"
                                     android:layout_height="10dip"
-                                    android:layout_alignParentRight="true"
+                                    android:layout_toRightOf="@+id/iv_yqgz"
                                     android:visibility="gone">
 
                                     <com.farm.widget.CircleImageView
@@ -620,6 +625,7 @@
                                 android:minHeight="60dip">
 
                                 <ImageView
+                                    android:id="@+id/iv_yqmq"
                                     android:layout_width="@dimen/size_47"
                                     android:layout_height="@dimen/size_47"
                                     android:layout_centerInParent="true"
@@ -630,7 +636,7 @@
                                     android:id="@+id/fl_plant_new"
                                     android:layout_width="10dip"
                                     android:layout_height="10dip"
-                                    android:layout_alignParentRight="true"
+                                    android:layout_toRightOf="@+id/iv_yqmq"
                                     android:visibility="gone">
 
                                     <com.farm.widget.CircleImageView
@@ -701,6 +707,7 @@
                                 android:minHeight="60dip">
 
                                 <ImageView
+                                    android:id="@+id/iv_yqzl"
                                     android:layout_width="@dimen/size_47"
                                     android:layout_height="@dimen/size_47"
                                     android:layout_centerInParent="true"
@@ -711,7 +718,7 @@
                                     android:id="@+id/fl_cmd_new"
                                     android:layout_width="10dip"
                                     android:layout_height="10dip"
-                                    android:layout_alignParentRight="true"
+                                    android:layout_toRightOf="@+id/iv_yqzl"
                                     android:visibility="gone">
 
                                     <com.farm.widget.CircleImageView

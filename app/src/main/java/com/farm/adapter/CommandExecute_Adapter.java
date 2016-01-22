@@ -24,6 +24,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
+import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
 import com.farm.bean.jobtab;
@@ -58,30 +59,27 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
     ExpandableListView mainlistview;
     Dictionary tempDic = new Dictionary();
     private Context context;// 运行上下文
-    List<String> firstItemName;
-    List<String> firstItemID;
-    List<List<String>> secondItemName;
-    List<List<String>> secondItemID;
-    List<List<List<String>>> ThirdItemName;
     int currentChildsize = 0;
     private GoodsAdapter adapter;
+    List<commandtab> listData;
     ListView list;
 
-    public CommandExecute_Adapter(Context context, Dictionary dictionary, ExpandableListView mainlistview)
+    public CommandExecute_Adapter(Context context, List<commandtab> listData, ExpandableListView mainlistview)
     {
-        this.tempDic = dictionary;
         this.mainlistview = mainlistview;
+        this.listData = listData;
         this.context = context;
-        firstItemName = dictionary.getFirstItemName();
-        secondItemName = dictionary.getSecondItemName();
-        ThirdItemName = dictionary.getThirdItemName();
     }
 
     //得到子item需要关联的数据
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        return secondItemName.get(groupPosition).get(childPosition);
+        if (listData.get(groupPosition).getJobList() == null)
+        {
+            return null;
+        }
+        return listData.get(groupPosition).getJobList().get(childPosition);
     }
 
     //得到子item的ID
@@ -103,11 +101,11 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
         public TextView tv_jd;
     }
 
-    private void getListData()
+    private void getListData(String jobid)
     {
         commembertab commembertab = AppContext.getUserInfo(context);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", "20");
+        params.addQueryStringParameter("jobid", jobid);
         params.addQueryStringParameter("userid", "15");
         params.addQueryStringParameter("uid", "12");
         params.addQueryStringParameter("username", "戴泉");
@@ -115,7 +113,7 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
         params.addQueryStringParameter("strWhere", "");
         params.addQueryStringParameter("page_size", "10");
         params.addQueryStringParameter("page_index", "10");
-        params.addQueryStringParameter("action", "jobGetList");
+        params.addQueryStringParameter("action", "tjobGetByID");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -156,9 +154,9 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
-        String key = firstItemName.get(groupPosition);
-        List<String> childData = secondItemName.get(groupPosition);
-        String info = childData.get(childPosition);
+
+        List<jobtab> childData = listData.get(groupPosition).getJobList();
+        final jobtab jobtab = childData.get(childPosition);
         View v = null;
         if (lmap.get(groupPosition) != null)
         {
@@ -167,9 +165,6 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
         }
         if (v == null)
         {
-            tempDic.getThirdItemID().get(groupPosition).get(childPosition).clear();
-//            tempDic.getThirdItemID().get(groupPosition).get(childPosition).add("该项未选填");
-            tempDic.getThirdItemID().get(groupPosition).get(childPosition).add(ThirdItemName.get(groupPosition).get(childPosition).get(0));
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_children_commandexecute, null);
             listItemView = new ListItemView();
@@ -178,12 +173,16 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
             listItemView.tv_note = (TextView) convertView.findViewById(R.id.tv_note);
             listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             convertView.setTag(listItemView);
+            convertView.setTag(R.id.tag_bean, jobtab);
             convertView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    getListData();
+                    jobtab jobtab = (com.farm.bean.jobtab) v.getTag(R.id.tag_bean);
+                    Intent intent = new Intent(context, Common_JobDetail_Show_.class);
+                    intent.putExtra("bean", jobtab);
+                    context.startActivity(intent);
 
                 }
             });
@@ -194,10 +193,19 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
                 map = new HashMap<>();
             }
 
-            listItemView.tv_time.setText(ThirdItemName.get(groupPosition).get(childPosition).get(0));
-            listItemView.tv_jd.setText(ThirdItemName.get(groupPosition).get(childPosition).get(1));
-            listItemView.tv_pf.setText(ThirdItemName.get(groupPosition).get(childPosition).get(2));
-            listItemView.tv_note.setText(ThirdItemName.get(groupPosition).get(childPosition).get(3));
+            if (jobtab.getPercent().equals(""))
+            {
+                listItemView.tv_time.setText(jobtab.getregDate().substring(5, jobtab.getregDate().lastIndexOf(" ")));
+                listItemView.tv_jd.setText("进行中...");
+                listItemView.tv_pf.setText("");
+                listItemView.tv_note.setText("");
+            } else
+            {
+                listItemView.tv_time.setText(jobtab.getregDate().substring(5, jobtab.getregDate().lastIndexOf(" ")));
+                listItemView.tv_jd.setText("完成" + jobtab.getPercent() + "%");
+                listItemView.tv_pf.setText(jobtab.getaudioJobExecPath() + "分");
+                listItemView.tv_note.setText(jobtab.getassessNote());
+            }
 
         } else
         {
@@ -237,22 +245,24 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        String key = firstItemName.get(groupPosition);
-        int size = secondItemName.get(groupPosition).size();
-        return size;
+        if (listData.get(groupPosition).getJobList() == null)
+        {
+            return 0;
+        }
+        return listData.get(groupPosition).getJobList().size();
     }
 
     //获取当前父item的数据
     @Override
     public Object getGroup(int groupPosition)
     {
-        return firstItemName.get(groupPosition);
+        return listData.get(groupPosition);
     }
 
     @Override
     public int getGroupCount()
     {
-        return firstItemName.size();
+        return listData.size();
     }
 
     @Override
@@ -272,6 +282,8 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
         }
         TextView tv_call = (TextView) convertView.findViewById(R.id.tv_call);
         TextView parent_textview = (TextView) convertView.findViewById(R.id.parent_textview);
+        TextView tv_pq = (TextView) convertView.findViewById(R.id.tv_pq);
+        TextView tv_sd = (TextView) convertView.findViewById(R.id.tv_sd);
         swipeLayout = (SwipeLayout) convertView.findViewById(R.id.swipe);
         // 当隐藏的删除menu被打开的时候的回调函数
         swipeLayout.addSwipeListener(new SimpleSwipeListener()
@@ -311,7 +323,8 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "15989145780"));
+                String phone = listData.get(Integer.valueOf(v.getTag().toString())).getPhone();
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
                 {
                     // TODO: Consider calling
@@ -336,7 +349,20 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
 //                TextView textView = (TextView) v;
             }
         });
-        parent_textview.setText(firstItemName.get(groupPosition));
+        parent_textview.setText(listData.get(groupPosition).getparkName());
+        tv_pq.setText(listData.get(groupPosition).getareaName());
+        String getcommStatus = listData.get(groupPosition).getcommStatus();
+        if (getcommStatus.equals("0"))
+        {
+            tv_sd.setText("待反馈");
+        } else if (getcommStatus.equals("1"))
+        {
+            tv_sd.setText("已反馈");
+        } else if (getcommStatus.equals("2"))
+        {
+            tv_sd.setText("已收到");
+        }
+
         return convertView;
     }
 
