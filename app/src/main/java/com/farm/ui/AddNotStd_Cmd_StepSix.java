@@ -147,6 +147,7 @@ public class AddNotStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("importance", commandtab_single.getimportance());
         params.addQueryStringParameter("execLevel", "1");
         params.addQueryStringParameter("", fragmentCallBack.level);
+        params.addQueryStringParameter("commFromVPath", "0");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

@@ -14,25 +14,42 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.commandtab_single;
+import com.farm.bean.Dictionary;
+import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
 import com.farm.common.BitmapHelper;
 import com.farm.common.SqliteDb;
 import com.farm.widget.CustomDialog_FLSL;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
 {
+    String number;
+    String small_dw;
+    String large_dw;
+    String gx;
     commembertab commembertab;
     goodslisttab currentgoods;
     boolean isrecovery = false;
     View currentparentview;
+    TextView tv_tip_gg;
     TextView tv_dw;
+    TextView tv_tip_number;
+    TextView tv_goodsname;
     Button btn_sure;
     EditText et_flsl;
     CustomDialog_FLSL customDialog_flsl;
@@ -91,8 +108,12 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 {
                     BitmapHelper.setImageViewBackground(context, listItemView.typeicon, goodslisttab.getImgurl());
                 }
+                String[] goodsspc = goodslisttab.getgoodsSpec().split("/");
+                String number = goodsspc[0];
+                String small_dw = goodsspc[1];
+                String large_dw = goodsspc[2];
                 listItemView.typename.setText(goodslisttab.getgoodsName());
-                listItemView.tv_gg.setText("规格：" + goodslisttab.getgoodsSpec());
+                listItemView.tv_gg.setText("规格：" + number+small_dw+"/"+large_dw);
             }
             listItemView.cb_fl.setTag(R.id.tag_bean, goodslisttab);
             listItemView.cb_fl.setTag(R.id.tag_postion, position);
@@ -138,10 +159,15 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 if (list_goodslisttab.get(i).getId().equals(goodslisttab.getId()))
                 {
                     isrecovery = true;
+                    String[] goodsspc = list_goodslisttab.get(i).getgoodsSpec().split("/");
+                    String number = goodsspc[0];
+                    String small_dw = goodsspc[1];
+                    String large_dw = goodsspc[2];
                     listItemView.cb_fl.setChecked(true);
                     listItemView.ll_flsl.setVisibility(View.VISIBLE);
-                    listItemView.tv_flsl.setText(list_goodslisttab.get(i).getYL());
-                    listItemView.tv_allnumber.setText("");
+                    listItemView.tv_flsl.setText(list_goodslisttab.get(i).getYL()+small_dw+"/株");
+
+                    listItemView.tv_allnumber.setText(list_goodslisttab.get(i).getGX()+large_dw);
                     isrecovery = false;
                     if (currentiv_tip != null)
                     {
@@ -173,14 +199,68 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         LinearLayout ll_flsl;
     }
 
+    public void getGoodsSum()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("name", "getWZ");
+        params.addQueryStringParameter("action", "getDict");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<Dictionary> lsitNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
+                        if (lsitNewData != null)
+                        {
+                        }
+
+                    } else
+                    {
+                        lsitNewData = new ArrayList<Dictionary>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
+
     public void showDialog_flsl(final int pos)
     {
         final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_flsl_self, null);
         customDialog_flsl = new CustomDialog_FLSL(context, R.style.MyDialog, dialog_layout);
         tv_dw = (TextView) dialog_layout.findViewById(R.id.tv_dw);
+        tv_tip_number = (TextView) dialog_layout.findViewById(R.id.tv_tip_number);
+        tv_tip_gg = (TextView) dialog_layout.findViewById(R.id.tv_tip_gg);
+        tv_dw = (TextView) dialog_layout.findViewById(R.id.tv_dw);
+        tv_goodsname = (TextView) dialog_layout.findViewById(R.id.tv_goodsname);
         et_flsl = (EditText) dialog_layout.findViewById(R.id.et_flsl);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
-        tv_dw.setText(commandtab_single.getInstance().getNongzidw());
+        String[] goodsspc = list.get(pos).getgoodsSpec().split("/");
+        number = goodsspc[0];
+        small_dw = goodsspc[1];
+        large_dw = goodsspc[2];
+        tv_tip_number.setText("剩余：" + list.get(pos).getGoodsSum() + large_dw);
+        tv_tip_gg.setText(number + small_dw + "/" + large_dw);
+        tv_goodsname.setText(list.get(pos).getgoodsName());
+        tv_dw.setText(small_dw + "/株");
         btn_sure.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -191,6 +271,9 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 currentgoods.setAreaId(commembertab.getareaId());
                 currentgoods.setAreaName(commembertab.getareaName());
                 currentgoods.setYL(et_flsl.getText().toString());
+                Double acountnumber = Double.valueOf(et_flsl.getText().toString()) * 20000;//株数
+                Double neednumber = acountnumber / Double.valueOf(number);
+                currentgoods.setGX(neednumber.toString());
                 SqliteDb.save(context, currentgoods);
 
                 LinearLayout ll_flsl = (LinearLayout) currentparentview.findViewById(R.id.ll_flsl);
@@ -199,8 +282,8 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 TextView tv_flsl = (TextView) currentparentview.findViewById(R.id.tv_flsl);
                 TextView tv_allnumber = (TextView) currentparentview.findViewById(R.id.tv_allnumber);
 
-                tv_flsl.setText(et_flsl.getText());
-                tv_allnumber.setText("");
+                tv_flsl.setText(et_flsl.getText()+small_dw+"/株");
+                tv_allnumber.setText(neednumber+large_dw);
 
                 customDialog_flsl.dismiss();
 

@@ -33,33 +33,39 @@
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:visibility="gone">
 
-                <com.farm.widget.CircleImageView
-                    android:id="@+id/circle_img"
-                    android:layout_width="40dip"
-                    android:layout_height="40dip"
-                    android:layout_centerVertical="true"
-                    android:src="#00000000"
-                    app:border_color="#00000000"
-                    app:border_width="0dp"/>
+            <LinearLayout
+                android:id="@+id/ll_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_czname"
+                    android:id="@+id/tv_temph"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dip"
-                    android:layout_toLeftOf="@id/circle_img"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="未知"
+                    android:text="15℃-27℃"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_11"/>
-            </RelativeLayout>
+                    android:textSize="@dimen/size_sp_14"/>
+
+                <com.farm.widget.CircleImageView
+                    android:id="@+id/iv_img"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dip"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/noimg"
+                    app:border_color="@color/transparent"
+                    app:border_width="0px"/>
+
+
+            </LinearLayout>
 
 
             <RelativeLayout
@@ -97,6 +103,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
                 android:orientation="horizontal">
 
                 <TextView
@@ -116,46 +123,6 @@
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:id="@+id/ll_weather"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:minHeight="60dip">
-
-                            <ImageView
-                                android:id="@+id/iv_img"
-                                android:layout_width="@dimen/size_35"
-                                android:layout_height="@dimen/size_35"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="true"
-                                android:layout_margin="5dip"
-                                />
-                        </RelativeLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="10dip"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/tv_temph"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:text="未知"
-                                android:textColor="@color/bg_text"
-                                android:textSize="@dimen/size_12"/>
-                        </LinearLayout>
-                    </LinearLayout>
 
                     <View
                         android:layout_width="1px"
@@ -197,6 +164,8 @@
                                 android:id="@+id/fl_worknumber_new"
                                 android:layout_width="10dip"
                                 android:layout_height="10dip"
+                                android:layout_marginRight="5dip"
+                                android:layout_marginTop="5dip"
                                 android:layout_toRightOf="@+id/iv_pqgz"
                                 android:visibility="gone">
 
@@ -243,7 +212,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="30dip"
                         android:layout_marginTop="30dip"
-                        android:background="@color/line_color"/>
+                        android:background="@color/line_color"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="0dip"
@@ -280,6 +250,8 @@
                                 android:id="@+id/fl_plantnumber_new"
                                 android:layout_width="10dip"
                                 android:layout_height="10dip"
+                                android:layout_marginRight="5dip"
+                                android:layout_marginTop="5dip"
                                 android:layout_toRightOf="@+id/iv_pqmq"
                                 android:visibility="gone">
 
@@ -325,7 +297,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="30dip"
                         android:layout_marginTop="30dip"
-                        android:background="@color/line_color"/>
+                        android:background="@color/line_color"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="0dip"
@@ -362,6 +335,8 @@
                                 android:id="@+id/fl_cmdnumber_new"
                                 android:layout_width="10dip"
                                 android:layout_height="10dip"
+                                android:layout_marginRight="5dip"
+                                android:layout_marginTop="5dip"
                                 android:layout_toRightOf="@+id/iv_pqzl"
                                 android:visibility="gone">
 
@@ -412,6 +387,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
                 android:orientation="horizontal">
 
                 <TextView
@@ -470,6 +446,8 @@
                                     android:id="@+id/fl_sq_new"
                                     android:layout_width="10dip"
                                     android:layout_height="10dip"
+                                    android:layout_marginRight="5dip"
+                                    android:layout_marginTop="5dip"
                                     android:layout_toRightOf="@+id/iv_yqsq"
                                     android:visibility="gone">
 
@@ -553,6 +531,8 @@
                                     android:id="@+id/fl_job_new"
                                     android:layout_width="10dip"
                                     android:layout_height="10dip"
+                                    android:layout_marginRight="5dip"
+                                    android:layout_marginTop="5dip"
                                     android:layout_toRightOf="@+id/iv_yqgz"
                                     android:visibility="gone">
 
@@ -606,7 +586,8 @@
                             android:layout_width="0dip"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/tv_yqmq"
@@ -718,6 +699,8 @@
                                     android:id="@+id/fl_cmd_new"
                                     android:layout_width="10dip"
                                     android:layout_height="10dip"
+                                    android:layout_marginRight="5dip"
+                                    android:layout_marginTop="5dip"
                                     android:layout_toRightOf="@+id/iv_yqzl"
                                     android:visibility="gone">
 

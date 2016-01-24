@@ -26,7 +26,7 @@
             android:layout_height="@dimen/titlebar_height"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="相关信息"
+            android:text="个人信息"
             android:textColor="@color/bg_text"
             android:textSize="@dimen/titlebar_textsize" />
     </RelativeLayout>
@@ -63,7 +63,7 @@
                     android:orientation="horizontal" >
 
                     <TextView
-                        android:id="@+id/tv_sex"
+                        android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
@@ -79,7 +79,7 @@
                         android:background="@color/bg_text" />
 
                     <TextView
-                        android:id="@+id/tv_name"
+                        android:id="@+id/tv_zw"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="15dip"
@@ -108,17 +108,18 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_margin="15dip"
+                    android:visibility="gone"
                     android:src="@drawable/next_black" />
 
                 <TextView
-                    android:id="@+id/tv_zw"
+                    android:id="@+id/tv_area"
                     android:layout_width="@dimen/size_150"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="20dip"
                     android:layout_toRightOf="@+id/iv_gy"
                     android:gravity="left|center_vertical"
-                    android:text="15989100000"
+                    android:text="所属园区片区"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_13" />
             </RelativeLayout>
@@ -149,7 +150,7 @@
                     android:layout_marginLeft="20dip"
                     android:layout_toRightOf="@id/iv_bz"
                     android:gravity="left|center_vertical"
-                    android:text="16558150000@qq.com"
+                    android:text="手机号"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_13" />
 
@@ -159,6 +160,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_margin="15dip"
+                    android:visibility="gone"
                     android:src="@drawable/next_black" />
             </RelativeLayout>
 
@@ -182,13 +184,13 @@
                     android:background="@drawable/people_black" />
 
                 <TextView
-                    android:id="@+id/tv_ssyq"
+                    android:id="@+id/tv_userQQ"
                     android:layout_width="@dimen/size_150"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dip"
                     android:layout_toRightOf="@id/iv_yj"
                     android:gravity="left|center_vertical"
-                    android:text="广西桂林"
+                    android:text="QQ号"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_13" />
 
@@ -198,6 +200,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_margin="15dip"
+                    android:visibility="gone"
                     android:src="@drawable/next_black" />
             </RelativeLayout>
 
@@ -208,6 +211,45 @@
                 android:layout_marginRight="15sp"
                 android:background="@color/line_color" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_80" >
+
+                <ImageView
+                    android:id="@+id/iv_wx"
+                    android:layout_width="@dimen/size_20"
+                    android:layout_height="@dimen/size_20"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dip"
+                    android:background="@drawable/people_black" />
+
+                <TextView
+                    android:id="@+id/tv_userWX"
+                    android:layout_width="@dimen/size_150"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dip"
+                    android:layout_toRightOf="@id/iv_wx"
+                    android:gravity="left|center_vertical"
+                    android:text="微信号"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_13" />
+
+                <ImageView
+                    android:layout_width="12dip"
+                    android:layout_height="12dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="15dip"
+                    android:visibility="gone"
+                    android:src="@drawable/next_black" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1px"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:background="@color/line_color" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_80" >
@@ -221,13 +263,13 @@
                     android:background="@drawable/people_black" />
 
                 <TextView
-                    android:id="@+id/tv_address"
+                    android:id="@+id/tv_contractName"
                     android:layout_width="@dimen/size_150"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dip"
                     android:layout_toRightOf="@id/iv_changepwd"
                     android:gravity="left|center_vertical"
-                    android:text="修改密码"
+                    android:text="联系地址"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_13" />
 
@@ -237,128 +279,10 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_margin="15dip"
+                    android:visibility="gone"
                     android:src="@drawable/next_black" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1px"
-                android:layout_marginLeft="15sp"
-                android:layout_marginRight="15sp"
-                android:background="@color/line_color" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_80" >
-
-                <FrameLayout
-                    android:id="@+id/fl_renewversion"
-                    android:layout_width="@dimen/width_setting"
-                    android:layout_height="@dimen/size_20"
-                    android:layout_centerVertical="true"
-                    android:orientation="horizontal" >
-
-                    <ImageView
-                        android:id="@+id/iv_renewversion"
-                        android:layout_width="@dimen/size_20"
-                        android:layout_height="@dimen/size_20"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="20dip"
-                        android:background="@drawable/people_black" />
-
-                    <FrameLayout
-                        android:id="@+id/fl_new"
-                        android:layout_width="15dip"
-                        android:layout_height="15dip"
-                        android:layout_gravity="right"
-                        android:visibility="gone" >
-
-                        <com.farm.widget.CircleImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:src="@color/red"
-                            app:border_color="@color/red"
-                            app:border_width="0dp" />
-
-                        <TextView
-                            android:id="@+id/tv_new"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text=""
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_10" />
-                    </FrameLayout>
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/tv_renewversion"
-                    android:layout_width="@dimen/size_150"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dip"
-                    android:layout_toRightOf="@id/fl_renewversion"
-                    android:gravity="left|center_vertical"
-                    android:text="系统更新"
-                    android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_13" />
-
-                <ProgressBar
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dip"
-                    android:layout_toRightOf="@id/fl_renewversion"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:layout_width="12dip"
-                    android:layout_height="12dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="15dip"
-                    android:src="@drawable/next_black" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1px"
-                android:layout_marginLeft="15sp"
-                android:layout_marginRight="15sp"
-                android:background="@color/line_color" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_80" >
-
-                <ImageView
-                    android:id="@+id/iv_exist"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dip"
-                    android:background="@drawable/people_black" />
-
-                <TextView
-                    android:id="@+id/tv_exist"
-                    android:layout_width="@dimen/size_150"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dip"
-                    android:layout_toRightOf="@id/iv_exist"
-                    android:gravity="left|center_vertical"
-                    android:text="退出账户"
-                    android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_13" />
-
-                <ImageView
-                    android:layout_width="12dip"
-                    android:layout_height="12dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="15dip"
-                    android:src="@drawable/next_black" />
-            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

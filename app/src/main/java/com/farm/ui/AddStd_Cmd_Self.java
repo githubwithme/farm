@@ -230,9 +230,13 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
         switch (currentItem)
         {
             case 0:
+                text_one.setClickable(true);
+                text_three.setClickable(true);
                 vPager.setCurrentItem(currentItem + 1);
                 break;
             case 1:
+                text_three.setClickable(true);
+                text_five.setClickable(true);
                 list_goodslisttab= SqliteDb.getSelectCmdArea(AddStd_Cmd_Self.this, goodslisttab.class);
                 if (list_goodslisttab.size()>0)
                 {
@@ -244,6 +248,8 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
 
                 break;
             case 2:
+                text_five.setClickable(true);
+                text_six.setClickable(true);
                 commandtab_single = com.farm.bean.commandtab_single.getInstance();
                 if (commandtab_single.getimportance().equals("") || commandtab_single.getcommComDate().equals("") || commandtab_single.getcommDays().equals("") || commandtab_single.getcommNote().equals(""))
                 {
@@ -259,6 +265,7 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
                 }
                 break;
             case 3:
+                text_six.setClickable(true);
                 break;
         }
 

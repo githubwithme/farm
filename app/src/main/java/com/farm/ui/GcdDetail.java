@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_GcdDetail;
@@ -94,7 +93,7 @@ public class GcdDetail extends FragmentActivity
             @Override
             public void onExtraPageSelected(int i)
             {
-                Toast.makeText(GcdDetail.this, "show", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(GcdDetail.this, "show", Toast.LENGTH_SHORT).show();
                 currentItem = i;
                 setBackground(i);
             }

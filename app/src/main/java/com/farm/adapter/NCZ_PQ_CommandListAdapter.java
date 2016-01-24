@@ -33,6 +33,8 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 		public TextView tv_cmdname;
 		public TextView tv_qx;
 		public TextView tv_time;
+		public TextView tv_type;
+		public TextView tv_zf;
 		public TextView tv_importance;
 		public CircleImageView circle_img;
 		public ImageView iv_record;
@@ -85,6 +87,8 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 			listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
 			listItemView.tv_cmdname = (TextView) convertView.findViewById(R.id.tv_cmdname);
 			listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+			listItemView.tv_zf = (TextView) convertView.findViewById(R.id.tv_zf);
+			listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
 
 			listItemView.iv_record.setId(position);
 			listItemView.iv_record.setOnClickListener(new OnClickListener()
@@ -130,6 +134,23 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 		} else
 		{
 			listItemView.tv_cmdname.setText(commandtab.getstdJobTypeName() + "-" + commandtab.getstdJobName());
+		}
+		if (commandtab.getcommFromVPath().equals("0"))
+		{
+			listItemView.tv_zf.setText("下发");
+		} else
+		{
+			listItemView.tv_zf.setText("自发");
+		}
+		if (commandtab.getstdJobType().equals("0"))
+		{
+			listItemView.tv_type.setText("非标准生产指令");
+		} else  if (commandtab.getstdJobType().equals("-1"))
+		{
+			listItemView.tv_type.setText("非生产指令");
+		} else
+		{
+			listItemView.tv_type.setText("标准生产指令");
 		}
 		listItemView.tv_qx.setText("开始" + commandtab.getcommComDate());
 		listItemView.tv_time.setText("发布于" + commandtab.getregDate().subSequence(0, commandtab.getregDate().lastIndexOf(" ")));

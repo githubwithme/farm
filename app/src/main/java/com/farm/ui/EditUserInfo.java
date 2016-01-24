@@ -32,19 +32,21 @@ public class EditUserInfo extends Activity
 	commembertab commembertab;
 	@ViewById
 	CircleImageView circle_img;
-	String userid;
 	@ViewById
 	TextView tv_name;
 	@ViewById
-	TextView tv_sex;
+	TextView tv_contractName;
 	@ViewById
 	TextView tv_zw;
 	@ViewById
 	TextView tv_phone;
 	@ViewById
-	TextView tv_address;
+	TextView tv_area;
 	@ViewById
-	TextView tv_ssyq;
+	TextView tv_userWX;
+	@ViewById
+	TextView tv_userQQ;
+	String userid;
 	@AfterViews
 	void afterOncreate()
 	{
@@ -109,12 +111,17 @@ public class EditUserInfo extends Activity
 
 	private void showData(commembertab commembertab)
 	{
+		if (commembertab.getnlevel().equals("0"))
+		{
+			tv_zw.setText(commembertab.getnlevel());
+		}
+		tv_area.setText(commembertab.getparkName() + "-" + commembertab.getareaName());
 		tv_name.setText(commembertab.getrealName());
-		tv_sex.setText(commembertab.getrealName());
-		tv_address.setText(commembertab.getcontractName());
-		tv_ssyq.setText(commembertab.getparkName()+"-"+commembertab.getareaName());
+		tv_userWX.setText(commembertab.getuserWX());
+		tv_userQQ.setText(commembertab.userQQ);
 		tv_phone.setText(commembertab.getuserCell());
-		BitmapHelper.setImageViewBackground(EditUserInfo.this, circle_img,AppConfig.baseurl+commembertab.getimgurl());
+		tv_contractName.setText(commembertab.getcontractName());
+		BitmapHelper.setImageViewBackground(EditUserInfo.this, circle_img, AppConfig.baseurl + commembertab.getimgurl());
 	}
 
 }

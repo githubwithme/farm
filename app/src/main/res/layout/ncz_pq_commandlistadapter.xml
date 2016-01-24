@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:gravity="left|center_vertical"
-                        android:text="标准生产指令"
+                        android:text="指令类型未知"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_sp_13"/>
 
@@ -106,7 +106,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:gravity="left|center_vertical"
-                        android:text="自发"
+                        android:text="指令来源未知"
                         android:textColor="@color/red"
                         android:textSize="@dimen/size_sp_13"/>
 

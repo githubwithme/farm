@@ -227,6 +227,8 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
         {
 
             case 0:
+                text_three.setClickable(true);
+                text_four.setClickable(true);
                 list_goodslisttab= SqliteDb.getSelectCmdArea(AddNotStd_Cmd.this, goodslisttab.class);
                 if (list_goodslisttab.size()>0)
                 {
@@ -240,6 +242,8 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
 
                 break;
             case 1:
+                text_four.setClickable(true);
+                text_five.setClickable(true);
                 list_SelectCmdArea = SqliteDb.getSelectCmdArea(AddNotStd_Cmd.this, goodslisttab_flsl.class);
                 if (list_SelectCmdArea.size()>0)
                 {
@@ -251,6 +255,8 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
 
                 break;
             case 2:
+                text_five.setClickable(true);
+                text_six.setClickable(true);
                 commandtab_single = com.farm.bean.commandtab_single.getInstance();
                 if (commandtab_single.getimportance().equals("") || commandtab_single.getcommComDate().equals("") || commandtab_single.getcommDays().equals("") || commandtab_single.getcommNote().equals(""))
                 {
@@ -267,6 +273,7 @@ public class AddNotStd_Cmd extends FragmentActivity implements FragmentCallBack
 
                 break;
             case 3:
+                text_six.setClickable(true);
                 break;
         }
     }

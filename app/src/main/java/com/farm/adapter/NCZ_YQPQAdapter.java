@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,7 +24,6 @@ import com.farm.ui.NCZ_CZ_ToDayJob_;
 import com.farm.ui.NCZ_CZ_ToDayPlant_;
 import com.farm.ui.NCZ_CZ_TodayCommand_;
 import com.farm.ui.NCZ_ToDayPQ_;
-import com.farm.ui.ShowUserInfo_;
 import com.farm.ui.WeatherActivity_;
 import com.farm.widget.CircleImageView;
 
@@ -60,7 +58,7 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         public TextView tv_plant_new;
         public TextView tv_sq_new;
         public TextView tv_cmd_new;
-        public TextView tv_czname;
+//        public TextView tv_czname;
         public TextView tv_yqname;
         public TextView tv_temph;
         public TextView tv_plantnumber;
@@ -70,7 +68,7 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         public TextView tv_cmdnumber_new;
         public TextView tv_worknumber_new;
         public FrameLayout fl_cmdnumber_new;
-        public ImageView iv_img;
+        public CircleImageView iv_img;
         public LinearLayout ll_weather;
         public LinearLayout ll_ask;
         public LinearLayout ll_cmd;
@@ -83,7 +81,7 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         public FrameLayout fl_plantnumber_new;
         public FrameLayout fl_job_new;
         public FrameLayout fl_sq_new;
-        public CircleImageView circle_img;
+//        public CircleImageView circle_img;
     }
 
     public NCZ_YQPQAdapter(Context context, List<parktab> data)
@@ -136,7 +134,7 @@ public class NCZ_YQPQAdapter extends BaseAdapter
             listItemView.ll_plant = (LinearLayout) convertView.findViewById(R.id.ll_plant);
             listItemView.tv_temph = (TextView) convertView.findViewById(R.id.tv_temph);
             listItemView.tv_yqname = (TextView) convertView.findViewById(R.id.tv_yqname);
-            listItemView.tv_czname = (TextView) convertView.findViewById(R.id.tv_czname);
+//            listItemView.tv_czname = (TextView) convertView.findViewById(R.id.tv_czname);
             listItemView.tv_cmdnumber = (TextView) convertView.findViewById(R.id.tv_cmdnumber);
             listItemView.fl_cmdnumber_new = (FrameLayout) convertView.findViewById(R.id.fl_cmdnumber_new);
             listItemView.tv_sq = (TextView) convertView.findViewById(R.id.tv_sq);
@@ -161,8 +159,8 @@ public class NCZ_YQPQAdapter extends BaseAdapter
             listItemView.tv_yqmq = (TextView) convertView.findViewById(R.id.tv_yqmq);
             listItemView.tv_yqsq = (TextView) convertView.findViewById(R.id.tv_yqsq);
 
-            listItemView.iv_img = (ImageView) convertView.findViewById(R.id.iv_img);
-            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
+            listItemView.iv_img = (CircleImageView) convertView.findViewById(R.id.iv_img);
+//            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
             listItemView.ll_jrpq.setId(position);
             listItemView.tv_yqname.setId(position);
             listItemView.ll_weather.setId(position);
@@ -170,17 +168,17 @@ public class NCZ_YQPQAdapter extends BaseAdapter
             listItemView.ll_job.setId(position);
             listItemView.ll_ask.setId(position);
             listItemView.ll_cmd.setId(position);
-            listItemView.circle_img.setTag(position);
-            listItemView.circle_img.setOnClickListener(new OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent intent = new Intent(context, ShowUserInfo_.class);
-                    intent.putExtra("workuserid", listItems.get(Integer.valueOf(v.getTag().toString())).getWorkuserid());
-                    context.startActivity(intent);
-                }
-            });
+//            listItemView.circle_img.setTag(position);
+//            listItemView.circle_img.setOnClickListener(new OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    Intent intent = new Intent(context, ShowUserInfo_.class);
+//                    intent.putExtra("workuserid", listItems.get(Integer.valueOf(v.getTag().toString())).getWorkuserid());
+//                    context.startActivity(intent);
+//                }
+//            });
             listItemView.ll_cmd.setOnClickListener(new OnClickListener()
             {
                 @Override
@@ -262,7 +260,7 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         }
 
 
-        listItemView.tv_czname.setText(parktab.getRealName());
+//        listItemView.tv_czname.setText(parktab.getRealName());
         listItemView.tv_yqname.setText(parktab.getparkName());
 
         if (Integer.valueOf(parktab.getCommandCount()) > 0)
@@ -315,8 +313,8 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         listItemView.tv_worknumber.setText("片管工作");
         listItemView.tv_cmdnumber.setText("片管指令");
 
-        listItemView.tv_temph.setText(parktab.getTMPL() + "-" + parktab.getTMPH());
-        BitmapHelper.setImageViewBackground(context, listItemView.circle_img, AppConfig.baseurl + parktab.getImgurl());
+//        listItemView.tv_temph.setText(parktab.getTMPL() + "-" + parktab.getTMPH());
+//        BitmapHelper.setImageViewBackground(context, listItemView.circle_img, AppConfig.baseurl + parktab.getImgurl());
         BitmapHelper.setImageViewBackground(context, listItemView.iv_img, AppConfig.baseurl + parktab.getWeatherimg());
         return convertView;
     }

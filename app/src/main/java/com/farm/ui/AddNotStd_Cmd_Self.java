@@ -199,6 +199,8 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
         switch (currentItem)
         {
             case 0:
+                text_three.setClickable(true);
+                text_five.setClickable(true);
                 list_goodslisttab= SqliteDb.getSelectCmdArea(AddNotStd_Cmd_Self.this, goodslisttab.class);
                 if (list_goodslisttab.size()>0)
                 {
@@ -209,6 +211,8 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
                 }
                 break;
             case 1:
+                text_five.setClickable(true);
+                text_six.setClickable(true);
                 commandtab_single = com.farm.bean.commandtab_single.getInstance();
                 if (commandtab_single.getimportance().equals("") || commandtab_single.getcommComDate().equals("") || commandtab_single.getcommDays().equals("") || commandtab_single.getcommNote().equals(""))
                 {
@@ -225,6 +229,7 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
 
                 break;
             case 2:
+                text_six.setClickable(true);
                 break;
         }
     }

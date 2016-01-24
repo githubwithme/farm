@@ -78,8 +78,8 @@ public class InputGoodsAdapter extends BaseAdapter
             String small_dw = goodsspc[1];
             String large_dw = goodsspc[2];
             listItemView.tv_dw.setText(small_dw+"/株");
-            listItemView.tv_syl.setText( list.get(arg0).getGoodsSum());
-            listItemView.tv_spec.setText( list.get(arg0).getgoodsSpec());
+            listItemView.tv_syl.setText( list.get(arg0).getGoodsSum()+large_dw);
+            listItemView.tv_spec.setText( number+small_dw+"/"+large_dw);
 
             lmap.put(arg0, convertView);
             convertView.setTag(listItemView);

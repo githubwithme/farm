@@ -259,40 +259,48 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
         switch (currentItem)
         {
             case 0:
+                text_one.setClickable(true);
+                text_three.setClickable(true);
                 AddStd_Cmd_StepTwo addStd_cmd_stepTwo = (AddStd_Cmd_StepTwo) adapter.getFragment(currentItem + 1);
                 addStd_cmd_stepTwo.update();
                 vPager.setCurrentItem(currentItem + 1);
                 break;
             case 1:
-                list_goodslisttab= SqliteDb.getSelectCmdArea(AddStd_Cmd.this, goodslisttab.class);
-                if (list_goodslisttab.size()>0)
+                text_three.setClickable(true);
+                text_four.setClickable(true);
+                list_goodslisttab = SqliteDb.getSelectCmdArea(AddStd_Cmd.this, goodslisttab.class);
+                if (list_goodslisttab.size() > 0)
                 {
                     AddStd_Cmd_StepThree_Temp addStd_cmd_stepThree_temp = (AddStd_Cmd_StepThree_Temp) adapter.getFragment(currentItem + 1);
                     addStd_cmd_stepThree_temp.update();
                     vPager.setCurrentItem(currentItem + 1);
-                }else
+                } else
                 {
-                    Toast.makeText(AddStd_Cmd.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddStd_Cmd.this, "请先选择！", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
             case 2:
+                text_four.setClickable(true);
+                text_five.setClickable(true);
                 list_SelectCmdArea = SqliteDb.getSelectCmdArea(AddStd_Cmd.this, goodslisttab_flsl.class);
-                if (list_SelectCmdArea.size()>0)
+                if (list_SelectCmdArea.size() > 0)
                 {
                     vPager.setCurrentItem(currentItem + 1);
-                }else
+                } else
                 {
-                    Toast.makeText(AddStd_Cmd.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddStd_Cmd.this, "请先选择！", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
             case 3:
-                    commandtab_single = com.farm.bean.commandtab_single.getInstance();
-                    if (commandtab_single.getimportance().equals("") || commandtab_single.getcommComDate().equals("") || commandtab_single.getcommDays().equals("") || commandtab_single.getcommNote().equals(""))
-                    {
-                        Toast.makeText(AddStd_Cmd.this,"请先选择！",Toast.LENGTH_SHORT).show();
-                }else
+                text_five.setClickable(true);
+                text_six.setClickable(true);
+                commandtab_single = com.farm.bean.commandtab_single.getInstance();
+                if (commandtab_single.getimportance().equals("") || commandtab_single.getcommComDate().equals("") || commandtab_single.getcommDays().equals("") || commandtab_single.getcommNote().equals(""))
+                {
+                    Toast.makeText(AddStd_Cmd.this, "请先选择！", Toast.LENGTH_SHORT).show();
+                } else
                 {
                     vPager.setIsScrollable(true);
                     setMenuCliable();
@@ -304,6 +312,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
 
                 break;
             case 4:
+                text_six.setClickable(true);
                 break;
         }
 
@@ -330,13 +339,14 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
 
     private void setMenuCliable()
     {
-         text_one.setClickable(true);
+        text_one.setClickable(true);
         text_three.setClickable(true);
         text_four.setClickable(true);
         text_five.setClickable(true);
         text_six.setClickable(true);
 
     }
+
     private void setMenuUnCliable()
     {
         text_one.setClickable(false);
@@ -345,6 +355,7 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
         text_five.setClickable(false);
         text_six.setClickable(false);
     }
+
     private void showExistTip()
     {
         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);

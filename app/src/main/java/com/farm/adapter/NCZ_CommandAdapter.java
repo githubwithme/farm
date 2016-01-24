@@ -145,6 +145,23 @@ public class NCZ_CommandAdapter extends BaseAdapter
 
 //        listItemView.tv_zf.setText();
 //        listItemView.tv_type.setText();
+        if (commandtab.getcommFromVPath().equals("0"))
+        {
+            listItemView.tv_zf.setText("下发");
+        } else
+        {
+            listItemView.tv_zf.setText("自发");
+        }
+        if (commandtab.getstdJobType().equals("0"))
+        {
+            listItemView.tv_type.setText("非标准生产指令");
+        } else  if (commandtab.getstdJobType().equals("-1"))
+        {
+            listItemView.tv_type.setText("非生产指令");
+        } else
+        {
+            listItemView.tv_type.setText("标准生产指令");
+        }
         listItemView.tv_qyts.setText("要求天数-" + commandtab.getcommDays() + "天");
         listItemView.tv_qx.setText("开始 " + commandtab.getcommComDate());
         listItemView.tv_time.setText("发布于 " + commandtab.getregDate().subSequence(0, commandtab.getregDate().lastIndexOf(" ")));
