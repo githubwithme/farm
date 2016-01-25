@@ -113,7 +113,7 @@ public class CZ_ToDayPQdapter extends BaseAdapter
                 public void onClick(View v)
                 {
                     Intent intent = new Intent(context, CZ_PQ_TodayCommand_.class);
-                    intent.putExtra("workuserid", listItems.get(v.getId()).getWorkuserid());// 因为list中添加了头部,因此要去掉一个
+                    intent.putExtra("bean", listItems.get(v.getId()));// 因为list中添加了头部,因此要去掉一个
                     context.startActivity(intent);
                 }
             });

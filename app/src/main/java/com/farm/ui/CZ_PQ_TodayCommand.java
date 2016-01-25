@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -33,6 +33,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
+import com.farm.bean.areatab;
 import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.common.DictionaryHelper;
@@ -80,16 +81,16 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
     @ViewById
     View line;
     @ViewById
-    ImageButton btn_add;
+    Button btn_more;
     @ViewById
     PullToRefreshListView frame_listview_news;
     Dictionary dictionary;
-    String workuserid;
+    areatab areatab;
 
     @Click
-    void btn_add()
+    void btn_more()
     {
-        showPop_addcommand();
+//        showPop_addcommand();
     }
 
     @Override
@@ -108,11 +109,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
         selectorUi.setArguments(bundle);
         switchContent(mContent, selectorUi);
         initAnimalListView();
-        commembertab commembertab = AppContext.getUserInfo(CZ_PQ_TodayCommand.this);
-        if (!commembertab.getnlevel().toString().equals("0"))
-        {
-            btn_add.setVisibility(View.GONE);
-        }
+        tv_title.setText(areatab.getRealName()+"今日指令");
     }
 
     @Override
@@ -123,7 +120,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
         appContext = (AppContext) CZ_PQ_TodayCommand.this.getApplication();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
         CZ_PQ_TodayCommand.this.registerReceiver(receiver_update, intentfilter_update);
-        workuserid = getIntent().getStringExtra("workuserid");
+        areatab = getIntent().getParcelableExtra("bean");
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
@@ -162,7 +159,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
         String orderby = selectorUi.getOrderby();
         commembertab commembertab = AppContext.getUserInfo(CZ_PQ_TodayCommand.this);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", workuserid);
+        params.addQueryStringParameter("workuserid", areatab.getWorkuserid());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
