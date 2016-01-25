@@ -37,14 +37,15 @@
             android:textColor="@color/textcolor_titlebar"
             android:textSize="@dimen/titlebar_textsize"/>
 
-        <TextView
-            android:id="@+id/tv_more"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/titlebar_height"
+        <Button
+            android:id="@+id/btn_more"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
+            android:background="@drawable/ic_more"
             android:gravity="center"
-            android:text="更多"
             android:textColor="@color/textcolor_titlebar"
             android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>

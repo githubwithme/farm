@@ -47,7 +47,8 @@ import java.util.List;
 @EActivity(R.layout.cz_pg_assess)
 public class CZ_PG_Assess extends Activity
 {
-    String bfb="20";
+    List<commandtab> listNewData = null;
+    String bfb = "0";
     CustomDialog_ListView customDialog_listView;
     CZ_PG_Assess_ExpandAdapter cz_pg_assess_expandAdapter;
     jobtab jobtab;
@@ -82,8 +83,16 @@ public class CZ_PG_Assess extends Activity
     @Click
     void btn_sure()
     {
-        addScore();
-    }    @Click
+        if (listNewData == null || listNewData.get(0).getstdJobType().equals("-1") || listNewData.get(0).getstdJobType().equals("0"))
+        {
+            addScore_cz();
+        } else
+        {
+            addScore_ncz();
+        }
+    }
+
+    @Click
     void tv_bfb()
     {
         JSONObject jsonObject = utils.parseJsonFile(CZ_PG_Assess.this, "dictionary.json");
@@ -91,7 +100,7 @@ public class CZ_PG_Assess extends Activity
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < jsonArray.size(); i++)
         {
-            if (Integer.valueOf(jsonArray.getString(i))>Integer.valueOf(bfb))
+            if (Integer.valueOf(jsonArray.getString(i)) > Integer.valueOf(bfb))
             {
                 list.add(jsonArray.getString(i));
             }
@@ -127,8 +136,77 @@ public class CZ_PG_Assess extends Activity
 
     Fragment mContent = new Fragment();
 
+    private void addScore_cz()
+    {
+        int score;
+        RadioButton rb = (RadioButton) rg_score.findViewById(rg_score.getCheckedRadioButtonId());
+        if (rb == null)
+        {
+            Toast.makeText(CZ_PG_Assess.this, "请先评分", Toast.LENGTH_SHORT).show();
+            return;
+        } else
+        {
+            score = getScore(rb.getText().toString());
+        }
+        if (et_note.getText().equals(""))
+        {
+            Toast.makeText(CZ_PG_Assess.this, "请先填写评分说明", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-    private void addScore()
+        commembertab commembertab = AppContext.getUserInfo(this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("username", commembertab.getrealName());
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "jobTabAssessByID");
+        params.addQueryStringParameter("jobID", jobtab.getId());
+        params.addQueryStringParameter("assessScore", String.valueOf(score));
+        params.addQueryStringParameter("percent", tv_bfb.getText().toString());
+        params.addQueryStringParameter("assessNote", et_note.getText().toString());
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<jobtab> listData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                        // if (audioFragment.getAudiopath() != null)
+                        // {
+                        // uploadAudio(listData.get(0).getId(),
+                        // audioFragment.getAudiopath());
+                        // } else
+                        // {
+                        Toast.makeText(CZ_PG_Assess.this, "保存成功！", Toast.LENGTH_SHORT).show();
+                        finish();
+                        // }
+                    } else
+                    {
+                        AppContext.makeToast(CZ_PG_Assess.this, "error_connectDataBase");
+                    }
+                } else
+                {
+                    AppContext.makeToast(CZ_PG_Assess.this, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1)
+            {
+                AppContext.makeToast(CZ_PG_Assess.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void addScore_ncz()
     {
         List<View> list_view = cz_pg_assess_expandAdapter.getListView();
         for (int i = 0; i < list_view.size(); i++)
@@ -141,6 +219,12 @@ public class CZ_PG_Assess extends Activity
             Toast.makeText(CZ_PG_Assess.this, "请先评分", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (et_note.getText().equals(""))
+        {
+            Toast.makeText(CZ_PG_Assess.this, "请先填写评分说明", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userid", commembertab.getId());
@@ -210,7 +294,6 @@ public class CZ_PG_Assess extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String aa = responseInfo.result;
-                List<commandtab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
@@ -328,6 +411,7 @@ public class CZ_PG_Assess extends Activity
         }
         return 0;
     }
+
     public void showDialog_workday(List<String> list)
     {
         View dialog_layout = (RelativeLayout) CZ_PG_Assess.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);

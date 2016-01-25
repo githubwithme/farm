@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -63,14 +64,14 @@ public class NCZ_PQ_TodayJob extends Activity
     @ViewById
     TextView tv_title;
     @ViewById
-    TextView tv_more;
+    Button btn_more;
     @ViewById
     ImageButton imgbtn_back;
 
     areatab areatab;
 
     @Click
-    void tv_more()
+    void btn_more()
     {
         Intent intent = new Intent(this, Common_MoreJob_.class);
         intent.putExtra("workuserid", areatab.getWorkuserid());

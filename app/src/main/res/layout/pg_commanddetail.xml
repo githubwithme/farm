@@ -28,6 +28,17 @@
             android:text="指令详情"
             android:textColor="@color/textcolor_titlebar"
             android:textSize="@dimen/titlebar_textsize"/>
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dip"
+            android:background="@null"
+            android:textSize="@dimen/size_sp_14"
+            android:textColor="@color/bg_text"
+            android:text="删除"
+            android:layout_alignParentRight="true"
+            />
     </RelativeLayout>
 
     <View

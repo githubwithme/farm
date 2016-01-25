@@ -60,7 +60,7 @@ public class NCZ_CZ_ToDayJob extends Activity
 	LinearLayout ll_tip;
 
 	@Click
-	void tv_more()
+	void btn_more()
 	{
 		Intent intent = new Intent(this, Common_MoreJob_.class);
 		intent.putExtra("workuserid", workuserid);

@@ -91,6 +91,7 @@
         <activity android:name=".ui.ProductBatchList_"/>
         <activity android:name=".ui.ProductBatchDetailList_"/>
         <activity android:name=".ui.DaoGangList_"/>
+        <activity android:name=".ui.Common_CommandDetail_Show_"/>
         <activity android:name=".ui.WeatherActivity_"/>
         <activity android:name=".ui.AssessList_"/>
         <activity android:name=".ui.RecordList_"/>

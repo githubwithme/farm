@@ -66,7 +66,13 @@ public class IFragment extends Fragment
 	LinearLayout ll_edituser;
 
 	@Click
-	void ll_edituser()
+	void tv_detail()
+	{
+		Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
+		startActivity(intent);
+	}
+	@Click
+	void tv_edituser()
 	{
 		Intent intent = new Intent(getActivity(), EditUserInfo_.class);
 		startActivity(intent);

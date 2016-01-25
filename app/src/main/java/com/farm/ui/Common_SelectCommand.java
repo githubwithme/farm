@@ -92,6 +92,8 @@ public class Common_SelectCommand extends Activity implements OnClickListener
     @ViewById
     Button btn_addtowork;
     @ViewById
+    ProgressBar pb;
+    @ViewById
     PullToRefreshListView frame_listview_news;
     @ViewById
     ImageButton btn_back;
@@ -116,6 +118,8 @@ public class Common_SelectCommand extends Activity implements OnClickListener
     @Click
     void btn_addtowork()
     {
+        pb.setVisibility(View.VISIBLE);
+        btn_addtowork.setVisibility(View.GONE);
         if (listItems_selected.size() > 0)
         {
             latch = new CountDownLatch(listItems_selected.size());
@@ -126,6 +130,8 @@ public class Common_SelectCommand extends Activity implements OnClickListener
         } else
         {
             Toast.makeText(this, "您还没选择任何指令呢！", Toast.LENGTH_SHORT).show();
+            btn_addtowork.setVisibility(View.VISIBLE);
+            pb.setVisibility(View.GONE);
         }
 
     }
@@ -777,15 +783,15 @@ public class Common_SelectCommand extends Activity implements OnClickListener
             listItemView.tv_time.setText(commandtab.getregDate().substring(0, commandtab.getregDate().lastIndexOf(" ")));
             if (commandtab.getcommFromVPath().equals("0"))
             {
-                listItemView.tv_zf.setText("下发");
+                listItemView.tv_zf.setText(commandtab.getcommFromName()+"下发");
             } else
             {
-                listItemView.tv_zf.setText("自发");
+                listItemView.tv_zf.setText(commandtab.getcommFromName()+"自发");
             }
             if (commandtab.getstdJobType().equals("0"))
             {
                 listItemView.tv_type.setText("非标准生产指令");
-            } else  if (commandtab.getstdJobType().equals("-1"))
+            } else if (commandtab.getstdJobType().equals("-1"))
             {
                 listItemView.tv_type.setText("非生产指令");
             } else
@@ -811,6 +817,8 @@ public class Common_SelectCommand extends Activity implements OnClickListener
         Long l = latch.getCount();
         if (l.intValue() == 0) // 全部线程是否已经结束
         {
+            btn_addtowork.setVisibility(View.VISIBLE);
+            pb.setVisibility(View.GONE);
             Toast.makeText(this, "选择成功！", Toast.LENGTH_SHORT).show();
             finish();
         }

@@ -130,21 +130,7 @@
                 android:background="@color/bg_selectitem"/>
             <!-- 备注 -->
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <CheckBox
-                    android:id="@+id/cb_plantType"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_colum"
-                    android:gravity="right|center_vertical"
-                    android:paddingRight="10dip"
-                    android:text="是否为异常株"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/size_14"/>
-            </RelativeLayout>
         </TableLayout>
     </ScrollView>
 

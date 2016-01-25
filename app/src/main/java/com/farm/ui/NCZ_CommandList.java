@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -79,6 +80,8 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
     TextView tv_title;
     @ViewById
     View line;
+    @ViewById
+    Button btn_more;
     @ViewById
     PullToRefreshListView frame_listview_news;
 

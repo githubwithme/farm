@@ -103,8 +103,8 @@
 
                             <ImageView
                                 android:id="@+id/iv_record"
-                                android:layout_width="30dip"
-                                android:layout_height="30dip"
+                                android:layout_width="25dip"
+                                android:layout_height="25dip"
                                 android:background="@drawable/add_voice_pressed"/>
 
                             <FrameLayout
@@ -141,9 +141,9 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dip"
                             android:layout_toLeftOf="@+id/rl_record"
-                            android:background="@drawable/background_view_rounded_single"
+                            android:background="@drawable/round_orange"
                             android:text="植株"
-                            android:textColor="@color/bg_green"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/size_11"/>
                     </RelativeLayout>
                 </LinearLayout>

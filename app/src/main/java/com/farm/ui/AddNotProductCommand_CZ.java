@@ -171,7 +171,6 @@ public class AddNotProductCommand_CZ extends Activity implements OnClickListener
         params.addQueryStringParameter("importance", importance_id);
         params.addQueryStringParameter("execLevel", level);
         params.addQueryStringParameter("commFromVPath", "1");
-
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

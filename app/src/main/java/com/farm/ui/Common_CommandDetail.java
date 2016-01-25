@@ -3,6 +3,7 @@ package com.farm.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -40,6 +41,8 @@ public class Common_CommandDetail extends Activity
     @ViewById
     TextView tv_zyts;
     @ViewById
+    Button btn_delete;
+    @ViewById
     TextView tv_importance;
     @ViewById
     TextView tv_jobname;
@@ -70,10 +73,22 @@ public class Common_CommandDetail extends Activity
         finish();
     }
 
+    @Click
+    void btn_delete()
+    {
+    }
+
 
     @AfterViews
     void afterOncreate()
     {
+        if (commandtab.getcommFromVPath().equals("0"))
+        {
+            btn_delete.setVisibility(View.GONE);
+        } else
+        {
+
+        }
         getJobList();
         showData(commandtab);
         // if (commandtab.getcommFromVPath() != null &&
@@ -110,11 +125,11 @@ public class Common_CommandDetail extends Activity
             rl_jobname_tip.setVisibility(View.GONE);
         }
         String[] nongzi = commandtab.getnongziName().split(",");
-        String[] yl = commandtab.getamount().split(";");
+//        String[] yl = commandtab.getamount().split(";");
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)
         {
-            flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
+            flyl = flyl + nongzi[i] +  "\n";
         }
 
         tv_yl.setText(flyl);

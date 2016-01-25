@@ -42,6 +42,8 @@ public class Common_JobDetail_Show extends Activity
     @ViewById
     TextView tv_yl;
     @ViewById
+    TextView tv_date_pf;
+    @ViewById
     TextView tv_qx;
     @ViewById
     TextView tv_pf;
@@ -106,17 +108,18 @@ public class Common_JobDetail_Show extends Activity
         {
             flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
         }
-
+        tv_qx.setText(jobtab.getregDate().substring(0,jobtab.getregDate().lastIndexOf(" ")));
         tv_jobname.setText(jobtab.getstdJobTypeName() + "——" + jobtab.getstdJobName());
         tv_yl.setText(flyl);
         tv_note.setText(jobtab.getjobNote());
-        tv_pf.setText(jobtab.getaudioJobExecPath()+"分");
+        tv_pf.setText(jobtab.getaudioJobExecPath() + "分");
         List<String> pfnr = jobtab.getPF();
         String nr = "";
         for (int i = 0; i < pfnr.size(); i++)
         {
             nr = nr + pfnr.get(i) + "\n\n";
         }
+        tv_date_pf.setText(jobtab.getassessDate().substring(0,jobtab.getassessDate().lastIndexOf(" ")));
         tv_pfnr.setText(nr);
         tv_pfsm.setText(jobtab.getassessNote());
         tv_fkjg.setText(jobtab.getaudioJobAssessPath());

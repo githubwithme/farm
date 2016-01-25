@@ -114,7 +114,13 @@ public class ShowUserInfo extends Activity
     {
         if (commembertab.getnlevel().equals("0"))
         {
-            tv_zw.setText(commembertab.getnlevel());
+            tv_zw.setText("农场主");
+        } else if (commembertab.getnlevel().equals("1"))
+        {
+            tv_zw.setText("场长");
+        } else
+        {
+            tv_zw.setText("片管");
         }
         tv_area.setText(commembertab.getparkName() + "-" + commembertab.getareaName());
         tv_name.setText(commembertab.getrealName());

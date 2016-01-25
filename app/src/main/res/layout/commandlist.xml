@@ -48,16 +48,15 @@
             android:contentDescription=""
             android:src="@drawable/search"/>
 
-        <ImageButton
-            android:layout_width="40dip"
-            android:layout_height="40dip"
+        <Button
+            android:id="@+id/btn_more"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dip"
+            android:layout_marginRight="10dip"
             android:layout_toLeftOf="@id/btn_search"
-            android:background="@null"
-            android:contentDescription=""
-            android:src="@drawable/plus"
-            android:visibility="gone"/>
+            android:background="@drawable/ic_more"
+            android:contentDescription=""/>
     </RelativeLayout>
 
     <View

@@ -280,6 +280,7 @@ public class AddNotProductCommand extends Activity implements OnClickListener
         params.addQueryStringParameter("stdJobName", "");
         params.addQueryStringParameter("importance", importance_id);
         params.addQueryStringParameter("execLevel", level);
+        params.addQueryStringParameter("commFromVPath", "0");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

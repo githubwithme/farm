@@ -137,10 +137,10 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 		}
 		if (commandtab.getcommFromVPath().equals("0"))
 		{
-			listItemView.tv_zf.setText("下发");
+			listItemView.tv_zf.setText(commandtab.getcommFromName()+"下发");
 		} else
 		{
-			listItemView.tv_zf.setText("自发");
+			listItemView.tv_zf.setText(commandtab.getcommFromName()+"自发");
 		}
 		if (commandtab.getstdJobType().equals("0"))
 		{

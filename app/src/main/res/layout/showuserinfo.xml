@@ -96,11 +96,11 @@
 
                 <ImageView
                     android:id="@+id/iv_gy"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dip"
-                    android:background="@drawable/people_black" />
+                    android:background="@drawable/temp1" />
 
                 <ImageView
                     android:layout_width="12dip"
@@ -137,11 +137,11 @@
 
                 <ImageView
                     android:id="@+id/iv_bz"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dip"
-                    android:background="@drawable/quick_set_issue_feed_l" />
+                    android:background="@drawable/logo_shortmessage" />
 
                 <TextView
                     android:id="@+id/tv_phone"
@@ -177,11 +177,11 @@
 
                 <ImageView
                     android:id="@+id/iv_yj"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dip"
-                    android:background="@drawable/people_black" />
+                    android:background="@drawable/logo_qq" />
 
                 <TextView
                     android:id="@+id/tv_userQQ"
@@ -217,11 +217,11 @@
 
                 <ImageView
                     android:id="@+id/iv_wx"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dip"
-                    android:background="@drawable/people_black" />
+                    android:background="@drawable/logo_wechat" />
 
                 <TextView
                     android:id="@+id/tv_userWX"
@@ -255,19 +255,19 @@
                 android:layout_height="@dimen/size_80" >
 
                 <ImageView
-                    android:id="@+id/iv_changepwd"
-                    android:layout_width="@dimen/size_20"
-                    android:layout_height="@dimen/size_20"
+                    android:id="@+id/iv_contractName"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dip"
-                    android:background="@drawable/people_black" />
+                    android:background="@drawable/temp8" />
 
                 <TextView
                     android:id="@+id/tv_contractName"
                     android:layout_width="@dimen/size_150"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dip"
-                    android:layout_toRightOf="@id/iv_changepwd"
+                    android:layout_toRightOf="@id/iv_contractName"
                     android:gravity="left|center_vertical"
                     android:text="联系地址"
                     android:textColor="@color/bg_text"
@@ -280,7 +280,7 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="15dip"
                     android:visibility="gone"
-                    android:src="@drawable/next_black" />
+                    android:src="@drawable/temp8" />
             </RelativeLayout>
 
         </LinearLayout>

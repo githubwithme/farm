@@ -181,10 +181,10 @@
                         <View
                             android:layout_width="1px"
                             android:layout_height="match_parent"
-                            android:background="@color/line_color"/>
+                            android:background="@color/red"/>
 
                         <TextView
-                            android:id="@+id/ib_edituser"
+                            android:id="@+id/tv_edituser"
                             android:layout_width="150dip"
                             android:layout_height="30dip"
                             android:layout_gravity="center_vertical"
