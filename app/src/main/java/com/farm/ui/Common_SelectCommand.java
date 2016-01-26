@@ -32,7 +32,6 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
-import com.farm.bean.HaveReadRecord;
 import com.farm.bean.Result;
 import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
@@ -449,6 +448,10 @@ public class Common_SelectCommand extends Activity implements OnClickListener
                 // return;
                 commandtab commandtab = listData.get(position - 1);
                 if (commandtab == null) return;
+
+                commembertab commembertab = AppContext.getUserInfo(Common_SelectCommand.this);
+                AppContext.updateStatus(Common_SelectCommand.this, "0", commandtab.getId(), "2", commembertab.getId());
+
                 Intent intent = new Intent(Common_SelectCommand.this, Common_CommandDetail_.class);
                 intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
@@ -613,6 +616,7 @@ public class Common_SelectCommand extends Activity implements OnClickListener
             public TextView tv_zf;
             public Button btn_sure;
             public FrameLayout fl_new;
+            public FrameLayout fl_new_item;
             public CircleImageView circle_img;
             public TextView tv_new;
         }
@@ -653,6 +657,7 @@ public class Common_SelectCommand extends Activity implements OnClickListener
                 listItemView = new ListItemView();
                 // 获取控件对象
                 listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
+                listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
                 listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
                 listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
                 listItemView.pb_jd = (ProgressBar) convertView.findViewById(R.id.pb_jd);
@@ -682,16 +687,9 @@ public class Common_SelectCommand extends Activity implements OnClickListener
                     public void onClick(View v)
                     {
                         commandtab command = listItems.get(v.getId());
-                        HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(context, command.getId());
-                        if (haveReadRecord != null)
-                        {
-                            SqliteDb.updateHaveReadRecord(context, command.getId(), command.getComvidioCount());
-                            FrameLayout fl_new = ((ListItemView) (lmap.get(v.getId()).getTag())).fl_new;
-                            fl_new.setVisibility(View.GONE);
-                        } else
-                        {
-                            SqliteDb.saveHaveReadRecord(context, command.getId(), command.getComvidioCount());
-                        }
+                        commembertab commembertab = AppContext.getUserInfo(context);
+                        AppContext.updateStatus(context, "1", command.getId(), "2", commembertab.getId());
+
                         Intent intent = new Intent(context, RecordList_.class);
                         intent.putExtra("type", "2");
                         intent.putExtra("workid", listItems.get(v.getId()).getId());
@@ -737,24 +735,28 @@ public class Common_SelectCommand extends Activity implements OnClickListener
                 listItemView = (ListItemView) convertView.getTag();
             }
             // 设置文字和图片
-            HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(context, commandtab.getId());
-            if (haveReadRecord != null)
+            if (Integer.valueOf(commandtab.getComCount()) > 0)
             {
-                String num = haveReadRecord.getNum();
-                if (num != null && !num.equals("") && (Integer.valueOf(num) < Integer.valueOf(commandtab.getComvidioCount())))
-                {
-                    int num_new = Integer.valueOf(commandtab.getComvidioCount()) - Integer.valueOf(num);
-                    listItemView.fl_new.setVisibility(View.VISIBLE);
-                    listItemView.tv_new.setText(String.valueOf(num_new));
-                }
+                listItemView.fl_new_item.setVisibility(View.VISIBLE);
             } else
             {
-                SqliteDb.saveHaveReadRecord(context, commandtab.getId(), commandtab.getComvidioCount());
+                listItemView.fl_new_item.setVisibility(View.GONE);
             }
-            int commDays = Integer.valueOf(commandtab.getcommDays());
-            int workDay = Integer.valueOf(commandtab.getiCount());
-            listItemView.tv_jd.setText(utils.getRate(workDay, commDays) + "%");
-            listItemView.pb_jd.setProgress(Integer.valueOf(utils.getRate(workDay, commDays)));
+            if (Integer.valueOf(commandtab.getComvidioCount()) > 0)
+            {
+                listItemView.fl_new.setVisibility(View.VISIBLE);
+            } else
+            {
+                listItemView.fl_new.setVisibility(View.GONE);
+            }
+//            int commDays = Integer.valueOf(commandtab.getcommDays());
+//            int workDay = Integer.valueOf(commandtab.getiCount());
+            if (!commandtab.getfeedbackuserName().equals(""))
+            {
+                listItemView.tv_jd.setText(commandtab.getfeedbackuserName() + "%");
+                listItemView.pb_jd.setProgress(Integer.valueOf(commandtab.getfeedbackuserName()));
+            }
+
             if (commandtab.getstdJobType().equals("0") || commandtab.getstdJobType().equals("-1"))
             {
                 listItemView.tv_jobtype.setText(commandtab.getcommNote().toString());

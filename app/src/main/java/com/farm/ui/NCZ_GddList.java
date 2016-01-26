@@ -74,7 +74,7 @@ public class NCZ_GddList extends Activity
     @ViewById
     View line;
     @ViewById
-    ImageButton btn_add;
+    ImageButton btn_connect;
     @ViewById
     ImageButton btn_search;
     @ViewById
@@ -83,10 +83,9 @@ public class NCZ_GddList extends Activity
     areatab areatab;
 
     @Click
-    void btn_add()
+    void btn_connect()
     {
-        Intent intent = new Intent(NCZ_GddList.this, AddGcd_.class);
-        NCZ_GddList.this.startActivity(intent);
+
     }
 
     @Override
@@ -106,12 +105,7 @@ public class NCZ_GddList extends Activity
     @AfterViews
     void afterOncreate()
     {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_GddList.this);
         tv_title.setText(areatab.getareaName() + "-" + "观测点");
-        if (commembertab.getnlevel().toString().equals("0"))
-        {
-            btn_add.setVisibility(View.GONE);
-        }
         dictionary = DictionaryHelper.getDictionaryFromAssess(NCZ_GddList.this, "PG_MQ");
         selectorUi = new SelectorFragment_();
         Bundle bundle = new Bundle();

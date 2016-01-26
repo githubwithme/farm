@@ -99,6 +99,7 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 					commandtab command = listItems.get(v.getId());
 					commembertab commembertab = AppContext.getUserInfo(context);
 					AppContext.updateStatus(context, "1", command.getId(), "2", commembertab.getId());
+
 					Intent intent = new Intent(context, RecordList_.class);
 					intent.putExtra("type", "2");
 					intent.putExtra("workid", listItems.get(v.getId()).getId());

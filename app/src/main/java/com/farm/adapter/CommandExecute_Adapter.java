@@ -16,7 +16,6 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -291,7 +290,7 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
             @Override
             public void onOpen(SwipeLayout layout)
             {
-                Toast.makeText(context, "Open", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Open", Toast.LENGTH_SHORT).show();
             }
         });
         // 双击的回调函数
@@ -300,7 +299,7 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
             @Override
             public void onDoubleClick(SwipeLayout layout, boolean surface)
             {
-                Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
             }
         });
         // 添加删除布局的点击事件
@@ -310,7 +309,7 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View arg0)
             {
-                Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
                 // 点击完成之后，关闭删除menu
                 swipeLayout.close();
             }

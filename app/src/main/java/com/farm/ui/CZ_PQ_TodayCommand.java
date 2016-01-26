@@ -360,7 +360,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                 commembertab commembertab = AppContext.getUserInfo(CZ_PQ_TodayCommand.this);
                 AppContext.updateStatus(CZ_PQ_TodayCommand.this, "0", commandtab.getId(), "2", commembertab.getId());
                 Intent intent = new Intent(CZ_PQ_TodayCommand.this, Common_CommandDetail_Show_.class);
-                intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
+                intent.putExtra("cmdid", commandtab.getId());// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
             }
         });

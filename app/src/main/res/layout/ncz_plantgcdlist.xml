@@ -39,15 +39,14 @@
             android:src="@drawable/search"/>
 
         <ImageButton
-            android:id="@+id/btn_add"
-            android:layout_width="40dip"
-            android:layout_height="40dip"
+            android:id="@+id/btn_connect"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/btn_search"
-            android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/plus"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:background="@drawable/ic_connect_gray"/>
     </RelativeLayout>
 
     <View

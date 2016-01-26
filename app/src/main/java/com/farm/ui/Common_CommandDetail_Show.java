@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ import java.util.List;
 @EActivity(R.layout.common_commanddetail_show)
 public class Common_CommandDetail_Show extends Activity
 {
-
+    String cmdid;
     @ViewById
     TextView tv_zyts;
     @ViewById
@@ -56,14 +57,20 @@ public class Common_CommandDetail_Show extends Activity
     @ViewById
     ListView lv;
     String filename;
-    commandtab commandtab;
     @ViewById
     ImageButton btn_back;
     @ViewById
     LinearLayout ll_yl_tip;
     @ViewById
     RelativeLayout rl_jobname_tip;
-
+    @ViewById
+    RelativeLayout rl_pb;
+    @ViewById
+    LinearLayout ll_tip;
+    @ViewById
+    ProgressBar pb;
+    @ViewById
+    TextView tv_tip;
     @Click
     void btn_back()
     {
@@ -75,7 +82,6 @@ public class Common_CommandDetail_Show extends Activity
     void afterOncreate()
     {
         getJobList();
-        showData(commandtab);
         // if (commandtab.getcommFromVPath() != null &&
         // !commandtab.getcommFromVPath().equals(""))
         // {
@@ -95,7 +101,7 @@ public class Common_CommandDetail_Show extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        commandtab = getIntent().getParcelableExtra("bean");
+        cmdid = getIntent().getStringExtra("cmdid");
     }
 
     private void showData(commandtab commandtab)
@@ -114,7 +120,7 @@ public class Common_CommandDetail_Show extends Activity
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)
         {
-            flyl = flyl + nongzi[i] +  "\n";
+            flyl = flyl + nongzi[i] + "\n";
         }
 
         tv_yl.setText(flyl);
@@ -141,7 +147,7 @@ public class Common_CommandDetail_Show extends Activity
     {
         commembertab commembertab = AppContext.getUserInfo(Common_CommandDetail_Show.this);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("commandid", commandtab.getId());
+        params.addQueryStringParameter("commandid", cmdid);
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getrealName());
@@ -159,7 +165,9 @@ public class Common_CommandDetail_Show extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
+                        rl_pb.setVisibility(View.GONE);
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), commandtab.class);
+                        showData(listNewData.get(0));
                         List<jobtab> jobtabs = listNewData.get(0).getJobList();
                         if (jobtabs == null)
                         {
@@ -173,10 +181,15 @@ public class Common_CommandDetail_Show extends Activity
                     } else
                     {
                         listNewData = new ArrayList<commandtab>();
+                        ll_tip.setVisibility(View.VISIBLE);
+                        tv_tip.setText("暂无数据！");
+                        pb.setVisibility(View.GONE);
                     }
                 } else
                 {
-                    AppContext.makeToast(Common_CommandDetail_Show.this, "error_connectDataBase");
+                    ll_tip.setVisibility(View.VISIBLE);
+                    tv_tip.setText("数据加载异常！");
+                    pb.setVisibility(View.GONE);
                     return;
                 }
             }
@@ -184,7 +197,9 @@ public class Common_CommandDetail_Show extends Activity
             @Override
             public void onFailure(HttpException e, String s)
             {
-
+                ll_tip.setVisibility(View.VISIBLE);
+                tv_tip.setText("网络连接异常！");
+                pb.setVisibility(View.GONE);
             }
         });
     }

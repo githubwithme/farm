@@ -38,7 +38,7 @@ public class AddStd_Cmd_StepFive extends Fragment
     Dictionary dic_comm;
     String importance_id="";
     String workday="";
-    String importance="";
+    String importance="一般";
 
     @Click
     void tv_importance()
@@ -100,7 +100,7 @@ public class AddStd_Cmd_StepFive extends Fragment
     @AfterViews
     void afterOncreate()
     {
-
+        tv_importance.setText(importance);
     }
 
     @Override

@@ -99,7 +99,7 @@
                         android:layout_toRightOf="@id/tv_jobname_tip"
                         android:gravity="right"
                         android:text="蕉蕾喷雾"
-                        android:textColor="@color/bg_yellow"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
                 </RelativeLayout>
 
@@ -134,7 +134,7 @@
                         android:layout_marginRight="10dip"
                         android:gravity="right"
                         android:text="暂无"
-                        android:textColor="@color/bg_yellow"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
                 </LinearLayout>
 
@@ -171,7 +171,7 @@
                         android:layout_marginRight="10dip"
                         android:gravity="right"
                         android:text="150kg"
-                        android:textColor="@color/bg_yellow"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
                 </LinearLayout>
 
@@ -205,7 +205,7 @@
                         android:layout_marginRight="10dip"
                         android:gravity="right"
                         android:text="2015-10-11"
-                        android:textColor="@color/bg_yellow"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
                 </LinearLayout>
 
@@ -239,7 +239,7 @@
                         android:layout_marginRight="10dip"
                         android:gravity="right"
                         android:text="暂无"
-                        android:textColor="@color/bg_yellow"
+                        android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
                 </LinearLayout>
 

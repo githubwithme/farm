@@ -19,7 +19,7 @@
                 android:id="@+id/trash"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@mipmap/ic_call"/>
+                android:src="@mipmap/ic_phone"/>
 
             <TextView
                 android:id="@+id/tv_call"

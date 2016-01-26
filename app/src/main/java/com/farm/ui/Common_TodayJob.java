@@ -180,23 +180,15 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                     if (result.getAffectedRows() != 0)
                     {
                         cmd_videoNum = result.getAffectedRows();
-                        HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(getActivity(), commembertab.getId());
-                        if (haveReadRecord != null)
+                        if (cmd_videoNum > 0)
                         {
-                            String num = haveReadRecord.getNum();
-                            if (num != null && !num.equals("") && (Integer.valueOf(num) < cmd_videoNum))
-                            {
-                                int num_new = cmd_videoNum - Integer.valueOf(num);
-                                fl_cmdnumber_new.setVisibility(View.VISIBLE);
-                                tv_cmdnumber_new.setText(String.valueOf(num_new));
-                            }
+                            fl_cmdnumber_new.setVisibility(View.VISIBLE);
                         } else
                         {
-                            SqliteDb.saveHaveReadRecord(getActivity(), commembertab.getId(), String.valueOf(cmd_videoNum));
+                            fl_cmdnumber_new.setVisibility(View.GONE);
                         }
                     } else
                     {
-                        SqliteDb.saveHaveReadRecord(getActivity(), commembertab.getId(), "0");
                     }
                 } else
                 {

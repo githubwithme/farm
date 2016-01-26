@@ -357,7 +357,7 @@ ImageView btn_back;
                 if (commandtab == null)
                     return;
                 Intent intent = new Intent(Command_more.this, Common_CommandDetail_Show_.class);
-                intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
+                intent.putExtra("cmdid", commandtab.getId());// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
 
             }

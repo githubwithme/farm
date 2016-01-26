@@ -127,6 +127,8 @@
                         android:layout_width="10dip"
                         android:layout_height="10dip"
                         android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dip"
+                        android:layout_marginTop="10dip"
                         android:visibility="gone">
 
                         <com.farm.widget.CircleImageView
@@ -219,6 +221,8 @@
                         android:layout_width="10dip"
                         android:layout_height="10dip"
                         android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dip"
+                        android:layout_marginTop="10dip"
                         android:visibility="gone">
 
                         <com.farm.widget.CircleImageView
@@ -310,6 +314,8 @@
                         android:layout_width="10dip"
                         android:layout_height="10dip"
                         android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dip"
+                        android:layout_marginTop="10dip"
                         android:visibility="gone">
 
                         <com.farm.widget.CircleImageView

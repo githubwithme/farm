@@ -33,9 +33,11 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
+import com.farm.bean.SelectRecords;
 import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.common.DictionaryHelper;
+import com.farm.common.SqliteDb;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
 import com.farm.widget.NewDataToast;
@@ -61,7 +63,7 @@ import java.util.List;
 @EFragment
 public class NCZ_CommandList extends Fragment implements OnClickListener
 {
-    Dictionary dictionary;
+    Dictionary dictionary = new Dictionary();
     TimeThread timethread;
     SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
@@ -102,6 +104,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
     @AfterViews
     void afterOncreate()
     {
+        SqliteDb.deleteAllRecordtemp(getActivity(), SelectRecords.class, "NCZ_CMD");
         getArealist();
         initAnimalListView();
     }
@@ -113,8 +116,14 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
         appContext = (AppContext) getActivity().getApplication();
         dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "NCZ_CMD");
         selectorUi = new SelectorFragment_();
+
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
+
+        IntentFilter intentfilter_updatesort = new IntentFilter(AppContext.BROADCAST_UPDATEPCMD_SORT);
+        getActivity().registerReceiver(receiver_updatesort, intentfilter_updatesort);
+
+
         workuserid = getArguments().getString("workuserid");
         timethread = new TimeThread();
         timethread.setStop(false);
@@ -123,6 +132,15 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
         return rootView;
     }
 
+    BroadcastReceiver receiver_updatesort = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+        }
+    };
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -148,6 +166,20 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
             }
         }
     }
+
+//    private void initSelecter(String BELONG, String firstItemId, String firstItemName, String secondItemId, String secondItemName)
+//    {
+//        SelectRecords selectRecords = new SelectRecords();
+//        selectRecords.setBELONG(BELONG);
+//        selectRecords.setFirstid(firstItemId);
+//        selectRecords.setFirsttype(firstItemName);
+//        selectRecords.setSecondid(secondItemId);
+//        selectRecords.setSecondtype(secondItemName);
+//        selectRecords.setThirdid("");
+//        selectRecords.setThirdtype("");
+//        selectRecords.setId(1);
+//        SqliteDb.save(getActivity(), selectRecords);
+//    }
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {

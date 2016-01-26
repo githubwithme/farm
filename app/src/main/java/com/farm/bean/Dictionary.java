@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Dictionary implements Serializable
 {
-    String BELONG;
+    String BELONG="";
     List<String> SORT;
     List<String> firstItemName;
     List<String> firstItemID;
