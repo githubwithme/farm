@@ -44,7 +44,40 @@ public class PlantGcjl implements Parcelable
     public String sfcl="True";
     public String sfly="";
     public String sfyz="";
+    public String zDate="";
+    public String cDate="";
+    public String plantType="";
 
+
+    public String getPlantType()
+    {
+        return plantType;
+    }
+
+    public void setPlantType(String plantType)
+    {
+        this.plantType = plantType;
+    }
+
+    public String getcDate()
+    {
+        return cDate;
+    }
+
+    public void setcDate(String cDate)
+    {
+        this.cDate = cDate;
+    }
+
+    public String getzDate()
+    {
+        return zDate;
+    }
+
+    public void setzDate(String zDate)
+    {
+        this.zDate = zDate;
+    }
 
     public String getSfyz()
     {
@@ -338,6 +371,9 @@ public class PlantGcjl implements Parcelable
             p.setSfcl(source.readString());
             p.setSfly(source.readString());
             p.setSfyz(source.readString());
+            p.setzDate(source.readString());
+            p.setcDate(source.readString());
+            p.setPlantType(source.readString());
             return p;
         }
 
@@ -376,6 +412,9 @@ public class PlantGcjl implements Parcelable
         p.writeString(sfcl);
         p.writeString(sfly);
         p.writeString(sfyz);
+        p.writeString(zDate);
+        p.writeString(cDate);
+        p.writeString(plantType);
     }
 
     @Override

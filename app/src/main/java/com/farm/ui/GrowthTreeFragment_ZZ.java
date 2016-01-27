@@ -57,6 +57,7 @@ import java.util.List;
 @EFragment
 public class GrowthTreeFragment_ZZ extends Fragment
 {
+    com.farm.bean.areatab areatab;
     int currentItem = 0;
     List<android.support.v4.app.Fragment> fragmentList;
     ViewPagerAdapter_ZZ viewPagerAdapter_zz;
@@ -135,7 +136,8 @@ public class GrowthTreeFragment_ZZ extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.growthtreefragment_zz, container, false);
-        plantGcd = getArguments().getParcelable("bean");
+        plantGcd = getArguments().getParcelable("bean_gcd");
+        areatab = getArguments().getParcelable("bean_areatab");
         return rootView;
     }
 

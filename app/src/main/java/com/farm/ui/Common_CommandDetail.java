@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -19,6 +20,7 @@ import com.farm.bean.Result;
 import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
+import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -37,7 +39,7 @@ import java.util.List;
 @EActivity(R.layout.pg_commanddetail)
 public class Common_CommandDetail extends Activity
 {
-
+    MyDialog myDialog;
     @ViewById
     TextView tv_zyts;
     @ViewById
@@ -76,6 +78,7 @@ public class Common_CommandDetail extends Activity
     @Click
     void btn_delete()
     {
+        showDeleteTip(commandtab.getId(), commandtab.getStatusid());
     }
 
 
@@ -200,6 +203,71 @@ public class Common_CommandDetail extends Activity
             public void onFailure(HttpException e, String s)
             {
 
+            }
+        });
+    }
+    private void showDeleteTip(final String cmdid, final String statusID)
+    {
+        View dialog_layout = (LinearLayout) Common_CommandDetail.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(Common_CommandDetail.this, R.style.MyDialog, dialog_layout, "图片", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        deleteCmd(cmdid, statusID);
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.cancel();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
+    private void deleteCmd(String cmdid, String statusID)
+    {
+        commembertab commembertab = AppContext.getUserInfo(Common_CommandDetail.this);
+        RequestParams params = new RequestParams();
+        // params.addQueryStringParameter("workuserid", workuserid);
+        params.addQueryStringParameter("statusID", statusID);
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("username", commembertab.getrealName());
+        params.addQueryStringParameter("comID", cmdid);
+        params.addQueryStringParameter("action", "delCommandByID");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(Common_CommandDetail.this, "删除成功！", Toast.LENGTH_SHORT).show();
+                        myDialog.cancel();
+                        finish();
+                    } else
+                    {
+                        Toast.makeText(Common_CommandDetail.this, "删除失败！", Toast.LENGTH_SHORT).show();
+                    }
+                } else
+                {
+                    AppContext.makeToast(Common_CommandDetail.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(Common_CommandDetail.this, "error_connectServer");
             }
         });
     }

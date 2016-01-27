@@ -52,7 +52,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:text="株高"
+                android:text="株高(m)"
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
 
@@ -67,7 +67,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:text="围径"
+                android:text="围径(cm)"
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
 

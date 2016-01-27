@@ -27,6 +27,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.PlantGcd;
 import com.farm.bean.Result;
+import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
 import com.farm.common.DictionaryHelper;
 import com.farm.common.StringUtils;
@@ -373,8 +374,17 @@ public class PG_GddList extends Fragment
                 if (PlantGcd == null) return;
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.updateStatus(getActivity(), "0", PlantGcd.getId(), "3", commembertab.getId());
+
+                areatab areatab=new areatab();
+                areatab.setWorkuserid(commembertab.getId());
+                areatab.setRealName(commembertab.getrealName());
+                areatab.setparkId(commembertab.getparkId());
+                areatab.setparkName(commembertab.getparkName());
+                areatab.setareaName(commembertab.getareaName());
+                areatab.setid(commembertab.getareaId());
                 Intent intent = new Intent(getActivity(), GcdDetail_.class);
-                intent.putExtra("bean", PlantGcd);  // 因为list中添加了头部,因此要去掉一个
+                intent.putExtra("bean_gcd", PlantGcd);  // 因为list中添加了头部,因此要去掉一个
+                intent.putExtra("bean_areatab", areatab);  // 因为list中添加了头部,因此要去掉一个
                 getActivity().startActivity(intent);
             }
         });

@@ -31,6 +31,7 @@ public class GcdDetail extends FragmentActivity
 {
     com.farm.bean.commembertab commembertab;
     PlantGcd plantGcd;
+    com.farm.bean.areatab areatab;
     int currentItem = 0;
     List<android.support.v4.app.Fragment> fragmentList;
     ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
@@ -122,8 +123,10 @@ public class GcdDetail extends FragmentActivity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         Bundle bundle = new Bundle();
-        plantGcd = getIntent().getParcelableExtra("bean");
-        bundle.putParcelable("bean", plantGcd);
+        plantGcd = getIntent().getParcelableExtra("bean_gcd");
+        areatab = getIntent().getParcelableExtra("bean_areatab");
+        bundle.putParcelable("bean_gcd", plantGcd);
+        bundle.putParcelable("bean_areatab", areatab);
 
         commembertab = AppContext.getUserInfo(GcdDetail.this);
         fragmentList = new ArrayList<>();

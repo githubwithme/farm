@@ -138,7 +138,36 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="数量"
+                android:text="植株数量"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/size_sp_14"/>
+
+            <TextView
+                android:id="@+id/tv_zzs"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="未知"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/size_sp_14"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_margin="5dip"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="肥料剩余量"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_sp_14"/>
 
@@ -149,7 +178,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="5kg/株"
+                android:text="未知"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_sp_14"/>
         </LinearLayout>
@@ -178,7 +207,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="50包"
+                android:text="未知"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_sp_14"/>
         </LinearLayout>

@@ -99,11 +99,11 @@ public class PlantObservationAdapter extends BaseAdapter
         listItemView.tv_wj.setText(plantgrowthtab.getwNum());
         listItemView.tv_ys.setText(plantgrowthtab.getyNum());
         listItemView.tv_lys.setText(plantgrowthtab.getxNum());
-        if (plantgrowthtab.getcDate().equals("True"))
+        if (plantgrowthtab.getcDate().equals("1"))
         {
             listItemView.cb_sfcl.setChecked(true);
         }
-        if (plantgrowthtab.getzDate().equals("True"))
+        if (plantgrowthtab.getzDate().equals("1"))
         {
             listItemView.cb_sfly.setChecked(true);
         }

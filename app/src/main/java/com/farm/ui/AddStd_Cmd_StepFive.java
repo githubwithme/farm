@@ -36,7 +36,7 @@ public class AddStd_Cmd_StepFive extends Fragment
 {
     CustomDialog_ListView customDialog_listView;
     Dictionary dic_comm;
-    String importance_id="";
+    String importance_id="0";
     String workday="";
     String importance="一般";
 

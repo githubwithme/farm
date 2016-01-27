@@ -419,7 +419,9 @@
                     android:textSize="@dimen/size_14"/>
 
               <RelativeLayout
+                  android:id="@+id/rl_percent"
                   android:layout_width="match_parent"
+                  android:visibility="gone"
                   android:layout_height="50dip">
                   <TextView
                       android:id="@+id/tv_bfb"

@@ -47,6 +47,7 @@ import java.util.List;
 @EActivity(R.layout.cz_pg_assess)
 public class CZ_PG_Assess extends Activity
 {
+    int oldpercent = 0;
     List<commandtab> listNewData = null;
     String bfb = "0";
     CustomDialog_ListView customDialog_listView;
@@ -57,6 +58,8 @@ public class CZ_PG_Assess extends Activity
     String assessScore = "";
     @ViewById
     ImageButton imgbtn_home;
+    @ViewById
+    RelativeLayout rl_percent;
     @ViewById
     Button btn_sure;
     @ViewById
@@ -100,7 +103,7 @@ public class CZ_PG_Assess extends Activity
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < jsonArray.size(); i++)
         {
-            if (Integer.valueOf(jsonArray.getString(i)) > Integer.valueOf(bfb))
+            if (Integer.valueOf(jsonArray.getString(i)) > oldpercent)
             {
                 list.add(jsonArray.getString(i));
             }
@@ -112,7 +115,6 @@ public class CZ_PG_Assess extends Activity
     @AfterViews
     void afterOncreate()
     {
-        tv_bfb.setText(bfb);
         rg_score.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             @Override
@@ -124,6 +126,7 @@ public class CZ_PG_Assess extends Activity
             }
         });
         getCommand();
+        getPercent();
     }
 
     @Override
@@ -277,6 +280,48 @@ public class CZ_PG_Assess extends Activity
         });
     }
 
+    private void getPercent()
+    {
+        commembertab commembertab = AppContext.getUserInfo(this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("parkID", jobtab.getparkId());
+        params.addQueryStringParameter("areaID", jobtab.getareaId());
+        params.addQueryStringParameter("comID", jobtab.getcommandID());
+        params.addQueryStringParameter("action", "getPercent");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String aa = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    String str = result.getOther().get(0).toString();
+                    if (str.equals(""))
+                    {
+                        oldpercent = 0;
+                    } else
+                    {
+                        oldpercent = Integer.valueOf(str);
+                    }
+                    rl_percent.setVisibility(View.VISIBLE);
+                    tv_bfb.setText(String.valueOf(oldpercent));
+                } else
+                {
+                    AppContext.makeToast(CZ_PG_Assess.this, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s)
+            {
+
+            }
+        });
+    }
 
     private void getCommand()
     {

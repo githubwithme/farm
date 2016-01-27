@@ -193,21 +193,32 @@
                             android:layout_width="0dip"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:textSize="@dimen/size_sp_14"
+                            android:textSize="@dimen/size_sp_12"
                             android:textColor="@color/red"
                             android:visibility="gone"
                             android:gravity="center"
-                            android:text="已抽蕾"/>
+                            android:text="未抽蕾"/>
                         <TextView
                             android:id="@+id/tv_sfly_left"
                             android:layout_width="0dip"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:textSize="@dimen/size_sp_14"
+                            android:textSize="@dimen/size_sp_12"
                             android:visibility="gone"
                             android:textColor="@color/red"
                             android:gravity="center"
-                            android:text="已留芽"/>
+                            android:text="未留芽"/>
+
+                        <TextView
+                            android:id="@+id/tv_sfyz_left"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/size_sp_12"
+                            android:visibility="gone"/>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -366,21 +377,32 @@
                 android:layout_width="0dip"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:textSize="@dimen/size_sp_14"
+                android:textSize="@dimen/size_sp_12"
                 android:textColor="@color/red"
                 android:visibility="gone"
                 android:gravity="center"
-                android:text="已抽蕾"/>
+                android:text="未抽蕾"/>
             <TextView
                 android:id="@+id/tv_sfly_right"
                 android:layout_width="0dip"
                 android:layout_weight="1"
                 android:visibility="gone"
                 android:layout_height="match_parent"
-                android:textSize="@dimen/size_sp_14"
+                android:textSize="@dimen/size_sp_12"
                 android:textColor="@color/red"
                 android:gravity="center"
-                android:text="已留芽"/>
+                android:text="未留芽"/>
+
+            <TextView
+                android:id="@+id/tv_sfyz_right"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/red"
+                android:textSize="@dimen/size_sp_12"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </LinearLayout>

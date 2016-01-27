@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -55,6 +56,8 @@ import java.util.List;
 @EFragment
 public class GrowthTreeFragment_GCD extends Fragment
 {
+    commembertab commembertab;
+    com.farm.bean.areatab areatab;
     PlantGcd plantGcd;
     int[] resleft = new int[]{R.drawable.centerleft, R.drawable.centerleft1, R.drawable.centerleft2};
     int[] resright = new int[]{R.drawable.centerright, R.drawable.centerright1, R.drawable.centerright2};
@@ -72,21 +75,70 @@ public class GrowthTreeFragment_GCD extends Fragment
     @ViewById
     ProgressBar pb;
     @ViewById
+    TextView tv_yqname;
+    @ViewById
+    TextView tv_pqname;
+    @ViewById
+    TextView tv_zzs;
+    @ViewById
     TextView tv_tip;
     @ViewById
     TextView tv_yq;
     @ViewById
+    TextView tv_gcd;
+    @ViewById
     TextView tv_pq;
     @ViewById
     TextView tv_zs;
+    @ViewById
+    RelativeLayout rl_gk;
+    @ViewById
+    LinearLayout ll_gk;
+    @ViewById
+    CircleImageView circle_zl;
+    @ViewById
+    CircleImageView circle_gk;
+    @ViewById
+    CircleImageView circle_add;
 
     @Click
-    void btn_add()
+    void circle_add()
     {
         Intent intent = new Intent(getActivity(), AddPlantObservation_.class);
         intent.putExtra("gcdid", plantGcd.getId());
         startActivity(intent);
     }
+
+    @Click
+    void circle_zl()
+    {
+        Intent intent = new Intent(getActivity(), NCZ_PQ_TodayCommand_.class);
+        intent.putExtra("bean", areatab);
+        startActivity(intent);
+    }
+
+    @Click
+    void circle_gk()
+    {
+        if (ll_gk.isShown())
+        {
+            ll_gk.setVisibility(View.GONE);
+        } else
+        {
+            ll_gk.setVisibility(View.VISIBLE);
+            ll_gk.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.in_top));
+        }
+//        if (rl_gk.isShown())
+//        {
+//            rl_gk.setVisibility(View.GONE);
+//        } else
+//        {
+//            rl_gk.setVisibility(View.VISIBLE);
+//            rl_gk.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.in_top));
+//        }
+
+    }
+
 
     @Click
     void ll_gk()
@@ -101,9 +153,21 @@ public class GrowthTreeFragment_GCD extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        if (commembertab.getnlevel().equals("0") || commembertab.getnlevel().equals("1"))
+        {
+            circle_add.setVisibility(View.GONE);
+        } else
+        {
+
+        }
+        tv_yqname.setText(areatab.getparkName());
+        tv_pqname.setText(areatab.getareaName());
+        tv_zzs.setText(plantGcd.getPlants() + "株");
+
         tv_yq.setText(plantGcd.getparkName());
         tv_pq.setText(plantGcd.getareaName());
-        tv_zs.setText(plantGcd.getPlants());
+        tv_gcd.setText(plantGcd.getPlantgcdName());
+        tv_zs.setText(plantGcd.getPlants() + "株");
         lv_tree.setAdapter(new TreeAdapter(getActivity(), listNewData));
         lv_tree.setOnItemClickListener(new OnItemClickListener()
         {
@@ -121,12 +185,13 @@ public class GrowthTreeFragment_GCD extends Fragment
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        commembertab = AppContext.getUserInfo(getActivity());
         View rootView = inflater.inflate(R.layout.growthtreefragment_gcd, container, false);
-        plantGcd = getArguments().getParcelable("bean");
+        plantGcd = getArguments().getParcelable("bean_gcd");
+        areatab = getArguments().getParcelable("bean_areatab");
         return rootView;
     }
 
@@ -221,6 +286,8 @@ public class GrowthTreeFragment_GCD extends Fragment
 
             public TextView tv_sfcl_left;
             public TextView tv_sfly_left;
+            public TextView tv_sfyz_right;
+            public TextView tv_sfyz_left;
             public TextView tv_sfcl_right;
             public TextView tv_sfly_right;
         }
@@ -255,6 +322,8 @@ public class GrowthTreeFragment_GCD extends Fragment
 
                 listItemView.tv_sfcl_left = (TextView) convertView.findViewById(R.id.tv_sfcl_left);
                 listItemView.tv_sfly_left = (TextView) convertView.findViewById(R.id.tv_sfly_left);
+                listItemView.tv_sfyz_left = (TextView) convertView.findViewById(R.id.tv_sfyz_left);
+                listItemView.tv_sfyz_right = (TextView) convertView.findViewById(R.id.tv_sfyz_right);
                 listItemView.tv_sfcl_right = (TextView) convertView.findViewById(R.id.tv_sfcl_right);
                 listItemView.tv_sfly_right = (TextView) convertView.findViewById(R.id.tv_sfly_right);
 
@@ -318,15 +387,23 @@ public class GrowthTreeFragment_GCD extends Fragment
                 {
                     BitmapHelper.setImageViewBackground(context, listItemView.iv_img_right, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
                 }
-                if (PlantGcjl.getSfcl().equals("True"))
+                if (Integer.valueOf(PlantGcjl.getcDate()) > 0)
                 {
                     listItemView.ll_tip_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfcl_right.setVisibility(View.VISIBLE);
+                    listItemView.tv_sfcl_right.setText(PlantGcjl.getcDate() + "株抽蕾");
                 }
-                if (PlantGcjl.getSfly().equals("True"))
+                if (Integer.valueOf(PlantGcjl.getzDate()) > 0)
                 {
                     listItemView.ll_tip_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfly_right.setVisibility(View.VISIBLE);
+                    listItemView.tv_sfly_right.setText(PlantGcjl.getzDate() + "株留芽");
+                }
+                if (Integer.valueOf(PlantGcjl.getPlantType()) > 0)
+                {
+                    listItemView.ll_tip_right.setVisibility(View.VISIBLE);
+                    listItemView.tv_sfyz_right.setVisibility(View.VISIBLE);
+                    listItemView.tv_sfyz_right.setText(PlantGcjl.getPlantType() + "株异株");
                 }
 
             } else
@@ -342,15 +419,23 @@ public class GrowthTreeFragment_GCD extends Fragment
                 {
                     BitmapHelper.setImageViewBackground(context, listItemView.iv_img_left, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
                 }
-                if (PlantGcjl.getSfcl().equals("True"))
+                if (Integer.valueOf(PlantGcjl.getcDate()) > 0)
                 {
                     listItemView.ll_tip_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfcl_left.setVisibility(View.VISIBLE);
+                    listItemView.tv_sfcl_left.setText(PlantGcjl.getcDate() + "株抽蕾");
                 }
-                if (PlantGcjl.getSfly().equals("True"))
+                if (Integer.valueOf(PlantGcjl.getzDate()) > 0)
                 {
                     listItemView.ll_tip_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfly_left.setVisibility(View.VISIBLE);
+                    listItemView.tv_sfly_left.setText(PlantGcjl.getzDate() + "株留芽");
+                }
+                if (Integer.valueOf(PlantGcjl.getPlantType()) > 0)
+                {
+                    listItemView.ll_tip_left.setVisibility(View.VISIBLE);
+                    listItemView.tv_sfyz_left.setVisibility(View.VISIBLE);
+                    listItemView.tv_sfyz_left.setText(PlantGcjl.getPlantType() + "株异株");
                 }
             }
             return convertView;

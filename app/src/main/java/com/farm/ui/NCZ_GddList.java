@@ -363,7 +363,8 @@ public class NCZ_GddList extends Activity
                 commembertab commembertab = AppContext.getUserInfo(NCZ_GddList.this);
                 AppContext.updateStatus(NCZ_GddList.this, "0", PlantGcd.getId(), "3", commembertab.getId());
                 Intent intent = new Intent(NCZ_GddList.this, GcdDetail_.class);
-                intent.putExtra("bean", PlantGcd); // 因为list中添加了头部,因此要去掉一个
+                intent.putExtra("bean_gcd", PlantGcd); // 因为list中添加了头部,因此要去掉一个
+                intent.putExtra("bean_areatab", areatab); // 因为list中添加了头部,因此要去掉一个
                 NCZ_GddList.this.startActivity(intent);
             }
         });
