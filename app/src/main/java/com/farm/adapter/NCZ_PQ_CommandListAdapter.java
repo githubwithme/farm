@@ -31,6 +31,7 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 	static class ListItemView
 	{
 		public TextView tv_cmdname;
+		public TextView tv_new_item;
 		public TextView tv_qx;
 		public TextView tv_time;
 		public TextView tv_type;
@@ -84,6 +85,7 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 			listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
 			listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
 			listItemView.tv_qx = (TextView) convertView.findViewById(R.id.tv_qx);
+			listItemView.tv_new_item = (TextView) convertView.findViewById(R.id.tv_new_item);
 			listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
 			listItemView.tv_cmdname = (TextView) convertView.findViewById(R.id.tv_cmdname);
 			listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
@@ -118,6 +120,7 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 		if (Integer.valueOf(commandtab.getComCount()) > 0)
 		{
 			listItemView.fl_new_item.setVisibility(View.VISIBLE);
+			listItemView.tv_new_item.setText(commandtab.getComCount());
 		} else
 		{
 			listItemView.fl_new_item.setVisibility(View.GONE);
@@ -125,6 +128,7 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 		if (Integer.valueOf(commandtab.getComvidioCount()) > 0)
 		{
 			listItemView.fl_new.setVisibility(View.VISIBLE);
+			listItemView.tv_new.setText(commandtab.getComvidioCount());
 		} else
 		{
 			listItemView.fl_new.setVisibility(View.GONE);
@@ -158,15 +162,18 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 		if (commandtab.getimportance().equals("0"))
 		{
 			listItemView.tv_importance.setText("一般");
-			listItemView.circle_img.setImageResource(R.color.bg_blue);
+//			listItemView.circle_img.setImageResource(R.color.bg_blue);
+			listItemView.circle_img.setImageResource(R.drawable.yb);
 		} else if (commandtab.getimportance().equals("1"))
 		{
 			listItemView.tv_importance.setText("重要");
-			listItemView.circle_img.setImageResource(R.color.bg_green);
+//			listItemView.circle_img.setImageResource(R.color.bg_green);
+			listItemView.circle_img.setImageResource(R.drawable.zyx);
 		} else if (commandtab.getimportance().equals("2"))
 		{
 			listItemView.tv_importance.setText("非常重要");
-			listItemView.circle_img.setImageResource(R.color.color_orange);
+//			listItemView.circle_img.setImageResource(R.color.color_orange);
+			listItemView.circle_img.setImageResource(R.drawable.fczy);
 		} else if (commandtab.getimportance().equals("3"))
 		{
 			listItemView.tv_importance.setTextColor(context.getResources().getColor(R.color.bg_blue));

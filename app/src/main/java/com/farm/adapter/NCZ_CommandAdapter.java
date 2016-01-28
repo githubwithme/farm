@@ -43,6 +43,7 @@ public class NCZ_CommandAdapter extends BaseAdapter
         public FrameLayout fl_new_item;
         public FrameLayout fl_new;
         public TextView tv_new;
+        public TextView tv_new_item;
         public TextView tv_zf;
         public TextView tv_type;
     }
@@ -85,6 +86,7 @@ public class NCZ_CommandAdapter extends BaseAdapter
             listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
             listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
             listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
+            listItemView.tv_new_item = (TextView) convertView.findViewById(R.id.tv_new_item);
             listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
             listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
             listItemView.rl_record = (FrameLayout) convertView.findViewById(R.id.rl_record);
@@ -124,6 +126,7 @@ public class NCZ_CommandAdapter extends BaseAdapter
 //        if (Integer.valueOf(commandtab.getComCount()) > 0)
 //        {
 //            listItemView.fl_new_item.setVisibility(View.VISIBLE);
+//            listItemView.tv_new_item.setText(commandtab.getComCount());
 //        } else
 //        {
 //            listItemView.fl_new_item.setVisibility(View.GONE);
@@ -131,6 +134,7 @@ public class NCZ_CommandAdapter extends BaseAdapter
         if (Integer.valueOf(commandtab.getComvidioCount()) > 0)
         {
             listItemView.fl_new.setVisibility(View.VISIBLE);
+            listItemView.tv_new.setText(commandtab.getComvidioCount());
         } else
         {
             listItemView.fl_new.setVisibility(View.GONE);
@@ -147,15 +151,15 @@ public class NCZ_CommandAdapter extends BaseAdapter
 //        listItemView.tv_type.setText();
         if (commandtab.getcommFromVPath().equals("0"))
         {
-            listItemView.tv_zf.setText(commandtab.getcommFromName()+"下发");
+            listItemView.tv_zf.setText(commandtab.getcommFromName() + "下发");
         } else
         {
-            listItemView.tv_zf.setText(commandtab.getcommFromName()+"自发");
+            listItemView.tv_zf.setText(commandtab.getcommFromName() + "自发");
         }
         if (commandtab.getstdJobType().equals("0"))
         {
             listItemView.tv_type.setText("非标准生产指令");
-        } else  if (commandtab.getstdJobType().equals("-1"))
+        } else if (commandtab.getstdJobType().equals("-1"))
         {
             listItemView.tv_type.setText("非生产指令");
         } else
@@ -168,15 +172,18 @@ public class NCZ_CommandAdapter extends BaseAdapter
         if (commandtab.getimportance().equals("0"))
         {
             listItemView.tv_importance.setText("一般");
-            listItemView.circle_img.setImageResource(R.color.bg_blue);
+//            listItemView.circle_img.setImageResource(R.color.bg_blue);
+            listItemView.circle_img.setImageResource(R.drawable.yb);
         } else if (commandtab.getimportance().equals("1"))
         {
             listItemView.tv_importance.setText("重要");
-            listItemView.circle_img.setImageResource(R.color.bg_green);
+//            listItemView.circle_img.setImageResource(R.color.bg_green);
+            listItemView.circle_img.setImageResource(R.drawable.zyx);
         } else if (commandtab.getimportance().equals("2"))
         {
             listItemView.tv_importance.setText("非常重要");
-            listItemView.circle_img.setImageResource(R.color.color_orange);
+//            listItemView.circle_img.setImageResource(R.color.color_orange);
+            listItemView.circle_img.setImageResource(R.drawable.fczy);
         } else if (commandtab.getimportance().equals("3"))
         {
             listItemView.tv_importance.setTextColor(context.getResources().getColor(R.color.bg_text));

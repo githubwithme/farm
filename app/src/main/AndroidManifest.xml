@@ -158,6 +158,10 @@
             android:name="com.service.UpdateApk"
             android:exported="false">
         </service>
+        <service
+            android:name="com.service.SentNotify"
+            android:exported="false">
+        </service>
         <!-- 其他UI -->
         <activity android:name=".ui.GuanYu_"/>
         <activity android:name=".ui.Helper_"/>

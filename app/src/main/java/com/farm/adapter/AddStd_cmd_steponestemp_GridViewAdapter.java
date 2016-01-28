@@ -58,7 +58,7 @@ public class AddStd_cmd_steponestemp_GridViewAdapter extends BaseAdapter
         {
             type = sn[position];
             view.name.setText(type);
-            view.circle_img.setImageResource(R.color.bg_blue);
+            view.circle_img.setImageResource(R.drawable.yb);
         }
 
         return convertView;

@@ -2,6 +2,7 @@ package com.farm.ui;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -135,7 +136,9 @@ public class IFragment extends Fragment
 	{
 		CleanLoginInfo();
 		AppManager.getAppManager().AppExit(getActivity());
-
+		NotificationManager manger =  (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
+		manger.cancel(101);
+		manger.cancel(100);
 	}
 
 	@AfterViews

@@ -160,6 +160,7 @@ public class NCZ_ToDayPQdapter extends BaseAdapter
 		if (Integer.valueOf(areatab.getJobCount()) > 0)
 		{
 			listItemView.fl_worknumber_new.setVisibility(View.VISIBLE);
+			listItemView.tv_worknumber_new.setText(areatab.getJobCount());
 		}
 		else
 		{
@@ -168,6 +169,7 @@ public class NCZ_ToDayPQdapter extends BaseAdapter
 		if (Integer.valueOf(areatab.getPlantGrowCount()) > 0)
 		{
 			listItemView.fl_plantnumber_new.setVisibility(View.VISIBLE);
+			listItemView.tv_plantnumber_new.setText(areatab.getPlantGrowCount());
 		}
 		else
 		{
@@ -176,6 +178,7 @@ public class NCZ_ToDayPQdapter extends BaseAdapter
 		if (Integer.valueOf(areatab.getCommandCount()) > 0)
 		{
 			listItemView.fl_cmdnumber_new.setVisibility(View.VISIBLE);
+			listItemView.tv_cmdnumber_new.setText(areatab.getCommandCount());
 		}
 		else
 		{

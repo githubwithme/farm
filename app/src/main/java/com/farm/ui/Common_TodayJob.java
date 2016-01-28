@@ -25,11 +25,9 @@ import com.farm.R;
 import com.farm.adapter.Common_TodayJobAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.HaveReadRecord;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
-import com.farm.common.SqliteDb;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
 import com.farm.widget.NewDataToast;
@@ -104,15 +102,7 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
     @Click
     void btn_cmd()
     {
-        HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(getActivity(), commembertab.getId());
-        if (haveReadRecord != null)
-        {
-            SqliteDb.updateHaveReadRecord(getActivity(), commembertab.getId(), String.valueOf(cmd_videoNum));
-            fl_cmdnumber_new.setVisibility(View.GONE);
-        } else
-        {
-            SqliteDb.saveHaveReadRecord(getActivity(), commembertab.getId(), String.valueOf(cmd_videoNum));
-        }
+
         Intent intent = new Intent(getActivity(), Common_SelectCommand_.class);
         intent.putParcelableArrayListExtra("jobtablist", (ArrayList<? extends Parcelable>) listData);
         startActivity(intent);
@@ -183,12 +173,14 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                         if (cmd_videoNum > 0)
                         {
                             fl_cmdnumber_new.setVisibility(View.VISIBLE);
+                            tv_cmdnumber_new.setText(String.valueOf(cmd_videoNum));
                         } else
                         {
                             fl_cmdnumber_new.setVisibility(View.GONE);
                         }
                     } else
                     {
+                        fl_cmdnumber_new.setVisibility(View.GONE);
                     }
                 } else
                 {

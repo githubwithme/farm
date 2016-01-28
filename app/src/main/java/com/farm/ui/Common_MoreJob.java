@@ -361,6 +361,8 @@ public class Common_MoreJob extends Activity
 				jobtab jobtab = listData.get(position - 1);
 				if (jobtab == null)
 					return;
+				commembertab commembertab = AppContext.getUserInfo(Common_MoreJob.this);
+				AppContext.updateStatus(Common_MoreJob.this, "0", jobtab.getId(), "1", commembertab.getId());
 				Intent intent = new Intent(Common_MoreJob.this, Common_JobDetail_Show_.class);
 				intent.putExtra("bean", jobtab); // 因为list中添加了头部,因此要去掉一个
 				Common_MoreJob.this.startActivity(intent);

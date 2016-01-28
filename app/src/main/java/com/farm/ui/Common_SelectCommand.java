@@ -772,15 +772,18 @@ public class Common_SelectCommand extends Activity implements OnClickListener
             if (commandtab.getimportance().equals("0"))
             {
                 listItemView.tv_importance.setText("一般");
-                listItemView.circle_img.setImageResource(R.color.bg_blue);
+//                listItemView.circle_img.setImageResource(R.color.bg_blue);
+                listItemView.circle_img.setImageResource(R.drawable.yb);
             } else if (commandtab.getimportance().equals("1"))
             {
                 listItemView.tv_importance.setText("重要");
-                listItemView.circle_img.setImageResource(R.color.bg_green);
+//                listItemView.circle_img.setImageResource(R.color.bg_green);
+                listItemView.circle_img.setImageResource(R.drawable.zyx);
             } else if (commandtab.getimportance().equals("2"))
             {
                 listItemView.tv_importance.setText("非常重要");
-                listItemView.circle_img.setImageResource(R.color.color_orange);
+//                listItemView.circle_img.setImageResource(R.color.color_orange);
+                listItemView.circle_img.setImageResource(R.drawable.fczy);
             }
             listItemView.tv_time.setText(commandtab.getregDate().substring(0, commandtab.getregDate().lastIndexOf(" ")));
             if (commandtab.getcommFromVPath().equals("0"))

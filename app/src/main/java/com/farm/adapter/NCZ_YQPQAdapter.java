@@ -1,5 +1,6 @@
 package com.farm.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -26,12 +27,15 @@ import com.farm.ui.NCZ_CZ_TodayCommand_;
 import com.farm.ui.NCZ_ToDayPQ_;
 import com.farm.ui.WeatherActivity_;
 import com.farm.widget.CircleImageView;
+import com.farm.widget.NewDataToast;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class NCZ_YQPQAdapter extends BaseAdapter
 {
+    boolean isVoice = false;
+    private AppContext appContext;
     String audiopath;
     private Context context;// 运行上下文
     private List<parktab> listItems;// 数据集合
@@ -58,7 +62,7 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         public TextView tv_plant_new;
         public TextView tv_sq_new;
         public TextView tv_cmd_new;
-//        public TextView tv_czname;
+        //        public TextView tv_czname;
         public TextView tv_yqname;
         public TextView tv_temph;
         public TextView tv_plantnumber;
@@ -84,8 +88,9 @@ public class NCZ_YQPQAdapter extends BaseAdapter
 //        public CircleImageView circle_img;
     }
 
-    public NCZ_YQPQAdapter(Context context, List<parktab> data)
+    public NCZ_YQPQAdapter(Activity context, List<parktab> data)
     {
+        appContext = (AppContext) context.getApplication();
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.listItems = data;
@@ -266,6 +271,15 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         if (Integer.valueOf(parktab.getCommandCount()) > 0)
         {
             listItemView.fl_cmd_new.setVisibility(View.VISIBLE);
+            listItemView.tv_cmd_new.setText(parktab.getCommandCount());
+            if (!isVoice)
+            {
+                NewDataToast.makeText(context, "有新更新", appContext.isAppSound(), R.raw.newdatatoast).show();
+//                Intent intent = new Intent(context, SentNotify.class);
+//                intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+//                context.startService(intent);
+                isVoice = true;
+            }
         } else
         {
             listItemView.fl_cmd_new.setVisibility(View.GONE);
@@ -273,6 +287,15 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         if (Integer.valueOf(parktab.getJobCount()) > 0)
         {
             listItemView.fl_job_new.setVisibility(View.VISIBLE);
+            listItemView.tv_job_new.setText(parktab.getJobCount());
+            if (!isVoice)
+            {
+                NewDataToast.makeText(context, "有新更新", appContext.isAppSound(), R.raw.newdatatoast).show();
+//                Intent intent = new Intent(context, SentNotify.class);
+//                intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+//                context.startService(intent);
+                isVoice = true;
+            }
         } else
         {
             listItemView.fl_job_new.setVisibility(View.GONE);
@@ -280,6 +303,15 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         if (Integer.valueOf(parktab.getPlantGrowCount()) > 0)
         {
             listItemView.fl_plant_new.setVisibility(View.VISIBLE);
+            listItemView.tv_plant_new.setText(parktab.getPlantGrowCount());
+            if (!isVoice)
+            {
+                NewDataToast.makeText(context, "有新更新", appContext.isAppSound(), R.raw.newdatatoast).show();
+//                Intent intent = new Intent(context, SentNotify.class);
+//                intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+//                context.startService(intent);
+                isVoice = true;
+            }
         } else
         {
             listItemView.fl_plant_new.setVisibility(View.GONE);
@@ -287,6 +319,15 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         if (Integer.valueOf(parktab.getAreajobCount()) > 0)
         {
             listItemView.fl_worknumber_new.setVisibility(View.VISIBLE);
+            listItemView.tv_worknumber_new.setText(parktab.getAreajobCount());
+            if (!isVoice)
+            {
+                NewDataToast.makeText(context, "有新更新", appContext.isAppSound(), R.raw.newdatatoast).show();
+//                Intent intent = new Intent(context, SentNotify.class);
+//                intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+//                context.startService(intent);
+                isVoice = true;
+            }
         } else
         {
             listItemView.fl_worknumber_new.setVisibility(View.GONE);
@@ -294,6 +335,15 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         if (Integer.valueOf(parktab.getAreaplantGrowCount()) > 0)
         {
             listItemView.fl_plantnumber_new.setVisibility(View.VISIBLE);
+            listItemView.tv_plantnumber_new.setText(parktab.getAreaplantGrowCount());
+            if (!isVoice)
+            {
+                NewDataToast.makeText(context, "有新更新", appContext.isAppSound(), R.raw.newdatatoast).show();
+//                Intent intent = new Intent(context, SentNotify.class);
+//                intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+//                context.startService(intent);
+                isVoice = true;
+            }
         } else
         {
             listItemView.fl_plantnumber_new.setVisibility(View.GONE);
@@ -301,6 +351,15 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         if (Integer.valueOf(parktab.getAreacommandCount()) > 0)
         {
             listItemView.fl_cmdnumber_new.setVisibility(View.VISIBLE);
+            listItemView.tv_cmdnumber_new.setText(parktab.getAreacommandCount());
+            if (!isVoice)
+            {
+                NewDataToast.makeText(context, "有新更新", appContext.isAppSound(), R.raw.newdatatoast).show();
+//                Intent intent = new Intent(context, SentNotify.class);
+//                intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+//                context.startService(intent);
+                isVoice = true;
+            }
         } else
         {
             listItemView.fl_cmdnumber_new.setVisibility(View.GONE);

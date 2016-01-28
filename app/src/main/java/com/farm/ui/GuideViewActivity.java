@@ -16,7 +16,6 @@ import android.widget.ImageView;
 
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter;
-import com.farm.common.TrayNotification;
 
 import java.util.ArrayList;
 
@@ -48,7 +47,7 @@ public class GuideViewActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		TrayNotification.addNotification(GuideViewActivity.this, R.drawable.logo, "欢迎使用农场易");// 让程序图标显示在托盘通知栏
+//		TrayNotification.addNotification(GuideViewActivity.this, R.drawable.logo, "欢迎使用农场易");// 让程序图标显示在托盘通知栏
 		sp = this.getSharedPreferences("MY_PRE", MODE_PRIVATE);
 		firstUse = sp.getString("firstUse", "");
 		if (firstUse.equals("true"))

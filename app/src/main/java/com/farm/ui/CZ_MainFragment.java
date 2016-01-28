@@ -134,6 +134,7 @@ public class CZ_MainFragment extends Fragment
                             if (Integer.valueOf(areatab.getJobCount()) > 0)
                             {
                                 fl_worknumber_new.setVisibility(View.VISIBLE);
+                                tv_worknumber_new.setText(areatab.getJobCount());
                             } else
                             {
                                 fl_worknumber_new.setVisibility(View.GONE);
@@ -141,6 +142,7 @@ public class CZ_MainFragment extends Fragment
                             if (Integer.valueOf(areatab.getCommandCount()) > 0)
                             {
                                 fl_cmdnumber_new.setVisibility(View.VISIBLE);
+                                tv_cmdnumber_new.setText(areatab.getCommandCount());
                             } else
                             {
                                 fl_cmdnumber_new.setVisibility(View.GONE);
@@ -148,6 +150,7 @@ public class CZ_MainFragment extends Fragment
                             if (Integer.valueOf(areatab.getPlantGrowCount()) > 0)
                             {
                                 fl_plantnumber_new.setVisibility(View.VISIBLE);
+                                tv_plantnumber_new.setText(areatab.getPlantGrowCount());
                             } else
                             {
                                 fl_plantnumber_new.setVisibility(View.GONE);

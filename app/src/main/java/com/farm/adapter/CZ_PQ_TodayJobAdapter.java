@@ -190,15 +190,18 @@ public class CZ_PQ_TodayJobAdapter extends BaseAdapter
 		if (jobtab.getImportance().equals("0"))
 		{
 			listItemView.tv_importance.setText("一般");
-			listItemView.circle_img.setImageResource(R.color.bg_blue);
+//			listItemView.circle_img.setImageResource(R.color.bg_blue);
+			listItemView.circle_img.setImageResource(R.drawable.yb);
 		} else if (jobtab.getImportance().equals("1"))
 		{
 			listItemView.tv_importance.setText("重要");
-			listItemView.circle_img.setImageResource(R.color.bg_green);
+//			listItemView.circle_img.setImageResource(R.color.bg_green);
+			listItemView.circle_img.setImageResource(R.drawable.zyx);
 		} else if (jobtab.getImportance().equals("2"))
 		{
 			listItemView.tv_importance.setText("非常重要");
-			listItemView.circle_img.setImageResource(R.color.color_orange);
+//			listItemView.circle_img.setImageResource(R.color.color_orange);
+			listItemView.circle_img.setImageResource(R.drawable.fczy);
 		} else if (jobtab.getImportance().equals("3"))
 		{
 			listItemView.tv_importance.setText("自发");

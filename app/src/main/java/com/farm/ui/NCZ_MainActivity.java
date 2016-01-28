@@ -2,6 +2,7 @@ package com.farm.ui;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -375,6 +376,9 @@ public class NCZ_MainActivity extends BaseActivity
 				case R.id.btn_sure:
 					myDialog.dismiss();
 					AppManager.getAppManager().AppExit(NCZ_MainActivity.this);
+					NotificationManager manger =  (NotificationManager) NCZ_MainActivity.this.getSystemService(NCZ_MainActivity.this.NOTIFICATION_SERVICE);
+					manger.cancel(101);
+					manger.cancel(100);
 					break;
 				case R.id.btn_cancle:
 					myDialog.dismiss();

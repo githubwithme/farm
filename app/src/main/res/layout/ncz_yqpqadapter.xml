@@ -151,42 +151,47 @@
                             android:layout_gravity="center_vertical"
                             android:minHeight="60dip">
 
-                            <ImageView
-                                android:id="@+id/iv_pqgz"
-                                android:layout_width="@dimen/size_47"
-                                android:layout_height="@dimen/size_47"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="true"
-                                android:layout_margin="5dip"
-                                android:background="@drawable/icon_gz"/>
+                            <RelativeLayout
+                                android:layout_width="55dip"
+                                android:layout_height="55dip"
+                                android:layout_centerInParent="true">
 
-                            <FrameLayout
-                                android:id="@+id/fl_worknumber_new"
-                                android:layout_width="10dip"
-                                android:layout_height="10dip"
-                                android:layout_marginRight="5dip"
-                                android:layout_marginTop="5dip"
-                                android:layout_toRightOf="@+id/iv_pqgz"
-                                android:visibility="gone">
-
-                                <com.farm.widget.CircleImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                <ImageView
+                                    android:id="@+id/iv_pqgz"
+                                    android:layout_width="@dimen/size_47"
+                                    android:layout_height="@dimen/size_47"
                                     android:layout_gravity="center"
-                                    android:src="@color/red"
-                                    app:border_color="@color/red"
-                                    app:border_width="0dp"/>
+                                    android:layout_margin="5dip"
+                                    android:background="@drawable/icon_gz"/>
 
-                                <TextView
-                                    android:id="@+id/tv_worknumber_new"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:text=""
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/size_10"/>
-                            </FrameLayout>
+                                <FrameLayout
+                                    android:id="@+id/fl_worknumber_new"
+                                    android:layout_width="20dip"
+                                    android:layout_height="20dip"
+                                    android:layout_alignParentRight="true"
+                                    android:visibility="gone">
+
+                                    <com.farm.widget.CircleImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/hd"
+                                        app:border_color="@color/red"
+                                        app:border_width="0dp"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_worknumber_new"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:text=""
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/size_10"/>
+                                </FrameLayout>
+
+                            </RelativeLayout>
+
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -237,42 +242,48 @@
                             android:layout_gravity="center_vertical"
                             android:minHeight="60dip">
 
-                            <ImageView
-                                android:id="@+id/iv_pqmq"
-                                android:layout_width="@dimen/size_47"
-                                android:layout_height="@dimen/size_47"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="true"
-                                android:layout_margin="5dip"
-                                android:background="@drawable/icon_zz"/>
+                            <RelativeLayout
+                                android:layout_width="55dip"
+                                android:layout_height="55dip"
+                                android:layout_centerInParent="true">
 
-                            <FrameLayout
-                                android:id="@+id/fl_plantnumber_new"
-                                android:layout_width="10dip"
-                                android:layout_height="10dip"
-                                android:layout_marginRight="5dip"
-                                android:layout_marginTop="5dip"
-                                android:layout_toRightOf="@+id/iv_pqmq"
-                                android:visibility="gone">
+                                <ImageView
+                                    android:id="@+id/iv_pqmq"
+                                    android:layout_width="@dimen/size_47"
+                                    android:layout_height="@dimen/size_47"
+                                    android:layout_centerInParent="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dip"
+                                    android:background="@drawable/icon_zz"/>
 
-                                <com.farm.widget.CircleImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:src="@color/red"
-                                    app:border_color="@color/red"
-                                    app:border_width="0dp"/>
+                                <FrameLayout
+                                    android:id="@+id/fl_plantnumber_new"
+                                    android:layout_width="20dip"
+                                    android:layout_height="20dip"
+                                    android:layout_alignParentRight="true"
+                                    android:visibility="gone">
 
-                                <TextView
-                                    android:id="@+id/tv_plantnumber_new"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:text=""
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/size_10"/>
-                            </FrameLayout>
+                                    <com.farm.widget.CircleImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/hd"
+                                        app:border_color="@color/red"
+                                        app:border_width="0dp"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_plantnumber_new"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:text=""
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/size_10"/>
+                                </FrameLayout>
+                            </RelativeLayout>
+
+
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -322,42 +333,48 @@
                             android:layout_gravity="center_vertical"
                             android:minHeight="60dip">
 
-                            <ImageView
-                                android:id="@+id/iv_pqzl"
-                                android:layout_width="@dimen/size_47"
-                                android:layout_height="@dimen/size_47"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="true"
-                                android:layout_margin="5dip"
-                                android:background="@drawable/icon_zl"/>
+                            <RelativeLayout
+                                android:layout_width="55dip"
+                                android:layout_height="55dip"
+                                android:layout_centerInParent="true">
 
-                            <FrameLayout
-                                android:id="@+id/fl_cmdnumber_new"
-                                android:layout_width="10dip"
-                                android:layout_height="10dip"
-                                android:layout_marginRight="5dip"
-                                android:layout_marginTop="5dip"
-                                android:layout_toRightOf="@+id/iv_pqzl"
-                                android:visibility="gone">
+                                <ImageView
+                                    android:id="@+id/iv_pqzl"
+                                    android:layout_width="@dimen/size_47"
+                                    android:layout_height="@dimen/size_47"
+                                    android:layout_centerInParent="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dip"
+                                    android:background="@drawable/icon_zl"/>
 
-                                <com.farm.widget.CircleImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:src="@color/red"
-                                    app:border_color="@color/red"
-                                    app:border_width="0dp"/>
+                                <FrameLayout
+                                    android:id="@+id/fl_cmdnumber_new"
+                                    android:layout_width="20dip"
+                                    android:layout_height="20dip"
+                                    android:layout_alignParentRight="true"
+                                    android:visibility="gone">
 
-                                <TextView
-                                    android:id="@+id/tv_cmdnumber_new"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:text=""
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/size_10"/>
-                            </FrameLayout>
+                                    <com.farm.widget.CircleImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:src="@color/red"
+                                        app:border_color="@color/red"
+                                        app:border_width="0dp"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_cmdnumber_new"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:text=""
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/size_10"/>
+                                </FrameLayout>
+                            </RelativeLayout>
+
+
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -434,41 +451,47 @@
                                 android:layout_gravity="center_vertical"
                                 android:minHeight="60dip">
 
-                                <ImageView
-                                    android:id="@+id/iv_yqsq"
-                                    android:layout_width="@dimen/size_47"
-                                    android:layout_height="@dimen/size_47"
-                                    android:layout_centerInParent="true"
-                                    android:layout_margin="5dip"
-                                    android:background="@drawable/icon_sq"/>
+                                <RelativeLayout
+                                    android:layout_width="55dip"
+                                    android:layout_height="55dip"
+                                    android:layout_centerInParent="true">
 
-                                <FrameLayout
-                                    android:id="@+id/fl_sq_new"
-                                    android:layout_width="10dip"
-                                    android:layout_height="10dip"
-                                    android:layout_marginRight="5dip"
-                                    android:layout_marginTop="5dip"
-                                    android:layout_toRightOf="@+id/iv_yqsq"
-                                    android:visibility="gone">
+                                    <ImageView
+                                        android:id="@+id/iv_yqsq"
+                                        android:layout_width="@dimen/size_47"
+                                        android:layout_height="@dimen/size_47"
+                                        android:layout_centerInParent="true"
+                                        android:layout_margin="5dip"
+                                        android:background="@drawable/icon_sq"/>
 
-                                    <com.farm.widget.CircleImageView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_gravity="center"
-                                        android:src="@color/red"
-                                        app:border_color="@color/red"
-                                        app:border_width="0dp"/>
+                                    <FrameLayout
+                                        android:id="@+id/fl_sq_new"
+                                        android:layout_width="20dip"
+                                        android:layout_height="20dip"
+                                        android:layout_alignParentRight="true"
+                                        android:visibility="gone">
 
-                                    <TextView
-                                        android:id="@+id/tv_sq_new"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:text=""
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/size_10"/>
-                                </FrameLayout>
+                                        <com.farm.widget.CircleImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/hd"
+                                            app:border_color="@color/red"
+                                            app:border_width="0dp"/>
+
+                                        <TextView
+                                            android:id="@+id/tv_sq_new"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:text=""
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/size_10"/>
+                                    </FrameLayout>
+                                </RelativeLayout>
+
+
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -519,41 +542,47 @@
                                 android:layout_gravity="center_vertical"
                                 android:minHeight="60dip">
 
-                                <ImageView
-                                    android:id="@+id/iv_yqgz"
-                                    android:layout_width="@dimen/size_47"
-                                    android:layout_height="@dimen/size_47"
-                                    android:layout_centerInParent="true"
-                                    android:layout_margin="5dip"
-                                    android:background="@drawable/icon_gz2"/>
+                                <RelativeLayout
+                                    android:layout_width="55dip"
+                                    android:layout_height="55dip"
+                                    android:layout_centerInParent="true">
 
-                                <FrameLayout
-                                    android:id="@+id/fl_job_new"
-                                    android:layout_width="10dip"
-                                    android:layout_height="10dip"
-                                    android:layout_marginRight="5dip"
-                                    android:layout_marginTop="5dip"
-                                    android:layout_toRightOf="@+id/iv_yqgz"
-                                    android:visibility="gone">
+                                    <ImageView
+                                        android:id="@+id/iv_yqgz"
+                                        android:layout_width="@dimen/size_47"
+                                        android:layout_height="@dimen/size_47"
+                                        android:layout_centerInParent="true"
+                                        android:layout_margin="5dip"
+                                        android:background="@drawable/icon_gz2"/>
 
-                                    <com.farm.widget.CircleImageView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_gravity="center"
-                                        android:src="@color/red"
-                                        app:border_color="@color/red"
-                                        app:border_width="0dp"/>
+                                    <FrameLayout
+                                        android:id="@+id/fl_job_new"
+                                        android:layout_width="20dip"
+                                        android:layout_height="20dip"
+                                        android:layout_alignParentRight="true"
+                                        android:visibility="gone">
 
-                                    <TextView
-                                        android:id="@+id/tv_job_new"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:text=""
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/size_10"/>
-                                </FrameLayout>
+                                        <com.farm.widget.CircleImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/hd"
+                                            app:border_color="@color/red"
+                                            app:border_width="0dp"/>
+
+                                        <TextView
+                                            android:id="@+id/tv_job_new"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:text=""
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/size_10"/>
+                                    </FrameLayout>
+                                </RelativeLayout>
+
+
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -687,41 +716,47 @@
                                 android:layout_gravity="center_vertical"
                                 android:minHeight="60dip">
 
-                                <ImageView
-                                    android:id="@+id/iv_yqzl"
-                                    android:layout_width="@dimen/size_47"
-                                    android:layout_height="@dimen/size_47"
-                                    android:layout_centerInParent="true"
-                                    android:layout_margin="5dip"
-                                    android:background="@drawable/icon_zl2"/>
+                                <RelativeLayout
+                                    android:layout_width="55dip"
+                                    android:layout_height="55dip"
+                                    android:layout_centerInParent="true">
 
-                                <FrameLayout
-                                    android:id="@+id/fl_cmd_new"
-                                    android:layout_width="10dip"
-                                    android:layout_height="10dip"
-                                    android:layout_marginRight="5dip"
-                                    android:layout_marginTop="5dip"
-                                    android:layout_toRightOf="@+id/iv_yqzl"
-                                    android:visibility="gone">
+                                    <ImageView
+                                        android:id="@+id/iv_yqzl"
+                                        android:layout_width="@dimen/size_47"
+                                        android:layout_height="@dimen/size_47"
+                                        android:layout_centerInParent="true"
+                                        android:layout_margin="5dip"
+                                        android:background="@drawable/icon_zl2"/>
 
-                                    <com.farm.widget.CircleImageView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_gravity="center"
-                                        android:src="@color/red"
-                                        app:border_color="@color/red"
-                                        app:border_width="0dp"/>
+                                    <FrameLayout
+                                        android:id="@+id/fl_cmd_new"
+                                        android:layout_width="20dip"
+                                        android:layout_height="20dip"
+                                        android:layout_alignParentRight="true"
+                                        android:visibility="gone">
 
-                                    <TextView
-                                        android:id="@+id/tv_cmd_new"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:text=""
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/size_10"/>
-                                </FrameLayout>
+                                        <com.farm.widget.CircleImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/hd"
+                                            app:border_color="@color/red"
+                                            app:border_width="0dp"/>
+
+                                        <TextView
+                                            android:id="@+id/tv_cmd_new"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:text=""
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/size_10"/>
+                                    </FrameLayout>
+                                </RelativeLayout>
+
+
                             </RelativeLayout>
 
                             <RelativeLayout

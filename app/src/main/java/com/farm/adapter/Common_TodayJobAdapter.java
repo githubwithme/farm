@@ -45,6 +45,7 @@ public class Common_TodayJobAdapter extends BaseAdapter
         public SwipeLayout swipeLayout;
         public LinearLayout ll_menu;
         public Button btn_connect;
+        public TextView tv_new_item;
         public TextView tv_time;
         public TextView tv_type;
         public TextView tv_zf;
@@ -98,6 +99,7 @@ public class Common_TodayJobAdapter extends BaseAdapter
             listItemView.tv_score = (TextView) convertView.findViewById(R.id.tv_score);
             listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
+            listItemView.tv_new_item = (TextView) convertView.findViewById(R.id.tv_new_item);
             listItemView.tv_zf = (TextView) convertView.findViewById(R.id.tv_zf);
             listItemView.btn_connect = (Button) convertView.findViewById(R.id.btn_connect);
             listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
@@ -193,6 +195,7 @@ public class Common_TodayJobAdapter extends BaseAdapter
         if (Integer.valueOf(jobtab.getJobCount()) > 0)
         {
             listItemView.fl_new_item.setVisibility(View.VISIBLE);
+            listItemView.tv_new_item.setText(jobtab.getJobCount());
         } else
         {
             listItemView.fl_new_item.setVisibility(View.GONE);
@@ -200,6 +203,7 @@ public class Common_TodayJobAdapter extends BaseAdapter
         if (Integer.valueOf(jobtab.getJobvidioCount()) > 0)
         {
             listItemView.fl_new.setVisibility(View.VISIBLE);
+            listItemView.tv_new.setText(jobtab.getJobvidioCount());
         } else
         {
             listItemView.fl_new.setVisibility(View.GONE);
@@ -207,15 +211,18 @@ public class Common_TodayJobAdapter extends BaseAdapter
         if (jobtab.getImportance().equals("0"))
         {
             listItemView.tv_importance.setText("一般");
-            listItemView.circle_img.setImageResource(R.color.bg_blue);
+//            listItemView.circle_img.setImageResource(R.color.bg_blue);
+            listItemView.circle_img.setImageResource(R.drawable.yb);
         } else if (jobtab.getImportance().equals("1"))
         {
             listItemView.tv_importance.setText("重要");
-            listItemView.circle_img.setImageResource(R.color.bg_green);
+//            listItemView.circle_img.setImageResource(R.color.bg_green);
+            listItemView.circle_img.setImageResource(R.drawable.zyx);
         } else if (jobtab.getImportance().equals("2"))
         {
             listItemView.tv_importance.setText("非常重要");
-            listItemView.circle_img.setImageResource(R.color.color_orange);
+//            listItemView.circle_img.setImageResource(R.color.color_orange);
+            listItemView.circle_img.setImageResource(R.drawable.fczy);
         } else if (jobtab.getImportance().equals("3"))
         {
             listItemView.tv_importance.setText("自");

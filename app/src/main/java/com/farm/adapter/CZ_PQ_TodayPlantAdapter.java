@@ -46,6 +46,7 @@ public class CZ_PQ_TodayPlantAdapter extends BaseAdapter
         public FrameLayout fl_new;
         public FrameLayout fl_new_item;
         public TextView tv_new;
+        public TextView tv_new_item;
         public ImageView iv_record;
     }
 
@@ -96,6 +97,7 @@ public class CZ_PQ_TodayPlantAdapter extends BaseAdapter
             // 获取控件对象
             listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
             listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
+            listItemView.tv_new_item = (TextView) convertView.findViewById(R.id.tv_new_item);
             listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
             listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
             listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
@@ -150,6 +152,7 @@ public class CZ_PQ_TodayPlantAdapter extends BaseAdapter
         if (Integer.valueOf(planttab.getPlantCount()) > 0)
         {
             listItemView.fl_new_item.setVisibility(View.VISIBLE);
+            listItemView.tv_new_item.setText(planttab.getPlantCount());
         } else
         {
             listItemView.fl_new_item.setVisibility(View.GONE);
@@ -157,6 +160,7 @@ public class CZ_PQ_TodayPlantAdapter extends BaseAdapter
         if (Integer.valueOf(planttab.getPlantvidioCount()) > 0)
         {
             listItemView.fl_new.setVisibility(View.VISIBLE);
+            listItemView.tv_new.setText(planttab.getPlantvidioCount());
         } else
         {
             listItemView.fl_new.setVisibility(View.GONE);

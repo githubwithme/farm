@@ -114,41 +114,47 @@
                     android:layout_gravity="center_vertical"
                     android:minHeight="50dip">
 
-                    <ImageView
-                        android:layout_width="@dimen/size_50"
-                        android:layout_height="@dimen/size_50"
-                        android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="5dip"
-                        android:background="@drawable/icon_gz"/>
+                    <RelativeLayout
+                        android:layout_width="55dip"
+                        android:layout_height="55dip"
+                        android:layout_centerInParent="true">
 
-                    <FrameLayout
-                        android:id="@+id/fl_worknumber_new"
-                        android:layout_width="10dip"
-                        android:layout_height="10dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dip"
-                        android:layout_marginTop="10dip"
-                        android:visibility="gone">
+                        <ImageView
+                            android:layout_width="@dimen/size_50"
+                            android:layout_height="@dimen/size_50"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="5dip"
+                            android:background="@drawable/icon_gz"/>
 
-                        <com.farm.widget.CircleImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:src="@color/red"
-                            app:border_color="@color/red"
-                            app:border_width="0dp"/>
+                        <FrameLayout
+                            android:id="@+id/fl_worknumber_new"
+                            android:layout_width="20dip"
+                            android:layout_height="20dip"
+                            android:layout_alignParentRight="true"
+                            android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/tv_worknumber_new"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text=""
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_10"/>
-                    </FrameLayout>
+                            <com.farm.widget.CircleImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:src="@color/red"
+                                app:border_color="@color/red"
+                                app:border_width="0dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_worknumber_new"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_10"/>
+                        </FrameLayout>
+
+                    </RelativeLayout>
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -208,41 +214,47 @@
                     android:layout_gravity="center_vertical"
                     android:minHeight="50dip">
 
-                    <ImageView
-                        android:layout_width="@dimen/size_50"
-                        android:layout_height="@dimen/size_50"
-                        android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="5dip"
-                        android:background="@drawable/icon_zz"/>
+                    <RelativeLayout
+                        android:layout_width="55dip"
+                        android:layout_height="55dip"
+                        android:layout_centerInParent="true">
 
-                    <FrameLayout
-                        android:id="@+id/fl_plantnumber_new"
-                        android:layout_width="10dip"
-                        android:layout_height="10dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dip"
-                        android:layout_marginTop="10dip"
-                        android:visibility="gone">
+                        <ImageView
+                            android:layout_width="@dimen/size_50"
+                            android:layout_height="@dimen/size_50"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="5dip"
+                            android:background="@drawable/icon_zz"/>
 
-                        <com.farm.widget.CircleImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:src="@color/red"
-                            app:border_color="@color/red"
-                            app:border_width="0dp"/>
+                        <FrameLayout
+                            android:id="@+id/fl_plantnumber_new"
+                            android:layout_width="20dip"
+                            android:layout_height="20dip"
+                            android:layout_alignParentRight="true"
+                            android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/tv_plantnumber_new"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text=""
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_10"/>
-                    </FrameLayout>
+                            <com.farm.widget.CircleImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:src="@color/red"
+                                app:border_color="@color/red"
+                                app:border_width="0dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_plantnumber_new"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_10"/>
+                        </FrameLayout>
+                    </RelativeLayout>
+
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -301,41 +313,47 @@
                     android:layout_gravity="center_vertical"
                     android:minHeight="50dip">
 
-                    <ImageView
-                        android:layout_width="@dimen/size_50"
-                        android:layout_height="@dimen/size_50"
-                        android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="5dip"
-                        android:background="@drawable/icon_zl"/>
+                    <RelativeLayout
+                        android:layout_width="55dip"
+                        android:layout_height="55dip"
+                        android:layout_centerInParent="true">
 
-                    <FrameLayout
-                        android:id="@+id/fl_cmdnumber_new"
-                        android:layout_width="10dip"
-                        android:layout_height="10dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dip"
-                        android:layout_marginTop="10dip"
-                        android:visibility="gone">
+                        <ImageView
+                            android:layout_width="@dimen/size_50"
+                            android:layout_height="@dimen/size_50"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="5dip"
+                            android:background="@drawable/icon_zl"/>
 
-                        <com.farm.widget.CircleImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:src="@color/red"
-                            app:border_color="@color/red"
-                            app:border_width="0dp"/>
+                        <FrameLayout
+                            android:id="@+id/fl_cmdnumber_new"
+                            android:layout_width="20dip"
+                            android:layout_height="20dip"
+                            android:layout_alignParentRight="true"
+                            android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/tv_cmdnumber_new"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text=""
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_10"/>
-                    </FrameLayout>
+                            <com.farm.widget.CircleImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:src="@color/red"
+                                app:border_color="@color/red"
+                                app:border_width="0dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_cmdnumber_new"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_10"/>
+                        </FrameLayout>
+                    </RelativeLayout>
+
+
                 </RelativeLayout>
 
                 <RelativeLayout
