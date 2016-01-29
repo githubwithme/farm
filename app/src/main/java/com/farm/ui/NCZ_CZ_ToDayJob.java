@@ -43,6 +43,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_cz_todayjob)
 public class NCZ_CZ_ToDayJob extends Activity
 {
+	boolean ishidding=false;
 	TimeThread timethread;
 	private NCZ_CZ_TodayJobAdapter listAdapter;
 	private int listSumData;
@@ -66,7 +67,29 @@ public class NCZ_CZ_ToDayJob extends Activity
 		intent.putExtra("workuserid", workuserid);
 		startActivity(intent);
 	}
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		ishidding = false;
+		if (timethread != null)
+		{
+			timethread.setSleep(false);
+		}
 
+	}
+
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+		ishidding = true;
+		if (timethread != null)
+		{
+			timethread.setSleep(true);
+		}
+
+	}
 	@Click
 	void imgbtn_back()
 	{
@@ -127,6 +150,10 @@ public class NCZ_CZ_ToDayJob extends Activity
 				} else
 				{
 					AppContext.makeToast(NCZ_CZ_ToDayJob.this, "error_connectDataBase");
+					if (!ishidding && timethread != null)
+					{
+						timethread.setSleep(false);
+					}
 					return;
 				}
 
@@ -255,6 +282,10 @@ public class NCZ_CZ_ToDayJob extends Activity
 					lv.onRefreshComplete();
 					lv.setSelection(0);
 				}
+				if (!ishidding && timethread != null)
+				{
+					timethread.setSleep(false);
+				}
 			}
 
 			@Override
@@ -262,6 +293,10 @@ public class NCZ_CZ_ToDayJob extends Activity
 			{
 				String a = error.getMessage();
 				AppContext.makeToast(NCZ_CZ_ToDayJob.this, "error_connectServer");
+				if (!ishidding && timethread != null)
+				{
+					timethread.setSleep(false);
+				}
 			}
 		});
 	}
@@ -377,10 +412,11 @@ public class NCZ_CZ_ToDayJob extends Activity
 				{
 					try
 					{
-						Thread.sleep(AppContext.TIME_REFRESH);
+						timethread.sleep(AppContext.TIME_REFRESH);
 						starttime = starttime + 1000;
 						getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-					} catch (InterruptedException e)
+						timethread.setSleep(false);
+						} catch (InterruptedException e)
 					{
 						e.printStackTrace();
 					}

@@ -51,6 +51,7 @@ import java.util.List;
 @EFragment
 public class Common_TodayJob extends Fragment implements View.OnClickListener
 {
+    boolean ishidding=false;
     PopupWindow pw_command;
     View pv_command;
     TimeThread timethread;
@@ -114,6 +115,25 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
         Intent intent = new Intent(getActivity(), Common_MoreJob_.class);
         intent.putExtra("workuserid", workuserid);
         startActivity(intent);
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden)
+    {
+        ishidding=hidden;
+        super.onHiddenChanged(hidden);
+        if (!hidden)
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(false);
+            }
+        } else
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(true);
+            }
+        }
     }
 
     @AfterViews
@@ -185,8 +205,17 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    if (!ishidding  && timethread!=null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     return;
                 }
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
+
 
             }
 
@@ -195,6 +224,11 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
             {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
+
             }
         });
     }
@@ -232,6 +266,7 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                     } else
                     {
                         listNewData = new ArrayList<jobtab>();
+                        tv_worknumber.setText( "0条");
                         frame_listview_news.setVisibility(View.GONE);
                     }
                 } else
@@ -533,9 +568,10 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                 {
                     try
                     {
-                        Thread.sleep(AppContext.TIME_REFRESH);
+                        timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getCmdNum();
+                        timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();

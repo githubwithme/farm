@@ -1,42 +1,33 @@
 package com.farm.ui;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_PQ_CommandListAdapter;
+import com.farm.adapter.Common_TodayJobAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
-import com.farm.bean.areatab;
-import com.farm.bean.commandtab;
+import com.farm.bean.SelectRecords;
 import com.farm.bean.commembertab;
-import com.farm.common.DictionaryHelper;
+import com.farm.bean.jobtab;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
 import com.farm.widget.NewDataToast;
@@ -49,8 +40,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -59,94 +49,82 @@ import java.util.HashMap;
 import java.util.List;
 
 @SuppressLint("NewApi")
-@EActivity(R.layout.cz_pq_todaycommand)
-public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
+@EFragment
+public class Common_MoreJobFragment extends Fragment
 {
-    boolean ishidding = false;
-    TimeThread timethread;
-    SelectorFragment selectorUi;
+    List<SelectRecords> list_SelectRecords;
+    //	SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
-    private NCZ_PQ_CommandListAdapter listAdapter;
+    private Common_TodayJobAdapter listAdapter;
     private int listSumData;
-    private List<commandtab> listData = new ArrayList<commandtab>();
+    private List<jobtab> listData = new ArrayList<jobtab>();
     private AppContext appContext;
     private View list_footer;
     private TextView list_foot_more;
     private ProgressBar list_foot_progress;
-    PopupWindow pw_tab;
-    View pv_tab;
-    PopupWindow pw_command;
-    View pv_command;
-    @ViewById
-    TextView tv_title;
+    // List<String> type_Data = new ArrayList<String>();
+    // List<View> type_laout = new ArrayList<View>();
+    PopupWindow popupWindow_tab;
+    View popupWindowView_tab;
     @ViewById
     View line;
     @ViewById
-    Button btn_more;
-    @ViewById
     PullToRefreshListView frame_listview_news;
+//    String workuserid;
     Dictionary dictionary;
-    areatab areatab;
-
-    @Click
-    void btn_more()
-    {
-//        showPop_addcommand();
-    }
+    com.farm.bean.areatab areatab;
 
     @Override
     public void onResume()
     {
         super.onResume();
-        ishidding = false;
-        if (timethread != null)
-        {
-            timethread.setSleep(false);
-        }
-
-    }
-
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        ishidding = true;
-        if (timethread != null)
-        {
-            timethread.setSleep(true);
-        }
-
+//        if (listData.isEmpty())
+//        {
+//            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+//
+//        } else
+//        {
+//            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+//        }
     }
 
     @AfterViews
     void afterOncreate()
     {
-        dictionary = DictionaryHelper.getDictionaryFromAssess(CZ_PQ_TodayCommand.this, "NCZ_CMD");
-        selectorUi = new SelectorFragment_();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", dictionary);
-        selectorUi.setArguments(bundle);
-        switchContent(mContent, selectorUi);
+//		selectorUi = new SelectorFragment_();
+//        dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "PG_MOREJOB");
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("bean", dictionary);
+//		selectorUi.setArguments(bundle);
+//		switchContent(mContent, selectorUi);
+//		tv_title.setText("更多工作");
+        appContext = (AppContext) getActivity().getApplication();
         initAnimalListView();
-        tv_title.setText(areatab.getRealName()+"今日指令");
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        getActionBar().hide();
-        appContext = (AppContext) CZ_PQ_TodayCommand.this.getApplication();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        CZ_PQ_TodayCommand.this.registerReceiver(receiver_update, intentfilter_update);
-        areatab = getIntent().getParcelableExtra("bean");
-        timethread = new TimeThread();
-        timethread.setStop(false);
-        timethread.setSleep(false);
-        timethread.start();
+        View rootView = inflater.inflate(R.layout.common_morejob, container, false);
+        appContext = (AppContext) getActivity().getApplication();
+        IntentFilter intentfilter_updateselect = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+        getActivity().registerReceiver(receiver_updateselect, intentfilter_updateselect);
+        IntentFilter intentfilter_updatesort = new IntentFilter(AppContext.BROADCAST_UPDATEPCMD_SORT);
+        getActivity().registerReceiver(receiver_updatesort, intentfilter_updatesort);
+        areatab = getArguments().getParcelable("bean");
+        return rootView;
     }
 
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    BroadcastReceiver receiver_updatesort = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+        }
+    };
+    BroadcastReceiver receiver_updateselect = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
@@ -164,7 +142,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             if (!to.isAdded())
             { // 先判断是否被add过
-                transaction.hide(from).add(R.id.top_container_cmd, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+                transaction.hide(from).add(R.id.top_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
             } else
             {
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
@@ -174,19 +152,19 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-        String strWher = DictionaryHelper.getStrWhere_ncz_cmd(CZ_PQ_TodayCommand.this, dictionary);
-        String orderby = selectorUi.getOrderby();
-        commembertab commembertab = AppContext.getUserInfo(CZ_PQ_TodayCommand.this);
+//		String strWher = DictionaryHelper.getStrWhere_morejob(getActivity(), dictionary.getBELONG());
+//		String orderby = selectorUi.getOrderby();
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("workuserid", areatab.getWorkuserid());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("orderby", orderby);
-        params.addQueryStringParameter("strWhere", strWher);
+        params.addQueryStringParameter("orderby", "");
+        params.addQueryStringParameter("strWhere", "");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "commandGetList");
+        params.addQueryStringParameter("action", "jobGetListMore");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -194,27 +172,22 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<commandtab> listNewData = null;
+                List<jobtab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), commandtab.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
                     } else
                     {
-                        listNewData = new ArrayList<commandtab>();
+                        listNewData = new ArrayList<jobtab>();
                     }
                 } else
                 {
-                    AppContext.makeToast(CZ_PQ_TodayCommand.this, "error_connectDataBase");
-                    if (!ishidding && timethread != null)
-                    {
-                        timethread.setSleep(false);
-                    }
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
                     return;
                 }
-
                 // 数据处理
                 int size = listNewData.size();
 
@@ -232,12 +205,12 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                                 {
                                     if (listData.size() > 0)// 页面切换时，若之前列表中已有数据，则往上面添加，并判断去除重复
                                     {
-                                        for (commandtab commandtab1 : listNewData)
+                                        for (jobtab jobtab1 : listNewData)
                                         {
                                             boolean b = false;
-                                            for (commandtab commandtab2 : listData)
+                                            for (jobtab jobtab2 : listData)
                                             {
-                                                if (commandtab1.getId().equals(commandtab2.getId()))
+                                                if (jobtab1.getId().equals(jobtab2.getId()))
                                                 {
                                                     b = true;
                                                     break;
@@ -262,10 +235,10 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(CZ_PQ_TodayCommand.this, getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else
                             {
-                                // NewDataToast.makeText(NCZ_PQ_CommandList.this,
+                                // NewDataToast.makeText(Common_MoreJob.this,
                                 // getString(R.string.new_data_toast_none), false,
                                 // R.raw.newdatatoast).show();
                             }
@@ -278,18 +251,18 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                                 listSumData += size;
                                 if (listNewData.size() > 0)
                                 {
-                                    for (commandtab commandtab1 : listNewData)
+                                    for (jobtab jobtab1 : listNewData)
                                     {
                                         boolean b = false;
-                                        for (commandtab commandtab2 : listData)
+                                        for (jobtab jobtab2 : listData)
                                         {
-                                            if (commandtab1.getId().equals(commandtab2.getId()))
+                                            if (jobtab1.getId().equals(jobtab2.getId()))
                                             {
                                                 b = true;
                                                 break;
                                             }
                                         }
-                                        if (!b) listData.add(commandtab1);
+                                        if (!b) listData.add(jobtab1);
                                     }
                                 } else
                                 {
@@ -321,7 +294,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                     // 有异常--显示加载出错 & 弹出错误消息
                     lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                     more.setText(R.string.load_error);
-                    AppContext.makeToast(CZ_PQ_TodayCommand.this, "load_error");
+                    AppContext.makeToast(getActivity(), "load_error");
                 }
                 if (adapter.getCount() == 0)
                 {
@@ -339,29 +312,20 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
-                if (!ishidding && timethread != null)
-                {
-                    timethread.setSleep(false);
-                }
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                String a = error.getMessage();
-                AppContext.makeToast(CZ_PQ_TodayCommand.this, "error_connectServer");
-                if (!ishidding && timethread != null)
-                {
-                    timethread.setSleep(false);
-                }
+                AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
     }
 
     private void initAnimalListView()
     {
-        listAdapter = new NCZ_PQ_CommandListAdapter(CZ_PQ_TodayCommand.this, listData);
-        list_footer = CZ_PQ_TodayCommand.this.getLayoutInflater().inflate(R.layout.listview_footer, null);
+        listAdapter = new Common_TodayJobAdapter(getActivity(), listData);
+        list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         frame_listview_news.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
@@ -386,13 +350,13 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                 // }
                 // if (animal == null)
                 // return;
-                commandtab commandtab = listData.get(position - 1);
-                if (commandtab == null) return;
-                commembertab commembertab = AppContext.getUserInfo(CZ_PQ_TodayCommand.this);
-                AppContext.updateStatus(CZ_PQ_TodayCommand.this, "0", commandtab.getId(), "2", commembertab.getId());
-                Intent intent = new Intent(CZ_PQ_TodayCommand.this, Common_CommandDetail_Show_.class);
-                intent.putExtra("cmdid", commandtab.getId());// 因为list中添加了头部,因此要去掉一个
-                startActivity(intent);
+                jobtab jobtab = listData.get(position - 1);
+                if (jobtab == null) return;
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                AppContext.updateStatus(getActivity(), "0", jobtab.getId(), "1", commembertab.getId());
+                Intent intent = new Intent(getActivity(), Common_JobDetail_Show_.class);
+                intent.putExtra("bean", jobtab); // 因为list中添加了头部,因此要去掉一个
+                getActivity().startActivity(intent);
             }
         });
         frame_listview_news.setOnScrollListener(new AbsListView.OnScrollListener()
@@ -450,44 +414,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
         }
     }
 
-    public void showPop_addcommand()
-    {
-        LayoutInflater layoutInflater = (LayoutInflater) CZ_PQ_TodayCommand.this.getSystemService(CZ_PQ_TodayCommand.this.LAYOUT_INFLATER_SERVICE);
-        pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
-        pv_command.setOnKeyListener(new OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
-                {
-                    pw_command.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        pv_command.setOnTouchListener(new OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_command.isShowing())
-                {
-                    pw_command.dismiss();
-                }
-                return false;
-            }
-        });
-        pw_command = new PopupWindow(pv_command, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, true);
-        pw_command.showAsDropDown(line, 0, 0);
-        pw_command.setOutsideTouchable(true);
-        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(this);
-        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(this);
-        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(this);
-    }
-
-    public class TitleAdapter extends BaseAdapter
+    public class yqAdapter extends BaseAdapter
     {
         private Context context;
         private List<String> listItems;
@@ -499,7 +426,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
             public TextView tv_yq;
         }
 
-        public TitleAdapter(Context context, List<String> data)
+        public yqAdapter(Context context, List<String> data)
         {
             this.context = context;
             this.listContainer = LayoutInflater.from(context);
@@ -545,77 +472,5 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
         {
             return 0;
         }
-    }
-
-    @Override
-    public void onClick(View v)
-    {
-        Intent intent;
-        switch (v.getId())
-        {
-            case R.id.btn_standardprocommand:
-                intent = new Intent(CZ_PQ_TodayCommand.this, AddStandardCommand_.class);
-                startActivity(intent);
-                break;
-            case R.id.btn_nonstandardprocommand:
-                intent = new Intent(CZ_PQ_TodayCommand.this, AddNotStandardCommand_.class);
-                startActivity(intent);
-                break;
-            case R.id.btn_nonprocommand:
-                intent = new Intent(CZ_PQ_TodayCommand.this, AddNotProductCommand_.class);
-                startActivity(intent);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    class TimeThread extends Thread
-    {
-        private boolean isSleep = true;
-        private boolean stop = false;
-
-        public void run()
-        {
-            Long starttime = 0l;
-            while (!stop)
-            {
-                if (isSleep)
-                {
-                } else
-                {
-                    try
-                    {
-                        timethread.sleep(AppContext.TIME_REFRESH);
-                        starttime = starttime + 1000;
-                        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-                        timethread.setSleep(true);
-                    } catch (InterruptedException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        public void setSleep(boolean sleep)
-        {
-            isSleep = sleep;
-        }
-
-        public void setStop(boolean stop)
-        {
-            this.stop = stop;
-        }
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        timethread.setStop(true);
-        timethread.interrupt();
-        timethread = null;
     }
 }

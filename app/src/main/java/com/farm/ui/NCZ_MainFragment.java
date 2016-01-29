@@ -45,7 +45,12 @@ public class NCZ_MainFragment extends Fragment
 	TextView tv_day;
 	@ViewById
 	TextView tv_title;
-
+	@Override
+	public void onHiddenChanged(boolean hidden)
+	{
+		super.onHiddenChanged(hidden);
+		ncz_WorkList.setThreadStatus(hidden);
+	}
 
 	@AfterViews
 	void afterOncreate()

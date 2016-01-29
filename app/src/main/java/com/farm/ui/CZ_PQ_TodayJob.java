@@ -47,6 +47,7 @@ import java.util.List;
 @EActivity(R.layout.cz_pq_todayjob)
 public class CZ_PQ_TodayJob extends Activity
 {
+	boolean ishidding = false;
 	TimeThread timethread;
 	private CZ_PQ_TodayJobAdapter listAdapter;
 	private int listSumData;
@@ -78,7 +79,29 @@ public class CZ_PQ_TodayJob extends Activity
 		intent.putExtra("workuserid", areatab.getWorkuserid());
 		startActivity(intent);
 	}
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		ishidding = false;
+		if (timethread != null)
+		{
+			timethread.setSleep(false);
+		}
 
+	}
+
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+		ishidding = true;
+		if (timethread != null)
+		{
+			timethread.setSleep(true);
+		}
+
+	}
 	@AfterViews
 	void afteroncreate()
 	{
@@ -98,19 +121,6 @@ public class CZ_PQ_TodayJob extends Activity
 		timethread.start();
 	}
 
-	@Override
-	protected void onResume()
-	{
-		super.onResume();
-		if (listData.isEmpty())
-		{
-			getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-
-		} else
-		{
-			getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-		}
-	}
 
 	private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
 	{
@@ -149,6 +159,10 @@ public class CZ_PQ_TodayJob extends Activity
 				} else
 				{
 					AppContext.makeToast(CZ_PQ_TodayJob.this, "error_connectDataBase");
+					if (!ishidding && timethread != null)
+					{
+						timethread.setSleep(false);
+					}
 					return;
 				}
 
@@ -277,6 +291,10 @@ public class CZ_PQ_TodayJob extends Activity
 					lv.onRefreshComplete();
 					lv.setSelection(0);
 				}
+				if (!ishidding && timethread != null)
+				{
+					timethread.setSleep(false);
+				}
 			}
 
 			@Override
@@ -284,6 +302,10 @@ public class CZ_PQ_TodayJob extends Activity
 			{
 				String a = error.getMessage();
 				AppContext.makeToast(CZ_PQ_TodayJob.this, "error_connectServer");
+				if (!ishidding && timethread != null)
+				{
+					timethread.setSleep(false);
+				}
 			}
 		});
 	}
@@ -399,9 +421,10 @@ public class CZ_PQ_TodayJob extends Activity
 				{
 					try
 					{
-						Thread.sleep(AppContext.TIME_REFRESH);
+						timethread.sleep(AppContext.TIME_REFRESH);
 						starttime = starttime + 1000;
 						getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+						timethread.setSleep(true);
 					} catch (InterruptedException e)
 					{
 						e.printStackTrace();

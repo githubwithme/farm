@@ -39,7 +39,7 @@ public class AppContext extends Application
     public final static String BROADCAST_SELECTOR = "SELECTOR";
     public final static String BROADCAST_REFRESHRECORD = "REFRESHRECORD";
     public final static String TAG_NCZ_CMD = "TAG_NCZ_CMD";
-    public final static int TIME_REFRESH = 20000;
+    public final static int TIME_REFRESH = 15000;
 
     public final static int TIME_STOPWATCH = 1001;
     public final static int DISTANCEBETWEEN = 1002;

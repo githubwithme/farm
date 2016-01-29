@@ -20,8 +20,8 @@ import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
 import com.farm.common.SqliteDb;
 import com.farm.ui.CZ_GddList_;
-import com.farm.ui.CZ_PQ_TodayCommand_;
-import com.farm.ui.CZ_PQ_TodayJob_;
+import com.farm.ui.JobList_;
+import com.farm.ui.NCZ_PG_CommandList_;
 import com.farm.widget.CircleImageView;
 
 import java.util.HashMap;
@@ -112,7 +112,7 @@ public class CZ_ToDayPQdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    Intent intent = new Intent(context, CZ_PQ_TodayCommand_.class);
+                    Intent intent = new Intent(context, NCZ_PG_CommandList_.class);
                     intent.putExtra("bean", listItems.get(v.getId()));// 因为list中添加了头部,因此要去掉一个
                     context.startActivity(intent);
                 }
@@ -133,7 +133,7 @@ public class CZ_ToDayPQdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    Intent intent = new Intent(context, CZ_PQ_TodayJob_.class);
+                    Intent intent = new Intent(context, JobList_.class);
                     intent.putExtra("bean", listItems.get(v.getId()));// 因为list中添加了头部,因此要去掉一个
                     context.startActivity(intent);
                 }

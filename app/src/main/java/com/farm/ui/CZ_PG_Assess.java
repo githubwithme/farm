@@ -416,7 +416,7 @@ public class CZ_PG_Assess extends Activity
                             Dictionary dic = lsitNewData.get(0);
                             cz_pg_assess_expandAdapter = new CZ_PG_Assess_ExpandAdapter(CZ_PG_Assess.this, dic, expandableListView);
                             expandableListView.setAdapter(cz_pg_assess_expandAdapter);
-                            utils.setListViewHeight(expandableListView);
+//                            utils.setListViewHeight(expandableListView);
 //                            for (int i = 0; i < dic.getFirstItemName().size(); i++)
 //                            {
 //                                expandableListView.expandGroup(i);

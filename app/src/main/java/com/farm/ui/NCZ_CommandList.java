@@ -25,6 +25,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -63,6 +64,7 @@ import java.util.List;
 @EFragment
 public class NCZ_CommandList extends Fragment implements OnClickListener
 {
+    boolean ishidding=false;
     Dictionary dictionary = new Dictionary();
     TimeThread timethread;
     SelectorFragment selectorUi;
@@ -108,6 +110,47 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
         getArealist();
         initAnimalListView();
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden)
+    {
+        ishidding=hidden;
+        super.onHiddenChanged(hidden);
+        if (!hidden)
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(false);
+            }
+        } else
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(true);
+            }
+        }
+    }
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser)
+//    {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser)
+//        {
+//            Toast.makeText(getActivity(),"isVisibleToUser=true",Toast.LENGTH_SHORT).show();
+//            if (timethread != null)
+//            {
+//                timethread.setStop(false);
+//            }
+//        } else
+//        {
+//            Toast.makeText(getActivity(),"isVisibleToUser=false",Toast.LENGTH_SHORT).show();
+//            if (timethread != null)
+//            {
+//                timethread.setStop(true);
+//            }
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -217,6 +260,12 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
+//                    Toast.makeText(getActivity(),"error_connectDataBase",Toast.LENGTH_SHORT).show();
+                    if (!ishidding  && timethread!=null)
+                    {
+                        timethread.setSleep(false);
+                    }
+
                     return;
                 }
 
@@ -344,13 +393,22 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                Toast.makeText(getActivity(),"error_connectServer",Toast.LENGTH_SHORT).show();
+//                AppContext.makeToast(getActivity(), "error_connectServer");
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
             }
         });
     }
@@ -607,9 +665,10 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 {
                     try
                     {
-                        Thread.sleep(AppContext.TIME_REFRESH);
+                        timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                        timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();

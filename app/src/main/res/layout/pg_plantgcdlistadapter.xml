@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/s2"
+                android:background="@drawable/noimg"
                 android:scaleType="fitXY"/>
         </LinearLayout>
 

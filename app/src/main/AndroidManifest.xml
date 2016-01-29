@@ -63,6 +63,8 @@
         <activity android:name=".ui.AddCommand_BZSC_"/>
         <activity android:name=".ui.NCZ_PQ_TodayCommand_"/>
         <activity android:name=".ui.NCZ_GddList_"/>
+        <activity android:name=".ui.JobList_"/>
+        <activity android:name=".ui.NCZ_PG_CommandList_"/>
         <activity android:name=".ui.NCZ_GrowthTreeActivity_"/>
         <activity android:name=".ui.NCZ_PQ_TodayJob_"/>
         <activity android:name=".ui.NCZ_CZ_CommandDetail_"/>

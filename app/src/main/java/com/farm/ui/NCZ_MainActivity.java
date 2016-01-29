@@ -44,7 +44,7 @@ import java.util.List;
 public class NCZ_MainActivity extends BaseActivity
 {
 	MyDialog myDialog;
-	TimeThread timethread;
+//	TimeThread timethread;
 	int cmd_videoNum;
 	Fragment mContent = new Fragment();
 	NCZ_MainFragment mainFragment;
@@ -232,10 +232,10 @@ public class NCZ_MainActivity extends BaseActivity
 
 		iFragment = new IFragment_();
 
-		timethread = new TimeThread();
-		timethread.setStop(false);
-		timethread.setSleep(false);
-		timethread.start();
+//		timethread = new TimeThread();
+//		timethread.setStop(false);
+//		timethread.setSleep(false);
+//		timethread.start();
 	}
 
 	public void switchContent(Fragment from, Fragment to)
@@ -347,9 +347,9 @@ public class NCZ_MainActivity extends BaseActivity
 	{
 		super.onDestroy();
 		AppManager.getAppManager().AppExit(NCZ_MainActivity.this);
-		timethread.setStop(true);
-		timethread.interrupt();
-		timethread = null;
+//		timethread.setStop(true);
+//		timethread.interrupt();
+//		timethread = null;
 	}
 
 	@Override

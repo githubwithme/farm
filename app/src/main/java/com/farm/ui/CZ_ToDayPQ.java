@@ -49,6 +49,7 @@ import java.util.List;
 @EActivity(R.layout.cz_todaypq)
 public class CZ_ToDayPQ extends Activity
 {
+    boolean ishidding = false;
     TimeThread timethread;
     private CZ_ToDayPQdapter listAdapter;
     private int listSumData;
@@ -84,13 +85,22 @@ public class CZ_ToDayPQ extends Activity
     public void onResume()
     {
         super.onResume();
-        if (listData.isEmpty())
+        ishidding = false;
+        if (timethread != null)
         {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            timethread.setSleep(false);
+        }
 
-        } else
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        ishidding = true;
+        if (timethread != null)
         {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            timethread.setSleep(true);
         }
 
     }
@@ -144,6 +154,10 @@ public class CZ_ToDayPQ extends Activity
                 } else
                 {
                     AppContext.makeToast(CZ_ToDayPQ.this, "error_connectDataBase");
+                    if (!ishidding && timethread != null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     return;
                 }
 
@@ -268,6 +282,10 @@ public class CZ_ToDayPQ extends Activity
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
             }
 
             @Override
@@ -275,6 +293,10 @@ public class CZ_ToDayPQ extends Activity
             {
                 String a = error.getMessage();
                 AppContext.makeToast(CZ_ToDayPQ.this, "error_connectServer");
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
             }
         });
     }
@@ -386,9 +408,10 @@ public class CZ_ToDayPQ extends Activity
                 {
                     try
                     {
-                        Thread.sleep(AppContext.TIME_REFRESH);
+                        timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                        timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();

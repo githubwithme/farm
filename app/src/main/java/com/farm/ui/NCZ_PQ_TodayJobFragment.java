@@ -1,42 +1,27 @@
 package com.farm.ui;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.PopupWindow;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_PQ_CommandListAdapter;
+import com.farm.adapter.Common_TodayJobAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
 import com.farm.bean.areatab;
-import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
-import com.farm.common.DictionaryHelper;
+import com.farm.bean.jobtab;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
 import com.farm.widget.NewDataToast;
@@ -50,143 +35,96 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
-@SuppressLint("NewApi")
-@EActivity(R.layout.cz_pq_todaycommand)
-public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
+@EFragment
+public class NCZ_PQ_TodayJobFragment extends Fragment
 {
     boolean ishidding = false;
     TimeThread timethread;
-    SelectorFragment selectorUi;
-    Fragment mContent = new Fragment();
-    private NCZ_PQ_CommandListAdapter listAdapter;
+    private Common_TodayJobAdapter listAdapter;
     private int listSumData;
-    private List<commandtab> listData = new ArrayList<commandtab>();
+    private List<jobtab> listData = new ArrayList<jobtab>();
     private AppContext appContext;
     private View list_footer;
     private TextView list_foot_more;
     private ProgressBar list_foot_progress;
-    PopupWindow pw_tab;
-    View pv_tab;
-    PopupWindow pw_command;
-    View pv_command;
-    @ViewById
-    TextView tv_title;
-    @ViewById
-    View line;
-    @ViewById
-    Button btn_more;
+    Common_TodayJobAdapter adapter;
+    List<jobtab> list;
     @ViewById
     PullToRefreshListView frame_listview_news;
-    Dictionary dictionary;
+    @ViewById
+    LinearLayout ll_tip;
+    Fragment mContent = new Fragment();
+
     areatab areatab;
 
     @Click
     void btn_more()
     {
-//        showPop_addcommand();
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        ishidding = false;
-        if (timethread != null)
-        {
-            timethread.setSleep(false);
-        }
-
-    }
-
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        ishidding = true;
-        if (timethread != null)
-        {
-            timethread.setSleep(true);
-        }
-
+        Intent intent = new Intent(getActivity(), Common_MoreJob_.class);
+        intent.putExtra("workuserid", areatab.getWorkuserid());
+        startActivity(intent);
     }
 
     @AfterViews
-    void afterOncreate()
+    void afteroncreate()
     {
-        dictionary = DictionaryHelper.getDictionaryFromAssess(CZ_PQ_TodayCommand.this, "NCZ_CMD");
-        selectorUi = new SelectorFragment_();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", dictionary);
-        selectorUi.setArguments(bundle);
-        switchContent(mContent, selectorUi);
+//        tv_title.setText(areatab.getRealName() + "今日工作情况");
         initAnimalListView();
-        tv_title.setText(areatab.getRealName()+"今日指令");
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        getActionBar().hide();
-        appContext = (AppContext) CZ_PQ_TodayCommand.this.getApplication();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        CZ_PQ_TodayCommand.this.registerReceiver(receiver_update, intentfilter_update);
-        areatab = getIntent().getParcelableExtra("bean");
+        View rootView = inflater.inflate(R.layout.cz_pq_todayjobfragment, container, false);
+        areatab = getArguments().getParcelable("bean");
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
         timethread.start();
+        return rootView;
     }
 
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
-    {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-        }
-    };
 
-    public void switchContent(Fragment from, Fragment to)
+    @Override
+    public void onHiddenChanged(boolean hidden)
     {
-        if (mContent != to)
+        ishidding = hidden;
+        super.onHiddenChanged(hidden);
+        if (!hidden)
         {
-            mContent = to;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if (!to.isAdded())
-            { // 先判断是否被add过
-                transaction.hide(from).add(R.id.top_container_cmd, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else
+            if (timethread != null)
             {
-                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+                timethread.setSleep(false);
+            }
+        } else
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(true);
             }
         }
     }
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-        String strWher = DictionaryHelper.getStrWhere_ncz_cmd(CZ_PQ_TodayCommand.this, dictionary);
-        String orderby = selectorUi.getOrderby();
-        commembertab commembertab = AppContext.getUserInfo(CZ_PQ_TodayCommand.this);
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("workuserid", areatab.getWorkuserid());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("orderby", orderby);
-        params.addQueryStringParameter("strWhere", strWher);
+        params.addQueryStringParameter("username", commembertab.getrealName());
+        params.addQueryStringParameter("orderby", "regDate desc");
+        params.addQueryStringParameter("strWhere", "");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "commandGetList");
+        params.addQueryStringParameter("action", "jobGetList");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -194,20 +132,23 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<commandtab> listNewData = null;
+                List<jobtab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), commandtab.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                        ll_tip.setVisibility(View.GONE);
+                        frame_listview_news.setVisibility(View.VISIBLE);
                     } else
                     {
-                        listNewData = new ArrayList<commandtab>();
+                        listNewData = new ArrayList<jobtab>();
+                        frame_listview_news.setVisibility(View.GONE);
                     }
                 } else
                 {
-                    AppContext.makeToast(CZ_PQ_TodayCommand.this, "error_connectDataBase");
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
                     if (!ishidding && timethread != null)
                     {
                         timethread.setSleep(false);
@@ -232,12 +173,12 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                                 {
                                     if (listData.size() > 0)// 页面切换时，若之前列表中已有数据，则往上面添加，并判断去除重复
                                     {
-                                        for (commandtab commandtab1 : listNewData)
+                                        for (jobtab jobtab1 : listNewData)
                                         {
                                             boolean b = false;
-                                            for (commandtab commandtab2 : listData)
+                                            for (jobtab jobtab2 : listData)
                                             {
-                                                if (commandtab1.getId().equals(commandtab2.getId()))
+                                                if (jobtab1.getId().equals(jobtab2.getId()))
                                                 {
                                                     b = true;
                                                     break;
@@ -262,10 +203,10 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(CZ_PQ_TodayCommand.this, getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else
                             {
-                                // NewDataToast.makeText(NCZ_PQ_CommandList.this,
+                                // NewDataToast.makeText(CZ_Pg_TodayJob.this,
                                 // getString(R.string.new_data_toast_none), false,
                                 // R.raw.newdatatoast).show();
                             }
@@ -278,18 +219,18 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                                 listSumData += size;
                                 if (listNewData.size() > 0)
                                 {
-                                    for (commandtab commandtab1 : listNewData)
+                                    for (jobtab jobtab1 : listNewData)
                                     {
                                         boolean b = false;
-                                        for (commandtab commandtab2 : listData)
+                                        for (jobtab jobtab2 : listData)
                                         {
-                                            if (commandtab1.getId().equals(commandtab2.getId()))
+                                            if (jobtab1.getId().equals(jobtab2.getId()))
                                             {
                                                 b = true;
                                                 break;
                                             }
                                         }
-                                        if (!b) listData.add(commandtab1);
+                                        if (!b) listData.add(jobtab1);
                                     }
                                 } else
                                 {
@@ -321,7 +262,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                     // 有异常--显示加载出错 & 弹出错误消息
                     lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                     more.setText(R.string.load_error);
-                    AppContext.makeToast(CZ_PQ_TodayCommand.this, "load_error");
+                    AppContext.makeToast(getActivity(), "load_error");
                 }
                 if (adapter.getCount() == 0)
                 {
@@ -349,7 +290,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(CZ_PQ_TodayCommand.this, "error_connectServer");
+                AppContext.makeToast(getActivity(), "error_connectServer");
                 if (!ishidding && timethread != null)
                 {
                     timethread.setSleep(false);
@@ -360,8 +301,8 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
 
     private void initAnimalListView()
     {
-        listAdapter = new NCZ_PQ_CommandListAdapter(CZ_PQ_TodayCommand.this, listData);
-        list_footer = CZ_PQ_TodayCommand.this.getLayoutInflater().inflate(R.layout.listview_footer, null);
+        listAdapter = new Common_TodayJobAdapter(getActivity(), listData);
+        list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         frame_listview_news.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
@@ -386,13 +327,23 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                 // }
                 // if (animal == null)
                 // return;
-                commandtab commandtab = listData.get(position - 1);
-                if (commandtab == null) return;
-                commembertab commembertab = AppContext.getUserInfo(CZ_PQ_TodayCommand.this);
-                AppContext.updateStatus(CZ_PQ_TodayCommand.this, "0", commandtab.getId(), "2", commembertab.getId());
-                Intent intent = new Intent(CZ_PQ_TodayCommand.this, Common_CommandDetail_Show_.class);
-                intent.putExtra("cmdid", commandtab.getId());// 因为list中添加了头部,因此要去掉一个
-                startActivity(intent);
+                jobtab jobtab = listData.get(position - 1);
+                if (jobtab == null) return;
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                AppContext.updateStatus(getActivity(), "0", jobtab.getId(), "1", commembertab.getId());
+
+                if (commembertab.getnlevel().equals("0"))
+                {
+                    Intent intent = new Intent(getActivity(), Common_JobDetail_Show_.class);
+                    intent.putExtra("bean", jobtab);// 因为list中添加了头部,因此要去掉一个
+                    startActivity(intent);
+                } else
+                {
+                    Intent intent = new Intent(getActivity(), Common_JobDetail_Assess_.class);
+                    intent.putExtra("bean", jobtab);// 因为list中添加了头部,因此要去掉一个
+                    startActivity(intent);
+                }
+
             }
         });
         frame_listview_news.setOnScrollListener(new AbsListView.OnScrollListener()
@@ -450,127 +401,6 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
         }
     }
 
-    public void showPop_addcommand()
-    {
-        LayoutInflater layoutInflater = (LayoutInflater) CZ_PQ_TodayCommand.this.getSystemService(CZ_PQ_TodayCommand.this.LAYOUT_INFLATER_SERVICE);
-        pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
-        pv_command.setOnKeyListener(new OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
-                {
-                    pw_command.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        pv_command.setOnTouchListener(new OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_command.isShowing())
-                {
-                    pw_command.dismiss();
-                }
-                return false;
-            }
-        });
-        pw_command = new PopupWindow(pv_command, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, true);
-        pw_command.showAsDropDown(line, 0, 0);
-        pw_command.setOutsideTouchable(true);
-        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(this);
-        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(this);
-        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(this);
-    }
-
-    public class TitleAdapter extends BaseAdapter
-    {
-        private Context context;
-        private List<String> listItems;
-        private LayoutInflater listContainer;
-        String type;
-
-        class ListItemView
-        {
-            public TextView tv_yq;
-        }
-
-        public TitleAdapter(Context context, List<String> data)
-        {
-            this.context = context;
-            this.listContainer = LayoutInflater.from(context);
-            this.listItems = data;
-        }
-
-        HashMap<Integer, View> lmap = new HashMap<Integer, View>();
-
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
-            type = listItems.get(position);
-            ListItemView listItemView = null;
-            if (lmap.get(position) == null)
-            {
-                convertView = listContainer.inflate(R.layout.yq_item, null);
-                listItemView = new ListItemView();
-                listItemView.tv_yq = (TextView) convertView.findViewById(R.id.tv_yq);
-                lmap.put(position, convertView);
-                convertView.setTag(listItemView);
-            } else
-            {
-                convertView = lmap.get(position);
-                listItemView = (ListItemView) convertView.getTag();
-            }
-            listItemView.tv_yq.setText(type);
-            return convertView;
-        }
-
-        @Override
-        public int getCount()
-        {
-            return listItems.size();
-        }
-
-        @Override
-        public Object getItem(int arg0)
-        {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int arg0)
-        {
-            return 0;
-        }
-    }
-
-    @Override
-    public void onClick(View v)
-    {
-        Intent intent;
-        switch (v.getId())
-        {
-            case R.id.btn_standardprocommand:
-                intent = new Intent(CZ_PQ_TodayCommand.this, AddStandardCommand_.class);
-                startActivity(intent);
-                break;
-            case R.id.btn_nonstandardprocommand:
-                intent = new Intent(CZ_PQ_TodayCommand.this, AddNotStandardCommand_.class);
-                startActivity(intent);
-                break;
-            case R.id.btn_nonprocommand:
-                intent = new Intent(CZ_PQ_TodayCommand.this, AddNotProductCommand_.class);
-                startActivity(intent);
-                break;
-
-            default:
-                break;
-        }
-    }
-
     class TimeThread extends Thread
     {
         private boolean isSleep = true;
@@ -611,11 +441,12 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
     }
 
     @Override
-    protected void onDestroy()
+    public void onDestroyView()
     {
-        super.onDestroy();
+        super.onDestroyView();
         timethread.setStop(true);
         timethread.interrupt();
         timethread = null;
     }
+
 }

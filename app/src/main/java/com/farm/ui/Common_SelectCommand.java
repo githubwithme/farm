@@ -66,6 +66,7 @@ import java.util.concurrent.CountDownLatch;
 @EActivity(R.layout.pg_commandlist)
 public class Common_SelectCommand extends Activity implements OnClickListener
 {
+    boolean ishidding=false;
     commembertab commembertab;
     TimeThread timethread;
     private List<jobtab> joblist;
@@ -134,7 +135,29 @@ public class Common_SelectCommand extends Activity implements OnClickListener
         }
 
     }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        ishidding = false;
+        if (timethread != null)
+        {
+            timethread.setSleep(false);
+        }
 
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        ishidding = true;
+        if (timethread != null)
+        {
+            timethread.setSleep(true);
+        }
+
+    }
     @AfterViews
     void afterOncreate()
     {
@@ -234,7 +257,15 @@ public class Common_SelectCommand extends Activity implements OnClickListener
                 } else
                 {
                     AppContext.makeToast(Common_SelectCommand.this, "error_connectDataBase");
+                    if (!ishidding  && timethread!=null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     return;
+                }
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
                 }
             }
 
@@ -242,6 +273,10 @@ public class Common_SelectCommand extends Activity implements OnClickListener
             public void onFailure(HttpException arg0, String arg1)
             {
                 AppContext.makeToast(Common_SelectCommand.this, "error_connectServer");
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
             }
         });
     }
@@ -785,7 +820,7 @@ public class Common_SelectCommand extends Activity implements OnClickListener
 //                listItemView.circle_img.setImageResource(R.color.color_orange);
                 listItemView.circle_img.setImageResource(R.drawable.fczy);
             }
-            listItemView.tv_time.setText(commandtab.getregDate().substring(0, commandtab.getregDate().lastIndexOf(" ")));
+            listItemView.tv_time.setText(commandtab.getregDate());
             if (commandtab.getcommFromVPath().equals("0"))
             {
                 listItemView.tv_zf.setText(commandtab.getcommFromName()+"下发");
@@ -895,9 +930,10 @@ public class Common_SelectCommand extends Activity implements OnClickListener
                 {
                     try
                     {
-                        Thread.sleep(AppContext.TIME_REFRESH);
+                        timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                        timethread.setSleep(false);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();

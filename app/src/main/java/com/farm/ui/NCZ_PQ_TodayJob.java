@@ -46,6 +46,7 @@ import java.util.List;
 @EActivity(R.layout.cz_pq_todayjob)
 public class NCZ_PQ_TodayJob extends Activity
 {
+    boolean ishidding = false;
     TimeThread timethread;
     private Common_TodayJobAdapter listAdapter;
     private int listSumData;
@@ -101,13 +102,29 @@ public class NCZ_PQ_TodayJob extends Activity
     protected void onResume()
     {
         super.onResume();
-        if (listData.isEmpty())
+        ishidding=false;
+//        if (listData.isEmpty())
+//        {
+//            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+//
+//        } else
+//        {
+//            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+//        }
+        if (timethread != null)
         {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            timethread.setSleep(false);
+        }
+    }
 
-        } else
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        ishidding=true;
+        if (timethread != null)
         {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            timethread.setSleep(true);
         }
     }
 
@@ -148,6 +165,10 @@ public class NCZ_PQ_TodayJob extends Activity
                 } else
                 {
                     AppContext.makeToast(NCZ_PQ_TodayJob.this, "error_connectDataBase");
+                    if (!ishidding && timethread != null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     return;
                 }
 
@@ -275,6 +296,10 @@ public class NCZ_PQ_TodayJob extends Activity
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
             }
 
             @Override
@@ -282,6 +307,10 @@ public class NCZ_PQ_TodayJob extends Activity
             {
                 String a = error.getMessage();
                 AppContext.makeToast(NCZ_PQ_TodayJob.this, "error_connectServer");
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
             }
         });
     }
@@ -394,9 +423,10 @@ public class NCZ_PQ_TodayJob extends Activity
                 {
                     try
                     {
-                        Thread.sleep(AppContext.TIME_REFRESH);
+                        timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                        timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();

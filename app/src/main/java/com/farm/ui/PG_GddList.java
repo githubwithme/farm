@@ -55,6 +55,7 @@ import java.util.List;
 @EFragment
 public class PG_GddList extends Fragment
 {
+    boolean ishidding = false;
     Dictionary dictionary;
     TimeThread timethread;
     SelectorFragment selectorUi;
@@ -91,18 +92,25 @@ public class PG_GddList extends Fragment
     }
 
     @Override
-    public void onResume()
+    public void onHiddenChanged(boolean hidden)
     {
-        super.onResume();
-        if (listData.isEmpty())
+        ishidding=hidden;
+        super.onHiddenChanged(hidden);
+        if (!hidden)
         {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-
+            if (timethread != null)
+            {
+                timethread.setSleep(false);
+            }
         } else
         {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            if (timethread != null)
+            {
+                timethread.setSleep(true);
+            }
         }
     }
+
 
     @AfterViews
     void afterOncreate()
@@ -206,6 +214,10 @@ public class PG_GddList extends Fragment
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    if (!ishidding  && timethread!=null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     return;
                 }
                 // 数据处理
@@ -332,12 +344,20 @@ public class PG_GddList extends Fragment
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(getActivity(), "error_connectServer");
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
             }
         });
     }
@@ -519,9 +539,10 @@ public class PG_GddList extends Fragment
                 {
                     try
                     {
-                        Thread.sleep(AppContext.TIME_REFRESH);
+                        timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                        timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();

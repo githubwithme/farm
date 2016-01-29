@@ -54,6 +54,7 @@ import java.util.List;
 @EActivity(R.layout.cz_plantgcdlist)
 public class CZ_GddList extends Activity
 {
+    boolean ishidding = false;
     Dictionary dictionary;
     TimeThread timethread;
     SelectorFragment selectorUi;
@@ -89,19 +90,6 @@ public class CZ_GddList extends Activity
         CZ_GddList.this.startActivity(intent);
     }
 
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        if (listData.isEmpty())
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-
-        } else
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-        }
-    }
 
     @AfterViews
     void afterOncreate()
@@ -120,6 +108,29 @@ public class CZ_GddList extends Activity
         initAnimalListView();
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        ishidding = false;
+        if (timethread != null)
+        {
+            timethread.setSleep(false);
+        }
+
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        ishidding = true;
+        if (timethread != null)
+        {
+            timethread.setSleep(true);
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -163,7 +174,6 @@ public class CZ_GddList extends Activity
     }
 
 
-
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_GddList.this);
@@ -190,7 +200,7 @@ public class CZ_GddList extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-						listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcd.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcd.class);
 //                        JSONObject jsonObject = utils.parseJsonFile(NCZ_GddList.this, "dictionary.json");
 //                        listNewData = JSON.parseArray(JSON.parseObject(jsonObject.getString("img_url"), Result.class).getRows().toJSONString(), PlantGcd.class);
                     } else
@@ -200,6 +210,10 @@ public class CZ_GddList extends Activity
                 } else
                 {
                     AppContext.makeToast(CZ_GddList.this, "error_connectDataBase");
+                    if (!ishidding && timethread != null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     return;
                 }
                 // 数据处理
@@ -326,12 +340,20 @@ public class CZ_GddList extends Activity
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(CZ_GddList.this, "error_connectServer");
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
             }
         });
     }
@@ -369,7 +391,7 @@ public class CZ_GddList extends Activity
                 commembertab commembertab = AppContext.getUserInfo(CZ_GddList.this);
                 AppContext.updateStatus(CZ_GddList.this, "0", PlantGcd.getId(), "3", commembertab.getId());
 
-                areatab areatab=new areatab();
+                areatab areatab = new areatab();
                 areatab.setWorkuserid(commembertab.getId());
                 areatab.setRealName(commembertab.getrealName());
                 areatab.setparkId(commembertab.getparkId());
@@ -379,7 +401,7 @@ public class CZ_GddList extends Activity
 
                 Intent intent = new Intent(CZ_GddList.this, GcdDetail_.class);
                 intent.putExtra("bean_gcd", PlantGcd); // 因为list中添加了头部,因此要去掉一个
-                intent.putExtra("bean_areatab",areatab); // 因为list中添加了头部,因此要去掉一个
+                intent.putExtra("bean_areatab", areatab); // 因为list中添加了头部,因此要去掉一个
                 CZ_GddList.this.startActivity(intent);
             }
         });
@@ -514,9 +536,10 @@ public class CZ_GddList extends Activity
                 {
                     try
                     {
-                        Thread.sleep(AppContext.TIME_REFRESH);
+                        timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                        timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();

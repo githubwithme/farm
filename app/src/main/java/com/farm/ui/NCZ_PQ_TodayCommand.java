@@ -62,6 +62,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_pq_todaycommand)
 public class NCZ_PQ_TodayCommand extends Activity implements OnClickListener
 {
+    boolean ishidding = false;
     com.farm.bean.areatab areatab;
     TimeThread timethread;
     SelectorFragment selectorUi;
@@ -104,6 +105,24 @@ public class NCZ_PQ_TodayCommand extends Activity implements OnClickListener
     public void onResume()
     {
         super.onResume();
+        ishidding = false;
+        if (timethread != null)
+        {
+            timethread.setSleep(false);
+        }
+
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        ishidding = true;
+        if (timethread != null)
+        {
+            timethread.setSleep(true);
+        }
+
     }
 
     @AfterViews
@@ -122,7 +141,7 @@ public class NCZ_PQ_TodayCommand extends Activity implements OnClickListener
         {
             btn_add.setVisibility(View.GONE);
         }
-        tv_title.setText(areatab.getRealName()+"今日指令");
+        tv_title.setText(areatab.getRealName() + "今日指令");
     }
 
     @Override
@@ -202,6 +221,10 @@ public class NCZ_PQ_TodayCommand extends Activity implements OnClickListener
                 } else
                 {
                     AppContext.makeToast(NCZ_PQ_TodayCommand.this, "error_connectDataBase");
+                    if (!ishidding && timethread != null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     return;
                 }
 
@@ -329,6 +352,10 @@ public class NCZ_PQ_TodayCommand extends Activity implements OnClickListener
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
             }
 
             @Override
@@ -336,6 +363,10 @@ public class NCZ_PQ_TodayCommand extends Activity implements OnClickListener
             {
                 String a = error.getMessage();
                 AppContext.makeToast(NCZ_PQ_TodayCommand.this, "error_connectServer");
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
             }
         });
     }
@@ -569,9 +600,10 @@ public class NCZ_PQ_TodayCommand extends Activity implements OnClickListener
                 {
                     try
                     {
-                        Thread.sleep(AppContext.TIME_REFRESH);
+                        timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                        timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();

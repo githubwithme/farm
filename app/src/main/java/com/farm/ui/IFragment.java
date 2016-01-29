@@ -24,7 +24,6 @@ import com.farm.app.AppManager;
 import com.farm.bean.Apk;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
-import com.farm.common.BitmapHelper;
 import com.farm.common.SqliteDb;
 import com.farm.widget.CircleImageView;
 import com.lidroid.xutils.HttpUtils;
@@ -147,7 +146,7 @@ public class IFragment extends Fragment
 		getListData();
 		commembertab commembertab = AppContext.getUserInfo(getActivity());
 //		BitmapHelper.setImageViewBackground(getActivity(), circle_img,AppConfig.baseurl+ commembertab.getimgurl());
-		BitmapHelper.setImageViewBackground(getActivity(), circle_img, AppConfig.baseurl + "/upload/201511/02/201511021602504091.jpg");
+//		BitmapHelper.setImageViewBackground(getActivity(), circle_img, AppConfig.baseurl + "/upload/201511/02/201511021602504091.jpg");
 	}
 
 	@Override

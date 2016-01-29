@@ -158,7 +158,7 @@ public class NCZ_PQ_CommandListAdapter extends BaseAdapter
 			listItemView.tv_type.setText("标准生产指令");
 		}
 		listItemView.tv_qx.setText("开始" + commandtab.getcommComDate());
-		listItemView.tv_time.setText("发布于" + commandtab.getregDate().subSequence(0, commandtab.getregDate().lastIndexOf(" ")));
+		listItemView.tv_time.setText("发布于" + commandtab.getregDate());
 		if (commandtab.getimportance().equals("0"))
 		{
 			listItemView.tv_importance.setText("一般");

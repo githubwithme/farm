@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.farm.R;
-import com.farm.common.TrayNotification;
 import com.farm.ui.GuideViewDoor;
 import com.guide.ViewPager.OnPageChangeListener;
 
@@ -68,7 +67,7 @@ public class Guide_List extends FragmentActivity implements OnPageChangeListener
 	{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		TrayNotification.addNotification(Guide_List.this, R.drawable.logo, "欢迎使用农场易");// 让程序图标显示在托盘通知栏
+//		TrayNotification.addNotification(Guide_List.this, R.drawable.logo, "欢迎使用农场易");// 让程序图标显示在托盘通知栏
 		sp = this.getSharedPreferences("MY_PRE", MODE_PRIVATE);
 		firstUse = sp.getString("firstUse", "");
 		if (firstUse.equals("true"))

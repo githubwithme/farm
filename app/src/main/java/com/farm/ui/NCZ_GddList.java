@@ -54,6 +54,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_plantgcdlist)
 public class NCZ_GddList extends Activity
 {
+    boolean ishidding = false;
     Dictionary dictionary;
     TimeThread timethread;
     SelectorFragment selectorUi;
@@ -92,14 +93,24 @@ public class NCZ_GddList extends Activity
     public void onResume()
     {
         super.onResume();
-        if (listData.isEmpty())
+        ishidding = false;
+        if (timethread != null)
         {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-
-        } else
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            timethread.setSleep(false);
         }
+
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        ishidding = true;
+        if (timethread != null)
+        {
+            timethread.setSleep(true);
+        }
+
     }
 
     @AfterViews
@@ -194,6 +205,10 @@ public class NCZ_GddList extends Activity
                 } else
                 {
                     AppContext.makeToast(NCZ_GddList.this, "error_connectDataBase");
+                    if (!ishidding && timethread != null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     return;
                 }
                 // 数据处理
@@ -320,12 +335,20 @@ public class NCZ_GddList extends Activity
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(NCZ_GddList.this, "error_connectServer");
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
             }
         });
     }
@@ -499,9 +522,10 @@ public class NCZ_GddList extends Activity
                 {
                     try
                     {
-                        Thread.sleep(AppContext.TIME_REFRESH);
+                        timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                        timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();

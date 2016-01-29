@@ -1,27 +1,20 @@
 package com.farm.ui;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,7 +26,6 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
-import com.farm.bean.areatab;
 import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.common.DictionaryHelper;
@@ -49,8 +41,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -59,12 +50,13 @@ import java.util.HashMap;
 import java.util.List;
 
 @SuppressLint("NewApi")
-@EActivity(R.layout.cz_pq_todaycommand)
-public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
+@EFragment
+public class NCZ_PQ_MoreCommandFragment extends Fragment implements OnClickListener
 {
     boolean ishidding = false;
+    com.farm.bean.areatab areatab;
     TimeThread timethread;
-    SelectorFragment selectorUi;
+    //    SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
     private NCZ_PQ_CommandListAdapter listAdapter;
     private int listSumData;
@@ -77,73 +69,69 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
     View pv_tab;
     PopupWindow pw_command;
     View pv_command;
-    @ViewById
-    TextView tv_title;
-    @ViewById
-    View line;
-    @ViewById
-    Button btn_more;
+    //    @ViewById
+//    TextView tv_title;
+//    @ViewById
+//    ImageButton btn_add;
+//    @ViewById
+//    Button btn_more;
     @ViewById
     PullToRefreshListView frame_listview_news;
     Dictionary dictionary;
-    areatab areatab;
 
-    @Click
-    void btn_more()
-    {
-//        showPop_addcommand();
-    }
 
     @Override
-    public void onResume()
+    public void onHiddenChanged(boolean hidden)
     {
-        super.onResume();
-        ishidding = false;
-        if (timethread != null)
+        ishidding = hidden;
+        super.onHiddenChanged(hidden);
+        if (!hidden)
         {
-            timethread.setSleep(false);
-        }
-
-    }
-
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        ishidding = true;
-        if (timethread != null)
+            if (timethread != null)
+            {
+                timethread.setSleep(false);
+            }
+        } else
         {
-            timethread.setSleep(true);
+            if (timethread != null)
+            {
+                timethread.setSleep(true);
+            }
         }
-
     }
 
     @AfterViews
     void afterOncreate()
     {
-        dictionary = DictionaryHelper.getDictionaryFromAssess(CZ_PQ_TodayCommand.this, "NCZ_CMD");
-        selectorUi = new SelectorFragment_();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", dictionary);
-        selectorUi.setArguments(bundle);
-        switchContent(mContent, selectorUi);
+
+        dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "NCZ_CMD");
+//        selectorUi = new SelectorFragment_();
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("bean", dictionary);
+//        selectorUi.setArguments(bundle);
+//        switchContent(mContent, selectorUi);
         initAnimalListView();
-        tv_title.setText(areatab.getRealName()+"今日指令");
+//        commembertab commembertab = AppContext.getUserInfo(getActivity());
+//        if (!commembertab.getnlevel().toString().equals("0"))
+//        {
+//            btn_add.setVisibility(View.GONE);
+//        }
+//        tv_title.setText(areatab.getRealName() + "今日指令");
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        getActionBar().hide();
-        appContext = (AppContext) CZ_PQ_TodayCommand.this.getApplication();
+        View rootView = inflater.inflate(R.layout.ncz_pq_morecommandfragment, container, false);
+        appContext = (AppContext) getActivity().getApplication();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        CZ_PQ_TodayCommand.this.registerReceiver(receiver_update, intentfilter_update);
-        areatab = getIntent().getParcelableExtra("bean");
+        getActivity().registerReceiver(receiver_update, intentfilter_update);
+        areatab = getArguments().getParcelable("bean");
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
         timethread.start();
+        return rootView;
     }
 
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
@@ -174,16 +162,16 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-        String strWher = DictionaryHelper.getStrWhere_ncz_cmd(CZ_PQ_TodayCommand.this, dictionary);
-        String orderby = selectorUi.getOrderby();
-        commembertab commembertab = AppContext.getUserInfo(CZ_PQ_TodayCommand.this);
+//        String strWher = DictionaryHelper.getStrWhere_ncz_cmd(getActivity(), dictionary);
+//        String orderby = selectorUi.getOrderby();
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("workuserid", areatab.getWorkuserid());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("orderby", orderby);
-        params.addQueryStringParameter("strWhere", strWher);
+        params.addQueryStringParameter("orderby", "");
+        params.addQueryStringParameter("strWhere", "zt:2");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
         params.addQueryStringParameter("action", "commandGetList");
@@ -207,7 +195,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                     }
                 } else
                 {
-                    AppContext.makeToast(CZ_PQ_TodayCommand.this, "error_connectDataBase");
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
                     if (!ishidding && timethread != null)
                     {
                         timethread.setSleep(false);
@@ -262,7 +250,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(CZ_PQ_TodayCommand.this, getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else
                             {
                                 // NewDataToast.makeText(NCZ_PQ_CommandList.this,
@@ -321,7 +309,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                     // 有异常--显示加载出错 & 弹出错误消息
                     lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                     more.setText(R.string.load_error);
-                    AppContext.makeToast(CZ_PQ_TodayCommand.this, "load_error");
+                    AppContext.makeToast(getActivity(), "load_error");
                 }
                 if (adapter.getCount() == 0)
                 {
@@ -349,7 +337,7 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(CZ_PQ_TodayCommand.this, "error_connectServer");
+                AppContext.makeToast(getActivity(), "error_connectServer");
                 if (!ishidding && timethread != null)
                 {
                     timethread.setSleep(false);
@@ -360,8 +348,8 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
 
     private void initAnimalListView()
     {
-        listAdapter = new NCZ_PQ_CommandListAdapter(CZ_PQ_TodayCommand.this, listData);
-        list_footer = CZ_PQ_TodayCommand.this.getLayoutInflater().inflate(R.layout.listview_footer, null);
+        listAdapter = new NCZ_PQ_CommandListAdapter(getActivity(), listData);
+        list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         frame_listview_news.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
@@ -388,9 +376,9 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
                 // return;
                 commandtab commandtab = listData.get(position - 1);
                 if (commandtab == null) return;
-                commembertab commembertab = AppContext.getUserInfo(CZ_PQ_TodayCommand.this);
-                AppContext.updateStatus(CZ_PQ_TodayCommand.this, "0", commandtab.getId(), "2", commembertab.getId());
-                Intent intent = new Intent(CZ_PQ_TodayCommand.this, Common_CommandDetail_Show_.class);
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                AppContext.updateStatus(getActivity(), "0", commandtab.getId(), "2", commembertab.getId());
+                Intent intent = new Intent(getActivity(), Common_CommandDetail_Show_.class);
                 intent.putExtra("cmdid", commandtab.getId());// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
             }
@@ -450,42 +438,6 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
         }
     }
 
-    public void showPop_addcommand()
-    {
-        LayoutInflater layoutInflater = (LayoutInflater) CZ_PQ_TodayCommand.this.getSystemService(CZ_PQ_TodayCommand.this.LAYOUT_INFLATER_SERVICE);
-        pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
-        pv_command.setOnKeyListener(new OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
-                {
-                    pw_command.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        pv_command.setOnTouchListener(new OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_command.isShowing())
-                {
-                    pw_command.dismiss();
-                }
-                return false;
-            }
-        });
-        pw_command = new PopupWindow(pv_command, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, true);
-        pw_command.showAsDropDown(line, 0, 0);
-        pw_command.setOutsideTouchable(true);
-        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(this);
-        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(this);
-        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(this);
-    }
 
     public class TitleAdapter extends BaseAdapter
     {
@@ -554,15 +506,15 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
         switch (v.getId())
         {
             case R.id.btn_standardprocommand:
-                intent = new Intent(CZ_PQ_TodayCommand.this, AddStandardCommand_.class);
+                intent = new Intent(getActivity(), AddStandardCommand_.class);
                 startActivity(intent);
                 break;
             case R.id.btn_nonstandardprocommand:
-                intent = new Intent(CZ_PQ_TodayCommand.this, AddNotStandardCommand_.class);
+                intent = new Intent(getActivity(), AddNotStandardCommand_.class);
                 startActivity(intent);
                 break;
             case R.id.btn_nonprocommand:
-                intent = new Intent(CZ_PQ_TodayCommand.this, AddNotProductCommand_.class);
+                intent = new Intent(getActivity(), AddNotProductCommand_.class);
                 startActivity(intent);
                 break;
 
@@ -611,9 +563,9 @@ public class CZ_PQ_TodayCommand extends Activity implements OnClickListener
     }
 
     @Override
-    protected void onDestroy()
+    public void onDestroyView()
     {
-        super.onDestroy();
+        super.onDestroyView();
         timethread.setStop(true);
         timethread.interrupt();
         timethread = null;

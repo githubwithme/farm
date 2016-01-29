@@ -47,6 +47,7 @@ import java.util.List;
 @EFragment
 public class NCZ_YQPQ extends Fragment
 {
+    boolean ishidding = false;
     TimeThread timethread;
     private NCZ_YQPQAdapter listAdapter;
     private int listSumData;
@@ -83,18 +84,47 @@ public class NCZ_YQPQ extends Fragment
         initAnimalListView();
     }
 
+//    @Override
+//    public void onHiddenChanged(boolean hidden)
+//    {
+//
+//    }
+
+    public void  setThreadStatus(boolean hidden)
+    {
+        ishidding = hidden;
+        super.onHiddenChanged(hidden);
+        if (!hidden)
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(false);
+            }
+        } else
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(true);
+            }
+        }
+    }
+
     @Override
     public void onResume()
     {
         super.onResume();
-        if (listData.isEmpty())
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_YQPQ, 0);
-
-        } else
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_YQPQ, 0);
-        }
+//        if (listData.isEmpty())
+//        {
+//            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_YQPQ, 0);
+//
+//        } else
+//        {
+//            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_YQPQ, 0);
+//        }
+//        if (timethread != null)
+//        {
+//            timethread.setStop(false);
+//        }
 
     }
 
@@ -145,6 +175,10 @@ public class NCZ_YQPQ extends Fragment
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    if (!ishidding && timethread!=null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     return;
                 }
 
@@ -274,6 +308,10 @@ public class NCZ_YQPQ extends Fragment
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
             }
 
             @Override
@@ -281,6 +319,10 @@ public class NCZ_YQPQ extends Fragment
             {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
             }
         });
     }
@@ -416,9 +458,10 @@ public class NCZ_YQPQ extends Fragment
                 {
                     try
                     {
-                        Thread.sleep(AppContext.TIME_REFRESH);
+                        timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_YQPQ, 0);
+                        timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();
