@@ -72,7 +72,7 @@ public class Common_MoreJobFragment extends Fragment
     PullToRefreshListView frame_listview_news;
 //    String workuserid;
     Dictionary dictionary;
-    com.farm.bean.areatab areatab;
+   String workuserid;
 
     @Override
     public void onResume()
@@ -111,7 +111,7 @@ public class Common_MoreJobFragment extends Fragment
         getActivity().registerReceiver(receiver_updateselect, intentfilter_updateselect);
         IntentFilter intentfilter_updatesort = new IntentFilter(AppContext.BROADCAST_UPDATEPCMD_SORT);
         getActivity().registerReceiver(receiver_updatesort, intentfilter_updatesort);
-        areatab = getArguments().getParcelable("bean");
+        workuserid = getArguments().getString("workuserid");
         return rootView;
     }
 
@@ -156,7 +156,7 @@ public class Common_MoreJobFragment extends Fragment
 //		String orderby = selectorUi.getOrderby();
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", areatab.getWorkuserid());
+        params.addQueryStringParameter("workuserid",workuserid);
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());

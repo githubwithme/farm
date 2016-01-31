@@ -9,20 +9,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -83,18 +77,11 @@ public class NCZ_PQ_TodayCommand extends Activity implements OnClickListener
     @ViewById
     View line;
     @ViewById
-    ImageButton btn_add;
-    @ViewById
     Button btn_more;
     @ViewById
     PullToRefreshListView frame_listview_news;
     Dictionary dictionary;
 
-    @Click
-    void btn_add()
-    {
-        showPop_addcommand();
-    }
 
     @Click
     void btn_more()
@@ -136,11 +123,6 @@ public class NCZ_PQ_TodayCommand extends Activity implements OnClickListener
         selectorUi.setArguments(bundle);
         switchContent(mContent, selectorUi);
         initAnimalListView();
-        commembertab commembertab = AppContext.getUserInfo(NCZ_PQ_TodayCommand.this);
-        if (!commembertab.getnlevel().toString().equals("0"))
-        {
-            btn_add.setVisibility(View.GONE);
-        }
         tv_title.setText(areatab.getRealName() + "今日指令");
     }
 
@@ -463,42 +445,6 @@ public class NCZ_PQ_TodayCommand extends Activity implements OnClickListener
         }
     }
 
-    public void showPop_addcommand()
-    {
-        LayoutInflater layoutInflater = (LayoutInflater) NCZ_PQ_TodayCommand.this.getSystemService(NCZ_PQ_TodayCommand.this.LAYOUT_INFLATER_SERVICE);
-        pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
-        pv_command.setOnKeyListener(new OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
-                {
-                    pw_command.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        pv_command.setOnTouchListener(new OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_command.isShowing())
-                {
-                    pw_command.dismiss();
-                }
-                return false;
-            }
-        });
-        pw_command = new PopupWindow(pv_command, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, true);
-        pw_command.showAsDropDown(line, 0, 0);
-        pw_command.setOutsideTouchable(true);
-        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(this);
-        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(this);
-        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(this);
-    }
 
     public class TitleAdapter extends BaseAdapter
     {

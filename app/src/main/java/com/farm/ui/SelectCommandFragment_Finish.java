@@ -1,44 +1,43 @@
 package com.farm.ui;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout.LayoutParams;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_CZ_TodayCommandAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
 import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
-import com.farm.common.DictionaryHelper;
+import com.farm.bean.jobtab;
+import com.farm.bean.plantgrowthtab;
+import com.farm.common.SqliteDb;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
+import com.farm.common.utils;
+import com.farm.widget.CircleImageView;
 import com.farm.widget.NewDataToast;
 import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
@@ -50,23 +49,27 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
-@SuppressLint("NewApi")
-@EActivity(R.layout.ncz_cz_todaycommand)
-public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
+@EFragment
+public class SelectCommandFragment_Finish extends Fragment implements OnClickListener
 {
-    boolean ishidding = false;
+    boolean ishidding=false;
+    commembertab commembertab;
     TimeThread timethread;
-    SelectorFragment selectorUi;
+//    private List<jobtab> joblist;
+    CountDownLatch latch;
+    private List<commandtab> listItems_selected = new ArrayList<commandtab>();// 数据集合
+    SelectorFragment_Support selectorUi;
     Fragment mContent = new Fragment();
-    private NCZ_CZ_TodayCommandAdapter listAdapter;
+    private ListViewPGCommandAdapter listAdapter;
     private int listSumData;
     private List<commandtab> listData = new ArrayList<commandtab>();
     private AppContext appContext;
@@ -78,84 +81,64 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
     PopupWindow pw_command;
     View pv_command;
     @ViewById
-    TextView tv_title;
-    @ViewById
-    View line;
-    @ViewById
-    ImageButton btn_add;
-    @ViewById
-    Button btn_more;
-    @ViewById
     PullToRefreshListView frame_listview_news;
+    @ViewById
+    ImageButton btn_more;
     Dictionary dictionary;
-    String workuserid;
-
-    @Click
-    void btn_add()
-    {
-        showPop_addcommand();
-    }
 
     @Click
     void btn_more()
     {
+        Intent intent = new Intent(getActivity(), Command_more_.class);
+        intent.putExtra("workuserid", commembertab.getId());
+        startActivity(intent);
     }
 
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        ishidding = false;
-        if (timethread != null)
-        {
-            timethread.setSleep(false);
-        }
-
-    }
 
     @Override
-    protected void onStop()
+    public void onHiddenChanged(boolean hidden)
     {
-        super.onStop();
-        ishidding = true;
-        if (timethread != null)
+        ishidding=hidden;
+        super.onHiddenChanged(hidden);
+        if (!hidden)
         {
-            timethread.setSleep(true);
+            if (timethread != null)
+            {
+                timethread.setSleep(false);
+            }
+        } else
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(true);
+            }
         }
-
     }
 
     @AfterViews
     void afterOncreate()
     {
-        dictionary = DictionaryHelper.getDictionaryFromAssess(NCZ_CZ_TodayCommand.this, "NCZ_CMD");
-        selectorUi = new SelectorFragment_();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", dictionary);
-        selectorUi.setArguments(bundle);
-        switchContent(mContent, selectorUi);
+//        dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "NCZ_CMD");
+//        selectorUi = new SelectorFragment_Support_();
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("bean", dictionary);
+//        selectorUi.setArguments(bundle);
+//        switchContent(mContent, selectorUi);
         initAnimalListView();
-        commembertab commembertab = AppContext.getUserInfo(NCZ_CZ_TodayCommand.this);
-        if (!commembertab.getnlevel().toString().equals("0"))
-        {
-            btn_add.setVisibility(View.GONE);
-        }
-        tv_title.setText("场长今日指令");
     }
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        getActionBar().hide();
-        appContext = (AppContext) NCZ_CZ_TodayCommand.this.getApplication();
+        View rootView = inflater.inflate(R.layout.selectcommandfragment_finish, container, false);
+        commembertab = AppContext.getUserInfo(getActivity());
+        appContext = (AppContext) getActivity().getApplication();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        NCZ_CZ_TodayCommand.this.registerReceiver(receiver_update, intentfilter_update);
-        workuserid = getIntent().getStringExtra("workuserid");
+        getActivity().registerReceiver(receiver_update, intentfilter_update);
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
         timethread.start();
+        return rootView;
     }
 
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
@@ -176,7 +159,7 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             if (!to.isAdded())
             { // 先判断是否被add过
-                transaction.hide(from).add(R.id.top_container_cmd, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+                transaction.hide(from).add(R.id.top_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
             } else
             {
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
@@ -184,18 +167,18 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
         }
     }
 
+
+
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-        String strWher = DictionaryHelper.getStrWhere_ncz_cmd(NCZ_CZ_TodayCommand.this, dictionary);
-        String orderby = selectorUi.getOrderby();
-        commembertab commembertab = AppContext.getUserInfo(NCZ_CZ_TodayCommand.this);
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", workuserid);
+        params.addQueryStringParameter("workuserid", commembertab.getId());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("orderby", orderby);
-        params.addQueryStringParameter("strWhere", strWher);
+        params.addQueryStringParameter("orderby", "regDate desc");
+        params.addQueryStringParameter("strWhere", "zt:2");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
         params.addQueryStringParameter("action", "commandGetList");
@@ -219,11 +202,7 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
                     }
                 } else
                 {
-                    AppContext.makeToast(NCZ_CZ_TodayCommand.this, "error_connectDataBase");
-                    if (!ishidding && timethread != null)
-                    {
-                        timethread.setSleep(false);
-                    }
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
                     return;
                 }
 
@@ -274,10 +253,10 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(NCZ_CZ_TodayCommand.this, getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else
                             {
-                                // NewDataToast.makeText(NCZ_CZ_TodayCommand.this,
+                                // NewDataToast.makeText(Common_CommandList.this,
                                 // getString(R.string.new_data_toast_none), false,
                                 // R.raw.newdatatoast).show();
                             }
@@ -333,7 +312,7 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
                     // 有异常--显示加载出错 & 弹出错误消息
                     lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                     more.setText(R.string.load_error);
-                    AppContext.makeToast(NCZ_CZ_TodayCommand.this, "load_error");
+                    AppContext.makeToast(getActivity(), "load_error");
                 }
                 if (adapter.getCount() == 0)
                 {
@@ -351,29 +330,21 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
-                if (!ishidding && timethread != null)
-                {
-                    timethread.setSleep(false);
-                }
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(NCZ_CZ_TodayCommand.this, "error_connectServer");
-                if (!ishidding && timethread != null)
-                {
-                    timethread.setSleep(false);
-                }
+                AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
     }
 
     private void initAnimalListView()
     {
-        listAdapter = new NCZ_CZ_TodayCommandAdapter(NCZ_CZ_TodayCommand.this, listData);
-        list_footer = NCZ_CZ_TodayCommand.this.getLayoutInflater().inflate(R.layout.listview_footer, null);
+        listAdapter = new ListViewPGCommandAdapter(getActivity(), listData);
+        list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         frame_listview_news.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
@@ -400,9 +371,11 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
                 // return;
                 commandtab commandtab = listData.get(position - 1);
                 if (commandtab == null) return;
-                commembertab commembertab = AppContext.getUserInfo(NCZ_CZ_TodayCommand.this);
-                AppContext.updateStatus(NCZ_CZ_TodayCommand.this, "0", commandtab.getId(), "2", commembertab.getId());
-                Intent intent = new Intent(NCZ_CZ_TodayCommand.this, CommandDetail_Show_.class);
+
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                AppContext.updateStatus(getActivity(), "0", commandtab.getId(), "2", commembertab.getId());
+
+                Intent intent = new Intent(getActivity(), CommandDetail_Edit_.class);
                 intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
             }
@@ -460,43 +433,6 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
         {
             getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
-    }
-
-    public void showPop_addcommand()
-    {
-        LayoutInflater layoutInflater = (LayoutInflater) NCZ_CZ_TodayCommand.this.getSystemService(NCZ_CZ_TodayCommand.this.LAYOUT_INFLATER_SERVICE);
-        pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
-        pv_command.setOnKeyListener(new OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
-                {
-                    pw_command.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        pv_command.setOnTouchListener(new OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_command.isShowing())
-                {
-                    pw_command.dismiss();
-                }
-                return false;
-            }
-        });
-        pw_command = new PopupWindow(pv_command, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, true);
-        pw_command.showAsDropDown(line, 0, 0);
-        pw_command.setOutsideTouchable(true);
-        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(this);
-        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(this);
-        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(this);
     }
 
     public class TitleAdapter extends BaseAdapter
@@ -566,21 +502,262 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
         switch (v.getId())
         {
             case R.id.btn_standardprocommand:
-                intent = new Intent(NCZ_CZ_TodayCommand.this, AddStandardCommand_.class);
+                intent = new Intent(getActivity(), AddStandardCommand_.class);
                 startActivity(intent);
                 break;
             case R.id.btn_nonstandardprocommand:
-                intent = new Intent(NCZ_CZ_TodayCommand.this, AddNotStandardCommand_.class);
+                intent = new Intent(getActivity(), AddNotStandardCommand_.class);
                 startActivity(intent);
                 break;
             case R.id.btn_nonprocommand:
-                intent = new Intent(NCZ_CZ_TodayCommand.this, AddNotProductCommand_.class);
+                intent = new Intent(getActivity(), AddNotProductCommand_.class);
                 startActivity(intent);
                 break;
 
             default:
                 break;
         }
+    }
+
+    class ListViewPGCommandAdapter extends BaseAdapter
+    {
+        private Context context;// 运行上下文
+        private List<commandtab> listItems;// 数据集合
+        private LayoutInflater listContainer;// 视图容器
+        commandtab commandtab;
+
+        class ListItemView
+        {
+            public ImageView iv_record;
+            public ProgressBar pb_jd;
+            public TextView tv_jobtype;
+            public TextView tv_importance;
+            public TextView tv_jd;
+            public TextView tv_time;
+            public TextView tv_type;
+            public TextView tv_zf;
+            public Button btn_sure;
+            public FrameLayout fl_new;
+            public LinearLayout ll_main;
+            public FrameLayout fl_new_item;
+            public CircleImageView circle_img;
+            public TextView tv_new;
+        }
+
+        public ListViewPGCommandAdapter(Context context, List<commandtab> data)
+        {
+            this.context = context;
+            this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
+            this.listItems = data;
+        }
+
+        public int getCount()
+        {
+            return listItems.size();
+        }
+
+        public Object getItem(int arg0)
+        {
+            return null;
+        }
+
+        public long getItemId(int arg0)
+        {
+            return 0;
+        }
+
+        HashMap<Integer, View> lmap = new HashMap<Integer, View>();
+
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            commandtab = listItems.get(position);
+            // 自定义视图
+            ListItemView listItemView = null;
+            if (lmap.get(position) == null)
+            {
+                // 获取list_item布局文件的视图
+                convertView = listContainer.inflate(R.layout.selectorcommand_finishadapter, null);
+                listItemView = new ListItemView();
+                // 获取控件对象
+                listItemView.ll_main = (LinearLayout) convertView.findViewById(R.id.ll_main);
+                listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
+                listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
+                listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
+                listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
+                listItemView.pb_jd = (ProgressBar) convertView.findViewById(R.id.pb_jd);
+                listItemView.btn_sure = (Button) convertView.findViewById(R.id.btn_sure);
+                listItemView.tv_jobtype = (TextView) convertView.findViewById(R.id.tv_jobtype);
+                listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
+                listItemView.tv_jd = (TextView) convertView.findViewById(R.id.tv_jd);
+                listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+                listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
+                listItemView.tv_zf = (TextView) convertView.findViewById(R.id.tv_zf);
+                listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
+                listItemView.btn_sure.setId(position);
+                listItemView.iv_record.setId(position);
+                listItemView.iv_record.setOnClickListener(new OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        commandtab command = listItems.get(v.getId());
+                        commembertab commembertab = AppContext.getUserInfo(context);
+                        AppContext.updateStatus(context, "1", command.getId(), "2", commembertab.getId());
+
+                        Intent intent = new Intent(context, RecordList_.class);
+                        intent.putExtra("type", "2");
+                        intent.putExtra("workid", listItems.get(v.getId()).getId());
+                        String aaa = listItems.get(v.getId()).getStatusid();
+                        context.startActivity(intent);
+                    }
+                });
+                listItemView.btn_sure.setOnClickListener(new OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        commandSetStatus(v, listItems.get(v.getId()));
+                    }
+                });
+                // 设置控件集到convertView
+                lmap.put(position, convertView);
+                convertView.setTag(listItemView);
+            } else
+            {
+                convertView = lmap.get(position);
+                listItemView = (ListItemView) convertView.getTag();
+            }
+            // 设置文字和图片
+            if (Integer.valueOf(commandtab.getComCount()) > 0)
+            {
+                listItemView.fl_new_item.setVisibility(View.VISIBLE);
+            } else
+            {
+                listItemView.fl_new_item.setVisibility(View.GONE);
+            }
+            if (Integer.valueOf(commandtab.getComvidioCount()) > 0)
+            {
+                listItemView.fl_new.setVisibility(View.VISIBLE);
+            } else
+            {
+                listItemView.fl_new.setVisibility(View.GONE);
+            }
+//            int commDays = Integer.valueOf(commandtab.getcommDays());
+//            int workDay = Integer.valueOf(commandtab.getiCount());
+            if (!commandtab.getfeedbackuserName().equals(""))
+            {
+                listItemView.tv_jd.setText(commandtab.getfeedbackuserName() + "%");
+                listItemView.pb_jd.setProgress(Integer.valueOf(commandtab.getfeedbackuserName()));
+            }
+
+            if (commandtab.getstdJobType().equals("0") || commandtab.getstdJobType().equals("-1"))
+            {
+                listItemView.tv_jobtype.setText(commandtab.getcommNote().toString());
+            } else
+            {
+                listItemView.tv_jobtype.setText(commandtab.getstdJobTypeName() + "——" + commandtab.getstdJobName());
+            }
+            // 反馈状态
+            if (commandtab.getcommStatus().equals("2") || commandtab.getcommStatus().equals("1"))
+            {
+                listItemView.btn_sure.setVisibility(View.GONE);
+            }
+            if (commandtab.getimportance().equals("0"))
+            {
+                listItemView.tv_importance.setText("一般");
+//                listItemView.circle_img.setImageResource(R.color.bg_blue);
+                listItemView.circle_img.setImageResource(R.drawable.yb);
+            } else if (commandtab.getimportance().equals("1"))
+            {
+                listItemView.tv_importance.setText("重要");
+//                listItemView.circle_img.setImageResource(R.color.bg_green);
+                listItemView.circle_img.setImageResource(R.drawable.zyx);
+            } else if (commandtab.getimportance().equals("2"))
+            {
+                listItemView.tv_importance.setText("非常重要");
+//                listItemView.circle_img.setImageResource(R.color.color_orange);
+                listItemView.circle_img.setImageResource(R.drawable.fczy);
+            }
+            listItemView.tv_time.setText(commandtab.getregDate());
+            if (commandtab.getcommFromVPath().equals("0"))
+            {
+                listItemView.tv_zf.setText(commandtab.getcommFromName()+"下发");
+            } else
+            {
+                listItemView.tv_zf.setText(commandtab.getcommFromName()+"自发");
+            }
+            if (commandtab.getstdJobType().equals("0"))
+            {
+                listItemView.tv_type.setText("非标准生产指令");
+            } else if (commandtab.getstdJobType().equals("-1"))
+            {
+                listItemView.tv_type.setText("非生产指令");
+            } else
+            {
+                listItemView.tv_type.setText("标准生产指令");
+            }
+
+            return convertView;
+        }
+    }
+
+    private void saveSelectedCommand(List<plantgrowthtab> listItems_selected)
+    {
+        for (int i = 0; i < listItems_selected.size(); i++)
+        {
+            SqliteDb.save(getActivity(), listItems_selected.get(i));
+        }
+    }
+
+
+    private void commandSetStatus(final View v, commandtab commandtab)
+    {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("userName", commembertab.getrealName());
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "commandSetStatus");
+
+        params.addQueryStringParameter("statusid", commandtab.getStatusid());
+        params.addQueryStringParameter("commStatus", "1");
+        params.addQueryStringParameter("feedbackNote", "");
+        params.addQueryStringParameter("feedbackDate", "");
+        params.addQueryStringParameter("confirmDate", utils.getToday());
+        params.addQueryStringParameter("finishDate", "");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<jobtab> listData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                    if (listData == null)
+                    {
+                        AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    } else
+                    {
+                        v.setVisibility(View.GONE);
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String arg1)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
     }
 
     class TimeThread extends Thread
@@ -602,7 +779,7 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
                         timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-                        timethread.setSleep(true);
+                        timethread.setSleep(false);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();
@@ -623,9 +800,9 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
     }
 
     @Override
-    protected void onDestroy()
+    public void onDestroyView()
     {
-        super.onDestroy();
+        super.onDestroyView();
         timethread.setStop(true);
         timethread.interrupt();
         timethread = null;

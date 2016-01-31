@@ -27,7 +27,7 @@ import java.util.List;
  * Created by ${hmj} on 2016/1/21.
  */
 @EActivity(R.layout.joblist)
-public class JobList extends FragmentActivity
+public class NCZ_CZ_JobList extends FragmentActivity
 {
     com.farm.bean.commembertab commembertab;
     PlantGcd plantGcd;
@@ -38,7 +38,7 @@ public class JobList extends FragmentActivity
     Fragment mContent = new Fragment();
     //    GrowthTreeFragment_GCD growthTreeFragment_gcd;
 //    GrowthTreeFragment_ZZ growthTreeFragment_zz;
-    NCZ_PQ_TodayJobFragment ncz_pq_todayJobFragment;
+    NCZ_CZ_TodayJobFragment ncz_cz_todayJobFragment;
     Common_MoreJobFragment common_moreJobFragment;
     @ViewById
     ImageButton btn_back;
@@ -54,7 +54,7 @@ public class JobList extends FragmentActivity
     @Click
     void btn_add()
     {
-        Intent intent = new Intent(JobList.this, AddPlantObservation_.class);
+        Intent intent = new Intent(NCZ_CZ_JobList.this, AddPlantObservation_.class);
         intent.putExtra("gcdid", plantGcd.getId());
         startActivity(intent);
     }
@@ -90,7 +90,7 @@ public class JobList extends FragmentActivity
         setBackground(0);
         vPager.setOffscreenPageLimit(1);
         vPager.setIsScrollable(true);
-        viewPagerAdapter_gcdDetail = new ViewPagerAdapter_GcdDetail(JobList.this.getSupportFragmentManager(), vPager, fragmentList);
+        viewPagerAdapter_gcdDetail = new ViewPagerAdapter_GcdDetail(NCZ_CZ_JobList.this.getSupportFragmentManager(), vPager, fragmentList);
         viewPagerAdapter_gcdDetail.setOnExtraPageChangeListener(new ViewPagerAdapter_GcdDetail.OnExtraPageChangeListener()
         {
             @Override
@@ -128,13 +128,13 @@ public class JobList extends FragmentActivity
         workuserid = getIntent().getStringExtra("workuserid");
         bundle.putString("workuserid", workuserid);
 
-        commembertab = AppContext.getUserInfo(JobList.this);
+        commembertab = AppContext.getUserInfo(NCZ_CZ_JobList.this);
         fragmentList = new ArrayList<>();
-        ncz_pq_todayJobFragment = new NCZ_PQ_TodayJobFragment_();
+        ncz_cz_todayJobFragment = new NCZ_CZ_TodayJobFragment_();
         common_moreJobFragment = new Common_MoreJobFragment_();
-        ncz_pq_todayJobFragment.setArguments(bundle);
+        ncz_cz_todayJobFragment.setArguments(bundle);
         common_moreJobFragment.setArguments(bundle);
-        fragmentList.add(ncz_pq_todayJobFragment);
+        fragmentList.add(ncz_cz_todayJobFragment);
         fragmentList.add(common_moreJobFragment);
     }
 

@@ -29,7 +29,7 @@ public class NCZ_PG_CommandList extends FragmentActivity
 {
     com.farm.bean.commembertab commembertab;
     PlantGcd plantGcd;
-    com.farm.bean.areatab areatab;
+String workuserid;
     int currentItem = 0;
     List<android.support.v4.app.Fragment> fragmentList;
     ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
@@ -114,8 +114,8 @@ public class NCZ_PG_CommandList extends FragmentActivity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         Bundle bundle = new Bundle();
-        areatab = getIntent().getParcelableExtra("bean");
-        bundle.putParcelable("bean", areatab);
+        workuserid = getIntent().getStringExtra("workuserid");
+        bundle.putString("workuserid", workuserid);
 
         commembertab = AppContext.getUserInfo(NCZ_PG_CommandList.this);
         fragmentList = new ArrayList<>();

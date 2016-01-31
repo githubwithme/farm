@@ -3,6 +3,7 @@ package com.farm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -115,12 +116,20 @@ public class Common_JobDetail_Show extends Activity
         tv_pf.setText(jobtab.getaudioJobExecPath() + "分");
         List<String> pfnr = jobtab.getPF();
         String nr = "";
-        for (int i = 0; i < pfnr.size(); i++)
+        if (pfnr.size()==0)
         {
-            nr = nr + pfnr.get(i) + "\n\n";
+            tv_pfnr.setText("此项工作无评分标准");
+            tv_pfnr.setGravity(Gravity.RIGHT);
+        }else
+        {
+            for (int i = 0; i < pfnr.size(); i++)
+            {
+                nr = nr + pfnr.get(i) + "\n\n";
+            }
+            tv_pfnr.setText(nr);
+
         }
         tv_date_pf.setText(jobtab.getassessDate().substring(0,jobtab.getassessDate().lastIndexOf(" ")));
-        tv_pfnr.setText(nr);
         tv_pfsm.setText(jobtab.getassessNote());
         tv_fkjg.setText(jobtab.getaudioJobAssessPath());
 

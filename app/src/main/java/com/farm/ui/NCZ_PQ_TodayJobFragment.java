@@ -19,7 +19,6 @@ import com.farm.adapter.Common_TodayJobAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
 import com.farm.common.StringUtils;
@@ -62,13 +61,12 @@ public class NCZ_PQ_TodayJobFragment extends Fragment
     LinearLayout ll_tip;
     Fragment mContent = new Fragment();
 
-    areatab areatab;
-
+String workuserid;
     @Click
     void btn_more()
     {
         Intent intent = new Intent(getActivity(), Common_MoreJob_.class);
-        intent.putExtra("workuserid", areatab.getWorkuserid());
+        intent.putExtra("workuserid", workuserid);
         startActivity(intent);
     }
 
@@ -83,7 +81,7 @@ public class NCZ_PQ_TodayJobFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.cz_pq_todayjobfragment, container, false);
-        areatab = getArguments().getParcelable("bean");
+        workuserid = getArguments().getString("workuserid");
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
@@ -116,7 +114,7 @@ public class NCZ_PQ_TodayJobFragment extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", areatab.getWorkuserid());
+        params.addQueryStringParameter("workuserid", workuserid);
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getrealName());
@@ -332,7 +330,7 @@ public class NCZ_PQ_TodayJobFragment extends Fragment
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.updateStatus(getActivity(), "0", jobtab.getId(), "1", commembertab.getId());
 
-                if (commembertab.getnlevel().equals("0"))
+                if (commembertab.getnlevel().equals("0") )
                 {
                     Intent intent = new Intent(getActivity(), Common_JobDetail_Show_.class);
                     intent.putExtra("bean", jobtab);// 因为list中添加了头部,因此要去掉一个

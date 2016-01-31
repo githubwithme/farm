@@ -1,11 +1,8 @@
 package com.farm.ui;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -14,6 +11,7 @@ import com.farm.adapter.ViewPagerAdapter_GcdDetail;
 import com.farm.app.AppContext;
 import com.farm.bean.PlantGcd;
 import com.farm.widget.CustomViewPager;
+import com.farm.widget.MyDialog;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -26,38 +24,29 @@ import java.util.List;
 /**
  * Created by ${hmj} on 2016/1/21.
  */
-@EActivity(R.layout.joblist)
-public class JobList extends FragmentActivity
+@EActivity(R.layout.commanddetail_show)
+public class CommandDetail_Show extends FragmentActivity
 {
+    MyDialog myDialog;
     com.farm.bean.commembertab commembertab;
     PlantGcd plantGcd;
-    String workuserid;
+    com.farm.bean.commandtab commandtab;
     int currentItem = 0;
     List<android.support.v4.app.Fragment> fragmentList;
     ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
     Fragment mContent = new Fragment();
     //    GrowthTreeFragment_GCD growthTreeFragment_gcd;
 //    GrowthTreeFragment_ZZ growthTreeFragment_zz;
-    NCZ_PQ_TodayJobFragment ncz_pq_todayJobFragment;
-    Common_MoreJobFragment common_moreJobFragment;
+    CommandDetail_Show_DetailFragment commandDetail_show_detailFragment;
+    CommandDetail_Show_ExecuteFragment commandDetail_show_executeFragment;
     @ViewById
     ImageButton btn_back;
     @ViewById
     CustomViewPager vPager;
     @ViewById
-    TextView tv_title;
+    TextView tv_detail;
     @ViewById
-    TextView tv_zz;
-    @ViewById
-    Button btn_add;
-
-    @Click
-    void btn_add()
-    {
-        Intent intent = new Intent(JobList.this, AddPlantObservation_.class);
-        intent.putExtra("gcdid", plantGcd.getId());
-        startActivity(intent);
-    }
+    TextView tv_execute;
 
     @Click
     void btn_back()
@@ -66,13 +55,13 @@ public class JobList extends FragmentActivity
     }
 
     @Click
-    void tv_zz()
+    void tv_execute()
     {
         vPager.setCurrentItem(1);
     }
 
     @Click
-    void tv_title()
+    void tv_detail()
     {
         vPager.setCurrentItem(0);
     }
@@ -80,17 +69,10 @@ public class JobList extends FragmentActivity
     @AfterViews
     void afterOncreate()
     {
-        if (commembertab.getnlevel().equals("0") || commembertab.getnlevel().equals("1"))
-        {
-            btn_add.setVisibility(View.GONE);
-        } else
-        {
-
-        }
         setBackground(0);
         vPager.setOffscreenPageLimit(1);
         vPager.setIsScrollable(true);
-        viewPagerAdapter_gcdDetail = new ViewPagerAdapter_GcdDetail(JobList.this.getSupportFragmentManager(), vPager, fragmentList);
+        viewPagerAdapter_gcdDetail = new ViewPagerAdapter_GcdDetail(CommandDetail_Show.this.getSupportFragmentManager(), vPager, fragmentList);
         viewPagerAdapter_gcdDetail.setOnExtraPageChangeListener(new ViewPagerAdapter_GcdDetail.OnExtraPageChangeListener()
         {
             @Override
@@ -105,15 +87,15 @@ public class JobList extends FragmentActivity
 
     private void setBackground(int pos)
     {
-        tv_zz.setBackgroundResource(R.color.white);
-        tv_title.setBackgroundResource(R.color.white);
+        tv_detail.setBackgroundResource(R.color.white);
+        tv_execute.setBackgroundResource(R.color.white);
         switch (pos)
         {
             case 0:
-                tv_title.setBackgroundResource(R.drawable.red_bottom);
+                tv_detail.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 1:
-                tv_zz.setBackgroundResource(R.drawable.red_bottom);
+                tv_execute.setBackgroundResource(R.drawable.red_bottom);
                 break;
         }
 
@@ -125,17 +107,18 @@ public class JobList extends FragmentActivity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         Bundle bundle = new Bundle();
-        workuserid = getIntent().getStringExtra("workuserid");
-        bundle.putString("workuserid", workuserid);
+        getIntent().getStringExtra("from");
+        commandtab = getIntent().getParcelableExtra("bean");
+        bundle.putParcelable("bean", commandtab);
 
-        commembertab = AppContext.getUserInfo(JobList.this);
+        commembertab = AppContext.getUserInfo(CommandDetail_Show.this);
         fragmentList = new ArrayList<>();
-        ncz_pq_todayJobFragment = new NCZ_PQ_TodayJobFragment_();
-        common_moreJobFragment = new Common_MoreJobFragment_();
-        ncz_pq_todayJobFragment.setArguments(bundle);
-        common_moreJobFragment.setArguments(bundle);
-        fragmentList.add(ncz_pq_todayJobFragment);
-        fragmentList.add(common_moreJobFragment);
+        commandDetail_show_detailFragment = new CommandDetail_Show_DetailFragment_();
+        commandDetail_show_executeFragment = new CommandDetail_Show_ExecuteFragment_();
+        commandDetail_show_detailFragment.setArguments(bundle);
+        commandDetail_show_executeFragment.setArguments(bundle);
+        fragmentList.add(commandDetail_show_detailFragment);
+        fragmentList.add(commandDetail_show_executeFragment);
     }
 
 

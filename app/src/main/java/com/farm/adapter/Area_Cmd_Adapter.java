@@ -217,9 +217,15 @@ public class Area_Cmd_Adapter extends BaseAdapter
                     String number = goodsspc[0];
                     String small_dw = goodsspc[1];
                     String large_dw = goodsspc[2];
-                    Double acountnumber = Double.valueOf(list_goodslisttab.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
-                    Double  neednumber = acountnumber / Double.valueOf(number);
-                    goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + small_dw + "/株" + "  " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n";
+                    if (small_dw.equals("ml"))
+                    {
+                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + "陪(兑水)" +  "\n";
+                    }else
+                    {
+                        Double acountnumber = Double.valueOf(list_goodslisttab.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
+                        Double  neednumber = acountnumber / Double.valueOf(number);
+                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + small_dw + "/株" + "  " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n";
+                    }
                     goodslisttab_flsl.setgoodsNote(goodsnote);
                 }
                 SqliteDb.save(context, goodslisttab_flsl);

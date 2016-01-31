@@ -71,7 +71,7 @@ public class NCZ_YQPQ extends Fragment
     @Click
     void btn_cmd()
     {
-        Intent intent = new Intent(getActivity(), Common_SelectCommand_.class);
+        Intent intent = new Intent(getActivity(), SelectorCommand_.class);
         intent.putParcelableArrayListExtra("parktablist", (ArrayList<? extends Parcelable>) listData);
         startActivity(intent);
     }

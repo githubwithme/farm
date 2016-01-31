@@ -60,7 +60,7 @@ public class PG_MainFragment extends Fragment
 	@Click
 	void btn_cmd()
 	{
-		Intent intent = new Intent(getActivity(), Common_SelectCommand_.class);
+		Intent intent = new Intent(getActivity(), SelectorCommand_.class);
 		intent.putParcelableArrayListExtra("jobtablist", (ArrayList<? extends Parcelable>) listData);
 		startActivity(intent);
 	}

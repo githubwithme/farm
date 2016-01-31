@@ -56,6 +56,10 @@
         <activity
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".ui.NCZ_CZ_JobList_"/>
+        <activity android:name=".ui.SelectorCommand_"/>
+        <activity android:name=".ui.CommandDetail_Edit_"/>
+        <activity android:name=".ui.CommandDetail_Show_"/>
         <activity android:name=".ui.Command_more_"/>
         <activity android:name=".ui.GcdDetail_"/>
         <activity android:name=".ui.AddStd_Cmd_Self_"/>
@@ -153,7 +157,6 @@
         <activity android:name=".ui.Common_MoreJob_"/>
         <activity android:name=".ui.Common_CommandFeedBack_"/>
         <activity android:name=".ui.Common_CommandDetail_"/>
-        <activity android:name=".ui.AnalysisActivityTemp_"/>
 
         <!-- 服务 -->
         <service

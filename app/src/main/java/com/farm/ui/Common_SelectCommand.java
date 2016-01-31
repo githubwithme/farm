@@ -22,6 +22,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -487,7 +488,7 @@ public class Common_SelectCommand extends Activity implements OnClickListener
                 commembertab commembertab = AppContext.getUserInfo(Common_SelectCommand.this);
                 AppContext.updateStatus(Common_SelectCommand.this, "0", commandtab.getId(), "2", commembertab.getId());
 
-                Intent intent = new Intent(Common_SelectCommand.this, Common_CommandDetail_.class);
+                Intent intent = new Intent(Common_SelectCommand.this, CommandDetail_Edit_.class);
                 intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
             }
@@ -651,9 +652,11 @@ public class Common_SelectCommand extends Activity implements OnClickListener
             public TextView tv_zf;
             public Button btn_sure;
             public FrameLayout fl_new;
+            public LinearLayout ll_main;
             public FrameLayout fl_new_item;
             public CircleImageView circle_img;
             public TextView tv_new;
+            public TextView tv_status;
         }
 
         public ListViewPGCommandAdapter(Context context, List<commandtab> data)
@@ -691,8 +694,10 @@ public class Common_SelectCommand extends Activity implements OnClickListener
                 convertView = listContainer.inflate(R.layout.listitem_pgcommand, null);
                 listItemView = new ListItemView();
                 // 获取控件对象
+                listItemView.ll_main = (LinearLayout) convertView.findViewById(R.id.ll_main);
                 listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
                 listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
+                listItemView.tv_status = (TextView) convertView.findViewById(R.id.tv_status);
                 listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
                 listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
                 listItemView.pb_jd = (ProgressBar) convertView.findViewById(R.id.pb_jd);
@@ -712,8 +717,10 @@ public class Common_SelectCommand extends Activity implements OnClickListener
                 {
                     if (joblist.get(i).getcommandID().equals(listItems.get(position).getId()))
                     {
-                        listItemView.cb_add.setChecked(true);
+//                        listItemView.cb_add.setChecked(true);
                         listItemView.cb_add.setClickable(false);
+                        listItemView.tv_status.setText("已选");
+                        listItemView.ll_main.setBackgroundResource(R.color.defaultcolor);
                     }
                 }
                 listItemView.iv_record.setOnClickListener(new OnClickListener()

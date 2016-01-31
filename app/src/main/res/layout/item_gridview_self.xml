@@ -167,7 +167,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="肥料剩余量"
+                android:text="肥料用量"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_sp_14"/>
 

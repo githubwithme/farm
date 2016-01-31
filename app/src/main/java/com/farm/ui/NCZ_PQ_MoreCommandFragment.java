@@ -54,7 +54,7 @@ import java.util.List;
 public class NCZ_PQ_MoreCommandFragment extends Fragment implements OnClickListener
 {
     boolean ishidding = false;
-    com.farm.bean.areatab areatab;
+  String workuserid;
     TimeThread timethread;
     //    SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
@@ -126,7 +126,7 @@ public class NCZ_PQ_MoreCommandFragment extends Fragment implements OnClickListe
         appContext = (AppContext) getActivity().getApplication();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
-        areatab = getArguments().getParcelable("bean");
+        workuserid = getArguments().getString("workuserid");
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
@@ -166,7 +166,7 @@ public class NCZ_PQ_MoreCommandFragment extends Fragment implements OnClickListe
 //        String orderby = selectorUi.getOrderby();
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", areatab.getWorkuserid());
+        params.addQueryStringParameter("workuserid",workuserid);
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
@@ -378,8 +378,8 @@ public class NCZ_PQ_MoreCommandFragment extends Fragment implements OnClickListe
                 if (commandtab == null) return;
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.updateStatus(getActivity(), "0", commandtab.getId(), "2", commembertab.getId());
-                Intent intent = new Intent(getActivity(), Common_CommandDetail_Show_.class);
-                intent.putExtra("cmdid", commandtab.getId());// 因为list中添加了头部,因此要去掉一个
+                Intent intent = new Intent(getActivity(), CommandDetail_Show_.class);
+                intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
             }
         });

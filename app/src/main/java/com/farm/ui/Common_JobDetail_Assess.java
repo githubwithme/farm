@@ -10,27 +10,43 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.CZ_PG_JobDetail_ExpandAdapter;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
+import com.farm.bean.Result;
+import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
+import com.farm.widget.CustomExpandableListView;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @EActivity(R.layout.common_jobdetail_assess)
 public class Common_JobDetail_Assess extends Activity
 {
+    jobtab jobtab;
     CZ_PG_JobDetail_ExpandAdapter cz_pg_assess_expandAdapter;
+    @ViewById
+    CustomExpandableListView expandableListView;
+    @ViewById
+    TextView tv_importance;
     @ViewById
     RelativeLayout rl_jobname_tip;
     @ViewById
     LinearLayout ll_yl_tip;
-    @ViewById
-    LinearLayout ll_more;
-    @ViewById
-    TextView tv_importance;
     @ViewById
     TextView tv_tip_yl;
     @ViewById
@@ -38,19 +54,28 @@ public class Common_JobDetail_Assess extends Activity
     @ViewById
     TextView tv_jobname;
     @ViewById
-    TextView tv_nz;
-    @ViewById
     TextView tv_yl;
+    @ViewById
+    TextView tv_date_pf;
     @ViewById
     TextView tv_qx;
     @ViewById
+    TextView tv_pf;
+    @ViewById
+    TextView tv_pfnr;
+    @ViewById
+    TextView tv_fkjg;
+    @ViewById
+    TextView tv_pfsm;
+    @ViewById
     TextView tv_note;
     @ViewById
-    Button btn_score;
-
-    jobtab jobtab;
+    TextView tv_pfnote;
     @ViewById
     ImageButton btn_back;
+
+    @ViewById
+    Button btn_score;
 
     @Click
     void btn_score()
@@ -66,18 +91,16 @@ public class Common_JobDetail_Assess extends Activity
         finish();
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+    }
+
     @AfterViews
     void afterOncreate()
     {
         showData(jobtab);
-//        getCommandlist();
-        // if (!jobtab.getaudioJobExecPath().equals(""))
-        // {
-        // downloadLuYin(AppConfig.baseurl + jobtab.getaudioJobExecPath(),
-        // AppConfig.MEDIA_PATH +
-        // jobtab.getaudioJobExecPath().substring(jobtab.getaudioJobExecPath().lastIndexOf("/"),
-        // jobtab.getaudioJobExecPath().length()));
-        // }
     }
 
     @Override
@@ -106,10 +129,21 @@ public class Common_JobDetail_Assess extends Activity
         {
             flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
         }
-
+        tv_qx.setText(jobtab.getregDate().substring(0,jobtab.getregDate().lastIndexOf(" ")));
         tv_jobname.setText(jobtab.getstdJobTypeName() + "——" + jobtab.getstdJobName());
         tv_yl.setText(flyl);
         tv_note.setText(jobtab.getjobNote());
+        tv_pf.setText(jobtab.getaudioJobExecPath() + "分");
+        List<String> pfnr = jobtab.getPF();
+        String nr = "";
+        for (int i = 0; i < pfnr.size(); i++)
+        {
+            nr = nr + pfnr.get(i) + "\n\n";
+        }
+        tv_date_pf.setText(jobtab.getassessDate().substring(0,jobtab.getassessDate().lastIndexOf(" ")));
+        tv_pfnr.setText(nr);
+        tv_pfsm.setText(jobtab.getassessNote());
+        tv_fkjg.setText(jobtab.getaudioJobAssessPath());
 
 
         if (jobtab.getImportance().equals("0"))
@@ -123,8 +157,47 @@ public class Common_JobDetail_Assess extends Activity
             tv_importance.setText("非常重要");
         }
 
-
     }
+    private void getJob()
+    {
+        commembertab commembertab = AppContext.getUserInfo(Common_JobDetail_Assess.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("jobid", "");
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("username", commembertab.getuserName());
+        params.addQueryStringParameter("action", "jobGetListMore");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<jobtab> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                        showData(listNewData.get(0));
+                    } else
+                    {
+                        listNewData = new ArrayList<jobtab>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(Common_JobDetail_Assess.this, "error_connectDataBase");
+                    return;
+                }
+            }
 
-
+            @Override
+            public void onFailure(HttpException e, String s)
+            {
+                AppContext.makeToast(Common_JobDetail_Assess.this, "error_connectServer");
+            }
+        });
+    }
 }

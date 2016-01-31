@@ -125,7 +125,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="叶色"
+                android:text="叶数"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_12" />
 
@@ -136,7 +136,7 @@
                 android:background="@color/red" />
 
             <TextView
-                android:id="@+id/tv_yColor"
+                android:id="@+id/tv_yNum"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -166,7 +166,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="叶片斜度"
+                android:text="绿叶数"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_12" />
 
@@ -214,7 +214,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="叶数"
+                android:text="留芽"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_12" />
 
@@ -225,7 +225,7 @@
                 android:background="@color/red" />
 
             <TextView
-                android:id="@+id/tv_yNum"
+                android:id="@+id/tv_zDate"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -255,7 +255,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="抽蕾时间"
+                android:text="抽蕾"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_12" />
 
@@ -277,52 +277,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_review"
-        android:background="@color/white"
-        android:orientation="horizontal" >
 
-        <LinearLayout
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_weight="1"
-            android:orientation="horizontal" >
-
-            <ImageView
-                android:layout_width="5dip"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dip"
-                android:layout_marginLeft="10dip"
-                android:src="@drawable/direct_index_selected" />
-
-            <TextView
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="种植留芽时间"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_12" />
-
-            <View
-                android:layout_width="10dip"
-                android:layout_height="0.1px"
-                android:layout_gravity="center"
-                android:background="@color/red" />
-
-            <TextView
-                android:id="@+id/tv_zDate"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="暂无"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_12" />
-        </LinearLayout>
-    </LinearLayout>
 
 </LinearLayout>

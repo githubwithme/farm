@@ -145,7 +145,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dip"
                             android:gravity="center"
-                            android:text="评分内容"
+                            android:text="评分标准"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
@@ -209,7 +209,6 @@
                         android:background="@color/line_color"/>
 
                     <RelativeLayout
-                        android:id="@+id/rl_pfsm_tip"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dip"
@@ -224,8 +223,8 @@
                             android:layout_marginLeft="10dip"
                             android:gravity="center"
                             android:text="罚款警告"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/size_16"/>
 
                         <TextView
                             android:id="@+id/tv_fkjg"
@@ -237,8 +236,8 @@
                             android:layout_toRightOf="@id/tv_fkjg_tip"
                             android:gravity="right"
                             android:text="暂无"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/size_14"/>
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/size_18"/>
                     </RelativeLayout>
 
 

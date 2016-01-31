@@ -112,8 +112,8 @@ public class GrowthTreeFragment_GCD extends Fragment
     @Click
     void circle_zl()
     {
-        Intent intent = new Intent(getActivity(), NCZ_PQ_TodayCommand_.class);
-        intent.putExtra("bean", areatab);
+        Intent intent = new Intent(getActivity(), NCZ_PG_CommandList_.class);
+        intent.putExtra("workuserid", areatab.getWorkuserid());
         startActivity(intent);
     }
 

@@ -54,7 +54,6 @@ public class ShowPlant extends Activity
     TextView tv_yNum;
     TextView tv_hNum;
     TextView tv_zDate;
-    TextView tv_yColor;
     TextView tv_xNum;
     TextView tv_cDate;
     LinearLayout ll_video;
@@ -174,7 +173,6 @@ public class ShowPlant extends Activity
             tv_hNum = (TextView) rootView.findViewById(R.id.tv_hNum);
             tv_wNum = (TextView) rootView.findViewById(R.id.tv_wNum);
             tv_yNum = (TextView) rootView.findViewById(R.id.tv_yNum);
-            tv_yColor = (TextView) rootView.findViewById(R.id.tv_yColor);
             tv_xNum = (TextView) rootView.findViewById(R.id.tv_xNum);
             tv_cDate = (TextView) rootView.findViewById(R.id.tv_cDate);
             tv_zDate = (TextView) rootView.findViewById(R.id.tv_zDate);
@@ -186,7 +184,6 @@ public class ShowPlant extends Activity
                 tv_hNum.setText("");
                 tv_wNum.setText("");
                 tv_yNum.setText("");
-                tv_yColor.setText("");
                 tv_xNum.setText("");
                 tv_cDate.setText("");
                 tv_zDate.setText("");
@@ -197,21 +194,20 @@ public class ShowPlant extends Activity
                 tv_hNum.setText(planttab.gethNum());
                 tv_wNum.setText(planttab.getwNum());
                 tv_yNum.setText(planttab.getyNum());
-                tv_yColor.setText(planttab.getyColor());
                 tv_xNum.setText(planttab.getxNum());
                 if (planttab.getcDate().equals("False"))
                 {
                     tv_cDate.setText("未抽蕾");
                 } else
                 {
-                    tv_cDate.setText(planttab.getregDate());
+                    tv_cDate.setText("已抽蕾");
                 }
                 if (planttab.getzDate().equals("False"))
                 {
                     tv_zDate.setText("未留芽");
                 } else
                 {
-                    tv_zDate.setText(planttab.getregDate());
+                    tv_zDate.setText("已留芽");
                 }
 
 
@@ -229,13 +225,11 @@ public class ShowPlant extends Activity
             View rootView = inflater.inflate(R.layout.otherinfomationfragment_animal, container, false);
             TextView tv_cjr = (TextView) rootView.findViewById(R.id.tv_cjr);
             TextView tv_cjsj = (TextView) rootView.findViewById(R.id.tv_cjsj);
-            TextView tv_xgr = (TextView) rootView.findViewById(R.id.tv_xgr);
-            TextView tv_xgsj = (TextView) rootView.findViewById(R.id.tv_xgsj);
+            TextView tv_plantnote = (TextView) rootView.findViewById(R.id.tv_plantnote);
 
             tv_cjr.setText(planttab.getCjUserName());
             tv_cjsj.setText(planttab.getGrowthDate());
-            tv_xgr.setText(planttab.getCjUserName());
-            tv_xgsj.setText(planttab.getregDate());
+            tv_plantnote.setText(planttab.getplantNote());
             return rootView;
         }
     }

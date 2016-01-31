@@ -154,13 +154,11 @@ public class ShowPlantGrowth extends Activity
 			View rootView = inflater.inflate(R.layout.otherinfomationfragment_animal, container, false);
 			TextView tv_cjr = (TextView) rootView.findViewById(R.id.tv_cjr);
 			TextView tv_cjsj = (TextView) rootView.findViewById(R.id.tv_cjsj);
-			TextView tv_xgr = (TextView) rootView.findViewById(R.id.tv_xgr);
-			TextView tv_xgsj = (TextView) rootView.findViewById(R.id.tv_xgsj);
+			TextView tv_plantnote = (TextView) rootView.findViewById(R.id.tv_plantnote);
 
-			tv_xgsj.setVisibility(View.GONE);
+			tv_plantnote.setText(plantgrowthtab.getplantGrowthNote());
 			tv_cjr.setText(plantgrowthtab.getcjUserName());
 			tv_cjsj.setText(plantgrowthtab.getcjDate());
-			tv_xgr.setText(plantgrowthtab.getcjUserName());
 			return rootView;
 		}
 	}

@@ -21,9 +21,9 @@ import com.farm.bean.parktab;
 import com.farm.common.BitmapHelper;
 import com.farm.common.SqliteDb;
 import com.farm.ui.Map_NC_;
-import com.farm.ui.NCZ_CZ_ToDayJob_;
+import com.farm.ui.NCZ_CZ_JobList_;
 import com.farm.ui.NCZ_CZ_ToDayPlant_;
-import com.farm.ui.NCZ_CZ_TodayCommand_;
+import com.farm.ui.NCZ_PG_CommandList_;
 import com.farm.ui.NCZ_ToDayPQ_;
 import com.farm.ui.WeatherActivity_;
 import com.farm.widget.CircleImageView;
@@ -189,7 +189,7 @@ public class NCZ_YQPQAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    Intent intent = new Intent(context, NCZ_CZ_TodayCommand_.class);
+                    Intent intent = new Intent(context, NCZ_PG_CommandList_.class);
                     intent.putExtra("workuserid", listItems.get(v.getId()).getWorkuserid());
                     context.startActivity(intent);
                 }
@@ -207,7 +207,7 @@ public class NCZ_YQPQAdapter extends BaseAdapter
                 public void onClick(View v)
                 {
 
-                    Intent intent = new Intent(context, NCZ_CZ_ToDayJob_.class);
+                    Intent intent = new Intent(context, NCZ_CZ_JobList_.class);
                     intent.putExtra("workuserid", listItems.get(v.getId()).getWorkuserid());
                     context.startActivity(intent);
                 }
@@ -372,7 +372,7 @@ public class NCZ_YQPQAdapter extends BaseAdapter
         listItemView.tv_worknumber.setText("片管工作");
         listItemView.tv_cmdnumber.setText("片管指令");
 
-//        listItemView.tv_temph.setText(parktab.getTMPL() + "-" + parktab.getTMPH());
+        listItemView.tv_temph.setText(parktab.getTMPL() + "-" + parktab.getTMPH());
 //        BitmapHelper.setImageViewBackground(context, listItemView.circle_img, AppConfig.baseurl + parktab.getImgurl());
         BitmapHelper.setImageViewBackground(context, listItemView.iv_img, AppConfig.baseurl + parktab.getWeatherimg());
         return convertView;

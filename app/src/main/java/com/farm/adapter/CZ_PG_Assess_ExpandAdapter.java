@@ -288,4 +288,16 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
     {
         return list_view;
     }
+    public int getAllChildCout()
+    {
+        int childsize=0;
+        int count = getGroupCount();
+        for (int i = 0; i < count; i++)
+        {
+             childsize = childsize+getChildrenCount(i);
+        }
+
+        return childsize;
+    }
+
 }

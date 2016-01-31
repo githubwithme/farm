@@ -1,6 +1,5 @@
 package com.farm.ui;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,20 +14,34 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_PQ_CommandListAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
 import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
+import com.farm.bean.jobtab;
+import com.farm.bean.plantgrowthtab;
+import com.farm.common.SqliteDb;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
+import com.farm.common.utils;
+import com.farm.widget.CircleImageView;
 import com.farm.widget.NewDataToast;
 import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
@@ -47,17 +60,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
-@SuppressLint("NewApi")
 @EFragment
-public class NCZ_PQ_TodayCommandFragment extends Fragment implements OnClickListener
+public class SelectCommandFragment extends Fragment implements OnClickListener
 {
-    boolean ishidding = false;
-String workuserid;
+    boolean ishidding=false;
+    commembertab commembertab;
     TimeThread timethread;
-//    SelectorFragment selectorUi;
+    private List<jobtab> joblist;
+    CountDownLatch latch;
+    private List<commandtab> listItems_selected = new ArrayList<commandtab>();// 数据集合
+    SelectorFragment_Support selectorUi;
     Fragment mContent = new Fragment();
-    private NCZ_PQ_CommandListAdapter listAdapter;
+    private ListViewPGCommandAdapter listAdapter;
     private int listSumData;
     private List<commandtab> listData = new ArrayList<commandtab>();
     private AppContext appContext;
@@ -68,21 +84,43 @@ String workuserid;
     View pv_tab;
     PopupWindow pw_command;
     View pv_command;
-//    @ViewById
-//    TextView tv_title;
-//    @ViewById
-//    View line;
-//    @ViewById
-//    ImageButton btn_add;
-//    @ViewById
-//    Button btn_more;
+    @ViewById
+    Button btn_addtowork;
+    @ViewById
+    ProgressBar pb;
     @ViewById
     PullToRefreshListView frame_listview_news;
-//    Dictionary dictionary;
+    @ViewById
+    ImageButton btn_more;
+    Dictionary dictionary;
 
     @Click
     void btn_more()
     {
+        Intent intent = new Intent(getActivity(), Command_more_.class);
+        intent.putExtra("workuserid", commembertab.getId());
+        startActivity(intent);
+    }
+
+    @Click
+    void btn_addtowork()
+    {
+        pb.setVisibility(View.VISIBLE);
+        btn_addtowork.setVisibility(View.GONE);
+        if (listItems_selected.size() > 0)
+        {
+            latch = new CountDownLatch(listItems_selected.size());
+            for (int i = 0; i < listItems_selected.size(); i++)
+            {
+                jobTabAdd(listItems_selected.get(i));
+            }
+        } else
+        {
+            Toast.makeText(getActivity(), "您还没选择任何指令呢！", Toast.LENGTH_SHORT).show();
+            btn_addtowork.setVisibility(View.VISIBLE);
+            pb.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -108,30 +146,23 @@ String workuserid;
     @AfterViews
     void afterOncreate()
     {
-
 //        dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "NCZ_CMD");
-//        selectorUi = new SelectorFragment_();
+//        selectorUi = new SelectorFragment_Support_();
 //        Bundle bundle = new Bundle();
 //        bundle.putSerializable("bean", dictionary);
 //        selectorUi.setArguments(bundle);
 //        switchContent(mContent, selectorUi);
         initAnimalListView();
-//        commembertab commembertab = AppContext.getUserInfo(getActivity());
-//        if (!commembertab.getnlevel().toString().equals("0"))
-//        {
-//            btn_add.setVisibility(View.GONE);
-//        }
-//        tv_title.setText(areatab.getRealName() + "今日指令");
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_pq_todaycommandfragment, container, false);
+        View rootView = inflater.inflate(R.layout.selectcommandfragment, container, false);
+        commembertab = AppContext.getUserInfo(getActivity());
+        joblist = getArguments().getParcelableArrayList("jobtablist");
         appContext = (AppContext) getActivity().getApplication();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
-        workuserid = getArguments().getString("workuserid");
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
@@ -157,7 +188,7 @@ String workuserid;
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             if (!to.isAdded())
             { // 先判断是否被add过
-                transaction.hide(from).add(R.id.top_container_cmd, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+                transaction.hide(from).add(R.id.top_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
             } else
             {
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
@@ -165,17 +196,84 @@ String workuserid;
         }
     }
 
-    private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
+    private void jobTabAdd(commandtab commandtab)
     {
-//        String strWher = DictionaryHelper.getStrWhere_ncz_cmd(getActivity(), dictionary);
-//        String orderby = selectorUi.getOrderby();
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid",workuserid);
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("userName", commembertab.getrealName());
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "jobTabAdd");
+        params.addQueryStringParameter("parkId", commembertab.getparkId());
+        params.addQueryStringParameter("parkName", commembertab.getparkName());
+        params.addQueryStringParameter("areaId", commembertab.getareaId());
+        params.addQueryStringParameter("areaName", commembertab.getareaName());
+
+        params.addQueryStringParameter("importance", commandtab.getimportance());
+        params.addQueryStringParameter("nongziName", commandtab.nongziName);
+        params.addQueryStringParameter("jobNote", commandtab.getcommNote());
+        params.addQueryStringParameter("audioJobAssessPath", commandtab.getcommFromVPath());
+        params.addQueryStringParameter("amount", commandtab.getamount());
+        params.addQueryStringParameter("jobNature", "1");
+        params.addQueryStringParameter("commandId", commandtab.getId());
+        params.addQueryStringParameter("stdJobType", commandtab.getstdJobType());
+        params.addQueryStringParameter("stdJobId", commandtab.getstdJobId());
+        params.addQueryStringParameter("stdJobName", commandtab.getstdJobName());
+        params.addQueryStringParameter("stdJobTypeName", commandtab.getstdJobTypeName());
+
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        showProgress();
+                    } else
+                    {
+                        AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    if (!ishidding  && timethread!=null)
+                    {
+                        timethread.setSleep(false);
+                    }
+                    return;
+                }
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
+            }
+        });
+    }
+
+    private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
+    {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("workuserid", commembertab.getId());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("orderby", "");
+        params.addQueryStringParameter("orderby", "regDate desc");
         params.addQueryStringParameter("strWhere", "zt:1");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
@@ -201,10 +299,6 @@ String workuserid;
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
-                    if (!ishidding && timethread != null)
-                    {
-                        timethread.setSleep(false);
-                    }
                     return;
                 }
 
@@ -258,7 +352,7 @@ String workuserid;
                                 NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else
                             {
-                                // NewDataToast.makeText(NCZ_PQ_CommandList.this,
+                                // NewDataToast.makeText(Common_CommandList.this,
                                 // getString(R.string.new_data_toast_none), false,
                                 // R.raw.newdatatoast).show();
                             }
@@ -332,10 +426,6 @@ String workuserid;
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
-                if (!ishidding && timethread != null)
-                {
-                    timethread.setSleep(false);
-                }
             }
 
             @Override
@@ -343,17 +433,13 @@ String workuserid;
             {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
-                if (!ishidding && timethread != null)
-                {
-                    timethread.setSleep(false);
-                }
             }
         });
     }
 
     private void initAnimalListView()
     {
-        listAdapter = new NCZ_PQ_CommandListAdapter(getActivity(), listData);
+        listAdapter = new ListViewPGCommandAdapter(getActivity(), listData);
         list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
@@ -381,9 +467,11 @@ String workuserid;
                 // return;
                 commandtab commandtab = listData.get(position - 1);
                 if (commandtab == null) return;
+
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.updateStatus(getActivity(), "0", commandtab.getId(), "2", commembertab.getId());
-                Intent intent = new Intent(getActivity(), CommandDetail_Show_.class);
+
+                Intent intent = new Intent(getActivity(), CommandDetail_Edit_.class);
                 intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
             }
@@ -442,7 +530,6 @@ String workuserid;
             getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
     }
-
 
     public class TitleAdapter extends BaseAdapter
     {
@@ -528,6 +615,295 @@ String workuserid;
         }
     }
 
+    class ListViewPGCommandAdapter extends BaseAdapter
+    {
+        private Context context;// 运行上下文
+        private List<commandtab> listItems;// 数据集合
+        private LayoutInflater listContainer;// 视图容器
+        commandtab commandtab;
+
+        class ListItemView
+        {
+            public ImageView iv_record;
+            public ProgressBar pb_jd;
+            public CheckBox cb_add;
+            public TextView tv_jobtype;
+            public TextView tv_importance;
+            public TextView tv_jd;
+            public TextView tv_time;
+            public TextView tv_type;
+            public TextView tv_zf;
+            public Button btn_sure;
+            public FrameLayout fl_new;
+            public LinearLayout ll_main;
+            public FrameLayout fl_new_item;
+            public CircleImageView circle_img;
+            public TextView tv_new;
+            public TextView tv_status;
+        }
+
+        public ListViewPGCommandAdapter(Context context, List<commandtab> data)
+        {
+            this.context = context;
+            this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
+            this.listItems = data;
+        }
+
+        public int getCount()
+        {
+            return listItems.size();
+        }
+
+        public Object getItem(int arg0)
+        {
+            return null;
+        }
+
+        public long getItemId(int arg0)
+        {
+            return 0;
+        }
+
+        HashMap<Integer, View> lmap = new HashMap<Integer, View>();
+
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            commandtab = listItems.get(position);
+            // 自定义视图
+            ListItemView listItemView = null;
+            if (lmap.get(position) == null)
+            {
+                // 获取list_item布局文件的视图
+                convertView = listContainer.inflate(R.layout.listitem_pgcommand, null);
+                listItemView = new ListItemView();
+                // 获取控件对象
+                listItemView.ll_main = (LinearLayout) convertView.findViewById(R.id.ll_main);
+                listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
+                listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
+                listItemView.tv_status = (TextView) convertView.findViewById(R.id.tv_status);
+                listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
+                listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
+                listItemView.pb_jd = (ProgressBar) convertView.findViewById(R.id.pb_jd);
+                listItemView.cb_add = (CheckBox) convertView.findViewById(R.id.cb_add);
+                listItemView.btn_sure = (Button) convertView.findViewById(R.id.btn_sure);
+                listItemView.tv_jobtype = (TextView) convertView.findViewById(R.id.tv_jobtype);
+                listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
+                listItemView.tv_jd = (TextView) convertView.findViewById(R.id.tv_jd);
+                listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+                listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
+                listItemView.tv_zf = (TextView) convertView.findViewById(R.id.tv_zf);
+                listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
+                listItemView.cb_add.setId(position);
+                listItemView.btn_sure.setId(position);
+                listItemView.iv_record.setId(position);
+                for (int i = 0; i < joblist.size(); i++)
+                {
+                    if (joblist.get(i).getcommandID().equals(listItems.get(position).getId()))
+                    {
+//                        listItemView.cb_add.setChecked(true);
+                        listItemView.cb_add.setClickable(false);
+                        listItemView.tv_status.setText("已选");
+                        listItemView.ll_main.setBackgroundResource(R.color.defaultcolor);
+                    }
+                }
+                listItemView.iv_record.setOnClickListener(new OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        commandtab command = listItems.get(v.getId());
+                        commembertab commembertab = AppContext.getUserInfo(context);
+                        AppContext.updateStatus(context, "1", command.getId(), "2", commembertab.getId());
+
+                        Intent intent = new Intent(context, RecordList_.class);
+                        intent.putExtra("type", "2");
+                        intent.putExtra("workid", listItems.get(v.getId()).getId());
+                        String aaa = listItems.get(v.getId()).getStatusid();
+                        context.startActivity(intent);
+                    }
+                });
+                listItemView.cb_add.setOnCheckedChangeListener(new OnCheckedChangeListener()
+                {
+
+                    @Override
+                    public void onCheckedChanged(CompoundButton v, boolean ischeck)
+                    {
+                        if (ischeck)
+                        {
+                            listItems_selected.add(listItems.get(v.getId()));
+                        } else
+                        {
+                            for (int i = 0; i < listItems_selected.size(); i++)
+                            {
+                                if (listItems_selected.get(i).getId().toString().equals(listItems.get(v.getId()).getId().toString()))
+                                {
+                                    listItems_selected.remove(i);
+                                }
+                            }
+                        }
+                    }
+                });
+                listItemView.btn_sure.setOnClickListener(new OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        commandSetStatus(v, listItems.get(v.getId()));
+                    }
+                });
+                // 设置控件集到convertView
+                lmap.put(position, convertView);
+                convertView.setTag(listItemView);
+            } else
+            {
+                convertView = lmap.get(position);
+                listItemView = (ListItemView) convertView.getTag();
+            }
+            // 设置文字和图片
+            if (Integer.valueOf(commandtab.getComCount()) > 0)
+            {
+                listItemView.fl_new_item.setVisibility(View.VISIBLE);
+            } else
+            {
+                listItemView.fl_new_item.setVisibility(View.GONE);
+            }
+            if (Integer.valueOf(commandtab.getComvidioCount()) > 0)
+            {
+                listItemView.fl_new.setVisibility(View.VISIBLE);
+            } else
+            {
+                listItemView.fl_new.setVisibility(View.GONE);
+            }
+//            int commDays = Integer.valueOf(commandtab.getcommDays());
+//            int workDay = Integer.valueOf(commandtab.getiCount());
+            if (!commandtab.getfeedbackuserName().equals(""))
+            {
+                listItemView.tv_jd.setText(commandtab.getfeedbackuserName() + "%");
+                listItemView.pb_jd.setProgress(Integer.valueOf(commandtab.getfeedbackuserName()));
+            }
+
+            if (commandtab.getstdJobType().equals("0") || commandtab.getstdJobType().equals("-1"))
+            {
+                listItemView.tv_jobtype.setText(commandtab.getcommNote().toString());
+            } else
+            {
+                listItemView.tv_jobtype.setText(commandtab.getstdJobTypeName() + "——" + commandtab.getstdJobName());
+            }
+            // 反馈状态
+            if (commandtab.getcommStatus().equals("2") || commandtab.getcommStatus().equals("1"))
+            {
+                listItemView.btn_sure.setVisibility(View.GONE);
+            }
+            if (commandtab.getimportance().equals("0"))
+            {
+                listItemView.tv_importance.setText("一般");
+//                listItemView.circle_img.setImageResource(R.color.bg_blue);
+                listItemView.circle_img.setImageResource(R.drawable.yb);
+            } else if (commandtab.getimportance().equals("1"))
+            {
+                listItemView.tv_importance.setText("重要");
+//                listItemView.circle_img.setImageResource(R.color.bg_green);
+                listItemView.circle_img.setImageResource(R.drawable.zyx);
+            } else if (commandtab.getimportance().equals("2"))
+            {
+                listItemView.tv_importance.setText("非常重要");
+//                listItemView.circle_img.setImageResource(R.color.color_orange);
+                listItemView.circle_img.setImageResource(R.drawable.fczy);
+            }
+            listItemView.tv_time.setText(commandtab.getregDate());
+            if (commandtab.getcommFromVPath().equals("0"))
+            {
+                listItemView.tv_zf.setText(commandtab.getcommFromName()+"下发");
+            } else
+            {
+                listItemView.tv_zf.setText(commandtab.getcommFromName()+"自发");
+            }
+            if (commandtab.getstdJobType().equals("0"))
+            {
+                listItemView.tv_type.setText("非标准生产指令");
+            } else if (commandtab.getstdJobType().equals("-1"))
+            {
+                listItemView.tv_type.setText("非生产指令");
+            } else
+            {
+                listItemView.tv_type.setText("标准生产指令");
+            }
+
+            return convertView;
+        }
+    }
+
+    private void saveSelectedCommand(List<plantgrowthtab> listItems_selected)
+    {
+        for (int i = 0; i < listItems_selected.size(); i++)
+        {
+            SqliteDb.save(getActivity(), listItems_selected.get(i));
+        }
+    }
+
+    private void showProgress()
+    {
+        latch.countDown();
+        Long l = latch.getCount();
+        if (l.intValue() == 0) // 全部线程是否已经结束
+        {
+            btn_addtowork.setVisibility(View.VISIBLE);
+            pb.setVisibility(View.GONE);
+            Toast.makeText(getActivity(), "选择成功！", Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+        }
+    }
+
+    private void commandSetStatus(final View v, commandtab commandtab)
+    {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("userName", commembertab.getrealName());
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "commandSetStatus");
+
+        params.addQueryStringParameter("statusid", commandtab.getStatusid());
+        params.addQueryStringParameter("commStatus", "1");
+        params.addQueryStringParameter("feedbackNote", "");
+        params.addQueryStringParameter("feedbackDate", "");
+        params.addQueryStringParameter("confirmDate", utils.getToday());
+        params.addQueryStringParameter("finishDate", "");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<jobtab> listData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                    if (listData == null)
+                    {
+                        AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    } else
+                    {
+                        v.setVisibility(View.GONE);
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String arg1)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
+
     class TimeThread extends Thread
     {
         private boolean isSleep = true;
@@ -547,7 +923,7 @@ String workuserid;
                         timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-                        timethread.setSleep(true);
+                        timethread.setSleep(false);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();

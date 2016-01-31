@@ -365,7 +365,7 @@
             <ExpandableListView
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"
-                android:layout_height="350dip"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/rg_score"
                 android:focusable="true"
                 android:groupIndicator="@null"/>

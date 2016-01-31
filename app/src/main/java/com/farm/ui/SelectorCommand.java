@@ -3,9 +3,8 @@ package com.farm.ui;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,6 +12,7 @@ import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_GcdDetail;
 import com.farm.app.AppContext;
 import com.farm.bean.PlantGcd;
+import com.farm.bean.jobtab;
 import com.farm.widget.CustomViewPager;
 
 import org.androidannotations.annotations.AfterViews;
@@ -26,20 +26,21 @@ import java.util.List;
 /**
  * Created by ${hmj} on 2016/1/21.
  */
-@EActivity(R.layout.joblist)
-public class JobList extends FragmentActivity
+@EActivity(R.layout.selectorcommand)
+public class SelectorCommand extends FragmentActivity
 {
+    private List<jobtab> joblist;
     com.farm.bean.commembertab commembertab;
     PlantGcd plantGcd;
-    String workuserid;
+    com.farm.bean.areatab areatab;
     int currentItem = 0;
     List<android.support.v4.app.Fragment> fragmentList;
     ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
     Fragment mContent = new Fragment();
     //    GrowthTreeFragment_GCD growthTreeFragment_gcd;
 //    GrowthTreeFragment_ZZ growthTreeFragment_zz;
-    NCZ_PQ_TodayJobFragment ncz_pq_todayJobFragment;
-    Common_MoreJobFragment common_moreJobFragment;
+    SelectCommandFragment selectCommandFragment;
+    SelectCommandFragment_Finish selectCommandFragment_finish;
     @ViewById
     ImageButton btn_back;
     @ViewById
@@ -48,13 +49,11 @@ public class JobList extends FragmentActivity
     TextView tv_title;
     @ViewById
     TextView tv_zz;
-    @ViewById
-    Button btn_add;
 
     @Click
     void btn_add()
     {
-        Intent intent = new Intent(JobList.this, AddPlantObservation_.class);
+        Intent intent = new Intent(SelectorCommand.this, AddPlantObservation_.class);
         intent.putExtra("gcdid", plantGcd.getId());
         startActivity(intent);
     }
@@ -80,23 +79,15 @@ public class JobList extends FragmentActivity
     @AfterViews
     void afterOncreate()
     {
-        if (commembertab.getnlevel().equals("0") || commembertab.getnlevel().equals("1"))
-        {
-            btn_add.setVisibility(View.GONE);
-        } else
-        {
-
-        }
         setBackground(0);
         vPager.setOffscreenPageLimit(1);
         vPager.setIsScrollable(true);
-        viewPagerAdapter_gcdDetail = new ViewPagerAdapter_GcdDetail(JobList.this.getSupportFragmentManager(), vPager, fragmentList);
+        viewPagerAdapter_gcdDetail = new ViewPagerAdapter_GcdDetail(SelectorCommand.this.getSupportFragmentManager(), vPager, fragmentList);
         viewPagerAdapter_gcdDetail.setOnExtraPageChangeListener(new ViewPagerAdapter_GcdDetail.OnExtraPageChangeListener()
         {
             @Override
             public void onExtraPageSelected(int i)
             {
-//                Toast.makeText(GcdDetail.this, "show", Toast.LENGTH_SHORT).show();
                 currentItem = i;
                 setBackground(i);
             }
@@ -124,18 +115,18 @@ public class JobList extends FragmentActivity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+        joblist = getIntent().getParcelableArrayListExtra("jobtablist");
         Bundle bundle = new Bundle();
-        workuserid = getIntent().getStringExtra("workuserid");
-        bundle.putString("workuserid", workuserid);
+        bundle.putParcelableArrayList("jobtablist", (ArrayList<? extends Parcelable>) joblist);
 
-        commembertab = AppContext.getUserInfo(JobList.this);
+        commembertab = AppContext.getUserInfo(SelectorCommand.this);
         fragmentList = new ArrayList<>();
-        ncz_pq_todayJobFragment = new NCZ_PQ_TodayJobFragment_();
-        common_moreJobFragment = new Common_MoreJobFragment_();
-        ncz_pq_todayJobFragment.setArguments(bundle);
-        common_moreJobFragment.setArguments(bundle);
-        fragmentList.add(ncz_pq_todayJobFragment);
-        fragmentList.add(common_moreJobFragment);
+        selectCommandFragment = new SelectCommandFragment_();
+        selectCommandFragment_finish=new SelectCommandFragment_Finish_();
+
+        selectCommandFragment.setArguments(bundle);
+        fragmentList.add(selectCommandFragment);
+        fragmentList.add(selectCommandFragment_finish);
     }
 
 

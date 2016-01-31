@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -29,6 +31,7 @@ import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
+import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -47,6 +50,9 @@ import java.util.List;
 @EActivity(R.layout.cz_pg_assess)
 public class CZ_PG_Assess extends Activity
 {
+    int totalHeight = 0;
+    int groupHeight = 0;
+    MyDialog myDialog;
     int oldpercent = 0;
     List<commandtab> listNewData = null;
     String bfb = "0";
@@ -86,13 +92,7 @@ public class CZ_PG_Assess extends Activity
     @Click
     void btn_sure()
     {
-        if (listNewData == null || listNewData.get(0).getstdJobType().equals("-1") || listNewData.get(0).getstdJobType().equals("0"))
-        {
-            addScore_cz();
-        } else
-        {
-            addScore_ncz();
-        }
+        showExistTip();
     }
 
     @Click
@@ -212,6 +212,12 @@ public class CZ_PG_Assess extends Activity
     private void addScore_ncz()
     {
         List<View> list_view = cz_pg_assess_expandAdapter.getListView();
+        int childCount = cz_pg_assess_expandAdapter.getAllChildCout();
+        if (list_view.size() != childCount)
+        {
+            Toast.makeText(CZ_PG_Assess.this, "请选填全部评分标准", Toast.LENGTH_SHORT).show();
+            return;
+        }
         for (int i = 0; i < list_view.size(); i++)
         {
             Bundle bundle = (Bundle) list_view.get(i).getTag();
@@ -348,10 +354,11 @@ public class CZ_PG_Assess extends Activity
                         showCommand(listNewData.get(0));
                         if (listNewData.get(0).getstdJobType().equals("-1") || listNewData.get(0).getstdJobType().equals("0"))
                         {
+                            expandableListView.setVisibility(View.GONE);
                             rg_score.setVisibility(View.VISIBLE);
                         } else
                         {
-                            getCommandlist();
+                            getPFBZ();
                         }
                     } else
                     {
@@ -389,7 +396,7 @@ public class CZ_PG_Assess extends Activity
         pb_jd.setProgress(0);
     }
 
-    private void getCommandlist()
+    private void getPFBZ()
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_PG_Assess.this);
         RequestParams params = new RequestParams();
@@ -416,7 +423,48 @@ public class CZ_PG_Assess extends Activity
                             Dictionary dic = lsitNewData.get(0);
                             cz_pg_assess_expandAdapter = new CZ_PG_Assess_ExpandAdapter(CZ_PG_Assess.this, dic, expandableListView);
                             expandableListView.setAdapter(cz_pg_assess_expandAdapter);
-//                            utils.setListViewHeight(expandableListView);
+                            expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener()
+                            {
+                                @Override
+                                public void onGroupExpand(int groupPosition)
+                                {
+                                    int childsize = cz_pg_assess_expandAdapter.getChildrenCount(groupPosition);
+                                    totalHeight=  totalHeight+childsize*135;
+                                    ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+                                    params.height = totalHeight ;
+                                    expandableListView.setLayoutParams(params);
+                                    expandableListView.requestLayout();
+                                    expandableListView.refreshDrawableState();
+                                }
+                            });
+                            expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener()
+                            {
+                                @Override
+                                public void onGroupCollapse(int groupPosition)
+                                {
+                                    int childsize = cz_pg_assess_expandAdapter.getChildrenCount(groupPosition);
+                                    totalHeight=  totalHeight- childsize*135;
+                                    ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+                                    params.height = totalHeight;
+                                    expandableListView.setLayoutParams(params);
+                                    expandableListView.requestLayout();
+                                    expandableListView.refreshDrawableState();
+                                }
+                            });
+//                            int groupsize=cz_pg_assess_expandAdapter.getGroupCount();
+//                            totalHeight=totalHeight+groupsize*135;
+//                            for (int i = 0; i < groupsize; i++)
+//                            {
+//                                int childsize=cz_pg_assess_expandAdapter.getChildrenCount(i);
+//                                totalHeight=  totalHeight+ childsize*135;
+//                            }
+//                            ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+//                            params.height = totalHeight + (expandableListView.getDividerHeight() * (cz_pg_assess_expandAdapter.getGroupCount() - 1));
+//                            expandableListView.setLayoutParams(params);
+//                            expandableListView.requestLayout();
+                            utils.setListViewHeightBasedOnChildren(expandableListView);
+                            totalHeight=utils.getListViewHeight(expandableListView);
+
 //                            for (int i = 0; i < dic.getFirstItemName().size(); i++)
 //                            {
 //                                expandableListView.expandGroup(i);
@@ -470,5 +518,33 @@ public class CZ_PG_Assess extends Activity
             }
         });
         customDialog_listView.show();
+    }
+    private void showExistTip()
+    {
+        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(CZ_PG_Assess.this, R.style.MyDialog, dialog_layout, "评分", "确定评分？", "确定", "取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        if (listNewData == null || listNewData.get(0).getstdJobType().equals("-1") || listNewData.get(0).getstdJobType().equals("0"))
+                        {
+                            addScore_cz();
+                        } else
+                        {
+                            addScore_ncz();
+                        }
+
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.dismiss();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
     }
 }

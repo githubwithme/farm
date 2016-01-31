@@ -17,6 +17,18 @@ public class CustomExpandableListView extends ExpandableListView
     }
 
     @Override
+    public void setOnGroupCollapseListener(OnGroupCollapseListener onGroupCollapseListener)
+    {
+        super.setOnGroupCollapseListener(onGroupCollapseListener);
+    }
+
+    @Override
+    public void setOnGroupExpandListener(OnGroupExpandListener onGroupExpandListener)
+    {
+        super.setOnGroupExpandListener(onGroupExpandListener);
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
         // TODO Auto-generated method stub

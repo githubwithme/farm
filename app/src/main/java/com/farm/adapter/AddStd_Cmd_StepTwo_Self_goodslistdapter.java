@@ -264,20 +264,36 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         tv_tip_number.setText("剩余：" + goodssum + large_dw);
         tv_tip_gg.setText(number + small_dw + "/" + large_dw);
         tv_goodsname.setText(list.get(currentpos).getgoodsName());
-        tv_dw.setText(small_dw + "/株");
+        if (small_dw.equals("ml"))
+        {
+
+            tv_dw.setText("倍(兑水)");
+        }else
+        {
+            tv_dw.setText(small_dw + "/株");
+        }
+
         btn_sure.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                Double acountnumber=0d;
+                Double neednumber = 0d;
                 currentgoods.setParkId(commembertab.getparkId());
                 currentgoods.setParkName(commembertab.getparkName());
                 currentgoods.setAreaId(commembertab.getareaId());
                 currentgoods.setAreaName(commembertab.getareaName());
                 currentgoods.setYL(et_flsl.getText().toString());
-                Double acountnumber = Double.valueOf(et_flsl.getText().toString()) * Integer.valueOf(zzs);//株数
-                Double neednumber = acountnumber / Double.valueOf(number);
-                currentgoods.setGX(neednumber.toString());
+                if (small_dw.equals("ml"))
+                {
+                    currentgoods.setGX("待定");
+                }else
+                {
+                     acountnumber = Double.valueOf(et_flsl.getText().toString()) * Integer.valueOf(zzs);//株数
+                     neednumber = acountnumber / Double.valueOf(number);
+                    currentgoods.setGX(neednumber.toString());
+                }
                 SqliteDb.save(context, currentgoods);
 
                 LinearLayout ll_flsl = (LinearLayout) currentparentview.findViewById(R.id.ll_flsl);
@@ -287,8 +303,16 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 TextView tv_allnumber = (TextView) currentparentview.findViewById(R.id.tv_allnumber);
                 TextView tv_zzs = (TextView) currentparentview.findViewById(R.id.tv_zzs);
 
-                tv_flsl.setText(et_flsl.getText() + small_dw + "/株");
-                tv_allnumber.setText(neednumber + large_dw);
+                if (small_dw.equals("ml"))
+                {
+                    tv_flsl.setText(et_flsl.getText() +"陪(兑水)");
+                    tv_allnumber.setText("待定");
+                }else
+                {
+                    tv_flsl.setText(et_flsl.getText() + small_dw + "/株");
+                    tv_allnumber.setText(neednumber + large_dw);
+                }
+
                 tv_zzs.setText(zzs+"株");
                 customDialog_flsl.dismiss();
 

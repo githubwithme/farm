@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,6 +25,8 @@ import com.farm.bean.commembertab;
 import com.farm.bean.plantgrowthtab;
 import com.farm.bean.planttab;
 import com.farm.common.BitmapHelper;
+import com.farm.common.utils;
+import com.farm.widget.CircleImageView;
 import com.farm.widget.swipelistview.ExpandAniLinearLayout;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -119,7 +120,7 @@ public class TreeFragment extends Fragment
 						listNewData = JSON.parseArray(result.getRows().toJSONString(), plantgrowthtab.class);
 						treeAdapter = new TreeAdapter(getActivity(), listNewData);
 						lv_tree.setAdapter(treeAdapter);
-						setListViewHeightBasedOnChildren(lv_tree);
+//						utils.setListViewHeightBasedOnChildren(lv_tree);
 					} else
 					{
 						listNewData = new ArrayList<plantgrowthtab>();
@@ -152,11 +153,13 @@ public class TreeFragment extends Fragment
 		{
 			public LinearLayout ll_right;
 			public LinearLayout ll_left;
+			public LinearLayout ll_tip_right;
+			public LinearLayout ll_tip_left;
 			public ImageView ic_center;
 			public ImageView iv_top;
 			public ImageView iv_bottom;
-			public ImageView iv_img_right;
-			public ImageView iv_img_left;
+			public CircleImageView iv_img_right;
+			public CircleImageView iv_img_left;
 			public TextView tv_cjtime_right;
 			public TextView tv_cjtime_left;
 			public TextView tv_sg_right;
@@ -165,6 +168,11 @@ public class TreeFragment extends Fragment
 			public TextView tv_sg_left;
 			public TextView tv_ys_left;
 			public TextView tv_wj_left;
+
+			public TextView tv_sfcl_left;
+			public TextView tv_sfly_left;
+			public TextView tv_sfcl_right;
+			public TextView tv_sfly_right;
 		}
 
 		public TreeAdapter(Context context, List<plantgrowthtab> data)
@@ -182,7 +190,7 @@ public class TreeFragment extends Fragment
 			ListItemView listItemView = null;
 			if (lmap.get(position) == null)
 			{
-				convertView = listContainer.inflate(R.layout.tree_itme, null);
+				convertView = listContainer.inflate(R.layout.growthtree_itme, null);
 				listItemView = new ListItemView();
 				listItemView.ll_right = (LinearLayout) convertView.findViewById(R.id.ll_right);
 				listItemView.ll_left = (LinearLayout) convertView.findViewById(R.id.ll_left);
@@ -194,30 +202,40 @@ public class TreeFragment extends Fragment
 				listItemView.tv_sg_right = (TextView) convertView.findViewById(R.id.tv_sg_right);
 				listItemView.tv_ys_right = (TextView) convertView.findViewById(R.id.tv_ys_right);
 				listItemView.tv_wj_right = (TextView) convertView.findViewById(R.id.tv_wj_right);
+
+				listItemView.tv_sfcl_left = (TextView) convertView.findViewById(R.id.tv_sfcl_left);
+				listItemView.tv_sfly_left = (TextView) convertView.findViewById(R.id.tv_sfly_left);
+				listItemView.tv_sfcl_right = (TextView) convertView.findViewById(R.id.tv_sfcl_right);
+				listItemView.tv_sfly_right = (TextView) convertView.findViewById(R.id.tv_sfly_right);
+
 				listItemView.ic_center = (ImageView) convertView.findViewById(R.id.ic_center);
 				listItemView.iv_bottom = (ImageView) convertView.findViewById(R.id.iv_bottom);
-				listItemView.iv_img_left = (ImageView) convertView.findViewById(R.id.iv_img_left);
-				listItemView.iv_img_right = (ImageView) convertView.findViewById(R.id.iv_img_right);
+				listItemView.iv_img_left = (CircleImageView) convertView.findViewById(R.id.iv_img_left);
+				listItemView.iv_img_right = (CircleImageView) convertView.findViewById(R.id.iv_img_right);
+				listItemView.ll_tip_left = (LinearLayout) convertView.findViewById(R.id.ll_tip_left);
+				listItemView.ll_tip_right = (LinearLayout) convertView.findViewById(R.id.ll_tip_right);
 				listItemView.iv_top = (ImageView) convertView.findViewById(R.id.iv_top);
 				listItemView.ll_left.setId(position);
 				listItemView.ll_right.setId(position);
-				listItemView.ll_left.setOnClickListener(new OnClickListener()
+				listItemView.ll_left.setOnClickListener(new View.OnClickListener()
 				{
 					@Override
 					public void onClick(View v)
 					{
-						Intent intent = new Intent(getActivity(), ShowPlantGrowth_.class);
-						intent.putExtra("bean", listItems.get(v.getId()));
+						int pos = v.getId();
+						Intent intent = new Intent(getActivity(), ObservationRecordActivity_.class);
+						intent.putExtra("gcid", listItems.get(pos).getId());
 						getActivity().startActivity(intent);
 					}
 				});
-				listItemView.ll_right.setOnClickListener(new OnClickListener()
+				listItemView.ll_right.setOnClickListener(new View.OnClickListener()
 				{
 					@Override
 					public void onClick(View v)
 					{
-						Intent intent = new Intent(getActivity(), ShowPlantGrowth_.class);
-						intent.putExtra("bean", listItems.get(v.getId()));
+						int pos = v.getId();
+						Intent intent = new Intent(getActivity(), ObservationRecordActivity_.class);
+						intent.putExtra("gcid", listItems.get(pos).getId());
 						getActivity().startActivity(intent);
 					}
 				});
@@ -243,30 +261,47 @@ public class TreeFragment extends Fragment
 				listItemView.ll_right.setVisibility(View.VISIBLE);
 				listItemView.tv_cjtime_right.setText(plantgrowthtab.getregDate().substring(0, plantgrowthtab.getregDate().lastIndexOf(" ")));
 				listItemView.tv_sg_right.setVisibility(View.VISIBLE);
-				listItemView.tv_sg_right.setText("树高：" + plantgrowthtab.gethNum());
-				listItemView.tv_wj_right.setText("叶数：" + plantgrowthtab.getwNum());
-				listItemView.tv_ys_right.setText("围径：" + plantgrowthtab.getyNum());
+				listItemView.tv_sg_right.setText(plantgrowthtab.gethNum() + "m");
+				listItemView.tv_wj_right.setText(plantgrowthtab.getwNum() + "m");
+				listItemView.tv_ys_right.setText(plantgrowthtab.getyNum() + "片");
 				if (plantgrowthtab.getImgUrl().size() != 0)
 				{
-					BitmapHelper.setImageView(context, listItemView.iv_img_right, AppConfig.baseurl + plantgrowthtab.getImgUrl().get(0));
+					BitmapHelper.setImageViewBackground(context, listItemView.iv_img_right, AppConfig.baseurl + plantgrowthtab.getImgUrl().get(0));
 				}
+//                if (plantgrowthtab.getSfcl().equals("True"))
+//                {
+//                    listItemView.ll_tip_right.setVisibility(View.VISIBLE);
+//                    listItemView.tv_sfcl_right.setVisibility(View.VISIBLE);
+//                }
+//                if (plantgrowthtab.getSfly().equals("True"))
+//                {
+//                    listItemView.ll_tip_right.setVisibility(View.VISIBLE);
+//                    listItemView.tv_sfly_right.setVisibility(View.VISIBLE);
+//                }
 
 			} else
 			{
 				listItemView.ic_center.setBackground(getResources().getDrawable(resleft[(int) (Math.random() * resleft.length)]));
 				listItemView.ll_left.setVisibility(View.VISIBLE);
 				listItemView.tv_cjtime_left.setText(plantgrowthtab.getregDate().substring(0, plantgrowthtab.getregDate().lastIndexOf(" ")));
-				if (plantgrowthtab.getplantType().equals("0"))
-				{
-					listItemView.tv_sg_left.setText("树高：" + plantgrowthtab.gethNum());
-					listItemView.tv_ys_left.setText("叶数：" + plantgrowthtab.getyNum());
-					listItemView.tv_wj_left.setText("围径：" + plantgrowthtab.getwNum());
-				}
+				listItemView.tv_sg_left.setText(plantgrowthtab.gethNum() + "m");
+				listItemView.tv_wj_left.setText(plantgrowthtab.getwNum() + "m");
+				listItemView.tv_ys_left.setText(plantgrowthtab.getyNum() + "片");
 
 				if (plantgrowthtab.getImgUrl().size() != 0)
 				{
-					BitmapHelper.setImageView(context, listItemView.iv_img_left, AppConfig.baseurl + plantgrowthtab.getImgUrl().get(0));
+					BitmapHelper.setImageViewBackground(context, listItemView.iv_img_left, AppConfig.baseurl + plantgrowthtab.getImgUrl().get(0));
 				}
+//                if (plantgrowthtab.getSfcl().equals("True"))
+//                {
+//                    listItemView.ll_tip_left.setVisibility(View.VISIBLE);
+//                    listItemView.tv_sfcl_left.setVisibility(View.VISIBLE);
+//                }
+//                if (plantgrowthtab.getSfly().equals("True"))
+//                {
+//                    listItemView.ll_tip_left.setVisibility(View.VISIBLE);
+//                    listItemView.tv_sfly_left.setVisibility(View.VISIBLE);
+//                }
 			}
 			return convertView;
 		}

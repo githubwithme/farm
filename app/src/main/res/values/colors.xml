@@ -34,6 +34,7 @@
     <color name="darkgray">#959595</color>
     <color name="find_textcolor">#000000</color>
     <color name="hasfind_textcolor">#909090</color>
+    <color name="defaultcolor">#F9F9F9</color>
     <color name="menu_textcolor">#333333</color>
     <color name="textcolor_titlebar">#333333</color>
     <color name="listitem_transparent">#00000000</color>
