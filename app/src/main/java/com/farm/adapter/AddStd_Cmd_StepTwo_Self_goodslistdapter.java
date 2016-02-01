@@ -136,7 +136,10 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                         getGoodsSum(list.get(currentpos));
                     } else
                     {
-                        SqliteDb.deleteGoods(context, goodslisttab.class, currentgoods.getId());
+                        if (!isrecovery)
+                        {
+                            SqliteDb.deleteGoods(context, goodslisttab.class, currentgoods.getId());
+                        }
                         currentiv_tip.setVisibility(View.GONE);
                         LinearLayout ll_flsl = (LinearLayout) currentparentview.findViewById(R.id.ll_flsl);
                         ll_flsl.setVisibility(View.GONE);

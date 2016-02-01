@@ -204,14 +204,20 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
         switch (currentItem)
         {
             case 0:
+                text_three.setClickable(true);
+                text_four.setClickable(true);
                 break;
             case 1:
+                text_four.setClickable(true);
+                text_five.setClickable(true);
                 AddPlantObservation_StepTwo fragment1 = (AddPlantObservation_StepTwo) adapter.getFragment(0);
                 String gcq = fragment1.getGcq();
                 AddPlantObservation_stepfour fragment2 = (AddPlantObservation_stepfour) adapter.getFragment(2);
                 fragment2.updateData(gcq, "香蕉");
                 break;
             case 2:
+                text_five.setClickable(true);
+                text_six.setClickable(true);
                 vPager.setIsScrollable(true);
                 setMenuCliable();
                 AddPlantObservation_stepfour fragment4 = (AddPlantObservation_stepfour) adapter.getFragment(2);

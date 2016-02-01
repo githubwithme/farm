@@ -123,7 +123,8 @@ public class Common_JobDetail extends Activity
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)
         {
-            flyl = flyl + nongzi[i] + "：" + yl[i] + dw[i]+"/株" + "\n";
+            flyl = flyl + nongzi[i] + "：" + yl[i] +"/株" + "\n";
+//            flyl = flyl + nongzi[i] + "：" + yl[i] + dw[i]+"/株" + "\n";
         }
 
         tv_jobname.setText(jobtab.getstdJobTypeName() + "——" + jobtab.getstdJobName());
