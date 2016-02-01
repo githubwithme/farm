@@ -95,11 +95,16 @@ public class Common_JobDetail_Assess extends Activity
     protected void onResume()
     {
         super.onResume();
+        getJob();
     }
 
     @AfterViews
     void afterOncreate()
     {
+        if (jobtab.equals("1"))
+        {
+            btn_score.setVisibility(View.VISIBLE);
+        }
         showData(jobtab);
     }
 
@@ -109,6 +114,7 @@ public class Common_JobDetail_Assess extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         jobtab = getIntent().getParcelableExtra("bean");
+
     }
 
     private void showData(jobtab jobtab)
@@ -129,19 +135,19 @@ public class Common_JobDetail_Assess extends Activity
         {
             flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
         }
-        tv_qx.setText(jobtab.getregDate().substring(0,jobtab.getregDate().lastIndexOf(" ")));
+        tv_qx.setText(jobtab.getregDate().substring(0, jobtab.getregDate().lastIndexOf(" ")));
         tv_jobname.setText(jobtab.getstdJobTypeName() + "——" + jobtab.getstdJobName());
         tv_yl.setText(flyl);
         tv_note.setText(jobtab.getjobNote());
         tv_pf.setText(jobtab.getaudioJobExecPath() + "分");
-        List<String> pfnr = jobtab.getPF();
-        String nr = "";
-        for (int i = 0; i < pfnr.size(); i++)
-        {
-            nr = nr + pfnr.get(i) + "\n\n";
-        }
-        tv_date_pf.setText(jobtab.getassessDate().substring(0,jobtab.getassessDate().lastIndexOf(" ")));
-        tv_pfnr.setText(nr);
+//        List<String> pfnr = jobtab.getPF();
+//        String nr = "";
+//        for (int i = 0; i < pfnr.size(); i++)
+//        {
+//            nr = nr + pfnr.get(i) + "\n\n";
+//        }
+        tv_date_pf.setText(jobtab.getassessDate().substring(0, jobtab.getassessDate().lastIndexOf(" ")));
+//        tv_pfnr.setText(nr);
         tv_pfsm.setText(jobtab.getassessNote());
         tv_fkjg.setText(jobtab.getaudioJobAssessPath());
 
@@ -158,15 +164,16 @@ public class Common_JobDetail_Assess extends Activity
         }
 
     }
+
     private void getJob()
     {
         commembertab commembertab = AppContext.getUserInfo(Common_JobDetail_Assess.this);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("jobid", "");
+        params.addQueryStringParameter("jobid", jobtab.getId());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("action", "jobGetListMore");
+        params.addQueryStringParameter("action", "jobGetByID");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -181,7 +188,13 @@ public class Common_JobDetail_Assess extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                        if (listNewData.get(0).getjobStatus().equals("1"))
+                        {
+                            btn_score.setVisibility(View.GONE);
+                        }
                         showData(listNewData.get(0));
+
+
                     } else
                     {
                         listNewData = new ArrayList<jobtab>();

@@ -29,6 +29,10 @@ public class ShowPhotos extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
-		url = getIntent().getStringExtra("url");
+		String  temp = getIntent().getStringExtra("url");
+		String name=temp.substring(temp.lastIndexOf("/")+1, temp.length());
+
+		String name1=name.substring(6,name.length());
+		url=temp.substring(0, temp.lastIndexOf("/")+1)+name1;
 	}
 }

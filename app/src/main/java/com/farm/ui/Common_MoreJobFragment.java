@@ -161,7 +161,7 @@ public class Common_MoreJobFragment extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
         params.addQueryStringParameter("orderby", "");
-        params.addQueryStringParameter("strWhere", "");
+        params.addQueryStringParameter("strWhere", "pf:1");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
         params.addQueryStringParameter("action", "jobGetListMore");

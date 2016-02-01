@@ -126,9 +126,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dip"
                         android:layout_toRightOf="@+id/tv_jobtype"
                         android:gravity="center"
-                        android:layout_marginLeft="20dip"
                         android:text=""
                         android:textColor="@color/bg_blue"
                         android:textSize="@dimen/size_14"/>
@@ -150,31 +150,32 @@
                         android:textColor="@color/bg_text_small"
                         android:textSize="@dimen/size_14"/>
 
+                    <TextView
+                        android:id="@+id/tv_zf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dip"
+                        android:layout_toRightOf="@+id/tv_type"
+                        android:gravity="center"
+                        android:text="指令来源未知"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/size_14"/>
 
                     <Button
                         android:id="@+id/btn_sure"
                         android:layout_width="45dip"
                         android:layout_height="20dip"
-                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dip"
+                        android:layout_marginLeft="15dip"
+                        android:layout_toRightOf="@+id/tv_zf"
                         android:background="@drawable/shape_work"
                         android:gravity="center"
                         android:text="收到"
                         android:textColor="@color/white"
                         android:textSize="@dimen/size_11"/>
 
-                    <TextView
-                        android:id="@+id/tv_zf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="70dip"
-                        android:gravity="center"
-                        android:text="指令来源未知"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/size_14"/>
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -236,9 +237,9 @@
 
                         <ImageView
                             android:id="@+id/iv_record"
-                            android:layout_width="25dip"
-                            android:layout_height="25dip"
-                            android:background="@drawable/add_voice_pressed"/>
+                            android:layout_width="35dip"
+                            android:layout_height="35dip"
+                            android:background="@drawable/ht"/>
 
                         <FrameLayout
                             android:id="@+id/fl_new"
