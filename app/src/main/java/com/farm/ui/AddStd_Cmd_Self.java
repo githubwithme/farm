@@ -243,7 +243,7 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
                     vPager.setCurrentItem(currentItem + 1);
                 }else
                 {
-                    Toast.makeText(AddStd_Cmd_Self.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddStd_Cmd_Self.this,"必须完整填写或者选择相应信息！",Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -253,7 +253,7 @@ public class AddStd_Cmd_Self extends FragmentActivity implements FragmentCallBac
                 commandtab_single = com.farm.bean.commandtab_single.getInstance();
                 if (commandtab_single.getimportance().equals("") || commandtab_single.getcommComDate().equals("") || commandtab_single.getcommDays().equals("") || commandtab_single.getcommNote().equals(""))
                 {
-                    Toast.makeText(AddStd_Cmd_Self.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddStd_Cmd_Self.this,"必须完整填写或者选择相应信息！",Toast.LENGTH_SHORT).show();
                 }else
                 {
                     vPager.setIsScrollable(true);

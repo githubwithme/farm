@@ -226,6 +226,31 @@ public class AddNotProductCommand extends Activity implements OnClickListener
 
     private void commandTabAdd()
     {
+        if (tv_area.getText().toString().equals(""))
+        {
+            Toast.makeText(AddNotProductCommand.this, "请选择区域！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (tv_timelimit.getText().toString().equals(""))
+        {
+            Toast.makeText(AddNotProductCommand.this, "请选择开始时间！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (tv_workday.getText().toString().equals(""))
+        {
+            Toast.makeText(AddNotProductCommand.this, "请选择作业天数！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_note.getText().toString().equals(""))
+        {
+            Toast.makeText(AddNotProductCommand.this, "请填写说明！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (importance_id.equals(""))
+        {
+            Toast.makeText(AddNotProductCommand.this, "请选择重要性！", Toast.LENGTH_SHORT).show();
+            return;
+        }
         List<SelectRecords> list_SelectRecords;
         commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
@@ -260,15 +285,11 @@ public class AddNotProductCommand extends Activity implements OnClickListener
             params.addQueryStringParameter("areaName", tempname.substring(0, tempname.length() - 1));
         } else
         {
-            Toast.makeText(AddNotProductCommand.this, "请选择区域！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddNotProductCommand.this, "请选择执行级别！", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (tv_timelimit.getText().toString().equals(""))
-        {
-            Toast.makeText(AddNotProductCommand.this, "请选择期限！", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         params.addQueryStringParameter("nongziName", et_note.getText().toString());
         params.addQueryStringParameter("amount", "");
         params.addQueryStringParameter("commNote", et_note.getText().toString());

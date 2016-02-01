@@ -207,7 +207,7 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
                     vPager.setCurrentItem(currentItem + 1);
                 }else
                 {
-                    Toast.makeText(AddNotStd_Cmd_Self.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNotStd_Cmd_Self.this,"必须完整填写或者选择相应信息！",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 1:
@@ -216,7 +216,7 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
                 commandtab_single = com.farm.bean.commandtab_single.getInstance();
                 if (commandtab_single.getimportance().equals("") || commandtab_single.getcommComDate().equals("") || commandtab_single.getcommDays().equals("") || commandtab_single.getcommNote().equals(""))
                 {
-                    Toast.makeText(AddNotStd_Cmd_Self.this,"请先选择！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNotStd_Cmd_Self.this,"必须完整填写或者选择相应信息！",Toast.LENGTH_SHORT).show();
                 }else
                 {
                     vPager.setIsScrollable(true);
