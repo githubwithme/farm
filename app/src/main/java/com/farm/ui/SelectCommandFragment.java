@@ -701,7 +701,7 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
                     if (joblist.get(i).getcommandID().equals(listItems.get(position).getId()))
                     {
 //                        listItemView.cb_add.setChecked(true);
-                        listItemView.cb_add.setClickable(false);
+                        listItemView.cb_add.setVisibility(View.GONE);
                         listItemView.tv_status.setText("已选");
                         listItemView.ll_main.setBackgroundResource(R.color.defaultcolor);
                     }

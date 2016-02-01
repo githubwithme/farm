@@ -121,8 +121,8 @@
                             android:layout_toRightOf="@id/tv_pf_tip"
                             android:gravity="right"
                             android:text="暂无"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/size_14"/>
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/size_sp_18"/>
                     </RelativeLayout>
 
                     <View
@@ -223,7 +223,7 @@
                             android:layout_marginLeft="10dip"
                             android:gravity="center"
                             android:text="罚款警告"
-                            android:textColor="@color/red"
+                            android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_16"/>
 
                         <TextView

@@ -140,14 +140,14 @@ public class Common_JobDetail_Assess extends Activity
         tv_yl.setText(flyl);
         tv_note.setText(jobtab.getjobNote());
         tv_pf.setText(jobtab.getaudioJobExecPath() + "分");
-//        List<String> pfnr = jobtab.getPF();
-//        String nr = "";
-//        for (int i = 0; i < pfnr.size(); i++)
-//        {
-//            nr = nr + pfnr.get(i) + "\n\n";
-//        }
+        List<String> pfnr = jobtab.getPF();
+        String nr = "";
+        for (int i = 0; i < pfnr.size(); i++)
+        {
+            nr = nr + pfnr.get(i) + "\n\n";
+        }
         tv_date_pf.setText(jobtab.getassessDate().substring(0, jobtab.getassessDate().lastIndexOf(" ")));
-//        tv_pfnr.setText(nr);
+        tv_pfnr.setText(nr);
         tv_pfsm.setText(jobtab.getassessNote());
         tv_fkjg.setText(jobtab.getaudioJobAssessPath());
 

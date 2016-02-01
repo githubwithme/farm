@@ -228,7 +228,7 @@ public class Common_TodayJobAdapter extends BaseAdapter
             listItemView.tv_importance.setText("自");
             listItemView.circle_img.setImageResource(R.color.bg_job);
         }
-        if (jobtab.getcommFromVPath().equals("0"))
+        if (jobtab.getFrom().equals("0"))
         {
             listItemView.tv_zf.setText( "下发");
         } else
@@ -246,21 +246,21 @@ public class Common_TodayJobAdapter extends BaseAdapter
             listItemView.tv_type.setText("标准生产指令");
         }
         listItemView.tv_time.setText(jobtab.getregDate().substring(0, jobtab.getregDate().lastIndexOf(":")));
-        if (jobtab.getassessScore().equals("-1"))
+        if (jobtab.getaudioJobExecPath().equals("-1"))
         {
             listItemView.tv_score.setText("暂无");
         } else
         {
             listItemView.tv_score.setTextColor(context.getResources().getColor(R.color.red));
-            if (jobtab.getassessScore().equals("0"))
+            if (jobtab.getaudioJobExecPath().equals("0"))
             {
-                listItemView.tv_score.setText("不合格");
-            } else if (jobtab.getassessScore().equals("8"))
+                listItemView.tv_score.setText("0分");
+            } else if (jobtab.getaudioJobExecPath().equals("8"))
             {
-                listItemView.tv_score.setText("合格");
-            } else if (jobtab.getassessScore().equals("10"))
+                listItemView.tv_score.setText("8分");
+            } else if (jobtab.getaudioJobExecPath().equals("10"))
             {
-                listItemView.tv_score.setText("优");
+                listItemView.tv_score.setText("10分");
             }
         }
 
