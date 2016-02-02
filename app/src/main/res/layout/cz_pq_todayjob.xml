@@ -33,7 +33,7 @@
             android:layout_height="@dimen/titlebar_height"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="张三今日工作情况"
+            android:text="张三工作情况"
             android:textColor="@color/textcolor_titlebar"
             android:textSize="@dimen/titlebar_textsize"/>
 

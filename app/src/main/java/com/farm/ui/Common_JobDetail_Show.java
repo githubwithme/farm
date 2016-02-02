@@ -104,12 +104,12 @@ public class Common_JobDetail_Show extends Activity
         }
         String[] nongzi = jobtab.getnongziName().split(",");
         String[] yl = jobtab.getamount().split(";");
-        String[] amountdw = jobtab.getAmountDW().split(";");
+        String[] amountdw = jobtab.getAmountDW().split(",");
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)
         {
-//            flyl = flyl + nongzi[i] + "：" + yl[i] + amountdw[i]+"/株" + "\n";
-            flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
+            flyl = flyl + nongzi[i] + "：" + yl[i] + amountdw[i] + "\n";
+//            flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
         }
         tv_qx.setText(jobtab.getregDate().substring(0,jobtab.getregDate().lastIndexOf(" ")));
         tv_jobname.setText(jobtab.getstdJobTypeName() + "——" + jobtab.getstdJobName());

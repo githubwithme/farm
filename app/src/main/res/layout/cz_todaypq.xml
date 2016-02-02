@@ -23,7 +23,7 @@
             android:layout_height="@dimen/titlebar_height"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="今日片区情况"
+            android:text="片区情况"
             android:textColor="@color/textcolor_titlebar"
             android:textSize="@dimen/titlebar_textsize"
             android:textStyle="bold"/>

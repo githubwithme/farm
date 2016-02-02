@@ -25,7 +25,7 @@
             android:layout_height="@dimen/titlebar_height"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="场长今日工作"
+            android:text="场长工作"
             android:textColor="@color/textcolor_titlebar"
             android:textSize="@dimen/titlebar_textsize"
             android:textStyle="bold"/>

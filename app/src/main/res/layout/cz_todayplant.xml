@@ -24,7 +24,7 @@
             android:layout_height="@dimen/titlebar_height"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="场长今日植株观测情况"
+            android:text="场长植株观测情况"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"
             android:textStyle="bold" />

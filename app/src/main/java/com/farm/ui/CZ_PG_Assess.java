@@ -92,7 +92,14 @@ public class CZ_PG_Assess extends Activity
     @Click
     void btn_sure()
     {
-        getassessScore();
+        if (listNewData == null || listNewData.get(0).getstdJobType().equals("-1") || listNewData.get(0).getstdJobType().equals("0"))
+        {
+            addScore_cz();
+        } else
+        {
+            getassessScore();
+        }
+
     }
 
     @Click
@@ -211,7 +218,7 @@ public class CZ_PG_Assess extends Activity
 
     private void getassessScore()
     {
-        assessScore="";
+        assessScore = "";
         List<View> list_view = cz_pg_assess_expandAdapter.getListView();
         int childCount = cz_pg_assess_expandAdapter.getAllChildCout();
         if (list_view.size() != childCount)
@@ -283,7 +290,7 @@ public class CZ_PG_Assess extends Activity
 
     private void addScore_ncz()
     {
-        assessScore="";
+        assessScore = "";
         List<View> list_view = cz_pg_assess_expandAdapter.getListView();
         int childCount = cz_pg_assess_expandAdapter.getAllChildCout();
         if (list_view.size() != childCount)
@@ -596,7 +603,7 @@ public class CZ_PG_Assess extends Activity
     private void showExistTip(String score)
     {
         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(CZ_PG_Assess.this, R.style.MyDialog, dialog_layout, "评分", "综合评分为"+score+"分，"+"确定评分？", "确定", "取消", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(CZ_PG_Assess.this, R.style.MyDialog, dialog_layout, "评分", "综合评分为" + score + "分，" + "确定评分？", "确定", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -604,13 +611,7 @@ public class CZ_PG_Assess extends Activity
                 switch (v.getId())
                 {
                     case R.id.btn_sure:
-                        if (listNewData == null || listNewData.get(0).getstdJobType().equals("-1") || listNewData.get(0).getstdJobType().equals("0"))
-                        {
-                            addScore_cz();
-                        } else
-                        {
-                            addScore_ncz();
-                        }
+                        addScore_ncz();
 
                         break;
                     case R.id.btn_cancle:
