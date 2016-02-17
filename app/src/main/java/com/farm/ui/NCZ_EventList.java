@@ -102,7 +102,7 @@ public class NCZ_EventList extends Fragment implements OnClickListener
     @AfterViews
     void afterOncreate()
     {
-        getArealist();
+//        getArealist();
         getTestData("event");
 //        initAnimalListView();
     }

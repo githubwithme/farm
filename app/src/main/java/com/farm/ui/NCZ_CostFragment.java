@@ -192,9 +192,10 @@ public class NCZ_CostFragment extends Activity implements OnClickListener
         params.addQueryStringParameter("username", commembertab.getuserName());
         params.addQueryStringParameter("orderby", "regDate desc");
         params.addQueryStringParameter("strWhere", "");
+        params.addQueryStringParameter("gcdid", "37");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "plantGetList");
+        params.addQueryStringParameter("action", "plantGetListByGCD");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
