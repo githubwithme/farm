@@ -398,7 +398,10 @@ public class SelectorFragment extends Fragment implements OnClickListener
                 list_state.remove(textView);
             }
         }
-
+        if (ll_selected.getChildCount()==0)
+        {
+            hs_selected.setVisibility(View.GONE);
+        }
     }
 
     public class TypeAdapter extends BaseAdapter
