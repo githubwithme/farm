@@ -37,10 +37,10 @@ public class AppConfig
 	public static AppConfig getAppConfig(Context context)
 	{
 		if (appConfig == null)
-		{
-			appConfig = new AppConfig();
-			appConfig.mContext = context;
-		}
+	{
+		appConfig = new AppConfig();
+		appConfig.mContext = context;
+	}
 		return appConfig;
 	}
 

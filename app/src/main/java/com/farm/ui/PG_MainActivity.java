@@ -29,12 +29,15 @@ public class PG_MainActivity extends Activity
     PG_MainFragment mainFragment;
     PG_GddList pg_gddList;
     PG_EventList pg_eventList;
+    PG_DL pg_dl;
     PG_EveryDayAssessList pg_EveryDayAssessList;
     IFragment iFragment;
     @ViewById
     ImageButton imgbtn_home;
     @ViewById
     ImageButton imgbtn_plant;
+    @ViewById
+    ImageButton imgbtn_dl;
     @ViewById
     ImageButton imgbtn_me;
     @ViewById
@@ -48,6 +51,8 @@ public class PG_MainActivity extends Activity
     TextView tv_me;
     @ViewById
     TextView tv_event;
+    @ViewById
+    TextView tv_dl;
 
     @ViewById
     TableLayout tl_home;
@@ -57,31 +62,52 @@ public class PG_MainActivity extends Activity
     TableLayout tl_me;
     @ViewById
     TableLayout tl_event;
+    @ViewById
+    TableLayout tl_dl;
 
     @Click
     void tl_home()
     {
         tv_home.setTextColor(getResources().getColor(R.color.bg_blue));
+        tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_home.setSelected(true);
+        tl_dl.setSelected(false);
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
         switchContent(mContent, mainFragment);
     }
+    @Click
+    void tl_dl()
+    {
+        tv_dl.setTextColor(getResources().getColor(R.color.bg_blue));
+        tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
+        tl_dl.setSelected(true);
+        tl_home.setSelected(false);
+        tl_plant.setSelected(false);
+        tl_me.setSelected(false);
+        tl_event.setSelected(false);
+        switchContent(mContent, pg_dl);
+    }
     @Click
     void tl_event()
     {
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_event.setTextColor(getResources().getColor(R.color.bg_blue));
 
         tl_home.setSelected(false);
+        tl_dl.setSelected(false);
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(true);
@@ -92,11 +118,13 @@ public class PG_MainActivity extends Activity
     void tl_plant()
     {
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_plant.setTextColor(getResources().getColor(R.color.bg_blue));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_home.setSelected(false);
+        tl_dl.setSelected(false);
         tl_plant.setSelected(true);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
@@ -107,12 +135,14 @@ public class PG_MainActivity extends Activity
     void tl_me()
     {
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.bg_blue));
         tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_home.setSelected(false);
         tl_plant.setSelected(false);
+        tl_dl.setSelected(false);
         tl_me.setSelected(true);
         tl_event.setSelected(false);
         switchContent(mContent, iFragment);
@@ -135,6 +165,7 @@ public class PG_MainActivity extends Activity
         mainFragment = new PG_MainFragment_();
         pg_gddList = new PG_GddList_();
         pg_eventList = new PG_EventList_();
+        pg_dl = new PG_DL_();
         pg_EveryDayAssessList = new PG_EveryDayAssessList_();
         iFragment = new IFragment_();
     }
