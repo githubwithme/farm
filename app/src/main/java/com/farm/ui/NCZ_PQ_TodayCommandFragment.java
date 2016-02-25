@@ -53,7 +53,7 @@ import java.util.List;
 public class NCZ_PQ_TodayCommandFragment extends Fragment implements OnClickListener
 {
     boolean ishidding = false;
-String workuserid;
+    String workuserid;
     TimeThread timethread;
 //    SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
