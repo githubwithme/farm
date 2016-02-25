@@ -2,7 +2,7 @@
 <!-- 左右滑入式 -->
 <set xmlns:android="http://schemas.android.com/apk/res/android" >
     <translate
-        android:duration="50"  
+        android:duration="400"
         android:fromXDelta="0"  
         android:toXDelta="-60%p" />        
 </set>
