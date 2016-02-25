@@ -9,8 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.app.AppContext;
+import com.farm.bean.Gps;
+import com.farm.bean.Points;
+import com.farm.bean.Result;
+import com.farm.common.CoordinateConvertUtil;
 import com.farm.common.utils;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
@@ -20,6 +26,8 @@ import com.tencent.mapsdk.raster.model.BitmapDescriptor;
 import com.tencent.mapsdk.raster.model.LatLng;
 import com.tencent.mapsdk.raster.model.Marker;
 import com.tencent.mapsdk.raster.model.MarkerOptions;
+import com.tencent.mapsdk.raster.model.Polyline;
+import com.tencent.mapsdk.raster.model.PolylineOptions;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 import com.tencent.tencentmap.mapsdk.map.Projection;
 import com.tencent.tencentmap.mapsdk.map.TencentMap;
@@ -34,6 +42,7 @@ import java.util.List;
 @EFragment
 public class PG_DL extends Fragment implements TencentLocationListener
 {
+    LatLng lastlatLng = null;
     int error;
     LatLng location_latLng = new LatLng(24.430833, 113.298611);// 初始化定位
     private List<Object> Overlays;
@@ -59,7 +68,8 @@ public class PG_DL extends Fragment implements TencentLocationListener
         tencentMap = mapview.getMap();
         tencentMap.setZoom(15);
         mProjection = mapview.getProjection();
-        animateToLocation();
+//        animateToLocation();
+        getTestData("points");
     }
 
     @Nullable
@@ -125,5 +135,49 @@ public class PG_DL extends Fragment implements TencentLocationListener
         Bitmap bitmap = utils.drawable2Bitmap(drawable);
         marker = tencentMap.addMarker(new MarkerOptions().position(latLng).title("").icon(new BitmapDescriptor(bitmap)));
         marker.hideInfoWindow();
+    }
+
+    private void getTestData(String from)
+    {
+        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
+        Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
+        List<Points> listData = JSON.parseArray(result.getRows().toJSONString(), Points.class);
+        showPatro(listData);
+    }
+
+    private void showPatro(List<Points> listNewData)
+    {
+        LatLng startlatLng = null;
+        tencentMap.setZoom(15);// 设置地图显示大小
+        List<Object> Overlays = new ArrayList<Object>();
+        for (int i = 0; i < listNewData.size(); i++)
+        {
+            Gps gPS = CoordinateConvertUtil.gps84_To_Gcj02(Double.valueOf(listNewData.get(i).getLat()), Double.valueOf(listNewData.get(i).getLon()));
+            LatLng latLng = new LatLng(gPS.getWgLat(), gPS.getWgLon());
+            if (i == 0)
+            {
+                Gps gPS0 = CoordinateConvertUtil.gps84_To_Gcj02(Double.valueOf(listNewData.get(i).getLat()), Double.valueOf(listNewData.get(i).getLon()));
+                startlatLng = new LatLng(gPS0.getWgLat(), gPS0.getWgLon());
+//                addMarker(startlatLng, R.drawable.location_start);
+                tencentMap.animateTo(startlatLng);
+                lastlatLng = latLng;
+            }
+            if (i == listNewData.size() - 1)
+            {
+//                addMarker(latLng, R.drawable.location_end);
+            }
+            // latLng = new LatLng(utils.randomCommon(lastlatLng.getLatitude(),
+            // lastlatLng.getLatitude() + 0.2, 1)[0],
+            // utils.randomCommon(lastlatLng.getLongitude(),
+            // lastlatLng.getLongitude() + 0.2, 1)[0]);
+            PolylineOptions lineOpt = new PolylineOptions();
+            lineOpt.add(lastlatLng);
+            lastlatLng = latLng;
+            lineOpt.add(latLng);
+            Polyline line = tencentMap.addPolyline(lineOpt);
+            line.setColor(this.getResources().getColor(R.color.black));
+            line.setWidth(4f);
+            Overlays.add(line);
+        }
     }
 }

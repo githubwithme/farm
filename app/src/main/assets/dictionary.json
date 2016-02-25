@@ -15,6 +15,8 @@
 
   "jj_gjd":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["干净","有灰尘","肮脏"]}],"other":[]},
 
+  "points":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"lat":"23.087978","lon":"113.319093"},{"lat":"23.088649","lon":"113.317671"},{"lat":"23.089606","lon":"113.318567"},{"lat":"23.089759","lon":"113.319699"},{"lat":"23.088358","lon":"113.320380"},{"lat":"23.087978","lon":"113.319093"}],"other":[]},
+
   "jj_gz":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["鲜艳","暗淡","正常"]}],"other":[]},
 
   "gcd":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["观测点1","观测点2","观测点3"]}],"other":[]},
