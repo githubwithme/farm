@@ -14,7 +14,7 @@ import com.lidroid.xutils.db.annotation.Table;
  *
  * @version 1.0
  */
-@Table(name = "areatab")
+@Table(name = "ZS")
 public class ZS implements Parcelable // 与数据库不一致
 {
     public String id;
