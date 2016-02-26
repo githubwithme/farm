@@ -237,7 +237,7 @@ public class SqliteDb
         List<T> list = null;
         try
         {
-            list = db.findAll(Selector.from(c).where("id", "=", areaid));
+            list = db.findAll(Selector.from(c).where("areaid", "=", areaid));
         } catch (DbException e)
         {
             e.printStackTrace();

@@ -29,7 +29,7 @@ public class PG_MainActivity extends Activity
     PG_MainFragment mainFragment;
     PG_GddList pg_gddList;
     PG_EventList pg_eventList;
-    PG_DL pg_dl;
+    ProductAndSale productAndSale;
     PG_EveryDayAssessList pg_EveryDayAssessList;
     IFragment iFragment;
     @ViewById
@@ -95,7 +95,7 @@ public class PG_MainActivity extends Activity
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
-        switchContent(mContent, pg_dl);
+        switchContent(mContent, productAndSale);
     }
     @Click
     void tl_event()
@@ -165,7 +165,7 @@ public class PG_MainActivity extends Activity
         mainFragment = new PG_MainFragment_();
         pg_gddList = new PG_GddList_();
         pg_eventList = new PG_EventList_();
-        pg_dl = new PG_DL_();
+        productAndSale = new ProductAndSale_();
         pg_EveryDayAssessList = new PG_EveryDayAssessList_();
         iFragment = new IFragment_();
     }

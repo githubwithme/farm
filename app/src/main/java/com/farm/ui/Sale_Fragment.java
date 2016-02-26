@@ -1,10 +1,10 @@
 package com.farm.ui;
 
+import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -58,7 +58,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EFragment
-public class PG_DL extends Fragment implements TencentLocationListener, View.OnClickListener
+public class Sale_Fragment extends Fragment implements TencentLocationListener, View.OnClickListener
 {
     List<ZS> list_zs;
     DL_ZS_Adapter dl_zs_adapter;
@@ -213,9 +213,9 @@ public class PG_DL extends Fragment implements TencentLocationListener, View.OnC
 //        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
 //        lp.alpha = 0.7f;
 //        getActivity().getWindow().setAttributes(lp);
-        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(PG_DL.this);
-        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(PG_DL.this);
-        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(PG_DL.this);
+        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(Sale_Fragment.this);
+        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(Sale_Fragment.this);
+        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(Sale_Fragment.this);
     }
 
     public void showPop_addcommand()
@@ -364,7 +364,7 @@ public class PG_DL extends Fragment implements TencentLocationListener, View.OnC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.map_nc, container, false);
+        View rootView = inflater.inflate(R.layout.sale_fragment, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
         return rootView;
     }
