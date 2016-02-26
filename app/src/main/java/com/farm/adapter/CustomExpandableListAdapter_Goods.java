@@ -20,6 +20,7 @@ import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
+import com.farm.ui.NCZ_WZ_XXList_;
 import com.farm.ui.SingleGoodList_;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -284,8 +285,9 @@ public class CustomExpandableListAdapter_Goods extends BaseExpandableListAdapter
                                 @Override
                                 public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
                                 {
-                                    Intent intent = new Intent(context, SingleGoodList_.class);
-                                    context.startActivity(intent);
+//                                      Intent intent = new Intent(context, SingleGoodList_.class);
+                                    Intent intent = new Intent(context, NCZ_WZ_XXList_.class);
+                                      context.startActivity(intent);
                                 }
                             });
                             adapter.notifyDataSetChanged();
