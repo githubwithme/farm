@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -53,11 +54,12 @@ import java.util.List;
 public class NCZ_PQ_TodayCommandFragment extends Fragment implements OnClickListener
 {
     boolean ishidding = false;
-String workuserid;
+    String workuserid;
     TimeThread timethread;
 //    SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
     private NCZ_PQ_CommandListAdapter listAdapter;
+
     private int listSumData;
     private List<commandtab> listData = new ArrayList<commandtab>();
     private AppContext appContext;

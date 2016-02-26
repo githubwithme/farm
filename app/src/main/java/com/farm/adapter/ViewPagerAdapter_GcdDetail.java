@@ -59,7 +59,6 @@ public class ViewPagerAdapter_GcdDetail extends PagerAdapter implements OnPageCh
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.add(fragment, fragment.getClass().getSimpleName());
             String tag = fragment.getTag();
-
             tagList.add(tag);
             ft.commitAllowingStateLoss();
             fragmentManager.executePendingTransactions();

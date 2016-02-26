@@ -136,15 +136,15 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_sale"
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="生产"
-                android:textColor="@color/menu_textcolor"
-                android:textSize="@dimen/home_menu_textsize" />
-        </TableLayout>
+        android:id="@+id/tv_sale"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:text="生产"
+        android:textColor="@color/menu_textcolor"
+        android:textSize="@dimen/home_menu_textsize" />
+    </TableLayout>
 
         <TableLayout
             android:id="@+id/tl_money"
