@@ -29,7 +29,7 @@ public class PG_MainActivity extends Activity
     PG_MainFragment mainFragment;
     PG_GddList pg_gddList;
     PG_EventList pg_eventList;
-    ProductAndSale productAndSale;
+    ProductSale productAndSale;
     PG_EveryDayAssessList pg_EveryDayAssessList;
     IFragment iFragment;
     @ViewById
@@ -165,7 +165,7 @@ public class PG_MainActivity extends Activity
         mainFragment = new PG_MainFragment_();
         pg_gddList = new PG_GddList_();
         pg_eventList = new PG_EventList_();
-        productAndSale = new ProductAndSale_();
+        productAndSale = new ProductSale_();
         pg_EveryDayAssessList = new PG_EveryDayAssessList_();
         iFragment = new IFragment_();
     }
