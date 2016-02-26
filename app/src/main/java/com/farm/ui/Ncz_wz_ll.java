@@ -7,7 +7,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.adapter.Ncz_wzgl_CVP;
 import com.farm.adapter.ViewPagerAdapter_GcdDetail;
 import com.farm.app.AppContext;
 import com.farm.widget.CustomViewPager;
@@ -28,8 +27,9 @@ public class Ncz_wz_ll extends FragmentActivity {
     com.farm.bean.commembertab commembertab;
     String wzgl;
     ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
-    NCZ_WZ_LOOKFragment ncz_wz_lookFragment;
-    Ncz_wzgl_CVP ncz_wzgl_cvp;
+    NCZ_WZ_LOOKFragment nec_wz_lookFragment;
+    NCZ_WZ_CKXXFragment ncz_wz_ckxxFragment;
+    NCZ_WZ_CKFRagment ncz_wz_ckfRagment;
     int currentItem = 0;
     List<Fragment> fragmentList;
     Fragment mContent = new Fragment();
@@ -59,17 +59,17 @@ public class Ncz_wz_ll extends FragmentActivity {
 
     @Click
     void wz_ck() {
-        cvPager.setCurrentItem(0);
+        cvPager.setCurrentItem(1);
     }
 
     @Click
     void wz_cr() {
-        cvPager.setCurrentItem(0);
+        cvPager.setCurrentItem(2);
     }
 
     @Click
     void wz_yc() {
-        cvPager.setCurrentItem(0);
+        cvPager.setCurrentItem(3);
     }
 
     @AfterViews
@@ -119,6 +119,16 @@ public class Ncz_wz_ll extends FragmentActivity {
         bundle.putString("wzgl", wzgl);
         commembertab = AppContext.getUserInfo(Ncz_wz_ll.this);
         fragmentList = new ArrayList<>();
+        ncz_wz_ckxxFragment=new NCZ_WZ_CKXXFragment_();
+        nec_wz_lookFragment=new NCZ_WZ_LOOKFragment_();
+        ncz_wz_ckfRagment=new NCZ_WZ_CKFRagment_();
+        nec_wz_lookFragment.setArguments(bundle);
+        ncz_wz_ckxxFragment.setArguments(bundle);
+        ncz_wz_ckfRagment.setArguments(bundle);
+        fragmentList.add(nec_wz_lookFragment);
+        fragmentList.add(ncz_wz_ckxxFragment);
+        fragmentList.add(ncz_wz_ckfRagment);
+
 
 
     }
