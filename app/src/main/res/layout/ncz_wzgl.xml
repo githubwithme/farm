@@ -48,7 +48,6 @@
                 android:text="仓库"
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/titlebar_textsize" />
-
             <TextView
                 android:id="@+id/wz_cr"
                 android:layout_width="60dip"
@@ -70,6 +69,8 @@
                 android:text="异常"
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/titlebar_textsize" />
+
+
         </LinearLayout>
 
 

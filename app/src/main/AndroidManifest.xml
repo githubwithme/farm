@@ -110,6 +110,8 @@
         <activity android:name=".ui.ShowPlantGrowth_"/>
         <activity android:name=".ui.EditUserInfo_"/>
         <activity android:name=".ui.AddPlantObservationRecord_"/>
+        <activity android:name=".ui.Ncz_wz_ll_"/>
+        <activity android:name="ui.NCZ_WZ_XXList_"/>
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
         <activity android:name=".ui.CZ_PQ_TodayCommand_"/>
@@ -157,6 +159,7 @@
         <activity android:name=".ui.Common_MoreJob_"/>
         <activity android:name=".ui.Common_CommandFeedBack_"/>
         <activity android:name=".ui.Common_CommandDetail_"/>
+
 
         <!-- 服务 -->
         <service
