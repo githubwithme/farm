@@ -99,6 +99,7 @@
                         <Button
                             android:id="@+id/btn_plantlist"
                             android:layout_width="45dip"
+                            android:visibility="gone"
                             android:layout_height="25dip"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dip"

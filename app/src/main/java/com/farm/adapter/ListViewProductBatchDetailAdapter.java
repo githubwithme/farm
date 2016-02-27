@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.planttab;
 import com.farm.ui.SingleGoodList_;
+import com.farm.widget.CustomGridview;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +28,7 @@ public class ListViewProductBatchDetailAdapter extends BaseAdapter
 
 	static class ListItemView
 	{
-		public GridView gridview;
+		public CustomGridview gridview;
 		public TextView tv_cmdname;
 		public TextView tv_state;
 		public TextView tv_yq;
@@ -74,7 +74,7 @@ public class ListViewProductBatchDetailAdapter extends BaseAdapter
 			convertView = listContainer.inflate(R.layout.listitem_productbatchdetail, null);
 			listItemView = new ListItemView();
 			// 获取控件对象
-			listItemView.gridview = (GridView) convertView.findViewById(R.id.gridview);
+			listItemView.gridview = (CustomGridview) convertView.findViewById(R.id.gridview);
 			adapter = new BatchDetailGridViewAdapter(context, listItems);
 			listItemView.gridview.setAdapter(adapter);
 			listItemView.gridview.setOnItemClickListener(new OnItemClickListener()
