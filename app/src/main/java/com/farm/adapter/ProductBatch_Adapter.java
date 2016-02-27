@@ -11,6 +11,7 @@ import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -28,7 +29,9 @@ import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
 import com.farm.bean.jobtab;
 import com.farm.ui.Common_JobDetail_Show_;
+import com.farm.ui.SingleGoodList_;
 import com.farm.widget.CustomDialog_ListView;
+import com.farm.widget.CustomGridview;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -60,6 +63,7 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
     private Context context;// 运行上下文
     int currentChildsize = 0;
     private GoodsAdapter adapter;
+    ProductBatchGridViewAdapter productBatchGridViewAdapter;
     List<commandtab> listData;
     ListView list;
 
@@ -94,6 +98,7 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
 
     static class ListItemView
     {
+        public CustomGridview gridview;
         public TextView tv_time;
         public TextView tv_note;
         public TextView tv_pf;
@@ -165,12 +170,24 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.layout_children_commandexecute, null);
+            convertView = inflater.inflate(R.layout.layout_children_productbatch, null);
             listItemView = new ListItemView();
             listItemView.tv_jd = (TextView) convertView.findViewById(R.id.tv_jd);
             listItemView.tv_pf = (TextView) convertView.findViewById(R.id.tv_pf);
             listItemView.tv_note = (TextView) convertView.findViewById(R.id.tv_note);
             listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+            listItemView.gridview = (CustomGridview) convertView.findViewById(R.id.gridview);
+            productBatchGridViewAdapter = new ProductBatchGridViewAdapter(context, childData);
+            listItemView.gridview.setAdapter(productBatchGridViewAdapter);
+            listItemView.gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+                {
+                    Intent intent = new Intent(context, SingleGoodList_.class);
+                    context.startActivity(intent);
+                }
+            });
             convertView.setTag(listItemView);
             convertView.setTag(R.id.tag_bean, jobtab);
             convertView.setOnClickListener(new View.OnClickListener()
@@ -277,7 +294,7 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
         if (convertView == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.layout_parent_commandexecute, null);
+            convertView = inflater.inflate(R.layout.layout_parent_productbatch, null);
         }
         TextView tv_call = (TextView) convertView.findViewById(R.id.tv_call);
         TextView parent_textview = (TextView) convertView.findViewById(R.id.parent_textview);
@@ -349,18 +366,18 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
             }
         });
         parent_textview.setText(listData.get(groupPosition).getparkName());
-        tv_pq.setText(listData.get(groupPosition).getareaName());
+//        tv_pq.setText(listData.get(groupPosition).getareaName());
         String getcommStatus = listData.get(groupPosition).getcommStatus();
-        if (getcommStatus.equals("0"))
-        {
-            tv_sd.setText("待反馈");
-        } else if (getcommStatus.equals("1"))
-        {
-            tv_sd.setText("已反馈");
-        } else if (getcommStatus.equals("2"))
-        {
-            tv_sd.setText("已收到");
-        }
+//        if (getcommStatus.equals("0"))
+//        {
+//            tv_sd.setText("待反馈");
+//        } else if (getcommStatus.equals("1"))
+//        {
+//            tv_sd.setText("已反馈");
+//        } else if (getcommStatus.equals("2"))
+//        {
+//            tv_sd.setText("已收到");
+//        }
 
         return convertView;
     }

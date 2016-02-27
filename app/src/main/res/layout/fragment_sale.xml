@@ -50,6 +50,7 @@
         android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_below="@+id/line"
+        android:layout_marginTop="15dip"
         android:childDivider="@color/transparent"
         android:dividerHeight="0dip"
         android:layout_height="match_parent"
@@ -69,6 +70,7 @@
         android:textSize="@dimen/size_sp_14"
         android:text="已选3000株"/>
     <Button
+        android:id="@+id/btn_addorder"
         android:layout_width="80dip"
         android:layout_alignParentRight="true"
         android:text="加入订单"

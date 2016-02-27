@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,10 +31,11 @@ import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
 import com.farm.bean.ZS;
+import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
-import com.farm.bean.planttab;
 import com.farm.common.SqliteDb;
 import com.farm.common.utils;
+import com.farm.widget.CustomDialog_EditDLInfor;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -46,6 +49,11 @@ import java.util.Map;
 @EFragment
 public class Fragment_Sale extends Fragment  implements View.OnClickListener
 {
+    Button btn_sure;
+    EditText et_note;
+    EditText et_time;
+    EditText et_dlzs;
+    CustomDialog_EditDLInfor customdialog_editdlinfor;
     ProductBatch_Adapter productBatch_adapter;
     public List<View> list_state = new ArrayList<View>();
     SelectorFirstItemAdapter mainAdapter;
@@ -62,7 +70,7 @@ public class Fragment_Sale extends Fragment  implements View.OnClickListener
     Fragment mContent = new Fragment();
     private ListViewProductBatchDetailAdapter listAdapter;
     private int listSumData;
-    private List<planttab> listData = new ArrayList<planttab>();
+    private List<commandtab> listData = new ArrayList<commandtab>();
     private AppContext appContext;
     private View list_footer;
     private TextView list_foot_more;
@@ -85,6 +93,11 @@ ImageView iv_up_selector;
 
 
     @Click
+    void btn_addorder()
+    {
+        showDialog_AddOrder();
+    }
+    @Click
     void rl_selector()
     {
         showPop_addcommand();
@@ -92,7 +105,7 @@ ImageView iv_up_selector;
     @AfterViews
     void afterOncreate()
     {
-        getTestData("procducts");
+        getTestData("productbatch");
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -109,16 +122,16 @@ ImageView iv_up_selector;
     {
         JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
         Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
-        listData= JSON.parseArray(result.getRows().toJSONString(), planttab.class);
+        listData= JSON.parseArray(result.getRows().toJSONString(), commandtab.class);
 //        listAdapter = new ListViewProductBatchDetailAdapter(getActivity(), listData);
 //        lv.setAdapter(listAdapter);
 
-//        productBatch_adapter = new ProductBatch_Adapter(getActivity(), listData, expandableListView);
-//        expandableListView.setAdapter(productBatch_adapter);
-//        for (int i = 0; i < listNewData.size(); i++)
-//        {
-//            expandableListView.expandGroup(i);
-//        }
+        productBatch_adapter = new ProductBatch_Adapter(getActivity(), listData, expandableListView);
+        expandableListView.setAdapter(productBatch_adapter);
+        for (int i = 0; i < listData.size(); i++)
+        {
+            expandableListView.expandGroup(i);
+        }
     }
 
 
@@ -188,7 +201,25 @@ ImageView iv_up_selector;
         lv_zs.setAdapter(dl_zs_adapter);
 
     }
-
+    public void showDialog_AddOrder()
+    {
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_addorder, null);
+        customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
+        et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
+        et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);
+        et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
+        btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+        et_time.setText(utils.getTime());
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_editdlinfor.dismiss();
+            }
+        });
+        customdialog_editdlinfor.show();
+    }
     @Override
     public void onClick(View v)
     {
