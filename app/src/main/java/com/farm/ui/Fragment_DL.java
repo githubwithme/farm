@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.BreakOffAdapter;
-import com.farm.adapter.Breakoff_Adapter;
+import com.farm.adapter.breakoff_Adapter;
 import com.farm.adapter.ListViewProductBatchDetailAdapter;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
@@ -65,7 +65,7 @@ public class Fragment_DL extends Fragment implements View.OnClickListener
     ExpandableListView expandableListView;
     Dictionary dictionary;
     BreakOffAdapter breakOffAdapter;
-    Breakoff_Adapter breakoff_adapter;
+    breakoff_Adapter breakoff_adapter;
     @Click
     void btn_add()
     {
@@ -78,7 +78,7 @@ public class Fragment_DL extends Fragment implements View.OnClickListener
     void afterOncreate()
     {
         List<contractTab> listdata= SqliteDb.getBreakOffListByAreaID(getActivity());
-        breakoff_adapter = new Breakoff_Adapter(getActivity(), listdata, expandableListView);
+        breakoff_adapter = new breakoff_Adapter(getActivity(), listdata, expandableListView);
         expandableListView.setAdapter(breakoff_adapter);
         for (int i = 0; i < listdata.size(); i++)
         {
@@ -102,7 +102,7 @@ public class Fragment_DL extends Fragment implements View.OnClickListener
         public void onReceive(Context context, Intent intent)
         {
             List<contractTab> listdata= SqliteDb.getBreakOffListByAreaID(getActivity());
-            breakoff_adapter = new Breakoff_Adapter(getActivity(), listdata, expandableListView);
+            breakoff_adapter = new breakoff_Adapter(getActivity(), listdata, expandableListView);
             expandableListView.setAdapter(breakoff_adapter);
             for (int i = 0; i < listdata.size(); i++)
             {
