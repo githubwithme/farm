@@ -32,6 +32,7 @@ public class AppContext extends Application
     public final static String ACTION_REFRESH_PLANT = "REFRESH_PLANT";
     public final static String BROADCAST_MAP_MORE = "MAP_MORE";
     public final static String BROADCAST_OPENDL = "OPENDL";
+    public final static String BROADCAST_UPDATEBREAKOFFINFO = "UPDATEBREAKOFFINFO";
     public final static String BROADCAST_UPDATEPLANT = "UPDATEPLANT";
     //	public final static String BROADCAST_UPDATECMD_SELECT = "UPDATECMD_SELECT";
     public final static String BROADCAST_UPDATEPCMD_SORT = "UPDATEPCMD_SORT";

@@ -7,8 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="45dip"
         android:layout_marginTop="10dip"
-        android:layout_marginLeft="30dip"
-        android:layout_marginRight="30dip"
+        android:layout_marginLeft="35dip"
+        android:layout_marginRight="35dip"
         android:background="@color/line_color"
         android:orientation="vertical">
 
@@ -50,8 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:horizontalSpacing="1dp"
-        android:layout_marginLeft="30dip"
-        android:layout_marginRight="30dip"
+        android:layout_marginLeft="35dip"
+        android:layout_marginRight="35dip"
         android:numColumns="2"
         android:scrollbars="none"
         android:verticalSpacing="1dp"/>

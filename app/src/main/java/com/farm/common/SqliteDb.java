@@ -2,8 +2,10 @@ package com.farm.common;
 
 import android.content.Context;
 
+import com.farm.bean.BreakOffTab;
 import com.farm.bean.HaveReadRecord;
 import com.farm.bean.commembertab;
+import com.farm.bean.contractTab;
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.db.sqlite.WhereBuilder;
@@ -14,6 +16,30 @@ import java.util.List;
 
 public class SqliteDb
 {
+    public static List<contractTab> getBreakOffListByAreaID(Context context)
+    {
+        List<contractTab> listdata=FileHelper.getAssetsData(context, "contractTab", contractTab.class);
+        DbUtils db = DbUtils.create(context);
+        for (int i = 0; i <listdata.size() ; i++)
+        {
+
+            List<BreakOffTab> list = null;
+            try
+            {
+                list = db.findAll(Selector.from(BreakOffTab.class).where("contractId", "=", listdata.get(i).getid()));
+                if (list != null)
+                {
+                    listdata.get(i).setBreakOffTabList(list);
+                }
+
+            } catch (DbException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        return listdata;
+    }
     public static boolean save(Context context, Object obj)
     {
         DbUtils db = DbUtils.create(context);

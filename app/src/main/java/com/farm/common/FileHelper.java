@@ -1,15 +1,27 @@
 package com.farm.common;
 
+import android.content.Context;
 import android.net.Uri;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.farm.bean.Result;
 import com.media.MediaChooserConstants;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class FileHelper
 {
+	public  static <T> List<T> getAssetsData(Context context,String from, Class<T> c)
+	{
+		JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
+		Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
+		List<T> listData= JSON.parseArray(result.getRows().toJSONString(),c);
+        return  listData;
+	}
 	/** Create a file Uri for saving an image or video */
 	public static String getOutputMediaFileUriString(int type, String path)
 	{

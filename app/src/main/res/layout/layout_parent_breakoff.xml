@@ -5,9 +5,9 @@
 
     <com.swipelistview.SwipeLayout
         android:id="@+id/swipe"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:layout_width="match_parent"
+        android:layout_marginRight="15dip"
+        android:layout_marginLeft="15dip"
         android:layout_height="45dip">
 
         <LinearLayout
@@ -32,42 +32,54 @@
                 android:textSize="15sp"/>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bg_sq"
-            android:orientation="horizontal">
+            android:background="@color/light_gray"
+            >
 
             <TextView
-                android:id="@+id/parent_textview"
-                android:layout_width="0dip"
+                android:id="@+id/tv_contractname"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:text="未知园区"
-                android:textColor="@color/white"
+                android:layout_marginLeft="10dip"
+                android:text="武鸣园区"
+                android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_sp_14"/>
 
             <TextView
-                android:id="@+id/tv_pq"
-                android:layout_width="0dip"
+                android:id="@+id/tv_numberofbreakoff"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_marginLeft="20dip"
+                android:layout_toRightOf="@+id/tv_contractname"
                 android:gravity="center"
-                android:text="共50000株"
-                android:textColor="@color/white"
+                android:text="共断蕾4000株"
+                android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_sp_14"/>
 
             <TextView
-                android:id="@+id/tv_sd"
-                android:layout_width="0dip"
+                android:id="@+id/tv_output"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:text="待售30000株"
-                android:textColor="@color/white"
+                android:layout_marginLeft="20dip"
+                android:layout_toRightOf="@+id/tv_numberofbreakoff"
+                android:text="共产12000株"
+                android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_sp_14"/>
-        </LinearLayout>
+            <Button
+                android:id="@+id/btn_addBreakOffInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/background_view_rounded_single"
+                android:layout_alignParentRight="true"
+                android:text="添加断蕾"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_14"/>
+        </RelativeLayout>
     </com.swipelistview.SwipeLayout>
 
 </LinearLayout>
