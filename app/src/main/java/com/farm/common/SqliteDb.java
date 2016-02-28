@@ -4,8 +4,10 @@ import android.content.Context;
 
 import com.farm.bean.BreakOffTab;
 import com.farm.bean.HaveReadRecord;
+import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
+import com.farm.bean.parktab;
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.db.sqlite.WhereBuilder;
@@ -16,6 +18,48 @@ import java.util.List;
 
 public class SqliteDb
 {
+    public static List<parktab> getBreakOffListByParkID(Context context)
+    {
+        List<parktab> list_park=FileHelper.getAssetsData(context, "parktab", parktab.class);
+        DbUtils db = DbUtils.create(context);
+        for (int i = 0; i <list_park.size() ; i++)
+        {
+            List<areatab> list_area=list_park.get(i).getAreatabList();
+            for (int j = 0; j < list_area.size(); j++)
+            {
+                List<contractTab> list_contractTab=list_park.get(i).getAreatabList().get(j).getContractTabList();
+                if (list_contractTab == null)
+                {
+                    List<contractTab> list_contractTab_temp=new ArrayList<>();
+                    list_park.get(i).getAreatabList().get(j).setContractTabList(list_contractTab_temp);
+                }else
+                {
+                    for (int k = 0; k <list_contractTab.size() ; k++)
+                    {
+
+                        List<BreakOffTab> list = null;
+                        try
+                        {
+                            list = db.findAll(Selector.from(BreakOffTab.class).where("contractId", "=", list_contractTab.get(k).getid()));
+                            if (list != null)
+                            {
+                                list_park.get(i).getAreatabList().get(j).getContractTabList().get(k).setBreakOffTabList(list);
+                            }
+
+                        } catch (DbException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+
+
+        }
+
+        return list_park;
+    }
     public static List<contractTab> getBreakOffListByAreaID(Context context)
     {
         List<contractTab> listdata=FileHelper.getAssetsData(context, "contractTab", contractTab.class);
@@ -29,6 +73,10 @@ public class SqliteDb
                 list = db.findAll(Selector.from(BreakOffTab.class).where("contractId", "=", listdata.get(i).getid()));
                 if (list != null)
                 {
+                    listdata.get(i).setBreakOffTabList(list);
+                }else
+                {
+               list = new ArrayList<>();
                     listdata.get(i).setBreakOffTabList(list);
                 }
 

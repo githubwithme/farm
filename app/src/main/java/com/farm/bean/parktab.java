@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.lidroid.xutils.db.annotation.Table;
 
+import java.util.List;
+
 /**
  * 
  * Description: parktab 实体类</p>
@@ -22,6 +24,7 @@ public class parktab implements Parcelable
 	public String uId;
 	public String regDate;
 	public String parkName;
+	public String plantnumber;
 	public String parkAddress;
 	public String parkCover;
 	public String depreciationOfFixedAssets;
@@ -61,6 +64,28 @@ public class parktab implements Parcelable
 	public String AreacommandCount;
 	public String commandVideoCount;
 	public String AreacommandVideoCount;
+	public List<areatab> areatabList;
+
+
+	public void setPlantnumber(String plantnumber)
+	{
+		this.plantnumber = plantnumber;
+	}
+
+	public String getPlantnumber()
+	{
+		return plantnumber;
+	}
+
+	public void setAreatabList(List<areatab> areatabList)
+	{
+		this.areatabList = areatabList;
+	}
+
+	public List<areatab> getAreatabList()
+	{
+		return areatabList;
+	}
 
 	public void setCommandVideoCount(String commandVideoCount)
 	{
@@ -483,6 +508,7 @@ public class parktab implements Parcelable
 			p.setuId(source.readString());
 			p.setregDate(source.readString());
 			p.setparkName(source.readString());
+			p.setPlantnumber(source.readString());
 			p.setparkAddress(source.readString());
 			p.setparkCover(source.readString());
 			p.setdepreciationOfFixedAssets(source.readString());
@@ -515,6 +541,7 @@ public class parktab implements Parcelable
 			p.setAreacommandCount(source.readString());
 			p.setCommandVideoCount(source.readString());
 			p.setAreacommandVideoCount(source.readString());
+			p.areatabList = source.readArrayList(plantgrowthtab.class.getClassLoader());
 			return p;
 		}
 
@@ -532,6 +559,7 @@ public class parktab implements Parcelable
 		p.writeString(uId);
 		p.writeString(regDate);
 		p.writeString(parkName);
+		p.writeString(plantnumber);
 		p.writeString(parkAddress);
 		p.writeString(parkCover);
 		p.writeString(depreciationOfFixedAssets);
@@ -564,6 +592,7 @@ public class parktab implements Parcelable
 		p.writeString(AreacommandCount);
 		p.writeString(commandVideoCount);
 		p.writeString(AreacommandVideoCount);
+		p.writeList(areatabList);
 	}
 
 	@Override

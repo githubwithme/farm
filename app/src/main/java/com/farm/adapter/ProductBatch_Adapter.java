@@ -1,12 +1,8 @@
 package com.farm.adapter;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +20,10 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
-import com.farm.bean.commandtab;
+import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
-import com.farm.bean.jobtab;
+import com.farm.bean.parktab;
 import com.farm.ui.Common_JobDetail_Show_;
 import com.farm.ui.SingleGoodList_;
 import com.farm.widget.CustomDialog_ListView;
@@ -64,10 +60,10 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
     int currentChildsize = 0;
     private GoodsAdapter adapter;
     ProductBatchGridViewAdapter productBatchGridViewAdapter;
-    List<commandtab> listData;
+    List<parktab> listData;
     ListView list;
 
-    public ProductBatch_Adapter(Context context, List<commandtab> listData, ExpandableListView mainlistview)
+    public ProductBatch_Adapter(Context context, List<parktab> listData, ExpandableListView mainlistview)
     {
         this.mainlistview = mainlistview;
         this.listData = listData;
@@ -78,11 +74,11 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        if (listData.get(groupPosition).getJobList() == null)
+        if (listData.get(groupPosition).getAreatabList() == null)
         {
             return null;
         }
-        return listData.get(groupPosition).getJobList().get(childPosition);
+        return listData.get(groupPosition).getAreatabList().get(childPosition);
     }
 
     //得到子item的ID
@@ -101,7 +97,9 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
         public CustomGridview gridview;
         public TextView tv_time;
         public TextView tv_note;
-        public TextView tv_pf;
+        public TextView tv_numberofbreakoff;
+        public TextView tv_areaname;
+        public TextView tv_output;
         public TextView tv_jd;
     }
 
@@ -125,19 +123,19 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<jobtab> listNewData = null;
+                List<areatab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), areatab.class);
                         Intent intent = new Intent(context, Common_JobDetail_Show_.class);
                         intent.putExtra("bean", listNewData.get(0));
                         context.startActivity(intent);
                     } else
                     {
-                        listNewData = new ArrayList<jobtab>();
+                        listNewData = new ArrayList<areatab>();
                     }
                 } else
                 {
@@ -159,8 +157,8 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<jobtab> childData = listData.get(groupPosition).getJobList();
-        final jobtab jobtab = childData.get(childPosition);
+        List<areatab> childData = listData.get(groupPosition).getAreatabList();
+        final areatab areatab = childData.get(childPosition);
         View v = null;
         if (lmap.get(groupPosition) != null)
         {
@@ -172,12 +170,13 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_children_productbatch, null);
             listItemView = new ListItemView();
-            listItemView.tv_jd = (TextView) convertView.findViewById(R.id.tv_jd);
-            listItemView.tv_pf = (TextView) convertView.findViewById(R.id.tv_pf);
+            listItemView.tv_numberofbreakoff = (TextView) convertView.findViewById(R.id.tv_numberofbreakoff);
+            listItemView.tv_areaname = (TextView) convertView.findViewById(R.id.tv_areaname);
+            listItemView.tv_output = (TextView) convertView.findViewById(R.id.tv_output);
             listItemView.tv_note = (TextView) convertView.findViewById(R.id.tv_note);
             listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             listItemView.gridview = (CustomGridview) convertView.findViewById(R.id.gridview);
-            productBatchGridViewAdapter = new ProductBatchGridViewAdapter(context, childData);
+            productBatchGridViewAdapter = new ProductBatchGridViewAdapter(context, childData.get(childPosition).getContractTabList(),childData.get(childPosition));
             listItemView.gridview.setAdapter(productBatchGridViewAdapter);
             listItemView.gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -189,15 +188,15 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
                 }
             });
             convertView.setTag(listItemView);
-            convertView.setTag(R.id.tag_bean, jobtab);
+            convertView.setTag(R.id.tag_bean, areatab);
             convertView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    jobtab jobtab = (com.farm.bean.jobtab) v.getTag(R.id.tag_bean);
+                    areatab areatab = (com.farm.bean.areatab) v.getTag(R.id.tag_bean);
                     Intent intent = new Intent(context, Common_JobDetail_Show_.class);
-                    intent.putExtra("bean", jobtab);
+                    intent.putExtra("bean", areatab);
                     context.startActivity(intent);
 
                 }
@@ -208,20 +207,22 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
             {
                 map = new HashMap<>();
             }
-
-            if (jobtab.getPercent().equals(""))
-            {
-                listItemView.tv_time.setText(jobtab.getregDate().substring(5, jobtab.getregDate().lastIndexOf(" ")));
-                listItemView.tv_jd.setText("进行中...");
-                listItemView.tv_pf.setText("");
-                listItemView.tv_note.setText("");
-            } else
-            {
-                listItemView.tv_time.setText(jobtab.getregDate().substring(5, jobtab.getregDate().lastIndexOf(" ")));
-                listItemView.tv_jd.setText("完成" + jobtab.getPercent() + "%");
-                listItemView.tv_pf.setText(jobtab.getaudioJobExecPath() + "分");
-                listItemView.tv_note.setText(jobtab.getassessNote());
-            }
+            listItemView.tv_output.setText("产量:"+areatab.getnumOfPlant());
+            listItemView.tv_areaname.setText(areatab.getareaName());
+            listItemView.tv_numberofbreakoff.setText("待售:"+areatab.getnumOfPlant());
+//            if (areatab.getPercent().equals(""))
+//            {
+//                listItemView.tv_time.setText(areatab.getregDate().substring(5, areatab.getregDate().lastIndexOf(" ")));
+//                listItemView.tv_jd.setText("进行中...");
+//                listItemView.tv_pf.setText("");
+//                listItemView.tv_note.setText("");
+//            } else
+//            {
+//                listItemView.tv_time.setText(areatab.getregDate().substring(5, areatab.getregDate().lastIndexOf(" ")));
+//                listItemView.tv_jd.setText("完成" + areatab.getPercent() + "%");
+//                listItemView.tv_pf.setText(areatab.getaudioJobExecPath() + "分");
+//                listItemView.tv_note.setText(areatab.getassessNote());
+//            }
 
         } else
         {
@@ -261,11 +262,11 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getJobList() == null)
+        if (listData.get(groupPosition).getAreatabList() == null)
         {
             return 0;
         }
-        return listData.get(groupPosition).getJobList().size();
+        return listData.get(groupPosition).getAreatabList().size();
     }
 
     //获取当前父item的数据
@@ -298,8 +299,8 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
         }
         TextView tv_call = (TextView) convertView.findViewById(R.id.tv_call);
         TextView parent_textview = (TextView) convertView.findViewById(R.id.parent_textview);
-        TextView tv_pq = (TextView) convertView.findViewById(R.id.tv_pq);
-        TextView tv_sd = (TextView) convertView.findViewById(R.id.tv_sd);
+        TextView tv_numberofbreakoff = (TextView) convertView.findViewById(R.id.tv_numberofbreakoff);
+        TextView tv_output = (TextView) convertView.findViewById(R.id.tv_output);
         swipeLayout = (SwipeLayout) convertView.findViewById(R.id.swipe);
         // 当隐藏的删除menu被打开的时候的回调函数
         swipeLayout.addSwipeListener(new SimpleSwipeListener()
@@ -339,20 +340,7 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View v)
             {
-                String phone = listData.get(Integer.valueOf(v.getTag().toString())).getPhone();
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-                {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                context.startActivity(intent);
+
             }
         });
         parent_textview.setTag(groupPosition);
@@ -367,7 +355,7 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
         });
         parent_textview.setText(listData.get(groupPosition).getparkName());
 //        tv_pq.setText(listData.get(groupPosition).getareaName());
-        String getcommStatus = listData.get(groupPosition).getcommStatus();
+//        String getcommStatus = listData.get(groupPosition).getcommStatus();
 //        if (getcommStatus.equals("0"))
 //        {
 //            tv_sd.setText("待反馈");
@@ -378,7 +366,8 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
 //        {
 //            tv_sd.setText("已收到");
 //        }
-
+        tv_numberofbreakoff.setText("待售:"+listData.get(groupPosition).getPlantnumber());
+        tv_output.setText("产量:"+listData.get(groupPosition).getPlantnumber());
         return convertView;
     }
 

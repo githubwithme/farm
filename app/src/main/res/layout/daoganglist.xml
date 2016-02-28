@@ -79,8 +79,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.farm.widget.PullToRefreshListView
-        android:id="@+id/frame_listview_news"
+    <ListView
+        android:id="@+id/lv"
         style="@style/widget_listview" />
 
 </LinearLayout>

@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.lidroid.xutils.db.annotation.Table;
 
+import java.util.List;
+
 /**
  * 
  * Description: areatab 实体类</p>
@@ -49,6 +51,18 @@ public class areatab implements Parcelable // 与数据库不一致
 	public String jobVideoCount;
 	public String plantGrowVideoCount;
 	public String commandVideoCount;
+	public List<contractTab> contractTabList;
+
+
+	public void setContractTabList(List<contractTab> contractTabList)
+	{
+		this.contractTabList = contractTabList;
+	}
+
+	public List<contractTab> getContractTabList()
+	{
+		return contractTabList;
+	}
 
 	public void setJobVideoCount(String jobVideoCount)
 	{
@@ -394,6 +408,7 @@ public class areatab implements Parcelable // 与数据库不一致
 			p.setImgurl(source.readString());
 			p.setWorkuserid(source.readString());
 			p.setCommandCount(source.readString());
+			p.contractTabList = source.readArrayList(plantgrowthtab.class.getClassLoader());
 			return p;
 		}
 
@@ -434,6 +449,7 @@ public class areatab implements Parcelable // 与数据库不一致
 		p.writeString(imgurl);
 		p.writeString(workuserid);
 		p.writeString(commandCount);
+		p.writeList(contractTabList);
 	}
 
 	@Override

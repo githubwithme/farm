@@ -3,48 +3,46 @@
               android:layout_width="match_parent"
               android:layout_height="80dip"
               android:orientation="vertical">
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dip"
-        android:layout_marginTop="10dip"
         android:layout_marginLeft="35dip"
+        android:layout_marginTop="10dip"
         android:layout_marginRight="35dip"
         android:background="@color/line_color"
-        android:orientation="vertical">
-
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_areaname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:layout_centerInParent="true"
-            android:text="第一片区"
-            android:textColor="@color/black"
+            android:text="未知片区"
+            android:textColor="@color/bg_text"
             android:textSize="@dimen/size_sp_14"/>
-
 
         <TextView
-            android:id="@+id/tv_number"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_numberofbreakoff"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:layout_alignParentRight="true"
-            android:text="300"
-            android:layout_marginRight="15dip"
-            android:textColor="@color/black"
-            android:textSize="@dimen/size_sp_14"/>
-        <TextView
-            android:id="@+id/tv_number_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_toLeftOf="@+id/tv_number"
-            android:text="合计待售:"
-            android:textColor="@color/black"
+            android:text="待售30000株"
+            android:textColor="@color/bg_text"
             android:textSize="@dimen/size_sp_14"/>
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_output"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="产量50000株"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_sp_14"/>
+    </LinearLayout>
     <com.farm.widget.CustomGridview
         android:id="@+id/gridview"
         android:layout_width="match_parent"

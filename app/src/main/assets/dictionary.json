@@ -1,5 +1,9 @@
 {
-  "contractTab":{"ResultCode":1,"Exception":"null","AffectedRows":"2","Rows":[{"id":1,"contractNum":"承包区一","parkId":"8","parkName":"武鸣园区","areaId":"4","areaName":"第一片区","plantnumber":"6000","gainnumber":"0","contractarea":"500"},{"id":2,"contractNum":"承包区二","parkId":"8","parkName":"武鸣园区","areaId":"4","areaName":"第一片区","plantnumber":"6500","gainnumber":"0","contractarea":"520"},{"id":3,"contractNum":"承包区三","parkId":"8","parkName":"武鸣园区","areaId":"4","areaName":"第一片区","plantnumber":"6700","gainnumber":"0","contractarea":"580"}],"other":[]},
+  "parktab":{"ResultCode":1,"Exception":"null","AffectedRows":"2","Rows":[{"id":1,"parkName":"武鸣园区","plantnumber":"30000","areatabList":[{"id":1,"parkId":"1","parkName":"武鸣园区","areaName":"第一片区","numOfPlant":"6000","contractTabList":[{"id":1,"contractNum":"承包区一","parkId":"1","parkName":"武鸣园区","areaId":"1","areaName":"第一片区","plantnumber":"6000","gainnumber":"0","contractarea":"500"},{"id":2,"contractNum":"承包区二","parkId":"1","parkName":"武鸣园区","areaId":"1","areaName":"第一片区","plantnumber":"6500","gainnumber":"0","contractarea":"520"},{"id":3,"contractNum":"承包区三","parkId":"1","parkName":"武鸣园区","areaId":"1","areaName":"第一片区","plantnumber":"6700","gainnumber":"0","contractarea":"580"}]},{"id":2,"parkId":"1","parkName":"武鸣园区","areaName":"第二片区","numOfPlant":"6500"}]},{"id":2,"parkName":"横县园区","plantnumber":"35000","areatabList":[{"id":1,"parkId":"2","parkName":"横县园区","areaName":"第一片区","numOfPlant":"6800"},{"id":2,"parkId":"2","parkName":"横县园区","areaName":"第二片区","numOfPlant":"6400"}]}],"other":[]},
+
+  "areatab":{"ResultCode":1,"Exception":"null","AffectedRows":"2","Rows":[{"id":1,"parkId":"1","parkName":"武鸣园区","areaName":"第一片区","numOfPlant":"6000"},{"id":2,"parkId":"1","parkName":"武鸣园区","areaName":"第二片区","numOfPlant":"6500"},{"id":3,"parkId":"2","parkName":"横县园区","areaName":"第一片区","numOfPlant":"6800"}],"other":[]},
+
+  "contractTab":{"ResultCode":1,"Exception":"null","AffectedRows":"2","Rows":[{"id":1,"contractNum":"承包区一","parkId":"1","parkName":"武鸣园区","areaId":"1","areaName":"第一片区","plantnumber":"6000","gainnumber":"0","contractarea":"500"},{"id":2,"contractNum":"承包区二","parkId":"1","parkName":"武鸣园区","areaId":"1","areaName":"第一片区","plantnumber":"6500","gainnumber":"0","contractarea":"520"},{"id":3,"contractNum":"承包区三","parkId":"1","parkName":"武鸣园区","areaId":"1","areaName":"第一片区","plantnumber":"6700","gainnumber":"0","contractarea":"580"}],"other":[]},
 
   "BreakOff":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":1,"contractNum":"承包区一","output":"6500","numberofbreakoff":"2700"},{"id":1,"contractNum":"承包区二","output":"6800","numberofbreakoff":"2100"},{"id":1,"contractNum":"承包区三","output":"6100","numberofbreakoff":"2900"},{"id":1,"contractNum":"承包区四","output":"6000","numberofbreakoff":"220"},{"id":1,"contractNum":"承包区五","output":"6500","numberofbreakoff":"2400"}],"other":[]},
 
@@ -13,7 +17,7 @@
 
 "gcjllist":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":1,"uId":12,"regDate":"2015-12-25 13:31:04","gcdId":"2","gcq":"1","jjbx":"3","ybx":"4","gxbx":"1","lbx":"1","ghbx":"1","csgbx":"1","cygbx":"1","szfx":"1","cjUserID":"20","cjUserName":"2m","imgurl":[""]}],"other":[]},
 
-  "plantgrowthlist":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":"2","uId":12,"plantName":"植株1"},{"id":"3","uId":12,"plantName":"植株2"}],"other":[]},
+  "plantgrowthlist":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":"2","uId":12,"plantName":"植株1"},{"id":"3","uId":12,"plantName":"植株2"},{"id":"3","uId":12,"plantName":"植株2"},{"id":"3","uId":12,"plantName":"植株2"}],"other":[]},
 
   "plantlist":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"id":"2","uId":12,"plantName":"植株1"},{"id":"3","uId":12,"plantName":"植株2"}],"other":[]},
 

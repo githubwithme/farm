@@ -19,6 +19,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="这个月"
+                android:layout_marginLeft="20dip"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 

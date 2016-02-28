@@ -19,8 +19,6 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.DL_ZS_Adapter;
 import com.farm.adapter.ListViewProductBatchDetailAdapter;
@@ -29,10 +27,10 @@ import com.farm.adapter.SelectorFirstItemAdapter;
 import com.farm.adapter.SelectorSecondItemAdapter;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
-import com.farm.bean.Result;
 import com.farm.bean.ZS;
 import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
+import com.farm.bean.parktab;
 import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditDLInfor;
@@ -95,7 +93,9 @@ ImageView iv_up_selector;
     @Click
     void btn_addorder()
     {
-        showDialog_AddOrder();
+        Intent intent=new Intent(getActivity(),AddOrder_.class);
+        getActivity().startActivity(intent);
+//        showDialog_AddOrder();
     }
     @Click
     void rl_selector()
@@ -120,13 +120,12 @@ ImageView iv_up_selector;
 
     private void getTestData(String from)
     {
-        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
-        Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
-        listData= JSON.parseArray(result.getRows().toJSONString(), commandtab.class);
-//        listAdapter = new ListViewProductBatchDetailAdapter(getActivity(), listData);
-//        lv.setAdapter(listAdapter);
+//        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
+//        Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
+//        listData= JSON.parseArray(result.getRows().toJSONString(), commandtab.class);
 
-        productBatch_adapter = new ProductBatch_Adapter(getActivity(), listData, expandableListView);
+        List<parktab> list_park=SqliteDb.getBreakOffListByParkID(getActivity());
+        productBatch_adapter = new ProductBatch_Adapter(getActivity(), list_park, expandableListView);
         expandableListView.setAdapter(productBatch_adapter);
         for (int i = 0; i < listData.size(); i++)
         {

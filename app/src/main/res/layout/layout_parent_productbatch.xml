@@ -49,22 +49,22 @@
                 android:textSize="@dimen/size_sp_14"/>
 
             <TextView
-                android:id="@+id/tv_pq"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="共50000株"
-                android:textColor="@color/white"
-                android:textSize="@dimen/size_sp_14"/>
-
-            <TextView
-                android:id="@+id/tv_sd"
+                android:id="@+id/tv_numberofbreakoff"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="待售30000株"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_sp_14"/>
+
+            <TextView
+                android:id="@+id/tv_output"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="产量50000株"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_sp_14"/>
         </LinearLayout>

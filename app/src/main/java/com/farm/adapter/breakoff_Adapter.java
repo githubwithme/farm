@@ -357,7 +357,7 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View v)
             {
-                showDialog_AddBreakOffInfo(listData.get(Integer.valueOf(v.getTag().toString())).getid(),listData.get(Integer.valueOf(v.getTag().toString())).getContractNum());
+                showDialog_AddBreakOffInfo(listData.get(Integer.valueOf(v.getTag().toString())));
             }
         });
         tv_contractname.setText(listData.get(groupPosition).getContractNum());
@@ -384,7 +384,7 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
     {
         return true;
     }
-    public void showDialog_AddBreakOffInfo(final String contractid,final String contractname)
+    public void showDialog_AddBreakOffInfo(final contractTab contractTab)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_addbreakoffinfo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(context, R.style.MyDialog, dialog_layout);
@@ -399,15 +399,15 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
             public void onClick(View v)
             {
                 String uuid = java.util.UUID.randomUUID().toString();
-                commembertab commembertab=AppContext.getUserInfo(context);
+//                commembertab commembertab=AppContext.getUserInfo(context);
                 BreakOffTab breakOffTab=new BreakOffTab();
                 breakOffTab.setid(uuid);
-                breakOffTab.setContractId(contractid);
-                breakOffTab.setContractNum(contractname);
-                breakOffTab.setparkId(commembertab.getparkId());
-                breakOffTab.setparkName(commembertab.getparkName());
-                breakOffTab.setAreaId(commembertab.getareaId());
-                breakOffTab.setareaName(commembertab.getareaName());
+                breakOffTab.setContractId(contractTab.getid());
+                breakOffTab.setContractNum(contractTab.getContractNum());
+                breakOffTab.setparkId(contractTab.getparkId());
+                breakOffTab.setparkName(contractTab.getparkName());
+                breakOffTab.setAreaId(contractTab.getAreaId());
+                breakOffTab.setareaName(contractTab.getareaName());
                 breakOffTab.setregDate(utils.getToday());
                 breakOffTab.setregDate(utils.getToday());
                 breakOffTab.setregDate(utils.getToday());

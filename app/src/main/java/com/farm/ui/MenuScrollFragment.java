@@ -262,7 +262,9 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
 			getActivity().startActivity(intent);
 			break;
 		case R.id.ll_zg:
-			intent = new Intent(getActivity(), DaoGangList_.class);
+//			intent = new Intent(getActivity(), DaoGangList_.class);
+//			getActivity().startActivity(intent);
+ 	intent = new Intent(getActivity(), Attendance_Map_.class);
 			getActivity().startActivity(intent);
 			break;
 		case R.id.ll_bwl:
