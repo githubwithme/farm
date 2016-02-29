@@ -11,10 +11,27 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
 import com.farm.app.AppManager;
+import com.farm.bean.Result;
+import com.farm.bean.commembertab;
+import com.farm.common.utils;
 import com.farm.widget.MyDialog;
 import com.farm.widget.MyDialog.CustomDialogListener;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
+import com.tencent.map.geolocation.TencentLocationManager;
+import com.tencent.map.geolocation.TencentLocationRequest;
+import com.tencent.mapsdk.raster.model.LatLng;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -22,8 +39,13 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.cz_activity)
-public class CZ_MainActivity extends Activity
+public class CZ_MainActivity extends Activity implements TencentLocationListener
 {
+	commembertab commembertab;
+	LatLng location_latLng = new LatLng(24.430833, 113.298611);// 初始化定位
+	Long newtime = 0L;
+	Long lasttime = 0L;
+	int error;
 	MyDialog myDialog;
 	Fragment mContent = new Fragment();
 	CZ_MainFragment mainFragment;
@@ -81,6 +103,13 @@ public class CZ_MainActivity extends Activity
 		AppManager.getAppManager().addActivity(this);
 		mainFragment = new CZ_MainFragment_();
 		iFragment = new IFragment_();
+
+		commembertab=AppContext.getUserInfo(CZ_MainActivity.this);
+
+		TencentLocationRequest request = TencentLocationRequest.create();
+		TencentLocationManager locationManager = TencentLocationManager.getInstance(CZ_MainActivity.this);
+		locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84
+		error = locationManager.requestLocationUpdates(request, this);
 	}
 
 	public void switchContent(Fragment from, Fragment to)
@@ -136,5 +165,73 @@ public class CZ_MainActivity extends Activity
 			}
 		});
 		myDialog.show();
+	}
+	@Override
+	public void onLocationChanged(TencentLocation location, int error, String reason)
+	{
+		if (TencentLocation.ERROR_OK == error) // 定位成功
+		{
+//            Gps gPS= CoordinateConvertUtil.gps84_To_Gcj02(location.getLatitude(), location.getLongitude());
+//            location_latLng = new LatLng(gPS.getWgLat(), gPS.getWgLon());
+			// 用于定位
+			location_latLng = new LatLng(location.getLatitude(), location.getLongitude());
+			AppContext appContext = (AppContext) CZ_MainActivity.this.getApplication();
+			appContext.setLOCATION_X(String.valueOf(location_latLng.getLatitude()));
+			appContext.setLOCATION_Y(String.valueOf(location_latLng.getLongitude()));
+			// 每隔15秒记录轨迹
+			newtime = System.currentTimeMillis();
+			int diff = (int) (newtime - lasttime) / 1000;
+			if (diff > 3)// 每隔15秒记录一次
+			{
+				lasttime = newtime;
+				MarkLocation(location);
+//                Toast.makeText(CZ_MainActivity.this,location.toString(),Toast.LENGTH_LONG).show();
+			}
+		}
+	}
+
+	@Override
+	public void onStatusUpdate(String s, int i, String s1)
+	{
+
+	}
+	private void MarkLocation(TencentLocation location)
+	{
+		RequestParams params = new RequestParams();
+		params.addQueryStringParameter("action", "AddLocationInfo");
+		params.addQueryStringParameter("uid", commembertab.getuId() );
+		params.addQueryStringParameter("userid",commembertab.getId() );
+		params.addQueryStringParameter("username",commembertab.getrealName() );
+		params.addQueryStringParameter("parkid",commembertab.getparkId() );
+		params.addQueryStringParameter("parkname",commembertab.getparkName() );
+		params.addQueryStringParameter("areaid",commembertab.getareaId() );
+		params.addQueryStringParameter("areaname",commembertab.getareaName() );
+		params.addQueryStringParameter("lat",String.valueOf(location.getLatitude()) );
+		params.addQueryStringParameter("lng", String.valueOf(location.getLongitude()));
+		params.addQueryStringParameter("time", utils.getTime());
+		HttpUtils http = new HttpUtils();
+		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+		{
+			@Override
+			public void onSuccess(ResponseInfo<String> responseInfo)
+			{
+				String a = responseInfo.result;
+				Result result = JSON.parseObject(responseInfo.result, Result.class);
+				if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+				{
+//                    Toast.makeText(CZ_MainActivity.this,"位置获取成功",Toast.LENGTH_SHORT).show();
+				} else
+				{
+//                    Toast.makeText(CZ_MainActivity.this,"位置错误",Toast.LENGTH_SHORT).show();
+					return;
+				}
+			}
+
+			@Override
+			public void onFailure(HttpException error, String arg1)
+			{
+//                Toast.makeText(CZ_MainActivity.this,"位置错误",Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 }

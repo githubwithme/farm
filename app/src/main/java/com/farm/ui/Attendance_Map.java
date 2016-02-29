@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -15,22 +16,30 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
+import com.farm.adapter.Attendance_Park_Adapter;
+import com.farm.adapter.Attendance_User_Adapter;
 import com.farm.adapter.DL_ZS_Adapter;
+import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Gps;
+import com.farm.bean.LocationBean;
 import com.farm.bean.Points;
 import com.farm.bean.Result;
-import com.farm.bean.ZS;
 import com.farm.bean.commembertab;
+import com.farm.bean.parktab;
 import com.farm.common.CoordinateConvertUtil;
-import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditDLInfor;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
@@ -55,10 +64,16 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 1、在地图画出农场所有园区的区域范围:
+ * 2、在地图上标记所有人员的最新位置信息:
+ * 3、判断工作人员在上班时间是否在工作岗位：area.parkid=user.parkid
+ * 4、按人员、园区切换地图视图：人员列表、园区列表
+ * 5、工作人员离岗马上提醒：Toast
+ */
 @EActivity(R.layout.attendance_map)
 public class Attendance_Map extends Activity implements TencentLocationListener, View.OnClickListener
 {
-    List<ZS> list_zs;
     DL_ZS_Adapter dl_zs_adapter;
     commembertab commembertab;
     ListView lv_zs;
@@ -97,82 +112,20 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
     FrameLayout fl_map;
 
     @Click
-    void tv_gk()
+    void btn_people()
     {
-        showPop_gk();
     }
 
     @Click
-    void tv_zs()
+    void btn_yq()
     {
-        list_zs = SqliteDb.getZS(Attendance_Map.this, ZS.class, commembertab.getareaId());
-        showPop_addcommand();
     }
 
-    @Click
-    void tv_adddl()
-    {
-        if (tv_adddl.getText().equals("确定"))
-        {
-            tv_adddl.setText("添加断蕾区");
-            tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-            {
-                @Override
-                public void onMapClick(LatLng latlng)
-                {
-                    latlng_clickpostion = latlng;
-                    if (latlng_clickpostion != null)
-                    {
-                        for (int i = 0; i < list_polygon.size(); i++)
-                        {
-                            if (list_polygon.get(i).contains(latlng_clickpostion))
-                            {
-                                Toast.makeText(Attendance_Map.this, "在范围内", Toast.LENGTH_SHORT).show();
-                            }
-                        }
 
-                    }
-                }
-            });
-//            SqliteDb.saveAll(Attendance_Map.this, pointsList);
-            Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
-            list_polygon.add(polygon);
-            showDialog_EditDL();
-        } else
-        {
-            tv_adddl.setText("确定");
-            isStart = true;
-            tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-            {
-
-                @Override
-                public void onMapClick(LatLng latlng)
-                {
-                    pointsList.add(latlng);
-                    if (isStart)
-                    {
-                        prelatLng = latlng;
-                        isStart = false;
-//                        addMarker(prelatLng, R.drawable.location_start);
-                    }
-                    PolylineOptions lineOpt = new PolylineOptions();
-                    lineOpt.add(prelatLng);
-                    prelatLng = latlng;
-                    lineOpt.add(latlng);
-                    Polyline line = tencentMap.addPolyline(lineOpt);
-                    line.setColor(Attendance_Map.this.getResources().getColor(R.color.black));
-                    line.setWidth(4f);
-                    Overlays.add(line);
-                }
-            });
-        }
-
-    }
-
-    public void showPop_gk()
+    public void showPop_user(List<commembertab> list)
     {
         LayoutInflater layoutInflater = (LayoutInflater) Attendance_Map.this.getSystemService(Attendance_Map.this.LAYOUT_INFLATER_SERVICE);
-        pv_command = layoutInflater.inflate(R.layout.pop_zs, null);// 外层
+        pv_command = layoutInflater.inflate(R.layout.pop_attendance, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {
             @Override
@@ -181,9 +134,9 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
                 if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
                 {
                     pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
-//                    lp.alpha = 1f;
-//                    Attendance_Map.this.getWindow().setAttributes(lp);
+                    WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    Attendance_Map.this.getWindow().setAttributes(lp);
                     return true;
                 }
                 return false;
@@ -197,9 +150,9 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
                 if (pw_command.isShowing())
                 {
                     pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
-//                    lp.alpha = 1f;
-//                    Attendance_Map.this.getWindow().setAttributes(lp);
+                    WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    Attendance_Map.this.getWindow().setAttributes(lp);
                 }
                 return false;
             }
@@ -207,16 +160,26 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         pw_command = new PopupWindow(pv_command, LinearLayout.LayoutParams.MATCH_PARENT, 300, true);
         pw_command.showAsDropDown(line, 0, 0);
         pw_command.setOutsideTouchable(true);
+        ListView lv = (ListView) pv_command.findViewById(R.id.lv);
+        Attendance_User_Adapter attendance_user_adapter = new Attendance_User_Adapter(Attendance_Map.this, list);
+        lv.setAdapter(attendance_user_adapter);
+        lv.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
 
-//        WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
-//        lp.alpha = 0.7f;
-//        Attendance_Map.this.getWindow().setAttributes(lp);
+            }
+        });
+        WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
+        lp.alpha = 0.7f;
+        Attendance_Map.this.getWindow().setAttributes(lp);
     }
 
-    public void showPop_addcommand()
+    public void showPop_park(List<parktab> list)
     {
         LayoutInflater layoutInflater = (LayoutInflater) Attendance_Map.this.getSystemService(Attendance_Map.this.LAYOUT_INFLATER_SERVICE);
-        pv_command = layoutInflater.inflate(R.layout.pop_zs, null);// 外层
+        pv_command = layoutInflater.inflate(R.layout.pop_attendance, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {
             @Override
@@ -225,9 +188,9 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
                 if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
                 {
                     pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
-//                    lp.alpha = 1f;
-//                    Attendance_Map.this.getWindow().setAttributes(lp);
+                    WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    Attendance_Map.this.getWindow().setAttributes(lp);
                     return true;
                 }
                 return false;
@@ -241,97 +204,32 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
                 if (pw_command.isShowing())
                 {
                     pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
-//                    lp.alpha = 1f;
-//                    Attendance_Map.this.getWindow().setAttributes(lp);
+                    WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    Attendance_Map.this.getWindow().setAttributes(lp);
                 }
                 return false;
             }
         });
-        pw_command = new PopupWindow(pv_command, 250, LinearLayout.LayoutParams.MATCH_PARENT, true);
-        pw_command.setAnimationStyle(R.style.leftinleftout);
+        pw_command = new PopupWindow(pv_command, LinearLayout.LayoutParams.MATCH_PARENT, 300, true);
         pw_command.showAsDropDown(line, 0, 0);
-//        pw_command.showAtLocation(fl_map, Gravity.LEFT, 0, 500);
         pw_command.setOutsideTouchable(true);
-
-//        WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
-//        lp.alpha = 0.7f;
-//        Attendance_Map.this.getWindow().setAttributes(lp);
-        lv_zs = (ListView) pv_command.findViewById(R.id.lv_zs);
-        dl_zs_adapter = new DL_ZS_Adapter(Attendance_Map.this, list_zs);
-        lv_zs.setAdapter(dl_zs_adapter);
-        pv_command.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener()
+        ListView lv = (ListView) pv_command.findViewById(R.id.lv);
+        Attendance_Park_Adapter attendance_park_adapter = new Attendance_Park_Adapter(Attendance_Map.this, list);
+        lv.setAdapter(attendance_park_adapter);
+        lv.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-//                showDialog_addZS();
-//                if (zs.getIsEnd().equals("0"))
-//                {
-//
-//                }
-                String uuid = java.util.UUID.randomUUID().toString();
-                ZS zs = new ZS();
-                zs.setid(uuid);
-                zs.setName(utils.getToday() + "年-第一造");
-                zs.setIsStart("1");
-                zs.setIsEnd("0");
-                zs.setparkId(commembertab.getparkId());
-                zs.setparkName(commembertab.getparkName());
-                zs.setAreaId(commembertab.getareaId());
-                zs.setareaName(commembertab.getareaName());
-                zs.setNote("暂无备注");
-                zs.setregDate(utils.getTime());
-                SqliteDb.save(Attendance_Map.this, zs);
-                if (pv_command.isShown())
-                {
-                    list_zs = SqliteDb.getZS(Attendance_Map.this, ZS.class, commembertab.getareaId());
-                    dl_zs_adapter.notifyDataSetChanged();
-                }
 
             }
         });
+        WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
+        lp.alpha = 0.7f;
+        Attendance_Map.this.getWindow().setAttributes(lp);
     }
 
-    public void showDialog_addZS()
-    {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(Attendance_Map.this).inflate(R.layout.customdialog_addzs, null);
-        customdialog_editdlinfor = new CustomDialog_EditDLInfor(Attendance_Map.this, R.style.MyDialog, dialog_layout);
-        et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
-        et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);
-        et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
-        btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
-        et_time.setText(utils.getTime());
-        btn_sure.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                customdialog_editdlinfor.dismiss();
-            }
-        });
-        customdialog_editdlinfor.show();
-    }
-
-    public void showDialog_EditDL()
-    {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(Attendance_Map.this).inflate(R.layout.customdialog_editarea, null);
-        customdialog_editdlinfor = new CustomDialog_EditDLInfor(Attendance_Map.this, R.style.MyDialog, dialog_layout);
-        et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
-        et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);
-        et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
-        btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
-        et_time.setText(utils.getTime());
-        btn_sure.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                customdialog_editdlinfor.dismiss();
-            }
-        });
-        customdialog_editdlinfor.show();
-    }
 
     @AfterViews
     void afterOncreate()
@@ -353,6 +251,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         mProjection = mapview.getProjection();
 //        animateToLocation();
         getTestData("points");
+        getLocationInfo(commembertab.getuId());
     }
 
     @Override
@@ -362,7 +261,6 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(this);
     }
-
 
 
     @Override
@@ -403,13 +301,13 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         }
     }
 
-    private void animateToLocation()
+    private void animateToLocation(LatLng latLng)
     {
-        if (location_latLng != null)
+        if (latLng != null)
         {
             tencentMap.removeOverlay(marker);
-            tencentMap.animateTo(location_latLng);
-            addMarker(location_latLng, R.drawable.location1);
+            tencentMap.animateTo(latLng);
+            addMarker(latLng, R.drawable.location1);
         }
     }
 
@@ -489,6 +387,137 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         }
         Polygon polygon = mapview.getMap().addPolygon(polygonOp);
         return polygon;
+    }
+
+    private void getLocationInfo(String uid)
+    {
+        commembertab commembertab = AppContext.getUserInfo(Attendance_Map.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", uid);
+        params.addQueryStringParameter("action", "GetLocationInfo");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<LocationBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        List<LocationBean> list= JSON.parseArray(result.getRows().toJSONString(), LocationBean.class);
+                        for (int i = 0; i <list.size() ; i++)
+                        {
+                            LatLng latLng=new LatLng(Double.valueOf(list.get(i).getLat().toString()),Double.valueOf(list.get(i).getLng()));
+                            if (latLng != null)
+                            {
+                                addMarker(latLng, R.drawable.location1);
+                            }
+                        }
+
+                    } else
+                    {
+                    }
+                } else
+                {
+//                    AppContext.makeToast(PG_MainActivity.this, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+//                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
+
+    private void getUserInfo(String uid)
+    {
+        commembertab commembertab = AppContext.getUserInfo(Attendance_Map.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", uid);
+        params.addQueryStringParameter("action", "GetLocationInfo");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<commembertab> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        List<commembertab> list = JSON.parseArray(result.getRows().toJSONString(), commembertab.class);
+                        showPop_user(list);
+                    } else
+                    {
+                        List<commembertab> list = new ArrayList<commembertab>();
+                        showPop_user(list);
+                    }
+                } else
+                {
+//                    AppContext.makeToast(PG_MainActivity.this, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+//                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
+
+    private void getParkInfo(String uid)
+    {
+        commembertab commembertab = AppContext.getUserInfo(Attendance_Map.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", uid);
+        params.addQueryStringParameter("action", "GetLocationInfo");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        List<parktab> list = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
+                        showPop_park(list);
+                    } else
+                    {
+                        List<parktab> list = new ArrayList<parktab>();
+                        showPop_park(list);
+                    }
+                } else
+                {
+//                    AppContext.makeToast(PG_MainActivity.this, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+//                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
     }
 
     @Override

@@ -33,6 +33,8 @@
 
   "gcd":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["观测点1","观测点2","观测点3"]}],"other":[]},
 
+  "boundary":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"uid":"1","parkid":"1","parkname":"武鸣园区","latLng":[{"lat":"23.145411","lng":"108.409653"},{"lat":"23.5565648","lng":"113.554455"},{"lat":"23.5565648","lng":"113.554455"}]}],"other":[]},
+
   "gcq":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["生长前期","生长中期","生长后期"]}],"other":[]},
 
 "importance":[ "一般", "重要", "非常重要" ],
