@@ -114,7 +114,7 @@ public class AppManager
 			finishAllActivity();
 //			ActivityManager activityMgr = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 //			activityMgr.restartPackage(context.getPackageName());
-			System.exit(0);
+//			System.exit(0);
 		} catch (Exception e)
 		{
 		}

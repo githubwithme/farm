@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.parktab;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +15,9 @@ import java.util.List;
 public class Attendance_Park_Adapter extends BaseAdapter
 {
     private Context context;// 运行上下文
-    private List<parktab> listItems;// 数据集合
+    private List<String> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
-    parktab parktab;
+    String String;
     ListItemView listItemView = null;
 
     static class ListItemView
@@ -26,7 +25,7 @@ public class Attendance_Park_Adapter extends BaseAdapter
         public TextView tv_name;
     }
 
-    public Attendance_Park_Adapter(Context context, List<parktab> data)
+    public Attendance_Park_Adapter(Context context, List<String> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -52,7 +51,7 @@ public class Attendance_Park_Adapter extends BaseAdapter
 
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        parktab = listItems.get(position);
+        String = listItems.get(position);
         // 自定义视图
 
         if (lmap.get(position) == null)
@@ -71,7 +70,7 @@ public class Attendance_Park_Adapter extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
-        listItemView.tv_name.setText(listItems.get(position).getparkName());
+        listItemView.tv_name.setText(listItems.get(position));
         return convertView;
     }
 }

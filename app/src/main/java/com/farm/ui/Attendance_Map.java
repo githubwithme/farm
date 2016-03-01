@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -21,10 +22,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.Attendance_Park_Adapter;
-import com.farm.adapter.Attendance_User_Adapter;
 import com.farm.adapter.DL_ZS_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.BoundaryBean;
 import com.farm.bean.Gps;
 import com.farm.bean.LocationBean;
 import com.farm.bean.Points;
@@ -62,7 +63,9 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 1、在地图画出农场所有园区的区域范围:
@@ -74,6 +77,12 @@ import java.util.List;
 @EActivity(R.layout.attendance_map)
 public class Attendance_Map extends Activity implements TencentLocationListener, View.OnClickListener
 {
+    List<LocationBean> list_locationInfo;
+    List<BoundaryBean> list_boundary;
+    List<String> list_yq = new ArrayList<>();
+    List<String> list_user = new ArrayList<>();
+    String note_lg = "";
+    Map<String, Polygon> map_polygon = new HashMap<>();
     DL_ZS_Adapter dl_zs_adapter;
     commembertab commembertab;
     ListView lv_zs;
@@ -107,6 +116,8 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
     @ViewById
     TextView tv_gk;
     @ViewById
+    LinearLayout ll_note;
+    @ViewById
     View line;
     @ViewById
     FrameLayout fl_map;
@@ -114,15 +125,17 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
     @Click
     void btn_people()
     {
+        showPop_user(list_user);
     }
 
     @Click
     void btn_yq()
     {
+        showPop_park(list_yq);
     }
 
 
-    public void showPop_user(List<commembertab> list)
+    public void showPop_user(List<String> list)
     {
         LayoutInflater layoutInflater = (LayoutInflater) Attendance_Map.this.getSystemService(Attendance_Map.this.LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_attendance, null);// 外层
@@ -161,14 +174,29 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         pw_command.showAsDropDown(line, 0, 0);
         pw_command.setOutsideTouchable(true);
         ListView lv = (ListView) pv_command.findViewById(R.id.lv);
-        Attendance_User_Adapter attendance_user_adapter = new Attendance_User_Adapter(Attendance_Map.this, list);
-        lv.setAdapter(attendance_user_adapter);
-        lv.setOnClickListener(new View.OnClickListener()
+        Attendance_Park_Adapter attendance_park_adapter = new Attendance_Park_Adapter(Attendance_Map.this, list_user);
+        lv.setAdapter(attendance_park_adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
-            public void onClick(View v)
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-
+                for (int i = 0; i < list_locationInfo.size(); i++)
+                {
+                    TextView textview = (TextView) view.findViewById(R.id.tv_name);
+                    String str = textview.getText().toString();
+                    if (list_locationInfo.get(i).getuserName().equals(str))
+                    {
+                        String lat = list_locationInfo.get(i).getLat();
+                        String lon = list_locationInfo.get(i).getLng();
+                        LatLng latlng = new LatLng(Double.valueOf(lat), Double.valueOf(lon));
+                        tencentMap.animateTo(latlng);
+                        WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
+                        lp.alpha = 1f;
+                        Attendance_Map.this.getWindow().setAttributes(lp);
+                        pw_command.dismiss();
+                    }
+                }
             }
         });
         WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
@@ -176,7 +204,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         Attendance_Map.this.getWindow().setAttributes(lp);
     }
 
-    public void showPop_park(List<parktab> list)
+    public void showPop_park(List<String> list_yq)
     {
         LayoutInflater layoutInflater = (LayoutInflater) Attendance_Map.this.getSystemService(Attendance_Map.this.LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_attendance, null);// 外层
@@ -215,16 +243,50 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         pw_command.showAsDropDown(line, 0, 0);
         pw_command.setOutsideTouchable(true);
         ListView lv = (ListView) pv_command.findViewById(R.id.lv);
-        Attendance_Park_Adapter attendance_park_adapter = new Attendance_Park_Adapter(Attendance_Map.this, list);
+        Attendance_Park_Adapter attendance_park_adapter = new Attendance_Park_Adapter(Attendance_Map.this, list_yq);
         lv.setAdapter(attendance_park_adapter);
-        lv.setOnClickListener(new View.OnClickListener()
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
-            public void onClick(View v)
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-
+                for (int i = 0; i < list_boundary.size(); i++)
+                {
+                    TextView textview= (TextView) view.findViewById(R.id.tv_name);
+                    String str=textview.getText().toString();
+                    if (list_boundary.get(i).getParkname().equals(str))
+                    {
+                        String lat = list_boundary.get(i).getPointsList().get(0).getLat();
+                        String lon = list_boundary.get(i).getPointsList().get(0).getLon();
+                        LatLng latlng = new LatLng(Double.valueOf(lat), Double.valueOf(lon));
+                        tencentMap.animateTo(latlng);
+                        WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
+                        lp.alpha = 1f;
+                        Attendance_Map.this.getWindow().setAttributes(lp);
+                        pw_command.dismiss();
+                    }
+                }
             }
         });
+
+//        lv.setAdapter(new ArrayAdapter<String>(Attendance_Map.this, R.layout.commember_item, list_yq));
+//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//        {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//            {
+//                for (int i = 0; i < list_boundary.size(); i++)
+//                {
+//                    if (list_boundary.get(i).getParkname().equals(((TextView) view).getText().toString()))
+//                    {
+//                        String lat = list_boundary.get(i).getPointsList().get(0).getLat();
+//                        String lon = list_boundary.get(i).getPointsList().get(0).getLat();
+//                        LatLng latlng = new LatLng(Double.valueOf(lat), Double.valueOf(lon));
+//                        tencentMap.animateTo(latlng);
+//                    }
+//                }
+//            }
+//        });
         WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
         lp.alpha = 0.7f;
         Attendance_Map.this.getWindow().setAttributes(lp);
@@ -246,11 +308,11 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         }
 //        mapview.setAlpha(0.2f);
         tencentMap = mapview.getMap();
-        tencentMap.setZoom(18);
+        tencentMap.setZoom(17);
 //        tencentMap.setSatelliteEnabled(true);
         mProjection = mapview.getProjection();
 //        animateToLocation();
-        getTestData("points");
+        getTestData("boundary");
         getLocationInfo(commembertab.getuId());
     }
 
@@ -307,37 +369,48 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         {
             tencentMap.removeOverlay(marker);
             tencentMap.animateTo(latLng);
-            addMarker(latLng, R.drawable.location1);
+            addMarker(latLng, R.drawable.location1, "");
         }
     }
 
-    private void addMarker(LatLng latLng, int icon)
+    private void addMarker(LatLng latLng, int icon, String info)
     {
         Drawable drawable = getResources().getDrawable(icon);
         Bitmap bitmap = utils.drawable2Bitmap(drawable);
-        marker = tencentMap.addMarker(new MarkerOptions().position(latLng).title("").icon(new BitmapDescriptor(bitmap)));
-        marker.hideInfoWindow();
+        marker = tencentMap.addMarker(new MarkerOptions().position(latLng).title(info).icon(new BitmapDescriptor(bitmap)));
+        marker.showInfoWindow();
     }
 
     private void getTestData(String from)
     {
         JSONObject jsonObject = utils.parseJsonFile(Attendance_Map.this, "dictionary.json");
         Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
-        List<Points> listData = JSON.parseArray(result.getRows().toJSONString(), Points.class);
+        list_boundary = JSON.parseArray(result.getRows().toJSONString(), BoundaryBean.class);
 //        showPatro(listData);
-        List<LatLng> list_LatLng = new ArrayList<>();
-        for (int i = 0; i < listData.size(); i++)
+
+        for (int i = 0; i < list_boundary.size(); i++)
         {
-            if (i == 0)
+            String parkid = list_boundary.get(i).getParkid();
+            String parkname = list_boundary.get(i).getParkname();
+            list_yq.add(parkname);
+            List<Points> list = list_boundary.get(i).getPointsList();
+            List<LatLng> list_LatLng = new ArrayList<>();
+            for (int j = 0; j < list.size(); j++)
             {
-                LatLng latlng = new LatLng(Double.valueOf(listData.get(i).getLat()), Double.valueOf(listData.get(i).getLon()));
-                tencentMap.animateTo(latlng);
+                if (j == 0)
+                {
+                    LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLon()));
+                    tencentMap.animateTo(latlng);
+                    addMarker(latlng, R.drawable.location_start, parkname);
+                }
+                LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLon()));
+                list_LatLng.add(latlng);
             }
-            LatLng latlng = new LatLng(Double.valueOf(listData.get(i).getLat()), Double.valueOf(listData.get(i).getLon()));
-            list_LatLng.add(latlng);
+            Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
+            map_polygon.put(parkid, polygon);
+            Overlays.add(polygon);
         }
-        Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
-        Overlays.add(polygon);
+
     }
 
     private void showPatro(List<Points> listNewData)
@@ -402,19 +475,43 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<LocationBean> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        List<LocationBean> list= JSON.parseArray(result.getRows().toJSONString(), LocationBean.class);
-                        for (int i = 0; i <list.size() ; i++)
+                        list_locationInfo= JSON.parseArray(result.getRows().toJSONString(), LocationBean.class);
+                        for (int i = 0; i < list_locationInfo.size(); i++)
                         {
-                            LatLng latLng=new LatLng(Double.valueOf(list.get(i).getLat().toString()),Double.valueOf(list.get(i).getLng()));
+                            LatLng latLng = new LatLng(Double.valueOf(list_locationInfo.get(i).getLat().toString()), Double.valueOf(list_locationInfo.get(i).getLng()));
                             if (latLng != null)
                             {
-                                addMarker(latLng, R.drawable.location1);
+                                list_user.add(list_locationInfo.get(i).getuserName());
+                                addMarker(latLng, R.drawable.user, list_locationInfo.get(i).getparkName() + "-" + list_locationInfo.get(i).getuserName());
+                                Polygon polygon = map_polygon.get(list_locationInfo.get(i).getparkId());
+                                if (polygon != null)
+                                {
+                                    if (!polygon.contains(latLng))
+                                    {
+                                        TextView textview = new TextView(Attendance_Map.this);
+                                        textview.setPadding(20, 20, 20, 20);
+                                        textview.setBackgroundResource(R.drawable.round_orange);
+                                        textview.setText(list_locationInfo.get(i).getparkName() + "-" + list_locationInfo.get(i).getuserName() + "离岗了;");
+                                        textview.setTag(latLng);
+                                        textview.setOnClickListener(new View.OnClickListener()
+                                        {
+                                            @Override
+                                            public void onClick(View v)
+                                            {
+                                                tencentMap.animateTo((LatLng) v.getTag());
+                                            }
+                                        });
+                                        ll_note.addView(textview);
+//                                        Toast.makeText(Attendance_Map.this, list.get(i).getuserName() + "离岗了", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+
                             }
                         }
 
@@ -457,11 +554,11 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
                     if (result.getAffectedRows() != 0)
                     {
                         List<commembertab> list = JSON.parseArray(result.getRows().toJSONString(), commembertab.class);
-                        showPop_user(list);
+//                        showPop_user(list);
                     } else
                     {
                         List<commembertab> list = new ArrayList<commembertab>();
-                        showPop_user(list);
+//                        showPop_user(list);
                     }
                 } else
                 {
@@ -498,11 +595,11 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
                     if (result.getAffectedRows() != 0)
                     {
                         List<parktab> list = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
-                        showPop_park(list);
+//                        showPop_park(list_boundary);
                     } else
                     {
                         List<parktab> list = new ArrayList<parktab>();
-                        showPop_park(list);
+//                        showPop_park(list_boundary);
                     }
                 } else
                 {

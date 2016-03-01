@@ -33,7 +33,7 @@
 
   "gcd":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["观测点1","观测点2","观测点3"]}],"other":[]},
 
-  "boundary":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"uid":"1","parkid":"1","parkname":"武鸣园区","latLng":[{"lat":"23.145411","lng":"108.409653"},{"lat":"23.5565648","lng":"113.554455"},{"lat":"23.5565648","lng":"113.554455"}]}],"other":[]},
+  "boundary":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"uid":"1","parkid":"8","parkname":"武鸣园区","pointsList":[{"lat":"23.087978","lon":"113.319093"},{"lat":"23.088649","lon":"113.317671"},{"lat":"23.089606","lon":"113.318567"},{"lat":"23.089759","lon":"113.319699"},{"lat":"23.088358","lon":"113.320380"},{"lat":"23.087978","lon":"113.319093"}]},{"uid":"1","parkid":"11","parkname":"横县园区","pointsList":[{"lat":"23.086537","lon":"113.317988"},{"lat":"23.087193","lon":"113.318487"},{"lat":"23.087277","lon":"113.319393"},{"lat":"23.086828","lon":"113.319962"},{"lat":"23.085974","lon":"113.319753"},{"lat":"23.085807","lon":"113.318814"},{"lat":"23.086537","lon":"113.317988"}]}],"other":[]},
 
   "gcq":{"ResultCode":1,"Exception":"","AffectedRows":"3","Rows":[{"firstItemID":["1","2","3"],"firstItemName":["生长前期","生长中期","生长后期"]}],"other":[]},
 
