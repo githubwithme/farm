@@ -348,17 +348,17 @@ public class Fragment_Order extends Fragment implements OnClickListener
 					return;
 				if (planttab.getplantType().equals("0"))
 				{
-					Intent intent = new Intent(getActivity(), MainSaleDetail_.class);
+					Intent intent = new Intent(getActivity(), OrderDetail_.class);
 					intent.putExtra("plant", planttab);// 因为list中添加了头部,因此要去掉一个
 					startActivity(intent);
 				} else if (planttab.getplantType().equals("1"))
 				{
-					Intent intent = new Intent(getActivity(), SmallSaleDetail_.class);
+					Intent intent = new Intent(getActivity(), OrderDetail_.class);
 					intent.putExtra("plant", planttab);// 因为list中添加了头部,因此要去掉一个
 					startActivity(intent);
 				} else if (planttab.getplantType().equals("11"))
 				{
-					Intent intent = new Intent(getActivity(), LargeSaleDetail_.class);
+					Intent intent = new Intent(getActivity(), OrderDetail_.class);
 					intent.putExtra("plant", planttab);// 因为list中添加了头部,因此要去掉一个
 					startActivity(intent);
 				}

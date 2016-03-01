@@ -38,6 +38,39 @@ public class sellOrderDetailTab implements Parcelable // 与数据库不一致
     public String sellPrice;
     public String sellDate;
     public String sellQuantity;
+    public String actualnumOfSellPlant;
+    public String actualsellPrice;
+    public String orderid;
+
+    public void setOrderid(String orderid)
+    {
+        this.orderid = orderid;
+    }
+
+    public String getOrderid()
+    {
+        return orderid;
+    }
+
+    public void setActualsellPrice(String actualsellPrice)
+    {
+        this.actualsellPrice = actualsellPrice;
+    }
+
+    public String getActualsellPrice()
+    {
+        return actualsellPrice;
+    }
+
+    public void setActualnumOfSellPlant(String actualnumOfSellPlant)
+    {
+        this.actualnumOfSellPlant = actualnumOfSellPlant;
+    }
+
+    public String getActualnumOfSellPlant()
+    {
+        return actualnumOfSellPlant;
+    }
 
     public void setSellQuantity(String sellQuantity)
     {
@@ -283,6 +316,9 @@ public class sellOrderDetailTab implements Parcelable // 与数据库不一致
             p.setSellPrice(source.readString());
             p.setSellDate(source.readString());
             p.setSellQuantity(source.readString());
+            p.setActualnumOfSellPlant(source.readString());
+            p.setActualsellPrice(source.readString());
+            p.setOrderId(source.readString());
 
             return p;
         }
@@ -318,6 +354,9 @@ public class sellOrderDetailTab implements Parcelable // 与数据库不一致
         p.writeString(sellPrice);
         p.writeString(sellDate);
         p.writeString(sellQuantity);
+        p.writeString(actualnumOfSellPlant);
+        p.writeString(actualsellPrice);
+        p.writeString(orderid);
 
     }
 

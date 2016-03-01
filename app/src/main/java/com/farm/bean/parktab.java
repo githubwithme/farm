@@ -541,7 +541,7 @@ public class parktab implements Parcelable
 			p.setAreacommandCount(source.readString());
 			p.setCommandVideoCount(source.readString());
 			p.setAreacommandVideoCount(source.readString());
-			p.areatabList = source.readArrayList(plantgrowthtab.class.getClassLoader());
+			p.areatabList = source.readArrayList(areatab.class.getClassLoader());
 			return p;
 		}
 

@@ -71,13 +71,13 @@ public class CZ_MainFragment extends Fragment
     int allCount_job;
     int allCount_cmd;
 
-    @Click
-    void btn_map()
-    {
-        Intent intent = new Intent(getActivity(), CZ_ToDayPQ_.class);
-        intent.putExtra("parkid", commembertab.getparkId());
-        startActivity(intent);
-    }
+//    @Click
+//    void btn_map()
+//    {
+//        Intent intent = new Intent(getActivity(), CZ_ToDayPQ_.class);
+//        intent.putExtra("parkid", commembertab.getparkId());
+//        startActivity(intent);
+//    }
 
     @Click
     void ll_jrpq()

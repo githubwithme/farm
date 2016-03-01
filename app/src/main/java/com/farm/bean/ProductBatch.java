@@ -30,7 +30,40 @@ public class ProductBatch implements Parcelable // 与数据库不一致
     public String numberofproductbatch;
     public String dateofproductbatch;
     public String isSell;
+    public String numberofsold;
+    public String numberforsale;
+    public String output;
 
+
+    public String getOutput()
+    {
+        return output;
+    }
+
+    public void setOutput(String output)
+    {
+        this.output = output;
+    }
+
+    public void setNumberforsale(String numberforsale)
+    {
+        this.numberforsale = numberforsale;
+    }
+
+    public String getNumberforsale()
+    {
+        return numberforsale;
+    }
+
+    public void setNumberofsold(String numberofsold)
+    {
+        this.numberofsold = numberofsold;
+    }
+
+    public String getNumberofsold()
+    {
+        return numberofsold;
+    }
 
     public void setIsSell(String isSell)
     {
@@ -196,6 +229,9 @@ public class ProductBatch implements Parcelable // 与数据库不一致
             p.setNumberofproductbatch(source.readString());
             p.setDateofproductbatch(source.readString());
             p.setIsSell(source.readString());
+            p.setNumberofsold(source.readString());
+            p.setNumberforsale(source.readString());
+            p.setOutput(source.readString());
             return p;
         }
 
@@ -222,6 +258,9 @@ public class ProductBatch implements Parcelable // 与数据库不一致
         p.writeString(numberofproductbatch);
         p.writeString(dateofproductbatch);
         p.writeString(isSell);
+        p.writeString(numberofsold);
+        p.writeString(numberforsale);
+        p.writeString(output);
     }
 
     @Override

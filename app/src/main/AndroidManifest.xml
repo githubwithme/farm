@@ -57,6 +57,7 @@
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.Attendance_Map_"/>
+        <activity android:name=".ui.OrderDetail_"/>
         <activity android:name=".ui.AddOrder_"/>
         <activity android:name=".ui.NCZ_ProductSale_"/>
         <activity android:name=".ui.NCZ_CZ_JobList_"/>

@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.lidroid.xutils.db.annotation.Table;
 
+import java.util.List;
+
 /**
  * Description: areatab 实体类</p>
  * <p>
@@ -23,7 +25,17 @@ public class sellOrderTab implements Parcelable // 与数据库不一致
     public String status;
     public String sellAmount;
     public String dataofOrder;
+    public List<sellOrderDetailTab> sellOrderDetailList;
 
+    public void setSellOrderDetailList(List<sellOrderDetailTab> sellOrderDetailList)
+    {
+        this.sellOrderDetailList = sellOrderDetailList;
+    }
+
+    public List<sellOrderDetailTab> getSellOrderDetailList()
+    {
+        return sellOrderDetailList;
+    }
 
     public void setDataofOrder(String dataofOrder)
     {
@@ -113,7 +125,7 @@ public class sellOrderTab implements Parcelable // 与数据库不一致
             p.setStatus(source.readString());
             p.setSellAmount(source.readString());
             p.setDataofOrder(source.readString());
-
+            p.sellOrderDetailList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
             return p;
         }
 
@@ -133,6 +145,7 @@ public class sellOrderTab implements Parcelable // 与数据库不一致
         p.writeString(status);
         p.writeString(sellAmount);
         p.writeString(dataofOrder);
+        p.writeList(sellOrderDetailList);
     }
 
     @Override

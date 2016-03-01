@@ -86,7 +86,7 @@
                 android:layout_toLeftOf="@id/btn_record"
                 android:layout_toRightOf="@id/tv_jobname_tip"
                 android:gravity="right"
-                android:text="蕉蕾喷雾"
+                android:text="广州海川"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </RelativeLayout>
@@ -126,7 +126,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dip"
                     android:gravity="right"
-                    android:text="暂无"
+                    android:text="1.4"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/size_14"/>
             </LinearLayout>
@@ -163,7 +163,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dip"
                     android:gravity="right"
-                    android:text=""
+                    android:text="2016-2-15"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/size_14"/>
             </LinearLayout>
@@ -197,7 +197,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dip"
                     android:gravity="right"
-                    android:text="2015-10-11"
+                    android:text="暂无"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/size_14"/>
             </LinearLayout>
