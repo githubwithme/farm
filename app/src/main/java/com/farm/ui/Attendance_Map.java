@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -170,7 +171,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
                 return false;
             }
         });
-        pw_command = new PopupWindow(pv_command, LinearLayout.LayoutParams.MATCH_PARENT, 300, true);
+        pw_command = new PopupWindow(pv_command, LinearLayout.LayoutParams.MATCH_PARENT, 600, true);
         pw_command.showAsDropDown(line, 0, 0);
         pw_command.setOutsideTouchable(true);
         ListView lv = (ListView) pv_command.findViewById(R.id.lv);
@@ -239,7 +240,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
                 return false;
             }
         });
-        pw_command = new PopupWindow(pv_command, LinearLayout.LayoutParams.MATCH_PARENT, 300, true);
+        pw_command = new PopupWindow(pv_command, LinearLayout.LayoutParams.MATCH_PARENT, 600, true);
         pw_command.showAsDropDown(line, 0, 0);
         pw_command.setOutsideTouchable(true);
         ListView lv = (ListView) pv_command.findViewById(R.id.lv);
@@ -252,8 +253,8 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
             {
                 for (int i = 0; i < list_boundary.size(); i++)
                 {
-                    TextView textview= (TextView) view.findViewById(R.id.tv_name);
-                    String str=textview.getText().toString();
+                    TextView textview = (TextView) view.findViewById(R.id.tv_name);
+                    String str = textview.getText().toString();
                     if (list_boundary.get(i).getParkname().equals(str))
                     {
                         String lat = list_boundary.get(i).getPointsList().get(0).getLat();
@@ -314,6 +315,25 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
 //        animateToLocation();
         getTestData("boundary");
         getLocationInfo(commembertab.getuId());
+        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+        {
+            @Override
+            public void onMapClick(LatLng latlng)
+            {
+                latlng_clickpostion = latlng;
+                if (latlng_clickpostion != null)
+                {
+                    for (int i = 0; i < list_polygon.size(); i++)
+                    {
+                        if (list_polygon.get(i).contains(latlng_clickpostion))
+                        {
+                            Toast.makeText(Attendance_Map.this, "", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }
+            }
+        });
     }
 
     @Override
@@ -408,6 +428,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
             }
             Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
             map_polygon.put(parkid, polygon);
+            list_polygon.add(polygon);
             Overlays.add(polygon);
         }
 
@@ -480,7 +501,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        list_locationInfo= JSON.parseArray(result.getRows().toJSONString(), LocationBean.class);
+                        list_locationInfo = JSON.parseArray(result.getRows().toJSONString(), LocationBean.class);
                         for (int i = 0; i < list_locationInfo.size(); i++)
                         {
                             LatLng latLng = new LatLng(Double.valueOf(list_locationInfo.get(i).getLat().toString()), Double.valueOf(list_locationInfo.get(i).getLng()));

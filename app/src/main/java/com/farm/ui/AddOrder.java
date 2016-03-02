@@ -33,7 +33,6 @@ public class AddOrder extends Activity
     @Click
     void btn_sure()
     {
-
         createOrder();
     }
 

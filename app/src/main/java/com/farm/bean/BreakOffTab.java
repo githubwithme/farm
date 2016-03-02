@@ -32,7 +32,17 @@ public class BreakOffTab implements Parcelable // 与数据库不一致
     public String numberofbreakoff;
     public String dateofbreakoff;
     public String output;
+    public String productbatchid;
 
+    public String getproductbatchid()
+    {
+        return productbatchid;
+    }
+
+    public void setproductbatchid(String productbatchid)
+    {
+        this.productbatchid = productbatchid;
+    }
 
     public void setContractId(String contractId)
     {
@@ -103,7 +113,6 @@ public class BreakOffTab implements Parcelable // 与数据库不一致
     {
         return isEnd;
     }
-
 
 
     public void setAreaId(String areaId)
@@ -220,6 +229,7 @@ public class BreakOffTab implements Parcelable // 与数据库不一致
             p.setNumberofbreakoff(source.readString());
             p.setDateofbreakoff(source.readString());
             p.setOutput(source.readString());
+            p.setproductbatchid(source.readString());
             return p;
         }
 
@@ -248,6 +258,7 @@ public class BreakOffTab implements Parcelable // 与数据库不一致
         p.writeString(numberofbreakoff);
         p.writeString(dateofbreakoff);
         p.writeString(output);
+        p.writeString(productbatchid);
     }
 
     @Override

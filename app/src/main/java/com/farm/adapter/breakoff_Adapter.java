@@ -188,9 +188,9 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
                 public void onClick(View v)
                 {
                     BreakOffTab BreakOffTab = (com.farm.bean.BreakOffTab) v.getTag(R.id.tag_bean);
-                    Intent intent = new Intent(context, Common_JobDetail_Show_.class);
-                    intent.putExtra("bean", BreakOffTab);
-                    context.startActivity(intent);
+//                    Intent intent = new Intent(context, Common_JobDetail_Show_.class);
+//                    intent.putExtra("bean", BreakOffTab);
+//                    context.startActivity(intent);
 
                 }
             });

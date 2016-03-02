@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.adapter.DL_ZS_Adapter;
 import com.farm.adapter.ListViewProductBatchDetailAdapter;
+import com.farm.adapter.ProductBatchList_Adapter;
 import com.farm.adapter.ProductBatch_Adapter;
 import com.farm.adapter.SelectorFirstItemAdapter;
 import com.farm.adapter.SelectorSecondItemAdapter;
@@ -47,6 +48,10 @@ import java.util.Map;
 @EFragment
 public class Fragment_Sale extends Fragment  implements View.OnClickListener
 {
+    Button btn_cancle;
+    Button btn_addBreakOffInfo;
+    TextView tv_tip;
+    ListView lv_batch;
     Button btn_sure;
     EditText et_note;
     EditText et_time;
@@ -100,7 +105,7 @@ ImageView iv_up_selector;
     @Click
     void rl_selector()
     {
-        showPop_addcommand();
+        showDialog_productbatchList();
     }
     @AfterViews
     void afterOncreate()
@@ -149,7 +154,32 @@ ImageView iv_up_selector;
             }
         }
     }
-
+    public void showDialog_productbatchList()
+    {
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_productlist, null);
+        customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
+        btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        lv_batch = (ListView) dialog_layout.findViewById(R.id.lv_batch);
+        ProductBatchList_Adapter productBatchList_adapter=new ProductBatchList_Adapter()
+        lv_batch.setAdapter(new ProductBatchList_Adapter());
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_editdlinfor.dismiss();
+            }
+        });
+        btn_addBreakOffInfo.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_editdlinfor.dismiss();
+            }
+        });
+        customdialog_editdlinfor.show();
+    }
     public void showPop_addcommand()
     {
         LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);

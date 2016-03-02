@@ -21,21 +21,21 @@ public class SqliteDb
 {
     public static List<parktab> getBreakOffListByParkID(Context context)
     {
-        List<parktab> list_park=FileHelper.getAssetsData(context, "parktab", parktab.class);
+        List<parktab> list_park = FileHelper.getAssetsData(context, "parktab", parktab.class);
         DbUtils db = DbUtils.create(context);
-        for (int i = 0; i <list_park.size() ; i++)
+        for (int i = 0; i < list_park.size(); i++)
         {
-            List<areatab> list_area=list_park.get(i).getAreatabList();
+            List<areatab> list_area = list_park.get(i).getAreatabList();
             for (int j = 0; j < list_area.size(); j++)
             {
-                List<contractTab> list_contractTab=list_park.get(i).getAreatabList().get(j).getContractTabList();
+                List<contractTab> list_contractTab = list_park.get(i).getAreatabList().get(j).getContractTabList();
                 if (list_contractTab == null)
                 {
-                    List<contractTab> list_contractTab_temp=new ArrayList<>();
+                    List<contractTab> list_contractTab_temp = new ArrayList<>();
                     list_park.get(i).getAreatabList().get(j).setContractTabList(list_contractTab_temp);
-                }else
+                } else
                 {
-                    for (int k = 0; k <list_contractTab.size() ; k++)
+                    for (int k = 0; k < list_contractTab.size(); k++)
                     {
 
                         List<BreakOffTab> list = null;
@@ -61,11 +61,12 @@ public class SqliteDb
 
         return list_park;
     }
+
     public static List<contractTab> getBreakOffListByAreaID(Context context)
     {
-        List<contractTab> listdata=FileHelper.getAssetsData(context, "contractTab", contractTab.class);
+        List<contractTab> listdata = FileHelper.getAssetsData(context, "contractTab", contractTab.class);
         DbUtils db = DbUtils.create(context);
-        for (int i = 0; i <listdata.size() ; i++)
+        for (int i = 0; i < listdata.size(); i++)
         {
 
             List<BreakOffTab> list = null;
@@ -75,9 +76,9 @@ public class SqliteDb
                 if (list != null)
                 {
                     listdata.get(i).setBreakOffTabList(list);
-                }else
+                } else
                 {
-               list = new ArrayList<>();
+                    list = new ArrayList<>();
                     listdata.get(i).setBreakOffTabList(list);
                 }
 
@@ -89,6 +90,7 @@ public class SqliteDb
 
         return listdata;
     }
+
     public static boolean save(Context context, Object obj)
     {
         DbUtils db = DbUtils.create(context);
@@ -138,6 +140,7 @@ public class SqliteDb
         }
         return true;
     }
+
     public static <T> boolean deletesellOrderDetailTab(Context context, Class<T> c, String productBatch, String contractId)
     {
         DbUtils db = DbUtils.create(context);
@@ -151,6 +154,7 @@ public class SqliteDb
         }
         return true;
     }
+
     public static <T> boolean deleteSelectCmdArea(Context context, Class<T> c, String firsttype, String secondType)
     {
         DbUtils db = DbUtils.create(context);
@@ -318,7 +322,8 @@ public class SqliteDb
         }
         return list;
     }
-    public static <T> List<T> getZS(Context context, Class<T> c,String areaid)
+
+    public static <T> List<T> getZS(Context context, Class<T> c, String areaid)
     {
         DbUtils db = DbUtils.create(context);
         List<T> list = null;
@@ -335,6 +340,7 @@ public class SqliteDb
         }
         return list;
     }
+
     public static <T> Object getCurrentUser(Context context, Class<T> c, String userName)
     {
         DbUtils db = DbUtils.create(context);
@@ -445,7 +451,7 @@ public class SqliteDb
         }
     }
 
-    public static void updatesellOrderDetailTab(Context context,sellOrderDetailTab sellOrderDetailTab)
+    public static void updatesellOrderDetailTab(Context context, sellOrderDetailTab sellOrderDetailTab)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -456,6 +462,7 @@ public class SqliteDb
             e.printStackTrace();
         }
     }
+
     public static <T> List<T> getAllsellOrderDetailTab(Context context, Class<T> c)
     {
         DbUtils db = DbUtils.create(context);

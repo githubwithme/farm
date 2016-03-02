@@ -46,7 +46,7 @@
                 android:layout_marginLeft="10dip"
                 android:text="武鸣园区"
                 android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_14"/>
+                android:textSize="@dimen/size_sp_16"/>
 
             <TextView
                 android:id="@+id/tv_numberofbreakoff"
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@drawable/background_view_rounded_single"
+                android:background="@color/line_color"
                 android:layout_alignParentRight="true"
                 android:text="添加断蕾"
                 android:textColor="@color/bg_text"
