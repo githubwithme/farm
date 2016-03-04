@@ -9,9 +9,9 @@ import java.util.List;
 
 /**
  * Description: areatab 实体类</p>
- * <p>
+ * <p/>
  * Copyright: Copyright (c) 2015
- * <p>
+ * <p/>
  * Company: 广州海川信息科技有限公司
  *
  * @version 1.0
@@ -28,11 +28,22 @@ public class contractTab implements Parcelable // 与数据库不一致
     public String areaId;
     public String areaName;
     public String note;
-    public String plantnumber;
+    public String numOfPlant;
     public String gainnumber;
     public String contractarea;
     public String amountforsale;
     public List<breakofftab> breakofftabList;
+
+
+    public void setNumOfPlant(String numOfPlant)
+    {
+        this.numOfPlant = numOfPlant;
+    }
+
+    public String getNumOfPlant()
+    {
+        return numOfPlant;
+    }
 
     public void setAmountforsale(String amountforsale)
     {
@@ -72,16 +83,6 @@ public class contractTab implements Parcelable // 与数据库不一致
     public String getGainnumber()
     {
         return gainnumber;
-    }
-
-    public void setPlantnumber(String plantnumber)
-    {
-        this.plantnumber = plantnumber;
-    }
-
-    public String getPlantnumber()
-    {
-        return plantnumber;
     }
 
 
@@ -204,7 +205,7 @@ public class contractTab implements Parcelable // 与数据库不一致
             p.setAreaId(source.readString());
             p.setareaName(source.readString());
             p.setNote(source.readString());
-            p.setPlantnumber(source.readString());
+            p.setNumOfPlant(source.readString());
             p.setGainnumber(source.readString());
             p.setContractarea(source.readString());
             p.setAmountforsale(source.readString());
@@ -231,7 +232,7 @@ public class contractTab implements Parcelable // 与数据库不一致
         p.writeString(areaId);
         p.writeString(areaName);
         p.writeString(note);
-        p.writeString(plantnumber);
+        p.writeString(numOfPlant);
         p.writeString(gainnumber);
         p.writeString(contractarea);
         p.writeString(amountforsale);

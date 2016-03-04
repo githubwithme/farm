@@ -360,7 +360,7 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
             numberOfBreakOff = numberOfBreakOff + Integer.valueOf(list_breakoff.get(i).getnumberofbreakoff());
         }
         tv_numberofbreakoff.setText("共断蕾" + numberOfBreakOff + "株");
-        tv_output.setText("产量:" + listData.get(groupPosition).getPlantnumber() + "株");
+        tv_output.setText("产量:" + listData.get(groupPosition).getNumOfPlant() + "株");
 
         return convertView;
     }

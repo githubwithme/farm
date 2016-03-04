@@ -130,7 +130,7 @@ public class ProductBatchGridViewAdapter extends BaseAdapter
         } if (list != null && list.size() > 0)
     {
         listItemView.tv_contractname.setText(list.get(position).getContractNum());
-        listItemView.tv_output.setText("产量:" + list.get(position).getPlantnumber());
+        listItemView.tv_output.setText("产量:" + list.get(position).getNumOfPlant());
         List<breakofftab> list_breakoff = list.get(position).getbreakofftabList();
         if (list_breakoff != null && list_breakoff.size() > 0)
         {

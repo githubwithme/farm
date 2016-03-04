@@ -20,16 +20,26 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.BreakOffAdapter;
-import com.farm.adapter.breakoff_Adapter;
 import com.farm.adapter.ListViewProductBatchDetailAdapter;
+import com.farm.adapter.breakoff_Adapter;
+import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
+import com.farm.bean.Result;
+import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
 import com.farm.bean.planttab;
 import com.farm.common.SqliteDb;
 import com.farm.widget.CustomDialog_EditDLInfor;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -66,6 +76,7 @@ public class Fragment_DL extends Fragment implements View.OnClickListener
     Dictionary dictionary;
     BreakOffAdapter breakOffAdapter;
     breakoff_Adapter breakoff_adapter;
+
     @Click
     void btn_add()
     {
@@ -77,14 +88,16 @@ public class Fragment_DL extends Fragment implements View.OnClickListener
     @AfterViews
     void afterOncreate()
     {
-        List<contractTab> listdata= SqliteDb.getBreakOffListByAreaID(getActivity());
-        breakoff_adapter = new breakoff_Adapter(getActivity(), listdata, expandableListView);
-        expandableListView.setAdapter(breakoff_adapter);
-        for (int i = 0; i < listdata.size(); i++)
-        {
-            expandableListView.expandGroup(i);
-        }
+//        List<contractTab> listdata = SqliteDb.getBreakOffListByAreaID(getActivity());
+//        breakoff_adapter = new breakoff_Adapter(getActivity(), listdata, expandableListView);
+//        expandableListView.setAdapter(breakoff_adapter);
+//        for (int i = 0; i < listdata.size(); i++)
+//        {
+//            expandableListView.expandGroup(i);
+//        }
+        getBreakOffInfoOfContract();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -101,7 +114,7 @@ public class Fragment_DL extends Fragment implements View.OnClickListener
         @Override
         public void onReceive(Context context, Intent intent)
         {
-            List<contractTab> listdata= SqliteDb.getBreakOffListByAreaID(getActivity());
+            List<contractTab> listdata = SqliteDb.getBreakOffListByAreaID(getActivity());
             breakoff_adapter = new breakoff_Adapter(getActivity(), listdata, expandableListView);
             expandableListView.setAdapter(breakoff_adapter);
             for (int i = 0; i < listdata.size(); i++)
@@ -152,6 +165,55 @@ public class Fragment_DL extends Fragment implements View.OnClickListener
             }
         });
         customdialog_editdlinfor.show();
+    }
+
+    private void getBreakOffInfoOfContract()
+    {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("areaid", commembertab.getareaId());
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "GetBreakOffByAreaId");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<contractTab> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listNewData = new ArrayList<contractTab>();
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
+                    } else
+                    {
+                        listNewData = new ArrayList<contractTab>();
+                    }
+                    breakoff_adapter = new breakoff_Adapter(getActivity(), listNewData, expandableListView);
+                    expandableListView.setAdapter(breakoff_adapter);
+                    for (int i = 0; i < listNewData.size(); i++)
+                    {
+                        expandableListView.expandGroup(i);
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
     }
 
     public void showPop_addcommand()
