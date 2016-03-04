@@ -44,18 +44,6 @@
             android:text="断蕾1500株"
             android:textColor="@color/gray"
             android:textSize="@dimen/size_14"/>
-        <TextView
-            android:id="@+id/tv_note"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dip"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="暂无备注"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/size_14"/>
-
 
 
         <ImageView

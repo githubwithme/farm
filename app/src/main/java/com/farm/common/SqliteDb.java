@@ -2,7 +2,7 @@ package com.farm.common;
 
 import android.content.Context;
 
-import com.farm.bean.BreakOffTab;
+import com.farm.bean.breakofftab;
 import com.farm.bean.HaveReadRecord;
 import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
@@ -38,13 +38,13 @@ public class SqliteDb
                     for (int k = 0; k < list_contractTab.size(); k++)
                     {
 
-                        List<BreakOffTab> list = null;
+                        List<breakofftab> list = null;
                         try
                         {
-                            list = db.findAll(Selector.from(BreakOffTab.class).where("contractId", "=", list_contractTab.get(k).getid()));
+                            list = db.findAll(Selector.from(breakofftab.class).where("contractId", "=", list_contractTab.get(k).getid()));
                             if (list != null)
                             {
-                                list_park.get(i).getAreatabList().get(j).getContractTabList().get(k).setBreakOffTabList(list);
+                                list_park.get(i).getAreatabList().get(j).getContractTabList().get(k).setbreakofftabList(list);
                             }
 
                         } catch (DbException e)
@@ -69,17 +69,17 @@ public class SqliteDb
         for (int i = 0; i < listdata.size(); i++)
         {
 
-            List<BreakOffTab> list = null;
+            List<breakofftab> list = null;
             try
             {
-                list = db.findAll(Selector.from(BreakOffTab.class).where("contractId", "=", listdata.get(i).getid()));
+                list = db.findAll(Selector.from(breakofftab.class).where("contractId", "=", listdata.get(i).getid()));
                 if (list != null)
                 {
-                    listdata.get(i).setBreakOffTabList(list);
+                    listdata.get(i).setbreakofftabList(list);
                 } else
                 {
                     list = new ArrayList<>();
-                    listdata.get(i).setBreakOffTabList(list);
+                    listdata.get(i).setbreakofftabList(list);
                 }
 
             } catch (DbException e)

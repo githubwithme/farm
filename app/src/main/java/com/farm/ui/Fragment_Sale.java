@@ -22,7 +22,6 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.adapter.DL_ZS_Adapter;
 import com.farm.adapter.ListViewProductBatchDetailAdapter;
-import com.farm.adapter.ProductBatchList_Adapter;
 import com.farm.adapter.ProductBatch_Adapter;
 import com.farm.adapter.SelectorFirstItemAdapter;
 import com.farm.adapter.SelectorSecondItemAdapter;
@@ -160,8 +159,8 @@ ImageView iv_up_selector;
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
         btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
         lv_batch = (ListView) dialog_layout.findViewById(R.id.lv_batch);
-        ProductBatchList_Adapter productBatchList_adapter=new ProductBatchList_Adapter()
-        lv_batch.setAdapter(new ProductBatchList_Adapter());
+//        ProductBatchList_Adapter productBatchList_adapter=new ProductBatchList_Adapter()
+//        lv_batch.setAdapter(new ProductBatchList_Adapter());
         btn_cancle.setOnClickListener(new View.OnClickListener()
         {
             @Override

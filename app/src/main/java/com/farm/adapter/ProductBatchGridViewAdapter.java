@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.BreakOffTab;
+import com.farm.bean.breakofftab;
 import com.farm.bean.ProductBatch;
 import com.farm.bean.areatab;
 import com.farm.bean.contractTab;
@@ -94,7 +94,7 @@ public class ProductBatchGridViewAdapter extends BaseAdapter
                         productBatch.setareaName(areatab.getareaName());
                         productBatch.setContractId(list.get(pos).getid());
                         productBatch.setContractNum(list.get(pos).getContractNum());
-                        productBatch.setNumberofproductbatch(list.get(pos).getBreakOffTabList().get(0).getNumberofbreakoff());
+                        productBatch.setNumberofproductbatch(list.get(pos).getbreakofftabList().get(0).getnumberofbreakoff());
                         productBatch.setDateofproductbatch("");
                         productBatch.setNote("");
                         productBatch.setIsSell("1");
@@ -131,10 +131,10 @@ public class ProductBatchGridViewAdapter extends BaseAdapter
     {
         listItemView.tv_contractname.setText(list.get(position).getContractNum());
         listItemView.tv_output.setText("产量:" + list.get(position).getPlantnumber());
-        List<BreakOffTab> list_breakoff = list.get(position).getBreakOffTabList();
+        List<breakofftab> list_breakoff = list.get(position).getbreakofftabList();
         if (list_breakoff != null && list_breakoff.size() > 0)
         {
-            listItemView.tv_numberofbreakoff.setText("待售:" + list_breakoff.get(0).getNumberofbreakoff());
+            listItemView.tv_numberofbreakoff.setText("待售:" + list_breakoff.get(0).getnumberofbreakoff());
         } else
         {
             listItemView.cb_productselect.setClickable(false);
@@ -165,7 +165,7 @@ public class ProductBatchGridViewAdapter extends BaseAdapter
 //		{
 //			view.tv_contractname.setText(list.get(position).getContractNum());
 //			view.tv_output.setText("产量:"+list.get(position).getPlantnumber());
-//			List<BreakOffTab> list_breakoff=list.get(position).getBreakOffTabList();
+//			List<breakofftab> list_breakoff=list.get(position).getbreakofftabList();
 //			if (list_breakoff != null)
 //			{
 //				view.tv_numberofbreakoff.setText("待售:"+list_breakoff.get(0).getNumberofbreakoff());

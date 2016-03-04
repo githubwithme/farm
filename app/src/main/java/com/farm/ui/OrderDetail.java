@@ -34,6 +34,10 @@ import java.util.List;
 /**
  * Created by ${hmj} on 2016/1/20.
  */
+
+/**
+ * 1
+ */
 @EActivity(R.layout.orderdetail)
 public class OrderDetail extends Activity
 {

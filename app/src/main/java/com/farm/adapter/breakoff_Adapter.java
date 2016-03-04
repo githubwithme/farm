@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,20 +15,20 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.BreakOffTab;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
+import com.farm.bean.breakofftab;
 import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
 import com.farm.bean.goodslisttab;
-import com.farm.common.SqliteDb;
+import com.farm.bean.jobtab;
 import com.farm.common.utils;
 import com.farm.ui.Common_JobDetail_Show_;
 import com.farm.widget.CustomDialog_EditDLInfor;
@@ -85,11 +83,11 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        if (listData.get(groupPosition).getBreakOffTabList() == null)
+        if (listData.get(groupPosition).getbreakofftabList() == null)
         {
             return null;
         }
-        return listData.get(groupPosition).getBreakOffTabList().get(childPosition);
+        return listData.get(groupPosition).getbreakofftabList().get(childPosition);
     }
 
     //得到子item的ID
@@ -105,7 +103,6 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
 
     static class ListItemView
     {
-        public TextView tv_note;
         public TextView tv_time;
         public TextView tv_numberofbreakoff;
     }
@@ -130,19 +127,19 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<BreakOffTab> listNewData = null;
+                List<breakofftab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), BreakOffTab.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), breakofftab.class);
                         Intent intent = new Intent(context, Common_JobDetail_Show_.class);
                         intent.putExtra("bean", listNewData.get(0));
                         context.startActivity(intent);
                     } else
                     {
-                        listNewData = new ArrayList<BreakOffTab>();
+                        listNewData = new ArrayList<breakofftab>();
                     }
                 } else
                 {
@@ -164,8 +161,8 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<BreakOffTab> childData = listData.get(groupPosition).getBreakOffTabList();
-        final BreakOffTab BreakOffTab = childData.get(childPosition);
+        List<breakofftab> childData = listData.get(groupPosition).getbreakofftabList();
+        final breakofftab breakofftab = childData.get(childPosition);
         View v = null;
         if (lmap.get(groupPosition) != null)
         {
@@ -178,18 +175,17 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.layout_children_breakoff, null);
             listItemView = new ListItemView();
             listItemView.tv_numberofbreakoff = (TextView) convertView.findViewById(R.id.tv_numberofbreakoff);
-            listItemView.tv_note = (TextView) convertView.findViewById(R.id.tv_note);
             listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             convertView.setTag(listItemView);
-            convertView.setTag(R.id.tag_bean, BreakOffTab);
+            convertView.setTag(R.id.tag_bean, breakofftab);
             convertView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    BreakOffTab BreakOffTab = (com.farm.bean.BreakOffTab) v.getTag(R.id.tag_bean);
+                    breakofftab breakofftab = (com.farm.bean.breakofftab) v.getTag(R.id.tag_bean);
 //                    Intent intent = new Intent(context, Common_JobDetail_Show_.class);
-//                    intent.putExtra("bean", BreakOffTab);
+//                    intent.putExtra("bean", breakofftab);
 //                    context.startActivity(intent);
 
                 }
@@ -201,13 +197,9 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
                 map = new HashMap<>();
             }
 
-            if (!BreakOffTab.getNote().equals(""))
-            {
-                listItemView.tv_note.setText(BreakOffTab.getNote());
-            }
 
-                listItemView.tv_time.setText(BreakOffTab.getDateofbreakoff());
-                listItemView.tv_numberofbreakoff.setText("断蕾"+BreakOffTab.getNumberofbreakoff()+"株");
+            listItemView.tv_time.setText(breakofftab.getdateofbreakoff());
+            listItemView.tv_numberofbreakoff.setText("断蕾" + breakofftab.getnumberofbreakoff() + "株");
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -246,11 +238,11 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getBreakOffTabList() == null)
+        if (listData.get(groupPosition).getbreakofftabList() == null)
         {
             return 0;
         }
-        return listData.get(groupPosition).getBreakOffTabList().size();
+        return listData.get(groupPosition).getbreakofftabList().size();
     }
 
     //获取当前父item的数据
@@ -361,14 +353,14 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
             }
         });
         tv_contractname.setText(listData.get(groupPosition).getContractNum());
-        int numberOfBreakOff=0;
-        List<BreakOffTab> list_breakoff=listData.get(groupPosition).getBreakOffTabList();
-        for (int i = 0; i <list_breakoff.size() ; i++)
+        int numberOfBreakOff = 0;
+        List<breakofftab> list_breakoff = listData.get(groupPosition).getbreakofftabList();
+        for (int i = 0; i < list_breakoff.size(); i++)
         {
-            numberOfBreakOff=numberOfBreakOff+Integer.valueOf(list_breakoff.get(i).getNumberofbreakoff());
+            numberOfBreakOff = numberOfBreakOff + Integer.valueOf(list_breakoff.get(i).getnumberofbreakoff());
         }
-        tv_numberofbreakoff.setText("共断蕾"+numberOfBreakOff+"株");
-        tv_output.setText("产量:"+listData.get(groupPosition).getPlantnumber()+"株");
+        tv_numberofbreakoff.setText("共断蕾" + numberOfBreakOff + "株");
+        tv_output.setText("产量:" + listData.get(groupPosition).getPlantnumber() + "株");
 
         return convertView;
     }
@@ -384,6 +376,7 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
     {
         return true;
     }
+
     public void showDialog_AddBreakOffInfo(final contractTab contractTab)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_addbreakoffinfo, null);
@@ -398,54 +391,57 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View v)
             {
-                String uuid = java.util.UUID.randomUUID().toString();
-//                commembertab commembertab=AppContext.getUserInfo(context);
-                BreakOffTab breakOffTab=new BreakOffTab();
-                breakOffTab.setid(uuid);
-                breakOffTab.setContractId(contractTab.getid());
-                breakOffTab.setContractNum(contractTab.getContractNum());
-                breakOffTab.setparkId(contractTab.getparkId());
-                breakOffTab.setparkName(contractTab.getparkName());
-                breakOffTab.setAreaId(contractTab.getAreaId());
-                breakOffTab.setareaName(contractTab.getareaName());
-                breakOffTab.setregDate(utils.getToday());
-                breakOffTab.setregDate(utils.getToday());
-                breakOffTab.setregDate(utils.getToday());
-                breakOffTab.setNote(et_note.getText().toString());
-                breakOffTab.setNumberofbreakoff(et_numberofbreakoff.getText().toString());
-                breakOffTab.setDateofbreakoff(utils.getToday());
-                SqliteDb.save(context, breakOffTab);
-
-                Intent intent = new Intent();
-                intent.setAction(AppContext.BROADCAST_UPDATEBREAKOFFINFO);
-                context.sendBroadcast(intent);
-
+                addBreakOffInfo(contractTab, et_numberofbreakoff.getText().toString());
                 customdialog_editdlinfor.dismiss();
             }
         });
         customdialog_editdlinfor.show();
     }
-    public void showDialog(List<String> list)
+
+    private void addBreakOffInfo(contractTab contractTab, String numberofbreakoff)
     {
-        View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
+        commembertab commembertab = AppContext.getUserInfo(context);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "AddBreakOff");
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("parkname", commembertab.getparkName());
+        params.addQueryStringParameter("areaid", commembertab.getareaId());
+        params.addQueryStringParameter("areaname", commembertab.getareaName());
+        params.addQueryStringParameter("contractid", "1");
+        params.addQueryStringParameter("contractname", "承包区一");
+        params.addQueryStringParameter("numberofbreakoff", numberofbreakoff);
+        params.addQueryStringParameter("dateofbreakoff", utils.getTime());
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
             @Override
-            public void OnClick(Bundle bundle)
+            public void onSuccess(ResponseInfo<String> responseInfo)
             {
-                tempDic.getThirdItemID().get(currentgroupPosition).get(currentchildPosition).clear();
-                tempDic.getThirdItemID().get(currentgroupPosition).get(currentchildPosition).add(bundle.getString("name"));
-                currentTextView.setText(bundle.getString("name"));
-                currentTextView.setTextColor(context.getResources().getColor(R.color.bg_yellow));
-                TextPaint tp = currentTextView.getPaint();
-                tp.setFakeBoldText(true);
+                String a = responseInfo.result;
+                List<jobtab> listData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    Toast.makeText(context, "保存成功！", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setAction(AppContext.BROADCAST_UPDATEBREAKOFFINFO);
+                    context.sendBroadcast(intent);
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String arg1)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(context, "error_connectServer");
             }
         });
-        customDialog_listView.show();
     }
 
-    public Dictionary getDictionary()
-    {
-        return tempDic;
-    }
+
 }

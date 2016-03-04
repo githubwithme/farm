@@ -7,18 +7,18 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.BreakOffTab;
+import com.farm.bean.breakofftab;
 
 import java.util.List;
 
 public class BreakOffAdapter extends BaseAdapter
 {
 
-	private List<BreakOffTab> list;
+	private List<breakofftab> list;
 	private Context context;
 	Holder view;
 
-	public BreakOffAdapter(Context context, List<BreakOffTab> list)
+	public BreakOffAdapter(Context context, List<breakofftab> list)
 	{
 		this.list = list;
 		this.context = context;
@@ -59,9 +59,9 @@ public class BreakOffAdapter extends BaseAdapter
 		}
 		if (list != null && list.size() > 0)
 		{
-			 view.tv_contractname.setText(list.get(position).getContractNum());
-			 view.tv_numberofbreakoff.setText(list.get(position).getNumberofbreakoff());
-			 view.tv_output.setText(list.get(position).getOutput());
+			 view.tv_contractname.setText(list.get(position).getcontractname());
+			 view.tv_numberofbreakoff.setText(list.get(position).getnumberofbreakoff());
+//			 view.tv_output.setText(list.get(position).getOutput());
 		}
 
 		return convertView;
