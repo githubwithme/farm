@@ -109,7 +109,16 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/line_color"/>
-
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:gravity="center"
+        android:text=""
+        android:visibility="gone"
+        android:background="@color/bg_yellow"
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
     <FrameLayout
         android:id="@+id/fl_map"
         android:layout_width="fill_parent"
