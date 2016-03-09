@@ -1,15 +1,13 @@
 package com.farm.ui;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -51,15 +49,15 @@ import com.tencent.tencentmap.mapsdk.map.TencentMap;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@EFragment
-public class DL_Fragment extends Fragment implements TencentLocationListener, View.OnClickListener
+@EActivity(R.layout.addordermap)
+public class AddOrderMap extends Activity implements TencentLocationListener, View.OnClickListener
 {
     List<Marker> list_mark;
     int last_pos = 0;
@@ -103,7 +101,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
     @ViewById
     TextView tv_tip;
     @ViewById
-    TextView tv_zs;
+    Button btn_addorder;
     @ViewById
     TextView tv_gk;
     @ViewById
@@ -121,10 +119,10 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
             build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
             for (int i = 0; i < pointsList.size(); i++)
             {
-                build.append("{" + "\"" + "lat" + "\"" + ":"+"\"" + pointsList.get(i).getLatitude() + "\"" + "," + "\"" + "lng" + "\"" + ":"+"\"" + pointsList.get(i).getLongitude() + "\"" + "}" + ",");
+                build.append("{" + "\"" + "lat" + "\"" + ":" + "\"" + pointsList.get(i).getLatitude() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + pointsList.get(i).getLongitude() + "\"" + "}" + ",");
 
             }
-            build.replace(build.length()-1,build.length(),"");
+            build.replace(build.length() - 1, build.length(), "");
             build.append("]}");
             build.toString();
             tv_gk.setText("添加断蕾区");
@@ -144,7 +142,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                 prelatLng = latlng;
                 lineOpt.add(latlng);
                 Polyline line = tencentMap.addPolyline(lineOpt);
-                line.setColor(getActivity().getResources().getColor(R.color.black));
+                line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                 line.setWidth(4f);
                 Overlays.add(line);
             }
@@ -152,17 +150,17 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
     }
 
     @Click
-    void tv_zs()
+    void btn_addorder()
     {
         //1、选取任意一个点，判断是否在任意一个承包区内,高亮所选定的承包区A，及显示其marker
         //2、以后每次选取一个点时都要先判断该点是否在承包区A内，在则画线，不在则提示
         //3、当选取任意一个marker时则设置点击地图不响应事件，并设置往后只能选择marker，
-//        list_zs = SqliteDb.getZS(getActivity(), ZS.class, commembertab.getareaId());
+//        list_zs = SqliteDb.getZS(AddOrderMap.this, ZS.class, commembertab.getareaId());
 //        showPop_addcommand();
-        if (tv_zs.getText().equals("确定"))
+        if (btn_addorder.getText().equals("确定"))
         {
             tv_tip.setVisibility(View.GONE);
-            tv_zs.setText("添加断蕾区");
+            btn_addorder.setText("添加断蕾区");
             tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
             {
                 @Override
@@ -175,14 +173,14 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                         {
                             if (list_polygon.get(i).contains(latlng_clickpostion))
                             {
-                                Toast.makeText(getActivity(), "在范围内", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddOrderMap.this, "在范围内", Toast.LENGTH_SHORT).show();
                             }
                         }
 
                     }
                 }
             });
-//            SqliteDb.saveAll(getActivity(), pointsList);
+//            SqliteDb.saveAll(AddOrderMap.this, pointsList);
             Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
             list_polygon.add(polygon);
             showDialog_EditDL();
@@ -204,7 +202,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
 
             tv_tip.setVisibility(View.VISIBLE);
             tv_tip.setText("请在承包区内选取点");
-            tv_zs.setText("确定");
+            btn_addorder.setText("确定");
             isStart = true;
             polygon_select = list_polygon_pq.get(0);
 
@@ -244,7 +242,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                     prelatLng = latlng;
                     lineOpt.add(latlng);
                     Polyline line = tencentMap.addPolyline(lineOpt);
-                    line.setColor(getActivity().getResources().getColor(R.color.black));
+                    line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                     line.setWidth(4f);
                     Overlays.add(line);
 //                    }
@@ -266,7 +264,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
 //                                prelatLng = latlng;
 //                                lineOpt.add(latlng);
 //                                Polyline line = tencentMap.addPolyline(lineOpt);
-//                                line.setColor(getActivity().getResources().getColor(R.color.black));
+//                                line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
 //                                line.setWidth(4f);
 //                                Overlays.add(line);
 //                                tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
@@ -298,7 +296,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
 //                        prelatLng = latlng;
 //                        lineOpt.add(latlng);
 //                        Polyline line = tencentMap.addPolyline(lineOpt);
-//                        line.setColor(getActivity().getResources().getColor(R.color.black));
+//                        line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
 //                        line.setWidth(4f);
 //                        Overlays.add(line);
 //                    }
@@ -328,9 +326,9 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
         }
     }
 //    @Click
-//    void tv_zs()
+//    void btn_addorder()
 //    {
-//        list_zs = SqliteDb.getZS(getActivity(), ZS.class, commembertab.getareaId());
+//        list_zs = SqliteDb.getZS(AddOrderMap.this, ZS.class, commembertab.getareaId());
 //        showPop_addcommand();
 //    }
 
@@ -352,14 +350,14 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                         {
                             if (list_polygon.get(i).contains(latlng_clickpostion))
                             {
-                                Toast.makeText(getActivity(), "在范围内", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddOrderMap.this, "在范围内", Toast.LENGTH_SHORT).show();
                             }
                         }
 
                     }
                 }
             });
-//            SqliteDb.saveAll(getActivity(), pointsList);
+//            SqliteDb.saveAll(AddOrderMap.this, pointsList);
             Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
             list_polygon.add(polygon);
             showDialog_EditDL();
@@ -385,7 +383,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                     prelatLng = latlng;
                     lineOpt.add(latlng);
                     Polyline line = tencentMap.addPolyline(lineOpt);
-                    line.setColor(getActivity().getResources().getColor(R.color.black));
+                    line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                     line.setWidth(4f);
                     Overlays.add(line);
                 }
@@ -396,7 +394,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
 
     public void showPop_gk()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) AddOrderMap.this.getSystemService(AddOrderMap.this.LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_zs, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {
@@ -406,9 +404,9 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                 if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
                 {
                     pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+//                    WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
 //                    lp.alpha = 1f;
-//                    getActivity().getWindow().setAttributes(lp);
+//                    AddOrderMap.this.getWindow().setAttributes(lp);
                     return true;
                 }
                 return false;
@@ -422,9 +420,9 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                 if (pw_command.isShowing())
                 {
                     pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+//                    WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
 //                    lp.alpha = 1f;
-//                    getActivity().getWindow().setAttributes(lp);
+//                    AddOrderMap.this.getWindow().setAttributes(lp);
                 }
                 return false;
             }
@@ -433,17 +431,17 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
         pw_command.showAsDropDown(line, 0, 0);
         pw_command.setOutsideTouchable(true);
 
-//        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+//        WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
 //        lp.alpha = 0.7f;
-//        getActivity().getWindow().setAttributes(lp);
-        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(DL_Fragment.this);
-        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(DL_Fragment.this);
-        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(DL_Fragment.this);
+//        AddOrderMap.this.getWindow().setAttributes(lp);
+        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(AddOrderMap.this);
+        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(AddOrderMap.this);
+        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(AddOrderMap.this);
     }
 
     public void showPop_addcommand()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) AddOrderMap.this.getSystemService(AddOrderMap.this.LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_zs, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {
@@ -453,9 +451,9 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                 if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
                 {
                     pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+//                    WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
 //                    lp.alpha = 1f;
-//                    getActivity().getWindow().setAttributes(lp);
+//                    AddOrderMap.this.getWindow().setAttributes(lp);
                     return true;
                 }
                 return false;
@@ -469,9 +467,9 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                 if (pw_command.isShowing())
                 {
                     pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+//                    WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
 //                    lp.alpha = 1f;
-//                    getActivity().getWindow().setAttributes(lp);
+//                    AddOrderMap.this.getWindow().setAttributes(lp);
                 }
                 return false;
             }
@@ -482,11 +480,11 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
 //        pw_command.showAtLocation(fl_map, Gravity.LEFT, 0, 500);
         pw_command.setOutsideTouchable(true);
 
-//        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+//        WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
 //        lp.alpha = 0.7f;
-//        getActivity().getWindow().setAttributes(lp);
+//        AddOrderMap.this.getWindow().setAttributes(lp);
         lv_zs = (ListView) pv_command.findViewById(R.id.lv_zs);
-        dl_zs_adapter = new DL_ZS_Adapter(getActivity(), list_zs);
+        dl_zs_adapter = new DL_ZS_Adapter(AddOrderMap.this, list_zs);
         lv_zs.setAdapter(dl_zs_adapter);
         pv_command.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener()
         {
@@ -510,10 +508,10 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                 zs.setareaName(commembertab.getareaName());
                 zs.setNote("暂无备注");
                 zs.setregDate(utils.getTime());
-                SqliteDb.save(getActivity(), zs);
+                SqliteDb.save(AddOrderMap.this, zs);
                 if (pv_command.isShown())
                 {
-                    list_zs = SqliteDb.getZS(getActivity(), ZS.class, commembertab.getareaId());
+                    list_zs = SqliteDb.getZS(AddOrderMap.this, ZS.class, commembertab.getareaId());
                     dl_zs_adapter.notifyDataSetChanged();
                 }
 
@@ -523,8 +521,8 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_addZS()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_addzs, null);
-        customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(AddOrderMap.this).inflate(R.layout.customdialog_addzs, null);
+        customdialog_editdlinfor = new CustomDialog_EditDLInfor(AddOrderMap.this, R.style.MyDialog, dialog_layout);
         et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
         et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);
         et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
@@ -543,8 +541,8 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_EditDL()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editarea, null);
-        customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(AddOrderMap.this).inflate(R.layout.customdialog_editarea, null);
+        customdialog_editdlinfor = new CustomDialog_EditDLInfor(AddOrderMap.this, R.style.MyDialog, dialog_layout);
         et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
         et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);
         et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
@@ -561,20 +559,28 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
         customdialog_editdlinfor.show();
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();
+        commembertab = AppContext.getUserInfo(this);
+    }
+
     @AfterViews
     void afterOncreate()
     {
         TencentLocationRequest request = TencentLocationRequest.create();
-        TencentLocationManager locationManager = TencentLocationManager.getInstance(getActivity());
+        TencentLocationManager locationManager = TencentLocationManager.getInstance(AddOrderMap.this);
         locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84
         error = locationManager.requestLocationUpdates(request, this);
         Overlays = new ArrayList<Object>();
         list_polygon = new ArrayList<Polygon>();
         list_polygon_pq = new ArrayList<Polygon>();
         map = new HashMap<>();
-        if (!utils.isOPen(getActivity()))
+        if (!utils.isOPen(AddOrderMap.this))
         {
-            utils.openGPSSettings(getActivity());
+            utils.openGPSSettings(AddOrderMap.this);
         }
 //        mapview.setAlpha(0.2f);
         tencentMap = mapview.getMap();
@@ -587,15 +593,6 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
         getTestData("points");
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View rootView = inflater.inflate(R.layout.dl_fragment, container, false);
-        commembertab = AppContext.getUserInfo(getActivity());
-        return rootView;
-    }
-
 
     @Override
     public void onLocationChanged(TencentLocation location, int error, String reason)
@@ -605,7 +602,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
             // 用于定位
             location_latLng = new LatLng(location.getLatitude(), location.getLongitude());
             //全局记录坐标
-            AppContext appContext = (AppContext) getActivity().getApplication();
+            AppContext appContext = (AppContext) AddOrderMap.this.getApplication();
             appContext.setLOCATION_X(String.valueOf(location_latLng.getLatitude()));
             appContext.setLOCATION_Y(String.valueOf(location_latLng.getLongitude()));
         }
@@ -618,19 +615,19 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
 
         if (status == 2)// 位置权限拒绝
         {
-            // Toast.makeText(getActivity(), " 位置权限拒绝！",
+            // Toast.makeText(AddOrderMap.this, " 位置权限拒绝！",
             // Toast.LENGTH_SHORT).show();
         } else if (status == 2)// 定位服务关闭
         {
-            // Toast.makeText(getActivity(), " 定位服务关闭！",
+            // Toast.makeText(AddOrderMap.this, " 定位服务关闭！",
             // Toast.LENGTH_SHORT).show();
         } else if (status == 1)// 定位服务开启
         {
-            // Toast.makeText(getActivity(), "定位服务开启！",
+            // Toast.makeText(AddOrderMap.this, "定位服务开启！",
             // Toast.LENGTH_SHORT).show();
         } else if (status == -1)// 定位服务未知
         {
-            // Toast.makeText(getActivity(), "定位服务未知！",
+            // Toast.makeText(AddOrderMap.this, "定位服务未知！",
             // Toast.LENGTH_SHORT).show();
         }
     }
@@ -665,7 +662,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
 
     private void getTestData(String from)
     {
-        JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
+        JSONObject jsonObject = utils.parseJsonFile(AddOrderMap.this, "dictionary.json");
         Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
         list_point_pq = JSON.parseArray(result.getRows().toJSONString(), Points.class);
 //        showPatro(listData);
@@ -743,7 +740,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                         if (number_markerselect > 2 && pointsList.get(0).getLatitude() == latlng.getLatitude() && pointsList.get(0).getLongitude() == latlng.getLongitude())
                         {
                             tv_tip.setVisibility(View.GONE);
-                            tv_zs.setText("添加断蕾区");
+                            btn_addorder.setText("添加断蕾区");
                             tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
                             {
                                 @Override
@@ -772,7 +769,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                         if (number_markerselect == 2 && number_pointselect > 0 && pointsList.get(0).getLatitude() == latlng.getLatitude() && pointsList.get(0).getLongitude() == latlng.getLongitude())
                         {
                             tv_tip.setVisibility(View.GONE);
-                            tv_zs.setText("添加断蕾区");
+                            btn_addorder.setText("添加断蕾区");
                             tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
                             {
                                 @Override
@@ -785,7 +782,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                                         {
                                             if (list_polygon.get(i).contains(latlng_clickpostion))
                                             {
-                                                Toast.makeText(getActivity(), "在范围内", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(AddOrderMap.this, "在范围内", Toast.LENGTH_SHORT).show();
                                             }
                                         }
 
@@ -814,7 +811,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                     prelatLng = latlng;
                     lineOpt.add(latlng);
                     Polyline line = tencentMap.addPolyline(lineOpt);
-                    line.setColor(getActivity().getResources().getColor(R.color.black));
+                    line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                     line.setWidth(4f);
                     Overlays.add(line);
                     if (number_pointselect > 0)//已经有点
@@ -871,7 +868,7 @@ public class DL_Fragment extends Fragment implements TencentLocationListener, Vi
                     prelatLng = latlng;
                     lineOpt.add(latlng);
                     Polyline line = tencentMap.addPolyline(lineOpt);
-                    line.setColor(getActivity().getResources().getColor(R.color.black));
+                    line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                     line.setWidth(4f);
                     Overlays.add(line);
                 } else

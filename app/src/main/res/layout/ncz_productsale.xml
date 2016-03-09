@@ -31,31 +31,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="20dip"
+                android:layout_marginLeft="30dip"
                 android:gravity="center"
                 android:text="主营销售"
                 android:textColor="@color/textcolor_titlebar"
-                android:textSize="@dimen/titlebar_textsize"/>
+                android:textSize="@dimen/size_sp_14"/>
             <TextView
                 android:id="@+id/tv_megasales"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="20dip"
+                android:layout_marginLeft="15dip"
                 android:gravity="center"
                 android:text="大额非主营"
                 android:textColor="@color/textcolor_titlebar"
-                android:textSize="@dimen/titlebar_textsize"/>
+                android:textSize="@dimen/size_sp_14"/>
             <TextView
                 android:id="@+id/tv_smallsales"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="20dip"
+                android:layout_marginLeft="15dip"
                 android:gravity="center"
                 android:text="小额额非主营"
                 android:textColor="@color/textcolor_titlebar"
-                android:textSize="@dimen/titlebar_textsize"/>
+                android:textSize="@dimen/size_sp_14"/>
         </LinearLayout>
 
         <ImageButton

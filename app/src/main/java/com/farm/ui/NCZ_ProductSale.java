@@ -22,8 +22,8 @@ public class NCZ_ProductSale extends Activity
 {
     com.farm.bean.commembertab commembertab;
     Fragment mContent = new Fragment();
-//    Fragment_Sale sale_fragment;
-Fragment_MegaSales fragment_megaSales;
+    //    Fragment_Sale sale_fragment;
+    Fragment_MegaSales fragment_megaSales;
     Fragment_MainSales fragment_mainSales;
     Fragment_SmallSales fragment_smallSales;
     @ViewById
@@ -48,12 +48,14 @@ Fragment_MegaSales fragment_megaSales;
         setBackground(0);
         switchContent(mContent, fragment_mainSales);
     }
+
     @Click
     void tv_megasales()
     {
         setBackground(1);
         switchContent(mContent, fragment_megaSales);
     }
+
     @Click
     void tv_smallsales()
     {
