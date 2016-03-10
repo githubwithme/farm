@@ -502,7 +502,7 @@ public class Fragment_CurrentSale extends Fragment implements TencentLocationLis
         mProjection = mapview.getProjection();
 
         //        animateToLocation();
-//        getTestData("points");
+        getTestData("points");
 //        setBoundary();
 //        setBoundary_farm();
     }
@@ -588,41 +588,41 @@ public class Fragment_CurrentSale extends Fragment implements TencentLocationLis
 //        setBoundary_park();
 //        getBoundary_park();
     }
-    private void setBoundary_farm()
-    {
-        List<CoordinatesBean> list_coordinates = SqliteDb.getBoundary_park(getActivity(), CoordinatesBean.class, "8", commembertab.getuId());
-        List<LatLng> list_LatLng = new ArrayList<>();
-        list_mark = new ArrayList<>();
-        for (int i = 0; i < list_coordinates.size(); i++)
-        {
-            LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
-            if (i == 0)
-            {
-                tencentMap.animateTo(latlng);
-            }
-            list_LatLng.add(latlng);
-            Marker marker = addMarker_Paint(i, latlng, R.drawable.location_start);
-            list_mark.add(marker);
-        }
-        map.put("a", list_mark);
-        Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
-        list_polygon_pq.add(polygon);
-        Overlays.add(polygon);
-
-        resetData();
-
-//        StringBuffer build = new StringBuffer();
-//        build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
+//    private void setBoundary_farm()
+//    {
+//        List<CoordinatesBean> list_coordinates = SqliteDb.getBoundary_park(getActivity(), CoordinatesBean.class, "8", commembertab.getuId());
+//        List<LatLng> list_LatLng = new ArrayList<>();
+//        list_mark = new ArrayList<>();
 //        for (int i = 0; i < list_coordinates.size(); i++)
 //        {
-//            build.append("{" + "\"" + "lat" + "\"" + ":" + "\"" + list_coordinates.get(i).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_coordinates.get(i).getLng() + "\"" + "}" + ",");
-//
+//            LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
+//            if (i == 0)
+//            {
+//                tencentMap.animateTo(latlng);
+//            }
+//            list_LatLng.add(latlng);
+//            Marker marker = addMarker_Paint(i, latlng, R.drawable.location_start);
+//            list_mark.add(marker);
 //        }
-//        build.replace(build.length() - 1, build.length(), "");
-//        build.append("]}");
-//        build.toString();
-//        build.toString();
-    }
+//        map.put("a", list_mark);
+//        Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
+//        list_polygon_pq.add(polygon);
+//        Overlays.add(polygon);
+//
+//        resetData();
+//
+////        StringBuffer build = new StringBuffer();
+////        build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
+////        for (int i = 0; i < list_coordinates.size(); i++)
+////        {
+////            build.append("{" + "\"" + "lat" + "\"" + ":" + "\"" + list_coordinates.get(i).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_coordinates.get(i).getLng() + "\"" + "}" + ",");
+////
+////        }
+////        build.replace(build.length() - 1, build.length(), "");
+////        build.append("]}");
+////        build.toString();
+////        build.toString();
+//    }
     private void setBoundary_park(List<CoordinatesBean> list_coordinates)
     {
 //        List<CoordinatesBean> list_coordinates = SqliteDb.getBoundary_park(getActivity(), CoordinatesBean.class, "8", commembertab.getuId());

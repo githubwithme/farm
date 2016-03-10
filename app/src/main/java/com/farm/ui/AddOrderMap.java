@@ -145,8 +145,8 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                 coordinatesBean.setWeightofplant("5000000");
                 coordinatesBean.setSaleid("");
                 coordinatesBean.setOrders("");
-//                SqliteDb.save(AddOrderMap.this, coordinatesBean);
-                uploadCoordinatesBean(coordinatesBean);
+                SqliteDb.save(AddOrderMap.this, coordinatesBean);
+//                uploadCoordinatesBean(coordinatesBean);
             }
 
 //            resetData();
@@ -605,12 +605,17 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
     @AfterViews
     void afterOncreate()
     {
-//        List<CoordinatesBean> list_boundary_park = SqliteDb.getBoundary_park(AddOrderMap.this, CoordinatesBean.class, "8", commembertab.getuId());
+//        SqliteDb.initPark(AddOrderMap.this);
+//        SqliteDb.initArea(AddOrderMap.this);
+//        SqliteDb.initContract(AddOrderMap.this);
+
+
+//        setBoundary_park(list_boundary_park);
 //        for (int i = 0; i <list_boundary_park.size() ; i++)
 //        {
 //            uploadCoordinatesBean(list_boundary_park.get(i));
 //        }
-        getBoundary_farm();
+//        getBoundary_farm();
 
 
         TencentLocationRequest request = TencentLocationRequest.create();
@@ -627,13 +632,36 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
         }
 //        mapview.setAlpha(0.2f);
         tencentMap = mapview.getMap();
-        tencentMap.setZoom(18);
-        setMarkerListenner();
+        tencentMap.setZoom(14);
+//        setMarkerListenner();
 //        tencentMap.setSatelliteEnabled(true);
         mProjection = mapview.getProjection();
 
         //        animateToLocation();
 //        getTestData("points");
+
+        String str = SqliteDb.getBoundary_farm(AddOrderMap.this, "60", "farm_boundary");
+        Result result = JSON.parseObject(str, Result.class);
+        if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+        {
+            if (result.getAffectedRows() != 0)
+            {
+                JSONArray jsonArray_Rows = result.getRows();
+                String aa = jsonArray_Rows.toString();
+                for (int i = 0; i < jsonArray_Rows.size(); i++)
+                {
+                    JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
+                    if (jsonArray_boundary.size()>0)
+                    {
+                        List<CoordinatesBean> listNewData = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
+//                        listNewData.add(listNewData.get(0));
+                        setBoundary_park(listNewData);
+                    }
+
+                }
+
+            }
+        }
     }
 
 
@@ -1011,7 +1039,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
             @Override
             public void onFailure(HttpException error, String arg1)
             {
-                String A="";
+                String A = "";
                 AppContext.makeToast(AddOrderMap.this, "error_connectServer");
             }
         });
@@ -1020,7 +1048,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
     private void getBoundary_farm()
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid","60");
+        params.addQueryStringParameter("uid", "60");
         params.addQueryStringParameter("action", "Getfarm_boundary");
         params.addQueryStringParameter("type", "farm_boundary");
         HttpUtils http = new HttpUtils();
@@ -1037,7 +1065,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                     if (result.getAffectedRows() != 0)
                     {
                         JSONArray jsonArray_Rows = result.getRows();
-                        String aa=jsonArray_Rows.toString();
+                        String aa = jsonArray_Rows.toString();
                         for (int i = 0; i < jsonArray_Rows.size(); i++)
                         {
                             JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
@@ -1064,36 +1092,39 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
             }
         });
     }
+
     private void setBoundary_park(List<CoordinatesBean> list_coordinates)
     {
         List<LatLng> list_LatLng = new ArrayList<>();
         list_mark = new ArrayList<>();
-        int dd=list_coordinates.size()/5;
-        int num=dd;
+        int dd = list_coordinates.size() / 9;
+        int num = dd;
         for (int i = 0; i < list_coordinates.size(); i++)
         {
             LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
             if (i == 0)
             {
                 tencentMap.animateTo(latlng);
+                addMarker_Paint(i, latlng, R.drawable.location_start);
             }
             list_LatLng.add(latlng);
-            if (i==num)
+            if (i == num)
             {
-                num=num+dd;
+                num = num + dd;
                 Marker marker = addMarker_Paint(i, latlng, R.drawable.location_start);
                 list_mark.add(marker);
             }
 
         }
-        map.put("a", list_mark);
+//        map.put("a", list_mark);
         Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
         list_polygon_pq.add(polygon);
         Overlays.add(polygon);
 
-        resetData();
+//        resetData();
 
     }
+
     @Override
     public void onClick(View v)
     {

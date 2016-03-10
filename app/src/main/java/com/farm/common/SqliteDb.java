@@ -2,6 +2,7 @@ package com.farm.common;
 
 import android.content.Context;
 
+import com.farm.bean.CoordinatesBean;
 import com.farm.bean.HaveReadRecord;
 import com.farm.bean.areatab;
 import com.farm.bean.breakofftab;
@@ -61,6 +62,7 @@ public class SqliteDb
 
         return list_park;
     }
+
     public static <T> List<T> getBoundary_area(Context context, Class<T> c, String parkid, String uid)
     {
         DbUtils db = DbUtils.create(context);
@@ -78,22 +80,103 @@ public class SqliteDb
         }
         return list;
     }
-    public static <T> List<T> getBoundary_park(Context context, Class<T> c, String parkid, String uid)
+
+    public static String getBoundary_farm(Context context, String uid, String farm_boundary)
     {
+        StringBuffer build = new StringBuffer();
+        build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
         DbUtils db = DbUtils.create(context);
-        List<T> list = null;
         try
         {
-            list = db.findAll(Selector.from(c).where("uid", "=", uid).and("type", "=", "boundary_park"));
+            List<parktab> list_parktab = db.findAll(Selector.from(parktab.class).where("uid", "=", uid));
+            if (list_parktab.size() != 0)
+            {
+                for (int i = 0; i < list_parktab.size(); i++)//每个园区
+                {
+                    build.append("[");
+                    List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", "farm_boundary"));
+                    if (list_CoordinatesBean_park.size() != 0)
+                    {
+                        for (int j = 0; j < list_CoordinatesBean_park.size(); j++)
+                        {
+                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getId() + "\"" +","+ "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUid() + "\"" +","+ "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkId() + "\"" +"," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getAreaId() + "\"" +","+ "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractid() + "\"" +","+ "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getType() + "\"" +","+ "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getBatchid() + "\"" +","+ "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getNumofplant() + "\"" +","+ "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getSaleid() + "\"" +","+ "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getWeightofplant() + "\"" +","+ "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUuid() + "\"" +","+ "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkName() + "\"" +","+ "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getareaName() + "\"" +","+ "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractname() + "\"" +","+ "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getOrders() + "\"" +","+ "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getCoordinatestime() + "\"" +","+ "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getRegistime() + "\"" +","+"\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLng() + "\"" + "}" + ",");
+                        }
+                        build.replace(build.length() - 1, build.length(), "");
+                        build.append("],");
+
+
+                        List<areatab> list_areatab = db.findAll(Selector.from(areatab.class).where("parkid", "=", list_parktab.get(i).getid()));
+                        if (list_areatab.size() != 0)
+                        {
+                            for (int j = 0; j < list_areatab.size(); j++)//该园区每个片区
+                            {
+                                build.append("[");
+                                List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("type", "=", "farm_boundary"));
+                                if (list_CoordinatesBean_area.size() != 0)
+                                {
+                                    for (int k = 0; k < list_CoordinatesBean_area.size(); k++)
+                                    {
+                                        build.append("{" + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLng() + "\"" + "}" + ",");
+                                    }
+                                    build.replace(build.length() - 1, build.length(), "");
+                                    build.append("],");
+
+
+                                    List<contractTab> list_contractTab = db.findAll(Selector.from(contractTab.class).where("areaid", "=", list_areatab.get(j).getid()));
+                                    if (list_contractTab.size() != 0)
+                                    {
+                                        for (int m = 0; m < list_contractTab.size(); m++)//该园区该片区每个承包区
+                                        {
+                                            build.append("[");
+                                            List<CoordinatesBean> list_CoordinatesBean_contractTab = db.findAll(Selector.from(CoordinatesBean.class).where("contractid", "=", list_contractTab.get(m).getid()).and("type", "=", "farm_boundary"));
+                                            if (list_CoordinatesBean_contractTab.size() != 0)
+                                            {
+                                                for (int k = 0; k < list_CoordinatesBean_contractTab.size(); k++)
+                                                {
+                                                    build.append("{" + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLng() + "\"" + "}" + ",");
+                                                }
+                                                build.replace(build.length() - 1, build.length(), "");
+                                                build.append("],");
+                                            } else
+                                            {
+                                                build.append("],");
+                                            }
+
+
+                                        }
+                                    }
+
+
+                                } else
+                                {
+                                    build.append("],");
+                                }
+
+
+
+                            }
+                        }
+
+
+                    } else
+                    {
+                        build.append("],");
+                    }
+
+                }
+            }
+
+            build.replace(build.length() - 1, build.length(), "");
+            build.append("]}");
+            build.toString();
+            build.toString();
+
+
         } catch (DbException e)
         {
             e.printStackTrace();
         }
-        if (null == list || list.isEmpty())
-        {
-            list = new ArrayList<T>();
-        }
-        return list;
+        return build.toString();
     }
 
     public static List<contractTab> getBreakOffListByAreaID(Context context)
@@ -159,7 +242,20 @@ public class SqliteDb
         }
         return true;
     }
-
+    public static <T> boolean deletetemp(Context context)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.delete(CoordinatesBean.class, WhereBuilder.b("id", ">=", 94));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            String a = e.getMessage();
+            return false;
+        }
+        return true;
+    }
     public static <T> boolean deleteRecordtemp(Context context, Class<T> c, String BELONG, String firsttype, String secondType)
     {
         DbUtils db = DbUtils.create(context);
@@ -515,4 +611,180 @@ public class SqliteDb
         return list;
     }
 
+    public static void initPark(Context context)
+    {
+
+        parktab parktab = new parktab();
+        parktab.setuId("60");
+        parktab.setid("15");
+        parktab.setparkName("一号园区");
+        save(context, parktab);
+
+        parktab = new parktab();
+        parktab.setuId("60");
+        parktab.setid("16");
+        parktab.setparkName("二号园区");
+        save(context, parktab);
+
+        parktab = new parktab();
+        parktab.setuId("60");
+        parktab.setid("17");
+        parktab.setparkName("三号园区");
+        save(context, parktab);
+
+    }
+
+    public static void initArea(Context context)
+    {
+
+        areatab areatab = new areatab();
+        areatab.setuId("60");
+        areatab.setid("10");
+        areatab.setareaName("片区一号");
+        areatab.setparkId("15");
+        areatab.setparkName("一号园区");
+        save(context, areatab);
+
+        areatab = new areatab();
+        areatab.setuId("60");
+        areatab.setid("13");
+        areatab.setareaName("片区二号");
+        areatab.setparkId("15");
+        areatab.setparkName("一号园区");
+        save(context, areatab);
+
+        areatab = new areatab();
+        areatab.setuId("60");
+        areatab.setid("14");
+        areatab.setareaName("片区三号");
+        areatab.setparkId("15");
+        areatab.setparkName("一号园区");
+        save(context, areatab);
+
+        areatab = new areatab();
+        areatab.setuId("60");
+        areatab.setid("15");
+        areatab.setareaName("片区四号");
+        areatab.setparkId("15");
+        areatab.setparkName("一号园区");
+        save(context, areatab);
+    }
+
+    public static void initContract(Context context)
+    {
+//园区一号片区一号
+        contractTab contractTab = new contractTab();
+        contractTab.setid("7");
+        contractTab.setContractNum("承包区一");
+        contractTab.setAreaId("10");
+        contractTab.setareaName("片区一号");
+        contractTab.setparkId("15");
+        contractTab.setparkName("一号园区");
+        contractTab.setuId("60");
+        save(context, contractTab);
+
+        contractTab = new contractTab();
+        contractTab.setid("10");
+        contractTab.setContractNum("承包区二");
+        contractTab.setAreaId("10");
+        contractTab.setareaName("片区一号");
+        contractTab.setparkId("15");
+        contractTab.setparkName("一号园区");
+        contractTab.setuId("60");
+        save(context, contractTab);
+
+        contractTab = new contractTab();
+        contractTab.setid("11");
+        contractTab.setContractNum("承包区三");
+        contractTab.setAreaId("10");
+        contractTab.setareaName("片区一号");
+        contractTab.setparkId("15");
+        contractTab.setparkName("一号园区");
+        contractTab.setuId("60");
+        save(context, contractTab);
+
+        //园区一号片区二号
+        contractTab = new contractTab();
+        contractTab.setid("12");
+        contractTab.setContractNum("承包区一");
+        contractTab.setAreaId("13");
+        contractTab.setareaName("片区二号");
+        contractTab.setparkId("15");
+        contractTab.setparkName("一号园区");
+        contractTab.setuId("60");
+        save(context, contractTab);
+
+        contractTab = new contractTab();
+        contractTab.setid("13");
+        contractTab.setContractNum("承包区二");
+        contractTab.setAreaId("13");
+        contractTab.setareaName("片区二号");
+        contractTab.setparkId("15");
+        contractTab.setparkName("一号园区");
+        contractTab.setuId("60");
+        save(context, contractTab);
+
+        contractTab = new contractTab();
+        contractTab.setid("14");
+        contractTab.setContractNum("承包区三");
+        contractTab.setAreaId("13");
+        contractTab.setareaName("片区二号");
+        contractTab.setparkId("15");
+        contractTab.setparkName("一号园区");
+        contractTab.setuId("60");
+        save(context, contractTab);
+
+        //园区一号片区三号
+        contractTab = new contractTab();
+        contractTab.setid("15");
+        contractTab.setContractNum("承包区一");
+        contractTab.setAreaId("14");
+        contractTab.setareaName("片区三号");
+        contractTab.setparkId("15");
+        contractTab.setparkName("一号园区");
+        contractTab.setuId("60");
+        save(context, contractTab);
+
+        contractTab = new contractTab();
+        contractTab.setid("16");
+        contractTab.setContractNum("承包区二");
+        contractTab.setAreaId("14");
+        contractTab.setareaName("片区三号");
+        contractTab.setparkId("15");
+        contractTab.setparkName("一号园区");
+        contractTab.setuId("60");
+        save(context, contractTab);
+
+        //园区一号片区四号
+        contractTab = new contractTab();
+        contractTab.setid("17");
+        contractTab.setContractNum("承包区一");
+        contractTab.setAreaId("15");
+        contractTab.setareaName("片区四号");
+        contractTab.setparkId("15");
+        contractTab.setparkName("一号园区");
+        contractTab.setuId("60");
+        save(context, contractTab);
+
+        contractTab = new contractTab();
+        contractTab.setid("18");
+        contractTab.setContractNum("承包区二");
+        contractTab.setAreaId("15");
+        contractTab.setareaName("片区四号");
+        contractTab.setparkId("15");
+        contractTab.setparkName("一号园区");
+        contractTab.setuId("60");
+        save(context, contractTab);
+
+        contractTab = new contractTab();
+        contractTab.setid("19");
+        contractTab.setContractNum("承包区三");
+        contractTab.setAreaId("15");
+        contractTab.setareaName("片区四号");
+        contractTab.setparkId("15");
+        contractTab.setparkName("一号园区");
+        contractTab.setuId("60");
+        save(context, contractTab);
+
+    }
 }
