@@ -130,23 +130,23 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                 CoordinatesBean coordinatesBean = new CoordinatesBean();
                 coordinatesBean.setLat(String.valueOf(pointsList.get(i).getLatitude()));
                 coordinatesBean.setLng(String.valueOf(pointsList.get(i).getLongitude()));
-                coordinatesBean.setNumofplant("80000");
+                coordinatesBean.setNumofplant("10000");
                 coordinatesBean.setType("farm_boundary");
                 coordinatesBean.setUid("60");
                 coordinatesBean.setparkId("15");
                 coordinatesBean.setparkName("一号园区");
                 coordinatesBean.setUuid(uuid);
-                coordinatesBean.setAreaId("");
-                coordinatesBean.setareaName("");
+                coordinatesBean.setAreaId("10");
+                coordinatesBean.setareaName("片区一号");
                 coordinatesBean.setContractid("");
                 coordinatesBean.setContractname("");
                 coordinatesBean.setBatchid("");
                 coordinatesBean.setCoordinatestime(utils.getTime());
                 coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("5000000");
+                coordinatesBean.setWeightofplant("400000");
                 coordinatesBean.setSaleid("");
                 coordinatesBean.setOrders("");
-                SqliteDb.save(AddOrderMap.this, coordinatesBean);
+//                SqliteDb.save(AddOrderMap.this, coordinatesBean);
 //                uploadCoordinatesBean(coordinatesBean);
             }
 
