@@ -21,10 +21,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.DL_ZS_Adapter;
+import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.CoordinatesBean;
 import com.farm.bean.Gps;
 import com.farm.bean.Points;
 import com.farm.bean.Result;
@@ -34,6 +37,12 @@ import com.farm.common.CoordinateConvertUtil;
 import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditDLInfor;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
@@ -493,7 +502,9 @@ public class Fragment_CurrentSale extends Fragment implements TencentLocationLis
         mProjection = mapview.getProjection();
 
         //        animateToLocation();
-        getTestData("points");
+//        getTestData("points");
+//        setBoundary();
+//        setBoundary_farm();
     }
 
     @Nullable
@@ -572,6 +583,82 @@ public class Fragment_CurrentSale extends Fragment implements TencentLocationLis
         return marker;
     }
 
+    private void setBoundary()
+    {
+//        setBoundary_park();
+//        getBoundary_park();
+    }
+    private void setBoundary_farm()
+    {
+        List<CoordinatesBean> list_coordinates = SqliteDb.getBoundary_park(getActivity(), CoordinatesBean.class, "8", commembertab.getuId());
+        List<LatLng> list_LatLng = new ArrayList<>();
+        list_mark = new ArrayList<>();
+        for (int i = 0; i < list_coordinates.size(); i++)
+        {
+            LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
+            if (i == 0)
+            {
+                tencentMap.animateTo(latlng);
+            }
+            list_LatLng.add(latlng);
+            Marker marker = addMarker_Paint(i, latlng, R.drawable.location_start);
+            list_mark.add(marker);
+        }
+        map.put("a", list_mark);
+        Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
+        list_polygon_pq.add(polygon);
+        Overlays.add(polygon);
+
+        resetData();
+
+//        StringBuffer build = new StringBuffer();
+//        build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
+//        for (int i = 0; i < list_coordinates.size(); i++)
+//        {
+//            build.append("{" + "\"" + "lat" + "\"" + ":" + "\"" + list_coordinates.get(i).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_coordinates.get(i).getLng() + "\"" + "}" + ",");
+//
+//        }
+//        build.replace(build.length() - 1, build.length(), "");
+//        build.append("]}");
+//        build.toString();
+//        build.toString();
+    }
+    private void setBoundary_park(List<CoordinatesBean> list_coordinates)
+    {
+//        List<CoordinatesBean> list_coordinates = SqliteDb.getBoundary_park(getActivity(), CoordinatesBean.class, "8", commembertab.getuId());
+        List<LatLng> list_LatLng = new ArrayList<>();
+        list_mark = new ArrayList<>();
+        for (int i = 0; i < list_coordinates.size(); i++)
+        {
+            LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
+            if (i == 0)
+            {
+                tencentMap.animateTo(latlng);
+            }
+            list_LatLng.add(latlng);
+            Marker marker = addMarker_Paint(i, latlng, R.drawable.location_start);
+            list_mark.add(marker);
+        }
+        map.put("a", list_mark);
+        Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
+        list_polygon_pq.add(polygon);
+        Overlays.add(polygon);
+
+        resetData();
+
+//        StringBuffer build = new StringBuffer();
+//        build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
+//        for (int i = 0; i < list_coordinates.size(); i++)
+//        {
+//            build.append("{" + "\"" + "lat" + "\"" + ":" + "\"" + list_coordinates.get(i).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_coordinates.get(i).getLng() + "\"" + "}" + ",");
+//
+//        }
+//        build.replace(build.length() - 1, build.length(), "");
+//        build.append("]}");
+//        build.toString();
+//        build.toString();
+    }
+
     private void getTestData(String from)
     {
         JSONObject jsonObject = utils.parseJsonFile(getActivity(), "dictionary.json");
@@ -632,6 +719,53 @@ public class Fragment_CurrentSale extends Fragment implements TencentLocationLis
             line.setWidth(4f);
             Overlays.add(line);
         }
+    }
+
+    private void getBoundary_farm()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "Getfarm_boundary");
+        params.addQueryStringParameter("type", "farm_boundary");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<CoordinatesBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        JSONArray jsonArray_Rows = result.getRows();
+                        for (int i = 0; i < jsonArray_Rows.size(); i++)
+                        {
+                            JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
+                            listNewData = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
+                            setBoundary_park(listNewData);
+                        }
+
+                    } else
+                    {
+                        listNewData = new ArrayList<CoordinatesBean>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                Toast.makeText(getActivity(), "error_connectServer", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setMarkerListenner()

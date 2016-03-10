@@ -36,7 +36,40 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
     public String lng;
     public String numofplant;
     public String weightofplant;
+    public String registime;
+    public String coordinatestime;
+    public String orders;
 
+
+    public void setOrders(String orders)
+    {
+        this.orders = orders;
+    }
+
+    public String getOrders()
+    {
+        return orders;
+    }
+
+    public void setCoordinatestime(String coordinatestime)
+    {
+        this.coordinatestime = coordinatestime;
+    }
+
+    public String getCoordinatestime()
+    {
+        return coordinatestime;
+    }
+
+    public void setRegistime(String registime)
+    {
+        this.registime = registime;
+    }
+
+    public String getRegistime()
+    {
+        return registime;
+    }
 
     public void setAreaId(String areaId)
     {
@@ -81,6 +114,11 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
     public void setLat(String lat)
     {
         this.lat = lat;
+    }
+
+    public String getLat()
+    {
+        return lat;
     }
 
     public void setSaleid(String saleid)
@@ -229,6 +267,9 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
             p.setLng(source.readString());
             p.setNumofplant(source.readString());
             p.setWeightofplant(source.readString());
+            p.setRegistime(source.readString());
+            p.setCoordinatestime(source.readString());
+            p.setOrders(source.readString());
             return p;
         }
 
@@ -259,6 +300,9 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
         p.writeString(lng);
         p.writeString(numofplant);
         p.writeString(weightofplant);
+        p.writeString(registime);
+        p.writeString(coordinatestime);
+        p.writeString(orders);
 
     }
 

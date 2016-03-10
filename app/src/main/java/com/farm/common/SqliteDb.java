@@ -2,9 +2,9 @@ package com.farm.common;
 
 import android.content.Context;
 
-import com.farm.bean.breakofftab;
 import com.farm.bean.HaveReadRecord;
 import com.farm.bean.areatab;
+import com.farm.bean.breakofftab;
 import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
 import com.farm.bean.parktab;
@@ -60,6 +60,40 @@ public class SqliteDb
         }
 
         return list_park;
+    }
+    public static <T> List<T> getBoundary_area(Context context, Class<T> c, String parkid, String uid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<T> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(c).where("uid", "=", uid).and("areaid", "=", parkid).and("type", "=", "boundary_area"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        if (null == list || list.isEmpty())
+        {
+            list = new ArrayList<T>();
+        }
+        return list;
+    }
+    public static <T> List<T> getBoundary_park(Context context, Class<T> c, String parkid, String uid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<T> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(c).where("uid", "=", uid).and("type", "=", "boundary_park"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        if (null == list || list.isEmpty())
+        {
+            list = new ArrayList<T>();
+        }
+        return list;
     }
 
     public static List<contractTab> getBreakOffListByAreaID(Context context)

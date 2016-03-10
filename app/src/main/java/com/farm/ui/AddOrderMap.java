@@ -18,10 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.DL_ZS_Adapter;
+import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.CoordinatesBean;
 import com.farm.bean.Gps;
 import com.farm.bean.Points;
 import com.farm.bean.Result;
@@ -31,6 +34,12 @@ import com.farm.common.CoordinateConvertUtil;
 import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditDLInfor;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
@@ -112,19 +121,45 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
     @Click
     void tv_gk()
     {
-//        showPop_gk();
         if (tv_gk.getText().equals("确定"))
         {
-            StringBuffer build = new StringBuffer();
-            build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
             for (int i = 0; i < pointsList.size(); i++)
             {
-                build.append("{" + "\"" + "lat" + "\"" + ":" + "\"" + pointsList.get(i).getLatitude() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + pointsList.get(i).getLongitude() + "\"" + "}" + ",");
-
+                String uuid = java.util.UUID.randomUUID().toString();
+                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                coordinatesBean.setLat(String.valueOf(pointsList.get(i).getLatitude()));
+                coordinatesBean.setLng(String.valueOf(pointsList.get(i).getLongitude()));
+                coordinatesBean.setNumofplant("80000");
+                coordinatesBean.setType("farm_boundary");
+                coordinatesBean.setUid("60");
+                coordinatesBean.setparkId("15");
+                coordinatesBean.setparkName("一号园区");
+                coordinatesBean.setUuid(uuid);
+                coordinatesBean.setAreaId("");
+                coordinatesBean.setareaName("");
+                coordinatesBean.setContractid("");
+                coordinatesBean.setContractname("");
+                coordinatesBean.setBatchid("");
+                coordinatesBean.setCoordinatestime(utils.getTime());
+                coordinatesBean.setRegistime(utils.getTime());
+                coordinatesBean.setWeightofplant("5000000");
+                coordinatesBean.setSaleid("");
+                coordinatesBean.setOrders("");
+//                SqliteDb.save(AddOrderMap.this, coordinatesBean);
+                uploadCoordinatesBean(coordinatesBean);
             }
-            build.replace(build.length() - 1, build.length(), "");
-            build.append("]}");
-            build.toString();
+
+//            resetData();
+//            StringBuffer build = new StringBuffer();
+//            build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
+//            for (int i = 0; i < pointsList.size(); i++)
+//            {
+//                build.append("{" + "\"" + "lat" + "\"" + ":" + "\"" + pointsList.get(i).getLatitude() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + pointsList.get(i).getLongitude() + "\"" + "}" + ",");
+//
+//            }
+//            build.replace(build.length() - 1, build.length(), "");
+//            build.append("]}");
+//            build.toString();
             tv_gk.setText("添加断蕾区");
         } else
         {
@@ -570,6 +605,14 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
     @AfterViews
     void afterOncreate()
     {
+//        List<CoordinatesBean> list_boundary_park = SqliteDb.getBoundary_park(AddOrderMap.this, CoordinatesBean.class, "8", commembertab.getuId());
+//        for (int i = 0; i <list_boundary_park.size() ; i++)
+//        {
+//            uploadCoordinatesBean(list_boundary_park.get(i));
+//        }
+        getBoundary_farm();
+
+
         TencentLocationRequest request = TencentLocationRequest.create();
         TencentLocationManager locationManager = TencentLocationManager.getInstance(AddOrderMap.this);
         locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84
@@ -590,7 +633,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
         mProjection = mapview.getProjection();
 
         //        animateToLocation();
-        getTestData("points");
+//        getTestData("points");
     }
 
 
@@ -673,7 +716,6 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
             LatLng latlng = new LatLng(Double.valueOf(list_point_pq.get(i).getLat()), Double.valueOf(list_point_pq.get(i).getLon()));
             if (i == 0)
             {
-
                 tencentMap.animateTo(latlng);
             }
             list_LatLng.add(latlng);
@@ -926,6 +968,132 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
         return polygon;
     }
 
+    private void uploadCoordinatesBean(CoordinatesBean coordinatesbean)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "AddCoordinates");
+        params.addQueryStringParameter("uuid", coordinatesbean.getUuid());
+        params.addQueryStringParameter("type", coordinatesbean.getType());
+        params.addQueryStringParameter("uid", coordinatesbean.getUid());
+        params.addQueryStringParameter("parkId", coordinatesbean.getparkId());
+        params.addQueryStringParameter("parkName", coordinatesbean.getparkName());
+        params.addQueryStringParameter("areaId", coordinatesbean.getAreaId());
+        params.addQueryStringParameter("areaName", coordinatesbean.getareaName());
+        params.addQueryStringParameter("contractid", coordinatesbean.getContractid());
+        params.addQueryStringParameter("contractname", coordinatesbean.getContractname());
+        params.addQueryStringParameter("batchid", coordinatesbean.getBatchid());
+        params.addQueryStringParameter("saleid", coordinatesbean.getSaleid());
+        params.addQueryStringParameter("lat", coordinatesbean.getLat());
+        params.addQueryStringParameter("lng", coordinatesbean.getLng());
+        params.addQueryStringParameter("numofplant", coordinatesbean.getNumofplant());
+        params.addQueryStringParameter("weightofplant", coordinatesbean.getWeightofplant());
+        params.addQueryStringParameter("registime", coordinatesbean.getRegistime());
+        params.addQueryStringParameter("coordinatestime", coordinatesbean.getCoordinatestime());
+        params.addQueryStringParameter("orders", "");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+//                    Toast.makeText(AddOrderMap.this, "添加成功！", Toast.LENGTH_SHORT).show();
+                } else
+                {
+                    AppContext.makeToast(AddOrderMap.this, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String arg1)
+            {
+                String A="";
+                AppContext.makeToast(AddOrderMap.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void getBoundary_farm()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid","60");
+        params.addQueryStringParameter("action", "Getfarm_boundary");
+        params.addQueryStringParameter("type", "farm_boundary");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<CoordinatesBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        JSONArray jsonArray_Rows = result.getRows();
+                        String aa=jsonArray_Rows.toString();
+                        for (int i = 0; i < jsonArray_Rows.size(); i++)
+                        {
+                            JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
+                            listNewData = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
+                            setBoundary_park(listNewData);
+                        }
+
+                    } else
+                    {
+                        listNewData = new ArrayList<CoordinatesBean>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(AddOrderMap.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                Toast.makeText(AddOrderMap.this, "error_connectServer", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void setBoundary_park(List<CoordinatesBean> list_coordinates)
+    {
+        List<LatLng> list_LatLng = new ArrayList<>();
+        list_mark = new ArrayList<>();
+        int dd=list_coordinates.size()/5;
+        int num=dd;
+        for (int i = 0; i < list_coordinates.size(); i++)
+        {
+            LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
+            if (i == 0)
+            {
+                tencentMap.animateTo(latlng);
+            }
+            list_LatLng.add(latlng);
+            if (i==num)
+            {
+                num=num+dd;
+                Marker marker = addMarker_Paint(i, latlng, R.drawable.location_start);
+                list_mark.add(marker);
+            }
+
+        }
+        map.put("a", list_mark);
+        Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
+        list_polygon_pq.add(polygon);
+        Overlays.add(polygon);
+
+        resetData();
+
+    }
     @Override
     public void onClick(View v)
     {
