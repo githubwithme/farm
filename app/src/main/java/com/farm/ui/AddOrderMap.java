@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.DL_ZS_Adapter;
 import com.farm.app.AppConfig;
@@ -68,12 +67,14 @@ import java.util.List;
 @EActivity(R.layout.addordermap)
 public class AddOrderMap extends Activity implements TencentLocationListener, View.OnClickListener
 {
+    List<CoordinatesBean> list_coordinatesbean;
+    List<LatLng> list_AllLatLng;
     List<Marker> list_mark;
     int last_pos = 0;
     int number_pointselect = 0;
     int number_markerselect = 0;
     boolean firstmarkerselect = true;
-    List<Points> list_point_pq;
+    List<LatLng> list_point_pq;
     HashMap<String, List<Marker>> map;
     Polygon polygon_select;
     List<Polygon> list_polygon_pq;
@@ -625,6 +626,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
         Overlays = new ArrayList<Object>();
         list_polygon = new ArrayList<Polygon>();
         list_polygon_pq = new ArrayList<Polygon>();
+        list_point_pq=new ArrayList<>();
         map = new HashMap<>();
         if (!utils.isOPen(AddOrderMap.this))
         {
@@ -633,7 +635,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
 //        mapview.setAlpha(0.2f);
         tencentMap = mapview.getMap();
         tencentMap.setZoom(14);
-//        setMarkerListenner();
+        setMarkerListenner();
 //        tencentMap.setSatelliteEnabled(true);
         mProjection = mapview.getProjection();
 
@@ -651,11 +653,11 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                 for (int i = 0; i < jsonArray_Rows.size(); i++)
                 {
                     JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
-                    if (jsonArray_boundary.size()>0)
+                    if (jsonArray_boundary.size() > 0)
                     {
-                        List<CoordinatesBean> listNewData = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
+                        list_coordinatesbean = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
 //                        listNewData.add(listNewData.get(0));
-                        setBoundary_park(listNewData);
+                        setBoundary_park(list_coordinatesbean);
                     }
 
                 }
@@ -731,30 +733,29 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
         return marker;
     }
 
-    private void getTestData(String from)
-    {
-        JSONObject jsonObject = utils.parseJsonFile(AddOrderMap.this, "dictionary.json");
-        Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
-        list_point_pq = JSON.parseArray(result.getRows().toJSONString(), Points.class);
-//        showPatro(listData);
-        List<LatLng> list_LatLng = new ArrayList<>();
-        list_mark = new ArrayList<>();
-        for (int i = 0; i < list_point_pq.size(); i++)
-        {
-            LatLng latlng = new LatLng(Double.valueOf(list_point_pq.get(i).getLat()), Double.valueOf(list_point_pq.get(i).getLon()));
-            if (i == 0)
-            {
-                tencentMap.animateTo(latlng);
-            }
-            list_LatLng.add(latlng);
-            Marker marker = addMarker_Paint(i, latlng, R.drawable.location_start);
-            list_mark.add(marker);
-        }
-        map.put("a", list_mark);
-        Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
-        list_polygon_pq.add(polygon);
-        Overlays.add(polygon);
-    }
+//    private void getTestData(String from)
+//    {
+//        JSONObject jsonObject = utils.parseJsonFile(AddOrderMap.this, "dictionary.json");
+//        Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
+//        list_point_pq = JSON.parseArray(result.getRows().toJSONString(), Points.class);
+//        List<LatLng> list_LatLng = new ArrayList<>();
+//        list_mark = new ArrayList<>();
+//        for (int i = 0; i < list_point_pq.size(); i++)
+//        {
+//            LatLng latlng = new LatLng(Double.valueOf(list_point_pq.get(i).getLat()), Double.valueOf(list_point_pq.get(i).getLon()));
+//            if (i == 0)
+//            {
+//                tencentMap.animateTo(latlng);
+//            }
+//            list_LatLng.add(latlng);
+//            Marker marker = addMarker_Paint(i, latlng, R.drawable.location_start);
+//            list_mark.add(marker);
+//        }
+//        map.put("a", list_mark);
+//        Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
+//        list_polygon_pq.add(polygon);
+//        Overlays.add(polygon);
+//    }
 
     private void showPatro(List<Points> listNewData)
     {
@@ -917,30 +918,119 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                 LatLng point_last;
                 if (last_pos == 0)
                 {
-                    point_next = new LatLng(Double.valueOf(list_point_pq.get(last_pos + 1).getLat()), Double.valueOf(list_point_pq.get(last_pos + 1).getLon()));
-                    point_last = new LatLng(Double.valueOf(list_point_pq.get(list_point_pq.size()).getLat()), Double.valueOf(list_point_pq.get(list_point_pq.size()).getLon()));
+                    point_next = new LatLng(Double.valueOf(list_point_pq.get(last_pos + 1).getLatitude()), Double.valueOf(list_point_pq.get(last_pos + 1).getLongitude()));
+                    point_last = new LatLng(Double.valueOf(list_point_pq.get(list_point_pq.size()).getLatitude()), Double.valueOf(list_point_pq.get(list_point_pq.size()).getLongitude()));
                 } else if (last_pos == list_point_pq.size() - 1)//画区域时会再加多第一个点
                 {
-                    point_next = new LatLng(Double.valueOf(list_point_pq.get(0).getLat()), Double.valueOf(list_point_pq.get(0).getLon()));
-                    point_last = new LatLng(Double.valueOf(list_point_pq.get(last_pos - 1).getLat()), Double.valueOf(list_point_pq.get(last_pos - 1).getLon()));
+                    point_next = new LatLng(Double.valueOf(list_point_pq.get(0).getLatitude()), Double.valueOf(list_point_pq.get(0).getLongitude()));
+                    point_last = new LatLng(Double.valueOf(list_point_pq.get(last_pos - 1).getLatitude()), Double.valueOf(list_point_pq.get(last_pos - 1).getLongitude()));
                 } else
                 {
-                    point_next = new LatLng(Double.valueOf(list_point_pq.get(last_pos + 1).getLat()), Double.valueOf(list_point_pq.get(last_pos + 1).getLon()));
-                    point_last = new LatLng(Double.valueOf(list_point_pq.get(last_pos - 1).getLat()), Double.valueOf(list_point_pq.get(last_pos - 1).getLon()));
+                    point_next = new LatLng(Double.valueOf(list_point_pq.get(last_pos + 1).getLatitude()), Double.valueOf(list_point_pq.get(last_pos + 1).getLongitude()));
+                    point_last = new LatLng(Double.valueOf(list_point_pq.get(last_pos - 1).getLatitude()), Double.valueOf(list_point_pq.get(last_pos - 1).getLongitude()));
                 }
                 if ((point_last.getLatitude() == (latlng.getLatitude()) && point_last.getLongitude() == (latlng.getLongitude())) || (point_next.getLatitude() == (latlng.getLatitude()) && point_next.getLongitude() == (latlng.getLongitude())))
                 {
-                    number_markerselect = number_markerselect + 1;
-                    last_pos = pos;
-                    pointsList.add(latlng);
-                    PolylineOptions lineOpt = new PolylineOptions();
-                    lineOpt.add(prelatLng);
-                    prelatLng = latlng;
-                    lineOpt.add(latlng);
-                    Polyline line = tencentMap.addPolyline(lineOpt);
-                    line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
-                    line.setWidth(4f);
-                    Overlays.add(line);
+                    LatLng ll = list_point_pq.get(last_pos);
+                    int currentmarker_pos = 0;
+                    int lastmarker_pos = 0;
+                    for (int i = 0; i < list_coordinatesbean.size(); i++)
+                    {
+                        String a=list_coordinatesbean.get(i).getLat();
+                        String c=String.valueOf(latlng.getLatitude());
+
+                        String b=list_coordinatesbean.get(i).getLng();
+                        String d=String.valueOf(latlng.getLongitude());
+                        if ((list_coordinatesbean.get(i).getLat().equals(String.valueOf(latlng.getLatitude())) && list_coordinatesbean.get(i).getLng().equals(String.valueOf(latlng.getLongitude()))))
+                        {
+                            currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(i).getId());
+                        }
+                        if ((list_coordinatesbean.get(i).getLat().equals(String.valueOf(ll.getLatitude())) && list_coordinatesbean.get(i).getLng().equals(String.valueOf(ll.getLongitude()))))
+                        {
+                            lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(i).getId());
+                        }
+                    }
+
+                    if (lastmarker_pos > currentmarker_pos)
+                    {
+                        if (lastmarker_pos == currentmarker_pos + 1)//非首尾相邻
+                        {
+                            for (int i = currentmarker_pos; i <lastmarker_pos ; i++)
+                            {
+                                LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(i).getLat()),Double.valueOf(list_coordinatesbean.get(i).getLng()));
+                                number_markerselect = number_markerselect + 1;
+                                last_pos = pos;
+                                pointsList.add(l);
+                                PolylineOptions lineOpt = new PolylineOptions();
+                                lineOpt.add(prelatLng);
+                                prelatLng = l;
+                                lineOpt.add(l);
+                                Polyline line = tencentMap.addPolyline(lineOpt);
+                                line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
+                                line.setWidth(4f);
+                                Overlays.add(line);
+                            }
+
+                        } else//首尾相邻
+                        {
+                            number_markerselect = number_markerselect + 1;
+                            last_pos = pos;
+                            pointsList.add(latlng);
+                            PolylineOptions lineOpt = new PolylineOptions();
+                            lineOpt.add(prelatLng);
+                            prelatLng = latlng;
+                            lineOpt.add(latlng);
+                            Polyline line = tencentMap.addPolyline(lineOpt);
+                            line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
+                            line.setWidth(4f);
+                            Overlays.add(line);
+                        }
+                    } else
+                    {
+                        if (currentmarker_pos  == lastmarker_pos + 10)//非首尾相邻
+                        {
+                            for (int i = lastmarker_pos; i <currentmarker_pos ; i++)
+                            {
+                                LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(i).getLat()),Double.valueOf(list_coordinatesbean.get(i).getLng()));
+                                number_markerselect = number_markerselect + 1;
+                                last_pos = pos;
+                                pointsList.add(l);
+                                PolylineOptions lineOpt = new PolylineOptions();
+                                lineOpt.add(prelatLng);
+                                prelatLng = l;
+                                lineOpt.add(l);
+                                Polyline line = tencentMap.addPolyline(lineOpt);
+                                line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
+                                line.setWidth(4f);
+                                Overlays.add(line);
+                            }
+
+                        } else//首尾相邻
+                        {
+                            number_markerselect = number_markerselect + 1;
+                            last_pos = pos;
+                            pointsList.add(latlng);
+                            PolylineOptions lineOpt = new PolylineOptions();
+                            lineOpt.add(prelatLng);
+                            prelatLng = latlng;
+                            lineOpt.add(latlng);
+                            Polyline line = tencentMap.addPolyline(lineOpt);
+                            line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
+                            line.setWidth(4f);
+                            Overlays.add(line);
+                        }
+                    }
+//                    number_markerselect = number_markerselect + 1;
+//                    last_pos = pos;
+//                    pointsList.add(latlng);
+//                    PolylineOptions lineOpt = new PolylineOptions();
+//                    lineOpt.add(prelatLng);
+//                    prelatLng = latlng;
+//                    lineOpt.add(latlng);
+//                    Polyline line = tencentMap.addPolyline(lineOpt);
+//                    line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
+//                    line.setWidth(4f);
+//                    Overlays.add(line);
                 } else
                 {
                     tv_tip.setText("请按顺序选择边界上的点");
@@ -953,34 +1043,34 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
 
     private void resetData()
     {
-        pointsList = new ArrayList<>();
-        list_polygon = new ArrayList<>();
-        last_pos = 0;
-        number_markerselect = 0;
-        number_pointselect = 0;
-        firstmarkerselect = true;
-        prelatLng = null;
-        polygon_select = null;
-        for (int i = 0; i < list_mark.size(); i++)
-        {
-            list_mark.remove(i);
-        }
-        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-        {
-            @Override
-            public void onMapClick(LatLng latlng)
-            {
-
-            }
-        });
-        tencentMap.setOnMarkerClickListener(new TencentMap.OnMarkerClickListener()
-        {
-            @Override
-            public boolean onMarkerClick(Marker marker)
-            {
-                return false;
-            }
-        });
+//        pointsList = new ArrayList<>();
+//        list_polygon = new ArrayList<>();
+//        last_pos = 0;
+//        number_markerselect = 0;
+//        number_pointselect = 0;
+//        firstmarkerselect = true;
+//        prelatLng = null;
+//        polygon_select = null;
+//        for (int i = 0; i < list_mark.size(); i++)
+//        {
+//            list_mark.remove(i);
+//        }
+//        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+//        {
+//            @Override
+//            public void onMapClick(LatLng latlng)
+//            {
+//
+//            }
+//        });
+//        tencentMap.setOnMarkerClickListener(new TencentMap.OnMarkerClickListener()
+//        {
+//            @Override
+//            public boolean onMarkerClick(Marker marker)
+//            {
+//                return false;
+//            }
+//        });
     }
 
     private Polygon drawPolygon(List<LatLng> list_LatLng, int color)
@@ -1095,7 +1185,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
 
     private void setBoundary_park(List<CoordinatesBean> list_coordinates)
     {
-        List<LatLng> list_LatLng = new ArrayList<>();
+        list_AllLatLng = new ArrayList<>();
         list_mark = new ArrayList<>();
         int dd = list_coordinates.size() / 9;
         int num = dd;
@@ -1105,19 +1195,20 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
             if (i == 0)
             {
                 tencentMap.animateTo(latlng);
-                addMarker_Paint(i, latlng, R.drawable.location_start);
+//                addMarker_Paint(i, latlng, R.drawable.location_start);
             }
-            list_LatLng.add(latlng);
+            list_AllLatLng.add(latlng);
             if (i == num)
             {
                 num = num + dd;
-                Marker marker = addMarker_Paint(i, latlng, R.drawable.location_start);
+                Marker marker = addMarker_Paint(list_mark.size(), latlng, R.drawable.location_start);
                 list_mark.add(marker);
+                list_point_pq.add(latlng);
             }
 
         }
 //        map.put("a", list_mark);
-        Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
+        Polygon polygon = drawPolygon(list_AllLatLng, R.color.bg_yellow);
         list_polygon_pq.add(polygon);
         Overlays.add(polygon);
 
