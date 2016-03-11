@@ -124,6 +124,11 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
     {
         if (tv_gk.getText().equals("确定"))
         {
+            for (int i = 0; i < list_mark.size(); i++)
+            {
+                list_mark.get(i).setVisible(false);
+            }
+
             for (int i = 0; i < pointsList.size(); i++)
             {
                 String uuid = java.util.UUID.randomUUID().toString();
@@ -626,7 +631,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
         Overlays = new ArrayList<Object>();
         list_polygon = new ArrayList<Polygon>();
         list_polygon_pq = new ArrayList<Polygon>();
-        list_point_pq=new ArrayList<>();
+        list_point_pq = new ArrayList<>();
         map = new HashMap<>();
         if (!utils.isOPen(AddOrderMap.this))
         {
@@ -919,7 +924,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                 if (last_pos == 0)
                 {
                     point_next = new LatLng(Double.valueOf(list_point_pq.get(last_pos + 1).getLatitude()), Double.valueOf(list_point_pq.get(last_pos + 1).getLongitude()));
-                    point_last = new LatLng(Double.valueOf(list_point_pq.get(list_point_pq.size()).getLatitude()), Double.valueOf(list_point_pq.get(list_point_pq.size()).getLongitude()));
+                    point_last = new LatLng(Double.valueOf(list_point_pq.get(list_point_pq.size()-1).getLatitude()), Double.valueOf(list_point_pq.get(list_point_pq.size()-1).getLongitude()));
                 } else if (last_pos == list_point_pq.size() - 1)//画区域时会再加多第一个点
                 {
                     point_next = new LatLng(Double.valueOf(list_point_pq.get(0).getLatitude()), Double.valueOf(list_point_pq.get(0).getLongitude()));
@@ -936,11 +941,11 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                     int lastmarker_pos = 0;
                     for (int i = 0; i < list_coordinatesbean.size(); i++)
                     {
-                        String a=list_coordinatesbean.get(i).getLat();
-                        String c=String.valueOf(latlng.getLatitude());
+                        String a = list_coordinatesbean.get(i).getLat();
+                        String c = String.valueOf(latlng.getLatitude());
 
-                        String b=list_coordinatesbean.get(i).getLng();
-                        String d=String.valueOf(latlng.getLongitude());
+                        String b = list_coordinatesbean.get(i).getLng();
+                        String d = String.valueOf(latlng.getLongitude());
                         if ((list_coordinatesbean.get(i).getLat().equals(String.valueOf(latlng.getLatitude())) && list_coordinatesbean.get(i).getLng().equals(String.valueOf(latlng.getLongitude()))))
                         {
                             currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(i).getId());
@@ -951,13 +956,13 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                         }
                     }
 
-                    if (lastmarker_pos > currentmarker_pos)
+                    if (lastmarker_pos > currentmarker_pos)//80-0-7   80-7-0
                     {
-                        if (lastmarker_pos == currentmarker_pos + 1)//非首尾相邻
+                        if (lastmarker_pos == currentmarker_pos + 10)//非首尾相邻
                         {
-                            for (int i = currentmarker_pos; i <lastmarker_pos ; i++)
+                            for (int i = lastmarker_pos; i > currentmarker_pos; i--)
                             {
-                                LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(i).getLat()),Double.valueOf(list_coordinatesbean.get(i).getLng()));
+                                LatLng l = new LatLng(Double.valueOf(list_coordinatesbean.get(i).getLat()), Double.valueOf(list_coordinatesbean.get(i).getLng()));
                                 number_markerselect = number_markerselect + 1;
                                 last_pos = pos;
                                 pointsList.add(l);
@@ -971,27 +976,59 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                 Overlays.add(line);
                             }
 
-                        } else//首尾相邻
+                        } else//首尾相邻80-0-7   80-7-0
                         {
-                            number_markerselect = number_markerselect + 1;
-                            last_pos = pos;
-                            pointsList.add(latlng);
-                            PolylineOptions lineOpt = new PolylineOptions();
-                            lineOpt.add(prelatLng);
-                            prelatLng = latlng;
-                            lineOpt.add(latlng);
-                            Polyline line = tencentMap.addPolyline(lineOpt);
-                            line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
-                            line.setWidth(4f);
-                            Overlays.add(line);
+                            for (int i = lastmarker_pos; i < list_coordinatesbean.size()-1; i++)
+                            {
+                                LatLng l = new LatLng(Double.valueOf(list_coordinatesbean.get(i).getLat()), Double.valueOf(list_coordinatesbean.get(i).getLng()));
+                                number_markerselect = number_markerselect + 1;
+                                last_pos = pos;
+                                pointsList.add(l);
+                                PolylineOptions lineOpt = new PolylineOptions();
+                                lineOpt.add(prelatLng);
+                                prelatLng = l;
+                                lineOpt.add(l);
+                                Polyline line = tencentMap.addPolyline(lineOpt);
+                                line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
+                                line.setWidth(4f);
+                                Overlays.add(line);
+                            }
+
+                            for (int i = 0; i < currentmarker_pos; i++)
+                            {
+                                LatLng l = new LatLng(Double.valueOf(list_coordinatesbean.get(i).getLat()), Double.valueOf(list_coordinatesbean.get(i).getLng()));
+                                number_markerselect = number_markerselect + 1;
+                                last_pos = pos;
+                                pointsList.add(l);
+                                PolylineOptions lineOpt = new PolylineOptions();
+                                lineOpt.add(prelatLng);
+                                prelatLng = l;
+                                lineOpt.add(l);
+                                Polyline line = tencentMap.addPolyline(lineOpt);
+                                line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
+                                line.setWidth(4f);
+                                Overlays.add(line);
+                            }
+
+//                            number_markerselect = number_markerselect + 1;
+//                            last_pos = pos;
+//                            pointsList.add(latlng);
+//                            PolylineOptions lineOpt = new PolylineOptions();
+//                            lineOpt.add(prelatLng);
+//                            prelatLng = latlng;
+//                            lineOpt.add(latlng);
+//                            Polyline line = tencentMap.addPolyline(lineOpt);
+//                            line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
+//                            line.setWidth(4f);
+//                            Overlays.add(line);
                         }
-                    } else
+                    } else//现在点大7>80
                     {
-                        if (currentmarker_pos  == lastmarker_pos + 10)//非首尾相邻
+                        if (currentmarker_pos == lastmarker_pos + 10)//非首尾相邻
                         {
-                            for (int i = lastmarker_pos; i <currentmarker_pos ; i++)
+                            for (int i = lastmarker_pos; i < currentmarker_pos; i++)
                             {
-                                LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(i).getLat()),Double.valueOf(list_coordinatesbean.get(i).getLng()));
+                                LatLng l = new LatLng(Double.valueOf(list_coordinatesbean.get(i).getLat()), Double.valueOf(list_coordinatesbean.get(i).getLng()));
                                 number_markerselect = number_markerselect + 1;
                                 last_pos = pos;
                                 pointsList.add(l);
@@ -1005,19 +1042,51 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                 Overlays.add(line);
                             }
 
-                        } else//首尾相邻
+                        } else//首尾相邻7>80
                         {
-                            number_markerselect = number_markerselect + 1;
-                            last_pos = pos;
-                            pointsList.add(latlng);
-                            PolylineOptions lineOpt = new PolylineOptions();
-                            lineOpt.add(prelatLng);
-                            prelatLng = latlng;
-                            lineOpt.add(latlng);
-                            Polyline line = tencentMap.addPolyline(lineOpt);
-                            line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
-                            line.setWidth(4f);
-                            Overlays.add(line);
+                            for (int i = lastmarker_pos; i >= 0; i--)//
+                            {
+                                LatLng l = new LatLng(Double.valueOf(list_coordinatesbean.get(i).getLat()), Double.valueOf(list_coordinatesbean.get(i).getLng()));
+                                number_markerselect = number_markerselect + 1;
+                                last_pos = pos;
+                                pointsList.add(l);
+                                PolylineOptions lineOpt = new PolylineOptions();
+                                lineOpt.add(prelatLng);
+                                prelatLng = l;
+                                lineOpt.add(l);
+                                Polyline line = tencentMap.addPolyline(lineOpt);
+                                line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
+                                line.setWidth(4f);
+                                Overlays.add(line);
+                            }
+                            for (int i = list_coordinatesbean.size()-1; i >= currentmarker_pos; i--)
+                            {
+                                LatLng l = new LatLng(Double.valueOf(list_coordinatesbean.get(i).getLat()), Double.valueOf(list_coordinatesbean.get(i).getLng()));
+                                number_markerselect = number_markerselect + 1;
+                                last_pos = pos;
+                                pointsList.add(l);
+                                PolylineOptions lineOpt = new PolylineOptions();
+                                lineOpt.add(prelatLng);
+                                prelatLng = l;
+                                lineOpt.add(l);
+                                Polyline line = tencentMap.addPolyline(lineOpt);
+                                line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
+                                line.setWidth(4f);
+                                Overlays.add(line);
+                            }
+
+
+//                            number_markerselect = number_markerselect + 1;
+//                            last_pos = pos;
+//                            pointsList.add(latlng);
+//                            PolylineOptions lineOpt = new PolylineOptions();
+//                            lineOpt.add(prelatLng);
+//                            prelatLng = latlng;
+//                            lineOpt.add(latlng);
+//                            Polyline line = tencentMap.addPolyline(lineOpt);
+//                            line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
+//                            line.setWidth(4f);
+//                            Overlays.add(line);
                         }
                     }
 //                    number_markerselect = number_markerselect + 1;
