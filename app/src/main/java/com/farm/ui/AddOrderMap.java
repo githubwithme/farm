@@ -74,6 +74,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
     List<CoordinatesBean> list_coordinatesbean;
     List<LatLng> list_AllLatLng;
     List<Marker> list_mark;
+    List<Marker> list_mark_inboundary;
     int last_pos = 0;
     int number_pointselect = 0;
     int number_markerselect = 0;
@@ -238,6 +239,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
         {
             //重置数据
             list_Polyline = new ArrayList<>();
+            list_mark_inboundary = new ArrayList<>();
             pointsList = new ArrayList<>();
             list_polygon = new ArrayList<>();
             list_LatLng_boundarynotselect=new ArrayList<>();
@@ -291,7 +293,8 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                     }
                     list_LatLng_inboundary.add(latlng);
                     number_pointselect = number_pointselect + 1;
-                    addMarker_Paint(0, latlng, R.drawable.location_start);
+                    Marker m=addMarker_Paint(0, latlng, R.drawable.location_start);
+                    list_mark_inboundary.add(m);
 //                    number_markerselect = number_markerselect + 1;
                     last_pos = 0;
                     firstmarkerselect = true;
@@ -1074,18 +1077,29 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
 
                             if (list_LatLng_inboundary != null)
                             {
-                                list_LatLng_boundarynotselect.addAll(list_LatLng_inboundary);
+                                for (int j = list_LatLng_inboundary.size()-1; j >=0 ; j--)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(j));
+                                }
                                 list_LatLng_boundaryselect.addAll(list_LatLng_inboundary);
                             }
                             Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue);
                             list_polygon.add(polygon1);
 
-                            Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.red);
+                            Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.bg_yellow);
                             list_polygon.add(polygon2);
 //                            Overlays.remove(list_Polyline);
                             for (int m = 0; m <list_Polyline.size() ; m++)
                             {
                                 list_Polyline.get(m).remove();
+                            }
+                            for (int m = 0; m <list_mark.size() ; m++)
+                            {
+                                list_mark.get(m).remove();
+                            }
+                            for (int m = 0; m <list_mark_inboundary.size() ; m++)
+                            {
+                                list_mark_inboundary.get(m).remove();
                             }
 //                            Overlays.remove(list_);
 //                            showDialog_EditDL();
@@ -1158,19 +1172,30 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                             }
                             if (list_LatLng_inboundary != null)
                             {
-                                list_LatLng_boundarynotselect.addAll(list_LatLng_inboundary);
+                                for (int j = list_LatLng_inboundary.size()-1; j >=0 ; j--)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(j));
+                                }
                                 list_LatLng_boundaryselect.addAll(list_LatLng_inboundary);
                             }
 
                             Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue);
                             list_polygon.add(polygon1);
 
-                            Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.red);
+                            Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.bg_yellow);
                             list_polygon.add(polygon2);
 //                            Overlays.remove(list_Polyline);
                             for (int m = 0; m <list_Polyline.size() ; m++)
                             {
                                 list_Polyline.get(m).remove();
+                            }
+                            for (int m = 0; m <list_mark.size() ; m++)
+                            {
+                                list_mark.get(m).remove();
+                            }
+                            for (int m = 0; m <list_mark_inboundary.size() ; m++)
+                            {
+                                list_mark_inboundary.get(m).remove();
                             }
 //                            Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
 //                            list_polygon.add(polygon);
