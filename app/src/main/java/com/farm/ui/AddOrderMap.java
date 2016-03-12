@@ -67,6 +67,7 @@ import java.util.List;
 @EActivity(R.layout.addordermap)
 public class AddOrderMap extends Activity implements TencentLocationListener, View.OnClickListener
 {
+    List<Polyline> list_Polyline;
     List<LatLng> list_LatLng_boundaryselect;
     List<LatLng> list_LatLng_boundarynotselect;
     List<LatLng> list_LatLng_inboundary=new ArrayList<>();
@@ -236,6 +237,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
         } else
         {
             //重置数据
+            list_Polyline = new ArrayList<>();
             pointsList = new ArrayList<>();
             list_polygon = new ArrayList<>();
             list_LatLng_boundarynotselect=new ArrayList<>();
@@ -301,6 +303,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                     Polyline line = tencentMap.addPolyline(lineOpt);
                     line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                     line.setWidth(4f);
+                    list_Polyline.add(line);
                     Overlays.add(line);
 //                    }
 //                    else//是否点击了marker
@@ -443,6 +446,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                     line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                     line.setWidth(4f);
                     Overlays.add(line);
+                    list_Polyline.add(line);
                 }
             });
         }
@@ -811,6 +815,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
             line.setColor(this.getResources().getColor(R.color.black));
             line.setWidth(4f);
             Overlays.add(line);
+            list_Polyline.add(line);
         }
     }
 
@@ -917,6 +922,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                                 line.setWidth(4f);
                                                 Overlays.add(line);
+                                                list_Polyline.add(line);
                                             }
 
                                         } else//首尾相邻80-0-7   80-7-0
@@ -935,6 +941,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                                 line.setWidth(4f);
                                                 Overlays.add(line);
+                                                list_Polyline.add(line);
                                             }
 
                                             for (int k = 0; k < currentmarker_pos; k++)
@@ -951,6 +958,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                                 line.setWidth(4f);
                                                 Overlays.add(line);
+                                                list_Polyline.add(line);
                                             }
 
 
@@ -973,6 +981,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                                 line.setWidth(4f);
                                                 Overlays.add(line);
+                                                list_Polyline.add(line);
                                             }
 
                                         } else//首尾相邻7>80
@@ -991,6 +1000,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                                 line.setWidth(4f);
                                                 Overlays.add(line);
+                                                list_Polyline.add(line);
                                             }
                                             for (int k = list_coordinatesbean.size() - 1; k>= currentmarker_pos; k--)
                                             {
@@ -1006,6 +1016,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                                 line.setWidth(4f);
                                                 Overlays.add(line);
+                                                list_Polyline.add(line);
                                             }
 
 
@@ -1060,11 +1071,23 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                     LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
                                     list_LatLng_boundarynotselect.add(l);
                                 }
+
+                            if (list_LatLng_inboundary != null)
+                            {
+                                list_LatLng_boundarynotselect.addAll(list_LatLng_inboundary);
+                                list_LatLng_boundaryselect.addAll(list_LatLng_inboundary);
+                            }
                             Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue);
                             list_polygon.add(polygon1);
 
                             Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.red);
                             list_polygon.add(polygon2);
+//                            Overlays.remove(list_Polyline);
+                            for (int m = 0; m <list_Polyline.size() ; m++)
+                            {
+                                list_Polyline.get(m).remove();
+                            }
+//                            Overlays.remove(list_);
 //                            showDialog_EditDL();
                             //重置数据
                             resetData();
@@ -1133,11 +1156,22 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                 LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
                                 list_LatLng_boundarynotselect.add(l);
                             }
+                            if (list_LatLng_inboundary != null)
+                            {
+                                list_LatLng_boundarynotselect.addAll(list_LatLng_inboundary);
+                                list_LatLng_boundaryselect.addAll(list_LatLng_inboundary);
+                            }
+
                             Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue);
                             list_polygon.add(polygon1);
 
                             Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.red);
                             list_polygon.add(polygon2);
+//                            Overlays.remove(list_Polyline);
+                            for (int m = 0; m <list_Polyline.size() ; m++)
+                            {
+                                list_Polyline.get(m).remove();
+                            }
 //                            Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
 //                            list_polygon.add(polygon);
 //                            showDialog_EditDL();
@@ -1163,6 +1197,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                     line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                     line.setWidth(4f);
                     Overlays.add(line);
+                    list_Polyline.add(line);
                     if (number_pointselect > 0)//已经有点
                     {
                         if (latlng_two == null)
@@ -1256,6 +1291,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                 line.setWidth(4f);
                                 Overlays.add(line);
+                                list_Polyline.add(line);
                             }
 
                         } else//首尾相邻80-0-7   80-7-0
@@ -1274,6 +1310,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                 line.setWidth(4f);
                                 Overlays.add(line);
+                                list_Polyline.add(line);
                             }
 
                             for (int i = 0; i < currentmarker_pos; i++)
@@ -1290,6 +1327,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                 line.setWidth(4f);
                                 Overlays.add(line);
+                                list_Polyline.add(line);
                             }
 
 //                            number_markerselect = number_markerselect + 1;
@@ -1322,6 +1360,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                 line.setWidth(4f);
                                 Overlays.add(line);
+                                list_Polyline.add(line);
                             }
 
                         } else//首尾相邻7>80
@@ -1340,6 +1379,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                 line.setWidth(4f);
                                 Overlays.add(line);
+                                list_Polyline.add(line);
                             }
                             for (int i = list_coordinatesbean.size() - 1; i >= currentmarker_pos; i--)
                             {
@@ -1355,6 +1395,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                 line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
                                 line.setWidth(4f);
                                 Overlays.add(line);
+                                list_Polyline.add(line);
                             }
 
 
