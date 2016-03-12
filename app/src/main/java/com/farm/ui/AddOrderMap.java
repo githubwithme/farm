@@ -61,12 +61,15 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 @EActivity(R.layout.addordermap)
 public class AddOrderMap extends Activity implements TencentLocationListener, View.OnClickListener
 {
+    boolean isend_select=false;
+    boolean isend_notselect=false;
     List<Polyline> list_Polyline;
     List<LatLng> list_LatLng_boundaryselect;
     List<LatLng> list_LatLng_boundarynotselect;
@@ -1035,76 +1038,77 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
 
                             }
 
-                            int currentmarker_pos = 0;
-                            int lastmarker_pos = 0;
-                            for (int k = 0; k < list_coordinatesbean.size(); k++)
-                            {
-                                if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_one.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_one.getLongitude()))))
-                                {
-                                    currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
-                                }
-                                if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_two.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_two.getLongitude()))))
-                                {
-                                    lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
-                                }
-                            }
-                            int max=0;
-                            int min=0;
-                            if (lastmarker_pos>currentmarker_pos)
-                            {
-                                max=lastmarker_pos;
-                                min=currentmarker_pos;
-                            }else
-                            {
-                                max=currentmarker_pos;
-                                min=lastmarker_pos;
-                            }
-                                for (int m = min; m <=max; m++)
-                                {
-                                    LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(m).getLat()),Double.valueOf(list_coordinatesbean.get(m).getLng()));
-                                    list_LatLng_boundaryselect.add(l);
-                                }
-                                for (int n =max; n <list_coordinatesbean.size() ; n++)
-                                {
-                                    LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
-                                    list_LatLng_boundarynotselect.add(l);
-                                }
-                                for (int n =0; n <=min ; n++)
-                                {
-                                    LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
-                                    list_LatLng_boundarynotselect.add(l);
-                                }
-
-                            if (list_LatLng_inboundary != null)
-                            {
-                                for (int j = list_LatLng_inboundary.size()-1; j >=0 ; j--)
-                                {
-                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(j));
-                                }
-                                list_LatLng_boundaryselect.addAll(list_LatLng_inboundary);
-                            }
-                            Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue);
-                            list_polygon.add(polygon1);
-
-                            Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.bg_yellow);
-                            list_polygon.add(polygon2);
-//                            Overlays.remove(list_Polyline);
-                            for (int m = 0; m <list_Polyline.size() ; m++)
-                            {
-                                list_Polyline.get(m).remove();
-                            }
-                            for (int m = 0; m <list_mark.size() ; m++)
-                            {
-                                list_mark.get(m).remove();
-                            }
-                            for (int m = 0; m <list_mark_inboundary.size() ; m++)
-                            {
-                                list_mark_inboundary.get(m).remove();
-                            }
+//                            int currentmarker_pos = 0;
+//                            int lastmarker_pos = 0;
+//                            for (int k = 0; k < list_coordinatesbean.size(); k++)
+//                            {
+//                                if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_one.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_one.getLongitude()))))
+//                                {
+//                                    currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+//                                }
+//                                if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_two.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_two.getLongitude()))))
+//                                {
+//                                    lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+//                                }
+//                            }
+//                            int max=0;
+//                            int min=0;
+//                            if (lastmarker_pos>currentmarker_pos)
+//                            {
+//                                max=lastmarker_pos;
+//                                min=currentmarker_pos;
+//                            }else
+//                            {
+//                                max=currentmarker_pos;
+//                                min=lastmarker_pos;
+//                            }
+//                                for (int m = min; m <=max; m++)
+//                                {
+//                                    LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(m).getLat()),Double.valueOf(list_coordinatesbean.get(m).getLng()));
+//                                    list_LatLng_boundaryselect.add(l);
+//                                }
+//                                for (int n =max; n <list_coordinatesbean.size() ; n++)
+//                                {
+//                                    LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
+//                                    list_LatLng_boundarynotselect.add(l);
+//                                }
+//                                for (int n =0; n <=min ; n++)
+//                                {
+//                                    LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
+//                                    list_LatLng_boundarynotselect.add(l);
+//                                }
+//
+//                            if (list_LatLng_inboundary != null)
+//                            {
+//                                for (int j = list_LatLng_inboundary.size()-1; j >=0 ; j--)
+//                                {
+//                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(j));
+//                                }
+//                                list_LatLng_boundaryselect.addAll(list_LatLng_inboundary);
+//                            }
+//                            Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue);
+//                            list_polygon.add(polygon1);
+//
+//                            Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.bg_yellow);
+//                            list_polygon.add(polygon2);
+////                            Overlays.remove(list_Polyline);
+//                            for (int m = 0; m <list_Polyline.size() ; m++)
+//                            {
+//                                list_Polyline.get(m).remove();
+//                            }
+//                            for (int m = 0; m <list_mark.size() ; m++)
+//                            {
+//                                list_mark.get(m).remove();
+//                            }
+//                            for (int m = 0; m <list_mark_inboundary.size() ; m++)
+//                            {
+//                                list_mark_inboundary.get(m).remove();
+//                            }
 //                            Overlays.remove(list_);
 //                            showDialog_EditDL();
                             //重置数据
-                            resetData();
+//                            resetData();
+                            divide();
                             return false;
                         }
                         if (number_markerselect == 2 && number_pointselect > 0 && pointsList.get(0).getLatitude() == latlng.getLatitude() && pointsList.get(0).getLongitude() == latlng.getLongitude())
@@ -1131,72 +1135,7 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                     }
                                 }
                             });
-                            int currentmarker_pos = 0;
-                            int lastmarker_pos = 0;
-                            for (int k = 0; k < list_coordinatesbean.size(); k++)
-                            {
-                                if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_one.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_one.getLongitude()))))
-                                {
-                                    currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
-                                }
-                                if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_two.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_two.getLongitude()))))
-                                {
-                                    lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
-                                }
-                            }
-                            int max=0;
-                            int min=0;
-                            if (lastmarker_pos>currentmarker_pos)
-                            {
-                                max=lastmarker_pos;
-                                min=currentmarker_pos;
-                            }else
-                            {
-                                max=currentmarker_pos;
-                                min=lastmarker_pos;
-                            }
-                            for (int m = min; m <=max; m++)
-                            {
-                                LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(m).getLat()),Double.valueOf(list_coordinatesbean.get(m).getLng()));
-                                list_LatLng_boundaryselect.add(l);
-                            }
-                            for (int n =max; n <list_coordinatesbean.size() ; n++)
-                            {
-                                LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
-                                list_LatLng_boundarynotselect.add(l);
-                            }
-                            for (int n =0; n <=min ; n++)
-                            {
-                                LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
-                                list_LatLng_boundarynotselect.add(l);
-                            }
-                            if (list_LatLng_inboundary != null)
-                            {
-                                for (int j = list_LatLng_inboundary.size()-1; j >=0 ; j--)
-                                {
-                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(j));
-                                }
-                                list_LatLng_boundaryselect.addAll(list_LatLng_inboundary);
-                            }
-
-                            Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue);
-                            list_polygon.add(polygon1);
-
-                            Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.bg_yellow);
-                            list_polygon.add(polygon2);
-//                            Overlays.remove(list_Polyline);
-                            for (int m = 0; m <list_Polyline.size() ; m++)
-                            {
-                                list_Polyline.get(m).remove();
-                            }
-                            for (int m = 0; m <list_mark.size() ; m++)
-                            {
-                                list_mark.get(m).remove();
-                            }
-                            for (int m = 0; m <list_mark_inboundary.size() ; m++)
-                            {
-                                list_mark_inboundary.get(m).remove();
-                            }
+                           divide();
 //                            Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
 //                            list_polygon.add(polygon);
 //                            showDialog_EditDL();
@@ -1458,6 +1397,547 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
         });
     }
 
+    private void divide()
+    {
+        int currentmarker_pos = 0;
+        int lastmarker_pos = 0;
+        for (int k = 0; k < list_coordinatesbean.size(); k++)
+        {
+            if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_one.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_one.getLongitude()))))
+            {
+                currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+            }
+            if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_two.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_two.getLongitude()))))
+            {
+                lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+            }
+        }
+        int max=0;
+        int min=0;
+        if (lastmarker_pos>currentmarker_pos)
+        {
+            max=lastmarker_pos;
+            min=currentmarker_pos;
+        }else
+        {
+            max=currentmarker_pos;
+            min=lastmarker_pos;
+        }
+        for (int m = min; m <=max; m++)
+        {
+            LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(m).getLat()),Double.valueOf(list_coordinatesbean.get(m).getLng()));
+            list_LatLng_boundaryselect.add(l);
+        }
+        for (int n =max; n <list_coordinatesbean.size() ; n++)
+        {
+            LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
+            list_LatLng_boundarynotselect.add(l);
+        }
+        for (int n =0; n <=min ; n++)
+        {
+            LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
+            list_LatLng_boundarynotselect.add(l);
+        }
+
+        if (list_LatLng_inboundary != null)
+        {
+            int pos_latlng_one_inboundarynotselect=0;
+            int pos_latlng_one_inboundaryselect=0;
+            int pos_latlng_two_inboundarynotselect=0;
+            int pos_latlng_two_inboundaryselect=0;
+            int pos_latlng_one_inpointsList=0;
+            int pos_latlng_two_inpointsList=0;
+            int pos_latlng_in__one_inpointsList=0;
+            int pos_latlng_in__two_inpointsList=0;
+
+            LatLng latlng_in__one=list_LatLng_inboundary.get(0);
+            LatLng latlng_in__two=list_LatLng_inboundary.get(list_LatLng_inboundary.size()-1);
+
+            for (int j = 0; j <list_LatLng_boundarynotselect.size() ; j++)//没选择区域
+            {
+                if (list_LatLng_boundarynotselect.get(j).toString().equals(latlng_one.toString()))
+                {
+                    pos_latlng_one_inboundarynotselect=j;
+                }
+                if (list_LatLng_boundarynotselect.get(j).toString().equals(latlng_two.toString()))
+                {
+                    pos_latlng_two_inboundarynotselect=j;
+                }
+            }
+            for (int j = 0; j <list_LatLng_boundaryselect.size() ; j++)//已选择区域
+            {
+                if (list_LatLng_boundaryselect.get(j).toString().equals(latlng_one.toString()))
+                {
+                    pos_latlng_one_inboundaryselect=j;
+                }
+                if (list_LatLng_boundaryselect.get(j).toString().equals(latlng_two.toString()))
+                {
+                    pos_latlng_two_inboundaryselect=j;
+                }
+            }
+
+            for (int j = 0; j <pointsList.size() ; j++)
+            {
+                if (pointsList.get(j).toString().equals(latlng_in__one.toString()))
+                {
+                    pos_latlng_in__one_inpointsList=j;
+                }
+                if (pointsList.get(j).toString().equals(latlng_in__two.toString()))
+                {
+                    pos_latlng_in__two_inpointsList=j;
+                }
+                if (pointsList.get(j).toString().equals(latlng_one.toString()))
+                {
+                    pos_latlng_one_inpointsList=j;
+                }
+                if (pointsList.get(j).toString().equals(latlng_two.toString()))
+                {
+                    pos_latlng_two_inpointsList=j;
+                }
+            }
+//                                int pos_latlng_one_inboundarynotselect=0;//latlng_one在没选择边界位置
+//                                int pos_latlng_one_inboundaryselect=0;//latlng_one在选择边界位置
+//                                int pos_latlng_two_inboundarynotselect=0;//latlng_two在没选择边界位置
+//                                int pos_latlng_two_inboundaryselect=0;//latlng_one在选择边界位置
+//                                int pos_latlng_one_inpointsList=0;//latlng_one在已选取点钟位置
+//                                int pos_latlng_two_inpointsList=0;//latlng_two在已选取点钟位置
+//                                int pos_latlng_in__one_inpointsList=0;//第一个内点在已选取点钟位置
+//                                int pos_latlng_in__two_inpointsList=0;//第二个内点在已选取点钟位置
+            int pos_connectpoint[]={pos_latlng_one_inpointsList,pos_latlng_two_inpointsList,pos_latlng_in__one_inpointsList,pos_latlng_in__two_inpointsList};
+
+            Arrays.sort(pos_connectpoint);
+            LatLng LatLng0=pointsList.get(pos_connectpoint[0]);
+            LatLng LatLng1=pointsList.get(pos_connectpoint[1]);
+            LatLng LatLng2=pointsList.get(pos_connectpoint[2]);
+            LatLng LatLng3=pointsList.get(pos_connectpoint[3]);
+//将已选取边界点和已选取内点相加
+            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size()-2).toString().equals(LatLng0.toString()))
+            {
+                for (int k = 0; k <list_LatLng_boundaryselect.size() ; k++)
+                {
+                    if (LatLng1.toString().equals(list_LatLng_boundaryselect.get(k).toString()))//不加LatLng1
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng2);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }
+
+
+                    }else
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng1);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }
+
+                    }
+                }
+            }
+            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size()-2).toString().equals(LatLng1.toString()))
+            {
+                for (int k = 0; k <list_LatLng_boundaryselect.size() ; k++)//判断是否已有点
+                {
+                    if (LatLng2.toString().equals(list_LatLng_boundaryselect.get(k).toString()))//不加LatLng2
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng3);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }
+
+
+                    }else
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng2);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }
+
+                    }
+                }
+            }
+            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size()-2).toString().equals(LatLng2.toString()))
+            {
+                for (int k = 0; k <list_LatLng_boundaryselect.size() ; k++)//判断是否已有点
+                {
+                    if (LatLng3.toString().equals(list_LatLng_boundaryselect.get(k).toString()))//不加LatLng3
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng0);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }
+
+
+                    }else
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng3);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }
+
+                    }
+                }
+            }
+            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size()-2).toString().equals(LatLng3.toString()))
+            {
+                for (int k = 0; k <list_LatLng_boundaryselect.size() ; k++)//判断是否已有点
+                {
+                    if (LatLng0.toString().equals(list_LatLng_boundaryselect.get(k).toString()))//不加LatLng0
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng1);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }
+
+
+                    }else
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng0);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_select=true;
+                                break;
+                            }
+
+                    }
+                }
+            }
+            //将非选取点和已选取内点相加
+            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size()-2).toString().equals(LatLng0.toString()))
+            {
+                for (int k = 0; k <list_LatLng_boundarynotselect.size() ; k++)//判断是否已有点
+                {
+                    if (LatLng1.toString().equals(list_LatLng_boundarynotselect.get(k).toString()))//不加LatLng0
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng2);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }
+
+
+                    }else
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng1);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }
+
+                    }
+                }
+            }
+            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size()-2).toString().equals(LatLng1.toString()))
+            {
+                for (int k = 0; k <list_LatLng_boundarynotselect.size() ; k++)//判断是否已有点
+                {
+                    if (LatLng2.toString().equals(list_LatLng_boundarynotselect.get(k).toString()))//不加LatLng0
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng3);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }
+
+
+                    }else
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng2);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }
+
+                    }
+                }
+            }
+            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size()-2).toString().equals(LatLng2.toString()))
+            {
+                for (int k = 0; k <list_LatLng_boundarynotselect.size() ; k++)//判断是否已有点
+                {
+                    if (LatLng3.toString().equals(list_LatLng_boundarynotselect.get(k).toString()))//不加LatLng0
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng0);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }
+
+
+                    }else
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng3);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }
+
+                    }
+                }
+            }
+            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size()-2).toString().equals(LatLng3.toString()))
+            {
+                for (int k = 0; k <list_LatLng_boundarynotselect.size() ; k++)//判断是否已有点
+                {
+                    if (LatLng0.toString().equals(list_LatLng_boundarynotselect.get(k).toString()))//不加LatLng0
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng1);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }
+
+
+                    }else
+                    {
+                            int index=list_LatLng_inboundary.indexOf(LatLng0);
+                            if (index==0)//
+                            {
+                                for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }else
+                            {
+                                for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
+                                {
+                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
+                                }
+                                isend_notselect=true;
+                                break;
+                            }
+
+                    }
+                }
+            }
+//                                for (int j = list_LatLng_inboundary.size()-1; j >=0 ; j--)
+//                                {
+//                                    list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(j));
+//                                }
+//                                list_LatLng_boundaryselect.addAll(list_LatLng_inboundary);
+        }
+
+        Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue);
+        list_polygon.add(polygon1);
+
+        Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.bg_yellow);
+        list_polygon.add(polygon2);
+//                            Overlays.remove(list_Polyline);
+        for (int m = 0; m <list_Polyline.size() ; m++)
+        {
+            list_Polyline.get(m).remove();
+        }
+        for (int m = 0; m <list_mark.size() ; m++)
+        {
+            list_mark.get(m).remove();
+        }
+        for (int m = 0; m <list_mark_inboundary.size() ; m++)
+        {
+            list_mark_inboundary.get(m).remove();
+        }
+    }
     private void resetData()
     {
 //        pointsList = new ArrayList<>();
