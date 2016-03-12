@@ -59,6 +59,8 @@ public class IFragment extends Fragment
 	@ViewById
 	TextView tv_exist;
 	@ViewById
+	TextView tv_makemap;
+	@ViewById
 	CircleImageView circle_img;
 	@ViewById
 	TextView tv_changepwd;
@@ -69,6 +71,12 @@ public class IFragment extends Fragment
 	void tv_detail()
 	{
 		Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
+		startActivity(intent);
+	}
+	@Click
+	void tv_makemap()
+	{
+		Intent intent = new Intent(getActivity(), MakeMap_.class);
 		startActivity(intent);
 	}
 	@Click
