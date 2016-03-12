@@ -67,6 +67,9 @@ import java.util.List;
 @EActivity(R.layout.addordermap)
 public class AddOrderMap extends Activity implements TencentLocationListener, View.OnClickListener
 {
+    List<LatLng> list_LatLng_boundaryselect;
+    List<LatLng> list_LatLng_boundarynotselect;
+    List<LatLng> list_LatLng_inboundary=new ArrayList<>();
     List<CoordinatesBean> list_coordinatesbean;
     List<LatLng> list_AllLatLng;
     List<Marker> list_mark;
@@ -74,6 +77,8 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
     int number_pointselect = 0;
     int number_markerselect = 0;
     boolean firstmarkerselect = true;
+    LatLng latlng_one;
+    LatLng latlng_two;
     List<LatLng> list_point_pq;
     HashMap<String, List<Marker>> map;
     Polygon polygon_select;
@@ -233,6 +238,9 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
             //重置数据
             pointsList = new ArrayList<>();
             list_polygon = new ArrayList<>();
+            list_LatLng_boundarynotselect=new ArrayList<>();
+            list_LatLng_boundaryselect=new ArrayList<>();
+            list_LatLng_inboundary=new ArrayList<>();
             last_pos = 0;
             number_markerselect = 0;
             number_pointselect = 0;
@@ -272,6 +280,14 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
 //                    }
 //                    if (polygon_select.contains(latlng))//第一个确定的承包区是否包含第第 一个以后的点
 //                    {
+                    if (number_markerselect> 0)//只要边界上有一个marker被选中,而且区域内也已经选取点了，就不能再点击地图了，只能点击marker
+                    {
+                        if (latlng_one == null)
+                        {
+                            latlng_one=pointsList.get(pointsList.size()-1);
+                        }
+                    }
+                    list_LatLng_inboundary.add(latlng);
                     number_pointselect = number_pointselect + 1;
                     addMarker_Paint(0, latlng, R.drawable.location_start);
 //                    number_markerselect = number_markerselect + 1;
@@ -815,6 +831,30 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                         //已经选取过，判断是否完成区域选择
                         if (number_markerselect > 2 && pointsList.get(0).getLatitude() == latlng.getLatitude() && pointsList.get(0).getLongitude() == latlng.getLongitude())
                         {
+
+                            for (int j = 0; j <list_LatLng_inboundary.size() ; j++)
+                            {
+                                if (latlng.toString().equals(list_LatLng_inboundary.get(j).toString()))//最终点为内点
+                                {
+                                    if (latlng_two == null)
+                                    {
+                                        latlng_two=pointsList.get(pointsList.size()-1);
+                                    }else   if (latlng_one== null)
+                                    {
+                                        latlng_one=pointsList.get(pointsList.size()-1);
+                                    }
+                                }
+                                if (j == list_LatLng_inboundary.size()-1)//最终点为边界点
+                                {
+                                    if (latlng_two == null)
+                                    {
+                                        latlng_two=latlng;
+                                    }else   if (latlng_one== null)
+                                    {
+                                        latlng_one=latlng;
+                                    }
+                                }
+                            }
                             tv_tip.setVisibility(View.GONE);
                             btn_addorder.setText("添加断蕾区");
                             tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
@@ -980,15 +1020,59 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                             {
 
                             }
-                            Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
-                            list_polygon.add(polygon);
-                            showDialog_EditDL();
+
+                            int currentmarker_pos = 0;
+                            int lastmarker_pos = 0;
+                            for (int k = 0; k < list_coordinatesbean.size(); k++)
+                            {
+                                if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_one.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_one.getLongitude()))))
+                                {
+                                    currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+                                }
+                                if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_two.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_two.getLongitude()))))
+                                {
+                                    lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+                                }
+                            }
+                            int max=0;
+                            int min=0;
+                            if (lastmarker_pos>currentmarker_pos)
+                            {
+                                max=lastmarker_pos;
+                                min=currentmarker_pos;
+                            }else
+                            {
+                                max=currentmarker_pos;
+                                min=lastmarker_pos;
+                            }
+                                for (int m = min; m <=max; m++)
+                                {
+                                    LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(m).getLat()),Double.valueOf(list_coordinatesbean.get(m).getLng()));
+                                    list_LatLng_boundaryselect.add(l);
+                                }
+                                for (int n =max; n <list_coordinatesbean.size() ; n++)
+                                {
+                                    LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
+                                    list_LatLng_boundarynotselect.add(l);
+                                }
+                                for (int n =0; n <=min ; n++)
+                                {
+                                    LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
+                                    list_LatLng_boundarynotselect.add(l);
+                                }
+                            Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue);
+                            list_polygon.add(polygon1);
+
+                            Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.red);
+                            list_polygon.add(polygon2);
+//                            showDialog_EditDL();
                             //重置数据
                             resetData();
                             return false;
                         }
                         if (number_markerselect == 2 && number_pointselect > 0 && pointsList.get(0).getLatitude() == latlng.getLatitude() && pointsList.get(0).getLongitude() == latlng.getLongitude())
                         {
+
                             tv_tip.setVisibility(View.GONE);
                             btn_addorder.setText("添加断蕾区");
                             tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
@@ -1010,10 +1094,54 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                     }
                                 }
                             });
-                            Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
-                            list_polygon.add(polygon);
-                            showDialog_EditDL();
-                            resetData();
+                            int currentmarker_pos = 0;
+                            int lastmarker_pos = 0;
+                            for (int k = 0; k < list_coordinatesbean.size(); k++)
+                            {
+                                if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_one.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_one.getLongitude()))))
+                                {
+                                    currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+                                }
+                                if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_two.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_two.getLongitude()))))
+                                {
+                                    lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+                                }
+                            }
+                            int max=0;
+                            int min=0;
+                            if (lastmarker_pos>currentmarker_pos)
+                            {
+                                max=lastmarker_pos;
+                                min=currentmarker_pos;
+                            }else
+                            {
+                                max=currentmarker_pos;
+                                min=lastmarker_pos;
+                            }
+                            for (int m = min; m <=max; m++)
+                            {
+                                LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(m).getLat()),Double.valueOf(list_coordinatesbean.get(m).getLng()));
+                                list_LatLng_boundaryselect.add(l);
+                            }
+                            for (int n =max; n <list_coordinatesbean.size() ; n++)
+                            {
+                                LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
+                                list_LatLng_boundarynotselect.add(l);
+                            }
+                            for (int n =0; n <=min ; n++)
+                            {
+                                LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
+                                list_LatLng_boundarynotselect.add(l);
+                            }
+                            Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue);
+                            list_polygon.add(polygon1);
+
+                            Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.red);
+                            list_polygon.add(polygon2);
+//                            Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
+//                            list_polygon.add(polygon);
+//                            showDialog_EditDL();
+//                            resetData();
                             return false;
                         }
                         tv_tip.setText("该点已经选取，请按顺序选择边界上的点");
@@ -1037,6 +1165,10 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                     Overlays.add(line);
                     if (number_pointselect > 0)//已经有点
                     {
+                        if (latlng_two == null)
+                        {
+                            latlng_two=latlng;
+                        }
                         tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
                         {
                             @Override
@@ -1053,6 +1185,11 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
 
                 if (number_pointselect > 0)//只要边界上有一个marker被选中,而且区域内也已经选取点了，就不能再点击地图了，只能点击marker
                 {
+                    if (latlng_two == null)
+                    {
+                        latlng_two=latlng;
+                    }
+
                     tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
                     {
                         @Override
