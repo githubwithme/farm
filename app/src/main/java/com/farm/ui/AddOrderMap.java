@@ -902,11 +902,11 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                                         String d = String.valueOf(latlng.getLongitude());
                                         if ((list_coordinatesbean.get(j).getLat().equals(String.valueOf(latlng.getLatitude())) && list_coordinatesbean.get(j).getLng().equals(String.valueOf(latlng.getLongitude()))))
                                         {
-                                            currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(j).getId());
+                                            currentmarker_pos = j+1;
                                         }
                                         if ((list_coordinatesbean.get(j).getLat().equals(String.valueOf(ll.getLatitude())) && list_coordinatesbean.get(j).getLng().equals(String.valueOf(ll.getLongitude()))))
                                         {
-                                            lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(j).getId());
+                                            lastmarker_pos = j+1;
                                         }
                                     }
 
@@ -1229,11 +1229,11 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
                         String d = String.valueOf(latlng.getLongitude());
                         if ((list_coordinatesbean.get(i).getLat().equals(String.valueOf(latlng.getLatitude())) && list_coordinatesbean.get(i).getLng().equals(String.valueOf(latlng.getLongitude()))))
                         {
-                            currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(i).getId());
+                            currentmarker_pos =i+1;
                         }
                         if ((list_coordinatesbean.get(i).getLat().equals(String.valueOf(ll.getLatitude())) && list_coordinatesbean.get(i).getLng().equals(String.valueOf(ll.getLongitude()))))
                         {
-                            lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(i).getId());
+                            lastmarker_pos = i+1;
                         }
                     }
 
@@ -1405,11 +1405,11 @@ public class AddOrderMap extends Activity implements TencentLocationListener, Vi
         {
             if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_one.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_one.getLongitude()))))
             {
-                currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+                currentmarker_pos = k+1;
             }
             if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_two.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_two.getLongitude()))))
             {
-                lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+                lastmarker_pos = k+1;
             }
         }
         int max=0;

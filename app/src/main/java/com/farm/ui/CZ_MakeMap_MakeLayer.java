@@ -1,20 +1,24 @@
 package com.farm.ui;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,19 +26,29 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.farm.R;
 import com.farm.adapter.DL_ZS_Adapter;
+import com.farm.adapter.Department_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.CoordinatesBean;
+import com.farm.bean.DepartmentBean;
 import com.farm.bean.Gps;
 import com.farm.bean.Points;
 import com.farm.bean.Result;
 import com.farm.bean.ZS;
+import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
+import com.farm.bean.contractTab;
+import com.farm.bean.parktab;
 import com.farm.common.CoordinateConvertUtil;
 import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditDLInfor;
+import com.farm.widget.CustomDialog_EditPolygonInfo;
+import com.farm.widget.swipelistview.CustomDialog_OperatePolygon;
+import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.db.sqlite.Selector;
+import com.lidroid.xutils.exception.DbException;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -69,15 +83,24 @@ import java.util.List;
 @EFragment
 public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationListener, View.OnClickListener
 {
-    boolean isend_select = false;
-    boolean isend_notselect = false;
+    int intervalNumber=0;//marker间隔数
+    List<DepartmentBean> list_department;
+    List<parktab> list_parktab;
+    List<areatab> list_areatab;
+    List<areatab> list_areatab_all=new ArrayList<>();
+    List<contractTab> list_contractTab;
+    List<contractTab> list_contractTab_all=new ArrayList<>();
+    boolean isend_select=false;
+    boolean isend_notselect=false;
+    List<Polygon> list_polygon_all;
+    List<CoordinatesBean> list_CoordinatesBean_currentPolygon;
+    List<  List<CoordinatesBean>> list_polygon_allCoordinatesBean;
     List<Polyline> list_Polyline;
     List<LatLng> list_LatLng_boundaryselect;
     List<LatLng> list_LatLng_boundarynotselect;
-    List<LatLng> list_LatLng_inboundary = new ArrayList<>();
+    List<LatLng> list_LatLng_inboundary=new ArrayList<>();
     List<CoordinatesBean> list_coordinatesbean;
-    List<LatLng> list_AllLatLng;
-    List<Marker> list_mark;
+    List<Marker> list_mark;//边界上的marker集合
     List<Marker> list_mark_inboundary;
     int last_pos = 0;
     int number_pointselect = 0;
@@ -85,13 +108,14 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
     boolean firstmarkerselect = true;
     LatLng latlng_one;
     LatLng latlng_two;
-    List<LatLng> list_point_pq;
+    List<LatLng> list_point_pq;//边界上的marker的坐标集
     HashMap<String, List<Marker>> map;
     Polygon polygon_select;
     List<Polygon> list_polygon_pq;
 
     List<ZS> list_zs;
     DL_ZS_Adapter dl_zs_adapter;
+    Department_Adapter department_adapter;
     commembertab commembertab;
     ListView lv_zs;
     List<Polygon> list_polygon;
@@ -102,7 +126,9 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
     EditText et_note;
     EditText et_time;
     EditText et_dlzs;
+    CustomDialog_EditPolygonInfo customdialog_editpolygoninfor;
     CustomDialog_EditDLInfor customdialog_editdlinfor;
+    CustomDialog_OperatePolygon customdialog_operatepolygon;
     boolean isStart = false;
     //    List<Object> area_Overlays = new ArrayList<Object>();
     LatLng lastlatLng = null;
@@ -204,11 +230,6 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
     @Click
     void btn_addorder()
     {
-        //1、选取任意一个点，判断是否在任意一个承包区内,高亮所选定的承包区A，及显示其marker
-        //2、以后每次选取一个点时都要先判断该点是否在承包区A内，在则画线，不在则提示
-        //3、当选取任意一个marker时则设置点击地图不响应事件，并设置往后只能选择marker，
-//        list_zs = SqliteDb.getZS(AddOrderMap.this, ZS.class, commembertab.getareaId());
-//        showPop_addcommand();
         if (btn_addorder.getText().equals("确定"))
         {
             tv_tip.setVisibility(View.GONE);
@@ -232,10 +253,9 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                     }
                 }
             });
-//            SqliteDb.saveAll(AddOrderMap.this, pointsList);
             Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
             list_polygon.add(polygon);
-            showDialog_EditDL();
+//            showDialog_EditPolygonInfo();
             //重置数据
             resetData();
 
@@ -246,22 +266,22 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
             list_mark_inboundary = new ArrayList<>();
             pointsList = new ArrayList<>();
             list_polygon = new ArrayList<>();
-            list_LatLng_boundarynotselect = new ArrayList<>();
-            list_LatLng_boundaryselect = new ArrayList<>();
-            list_LatLng_inboundary = new ArrayList<>();
+            list_LatLng_boundarynotselect=new ArrayList<>();
+            list_LatLng_boundaryselect=new ArrayList<>();
+            list_LatLng_inboundary=new ArrayList<>();
             last_pos = 0;
             number_markerselect = 0;
             number_pointselect = 0;
             firstmarkerselect = true;
             prelatLng = null;
-            polygon_select = null;
+//            polygon_select = null;
 
 
             tv_tip.setVisibility(View.VISIBLE);
             tv_tip.setText("请在承包区内选取点");
             btn_addorder.setText("确定");
             isStart = true;
-            polygon_select = list_polygon_pq.get(0);
+//            polygon_select = list_polygon_pq.get(0);
 
             setMarkerListenner();
             tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
@@ -269,37 +289,24 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                 @Override
                 public void onMapClick(LatLng latlng)
                 {
-                    polygon_select = list_polygon_pq.get(0);
+//                    polygon_select = list_polygon_pq.get(0);
                     if (!polygon_select.contains(latlng))
                     {
                         tv_tip.setText("请在承包区内选取点");
                         tv_tip.setBackgroundResource(R.color.bg_job);
                         return;
                     }
-//                    for (int i = 0; i < pointsList.size(); i++)//判断点是否已经选取过
-//                    {
-//                        if (pointsList.get(i).getLatitude() == latlng.getLatitude() && pointsList.get(i).getLongitude() == latlng.getLongitude())
-//                        {
-//                            //已经选取过，判断是否完成区域选择
-//                            tv_tip.setText("该点已经选取");
-//                            tv_tip.setBackgroundResource(R.color.bg_blue);
-//                            return ;
-//                        }
-//                    }
-//                    if (polygon_select.contains(latlng))//第一个确定的承包区是否包含第第 一个以后的点
-//                    {
-                    if (number_markerselect > 0)//只要边界上有一个marker被选中,而且区域内也已经选取点了，就不能再点击地图了，只能点击marker
+                    if (number_markerselect> 0)//只要边界上有一个marker被选中,而且区域内也已经选取点了，就不能再点击地图了，只能点击marker
                     {
                         if (latlng_one == null)
                         {
-                            latlng_one = pointsList.get(pointsList.size() - 1);
+                            latlng_one=pointsList.get(pointsList.size()-1);
                         }
                     }
                     list_LatLng_inboundary.add(latlng);
                     number_pointselect = number_pointselect + 1;
-                    Marker m = addMarker_Paint(0, latlng, R.drawable.location_start);
+                    Marker m=addMarker_Paint(0, latlng, R.drawable.location_start);
                     list_mark_inboundary.add(m);
-//                    number_markerselect = number_markerselect + 1;
                     last_pos = 0;
                     firstmarkerselect = true;
                     pointsList.add(latlng);
@@ -312,82 +319,6 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                     line.setWidth(4f);
                     list_Polyline.add(line);
                     Overlays.add(line);
-//                    }
-//                    else//是否点击了marker
-//                    {
-//                        List<Marker> list_marker = map.get("a");
-//                        for (int i = 0; i < list_marker.size(); i++)
-//                        {
-//                            if (list_marker.get(i).getPosition().equals(latlng))
-//                            {
-//                                pointsList.add(latlng);
-//                                if (isStart)
-//                                {
-//                                    prelatLng = latlng;
-//                                    isStart = false;
-//                                }
-//                                PolylineOptions lineOpt = new PolylineOptions();
-//                                lineOpt.add(prelatLng);
-//                                prelatLng = latlng;
-//                                lineOpt.add(latlng);
-//                                Polyline line = tencentMap.addPolyline(lineOpt);
-//                                line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
-//                                line.setWidth(4f);
-//                                Overlays.add(line);
-//                                tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-//                                {
-//                                    @Override
-//                                    public void onMapClick(LatLng latlng)
-//                                    {
-//                                        tv_tip.setText("请按顺序选择边界上的点");
-//                                        tv_tip.setBackgroundResource(R.color.bg_blue);
-//                                    }
-//                                });
-//                            } else
-//                            {
-//                                tv_tip.setText("请在承包区内选取点或选取边界上的点");
-//                                tv_tip.setBackgroundResource(R.color.bg_green);
-//                            }
-//                        }
-//                    }
-//                    if (pointsList.size() <= 1)
-//                    {
-//                        pointsList.add(latlng);
-//                        if (isStart)
-//                        {
-//                            prelatLng = latlng;
-//                            isStart = false;
-//                        }
-//                        PolylineOptions lineOpt = new PolylineOptions();
-//                        lineOpt.add(prelatLng);
-//                        prelatLng = latlng;
-//                        lineOpt.add(latlng);
-//                        Polyline line = tencentMap.addPolyline(lineOpt);
-//                        line.setColor(AddOrderMap.this.getResources().getColor(R.color.black));
-//                        line.setWidth(4f);
-//                        Overlays.add(line);
-//                    }
-//                    else
-//                    {
-//                        for (int i = 0; i < list_polygon_pq.size(); i++)
-//                        {
-//
-//                            int a = pointsList.size();
-//                            Polygon polygon = list_polygon_pq.get(i);
-//                            List<LatLng> list_point = polygon.getPoints();
-//                            for (int j = 0; j < list_point.size(); j++)
-//                            {
-//                                for (int k = 0; k < pointsList.size(); k++)
-//                                {
-//                                    if (list_point.get(j).equals(pointsList.get(k)))
-//                                    {
-//                                        addMarker(pointsList.get(k),R.drawable.location_start);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-
                 }
             });
         }
@@ -427,7 +358,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
 //            SqliteDb.saveAll(AddOrderMap.this, pointsList);
             Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
             list_polygon.add(polygon);
-            showDialog_EditDL();
+//            showDialog_EditPolygonInfo();
         } else
         {
             tv_adddl.setText("确定");
@@ -606,32 +537,317 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         });
         customdialog_editdlinfor.show();
     }
-
-    public void showDialog_EditDL()
+    public   List<DepartmentBean>  getDepartment(Context context)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editarea, null);
-        customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
-        et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
-        et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);
-        et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
-        btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
-        et_time.setText(utils.getTime());
-        btn_sure.setOnClickListener(new View.OnClickListener()
+        DbUtils db = DbUtils.create(context);
+        List<DepartmentBean> list = new ArrayList<>();
+        try
+        {
+            list_parktab = db.findAll(Selector.from(parktab.class));
+            if (list_parktab != null)
+            {
+                for (int i = 0; i <list_parktab.size() ; i++)
+                {
+                    DepartmentBean department=new DepartmentBean();
+                    department.setId(list_parktab.get(i).getid());
+                    department.setType("园区");
+                    department.setName(list_parktab.get(i).getparkName());
+                    list.add(department);//添加
+                    list_areatab = db.findAll(Selector.from(areatab.class).where("parkid","=",list_parktab.get(i).getid()));
+                    list_areatab_all.addAll(list_areatab);
+                    if (list_areatab != null)
+                    {
+                        for (int j = 0; j <list_areatab.size() ; j++)
+                        {
+                            DepartmentBean department1=new DepartmentBean();
+                            department1.setId(list_areatab.get(i).getid());
+                            department1.setType("片区");
+                            department1.setName(list_parktab.get(i).getparkName() + "-" + list_areatab.get(j).getareaName());
+                            list.add(department1);//添加
+                            list_contractTab = db.findAll(Selector.from(contractTab.class));
+                            list_contractTab_all.addAll(list_contractTab);
+                            if (list_contractTab != null)
+                            {
+                                for (int k = 0; k < list_contractTab.size(); k++)
+                                {
+                                    DepartmentBean department2=new DepartmentBean();
+                                    department2.setId(list_contractTab.get(i).getid());
+                                    department2.setType("承包区");
+                                    department2.setName(list_parktab.get(i).getparkName() + "-" + list_areatab.get(j).getareaName() + "-"+list_contractTab.get(k).getContractNum());
+                                    list.add(department2);//添加
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public void showDialog_EditPolygonInfo(final List<LatLng> list_select, final List<LatLng> list_notselect)
+    {
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editpolygoninfo, null);
+        customdialog_editpolygoninfor = new CustomDialog_EditPolygonInfo(getActivity(), R.style.MyDialog, dialog_layout);
+        ListView lv_department = (ListView) dialog_layout.findViewById(R.id.lv_department);
+        Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+        list_department=getDepartment(getActivity());
+        department_adapter = new Department_Adapter(getActivity(), list_department);
+        lv_department.setAdapter(department_adapter);
+        lv_department.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                customdialog_editpolygoninfor.dismiss();
+                DepartmentBean d = list_department.get(position);
+               String order_new= String.valueOf(Integer.valueOf(list_coordinatesbean.get(0).getOrders()) + 1);
+                if (d.getType().equals("园区"))
+                {
+                    for (int i = 0; i < list_parktab.size(); i++)
+                    {
+                        if (d.getId().equals(list_parktab.get(i).getid()))
+                        {
+                            for (int m = 0; m < list_select.size(); m++)
+                            {
+                                String uuid = java.util.UUID.randomUUID().toString();
+                                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                                coordinatesBean.setLat(String.valueOf(list_select.get(m).getLatitude()));
+                                coordinatesBean.setLng(String.valueOf(list_select.get(m).getLongitude()));
+                                coordinatesBean.setNumofplant("10000");
+                                coordinatesBean.setType("farm_boundary");
+                                coordinatesBean.setUid("60");
+                                coordinatesBean.setparkId(list_parktab.get(i).getid());
+                                coordinatesBean.setparkName(list_parktab.get(i).getparkName());
+                                coordinatesBean.setUuid(uuid);
+                                coordinatesBean.setAreaId("");
+                                coordinatesBean.setareaName("");
+                                coordinatesBean.setContractid("");
+                                coordinatesBean.setContractname("");
+                                coordinatesBean.setBatchid("");
+                                coordinatesBean.setCoordinatestime(utils.getTime());
+                                coordinatesBean.setRegistime(utils.getTime());
+                                coordinatesBean.setWeightofplant("400000");
+                                coordinatesBean.setSaleid("");
+                                coordinatesBean.setOrders(order_new);
+                                SqliteDb.save(getActivity(), coordinatesBean);
+//                uploadCoordinatesBean(coordinatesBean);
+                            }
+                            for (int m = 0; m < list_notselect.size(); m++)
+                            {
+                                String uuid = java.util.UUID.randomUUID().toString();
+                                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                                coordinatesBean.setLat(String.valueOf(list_notselect.get(m).getLatitude()));
+                                coordinatesBean.setLng(String.valueOf(list_notselect.get(m).getLongitude()));
+                                coordinatesBean.setNumofplant("10000");
+                                coordinatesBean.setType("farm_boundary_free");
+                                coordinatesBean.setUid("60");
+                                coordinatesBean.setparkId(list_parktab.get(i).getid());
+                                coordinatesBean.setparkName(list_parktab.get(i).getparkName());
+                                coordinatesBean.setUuid(uuid);
+                                coordinatesBean.setAreaId("");
+                                coordinatesBean.setareaName("");
+                                coordinatesBean.setContractid("");
+                                coordinatesBean.setContractname("");
+                                coordinatesBean.setBatchid("");
+                                coordinatesBean.setCoordinatestime(utils.getTime());
+                                coordinatesBean.setRegistime(utils.getTime());
+                                coordinatesBean.setWeightofplant("400000");
+                                coordinatesBean.setSaleid("");
+                                coordinatesBean.setOrders(order_new);
+                                SqliteDb.save(getActivity(), coordinatesBean);
+//                uploadCoordinatesBean(coordinatesBean);
+                            }
+                            break;
+                        }
+                    }
+                } else if (d.getType().equals("片区"))
+                {
+                    for (int i = 0; i < list_areatab_all.size(); i++)
+                    {
+                        if (d.getId().equals(list_areatab_all.get(i).getid()))
+                        {
+                            for (int m = 0; m < list_select.size(); m++)
+                            {
+                                String uuid = java.util.UUID.randomUUID().toString();
+                                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                                coordinatesBean.setLat(String.valueOf(list_select.get(m).getLatitude()));
+                                coordinatesBean.setLng(String.valueOf(list_select.get(m).getLongitude()));
+                                coordinatesBean.setNumofplant("10000");
+                                coordinatesBean.setType("farm_boundary");
+                                coordinatesBean.setUid("60");
+                                coordinatesBean.setparkId(list_areatab_all.get(i).getparkId());
+                                coordinatesBean.setparkName(list_areatab_all.get(i).getparkName());
+                                coordinatesBean.setUuid(uuid);
+                                coordinatesBean.setAreaId(list_areatab_all.get(i).getid());
+                                coordinatesBean.setareaName(list_areatab_all.get(i).getareaName());
+                                coordinatesBean.setContractid("");
+                                coordinatesBean.setContractname("");
+                                coordinatesBean.setBatchid("");
+                                coordinatesBean.setCoordinatestime(utils.getTime());
+                                coordinatesBean.setRegistime(utils.getTime());
+                                coordinatesBean.setWeightofplant("400000");
+                                coordinatesBean.setSaleid("");
+                                coordinatesBean.setOrders(order_new);
+                                SqliteDb.save(getActivity(), coordinatesBean);
+//                uploadCoordinatesBean(coordinatesBean);
+                            }
+                            for (int m = 0; m < list_notselect.size(); m++)
+                            {
+                                String uuid = java.util.UUID.randomUUID().toString();
+                                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                                coordinatesBean.setLat(String.valueOf(list_notselect.get(m).getLatitude()));
+                                coordinatesBean.setLng(String.valueOf(list_notselect.get(m).getLongitude()));
+                                coordinatesBean.setNumofplant("10000");
+                                coordinatesBean.setType("farm_boundary_free");
+                                coordinatesBean.setUid("60");
+                                coordinatesBean.setparkId(list_areatab_all.get(i).getparkId());
+                                coordinatesBean.setparkName(list_areatab_all.get(i).getparkName());
+                                coordinatesBean.setUuid(uuid);
+                                coordinatesBean.setAreaId("");//画选片区，list_notselect则只能为园区的未规划图，所以为空
+                                coordinatesBean.setareaName("");//画选片区，list_notselect则只能为园区的未规划图，所以为空
+                                coordinatesBean.setContractid("");
+                                coordinatesBean.setContractname("");
+                                coordinatesBean.setBatchid("");
+                                coordinatesBean.setCoordinatestime(utils.getTime());
+                                coordinatesBean.setRegistime(utils.getTime());
+                                coordinatesBean.setWeightofplant("400000");
+                                coordinatesBean.setSaleid("");
+                                coordinatesBean.setOrders(order_new);
+                                SqliteDb.save(getActivity(), coordinatesBean);
+//                uploadCoordinatesBean(coordinatesBean);
+                            }
+                            break;
+                        }
+                    }
+                } else
+                {
+                    for (int i = 0; i < list_contractTab_all.size(); i++)
+                    {
+                        if (d.getId().equals(list_contractTab.get(i).getid()))
+                        {
+                            for (int m = 0; m < list_select.size(); m++)
+                            {
+                                String uuid = java.util.UUID.randomUUID().toString();
+                                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                                coordinatesBean.setLat(String.valueOf(list_select.get(m).getLatitude()));
+                                coordinatesBean.setLng(String.valueOf(list_select.get(m).getLongitude()));
+                                coordinatesBean.setNumofplant("10000");
+                                coordinatesBean.setType("farm_boundary");
+                                coordinatesBean.setUid("60");
+                                coordinatesBean.setparkId(list_contractTab_all.get(i).getparkId());
+                                coordinatesBean.setparkName(list_contractTab_all.get(i).getparkName());
+                                coordinatesBean.setUuid(uuid);
+                                coordinatesBean.setAreaId(list_contractTab_all.get(i).getAreaId());
+                                coordinatesBean.setareaName(list_contractTab_all.get(i).getareaName());
+                                coordinatesBean.setContractid(list_contractTab_all.get(i).getid());
+                                coordinatesBean.setContractname(list_contractTab_all.get(i).getContractNum());
+                                coordinatesBean.setBatchid("");
+                                coordinatesBean.setCoordinatestime(utils.getTime());
+                                coordinatesBean.setRegistime(utils.getTime());
+                                coordinatesBean.setWeightofplant("400000");
+                                coordinatesBean.setSaleid("");
+                                coordinatesBean.setOrders(order_new);
+                                SqliteDb.save(getActivity(), coordinatesBean);
+//                uploadCoordinatesBean(coordinatesBean);
+                            }
+                            for (int m = 0; m < list_notselect.size(); m++)
+                            {
+                                String uuid = java.util.UUID.randomUUID().toString();
+                                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                                coordinatesBean.setLat(String.valueOf(list_notselect.get(m).getLatitude()));
+                                coordinatesBean.setLng(String.valueOf(list_notselect.get(m).getLongitude()));
+                                coordinatesBean.setNumofplant("10000");
+                                coordinatesBean.setType("farm_boundary_free");
+                                coordinatesBean.setUid("60");
+                                coordinatesBean.setparkId(list_contractTab_all.get(i).getparkId());
+                                coordinatesBean.setparkName(list_contractTab_all.get(i).getparkName());
+                                coordinatesBean.setUuid(uuid);
+                                coordinatesBean.setAreaId(list_contractTab_all.get(i).getAreaId());
+                                coordinatesBean.setareaName(list_contractTab_all.get(i).getareaName());
+                                coordinatesBean.setContractid("");//画选承包区，list_notselect则只能为片区的未规划图，所以为空
+                                coordinatesBean.setContractname("");//画选承包区，list_notselect则只能为片区的未规划图，所以为空
+                                coordinatesBean.setBatchid("");
+                                coordinatesBean.setCoordinatestime(utils.getTime());
+                                coordinatesBean.setRegistime(utils.getTime());
+                                coordinatesBean.setWeightofplant("400000");
+                                coordinatesBean.setSaleid("");
+                                coordinatesBean.setOrders(order_new);
+                                SqliteDb.save(getActivity(), coordinatesBean);
+//                uploadCoordinatesBean(coordinatesBean);
+                            }
+                            break;
+                        }
+                    }
+                }
+
+            }
+        });
+        customdialog_editpolygoninfor.show();
+    }
+    public void showDialog_OperatePolygon()
+    {
+        final View dialog_layout = (RelativeLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_operatepolygon, null);
+        customdialog_operatepolygon = new CustomDialog_OperatePolygon(getActivity(), R.style.MyDialog, dialog_layout);
+        Button  btn_paint = (Button) dialog_layout.findViewById(R.id.btn_paint);
+        Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
+        Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
+        Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        Button btn_delete = (Button) dialog_layout.findViewById(R.id.btn_delete);
+        btn_paint.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                customdialog_editdlinfor.dismiss();
+                initMapAndParam();
+                customdialog_operatepolygon.dismiss();
             }
         });
-        customdialog_editdlinfor.show();
+        btn_delete.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+//                initMapAndParam();
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        btn_see.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        btn_change.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        customdialog_operatepolygon.show();
     }
 
-
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.cz_makemap_makelayer, container, false);
+        commembertab = AppContext.getUserInfo(getActivity());
         commembertab = AppContext.getUserInfo(getActivity());
         return rootView;
     }
@@ -639,6 +855,15 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
     @AfterViews
     void afterOncreate()
     {
+//       List<CoordinatesBean> list11=SqliteDb.getTemp1(getActivity());
+//        CoordinatesBean cc= list11.get(0);
+//        for (int i = 0; i < list11.size(); i++)
+//        {
+//            CoordinatesBean cc= list11.get(i);
+//            cc.setAreaId("");
+//            cc.setareaName("");
+//            SqliteDb.updateCoordinatesOrder(getActivity(),cc);
+//        }
 //        SqliteDb.initPark(AddOrderMap.this);
 //        SqliteDb.initArea(AddOrderMap.this);
 //        SqliteDb.initContract(AddOrderMap.this);
@@ -650,7 +875,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
 //            uploadCoordinatesBean(list_boundary_park.get(i));
 //        }
 //        getBoundary_farm();
-//        SqliteDb.deletetemp(AddOrderMap.this);
+//        SqliteDb.deletetemp(getActivity());
 
         TencentLocationRequest request = TencentLocationRequest.create();
         TencentLocationManager locationManager = TencentLocationManager.getInstance(getActivity());
@@ -660,6 +885,8 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         list_polygon = new ArrayList<Polygon>();
         list_polygon_pq = new ArrayList<Polygon>();
         list_point_pq = new ArrayList<>();
+        list_polygon_all = new ArrayList<>();
+        list_polygon_allCoordinatesBean = new ArrayList<>();
         map = new HashMap<>();
         if (!utils.isOPen(getActivity()))
         {
@@ -668,35 +895,53 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
 //        mapview.setAlpha(0.2f);
         tencentMap = mapview.getMap();
         tencentMap.setZoom(14);
-        setMarkerListenner();
+//        setMarkerListenner();
 //        tencentMap.setSatelliteEnabled(true);
         mProjection = mapview.getProjection();
 
         //        animateToLocation();
 //        getTestData("points");
+        initMapOnclick();
 
-        String str = SqliteDb.getBoundary_farm(getActivity(), "60", "farm_boundary");
-        Result result = JSON.parseObject(str, Result.class);
-        if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+
+
+        String str_farm_boundary_free = SqliteDb.getBoundary_farm_free(getActivity(), "60", "farm_boundary_free");
+        Result result_farm_boundary_free = JSON.parseObject(str_farm_boundary_free, Result.class);
+        if (result_farm_boundary_free.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
         {
-            if (result.getAffectedRows() != 0)
+            if (result_farm_boundary_free.getAffectedRows() != 0)
             {
-                JSONArray jsonArray_Rows = result.getRows();
-                String aa = jsonArray_Rows.toString();
+                JSONArray jsonArray_Rows = result_farm_boundary_free.getRows();
                 for (int i = 0; i < jsonArray_Rows.size(); i++)
                 {
                     JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
                     if (jsonArray_boundary.size() > 0)
                     {
                         list_coordinatesbean = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
-//                        listNewData.add(listNewData.get(0));
                         setBoundary_park(list_coordinatesbean);
                     }
-
                 }
-
             }
         }
+
+//        String str_farm_boundary = SqliteDb.getBoundary_farm_free(getActivity(), "60", "farm_boundary");
+//        Result result_farm_boundary = JSON.parseObject(str_farm_boundary, Result.class);
+//        if (result_farm_boundary.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+//        {
+//            if (result_farm_boundary.getAffectedRows() != 0)
+//            {
+//                JSONArray jsonArray_Rows = result_farm_boundary.getRows();
+//                for (int i = 0; i < jsonArray_Rows.size(); i++)
+//                {
+//                    JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
+//                    if (jsonArray_boundary.size() > 0)
+//                    {
+//                        list_coordinatesbean = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
+//                        setBoundary_park(list_coordinatesbean);
+//                    }
+//                }
+//            }
+//        }
     }
 
 
@@ -845,26 +1090,26 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                         if (number_markerselect > 2 && pointsList.get(0).getLatitude() == latlng.getLatitude() && pointsList.get(0).getLongitude() == latlng.getLongitude())
                         {
 
-                            for (int j = 0; j < list_LatLng_inboundary.size(); j++)
+                            for (int j = 0; j <list_LatLng_inboundary.size() ; j++)
                             {
                                 if (latlng.toString().equals(list_LatLng_inboundary.get(j).toString()))//最终点为内点
                                 {
                                     if (latlng_two == null)
                                     {
-                                        latlng_two = pointsList.get(pointsList.size() - 1);
-                                    } else if (latlng_one == null)
+                                        latlng_two=pointsList.get(pointsList.size()-1);
+                                    }else   if (latlng_one== null)
                                     {
-                                        latlng_one = pointsList.get(pointsList.size() - 1);
+                                        latlng_one=pointsList.get(pointsList.size()-1);
                                     }
                                 }
-                                if (j == list_LatLng_inboundary.size() - 1)//最终点为边界点
+                                if (j == list_LatLng_inboundary.size()-1)//最终点为边界点
                                 {
                                     if (latlng_two == null)
                                     {
-                                        latlng_two = latlng;
-                                    } else if (latlng_one == null)
+                                        latlng_two=latlng;
+                                    }else   if (latlng_one== null)
                                     {
-                                        latlng_one = latlng;
+                                        latlng_one=latlng;
                                     }
                                 }
                             }
@@ -904,17 +1149,17 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                                         String d = String.valueOf(latlng.getLongitude());
                                         if ((list_coordinatesbean.get(j).getLat().equals(String.valueOf(latlng.getLatitude())) && list_coordinatesbean.get(j).getLng().equals(String.valueOf(latlng.getLongitude()))))
                                         {
-                                            currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(j).getId());
+                                            currentmarker_pos = j+1;
                                         }
                                         if ((list_coordinatesbean.get(j).getLat().equals(String.valueOf(ll.getLatitude())) && list_coordinatesbean.get(j).getLng().equals(String.valueOf(ll.getLongitude()))))
                                         {
-                                            lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(j).getId());
+                                            lastmarker_pos = j+1;
                                         }
                                     }
 
                                     if (lastmarker_pos > currentmarker_pos)//80-0-7   80-7-0
                                     {
-                                        if (lastmarker_pos == currentmarker_pos + 10)//非首尾相邻
+                                        if (lastmarker_pos == currentmarker_pos + intervalNumber)//非首尾相邻
                                         {
                                             for (int k = lastmarker_pos; k > currentmarker_pos; k--)
                                             {
@@ -973,7 +1218,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                                         }
                                     } else//现在点大7>80
                                     {
-                                        if (currentmarker_pos == lastmarker_pos + 10)//非首尾相邻
+                                        if (currentmarker_pos == lastmarker_pos + intervalNumber)//非首尾相邻
                                         {
                                             for (int k = lastmarker_pos; k < currentmarker_pos; k++)
                                             {
@@ -1010,7 +1255,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                                                 Overlays.add(line);
                                                 list_Polyline.add(line);
                                             }
-                                            for (int k = list_coordinatesbean.size() - 1; k >= currentmarker_pos; k--)
+                                            for (int k = list_coordinatesbean.size() - 1; k>= currentmarker_pos; k--)
                                             {
                                                 LatLng l = new LatLng(Double.valueOf(list_coordinatesbean.get(k).getLat()), Double.valueOf(list_coordinatesbean.get(k).getLng()));
                                                 number_markerselect = number_markerselect + 1;
@@ -1107,7 +1352,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
 //                                list_mark_inboundary.get(m).remove();
 //                            }
 //                            Overlays.remove(list_);
-//                            showDialog_EditDL();
+//                            showDialog_EditPolygonInfo();
                             //重置数据
 //                            resetData();
                             divide();
@@ -1140,7 +1385,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                             divide();
 //                            Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
 //                            list_polygon.add(polygon);
-//                            showDialog_EditDL();
+//                            showDialog_EditPolygonInfo();
 //                            resetData();
                             return false;
                         }
@@ -1168,7 +1413,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                     {
                         if (latlng_two == null)
                         {
-                            latlng_two = latlng;
+                            latlng_two=latlng;
                         }
                         tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
                         {
@@ -1188,7 +1433,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                 {
                     if (latlng_two == null)
                     {
-                        latlng_two = latlng;
+                        latlng_two=latlng;
                     }
 
                     tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
@@ -1231,17 +1476,17 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                         String d = String.valueOf(latlng.getLongitude());
                         if ((list_coordinatesbean.get(i).getLat().equals(String.valueOf(latlng.getLatitude())) && list_coordinatesbean.get(i).getLng().equals(String.valueOf(latlng.getLongitude()))))
                         {
-                            currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(i).getId());
+                            currentmarker_pos = i+1;
                         }
                         if ((list_coordinatesbean.get(i).getLat().equals(String.valueOf(ll.getLatitude())) && list_coordinatesbean.get(i).getLng().equals(String.valueOf(ll.getLongitude()))))
                         {
-                            lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(i).getId());
+                            lastmarker_pos = i+1;
                         }
                     }
 
                     if (lastmarker_pos > currentmarker_pos)//80-0-7   80-7-0
                     {
-                        if (lastmarker_pos == currentmarker_pos + 10)//非首尾相邻
+                        if (lastmarker_pos == currentmarker_pos + intervalNumber)//非首尾相邻
                         {
                             for (int i = lastmarker_pos; i > currentmarker_pos; i--)
                             {
@@ -1310,7 +1555,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                         }
                     } else//现在点大7>80
                     {
-                        if (currentmarker_pos == lastmarker_pos + 10)//非首尾相邻
+                        if (currentmarker_pos == lastmarker_pos + intervalNumber)//非首尾相邻
                         {
                             for (int i = lastmarker_pos; i < currentmarker_pos; i++)
                             {
@@ -1407,94 +1652,94 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         {
             if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_one.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_one.getLongitude()))))
             {
-                currentmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+                currentmarker_pos =k+1;
             }
             if ((list_coordinatesbean.get(k).getLat().equals(String.valueOf(latlng_two.getLatitude())) && list_coordinatesbean.get(k).getLng().equals(String.valueOf(latlng_two.getLongitude()))))
             {
-                lastmarker_pos = Integer.valueOf(list_coordinatesbean.get(k).getId());
+                lastmarker_pos = k+1;
             }
         }
-        int max = 0;
-        int min = 0;
-        if (lastmarker_pos > currentmarker_pos)
+        int max=0;
+        int min=0;
+        if (lastmarker_pos>currentmarker_pos)
         {
-            max = lastmarker_pos;
-            min = currentmarker_pos;
-        } else
+            max=lastmarker_pos;
+            min=currentmarker_pos;
+        }else
         {
-            max = currentmarker_pos;
-            min = lastmarker_pos;
+            max=currentmarker_pos;
+            min=lastmarker_pos;
         }
-        for (int m = min; m <= max; m++)
+        for (int m = min; m <=max; m++)
         {
-            LatLng l = new LatLng(Double.valueOf(list_coordinatesbean.get(m).getLat()), Double.valueOf(list_coordinatesbean.get(m).getLng()));
+            LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(m).getLat()),Double.valueOf(list_coordinatesbean.get(m).getLng()));
             list_LatLng_boundaryselect.add(l);
         }
-        for (int n = max; n < list_coordinatesbean.size(); n++)
+        for (int n =max; n <list_coordinatesbean.size() ; n++)
         {
-            LatLng l = new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()), Double.valueOf(list_coordinatesbean.get(n).getLng()));
+            LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
             list_LatLng_boundarynotselect.add(l);
         }
-        for (int n = 0; n <= min; n++)
+        for (int n =0; n <=min ; n++)
         {
-            LatLng l = new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()), Double.valueOf(list_coordinatesbean.get(n).getLng()));
+            LatLng l=new LatLng(Double.valueOf(list_coordinatesbean.get(n).getLat()),Double.valueOf(list_coordinatesbean.get(n).getLng()));
             list_LatLng_boundarynotselect.add(l);
         }
 
         if (list_LatLng_inboundary != null)
         {
-            int pos_latlng_one_inboundarynotselect = 0;
-            int pos_latlng_one_inboundaryselect = 0;
-            int pos_latlng_two_inboundarynotselect = 0;
-            int pos_latlng_two_inboundaryselect = 0;
-            int pos_latlng_one_inpointsList = 0;
-            int pos_latlng_two_inpointsList = 0;
-            int pos_latlng_in__one_inpointsList = 0;
-            int pos_latlng_in__two_inpointsList = 0;
+            int pos_latlng_one_inboundarynotselect=0;
+            int pos_latlng_one_inboundaryselect=0;
+            int pos_latlng_two_inboundarynotselect=0;
+            int pos_latlng_two_inboundaryselect=0;
+            int pos_latlng_one_inpointsList=0;
+            int pos_latlng_two_inpointsList=0;
+            int pos_latlng_in__one_inpointsList=0;
+            int pos_latlng_in__two_inpointsList=0;
 
-            LatLng latlng_in__one = list_LatLng_inboundary.get(0);
-            LatLng latlng_in__two = list_LatLng_inboundary.get(list_LatLng_inboundary.size() - 1);
+            LatLng latlng_in__one=list_LatLng_inboundary.get(0);
+            LatLng latlng_in__two=list_LatLng_inboundary.get(list_LatLng_inboundary.size()-1);
 
-            for (int j = 0; j < list_LatLng_boundarynotselect.size(); j++)//没选择区域
+            for (int j = 0; j <list_LatLng_boundarynotselect.size() ; j++)//没选择区域
             {
                 if (list_LatLng_boundarynotselect.get(j).toString().equals(latlng_one.toString()))
                 {
-                    pos_latlng_one_inboundarynotselect = j;
+                    pos_latlng_one_inboundarynotselect=j;
                 }
                 if (list_LatLng_boundarynotselect.get(j).toString().equals(latlng_two.toString()))
                 {
-                    pos_latlng_two_inboundarynotselect = j;
+                    pos_latlng_two_inboundarynotselect=j;
                 }
             }
-            for (int j = 0; j < list_LatLng_boundaryselect.size(); j++)//已选择区域
+            for (int j = 0; j <list_LatLng_boundaryselect.size() ; j++)//已选择区域
             {
                 if (list_LatLng_boundaryselect.get(j).toString().equals(latlng_one.toString()))
                 {
-                    pos_latlng_one_inboundaryselect = j;
+                    pos_latlng_one_inboundaryselect=j;
                 }
                 if (list_LatLng_boundaryselect.get(j).toString().equals(latlng_two.toString()))
                 {
-                    pos_latlng_two_inboundaryselect = j;
+                    pos_latlng_two_inboundaryselect=j;
                 }
             }
 
-            for (int j = 0; j < pointsList.size(); j++)
+            for (int j = 0; j <pointsList.size() ; j++)
             {
                 if (pointsList.get(j).toString().equals(latlng_in__one.toString()))
                 {
-                    pos_latlng_in__one_inpointsList = j;
+                    pos_latlng_in__one_inpointsList=j;
                 }
                 if (pointsList.get(j).toString().equals(latlng_in__two.toString()))
                 {
-                    pos_latlng_in__two_inpointsList = j;
+                    pos_latlng_in__two_inpointsList=j;
                 }
                 if (pointsList.get(j).toString().equals(latlng_one.toString()))
                 {
-                    pos_latlng_one_inpointsList = j;
+                    pos_latlng_one_inpointsList=j;
                 }
                 if (pointsList.get(j).toString().equals(latlng_two.toString()))
                 {
-                    pos_latlng_two_inpointsList = j;
+                    pos_latlng_two_inpointsList=j;
                 }
             }
 //                                int pos_latlng_one_inboundarynotselect=0;//latlng_one在没选择边界位置
@@ -1505,208 +1750,208 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
 //                                int pos_latlng_two_inpointsList=0;//latlng_two在已选取点钟位置
 //                                int pos_latlng_in__one_inpointsList=0;//第一个内点在已选取点钟位置
 //                                int pos_latlng_in__two_inpointsList=0;//第二个内点在已选取点钟位置
-            int pos_connectpoint[] = {pos_latlng_one_inpointsList, pos_latlng_two_inpointsList, pos_latlng_in__one_inpointsList, pos_latlng_in__two_inpointsList};
+            int pos_connectpoint[]={pos_latlng_one_inpointsList,pos_latlng_two_inpointsList,pos_latlng_in__one_inpointsList,pos_latlng_in__two_inpointsList};
 
             Arrays.sort(pos_connectpoint);
-            LatLng LatLng0 = pointsList.get(pos_connectpoint[0]);
-            LatLng LatLng1 = pointsList.get(pos_connectpoint[1]);
-            LatLng LatLng2 = pointsList.get(pos_connectpoint[2]);
-            LatLng LatLng3 = pointsList.get(pos_connectpoint[3]);
+            LatLng LatLng0=pointsList.get(pos_connectpoint[0]);
+            LatLng LatLng1=pointsList.get(pos_connectpoint[1]);
+            LatLng LatLng2=pointsList.get(pos_connectpoint[2]);
+            LatLng LatLng3=pointsList.get(pos_connectpoint[3]);
 //将已选取边界点和已选取内点相加
-            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size() - 2).toString().equals(LatLng0.toString()))
+            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size()-2).toString().equals(LatLng0.toString()))
             {
-                for (int k = 0; k < list_LatLng_boundaryselect.size(); k++)
+                for (int k = 0; k <list_LatLng_boundaryselect.size() ; k++)
                 {
                     if (LatLng1.toString().equals(list_LatLng_boundaryselect.get(k).toString()))//不加LatLng1
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng2);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng2);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
                         }
 
 
-                    } else
+                    }else
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng1);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng1);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
                         }
 
                     }
                 }
             }
-            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size() - 2).toString().equals(LatLng1.toString()))
+            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size()-2).toString().equals(LatLng1.toString()))
             {
-                for (int k = 0; k < list_LatLng_boundaryselect.size(); k++)//判断是否已有点
+                for (int k = 0; k <list_LatLng_boundaryselect.size() ; k++)//判断是否已有点
                 {
                     if (LatLng2.toString().equals(list_LatLng_boundaryselect.get(k).toString()))//不加LatLng2
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng3);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng3);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
                         }
 
 
-                    } else
+                    }else
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng2);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng2);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
                         }
 
                     }
                 }
             }
-            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size() - 2).toString().equals(LatLng2.toString()))
+            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size()-2).toString().equals(LatLng2.toString()))
             {
-                for (int k = 0; k < list_LatLng_boundaryselect.size(); k++)//判断是否已有点
+                for (int k = 0; k <list_LatLng_boundaryselect.size() ; k++)//判断是否已有点
                 {
                     if (LatLng3.toString().equals(list_LatLng_boundaryselect.get(k).toString()))//不加LatLng3
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng0);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng0);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
                         }
 
 
-                    } else
+                    }else
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng3);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng3);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
                         }
 
                     }
                 }
             }
-            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size() - 2).toString().equals(LatLng3.toString()))
+            if (!isend_select && list_LatLng_boundaryselect.get(list_LatLng_boundaryselect.size()-2).toString().equals(LatLng3.toString()))
             {
-                for (int k = 0; k < list_LatLng_boundaryselect.size(); k++)//判断是否已有点
+                for (int k = 0; k <list_LatLng_boundaryselect.size() ; k++)//判断是否已有点
                 {
                     if (LatLng0.toString().equals(list_LatLng_boundaryselect.get(k).toString()))//不加LatLng0
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng1);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng1);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
                         }
 
 
-                    } else
+                    }else
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng0);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng0);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundaryselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_select = true;
+                            isend_select=true;
                             break;
                         }
 
@@ -1714,200 +1959,200 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                 }
             }
             //将非选取点和已选取内点相加
-            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size() - 2).toString().equals(LatLng0.toString()))
+            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size()-2).toString().equals(LatLng0.toString()))
             {
-                for (int k = 0; k < list_LatLng_boundarynotselect.size(); k++)//判断是否已有点
+                for (int k = 0; k <list_LatLng_boundarynotselect.size() ; k++)//判断是否已有点
                 {
                     if (LatLng1.toString().equals(list_LatLng_boundarynotselect.get(k).toString()))//不加LatLng0
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng2);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng2);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
                         }
 
 
-                    } else
+                    }else
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng1);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng1);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
                         }
 
                     }
                 }
             }
-            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size() - 2).toString().equals(LatLng1.toString()))
+            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size()-2).toString().equals(LatLng1.toString()))
             {
-                for (int k = 0; k < list_LatLng_boundarynotselect.size(); k++)//判断是否已有点
+                for (int k = 0; k <list_LatLng_boundarynotselect.size() ; k++)//判断是否已有点
                 {
                     if (LatLng2.toString().equals(list_LatLng_boundarynotselect.get(k).toString()))//不加LatLng0
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng3);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng3);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
                         }
 
 
-                    } else
+                    }else
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng2);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng2);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
                         }
 
                     }
                 }
             }
-            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size() - 2).toString().equals(LatLng2.toString()))
+            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size()-2).toString().equals(LatLng2.toString()))
             {
-                for (int k = 0; k < list_LatLng_boundarynotselect.size(); k++)//判断是否已有点
+                for (int k = 0; k <list_LatLng_boundarynotselect.size() ; k++)//判断是否已有点
                 {
                     if (LatLng3.toString().equals(list_LatLng_boundarynotselect.get(k).toString()))//不加LatLng0
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng0);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng0);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
                         }
 
 
-                    } else
+                    }else
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng3);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng3);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
                         }
 
                     }
                 }
             }
-            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size() - 2).toString().equals(LatLng3.toString()))
+            if (!isend_notselect && list_LatLng_boundarynotselect.get(list_LatLng_boundarynotselect.size()-2).toString().equals(LatLng3.toString()))
             {
-                for (int k = 0; k < list_LatLng_boundarynotselect.size(); k++)//判断是否已有点
+                for (int k = 0; k <list_LatLng_boundarynotselect.size() ; k++)//判断是否已有点
                 {
                     if (LatLng0.toString().equals(list_LatLng_boundarynotselect.get(k).toString()))//不加LatLng0
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng1);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng1);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
                         }
 
 
-                    } else
+                    }else
                     {
-                        int index = list_LatLng_inboundary.indexOf(LatLng0);
-                        if (index == 0)//
+                        int index=list_LatLng_inboundary.indexOf(LatLng0);
+                        if (index==0)//
                         {
-                            for (int n = 0; n < list_LatLng_inboundary.size(); n++)
+                            for (int n = 0; n <list_LatLng_inboundary.size() ; n++)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
-                        } else
+                        }else
                         {
-                            for (int n = list_LatLng_inboundary.size() - 1; n >= 0; n--)
+                            for (int n =list_LatLng_inboundary.size()-1; n >=0 ; n--)
                             {
                                 list_LatLng_boundarynotselect.add(list_LatLng_inboundary.get(n));
                             }
-                            isend_notselect = true;
+                            isend_notselect=true;
                             break;
                         }
 
@@ -1926,53 +2171,28 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
 
         Polygon polygon2 = drawPolygon(list_LatLng_boundaryselect, R.color.bg_yellow);
         list_polygon.add(polygon2);
-        saveCoordinate(list_LatLng_boundaryselect, "13", "片区二号");
-        saveCoordinate(list_LatLng_boundarynotselect, "-2", "未选区域");
-//                            Overlays.remove(list_Polyline);
-        for (int m = 0; m < list_Polyline.size(); m++)
+//        saveCoordinate(list_LatLng_boundaryselect, "13", "片区二号");
+//        saveCoordinate(list_LatLng_boundarynotselect,"-2","未选区域");
+        for (int m = 0; m <list_Polyline.size() ; m++)
         {
             list_Polyline.get(m).remove();
         }
-        for (int m = 0; m < list_mark.size(); m++)
+        for (int m = 0; m <list_mark.size() ; m++)
         {
             list_mark.get(m).remove();
         }
-        for (int m = 0; m < list_mark_inboundary.size(); m++)
+        for (int m = 0; m <list_mark_inboundary.size() ; m++)
         {
             list_mark_inboundary.get(m).remove();
         }
+        showDialog_EditPolygonInfo(list_LatLng_boundaryselect,list_LatLng_boundarynotselect);
+        //重置数据
+        resetData();
     }
-
     private void resetData()
     {
-//        pointsList = new ArrayList<>();
-//        list_polygon = new ArrayList<>();
-//        last_pos = 0;
-//        number_markerselect = 0;
-//        number_pointselect = 0;
-//        firstmarkerselect = true;
-//        prelatLng = null;
-//        polygon_select = null;
-//        for (int i = 0; i < list_mark.size(); i++)
-//        {
-//            list_mark.remove(i);
-//        }
-//        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-//        {
-//            @Override
-//            public void onMapClick(LatLng latlng)
-//            {
-//
-//            }
-//        });
-//        tencentMap.setOnMarkerClickListener(new TencentMap.OnMarkerClickListener()
-//        {
-//            @Override
-//            public boolean onMarkerClick(Marker marker)
-//            {
-//                return false;
-//            }
-//        });
+        initMapAndParam();
+        initMapOnclick();
     }
 
     private Polygon drawPolygon(List<LatLng> list_LatLng, int color)
@@ -2087,10 +2307,10 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
 
     private void setBoundary_park(List<CoordinatesBean> list_coordinates)
     {
-        list_AllLatLng = new ArrayList<>();
-        list_mark = new ArrayList<>();
-        int dd = list_coordinates.size() / 9;
-        int num = dd;
+        List<LatLng> list_AllLatLng = new ArrayList<>();
+//        list_mark = new ArrayList<>();
+//        int dd = list_coordinates.size() / 9;
+//        int num = dd;
         for (int i = 0; i < list_coordinates.size(); i++)
         {
             LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
@@ -2100,25 +2320,27 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
 //                addMarker_Paint(i, latlng, R.drawable.location_start);
             }
             list_AllLatLng.add(latlng);
-            if (i == num)
-            {
-                num = num + dd;
-                Marker marker = addMarker_Paint(list_mark.size(), latlng, R.drawable.location_start);
-                list_mark.add(marker);
-                list_point_pq.add(latlng);
-            }
+//            if (i == num)
+//            {
+//                num = num + dd;
+//                Marker marker = addMarker_Paint(list_mark.size(), latlng, R.drawable.location_start);
+//                list_mark.add(marker);
+//                list_point_pq.add(latlng);
+//            }
 
         }
 //        map.put("a", list_mark);
         Polygon polygon = drawPolygon(list_AllLatLng, R.color.bg_yellow);
-        list_polygon_pq.add(polygon);
+//        list_polygon_pq.add(polygon);
+        list_polygon_all.add(polygon);
+        list_polygon_allCoordinatesBean.add(list_coordinates);
         Overlays.add(polygon);
 
 //        resetData();
 
     }
 
-    public void saveCoordinate(List<LatLng> list, String id, String name)
+    public void   saveCoordinate(List<LatLng> list,String id,String name)
     {
         for (int i = 0; i < list.size(); i++)
         {
@@ -2146,7 +2368,113 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
 //                uploadCoordinatesBean(coordinatesBean);
         }
     }
+    private void initMapAndParam()
+    {
+        //重置数据
+        list_Polyline = new ArrayList<>();
+        list_mark_inboundary = new ArrayList<>();
+        pointsList = new ArrayList<>();
+        list_polygon = new ArrayList<>();
+        list_LatLng_boundarynotselect=new ArrayList<>();
+        list_LatLng_boundaryselect=new ArrayList<>();
+        list_LatLng_inboundary=new ArrayList<>();
+        last_pos = 0;
+        number_markerselect = 0;
+        number_pointselect = 0;
+        firstmarkerselect = true;
+        prelatLng = null;
+//        polygon_select = null;
 
+
+        isStart = true;
+//        polygon_select = list_polygon_pq.get(0);
+
+        setMarkerListenner();
+        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+        {
+            @Override
+            public void onMapClick(LatLng latlng)
+            {
+//                polygon_select = list_polygon_pq.get(0);
+                if (!polygon_select.contains(latlng))
+                {
+                    tv_tip.setText("请在承包区内选取点");
+                    tv_tip.setBackgroundResource(R.color.bg_job);
+                    return;
+                }
+                if (number_markerselect> 0)//只要边界上有一个marker被选中,而且区域内也已经选取点了，就不能再点击地图了，只能点击marker
+                {
+                    if (latlng_one == null)
+                    {
+                        latlng_one=pointsList.get(pointsList.size()-1);
+                    }
+                }
+                list_LatLng_inboundary.add(latlng);
+                number_pointselect = number_pointselect + 1;
+                Marker m=addMarker_Paint(0, latlng, R.drawable.location_start);
+                list_mark_inboundary.add(m);
+                last_pos = 0;
+                firstmarkerselect = true;
+                pointsList.add(latlng);
+                PolylineOptions lineOpt = new PolylineOptions();
+                lineOpt.add(prelatLng);
+                prelatLng = latlng;
+                lineOpt.add(latlng);
+                Polyline line = tencentMap.addPolyline(lineOpt);
+                line.setColor(getActivity().getResources().getColor(R.color.black));
+                line.setWidth(4f);
+                list_Polyline.add(line);
+                Overlays.add(line);
+            }
+        });
+    }
+    public void  initMapOnclick()
+    {
+        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+        {
+            @Override
+            public void onMapClick(LatLng latlng)
+            {
+                for (int i = 0; i <list_polygon_all.size() ; i++)
+                {
+                    Polygon polygon= list_polygon_all.get(i);
+                    if (polygon.contains(latlng))
+                    {
+                        list_CoordinatesBean_currentPolygon= list_polygon_allCoordinatesBean.get(i);
+                        polygon_select=polygon;
+                        List<LatLng> list_single_polygon=polygon.getPoints();
+                        list_mark = new ArrayList<>();
+                        intervalNumber = list_single_polygon.size() / 9;
+                        int num = intervalNumber;
+                        for (int j = 0; j < list_single_polygon.size(); j++)
+                        {
+                            LatLng ll = new LatLng(Double.valueOf(list_single_polygon.get(j).getLatitude()), Double.valueOf(list_single_polygon.get(j).getLongitude()));
+                            if (j == 0)
+                            {
+                                tencentMap.animateTo(ll);
+                            }
+                            if (j== num)
+                            {
+                                num = num + intervalNumber;
+                                Marker marker = addMarker_Paint(list_mark.size(), ll, R.drawable.location_start);
+                                list_mark.add(marker);
+                                list_point_pq.add(ll);
+                            }
+
+                        }
+                        showDialog_OperatePolygon();
+                        return;
+                    }
+                    if (i==list_polygon_all.size()-1)
+                    {
+                        tv_tip.setText("请在承包区内选取点");
+                        tv_tip.setBackgroundResource(R.color.bg_job);
+                        return;
+                    }
+                }
+            }
+        });
+    }
     @Override
     public void onClick(View v)
     {

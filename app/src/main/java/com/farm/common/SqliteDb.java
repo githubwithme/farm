@@ -14,6 +14,7 @@ import com.farm.bean.sellOrderDetailTab;
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.db.sqlite.WhereBuilder;
+import com.lidroid.xutils.db.table.DbModel;
 import com.lidroid.xutils.exception.DbException;
 
 import java.util.ArrayList;
@@ -81,6 +82,40 @@ public class SqliteDb
         }
         return list;
     }
+    //    }
+
+
+    public static void updateCoordinatesOrder(Context context, CoordinatesBean coordinatesBean)// 这个方式可以
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.update(coordinatesBean, "areaId","areaName");
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            e.printStackTrace();
+        }
+    }
+    public static <T> List<T> getTemp1(Context context)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<T> list = null;
+        try
+        {
+
+            list = db.findAll(Selector.from(CoordinatesBean.class).where("uid", "=", 60).and("parkid", "=", "15").and("areaid", "=", "").and("type", "=", "farm_boundary_free"));
+//            db.deleteAll(list);
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        if (null == list || list.isEmpty())
+        {
+            list = new ArrayList<T>();
+        }
+        return list;
+    }
     public static String getBoundary_farm(Context context, String uid, String farm_boundary)
     {
         StringBuffer build = new StringBuffer();
@@ -111,7 +146,7 @@ public class SqliteDb
                             for (int j = 0; j < list_areatab.size(); j++)//该园区每个片区
                             {
                                 build.append("[");
-                                List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("type", "=", farm_boundary));
+                                List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("contractid", "=", "").and("type", "=", farm_boundary));
                                 if (list_CoordinatesBean_area.size() != 0)
                                 {
                                     for (int k = 0; k < list_CoordinatesBean_area.size(); k++)
@@ -191,7 +226,13 @@ public class SqliteDb
                 for (int i = 0; i < list_parktab.size(); i++)//每个园区
                 {
                     build.append("[");
-                    List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", ""));
+                    String order_last="0";
+                    List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders",true));
+                    if (dbModels.size()!=0)
+                    {
+                        order_last=dbModels.get(0).getString("orders");
+                    }
+                    List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", "").and("orders", "=",order_last));
                     if (list_CoordinatesBean_park.size() != 0)
                     {
                         for (int j = 0; j < list_CoordinatesBean_park.size(); j++)
@@ -212,7 +253,7 @@ public class SqliteDb
                         for (int j = 0; j < list_areatab.size(); j++)//该园区每个片区
                         {
                             build.append("[");
-                            List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("type", "=", farm_boundary));
+                            List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("contractid", "=", "").and("type", "=", farm_boundary));
                             if (list_CoordinatesBean_area.size() != 0)
                             {
                                 for (int k = 0; k < list_CoordinatesBean_area.size(); k++)
