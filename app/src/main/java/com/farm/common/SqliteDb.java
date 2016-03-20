@@ -90,13 +90,14 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.update(coordinatesBean, "areaId","areaName");
+            db.update(coordinatesBean, "areaId", "areaName");
         } catch (DbException e)
         {
             e.printStackTrace();
             e.printStackTrace();
         }
     }
+
     public static <T> List<T> getTemp1(Context context)
     {
         DbUtils db = DbUtils.create(context);
@@ -104,8 +105,9 @@ public class SqliteDb
         try
         {
 
-            list = db.findAll(Selector.from(CoordinatesBean.class).where("uid", "=", 60).and("parkid", "=", "15").and("areaid", "=", "").and("type", "=", "farm_boundary_free"));
+//            list = db.findAll(Selector.from(CoordinatesBean.class).where("uid", "=", 60).and("parkid", "=", "15").and("areaid", "=", "").and("type", "=", "farm_boundary_free"));
 //            db.deleteAll(list);
+            list = db.findAll(Selector.from(CoordinatesBean.class));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -116,6 +118,230 @@ public class SqliteDb
         }
         return list;
     }
+//    public static String getNeedPlanBoundary(Context context, String uid, String farm_boundary)
+//    {
+//        StringBuffer build = new StringBuffer();
+//        build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
+//        DbUtils db = DbUtils.create(context);
+//        try
+//        {
+//            List<parktab> list_parktab = db.findAll(Selector.from(parktab.class).where("uid", "=", uid));
+//            if (list_parktab.size() != 0)
+//            {
+//                for (int i = 0; i < list_parktab.size(); i++)//每个园区
+//                {
+//                    List<areatab> list_areatab_temp = db.findAll(Selector.from(areatab.class).where("parkid", "=", list_parktab.get(i).getid()));
+//                    if (list_areatab_temp.size() != 0)
+//                    {
+//                        for (int j = 0; j < list_areatab_temp.size(); j++)//检查每个片区是否已经开始规划
+//                        {
+//                            List<CoordinatesBean> list_CoordinatesBean_area_temp = db.findAll(Selector.from(CoordinatesBean.class).where("areaid", "=", list_areatab_temp.get(j).getid()).and("contractid", "=", "").and("type", "=", "farm_boundary"));
+//                            if (list_CoordinatesBean_area_temp!=null && list_CoordinatesBean_area_temp.size()>0)
+//                            {
+//                                build.append("[");
+//                                String order_last = "0";
+//                                List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", "farm_boundary_free").and("areaid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+//                                if (dbModels.size() != 0)
+//                                {
+//                                    order_last = dbModels.get(0).getString("orders");
+//                                }
+//                                List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", "").and("orders", "=", order_last));
+//                                if (list_CoordinatesBean_park.size() != 0)
+//                                {
+//                                    for (int h = 0; h < list_CoordinatesBean_park.size(); h++)
+//                                    {
+//                                        build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h).getLng() + "\"" + "}" + ",");
+//                                    }
+//                                    build.replace(build.length() - 1, build.length(), "");
+//                                    build.append("],");
+//                                } else
+//                                {
+//                                    build.append("],");
+//                                }
+//                                break;
+//                            }
+//                            if (j == list_areatab_temp.size()-1)//该园区还未开始规划
+//                            {
+//                                build.append("[");
+//                                List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", ""));
+//                                if (list_CoordinatesBean_park.size() != 0)
+//                                {
+//                                    for (int h1 = 0; h1 < list_CoordinatesBean_park.size(); h1++)
+//                                    {
+//                                        build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getLng() + "\"" + "}" + ",");
+//                                    }
+//                                    build.replace(build.length() - 1, build.length(), "");
+//                                    build.append("],");
+//                                } else
+//                                {
+//                                    build.append("],");
+//                                }
+//                            }
+//                        }
+//                    }else
+//                    {
+//                        build.append("[");
+//                        List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", ""));
+//                        if (list_CoordinatesBean_park.size() != 0)
+//                        {
+//                            for (int h1 = 0; h1 < list_CoordinatesBean_park.size(); h1++)
+//                            {
+//                                build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(h1).getLng() + "\"" + "}" + ",");
+//                            }
+//                            build.replace(build.length() - 1, build.length(), "");
+//                            build.append("],");
+//                        } else
+//                        {
+//                            build.append("],");
+//                        }
+//                    }
+//
+////                    build.append("[");
+////                    List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", ""));
+////                    if (list_CoordinatesBean_park.size() != 0)
+////                    {
+////                        for (int j = 0; j < list_CoordinatesBean_park.size(); j++)
+////                        {
+////                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLng() + "\"" + "}" + ",");
+////                        }
+////                        build.replace(build.length() - 1, build.length(), "");
+////                        build.append("],");
+////                    } else
+////                    {
+////                        build.append("],");
+////                    }
+//
+//                    //片区
+//                    List<areatab> list_areatab = db.findAll(Selector.from(areatab.class).where("parkid", "=", list_parktab.get(i).getid()));
+//                    if (list_areatab.size() != 0)
+//                    {
+//                        for (int j = 0; j < list_areatab.size(); j++)//该园区每个片区
+//                        {
+//                            List<contractTab> list_contractTab_temp = db.findAll(Selector.from(contractTab.class).where("areaid", "=", list_areatab.get(j).getid()));
+//                            if (list_contractTab_temp.size() != 0)
+//                            {
+//                                for (int m = 0; m < list_contractTab_temp.size(); m++)//该园区该片区每个承包区
+//                                {
+//                                    build.append("[");
+//                                    List<CoordinatesBean> list_CoordinatesBean_contractTab = db.findAll(Selector.from(CoordinatesBean.class).where("contractid", "=", list_contractTab_temp.get(m).getid()).and("type", "=", ""));
+//                                    if (list_CoordinatesBean_contractTab.size() != 0)
+//                                    {
+//                                        for (int k = 0; k < list_CoordinatesBean_contractTab.size(); k++)
+//                                        {
+//                                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLng() + "\"" + "}" + ",");
+//                                        }
+//                                        build.replace(build.length() - 1, build.length(), "");
+//                                        build.append("],");
+//                                    } else
+//                                    {
+//                                        build.append("],");
+//                                    }
+//                                }
+//                            }else
+//                            {
+//
+//                            }
+//
+//
+//
+//
+//
+//                            build.append("[");
+//                            List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("contractid", "=", "").and("type", "=", farm_boundary));
+//                            if (list_CoordinatesBean_area.size() != 0)
+//                            {
+//                                for (int k = 0; k < list_CoordinatesBean_area.size(); k++)
+//                                {
+//                                    build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLng() + "\"" + "}" + ",");
+//                                }
+//                                build.replace(build.length() - 1, build.length(), "");
+//                                build.append("],");
+//
+//                            } else
+//                            {
+//                                build.append("],");
+//                            }
+////承包区
+//                            List<contractTab> list_contractTab = db.findAll(Selector.from(contractTab.class).where("areaid", "=", list_areatab.get(j).getid()));
+//                            if (list_contractTab.size() != 0)
+//                            {
+//                                for (int m = 0; m < list_contractTab.size(); m++)//该园区该片区每个承包区
+//                                {
+//                                    build.append("[");
+//                                    List<CoordinatesBean> list_CoordinatesBean_contractTab = db.findAll(Selector.from(CoordinatesBean.class).where("contractid", "=", list_contractTab.get(m).getid()).and("type", "=", farm_boundary));
+//                                    if (list_CoordinatesBean_contractTab.size() != 0)
+//                                    {
+//                                        for (int k = 0; k < list_CoordinatesBean_contractTab.size(); k++)
+//                                        {
+//                                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLng() + "\"" + "}" + ",");
+//                                        }
+//                                        build.replace(build.length() - 1, build.length(), "");
+//                                        build.append("],");
+//                                    } else
+//                                    {
+//                                        build.append("],");
+//                                    }
+//
+//
+//                                }
+//                            }
+//
+//
+//                        }
+//                    }
+//                }
+//            }
+//
+//            build.replace(build.length() - 1, build.length(), "");
+//            build.append("]}");
+//            build.toString();
+//            build.toString();
+//
+//
+//        } catch (DbException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        return build.toString();
+//    }
+public static List<CoordinatesBean>  getBoundaryByID(Context context, String uid, String parkid,String areaid,String contractid)
+{
+    DbUtils db = DbUtils.create(context);
+    List<CoordinatesBean> list_CoordinatesBean = null;
+    try
+    {
+        if (contractid.equals(""))//获取园区未规划图层或者整个园区图层
+        {
+            String order_last = "0";
+            List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+            if (dbModels.size() != 0)//该园区已经开始规划
+            {
+                order_last = dbModels.get(0).getString("orders");
+                list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", "").and("orders", "=", order_last));
+            }else//该园区还没开始规划
+            {
+                list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=",parkid).and("type", "=", "farm_boundary").and("areaid", "=", ""));
+            }
+        }else//获取片区未规划图层或者整个片区
+        {
+            String order_last = "0";
+            List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+            if (dbModels.size() != 0)//该片区已经开始规划
+            {
+                order_last = dbModels.get(0).getString("orders");
+                list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").and("orders", "=", order_last));
+            }else//该片区还没开始规划
+            {
+                list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", areaid).and("contractid", "=", ""));
+            }
+        }
+    } catch (DbException e)
+    {
+        e.printStackTrace();
+    }
+
+    return list_CoordinatesBean;
+}
     public static String getBoundary_farm(Context context, String uid, String farm_boundary)
     {
         StringBuffer build = new StringBuffer();
@@ -134,70 +360,64 @@ public class SqliteDb
                     {
                         for (int j = 0; j < list_CoordinatesBean_park.size(); j++)
                         {
-                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getId() + "\"" +","+ "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUid() + "\"" +","+ "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkId() + "\"" +"," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getAreaId() + "\"" +","+ "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractid() + "\"" +","+ "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getType() + "\"" +","+ "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getBatchid() + "\"" +","+ "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getNumofplant() + "\"" +","+ "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getSaleid() + "\"" +","+ "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getWeightofplant() + "\"" +","+ "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUuid() + "\"" +","+ "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkName() + "\"" +","+ "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getareaName() + "\"" +","+ "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractname() + "\"" +","+ "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getOrders() + "\"" +","+ "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getCoordinatestime() + "\"" +","+ "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getRegistime() + "\"" +","+"\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLng() + "\"" + "}" + ",");
+                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLng() + "\"" + "}" + ",");
                         }
                         build.replace(build.length() - 1, build.length(), "");
                         build.append("],");
-
-
-                        List<areatab> list_areatab = db.findAll(Selector.from(areatab.class).where("parkid", "=", list_parktab.get(i).getid()));
-                        if (list_areatab.size() != 0)
-                        {
-                            for (int j = 0; j < list_areatab.size(); j++)//该园区每个片区
-                            {
-                                build.append("[");
-                                List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("contractid", "=", "").and("type", "=", farm_boundary));
-                                if (list_CoordinatesBean_area.size() != 0)
-                                {
-                                    for (int k = 0; k < list_CoordinatesBean_area.size(); k++)
-                                    {
-                                        build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getId() + "\"" +","+ "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUid() + "\"" +","+ "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkId() + "\"" +"," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getAreaId() + "\"" +","+ "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractid() + "\"" +","+ "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getType() + "\"" +","+ "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getBatchid() + "\"" +","+ "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getNumofplant() + "\"" +","+ "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getSaleid() + "\"" +","+ "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getWeightofplant() + "\"" +","+ "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUuid() + "\"" +","+ "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkName() + "\"" +","+ "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getareaName() + "\"" +","+ "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractname() + "\"" +","+ "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getOrders() + "\"" +","+ "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getCoordinatestime() + "\"" +","+ "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getRegistime() + "\"" +","+"\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLng() + "\"" + "}" + ",");
-                                    }
-                                    build.replace(build.length() - 1, build.length(), "");
-                                    build.append("],");
-
-
-                                    List<contractTab> list_contractTab = db.findAll(Selector.from(contractTab.class).where("areaid", "=", list_areatab.get(j).getid()));
-                                    if (list_contractTab.size() != 0)
-                                    {
-                                        for (int m = 0; m < list_contractTab.size(); m++)//该园区该片区每个承包区
-                                        {
-                                            build.append("[");
-                                            List<CoordinatesBean> list_CoordinatesBean_contractTab = db.findAll(Selector.from(CoordinatesBean.class).where("contractid", "=", list_contractTab.get(m).getid()).and("type", "=", farm_boundary));
-                                            if (list_CoordinatesBean_contractTab.size() != 0)
-                                            {
-                                                for (int k = 0; k < list_CoordinatesBean_contractTab.size(); k++)
-                                                {
-                                                    build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getId() + "\"" +","+ "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUid() + "\"" +","+ "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkId() + "\"" +"," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getAreaId() + "\"" +","+ "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractid() + "\"" +","+ "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getType() + "\"" +","+ "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getBatchid() + "\"" +","+ "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getNumofplant() + "\"" +","+ "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getSaleid() + "\"" +","+ "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getWeightofplant() + "\"" +","+ "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUuid() + "\"" +","+ "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkName() + "\"" +","+ "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getareaName() + "\"" +","+ "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractname() + "\"" +","+ "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getOrders() + "\"" +","+ "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getCoordinatestime() + "\"" +","+ "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getRegistime() + "\"" +","+"\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLng() + "\"" + "}" + ",");
-                                                }
-                                                build.replace(build.length() - 1, build.length(), "");
-                                                build.append("],");
-                                            } else
-                                            {
-                                                build.append("],");
-                                            }
-
-
-                                        }
-                                    }
-
-
-                                } else
-                                {
-                                    build.append("],");
-                                }
-
-
-
-                            }
-                        }
-
-
                     } else
                     {
                         build.append("],");
                     }
 
+                    //片区
+                    List<areatab> list_areatab = db.findAll(Selector.from(areatab.class).where("parkid", "=", list_parktab.get(i).getid()));
+                    if (list_areatab.size() != 0)
+                    {
+                        for (int j = 0; j < list_areatab.size(); j++)//该园区每个片区
+                        {
+                            build.append("[");
+                            List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("contractid", "=", "").and("type", "=", farm_boundary));
+                            if (list_CoordinatesBean_area.size() != 0)
+                            {
+                                for (int k = 0; k < list_CoordinatesBean_area.size(); k++)
+                                {
+                                    build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLng() + "\"" + "}" + ",");
+                                }
+                                build.replace(build.length() - 1, build.length(), "");
+                                build.append("],");
+
+                            } else
+                            {
+                                build.append("],");
+                            }
+//承包区
+                            List<contractTab> list_contractTab = db.findAll(Selector.from(contractTab.class).where("areaid", "=", list_areatab.get(j).getid()));
+                            if (list_contractTab.size() != 0)
+                            {
+                                for (int m = 0; m < list_contractTab.size(); m++)//该园区该片区每个承包区
+                                {
+                                    build.append("[");
+                                    List<CoordinatesBean> list_CoordinatesBean_contractTab = db.findAll(Selector.from(CoordinatesBean.class).where("contractid", "=", list_contractTab.get(m).getid()).and("type", "=", farm_boundary));
+                                    if (list_CoordinatesBean_contractTab.size() != 0)
+                                    {
+                                        for (int k = 0; k < list_CoordinatesBean_contractTab.size(); k++)
+                                        {
+                                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLng() + "\"" + "}" + ",");
+                                        }
+                                        build.replace(build.length() - 1, build.length(), "");
+                                        build.append("],");
+                                    } else
+                                    {
+                                        build.append("],");
+                                    }
+
+
+                                }
+                            }
+
+
+                        }
+                    }
                 }
             }
 
@@ -213,6 +433,7 @@ public class SqliteDb
         }
         return build.toString();
     }
+
     public static String getBoundary_farm_free(Context context, String uid, String farm_boundary)
     {
         StringBuffer build = new StringBuffer();
@@ -226,18 +447,18 @@ public class SqliteDb
                 for (int i = 0; i < list_parktab.size(); i++)//每个园区
                 {
                     build.append("[");
-                    String order_last="0";
-                    List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders",true));
-                    if (dbModels.size()!=0)
+                    String order_last = "0";
+                    List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+                    if (dbModels.size() != 0)
                     {
-                        order_last=dbModels.get(0).getString("orders");
+                        order_last = dbModels.get(0).getString("orders");
                     }
-                    List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", "").and("orders", "=",order_last));
+                    List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", "").and("orders", "=", order_last));
                     if (list_CoordinatesBean_park.size() != 0)
                     {
                         for (int j = 0; j < list_CoordinatesBean_park.size(); j++)
                         {
-                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getId() + "\"" +","+ "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUid() + "\"" +","+ "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkId() + "\"" +"," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getAreaId() + "\"" +","+ "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractid() + "\"" +","+ "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getType() + "\"" +","+ "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getBatchid() + "\"" +","+ "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getNumofplant() + "\"" +","+ "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getSaleid() + "\"" +","+ "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getWeightofplant() + "\"" +","+ "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUuid() + "\"" +","+ "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkName() + "\"" +","+ "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getareaName() + "\"" +","+ "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractname() + "\"" +","+ "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getOrders() + "\"" +","+ "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getCoordinatestime() + "\"" +","+ "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getRegistime() + "\"" +","+"\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLng() + "\"" + "}" + ",");
+                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLng() + "\"" + "}" + ",");
                         }
                         build.replace(build.length() - 1, build.length(), "");
                         build.append("],");
@@ -258,7 +479,7 @@ public class SqliteDb
                             {
                                 for (int k = 0; k < list_CoordinatesBean_area.size(); k++)
                                 {
-                                    build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getId() + "\"" +","+ "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUid() + "\"" +","+ "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkId() + "\"" +"," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getAreaId() + "\"" +","+ "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractid() + "\"" +","+ "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getType() + "\"" +","+ "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getBatchid() + "\"" +","+ "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getNumofplant() + "\"" +","+ "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getSaleid() + "\"" +","+ "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getWeightofplant() + "\"" +","+ "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUuid() + "\"" +","+ "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkName() + "\"" +","+ "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getareaName() + "\"" +","+ "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractname() + "\"" +","+ "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getOrders() + "\"" +","+ "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getCoordinatestime() + "\"" +","+ "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getRegistime() + "\"" +","+"\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLng() + "\"" + "}" + ",");
+                                    build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLng() + "\"" + "}" + ",");
                                 }
                                 build.replace(build.length() - 1, build.length(), "");
                                 build.append("],");
@@ -281,7 +502,7 @@ public class SqliteDb
                                     {
                                         for (int k = 0; k < list_CoordinatesBean_contractTab.size(); k++)
                                         {
-                                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getId() + "\"" +","+ "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUid() + "\"" +","+ "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkId() + "\"" +"," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getAreaId() + "\"" +","+ "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractid() + "\"" +","+ "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getType() + "\"" +","+ "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getBatchid() + "\"" +","+ "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getNumofplant() + "\"" +","+ "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getSaleid() + "\"" +","+ "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getWeightofplant() + "\"" +","+ "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUuid() + "\"" +","+ "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkName() + "\"" +","+ "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getareaName() + "\"" +","+ "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractname() + "\"" +","+ "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getOrders() + "\"" +","+ "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getCoordinatestime() + "\"" +","+ "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getRegistime() + "\"" +","+"\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLng() + "\"" + "}" + ",");
+                                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLng() + "\"" + "}" + ",");
                                         }
                                         build.replace(build.length() - 1, build.length(), "");
                                         build.append("],");
@@ -375,6 +596,7 @@ public class SqliteDb
         }
         return true;
     }
+
     public static <T> boolean deletetemp(Context context)
     {
         DbUtils db = DbUtils.create(context);
@@ -389,6 +611,7 @@ public class SqliteDb
         }
         return true;
     }
+
     public static <T> boolean deleteRecordtemp(Context context, Class<T> c, String BELONG, String firsttype, String secondType)
     {
         DbUtils db = DbUtils.create(context);
@@ -477,7 +700,8 @@ public class SqliteDb
         }
         return true;
     }
-    public static <T> boolean deleteCoordinates(Context context )
+
+    public static <T> boolean deleteCoordinates(Context context)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -491,6 +715,7 @@ public class SqliteDb
         }
         return true;
     }
+
     public static <T> List<T> getSelectRecordTemp(Context context, Class<T> c, String BELONG, String firsttype)
     {
         DbUtils db = DbUtils.create(context);
@@ -580,7 +805,8 @@ public class SqliteDb
         }
         return list;
     }
-    public static  List<DepartmentBean>  getDepartment(Context context)
+
+    public static List<DepartmentBean> getDepartment(Context context)
     {
         DbUtils db = DbUtils.create(context);
         List<DepartmentBean> list = new ArrayList<>();
@@ -589,32 +815,32 @@ public class SqliteDb
             List<parktab> list_parktab = db.findAll(Selector.from(parktab.class));
             if (list_parktab != null)
             {
-                for (int i = 0; i <list_parktab.size() ; i++)
+                for (int i = 0; i < list_parktab.size(); i++)
                 {
-                    DepartmentBean department=new DepartmentBean();
+                    DepartmentBean department = new DepartmentBean();
                     department.setId(list_parktab.get(i).getid());
                     department.setType("园区");
                     department.setName(list_parktab.get(i).getparkName());
                     list.add(department);//添加
-                    List<areatab> list_areatab = db.findAll(Selector.from(areatab.class).where("parkid","=",list_parktab.get(i).getid()));
+                    List<areatab> list_areatab = db.findAll(Selector.from(areatab.class).where("parkid", "=", list_parktab.get(i).getid()));
                     if (list_areatab != null)
                     {
-                        for (int j = 0; j <list_areatab.size() ; j++)
+                        for (int j = 0; j < list_areatab.size(); j++)
                         {
-                            DepartmentBean department1=new DepartmentBean();
+                            DepartmentBean department1 = new DepartmentBean();
                             department1.setId(list_areatab.get(i).getid());
                             department1.setType("片区");
-                            department1.setName(list_parktab.get(i).getparkName() +"-"+list_areatab.get(j).getareaName());
+                            department1.setName(list_parktab.get(i).getparkName() + "-" + list_areatab.get(j).getareaName());
                             list.add(department1);//添加
                             List<contractTab> list_contractTab = db.findAll(Selector.from(contractTab.class));
                             if (list_contractTab != null)
                             {
                                 for (int k = 0; k < list_contractTab.size(); k++)
                                 {
-                                    DepartmentBean department2=new DepartmentBean();
+                                    DepartmentBean department2 = new DepartmentBean();
                                     department2.setId(list_contractTab.get(i).getid());
                                     department2.setType("承包区");
-                                    department2.setName(list_parktab.get(i).getparkName() + "-" + list_areatab.get(j).getareaName() + "-"+list_contractTab.get(k).getContractNum());
+                                    department2.setName(list_parktab.get(i).getparkName() + "-" + list_areatab.get(j).getareaName() + "-" + list_contractTab.get(k).getContractNum());
                                     list.add(department2);//添加
                                 }
                             }
@@ -629,6 +855,7 @@ public class SqliteDb
         }
         return list;
     }
+
     public static <T> List<T> getUserList(Context context, Class<T> c)
     {
         DbUtils db = DbUtils.create(context);

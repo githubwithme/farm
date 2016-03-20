@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.bean.Result;
 import com.media.MediaChooserConstants;
@@ -21,6 +22,12 @@ public class FileHelper
 		Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
 		List<T> listData= JSON.parseArray(result.getRows().toJSONString(),c);
         return  listData;
+	}
+	public  static JSONArray getAssetsJsonArray(Context context,String from)
+	{
+		JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
+		JSONArray jsonArray= JSONArray.parseArray(jsonObject.getString(from));
+        return  jsonArray;
 	}
 	/** Create a file Uri for saving an image or video */
 	public static String getOutputMediaFileUriString(int type, String path)

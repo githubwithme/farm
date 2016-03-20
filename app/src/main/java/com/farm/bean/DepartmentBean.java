@@ -19,8 +19,52 @@ import com.lidroid.xutils.db.annotation.Table;
 public class DepartmentBean implements Parcelable // 与数据库不一致
 {
 	public String id;
+	public String uid;
+	public String parkid;
+	public String areaid;
+	public String contractid;
 	public String type;
 	public String name;
+
+	public void setContractid(String contractid)
+	{
+		this.contractid = contractid;
+	}
+
+	public String getContractid()
+	{
+		return contractid;
+	}
+
+	public void setAreaid(String areaid)
+	{
+		this.areaid = areaid;
+	}
+
+	public String getAreaid()
+	{
+		return areaid;
+	}
+
+	public void setParkid(String parkid)
+	{
+		this.parkid = parkid;
+	}
+
+	public String getParkid()
+	{
+		return parkid;
+	}
+
+	public void setUid(String uid)
+	{
+		this.uid = uid;
+	}
+
+	public String getUid()
+	{
+		return uid;
+	}
 
 	public void setId(String id)
 	{
@@ -70,6 +114,10 @@ public class DepartmentBean implements Parcelable // 与数据库不一致
 			// 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错
 			DepartmentBean p = new DepartmentBean();
 			p.setId(source.readString());
+			p.setUid(source.readString());
+			p.setParkid(source.readString());
+			p.setAreaid(source.readString());
+			p.setContractid(source.readString());
 			p.setType(source.readString());
 			p.setName(source.readString());
 			return p;
@@ -86,6 +134,10 @@ public class DepartmentBean implements Parcelable // 与数据库不一致
 	public void writeToParcel(Parcel p, int arg1)
 	{
 		p.writeString(id);
+		p.writeString(uid);
+		p.writeString(parkid);
+		p.writeString(areaid);
+		p.writeString(contractid);
 		p.writeString(type);
 		p.writeString(name);
 
