@@ -1,10 +1,14 @@
 package com.farm.common;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.farm.bean.CoordinatesBean;
 import com.farm.bean.DepartmentBean;
 import com.farm.bean.HaveReadRecord;
+import com.farm.bean.MoreLayerBean;
+import com.farm.bean.PolygonBean;
 import com.farm.bean.areatab;
 import com.farm.bean.breakofftab;
 import com.farm.bean.commembertab;
@@ -104,10 +108,11 @@ public class SqliteDb
         List<T> list = null;
         try
         {
-
-//            list = db.findAll(Selector.from(CoordinatesBean.class).where("uid", "=", 60).and("parkid", "=", "15").and("areaid", "=", "").and("type", "=", "farm_boundary_free"));
-//            db.deleteAll(list);
             list = db.findAll(Selector.from(CoordinatesBean.class));
+            list = db.findAll(Selector.from(CoordinatesBean.class));
+//            db.updateAll(list, "note", "");
+//            db.deleteAll(list);
+//            list = db.findAll(Selector.from(CoordinatesBean.class));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -118,7 +123,8 @@ public class SqliteDb
         }
         return list;
     }
-//    public static String getNeedPlanBoundary(Context context, String uid, String farm_boundary)
+
+    //    public static String getNeedPlanBoundary(Context context, String uid, String farm_boundary)
 //    {
 //        StringBuffer build = new StringBuffer();
 //        build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
@@ -304,44 +310,293 @@ public class SqliteDb
 //        }
 //        return build.toString();
 //    }
-public static List<CoordinatesBean>  getBoundaryByID(Context context, String uid, String parkid,String areaid,String contractid)
-{
-    DbUtils db = DbUtils.create(context);
-    List<CoordinatesBean> list_CoordinatesBean = null;
-    try
+    public static List<CoordinatesBean> getBoundaryByID(Context context, String uid, String parkid, String areaid, String contractid)
     {
-        if (contractid.equals(""))//获取园区未规划图层或者整个园区图层
+        DbUtils db = DbUtils.create(context);
+        List<CoordinatesBean> list_CoordinatesBean = null;
+        try
         {
-            String order_last = "0";
-            List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
-            if (dbModels.size() != 0)//该园区已经开始规划
+            if (contractid.equals(""))//获取园区未规划图层或者整个园区图层
             {
-                order_last = dbModels.get(0).getString("orders");
-                list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", "").and("orders", "=", order_last));
-            }else//该园区还没开始规划
+                String order_last = "0";
+                List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+                if (dbModels.size() != 0)//该园区已经开始规划
+                {
+                    order_last = dbModels.get(0).getString("orders");
+                    list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", "").and("orders", "=", order_last));
+                } else//该园区还没开始规划
+                {
+                    list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", ""));
+                }
+            } else//获取片区未规划图层或者整个片区
             {
-                list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=",parkid).and("type", "=", "farm_boundary").and("areaid", "=", ""));
+                String order_last = "0";
+                List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+                if (dbModels.size() != 0)//该片区已经开始规划
+                {
+                    order_last = dbModels.get(0).getString("orders");
+                    list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").and("orders", "=", order_last));
+                } else//该片区还没开始规划
+                {
+                    list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", areaid).and("contractid", "=", ""));
+                }
             }
-        }else//获取片区未规划图层或者整个片区
+        } catch (DbException e)
         {
-            String order_last = "0";
-            List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
-            if (dbModels.size() != 0)//该片区已经开始规划
-            {
-                order_last = dbModels.get(0).getString("orders");
-                list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").and("orders", "=", order_last));
-            }else//该片区还没开始规划
-            {
-                list_CoordinatesBean = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", areaid).and("contractid", "=", ""));
-            }
+            e.printStackTrace();
         }
-    } catch (DbException e)
-    {
-        e.printStackTrace();
+
+        return list_CoordinatesBean;
     }
 
-    return list_CoordinatesBean;
-}
+    public static List<CoordinatesBean> getPoints(Context context, String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<CoordinatesBean> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(CoordinatesBean.class).where("uuid", "=", uuid));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public static List<MoreLayerBean> getMoreLayer_point(Context context, String uid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<MoreLayerBean> list = null;
+        try
+        {
+            list= db.findAll(Selector.from(MoreLayerBean.class).where("uid", "=", uid).and("type", "=", "D").and("xxzt", "=", "0"));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public static List<MoreLayerBean> getMoreLayer_line(Context context, String uid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<MoreLayerBean> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(MoreLayerBean.class).where("uid", "=", uid).and("type", "=", "X").and("xxzt", "=", "0"));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public static PolygonBean getLayer_park(Context context, String parkid)
+    {
+        DbUtils db = DbUtils.create(context);
+        PolygonBean polygonBean_park = null;
+        try
+        {
+            polygonBean_park = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", "").and("xxzt", "=", "0"));
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return polygonBean_park;
+    }
+    public static PolygonBean getLayer_area(Context context, String parkid,String areaid)
+    {
+        DbUtils db = DbUtils.create(context);
+        PolygonBean polygonBean = null;
+        try
+        {
+            polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", areaid).and("contractid", "=", "").and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return polygonBean;
+    }
+    public static PolygonBean getLayer_contract(Context context, String parkid,String areaid,String contractid)
+    {
+        DbUtils db = DbUtils.create(context);
+        PolygonBean polygonBean = null;
+        try
+        {
+            polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", areaid).and("contractid", "=", contractid).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return polygonBean;
+    }
+    public static List<parktab> getparktab(Context context, String uid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<parktab> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(parktab.class).where("uid", "=", uid));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public static List<areatab> getareatab(Context context, String parkid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<areatab> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(areatab.class).where("parkid", "=", parkid));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public static List<contractTab> getcontracttab(Context context, String areaid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<contractTab> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(contractTab.class).where("areaid", "=", areaid));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public static String getPlanMap(Context context, String uid, String farm_boundary)
+    {
+        StringBuffer build = new StringBuffer();
+        build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            List<parktab> list_parktab = db.findAll(Selector.from(parktab.class).where("uid", "=", uid));
+            if (list_parktab.size() != 0)
+            {
+                for (int i = 0; i < list_parktab.size(); i++)//每个园区
+                {
+                    build.append("[");
+                    PolygonBean polygonBean_park = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", "").and("xxzt", "=", "0"));
+
+                    if (polygonBean_park != null)
+                    {
+                        List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("uuid", "=", polygonBean_park.getUuid()));
+                        for (int j = 0; j < list_CoordinatesBean_park.size(); j++)
+                        {
+                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLng() + "\"" + "}" + ",");
+                        }
+                        build.replace(build.length() - 1, build.length(), "");
+                        build.append("],");
+                    } else
+                    {
+                        build.append("],");
+                    }
+
+                    //片区
+                    List<areatab> list_areatab = db.findAll(Selector.from(areatab.class).where("parkid", "=", list_parktab.get(i).getid()));
+                    if (list_areatab.size() != 0)
+                    {
+                        for (int j = 0; j < list_areatab.size(); j++)//该园区每个片区
+                        {
+                            build.append("[");
+                            PolygonBean polygonBean_area = db.findFirst(Selector.from(PolygonBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("contractid", "=", "").and("type", "=", farm_boundary).and("xxzt", "=", "0"));
+
+                            if (polygonBean_area != null)
+                            {
+                                List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("uuid", "=", polygonBean_area.getUuid()));
+                                for (int k = 0; k < list_CoordinatesBean_area.size(); k++)
+                                {
+                                    build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLng() + "\"" + "}" + ",");
+                                }
+                                build.replace(build.length() - 1, build.length(), "");
+                                build.append("],");
+
+                            } else
+                            {
+                                build.append("],");
+                            }
+//承包区
+                            List<contractTab> list_contractTab = db.findAll(Selector.from(contractTab.class).where("areaid", "=", list_areatab.get(j).getid()));
+                            if (list_contractTab.size() != 0)
+                            {
+                                for (int m = 0; m < list_contractTab.size(); m++)//该园区该片区每个承包区
+                                {
+                                    build.append("[");
+                                    PolygonBean list_PolygonBean_contractTab = db.findFirst(Selector.from(PolygonBean.class).where("contractid", "=", list_contractTab.get(m).getid()).and("type", "=", farm_boundary).and("xxzt", "=", "0"));
+
+                                    if (list_PolygonBean_contractTab != null)
+                                    {
+                                        List<CoordinatesBean> list_CoordinatesBean_contractTab = db.findAll(Selector.from(CoordinatesBean.class).where("uuid", "=", list_PolygonBean_contractTab.getUuid()));
+                                        for (int k = 0; k < list_CoordinatesBean_contractTab.size(); k++)
+                                        {
+                                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLng() + "\"" + "}" + ",");
+                                        }
+                                        build.replace(build.length() - 1, build.length(), "");
+                                        build.append("],");
+                                    } else
+                                    {
+                                        build.append("],");
+                                    }
+
+
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+            }
+
+            build.replace(build.length() - 1, build.length(), "");
+            build.append("]}");
+            build.toString();
+            build.toString();
+
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        return build.toString();
+    }
+
     public static String getBoundary_farm(Context context, String uid, String farm_boundary)
     {
         StringBuffer build = new StringBuffer();
@@ -560,6 +815,56 @@ public static List<CoordinatesBean>  getBoundaryByID(Context context, String uid
         }
 
         return listdata;
+    }
+
+    /**
+     * 方法1：检查某表列是否存在
+     *
+     * @param db
+     * @param tableName  表名
+     * @param columnName 列名
+     * @return
+     */
+    public static boolean checkColumnExist1(SQLiteDatabase db, String tableName, String columnName)
+    {
+        boolean result = false;
+        Cursor cursor = null;
+        try
+        {
+            //查询一行
+            cursor = db.rawQuery("SELECT * FROM " + tableName + " LIMIT 0", null);
+            result = cursor != null && cursor.getColumnIndex(columnName) != -1;
+        } catch (Exception e)
+        {
+//            Log.e(TAG, "checkColumnExists1..." + e.getMessage());
+        } finally
+        {
+            if (null != cursor && !cursor.isClosed())
+            {
+                cursor.close();
+            }
+        }
+
+        return result;
+    }
+
+    public static boolean alterTable(Context context)
+    {
+
+        String[] str = new String[]{"isInnerPoint", "isCenterPoint", "note"};
+        DbUtils db = DbUtils.create(context);
+        SQLiteDatabase sqLiteDatabase = db.getDatabase();
+
+        for (int i = 0; i < str.length; i++)
+        {
+            boolean isexist = SqliteDb.checkColumnExist1(sqLiteDatabase, "CoordinatesBean", str[i]);
+            if (!isexist)
+            {
+                String sql = "alter table  CoordinatesBean  add column " + str[i] + " NVARCHAR(10)";
+                sqLiteDatabase.execSQL(sql);
+            }
+        }
+        return true;
     }
 
     public static boolean save(Context context, Object obj)

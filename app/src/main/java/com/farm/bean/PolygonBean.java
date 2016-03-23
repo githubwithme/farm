@@ -15,8 +15,8 @@ import com.lidroid.xutils.db.annotation.Table;
  *地理坐标信息表:记录销售区域
  * @version 1.0
  */
-@Table(name = "CoordinatesBean")
-public class CoordinatesBean implements Parcelable // 与数据库不一致
+@Table(name = "PolygonBean")
+public class PolygonBean implements Parcelable // 与数据库不一致
 {
 
     @Id
@@ -42,7 +42,18 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
     public String isInnerPoint;
     public String isCenterPoint;
     public String note;
+    public String xxzt;
 
+
+    public void setXxzt(String xxzt)
+    {
+        this.xxzt = xxzt;
+    }
+
+    public String getXxzt()
+    {
+        return xxzt;
+    }
 
     public void setNote(String note)
     {
@@ -276,13 +287,13 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
         return 0;
     }
 
-    public static final Creator<CoordinatesBean> CREATOR = new Creator()
+    public static final Creator<PolygonBean> CREATOR = new Creator()
     {
         @Override
-        public CoordinatesBean createFromParcel(Parcel source)
+        public PolygonBean createFromParcel(Parcel source)
         {
             // 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错
-            CoordinatesBean p = new CoordinatesBean();
+            PolygonBean p = new PolygonBean();
             p.setId(source.readInt());
             p.setUuid(source.readString());
             p.setType(source.readString());
@@ -306,14 +317,15 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
             p.setIsInnerPoint(source.readString());
             p.setIsCenterPoint(source.readString());
             p.setNote(source.readString());
+            p.setXxzt(source.readString());
 
             return p;
         }
 
         @Override
-        public CoordinatesBean[] newArray(int size)
+        public PolygonBean[] newArray(int size)
         {
-            return new CoordinatesBean[size];
+            return new PolygonBean[size];
         }
     };
 
@@ -343,6 +355,7 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
         p.writeString(isInnerPoint);
         p.writeString(isCenterPoint);
         p.writeString(note);
+        p.writeString(xxzt);
 
     }
 
