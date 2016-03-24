@@ -100,7 +100,21 @@ public class SqliteDb
             e.printStackTrace();
         }
     }
-
+    public static <T> boolean deleteplanPolygon(Context context,String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.delete(PolygonBean.class, WhereBuilder.b("uuid", "=", uuid));
+            db.delete(PolygonBean.class, WhereBuilder.b("otherhalf", "=", uuid));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            String a = e.getMessage();
+            return false;
+        }
+        return true;
+    }
     public static <T> boolean deletePolygon(Context context,String uuid)
     {
         DbUtils db = DbUtils.create(context);
@@ -122,8 +136,11 @@ public class SqliteDb
         try
         {
             list = db.findAll(Selector.from(PolygonBean.class));
+            db.deleteAll(list);
+            list = db.findAll(Selector.from(CoordinatesBean.class));
+//            list = db.findAll(Selector.from(PolygonBean.class));
 //            db.updateAll(list, "note", "");
-//            db.deleteAll(list);
+            db.deleteAll(list);
 //            list = db.findAll(Selector.from(CoordinatesBean.class));
         } catch (DbException e)
         {
@@ -322,6 +339,44 @@ public class SqliteDb
 //        }
 //        return build.toString();
 //    }
+    public static PolygonBean getNeedPlanlayer(Context context, String uid, String parkid, String areaid, String contractid)
+    {
+        DbUtils db = DbUtils.create(context);
+        PolygonBean polygonBean = null;
+        try
+        {
+            if (contractid.equals(""))//要规划片区，则获取园区未规划图层或者整个园区图层
+            {
+                String order_last = "0";
+                List<DbModel> dbModels = db.findDbModelAll(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+                if (dbModels.size() != 0)//该园区已经开始规划
+                {
+                    order_last = dbModels.get(0).getString("orders");
+                    polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", "").and("contractid", "=", "").and("orders", "=", order_last).and("xxzt", "=", "0"));
+                } else//该园区还没开始规划
+                {
+                    polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", "").and("contractid", "=", "").and("xxzt", "=", "0"));
+                }
+            } else//要规划承包区，则获取片区未规划图层或者整个片区
+            {
+                String order_last = "0";
+                List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+                if (dbModels.size() != 0)//该片区已经开始规划
+                {
+                    order_last = dbModels.get(0).getString("orders");
+                    polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").and("orders", "=", order_last).and("xxzt", "=", "0"));
+                } else//该片区还没开始规划
+                {
+                    polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", areaid).and("contractid", "=", contractid).and("xxzt", "=", "0"));
+                }
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return polygonBean;
+    }
     public static List<CoordinatesBean> getBoundaryByID(Context context, String uid, String parkid, String areaid, String contractid)
     {
         DbUtils db = DbUtils.create(context);
@@ -444,6 +499,34 @@ public class SqliteDb
         return polygonBean;
     }
     public static PolygonBean getLayer_contract(Context context, String parkid,String areaid,String contractid)
+    {
+        DbUtils db = DbUtils.create(context);
+        PolygonBean polygonBean = null;
+        try
+        {
+            polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", areaid).and("contractid", "=", contractid).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return polygonBean;
+    }
+    public static PolygonBean getLayerbyuuid(Context context, String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        PolygonBean polygonBean = null;
+        try
+        {
+            polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("uuid", "=", uuid).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return polygonBean;
+    }
+    public static PolygonBean getLayer(Context context, String parkid,String areaid,String contractid)
     {
         DbUtils db = DbUtils.create(context);
         PolygonBean polygonBean = null;

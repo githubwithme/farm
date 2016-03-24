@@ -43,7 +43,17 @@ public class PolygonBean implements Parcelable // 与数据库不一致
     public String isCenterPoint;
     public String note;
     public String xxzt;
+    public String otherhalf;
 
+    public void setOtherhalf(String otherhalf)
+    {
+        this.otherhalf = otherhalf;
+    }
+
+    public String getOtherhalf()
+    {
+        return otherhalf;
+    }
 
     public void setXxzt(String xxzt)
     {
@@ -318,6 +328,7 @@ public class PolygonBean implements Parcelable // 与数据库不一致
             p.setIsCenterPoint(source.readString());
             p.setNote(source.readString());
             p.setXxzt(source.readString());
+            p.setOtherhalf(source.readString());
 
             return p;
         }
@@ -356,6 +367,7 @@ public class PolygonBean implements Parcelable // 与数据库不一致
         p.writeString(isCenterPoint);
         p.writeString(note);
         p.writeString(xxzt);
+        p.writeString(otherhalf);
 
     }
 

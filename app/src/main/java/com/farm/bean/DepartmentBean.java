@@ -21,10 +21,43 @@ public class DepartmentBean implements Parcelable // 与数据库不一致
 	public String id;
 	public String uid;
 	public String parkid;
+	public String parkname;
 	public String areaid;
+	public String areaname;
 	public String contractid;
+	public String contractname;
 	public String type;
 	public String name;
+
+	public void setContractname(String contractname)
+	{
+		this.contractname = contractname;
+	}
+
+	public String getContractname()
+	{
+		return contractname;
+	}
+
+	public void setAreaname(String areaname)
+	{
+		this.areaname = areaname;
+	}
+
+	public String getAreaname()
+	{
+		return areaname;
+	}
+
+	public void setParkname(String parkname)
+	{
+		this.parkname = parkname;
+	}
+
+	public String getParkname()
+	{
+		return parkname;
+	}
 
 	public void setContractid(String contractid)
 	{
@@ -116,8 +149,11 @@ public class DepartmentBean implements Parcelable // 与数据库不一致
 			p.setId(source.readString());
 			p.setUid(source.readString());
 			p.setParkid(source.readString());
+			p.setParkname(source.readString());
 			p.setAreaid(source.readString());
+			p.setAreaname(source.readString());
 			p.setContractid(source.readString());
+			p.setContractname(source.readString());
 			p.setType(source.readString());
 			p.setName(source.readString());
 			return p;
@@ -136,11 +172,13 @@ public class DepartmentBean implements Parcelable // 与数据库不一致
 		p.writeString(id);
 		p.writeString(uid);
 		p.writeString(parkid);
+		p.writeString(parkname);
 		p.writeString(areaid);
+		p.writeString(areaname);
 		p.writeString(contractid);
+		p.writeString(contractname);
 		p.writeString(type);
 		p.writeString(name);
-
 	}
 
 	@Override
