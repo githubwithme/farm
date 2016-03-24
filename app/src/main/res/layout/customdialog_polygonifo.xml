@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="请选择操作"
+            android:text="请填写标注信息"
             android:textColor="#000000"
             android:textSize="15sp"/>
     </LinearLayout>
@@ -24,10 +24,37 @@
         android:layout_height="1px"
         android:background="@color/line_color"/>
 
-    <ListView
-        android:id="@+id/lv_department"
-        android:layout_width="match_parent"
-        android:layout_height="300dip"/>
+    <LinearLayout
+        android:layout_width="320dip"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dip"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="标注"
+                android:textSize="@dimen/size_sp_14"/>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/line_color"/>
+
+            <EditText
+                android:id="@+id/et_note"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
@@ -35,7 +62,6 @@
 
     <LinearLayout
         android:layout_width="320dip"
-        android:visibility="gone"
         android:layout_height="60dip">
 
         <Button

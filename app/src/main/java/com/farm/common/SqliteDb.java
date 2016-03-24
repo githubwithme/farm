@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.farm.bean.CoordinatesBean;
 import com.farm.bean.DepartmentBean;
 import com.farm.bean.HaveReadRecord;
-import com.farm.bean.MoreLayerBean;
 import com.farm.bean.PolygonBean;
 import com.farm.bean.areatab;
 import com.farm.bean.breakofftab;
@@ -102,14 +101,27 @@ public class SqliteDb
         }
     }
 
+    public static <T> boolean deletePolygon(Context context,String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.delete(PolygonBean.class, WhereBuilder.b("uuid", "=", uuid));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            String a = e.getMessage();
+            return false;
+        }
+        return true;
+    }
     public static <T> List<T> getTemp1(Context context)
     {
         DbUtils db = DbUtils.create(context);
         List<T> list = null;
         try
         {
-            list = db.findAll(Selector.from(CoordinatesBean.class));
-            list = db.findAll(Selector.from(CoordinatesBean.class));
+            list = db.findAll(Selector.from(PolygonBean.class));
 //            db.updateAll(list, "note", "");
 //            db.deleteAll(list);
 //            list = db.findAll(Selector.from(CoordinatesBean.class));
@@ -364,13 +376,13 @@ public class SqliteDb
         return list;
     }
 
-    public static List<MoreLayerBean> getMoreLayer_point(Context context, String uid)
+    public static List<PolygonBean> getMoreLayer_point(Context context, String uid)
     {
         DbUtils db = DbUtils.create(context);
-        List<MoreLayerBean> list = null;
+        List<PolygonBean> list = null;
         try
         {
-            list= db.findAll(Selector.from(MoreLayerBean.class).where("uid", "=", uid).and("type", "=", "D").and("xxzt", "=", "0"));
+            list= db.findAll(Selector.from(PolygonBean.class).where("uid", "=", uid).and("type", "=", "D").and("xxzt", "=", "0"));
             if (list == null)
             {
                 list = new ArrayList<>();
@@ -384,13 +396,13 @@ public class SqliteDb
         return list;
     }
 
-    public static List<MoreLayerBean> getMoreLayer_line(Context context, String uid)
+    public static List<PolygonBean> getMoreLayer_line(Context context, String uid)
     {
         DbUtils db = DbUtils.create(context);
-        List<MoreLayerBean> list = null;
+        List<PolygonBean> list = null;
         try
         {
-            list = db.findAll(Selector.from(MoreLayerBean.class).where("uid", "=", uid).and("type", "=", "X").and("xxzt", "=", "0"));
+            list = db.findAll(Selector.from(PolygonBean.class).where("uid", "=", uid).and("type", "=", "X").and("xxzt", "=", "0"));
             if (list == null)
             {
                 list = new ArrayList<>();

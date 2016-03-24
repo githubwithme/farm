@@ -240,30 +240,40 @@
                 android:orientation="vertical">
                 <Button
                     android:id="@+id/btn_addparklayer"
-                    android:layout_width="80dip"
-                    android:layout_height="40dip"
+                    android:layout_width="70dip"
+                    android:layout_height="30dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
-                    android:text="添加园区"
+                    android:text="添加区域"
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
                 <Button
                     android:id="@+id/btn_addlayer"
-                    android:layout_width="80dip"
-                    android:layout_height="40dip"
+                    android:layout_width="70dip"
+                    android:layout_height="30dip"
                     android:layout_marginTop="10dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
-                    android:text="添加片/承区"
+                    android:text="划分区域"
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
                 <Button
                     android:id="@+id/btn_addmore"
-                    android:layout_width="80dip"
-                    android:layout_height="40dip"
+                    android:layout_width="70dip"
+                    android:layout_height="30dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
                     android:text="更多"
+                    android:layout_marginTop="10dip"
+                    android:textColor="@color/bg_text"
+                    android:textSize="14sp"/>
+                <Button
+                    android:id="@+id/btn_yx"
+                    android:layout_width="70dip"
+                    android:layout_height="30dip"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:gravity="center"
+                    android:text="2D"
                     android:layout_marginTop="10dip"
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
