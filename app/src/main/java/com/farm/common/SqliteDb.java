@@ -100,7 +100,8 @@ public class SqliteDb
             e.printStackTrace();
         }
     }
-    public static <T> boolean deleteplanPolygon(Context context,String uuid)
+
+    public static <T> boolean deleteplanPolygon(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -115,7 +116,22 @@ public class SqliteDb
         }
         return true;
     }
-    public static <T> boolean deletePolygon(Context context,String uuid)
+
+    public static <T> boolean editPolygoninfo(Context context, Object c)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.update(c, "note");
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static <T> boolean deletePolygon(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -129,6 +145,67 @@ public class SqliteDb
         }
         return true;
     }
+
+    public static <T> boolean isexistpark(Context context, String parkid)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            List<CoordinatesBean> list = db.findAll(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", "").and("xxzt", "=", "0"));
+
+            if (list == null || list.size() == 0)
+            {
+                return false;
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            String a = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
+    public static <T> boolean isexistarea(Context context, String parkid, String areaid)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            List<CoordinatesBean> list = db.findAll(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", areaid).and("contractid", "=", "").and("xxzt", "=", "0"));
+
+            if (list == null || list.size() == 0)
+            {
+                return false;
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            String a = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
+    public static <T> boolean isexistcontract(Context context, String parkid, String areaid, String contractid)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            List<CoordinatesBean> list = db.findAll(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", areaid).and("contractid", "=", contractid).and("xxzt", "=", "0"));
+
+            if (list == null || list.size() == 0)
+            {
+                return false;
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            String a = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
     public static <T> List<T> getTemp1(Context context)
     {
         DbUtils db = DbUtils.create(context);
@@ -377,6 +454,7 @@ public class SqliteDb
 
         return polygonBean;
     }
+
     public static List<CoordinatesBean> getBoundaryByID(Context context, String uid, String parkid, String areaid, String contractid)
     {
         DbUtils db = DbUtils.create(context);
@@ -437,7 +515,27 @@ public class SqliteDb
         List<PolygonBean> list = null;
         try
         {
-            list= db.findAll(Selector.from(PolygonBean.class).where("uid", "=", uid).and("type", "=", "D").and("xxzt", "=", "0"));
+            list = db.findAll(Selector.from(PolygonBean.class).where("uid", "=", uid).and("type", "=", "D").and("xxzt", "=", "0"));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public static List<PolygonBean> getMoreLayer_house(Context context, String uid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<PolygonBean> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(PolygonBean.class).where("uid", "=", uid).and("type", "=", "house").and("xxzt", "=", "0"));
             if (list == null)
             {
                 list = new ArrayList<>();
@@ -469,6 +567,43 @@ public class SqliteDb
 
         return list;
     }
+    public static List<PolygonBean> getMoreLayer_mian(Context context, String uid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<PolygonBean> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(PolygonBean.class).where("uid", "=", uid).and("type", "=", "M").and("xxzt", "=", "0"));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public static List<PolygonBean> getMoreLayer_road(Context context, String uid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<PolygonBean> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(PolygonBean.class).where("uid", "=", uid).and("type", "=", "road").and("xxzt", "=", "0"));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
     public static PolygonBean getLayer_park(Context context, String parkid)
     {
         DbUtils db = DbUtils.create(context);
@@ -484,7 +619,8 @@ public class SqliteDb
 
         return polygonBean_park;
     }
-    public static PolygonBean getLayer_area(Context context, String parkid,String areaid)
+
+    public static PolygonBean getLayer_area(Context context, String parkid, String areaid)
     {
         DbUtils db = DbUtils.create(context);
         PolygonBean polygonBean = null;
@@ -498,7 +634,8 @@ public class SqliteDb
 
         return polygonBean;
     }
-    public static PolygonBean getLayer_contract(Context context, String parkid,String areaid,String contractid)
+
+    public static PolygonBean getLayer_contract(Context context, String parkid, String areaid, String contractid)
     {
         DbUtils db = DbUtils.create(context);
         PolygonBean polygonBean = null;
@@ -512,6 +649,7 @@ public class SqliteDb
 
         return polygonBean;
     }
+
     public static PolygonBean getLayerbyuuid(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
@@ -526,7 +664,8 @@ public class SqliteDb
 
         return polygonBean;
     }
-    public static PolygonBean getLayer(Context context, String parkid,String areaid,String contractid)
+
+    public static PolygonBean getLayer(Context context, String parkid, String areaid, String contractid)
     {
         DbUtils db = DbUtils.create(context);
         PolygonBean polygonBean = null;
@@ -540,6 +679,7 @@ public class SqliteDb
 
         return polygonBean;
     }
+
     public static List<parktab> getparktab(Context context, String uid)
     {
         DbUtils db = DbUtils.create(context);
@@ -558,6 +698,7 @@ public class SqliteDb
 
         return list;
     }
+
     public static List<areatab> getareatab(Context context, String parkid)
     {
         DbUtils db = DbUtils.create(context);
@@ -576,6 +717,7 @@ public class SqliteDb
 
         return list;
     }
+
     public static List<contractTab> getcontracttab(Context context, String areaid)
     {
         DbUtils db = DbUtils.create(context);
@@ -594,6 +736,7 @@ public class SqliteDb
 
         return list;
     }
+
     public static String getPlanMap(Context context, String uid, String farm_boundary)
     {
         StringBuffer build = new StringBuffer();

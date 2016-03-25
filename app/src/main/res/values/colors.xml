@@ -47,6 +47,7 @@
     <color name="color_orange">#ffd350</color>
     <color name="bg_text_small">#bdbdbd</color>
     <color name="bg_text">#333333</color>
+    <color name="bg_panel">#55555555</color>
     <color name="bg_work">#fed15c </color>
     <color name="bg_titlebar">#ffffff</color>
     <color name="bg_yellow">#ea871c</color>

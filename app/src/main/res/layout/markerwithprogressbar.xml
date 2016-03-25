@@ -16,13 +16,24 @@
             android:background="@drawable/umeng_socialize_follow_on"/>
 
 
+        <com.farm.widget.VerticalProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="20dip"
+            android:layout_height="80dp"
+            android:scrollbarSize="60dip"
+            android:layout_gravity="center"
+            android:max="100"
+            android:progress="70"/>
+
         <TextView
             android:id="@+id/tv_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginLeft="5dip"
             android:background="@null"
             android:text=""
+            android:layout_gravity="bottom|center_horizontal"
             android:textColor="@color/bg_blue"
             android:textSize="12sp"/>
     </FrameLayout>

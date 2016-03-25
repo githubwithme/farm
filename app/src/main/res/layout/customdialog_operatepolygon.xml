@@ -46,6 +46,7 @@
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:background="@color/line_color"/>
         <Button
             android:id="@+id/btn_paint"
@@ -53,6 +54,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
+            android:visibility="gone"
             android:text="画图"
             android:textSize="15sp"/>
         <View

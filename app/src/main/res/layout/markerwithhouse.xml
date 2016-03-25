@@ -10,10 +10,10 @@
 
         <View
             android:id="@+id/view_marker"
-            android:layout_width="8dip"
-            android:layout_height="8dip"
+            android:layout_width="25dip"
+            android:layout_height="25dip"
             android:layout_gravity="bottom|center_horizontal"
-            android:background="@drawable/umeng_socialize_follow_on"/>
+            android:background="@drawable/icon_house"/>
 
 
         <TextView

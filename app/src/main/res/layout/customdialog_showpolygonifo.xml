@@ -5,6 +5,7 @@
               android:layout_gravity="center"
               android:orientation="vertical">
 
+
     <LinearLayout
         android:layout_width="320dip"
         android:layout_height="60dip">
@@ -14,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="请填写标注信息"
+            android:text="相关信息"
             android:textColor="#000000"
             android:textSize="15sp"/>
     </LinearLayout>
@@ -35,21 +36,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="80dip"
+                android:id="@+id/tv_note"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="标注"
+                android:text="暂无信息"
                 android:textSize="@dimen/size_sp_14"/>
 
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line_color"/>
 
-            <EditText
-                android:id="@+id/et_note"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
         </LinearLayout>
 
 
@@ -65,27 +59,14 @@
         android:layout_height="60dip">
 
         <Button
-            android:id="@+id/btn_sure"
+            android:id="@+id/btn_close"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:text="确定"
+            android:text="关闭"
             android:textSize="15sp"/>
 
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/line_color"/>
-
-        <Button
-            android:id="@+id/btn_cancle"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:text="取消"
-            android:textSize="15sp"/>
 
     </LinearLayout>
 

@@ -28,6 +28,17 @@ public class DepartmentBean implements Parcelable // 与数据库不一致
 	public String contractname;
 	public String type;
 	public String name;
+	public String isdrawer;
+
+	public void setIsdrawer(String isdrawer)
+	{
+		this.isdrawer = isdrawer;
+	}
+
+	public String getIsdrawer()
+	{
+		return isdrawer;
+	}
 
 	public void setContractname(String contractname)
 	{
@@ -156,6 +167,7 @@ public class DepartmentBean implements Parcelable // 与数据库不一致
 			p.setContractname(source.readString());
 			p.setType(source.readString());
 			p.setName(source.readString());
+			p.setIsdrawer(source.readString());
 			return p;
 		}
 
@@ -179,6 +191,7 @@ public class DepartmentBean implements Parcelable // 与数据库不一致
 		p.writeString(contractname);
 		p.writeString(type);
 		p.writeString(name);
+		p.writeString(isdrawer);
 	}
 
 	@Override

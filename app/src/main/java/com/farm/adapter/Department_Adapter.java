@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -21,9 +22,11 @@ public class Department_Adapter extends BaseAdapter
     ListItemView listItemView = null;
 
     DepartmentBean DepartmentBean;
+
     static class ListItemView
     {
         public TextView tv_name;
+        public ImageView iv_selectet;
     }
 
     public Department_Adapter(Context context, List<DepartmentBean> data)
@@ -62,6 +65,7 @@ public class Department_Adapter extends BaseAdapter
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+            listItemView.iv_selectet = (ImageView) convertView.findViewById(R.id.iv_selectet);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -72,6 +76,11 @@ public class Department_Adapter extends BaseAdapter
         }
         // 设置文字和图片
         listItemView.tv_name.setText((list_department.get(position).getName()));
+        if (list_department.get(position).getIsdrawer().equals("1"))
+        {
+            listItemView.iv_selectet.setVisibility(View.VISIBLE);
+            lmap.get(position).setBackgroundResource(R.color.light_gray);
+        }
         return convertView;
     }
 }
