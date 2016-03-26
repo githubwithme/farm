@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/rl_getlocation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="300dip">
 
         <ProgressBar
             android:id="@+id/pb_getlocation"
@@ -38,7 +38,7 @@
         android:id="@+id/ll_locationinfo"
         android:layout_width="match_parent"
         android:visibility="gone"
-        android:layout_height="match_parent"
+        android:layout_height="300dip"
         android:orientation="vertical">
 
         <LinearLayout

@@ -250,17 +250,7 @@
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
 
-                <Button
-                    android:id="@+id/btn_addparklayer"
-                    android:layout_width="70dip"
-                    android:layout_height="30dip"
-                    android:layout_marginTop="10dip"
-                    android:background="@drawable/background_view_rounded_single"
-                    android:gravity="center"
-                    android:text="添加区域"
-                    android:visibility="gone"
-                    android:textColor="@color/bg_text"
-                    android:textSize="14sp"/>
+
 
                 <Button
                     android:id="@+id/btn_addlayer"
