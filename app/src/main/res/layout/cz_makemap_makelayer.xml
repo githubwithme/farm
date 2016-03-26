@@ -398,7 +398,26 @@
                     android:layout_weight="1"
                     android:clickable="false"
                     android:text="承包区"/>
+                <CheckBox
+                    android:id="@+id/cb_parkdata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="园区图表"/>
 
+                <CheckBox
+                    android:id="@+id/cb_areadata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="片区图表"/>
+
+                <CheckBox
+                    android:id="@+id/cb_contractdata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="承包区图表"/>
                 <CheckBox
                     android:id="@+id/cb_house"
                     android:layout_width="wrap_content"

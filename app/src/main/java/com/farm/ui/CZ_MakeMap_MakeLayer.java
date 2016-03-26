@@ -141,6 +141,12 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
     List<Marker> list_mark;//边界上的marker集合
     List<Marker> list_centermark;//边界上的marker集合
     List<Marker> list_mark_inboundary;
+    List<LinearLayout> list_ll_second;
+    List<LinearLayout> list_ll_first;
+    List<LinearLayout> list_ll_third;
+    List<Marker> list_Marker_second;
+    List<Marker> list_Marker_first;
+    List<Marker> list_Marker_third;
     int last_pos = 0;
     int number_pointselect = 0;
     int number_markerselect = 0;
@@ -226,6 +232,12 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
     @ViewById
     CheckBox cb_contract;
     @ViewById
+    CheckBox cb_parkdata;
+    @ViewById
+    CheckBox cb_areadata;
+    @ViewById
+    CheckBox cb_contractdata;
+    @ViewById
     CheckBox cb_house;
     @ViewById
     CheckBox cb_road;
@@ -255,6 +267,10 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
     LinearLayout ll_setting;
     @ViewById
     LinearLayout ll_showlayer;
+    @ViewById
+    LinearLayout ll_first;
+    @ViewById
+    LinearLayout ll_second;
     @ViewById
     Button btn_setting;
 
@@ -292,6 +308,57 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         } else
         {
             cb_contract.setSelected(true);
+        }
+    }
+    @CheckedChange
+    void cb_parkdata()
+    {
+        if (cb_parkdata.isSelected())
+        {
+            cb_parkdata.setSelected(false);
+            for (int i = 0; i < list_Marker_first.size(); i++)
+            {
+                list_Marker_first.get(i).setVisible(false);
+            }
+        } else
+        {
+            cb_parkdata.setSelected(true);
+            showFirstMarker();
+        }
+
+    }
+
+    @CheckedChange
+    void cb_areadata()
+    {
+        if (cb_areadata.isSelected())
+        {
+            cb_areadata.setSelected(false);
+            for (int i = 0; i < list_Marker_second.size(); i++)
+            {
+                list_Marker_second.get(i).setVisible(false);
+            }
+        } else
+        {
+            cb_areadata.setSelected(true);
+            showSecondMarker();
+        }
+    }
+
+    @CheckedChange
+    void cb_contractdata()
+    {
+        if (cb_contractdata.isSelected())
+        {
+            cb_contractdata.setSelected(false);
+            for (int i = 0; i < list_Marker_third.size(); i++)
+            {
+                list_Marker_third.get(i).setVisible(false);
+            }
+        } else
+        {
+            cb_contractdata.setSelected(true);
+            showSecondMarker();
         }
     }
 
@@ -2692,6 +2759,17 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         mapview.onDestroy();
     }
 
+    public void  settile()
+    {
+//        TileOverlay tileOverlay = null;
+//        UrlTileProvider u = null;
+//        Tile tile = new Tile("","","");
+//        TileProvider tileProvider = null;
+//        tileProvider.getTile();
+//        TileOverlayOptions tileOverlayOptions=new TileOverlayOptions();
+//        tileOverlayOptions.tileProvider(tileProvider);
+//        tencentMap.addTileOverlay(tileOverlayOptions);
+    }
     @AfterViews
     void afterOncreate()
     {
@@ -2721,7 +2799,11 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
 //        getBoundary_farm();
 //        SqliteDb.deletetemp(getActivity());
 
-
+        tencentMap = mapview.getMap();
+        tencentMap.setZoom(13);
+        uiSettings = mapview.getUiSettings();
+        tencentMap.setSatelliteEnabled(true);
+        mProjection = mapview.getProjection();
 
         Overlays = new ArrayList<Object>();
         list_polygon = new ArrayList<Polygon>();
@@ -2729,6 +2811,12 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         list_point_pq = new ArrayList<>();
         list_polygon_all = new ArrayList<>();
         list_centermark = new ArrayList<>();
+        list_ll_second = new ArrayList<>();
+        list_ll_first = new ArrayList<>();
+        list_ll_third = new ArrayList<>();
+        list_Marker_first= new ArrayList<>();
+        list_Marker_second = new ArrayList<>();
+        list_Marker_third = new ArrayList<>();
 
         list_polygon_road = new ArrayList<>();
         list_polygon_house = new ArrayList<>();
@@ -2760,17 +2848,16 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         cb_area.setChecked(true);
         cb_contract.setChecked(true);
 
+        cb_parkdata.setChecked(false);
+        cb_areadata.setChecked(false);
+        cb_contractdata.setChecked(false);
+
         list_polygon_allCoordinatesBean = new ArrayList<>();
         map = new HashMap<>();
         if (!utils.isOPen(getActivity()))
         {
             utils.openGPSSettings(getActivity());
         }
-        tencentMap = mapview.getMap();
-        tencentMap.setZoom(14);
-        uiSettings = mapview.getUiSettings();
-        tencentMap.setSatelliteEnabled(true);
-        mProjection = mapview.getProjection();
 
 //        String str_farm_boundary_free = SqliteDb.getBoundary_farm_free(getActivity(), "60", "farm_boundary_free");
 //        Result result_farm_boundary_free = JSON.parseObject(str_farm_boundary_free, Result.class);
@@ -3160,7 +3247,48 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         marker.hideInfoWindow();
         return marker;
     }
-
+    private Marker addFirstView( LatLng latLng, String uuid,String note)
+    {
+        marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
+        list_centermark.add(marker);
+        marker.set2Top();
+        View view = View.inflate(getActivity(), R.layout.addfirstview, null);
+        LinearLayout ll_first = (LinearLayout) view.findViewById(R.id.ll_first);
+        marker.setMarkerView(view);
+        Bundle bundle=new Bundle();
+        bundle.putString("uuid", uuid);
+        bundle.putString("note", note);
+        marker.setTag(bundle);
+        return marker;
+    }
+    private Marker addSecondView( LatLng latLng, String uuid,String note)
+    {
+        marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
+        list_centermark.add(marker);
+        marker.set2Top();
+        View view = View.inflate(getActivity(),R.layout.addsecondview, null);
+        LinearLayout ll_second = (LinearLayout) view.findViewById(R.id.ll_second);
+        marker.setMarkerView(view);
+        Bundle bundle=new Bundle();
+        bundle.putString("uuid", uuid);
+        bundle.putString("note", note);
+        marker.setTag(bundle);
+        return marker;
+    }
+    private Marker addThirdView(LatLng latLng, String uuid,String note)
+    {
+        marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
+        list_centermark.add(marker);
+        marker.set2Top();
+        View view = View.inflate(getActivity(),R.layout.addthirdview, null);
+        LinearLayout ll_third = (LinearLayout) view.findViewById(R.id.ll_third);
+        marker.setMarkerView(view);
+        Bundle bundle=new Bundle();
+        bundle.putString("uuid", uuid);
+        bundle.putString("note", note);
+        marker.setTag(bundle);
+        return marker;
+    }
     private Marker addCustomMarkerWithProgressbar(int textcolor, LatLng latLng, String uuid, String note)
     {
         Drawable drawable = getResources().getDrawable(R.drawable.location1);
@@ -3168,8 +3296,14 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         marker = tencentMap.addMarker(new MarkerOptions().position(latLng).icon(new BitmapDescriptor(bitmap)));
         list_centermark.add(marker);
         marker.set2Top();
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.markerwithprogressbar, null);
+        View view = View.inflate(getActivity(),R.layout.markerwithprogressbar, null);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
+        LinearLayout ll_second = (LinearLayout) view.findViewById(R.id.ll_second);
+        LinearLayout ll_first = (LinearLayout) view.findViewById(R.id.ll_first);
+        LinearLayout ll_third = (LinearLayout) view.findViewById(R.id.ll_third);
+        list_ll_first.add(ll_first);
+        list_ll_second.add(ll_second);
+        list_ll_third.add(ll_third);
         if (note == null || note.equals(""))
         {
             textView.setText("暂无说明");
@@ -3179,10 +3313,11 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         }
         textView.setTextColor(textcolor);
         textView.setTextSize(12);
-        textView.setTag(latLng);
-        textView.setTag(R.id.tag_latlng, latLng);
-        textView.setTag(R.id.tag_uuid, uuid);
         marker.setMarkerView(view);
+        Bundle bundle=new Bundle();
+        bundle.putString("uuid", uuid);
+        bundle.putString("note", note);
+        marker.setTag(bundle);
         return marker;
     }
 
@@ -3204,10 +3339,14 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         }
         textView.setTextColor(textcolor);
         textView.setTextSize(12);
-        textView.setTag(latLng);
-        textView.setTag(R.id.tag_latlng, latLng);
-        textView.setTag(R.id.tag_uuid, uuid);
+//        textView.setTag(latLng);
+//        textView.setTag(R.id.tag_latlng, latLng);
+//        textView.setTag(R.id.tag_uuid, uuid);
         marker.setMarkerView(view);
+        Bundle bundle=new Bundle();
+        bundle.putString("uuid",uuid);
+        bundle.putString("note", note);
+        marker.setTag(bundle);
         return marker;
     }
 
@@ -3229,10 +3368,14 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         }
         textView.setTextColor(textcolor);
         textView.setTextSize(12);
-        textView.setTag(latLng);
-        textView.setTag(R.id.tag_latlng, latLng);
-        textView.setTag(R.id.tag_uuid, uuid);
+//        textView.setTag(latLng);
+//        textView.setTag(R.id.tag_latlng, latLng);
+//        textView.setTag(R.id.tag_uuid, uuid);
         marker.setMarkerView(view);
+        Bundle bundle=new Bundle();
+        bundle.putString("uuid", uuid);
+        bundle.putString("note", note);
+        marker.setTag(bundle);
         return marker;
     }
 
@@ -4531,7 +4674,87 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         initMapOnclickListening();
         initMapCameraChangeListener();
     }
-
+    private void   showThirdMarker()
+    {
+        if (list_Marker_third.size()>0)
+        {
+            for (int i = 0; i < list_Marker_third.size(); i++)
+            {
+                list_Marker_third.get(i).setVisible(true);
+            }
+        }else
+        {
+            List<parktab> list_parktab = SqliteDb.getparktab(getActivity(), "60");
+            for (int i = 0; i < list_parktab.size(); i++)//每个园区
+            {
+                List<areatab> list_areatab = SqliteDb.getareatab(getActivity(), list_parktab.get(i).getid());
+                for (int k = 0; k < list_areatab.size(); k++)//每个片区
+                {
+                    List<contractTab> list_contractTab = SqliteDb.getcontracttab(getActivity(), list_areatab.get(k).getid());
+                    for (int m = 0; m < list_contractTab.size(); m++)//每个承包区
+                    {
+                        PolygonBean polygonBean_contract = SqliteDb.getLayer_contract(getActivity(), list_parktab.get(i).getid(), list_areatab.get(k).getid(), list_contractTab.get(m).getid());
+                        if (polygonBean_contract != null)
+                        {
+                            LatLng latlng = new LatLng(Double.valueOf(polygonBean_contract.getLat()), Double.valueOf(polygonBean_contract.getLng()));
+                            Marker marker= addThirdView(latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote()+"相关信息");
+                            list_Marker_third.add(marker);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private void   showSecondMarker()
+    {
+        if (list_Marker_second.size()>0)
+        {
+            for (int i = 0; i < list_Marker_second.size(); i++)
+            {
+                list_Marker_second.get(i).setVisible(true);
+            }
+        }else
+        {
+            List<parktab> list_parktab = SqliteDb.getparktab(getActivity(), "60");
+            for (int i = 0; i < list_parktab.size(); i++)//每个园区
+            {
+                List<areatab> list_areatab = SqliteDb.getareatab(getActivity(), list_parktab.get(i).getid());
+                for (int k = 0; k < list_areatab.size(); k++)//每个片区
+                {
+                    PolygonBean polygonBean_area = SqliteDb.getLayer_area(getActivity(), list_parktab.get(i).getid(), list_areatab.get(k).getid());
+                    if (polygonBean_area != null)
+                    {
+                        LatLng latlng = new LatLng(Double.valueOf(polygonBean_area.getLat()), Double.valueOf(polygonBean_area.getLng()));
+                        Marker marker=addSecondView(latlng, polygonBean_area.getUuid(), polygonBean_area.getNote()+"相关信息");
+                        list_Marker_second.add(marker);
+                    }
+                }
+            }
+        }
+    }
+    private void   showFirstMarker()
+    {
+        if (list_Marker_first.size()>0)
+        {
+            for (int i = 0; i < list_Marker_first.size(); i++)
+            {
+                list_Marker_first.get(i).setVisible(true);
+            }
+        }else
+        {
+            List<parktab> list_parktab = SqliteDb.getparktab(getActivity(), "60");
+            for (int i = 0; i < list_parktab.size(); i++)//每个园区
+            {
+                PolygonBean polygonBean_park = SqliteDb.getLayer_park(getActivity(), list_parktab.get(i).getid());
+                if (polygonBean_park != null)
+                {
+                    LatLng latlng = new LatLng(Double.valueOf(polygonBean_park.getLat()), Double.valueOf(polygonBean_park.getLng()));
+                    Marker marker=addFirstView(latlng, polygonBean_park.getUuid(), polygonBean_park.getNote()+"相关信息");
+                    list_Marker_first.add(marker);
+                }
+            }
+        }
+    }
     private void initMapCameraChangeListener()
     {
         tencentMap.setOnMapCameraChangeListener(new TencentMap.OnMapCameraChangeListener()
@@ -4539,20 +4762,43 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
             @Override
             public void onCameraChange(CameraPosition cameraPosition)
             {
-//                int zoomlevel = tencentMap.getZoomLevel();
-//                if (zoomlevel > 12)
-//                {
-//                    for (int i = 0; i < list_centermark.size(); i++)
-//                    {
-//                        list_centermark.get(i).setVisible(true);
-//                    }
-//                } else if (zoomlevel <= 12)
-//                {
-//                    for (int i = 0; i < list_centermark.size(); i++)
-//                    {
-//                        list_centermark.get(i).setVisible(false);
-//                    }
-//                }
+                int zoomlevel = tencentMap.getZoomLevel();
+                //规划图层信息显示控制
+                if (zoomlevel == 15)
+                {
+                    showFirstMarker();
+                }else
+                {
+                    for (int i = 0; i < list_Marker_first.size(); i++)
+                    {
+                        list_Marker_first.get(i).setVisible(false);
+                    }
+                }
+
+                //片区图层信息显示控制
+                if (zoomlevel ==14)
+                {
+                    showSecondMarker();
+                } else
+                {
+                    for (int i = 0; i < list_Marker_second.size(); i++)
+                    {
+                        list_Marker_second.get(i).setVisible(false);
+                    }
+                }
+
+                //其他图层信息显示控制
+                if (zoomlevel == 13 )
+                {
+                    showThirdMarker();
+                } else
+                {
+                    for (int i = 0; i < list_Marker_third.size(); i++)
+                    {
+                        list_Marker_third.get(i).setVisible(false);
+                    }
+                }
+
             }
 
             @Override
@@ -4605,10 +4851,13 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
             @Override
             public boolean onMarkerClick(Marker marker)
             {
-                View view = (View) marker.getMarkerView();
-                TextView textview = (TextView) view.findViewById(R.id.tv_note);
-                LatLng latLng = (LatLng) textview.getTag(R.id.tag_latlng);
-                String uuid = (String) textview.getTag(R.id.tag_uuid);
+                Bundle bundle= (Bundle) marker.getTag();
+               String note= bundle.getString("note");
+                String uuid= bundle.getString("uuid");
+//                View view = (View) marker.getMarkerView();
+//                TextView textview = (TextView) view.findViewById(R.id.tv_note);
+//                LatLng latLng = (LatLng) textview.getTag(R.id.tag_latlng);
+//                String uuid = (String) textview.getTag(R.id.tag_uuid);
                 showDialog_OperatePolygon(uuid);
                 return false;
             }

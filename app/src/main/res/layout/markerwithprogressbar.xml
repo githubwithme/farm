@@ -1,42 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <FrameLayout
+    <View
+        android:id="@+id/view_marker"
+        android:layout_width="8dip"
+        android:layout_height="8dip"
+        android:layout_centerInParent="true"
+        android:background="@drawable/umeng_socialize_follow_on"/>
+    <TextView
+        android:id="@+id/tv_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <View
-            android:id="@+id/view_marker"
-            android:layout_width="8dip"
-            android:layout_height="8dip"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@drawable/umeng_socialize_follow_on"/>
-
+        android:background="@null"
+        android:layout_centerInParent="true"
+        android:text="gggggggg"
+        android:textColor="@color/bg_blue"
+        android:textSize="12sp"/>
 
         <com.farm.widget.VerticalProgressBar
             android:id="@+id/progress_bar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="20dip"
             android:layout_height="80dp"
+            android:visibility="gone"
             android:scrollbarSize="60dip"
             android:layout_gravity="center"
             android:max="100"
             android:progress="70"/>
+    <LinearLayout
+        android:id="@+id/ll_first"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_note"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
+            android:layout_height="30dip"
+            android:background="@color/red"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:text="15000/360000"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_second"
+        android:layout_width="40dip"
+        android:layout_height="100dip"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:text="12000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:background="@color/bg_green"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:text="15000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:background="@color/red"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:text="16000"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_third"
+        android:layout_width="140dip"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:background="@drawable/background_view_rounded_single"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
             android:background="@null"
-            android:text=""
-            android:layout_gravity="bottom|center_horizontal"
-            android:textColor="@color/bg_blue"
-            android:textSize="12sp"/>
-    </FrameLayout>
+            android:gravity="center"
+            android:textSize="13sp"
+            android:textColor="@color/bg_text"
+            android:text="1、单价1.2 共21000株"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_color"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:background="@null"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:textColor="@color/bg_text"
+            android:text="2、单价1.3 共16000株"/>
 
-
-</LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
