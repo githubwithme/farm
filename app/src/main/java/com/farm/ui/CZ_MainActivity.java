@@ -49,41 +49,64 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
 	MyDialog myDialog;
 	Fragment mContent = new Fragment();
 	CZ_MainFragment mainFragment;
+	CZ_SaleMap cz_saleMap;
 	IFragment iFragment;
 	@ViewById
 	ImageButton imgbtn_home;
 	@ViewById
 	ImageButton imgbtn_me;
+	@ViewById
+	ImageButton imgbtn_sale;
 
 	@ViewById
 	TextView tv_home;
 	@ViewById
 	TextView tv_me;
+	@ViewById
+	TextView tv_sale;
 
 	@ViewById
 	TableLayout tl_home;
 	@ViewById
 	TableLayout tl_me;
+	@ViewById
+	TableLayout tl_sale;
 
 	@Click
 	void tl_home()
 	{
 		tv_home.setTextColor(getResources().getColor(R.color.bg_blue));
 		tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
+		tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
 		tl_home.setSelected(true);
 		tl_me.setSelected(false);
+		tl_sale.setSelected(false);
 		switchContent(mContent, mainFragment);
+	}
+	@Click
+	void tl_sale()
+	{
+		tv_sale.setTextColor(getResources().getColor(R.color.bg_blue));
+		tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
+		tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+
+		tl_sale.setSelected(true);
+		tl_home.setSelected(false);
+		tl_me.setSelected(false);
+		switchContent(mContent, cz_saleMap);
 	}
 
 	@Click
 	void tl_me()
 	{
-		tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
 		tv_me.setTextColor(getResources().getColor(R.color.bg_blue));
+		tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+		tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
-		tl_home.setSelected(false);
 		tl_me.setSelected(true);
+		tl_home.setSelected(false);
+		tl_sale.setSelected(false);
 		switchContent(mContent, iFragment);
 	}
 
@@ -103,6 +126,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
 		AppManager.getAppManager().addActivity(this);
 		mainFragment = new CZ_MainFragment_();
 		iFragment = new IFragment_();
+		cz_saleMap = new CZ_SaleMap_();
 
 		commembertab=AppContext.getUserInfo(CZ_MainActivity.this);
 

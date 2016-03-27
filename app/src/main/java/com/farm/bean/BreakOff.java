@@ -1,0 +1,294 @@
+package com.farm.bean;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.lidroid.xutils.db.annotation.Table;
+
+/**
+ *
+ * Description: breakofftab 实体类</p>
+ *
+ * Copyright: Copyright (c) 2015
+ *
+ * Company: 广州海川信息科技有限公司
+ * @version 1.0
+ */
+@Table(name="BreakOff")
+public class BreakOff implements Parcelable
+{
+	public String id;
+	public String uuid;
+	public String uid;
+	public String breakofftime;
+	public String parkid;
+	public String parkname;
+	public String areaid;
+	public String areaname;
+	public String contractid;
+	public String contractname;
+	public String lat;
+	public String lng;
+	public String latlngsize ;
+	public String numberofbreakoff;
+	public String regdate;
+	public String dateofbreakoff;
+	public String weight;
+	public String status;
+
+
+	public void setStatus(String status)
+	{
+		this.status = status;
+	}
+
+	public String getStatus()
+	{
+		return status;
+	}
+
+	public void setWeight(String weight)
+	{
+		this.weight = weight;
+	}
+
+	public String getWeight()
+	{
+		return weight;
+	}
+
+	public void setLatlngsize(String latlngsize)
+	{
+		this.latlngsize = latlngsize;
+	}
+
+	public String getLatlngsize()
+	{
+		return latlngsize;
+	}
+
+	public void setLat(String lat)
+	{
+		this.lat = lat;
+	}
+
+	public String getLat()
+	{
+		return lat;
+	}
+
+	public void setLng(String lng)
+	{
+		this.lng = lng;
+	}
+
+	public String getLng()
+	{
+		return lng;
+	}
+
+	public void setUuid(String uuid)
+	{
+		this.uuid = uuid;
+	}
+
+	public String getUuid()
+	{
+		return uuid;
+	}
+
+	public void setBreakofftime(String breakofftime)
+	{
+		this.breakofftime = breakofftime;
+	}
+
+	public String getBreakofftime()
+	{
+		return breakofftime;
+	}
+
+	public String getid()
+	{
+		return id;
+	}
+
+	public void setid(String id)
+	{
+		this.id = id;
+	}
+
+	public String getuid()
+	{
+		return uid;
+	}
+
+	public void setuid(String uid)
+	{
+		this.uid = uid;
+	}
+
+
+
+	public String getparkid()
+	{
+		return parkid;
+	}
+
+	public void setparkid(String parkid)
+	{
+		this.parkid = parkid;
+	}
+
+	public String getparkname()
+	{
+		return parkname;
+	}
+
+	public void setparkname(String parkname)
+	{
+		this.parkname = parkname;
+	}
+
+	public String getareaid()
+	{
+		return areaid;
+	}
+
+	public void setareaid(String areaid)
+	{
+		this.areaid = areaid;
+	}
+
+	public String getareaname()
+	{
+		return areaname;
+	}
+
+	public void setareaname(String areaname)
+	{
+		this.areaname = areaname;
+	}
+
+	public String getcontractid()
+	{
+		return contractid;
+	}
+
+	public void setcontractid(String contractid)
+	{
+		this.contractid = contractid;
+	}
+
+	public String getcontractname()
+	{
+		return contractname;
+	}
+
+	public void setcontractname(String contractname)
+	{
+		this.contractname = contractname;
+	}
+
+	public String getnumberofbreakoff()
+	{
+		return numberofbreakoff;
+	}
+
+	public void setnumberofbreakoff(String numberofbreakoff)
+	{
+		this.numberofbreakoff = numberofbreakoff;
+	}
+
+	public String getregdate()
+	{
+		return regdate;
+	}
+
+	public void setregdate(String regdate)
+	{
+		this.regdate = regdate;
+	}
+
+	public String getdateofbreakoff()
+	{
+		return dateofbreakoff;
+	}
+
+	public void setdateofbreakoff(String dateofbreakoff)
+	{
+		this.dateofbreakoff = dateofbreakoff;
+	}
+
+	public boolean equals(Object o)
+	{
+		return false;
+	}
+
+	public int hashCode()
+	{
+		return 0;
+	}
+
+	public static final Creator<BreakOff> CREATOR = new Creator()
+	{
+		@Override
+		public BreakOff createFromParcel(Parcel source)
+		{
+			// 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错
+			BreakOff p = new BreakOff();
+			p.setid(source.readString());
+			p.setUuid(source.readString());
+			p.setuid(source.readString());
+			p.setBreakofftime(source.readString());
+			p.setparkid(source.readString());
+			p.setparkname(source.readString());
+			p.setareaid(source.readString());
+			p.setareaname(source.readString());
+			p.setcontractid(source.readString());
+			p.setcontractname(source.readString());
+			p.setLat(source.readString());
+			p.setLng(source.readString());
+			p.setLatlngsize(source.readString());
+			p.setnumberofbreakoff(source.readString());
+			p.setregdate(source.readString());
+			p.setdateofbreakoff(source.readString());
+			p.setWeight(source.readString());
+			p.setStatus(source.readString());
+			return p;
+		}
+
+		@Override
+		public BreakOff[] newArray(int size)
+		{
+			return new BreakOff[size];
+		}
+	};
+
+	@Override
+	public void writeToParcel(Parcel p, int arg1)
+	{
+		p.writeString(id);
+		p.writeString(uuid);
+		p.writeString(uid);
+		p.writeString(breakofftime);
+		p.writeString(parkid);
+		p.writeString(parkname);
+		p.writeString(areaid);
+		p.writeString(areaname);
+		p.writeString(contractid);
+		p.writeString(contractname);
+		p.writeString(lat);
+		p.writeString(lng);
+		p.writeString(latlngsize);
+		p.writeString(numberofbreakoff);
+		p.writeString(regdate);
+		p.writeString(dateofbreakoff);
+		p.writeString(weight);
+		p.writeString(status);
+	}
+	@Override
+	public int describeContents()
+	{
+		return 0;
+	}
+}

@@ -104,5 +104,10 @@
         <item name="@android:windowEnterAnimation">@anim/slide_from_bottom</item>
         <item name="@android:windowExitAnimation">@anim/slide_out_bottom</item>
     </style>
-
+    <style name="PanelLineStyle" parent="@android:style/Theme.Black">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:paddingTop">1dp</item>
+    </style>
 </resources>

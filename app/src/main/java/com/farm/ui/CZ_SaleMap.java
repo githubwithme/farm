@@ -90,7 +90,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @EFragment
-public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationListener, View.OnClickListener
+public class CZ_SaleMap extends Fragment implements TencentLocationListener, View.OnClickListener
 {
     List<PolygonBean> list_polygon_road;
     List<PolygonBean> list_polygon_house;
@@ -204,8 +204,6 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
     @ViewById
     MapView mapview;
     @ViewById
-    TextView tv_adddl;
-    @ViewById
     Button btn_addlayer;
     @ViewById
     Button btn_showlayer;
@@ -216,11 +214,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
     @ViewById
     Button btn_yx;
     @ViewById
-    Button btn_addorder;
-    @ViewById
     Button btn_complete;
-    @ViewById
-    TextView tv_gk;
     @ViewById
     View line;
     @ViewById
@@ -736,240 +730,10 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         }
     }
 
-    @Click
-    void tv_gk()
-    {
-        if (tv_gk.getText().equals("确定"))
-        {
-            for (int i = 0; i < list_mark.size(); i++)
-            {
-                list_mark.get(i).setVisible(false);
-            }
-
-            for (int i = 0; i < pointsList.size(); i++)
-            {
-                String uuid = java.util.UUID.randomUUID().toString();
-                CoordinatesBean coordinatesBean = new CoordinatesBean();
-                coordinatesBean.setLat(String.valueOf(pointsList.get(i).getLatitude()));
-                coordinatesBean.setLng(String.valueOf(pointsList.get(i).getLongitude()));
-                coordinatesBean.setNumofplant("10000");
-                coordinatesBean.setType("farm_boundary");
-                coordinatesBean.setUid("60");
-                coordinatesBean.setparkId("15");
-                coordinatesBean.setparkName("一号园区");
-                coordinatesBean.setUuid(uuid);
-                coordinatesBean.setAreaId("10");
-                coordinatesBean.setareaName("片区一号");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
-                coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("400000");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
-//                SqliteDb.save(AddOrderMap.this, coordinatesBean);
-//                uploadCoordinatesBean(coordinatesBean);
-            }
-
-//            resetData();
-//            StringBuffer build = new StringBuffer();
-//            build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
-//            for (int i = 0; i < pointsList.size(); i++)
-//            {
-//                build.append("{" + "\"" + "lat" + "\"" + ":" + "\"" + pointsList.get(i).getLatitude() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + pointsList.get(i).getLongitude() + "\"" + "}" + ",");
-//
-//            }
-//            build.replace(build.length() - 1, build.length(), "");
-//            build.append("]}");
-//            build.toString();
-            tv_gk.setText("添加断蕾区");
-        } else
-        {
-            tv_gk.setText("确定");
-        }
-        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-        {
-            @Override
-            public void onMapClick(LatLng latlng)
-            {
-//                addMarker_Paint(0, latlng, R.drawable.location_start);
-                pointsList.add(latlng);
-                PolylineOptions lineOpt = new PolylineOptions();
-                lineOpt.add(prelatLng);
-                prelatLng = latlng;
-                lineOpt.add(latlng);
-                Polyline line = tencentMap.addPolyline(lineOpt);
-                line.setColor(getActivity().getResources().getColor(R.color.black));
-                line.setWidth(4f);
-                Overlays.add(line);
-            }
-        });
-    }
-
-    @Click
-    void btn_addorder()
-    {
-        if (btn_addorder.getText().equals("确定"))
-        {
-            tv_tip.setVisibility(View.GONE);
-            btn_addorder.setText("添加断蕾区");
-            tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-            {
-                @Override
-                public void onMapClick(LatLng latlng)
-                {
-                    latlng_clickpostion = latlng;
-                    if (latlng_clickpostion != null)
-                    {
-                        for (int i = 0; i < list_polygon.size(); i++)
-                        {
-                            if (list_polygon.get(i).contains(latlng_clickpostion))
-                            {
-                                Toast.makeText(getActivity(), "在范围内", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                    }
-                }
-            });
-            Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
-            list_polygon.add(polygon);
-//            showDialog_EditPolygonInfo();
-            //重置数据
-            resetData();
-
-        } else
-        {
-            //重置数据
-            list_Polyline = new ArrayList<>();
-            list_mark_inboundary = new ArrayList<>();
-            pointsList = new ArrayList<>();
-            list_polygon = new ArrayList<>();
-            list_LatLng_boundarynotselect = new ArrayList<>();
-            list_LatLng_boundaryselect = new ArrayList<>();
-            list_LatLng_inboundary = new ArrayList<>();
-            last_pos = 0;
-            number_markerselect = 0;
-            number_pointselect = 0;
-            firstmarkerselect = true;
-            prelatLng = null;
-//            polygon_select = null;
 
 
-            tv_tip.setVisibility(View.VISIBLE);
-            tv_tip.setText("请在承包区内选取点");
-            btn_addorder.setText("确定");
-            isStart = true;
-//            polygon_select = list_polygon_pq.get(0);
 
-            setMarkerListenner();
-            tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-            {
-                @Override
-                public void onMapClick(LatLng latlng)
-                {
-//                    polygon_select = list_polygon_pq.get(0);
-                    if (!polygon_select.contains(latlng))
-                    {
-                        tv_tip.setText("请在承包区内选取点");
-                        tv_tip.setBackgroundResource(R.color.bg_job);
-                        return;
-                    }
-                    if (number_markerselect > 0)//只要边界上有一个marker被选中,而且区域内也已经选取点了，就不能再点击地图了，只能点击marker
-                    {
-                        if (latlng_one == null)
-                        {
-                            latlng_one = pointsList.get(pointsList.size() - 1);
-                        }
-                    }
-                    list_LatLng_inboundary.add(latlng);
-                    number_pointselect = number_pointselect + 1;
-                    Marker m = addMarker_Paint(0, latlng, R.drawable.location_start);
-                    list_mark_inboundary.add(m);
-                    last_pos = 0;
-                    firstmarkerselect = true;
-                    pointsList.add(latlng);
-                    PolylineOptions lineOpt = new PolylineOptions();
-                    lineOpt.add(prelatLng);
-                    prelatLng = latlng;
-                    lineOpt.add(latlng);
-                    Polyline line = tencentMap.addPolyline(lineOpt);
-                    line.setColor(getActivity().getResources().getColor(R.color.black));
-                    line.setWidth(4f);
-                    list_Polyline.add(line);
-                    Overlays.add(line);
-                }
-            });
-        }
-    }
-//    @Click
-//    void btn_addorder()
-//    {
-//        list_zs = SqliteDb.getZS(AddOrderMap.this, ZS.class, commembertab.getareaId());
-//        showPop_addcommand();
-//    }
 
-    @Click
-    void tv_adddl()
-    {
-        if (tv_adddl.getText().equals("确定"))
-        {
-            tv_adddl.setText("添加断蕾区");
-            tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-            {
-                @Override
-                public void onMapClick(LatLng latlng)
-                {
-                    latlng_clickpostion = latlng;
-                    if (latlng_clickpostion != null)
-                    {
-                        for (int i = 0; i < list_polygon.size(); i++)
-                        {
-                            if (list_polygon.get(i).contains(latlng_clickpostion))
-                            {
-                                Toast.makeText(getActivity(), "在范围内", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                    }
-                }
-            });
-//            SqliteDb.saveAll(AddOrderMap.this, pointsList);
-            Polygon polygon = drawPolygon(pointsList, R.color.bg_blue);
-            list_polygon.add(polygon);
-//            showDialog_EditPolygonInfo();
-        } else
-        {
-            tv_adddl.setText("确定");
-            isStart = true;
-            tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-            {
-
-                @Override
-                public void onMapClick(LatLng latlng)
-                {
-                    pointsList.add(latlng);
-                    if (isStart)
-                    {
-                        prelatLng = latlng;
-                        isStart = false;
-//                        addMarker(prelatLng, R.drawable.location_start);
-                    }
-                    PolylineOptions lineOpt = new PolylineOptions();
-                    lineOpt.add(prelatLng);
-                    prelatLng = latlng;
-                    lineOpt.add(latlng);
-                    Polyline line = tencentMap.addPolyline(lineOpt);
-                    line.setColor(getActivity().getResources().getColor(R.color.black));
-                    line.setWidth(4f);
-                    Overlays.add(line);
-                    list_Polyline.add(line);
-                }
-            });
-        }
-
-    }
 
     public void showPop_gk()
     {
@@ -1013,9 +777,9 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
 //        WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
 //        lp.alpha = 0.7f;
 //        AddOrderMap.this.getWindow().setAttributes(lp);
-        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(CZ_MakeMap_MakeLayer.this);
-        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(CZ_MakeMap_MakeLayer.this);
-        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(CZ_MakeMap_MakeLayer.this);
+        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(CZ_SaleMap.this);
+        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(CZ_SaleMap.this);
+        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(CZ_SaleMap.this);
     }
 
     public void showPop_addcommand()
@@ -2734,7 +2498,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.cz_makemap_makelayer, container, false);
+        View rootView = inflater.inflate(R.layout.cz_salemap, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
         TencentLocationRequest request = TencentLocationRequest.create();
         TencentLocationManager locationManager = TencentLocationManager.getInstance(getActivity());
@@ -2967,7 +2731,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                     if (list_area != null && list_area.size() != 0)
                     {
                         initBoundary(Color.argb(150, 4, 181, 0), 100f, list_area);
-                        initBoundaryLine(Color.argb(1000,0, 0, 0), 0f, list_area);
+                        initBoundaryLine(Color.argb(1000, 0, 0, 0), 0f, list_area);
                     }
 
                 }
@@ -3492,7 +3256,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                                 }
                             }
                             tv_tip.setVisibility(View.GONE);
-                            btn_addorder.setText("添加断蕾区");
+//                            btn_addorder.setText("添加断蕾区");
                             tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
                             {
                                 @Override
@@ -3741,7 +3505,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
                         {
 
                             tv_tip.setVisibility(View.GONE);
-                            btn_addorder.setText("添加断蕾区");
+//                            btn_addorder.setText("添加断蕾区");
                             tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
                             {
                                 @Override
@@ -5013,7 +4777,7 @@ public class CZ_MakeMap_MakeLayer extends Fragment implements TencentLocationLis
         lineOpt.addAll(list_AllLatLng);
         Polyline line = tencentMap.addPolyline(lineOpt);
         line.setColor(color);
-//        line.setDottedLine(true);
+        line.setDottedLine(true);
         line.setWidth(4f);
         Overlays.add(line);
     }

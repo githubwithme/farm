@@ -78,6 +78,9 @@ public class IFragment extends Fragment
 	{
 		Intent intent = new Intent(getActivity(), CZ_MakeMap_.class);
 		startActivity(intent);
+
+//		Intent intent = new Intent(getActivity(), MapUtils_.class);
+//		startActivity(intent);
 	}
 	@Click
 	void tv_edituser()

@@ -50,7 +50,38 @@
                 android:textColor="@color/menu_textcolor"
                 android:textSize="@dimen/home_menu_textsize" />
         </TableLayout>
+        <TableLayout
+            android:id="@+id/tl_sale"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
 
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1.5" >
+
+                <ImageButton
+                    android:id="@+id/imgbtn_sale"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:clickable="false"
+                    android:layout_centerInParent="true"
+                    android:contentDescription=""
+                    android:background="@drawable/selector_message" />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_sale"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="销售"
+                android:textColor="@color/menu_textcolor"
+                android:textSize="@dimen/home_menu_textsize" />
+        </TableLayout>
         <TableLayout
             android:id="@+id/tl_me"
             android:layout_width="0dip"

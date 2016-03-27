@@ -215,10 +215,7 @@ public class SqliteDb
             list = db.findAll(Selector.from(PolygonBean.class));
             db.deleteAll(list);
             list = db.findAll(Selector.from(CoordinatesBean.class));
-//            list = db.findAll(Selector.from(PolygonBean.class));
-//            db.updateAll(list, "note", "");
             db.deleteAll(list);
-//            list = db.findAll(Selector.from(CoordinatesBean.class));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -444,7 +441,7 @@ public class SqliteDb
                     polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").and("orders", "=", order_last).and("xxzt", "=", "0"));
                 } else//该片区还没开始规划
                 {
-                    polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", areaid).and("contractid", "=", contractid).and("xxzt", "=", "0"));
+                    polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary").and("areaid", "=", areaid).and("contractid", "=", "").and("xxzt", "=", "0"));
                 }
             }
         } catch (DbException e)
