@@ -24,7 +24,8 @@ public class NCZ_ProductSale extends Activity
     Fragment mContent = new Fragment();
     //    Fragment_Sale sale_fragment;
     Fragment_MegaSales fragment_megaSales;
-    Fragment_MainSales fragment_mainSales;
+//    Fragment_MainSales fragment_mainSales;
+    NCZ_CurrentSale ncz_currentSale;
     Fragment_SmallSales fragment_smallSales;
     @ViewById
     ImageButton btn_back;
@@ -46,7 +47,7 @@ public class NCZ_ProductSale extends Activity
     void tv_mainsales()
     {
         setBackground(0);
-        switchContent(mContent, fragment_mainSales);
+        switchContent(mContent, ncz_currentSale);
     }
 
     @Click
@@ -67,7 +68,7 @@ public class NCZ_ProductSale extends Activity
     void afterOncreate()
     {
         setBackground(0);
-        switchContent(mContent, fragment_mainSales);
+        switchContent(mContent, ncz_currentSale);
     }
 
     private void setBackground(int pos)
@@ -109,7 +110,7 @@ public class NCZ_ProductSale extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        fragment_mainSales = new Fragment_MainSales_();
+        ncz_currentSale = new NCZ_CurrentSale_();
         fragment_megaSales = new Fragment_MegaSales_();
         fragment_smallSales = new Fragment_SmallSales_();
     }

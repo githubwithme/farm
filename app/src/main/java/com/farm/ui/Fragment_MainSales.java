@@ -28,7 +28,8 @@ public class Fragment_MainSales extends Fragment
     Fragment_Order fragment_order;
 //    DL_Fragment dl_fragment;
 //    Fragment_CurrentSale fragment_currentSale;
-    NCZ_SaleMap ncz_saleMap;
+//    NCZ_SaleMap ncz_saleMap;
+    NCZ_CurrentSale ncz_currentSale;
     @ViewById
     ImageButton btn_back;
     @ViewById
@@ -47,7 +48,7 @@ public class Fragment_MainSales extends Fragment
     void tv_product()
     {
         setBackground(0);
-        switchContent(mContent, ncz_saleMap);
+        switchContent(mContent, ncz_currentSale);
     }
     @Click
     void tv_order()
@@ -66,7 +67,7 @@ public class Fragment_MainSales extends Fragment
     void afterOncreate()
     {
         setBackground(0);
-        switchContent(mContent, ncz_saleMap);
+        switchContent(mContent, ncz_currentSale);
     }
 
     private void setBackground(int pos)
@@ -98,7 +99,7 @@ public class Fragment_MainSales extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_mainsales, container, false);
-        ncz_saleMap = new NCZ_SaleMap_();
+        ncz_currentSale = new NCZ_CurrentSale_();
         fragment_order = new Fragment_Order_();
         return rootView;
     }
