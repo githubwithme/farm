@@ -4409,6 +4409,10 @@ public class NCZ_SaleMap extends Fragment implements TencentLocationListener, Vi
         listlatlng_park = new ArrayList<>();
         prelatLng_drawerparklayer = null;
 
+
+        list_Marker_first=new ArrayList<>();
+        list_Marker_second=new ArrayList<>();
+        list_Marker_third=new ArrayList<>();
         list_Polyline = new ArrayList<>();
         list_mark_inboundary = new ArrayList<>();
         pointsList = new ArrayList<>();

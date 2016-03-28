@@ -677,7 +677,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 {
                     for (int i = 0; i < list_contractplanpolygon.size(); i++)
                     {
-                        if (list_contractplanpolygon.get(i).contains(currentPoint))
+                        if (list_contractplanpolygon.get(i).contains(latlng))
                         {
                             tencentMap.removeOverlay(currentpointmarker);
                             currentPoint = latlng;
@@ -1319,26 +1319,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 btn_addbreakoff.setClickable(true);
                 btn_addbreakoff.setText("添加断蕾");
                 tv_tip.setVisibility(View.GONE);
-                initBreakOff();
-                currentPolygonbean_select=null;
-                tencentMap.removeOverlay(currentpointmarker);
-                tencentMap.removeOverlay(list_Marker_first);
-                tencentMap.removeOverlay(list_Marker_second);
-                tencentMap.removeOverlay(list_Marker_third);
-                list_Marker_first = new ArrayList<Marker>();
-                list_Marker_second = new ArrayList<Marker>();
-                list_Marker_third = new ArrayList<Marker>();
-                showFirstMarker();
-                showSecondMarker();
-                showThirdMarker();
-
-                tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-                {
-                    @Override
-                    public void onMapClick(LatLng latlng)
-                    {
-                    }
-                });
+                reloadMap();
 
             }
         });
@@ -1353,25 +1334,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 btn_addbreakoff.setClickable(true);
                 btn_addbreakoff.setText("添加断蕾");
                 tv_tip.setVisibility(View.GONE);
-                initBreakOff();
-                currentPolygonbean_select=null;
-                tencentMap.removeOverlay(currentpointmarker);
-                tencentMap.removeOverlay(list_Marker_first);
-                tencentMap.removeOverlay(list_Marker_second);
-                tencentMap.removeOverlay(list_Marker_third);
-                list_Marker_first = new ArrayList<Marker>();
-                list_Marker_second = new ArrayList<Marker>();
-                list_Marker_third = new ArrayList<Marker>();
-                showFirstMarker();
-                showSecondMarker();
-                showThirdMarker();
-                tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-                {
-                    @Override
-                    public void onMapClick(LatLng latlng)
-                    {
-                    }
-                });
+                reloadMap();
             }
         });
         btn_sure.setOnClickListener(new View.OnClickListener()
@@ -1423,25 +1386,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 btn_addbreakoff.setClickable(true);
                 btn_addbreakoff.setText("添加断蕾");
                 tv_tip.setVisibility(View.GONE);
-                initBreakOff();
-                currentPolygonbean_select=null;
-                tencentMap.removeOverlay(currentpointmarker);
-                tencentMap.removeOverlay(list_Marker_first);
-                tencentMap.removeOverlay(list_Marker_second);
-                tencentMap.removeOverlay(list_Marker_third);
-                list_Marker_first = new ArrayList<Marker>();
-                list_Marker_second = new ArrayList<Marker>();
-                list_Marker_third = new ArrayList<Marker>();
-                showFirstMarker();
-                showSecondMarker();
-                showThirdMarker();
-                tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-                {
-                    @Override
-                    public void onMapClick(LatLng latlng)
-                    {
-                    }
-                });
+                reloadMap();
             }
         });
         customdialog_editdlinfor.show();
@@ -4257,6 +4202,10 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         btn_setting.setVisibility(View.VISIBLE);
         listlatlng_park = new ArrayList<>();
         prelatLng_drawerparklayer = null;
+
+        list_Marker_first=new ArrayList<>();
+        list_Marker_second=new ArrayList<>();
+        list_Marker_third=new ArrayList<>();
 
         list_Polyline = new ArrayList<>();
         list_mark_inboundary = new ArrayList<>();
