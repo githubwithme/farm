@@ -3,6 +3,8 @@ package com.farm.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.lidroid.xutils.db.annotation.Id;
+import com.lidroid.xutils.db.annotation.NoAutoIncrement;
 import com.lidroid.xutils.db.annotation.Table;
 
 /**
@@ -18,6 +20,8 @@ import com.lidroid.xutils.db.annotation.Table;
 public class BreakOff implements Parcelable
 {
 	public String id;
+	@Id
+	@NoAutoIncrement
 	public String uuid;
 	public String uid;
 	public String breakofftime;
@@ -32,10 +36,33 @@ public class BreakOff implements Parcelable
 	public String latlngsize ;
 	public String numberofbreakoff;
 	public String regdate;
-	public String dateofbreakoff;
 	public String weight;
 	public String status;
+	public String batchTime  ;//批次时间
+	public String xxzt;
 
+	public void setXxzt(String xxzt)
+	{
+		this.xxzt = xxzt;
+	}
+
+	public String getXxzt()
+	{
+		return xxzt;
+	}
+
+	;
+
+
+	public void setBatchTime(String batchTime)
+	{
+		this.batchTime = batchTime;
+	}
+
+	public String getBatchTime()
+	{
+		return batchTime;
+	}
 
 	public void setStatus(String status)
 	{
@@ -209,15 +236,7 @@ public class BreakOff implements Parcelable
 		this.regdate = regdate;
 	}
 
-	public String getdateofbreakoff()
-	{
-		return dateofbreakoff;
-	}
 
-	public void setdateofbreakoff(String dateofbreakoff)
-	{
-		this.dateofbreakoff = dateofbreakoff;
-	}
 
 	public boolean equals(Object o)
 	{
@@ -251,9 +270,10 @@ public class BreakOff implements Parcelable
 			p.setLatlngsize(source.readString());
 			p.setnumberofbreakoff(source.readString());
 			p.setregdate(source.readString());
-			p.setdateofbreakoff(source.readString());
 			p.setWeight(source.readString());
 			p.setStatus(source.readString());
+			p.setBatchTime(source.readString());
+			p.setXxzt(source.readString());
 			return p;
 		}
 
@@ -282,9 +302,10 @@ public class BreakOff implements Parcelable
 		p.writeString(latlngsize);
 		p.writeString(numberofbreakoff);
 		p.writeString(regdate);
-		p.writeString(dateofbreakoff);
 		p.writeString(weight);
 		p.writeString(status);
+		p.writeString(batchTime);
+		p.writeString(xxzt);
 	}
 	@Override
 	public int describeContents()

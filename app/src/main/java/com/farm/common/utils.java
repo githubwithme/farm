@@ -79,6 +79,32 @@ public class utils
         return str;
     }
 
+    public static String getIntervalTime(String time1, String time2)
+    {
+        String dt = new String();
+        if (time1.equals("") || time1.equals("null") || time2.equals("") || time2.equals("null"))
+        {
+            return "";
+        }
+        try
+        {
+            SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date begin = dfs.parse(time1);
+            java.util.Date end = dfs.parse(time2);
+
+            if (end.before(begin))
+            {
+                dt = "已到期";
+                return dt;
+            }
+            long between = (end.getTime() - begin.getTime()) / 1000;// 除以1000是为了转换成秒
+            long day1 = between / (24 * 3600);
+            dt = String.valueOf(day1);
+        } catch (Exception e)
+        {
+        }
+        return dt;
+    }
     public static String getDayDifference(String time1, String time2)
     {
         String dt = new String();

@@ -8,9 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -33,6 +31,8 @@ import com.farm.adapter.Department_Adapter;
 import com.farm.adapter.Operation_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.BatchOfProduct;
+import com.farm.bean.BreakOff;
 import com.farm.bean.CoordinatesBean;
 import com.farm.bean.DepartmentBean;
 import com.farm.bean.Gps;
@@ -92,6 +92,12 @@ import java.util.List;
 @EFragment
 public class PG_BreakOff extends Fragment implements TencentLocationListener, View.OnClickListener
 {
+    int[] fillcolor_park;
+    int[] fillcolor_area;
+    int[] fillcolor_contract;
+    int[] ic_breakoff;
+    List<BreakOff> list_breakoff;
+    List<BatchOfProduct> list_BatchOfProduct;
     List<PolygonBean> list_polygon_road;
     List<PolygonBean> list_polygon_house;
     List<PolygonBean> list_polygon_point;
@@ -103,6 +109,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
 
     List<Polyline> list_Objects_road;
     List<Marker> list_Objects_road_centermarker;
+    List<Marker> list_Objects_breakoff;
     List<Marker> list_Objects_house;
     List<Marker> list_Objects_point;
     List<Polyline> list_Objects_line;
@@ -131,6 +138,9 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
     boolean isend_select = false;
     boolean isend_notselect = false;
     List<Polygon> list_polygon_all;
+    PolygonBean currentPolygonbean_select;
+    List<Polygon> list_contractplanpolygon;
+    List<PolygonBean> list_contractplanpolygonbean;
     List<CoordinatesBean> list_CoordinatesBean_currentPolygon;
     List<List<CoordinatesBean>> list_polygon_allCoordinatesBean;
     List<Polyline> list_Polyline;
@@ -169,15 +179,18 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
     PopupWindow pw_command;
     View pv_command;
     Button btn_sure;
+    CheckBox cb_sfwc;
     Button btn_cancle;
     Button btn_close;
     TextView tv_note;
+    TextView tv_ssqy;
     TextView tv_lng;
     TextView tv_lat;
     RelativeLayout rl_getlocation;
     LinearLayout ll_locationinfo;
     EditText et_note;
     EditText et_polygonnote;
+    EditText et_numofbreakoff;
     EditText et_time;
     EditText et_dlzs;
     CustomDialog_EditPolygonInfo customdialog_editpolygoninfor;
@@ -200,21 +213,21 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
 
     List<LatLng> pointsList = new ArrayList<>();
     List<LatLng> listlatlng_park = new ArrayList<>();
-    List<LatLng> listlatlng_cx= new ArrayList<>();
+    List<LatLng> listlatlng_cx = new ArrayList<>();
     @ViewById
     MapView mapview;
     @ViewById
-    Button btn_addlayer;
-    @ViewById
     Button btn_showlayer;
     @ViewById
-    Button btn_addmore;
+    Button btn_addbreakoff;
     @ViewById
     TextView tv_tip;
     @ViewById
     Button btn_yx;
     @ViewById
     Button btn_complete;
+    @ViewById
+    LinearLayout ll_sm;
     @ViewById
     View line;
     @ViewById
@@ -304,6 +317,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
             cb_contract.setSelected(true);
         }
     }
+
     @CheckedChange
     void cb_parkdata()
     {
@@ -352,7 +366,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         } else
         {
             cb_contractdata.setSelected(true);
-            showSecondMarker();
+            showThirdMarker();
         }
     }
 
@@ -519,23 +533,6 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         uiSettings.setZoomGesturesEnabled(true);
     }
 
-    @Click
-    void btn_addlayer()
-    {
-        if (btn_addlayer.getText().equals("取消"))
-        {
-            reloadMap();
-        } else
-        {
-            btn_addlayer.setText("取消");
-            btn_addmore.setVisibility(View.GONE);
-            btn_showlayer.setVisibility(View.GONE);
-            btn_setting.setVisibility(View.GONE);
-            showDialog_department();
-        }
-
-
-    }
 
     @Click
     void btn_setting()
@@ -653,234 +650,54 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
     }
 
     @Click
-    void btn_addmore()
+    void btn_addbreakoff()
     {
-        if (btn_addmore.getText().equals("确定"))
+        if (btn_addbreakoff.getText().equals("完成"))
         {
-            if (drawerType.equals("画面"))
+            if (currentPolygonbean_select != null)
             {
-                tv_tip.setVisibility(View.VISIBLE);
-                tv_tip.setText("请在所画的区域内选取一个中心点");
-                tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-                {
-                    @Override
-                    public void onMapClick(LatLng latlng)
-                    {
-                        if (parkpolygon.contains(latlng))
-                        {
-                            showDialog_Mianinfo(latlng);
-                        } else
-                        {
-                            tv_tip.setVisibility(View.VISIBLE);
-                            tv_tip.setText("请在所画的区域内选取一个中心点");
-                        }
-                    }
-                });
-            } else if (drawerType.equals("画线"))
+                showDialog_houseinfo(currentPolygonbean_select, currentPoint);
+            } else
             {
-                showDialog_Lineinfo();
-            } else if (drawerType.equals("画点"))
-            {
-                showDialog_pointinfo();
-            } else if (drawerType.equals("房子"))
-            {
-                showDialog_houseinfo();
-            } else if (drawerType.equals("道路"))
-            {
-                showDialog_Roadinfo();
-            } else if (drawerType.equals("采线"))
-            {
-                drawerType="";
-                showDialog_CXinfo();
-            }else if (drawerType.equals("采面"))
-            {
-                drawerType="";
-                tv_tip.setVisibility(View.VISIBLE);
-                tv_tip.setText("请在所画的区域内选取一个中心点");
-                tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-                {
-                    @Override
-                    public void onMapClick(LatLng latlng)
-                    {
-                        if (parkpolygon.contains(latlng))
-                        {
-                            showDialog_Mianinfo(latlng);
-                        } else
-                        {
-                            tv_tip.setVisibility(View.VISIBLE);
-                            tv_tip.setText("请在所画的区域内选取一个中心点");
-                        }
-                    }
-                });
+                Toast.makeText(getActivity(), "请在承包区内取点", Toast.LENGTH_SHORT).show();
             }
-            btn_addmore.setClickable(false);
-            btn_addmore.setText("更多");
+
         } else
         {
-            btn_addlayer.setVisibility(View.GONE);
             btn_showlayer.setVisibility(View.GONE);
             btn_setting.setVisibility(View.GONE);
+            btn_addbreakoff.setText("完成");
 
-            listlatlng_park = new ArrayList<>();
-            prelatLng_drawerparklayer = null;
-            drawerType = "";
-            currentpointmarker=null;
-            btn_addmore.setText("确定");
-            showDialog_SelectOperation();
+            tv_tip.setVisibility(View.VISIBLE);
+            tv_tip.setText("请在地图内选取断蕾的位置");
+            tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+            {
+                @Override
+                public void onMapClick(LatLng latlng)
+                {
+                    for (int i = 0; i < list_contractplanpolygon.size(); i++)
+                    {
+                        if (list_contractplanpolygon.get(i).contains(currentPoint))
+                        {
+                            tencentMap.removeOverlay(currentpointmarker);
+                            currentPoint = latlng;
+                            Drawable drawable = getResources().getDrawable(R.drawable.ic_breakoff);
+                            Bitmap bitmap = utils.drawable2Bitmap(drawable);
+                            currentpointmarker = tencentMap.addMarker(new MarkerOptions().position(latlng).title(latlng.getLatitude() + "," + latlng.getLongitude()).icon(new BitmapDescriptor(bitmap)));
+                            currentPolygonbean_select = list_contractplanpolygonbean.get(i);
+                            break;
+                        }
+                        if (i == list_contractplanpolygon.size() - 1)
+                        {
+                            Toast.makeText(getActivity(), "请在承包区内取点", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
         }
     }
 
 
-
-
-
-
-    public void showPop_gk()
-    {
-        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
-        pv_command = layoutInflater.inflate(R.layout.pop_zs, null);// 外层
-        pv_command.setOnKeyListener(new View.OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
-                {
-                    pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
-//                    lp.alpha = 1f;
-//                    AddOrderMap.this.getWindow().setAttributes(lp);
-                    return true;
-                }
-                return false;
-            }
-        });
-        pv_command.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_command.isShowing())
-                {
-                    pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
-//                    lp.alpha = 1f;
-//                    AddOrderMap.this.getWindow().setAttributes(lp);
-                }
-                return false;
-            }
-        });
-        pw_command = new PopupWindow(pv_command, LinearLayout.LayoutParams.MATCH_PARENT, 300, true);
-        pw_command.showAsDropDown(line, 0, 0);
-        pw_command.setOutsideTouchable(true);
-
-//        WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
-//        lp.alpha = 0.7f;
-//        AddOrderMap.this.getWindow().setAttributes(lp);
-        pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(PG_BreakOff.this);
-        pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(PG_BreakOff.this);
-        pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(PG_BreakOff.this);
-    }
-
-    public void showPop_addcommand()
-    {
-        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
-        pv_command = layoutInflater.inflate(R.layout.pop_zs, null);// 外层
-        pv_command.setOnKeyListener(new View.OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
-                {
-                    pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
-//                    lp.alpha = 1f;
-//                    AddOrderMap.this.getWindow().setAttributes(lp);
-                    return true;
-                }
-                return false;
-            }
-        });
-        pv_command.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_command.isShowing())
-                {
-                    pw_command.dismiss();
-//                    WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
-//                    lp.alpha = 1f;
-//                    AddOrderMap.this.getWindow().setAttributes(lp);
-                }
-                return false;
-            }
-        });
-        pw_command = new PopupWindow(pv_command, 250, LinearLayout.LayoutParams.MATCH_PARENT, true);
-        pw_command.setAnimationStyle(R.style.leftinleftout);
-        pw_command.showAsDropDown(line, 0, 0);
-//        pw_command.showAtLocation(fl_map, Gravity.LEFT, 0, 500);
-        pw_command.setOutsideTouchable(true);
-
-//        WindowManager.LayoutParams lp = AddOrderMap.this.getWindow().getAttributes();
-//        lp.alpha = 0.7f;
-//        AddOrderMap.this.getWindow().setAttributes(lp);
-        lv_zs = (ListView) pv_command.findViewById(R.id.lv_zs);
-        dl_zs_adapter = new DL_ZS_Adapter(getActivity(), list_zs);
-        lv_zs.setAdapter(dl_zs_adapter);
-        pv_command.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-//                showDialog_addZS();
-//                if (zs.getIsEnd().equals("0"))
-//                {
-//
-//                }
-                String uuid = java.util.UUID.randomUUID().toString();
-                ZS zs = new ZS();
-                zs.setid(uuid);
-                zs.setName(utils.getToday() + "年-第一造");
-                zs.setIsStart("1");
-                zs.setIsEnd("0");
-                zs.setparkId(commembertab.getparkId());
-                zs.setparkName(commembertab.getparkName());
-                zs.setAreaId(commembertab.getareaId());
-                zs.setareaName(commembertab.getareaName());
-                zs.setNote("暂无备注");
-                zs.setregDate(utils.getTime());
-                SqliteDb.save(getActivity(), zs);
-                if (pv_command.isShown())
-                {
-                    list_zs = SqliteDb.getZS(getActivity(), ZS.class, commembertab.getareaId());
-                    dl_zs_adapter.notifyDataSetChanged();
-                }
-
-            }
-        });
-    }
-
-    public void showDialog_addZS()
-    {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_addzs, null);
-        customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
-        et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
-        et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);
-        et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
-        btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
-        et_time.setText(utils.getTime());
-        btn_sure.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                customdialog_editdlinfor.dismiss();
-            }
-        });
-        customdialog_editdlinfor.show();
-    }
     public void showDialog_CXinfo()
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_polygonifo, null);
@@ -962,12 +779,13 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 listlatlng_cx = new ArrayList<>();
                 reloadMap();
                 prelatLng_drawerparklayer = null;
-                btn_addmore.setClickable(true);
+                btn_addbreakoff.setClickable(true);
 
             }
         });
         customdialog_editdlinfor.show();
     }
+
     public void showDialog_Roadinfo()
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_polygonifo, null);
@@ -1049,7 +867,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 listlatlng_park = new ArrayList<>();
                 reloadMap();
                 prelatLng_drawerparklayer = null;
-                btn_addmore.setClickable(true);
+                btn_addbreakoff.setClickable(true);
 
             }
         });
@@ -1138,7 +956,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 tv_tip.setText("你已成功画选一个区域！");
                 listlatlng_park = new ArrayList<>();
                 reloadMap();
-                btn_addmore.setClickable(true);
+                btn_addbreakoff.setClickable(true);
             }
         });
         customdialog_editdlinfor.show();
@@ -1225,7 +1043,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 listlatlng_park = new ArrayList<>();
                 reloadMap();
                 prelatLng_drawerparklayer = null;
-                btn_addmore.setClickable(true);
+                btn_addbreakoff.setClickable(true);
 
             }
         });
@@ -1310,7 +1128,43 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 SqliteDb.save(getActivity(), coordinatesBean);
 
                 reloadMap();
-                btn_addmore.setClickable(true);
+                btn_addbreakoff.setClickable(true);
+            }
+        });
+        customdialog_editdlinfor.show();
+    }
+
+    public void showDialog_editbreakoffinfo(final BreakOff breakoff)
+    {
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_polygonifo, null);
+        customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
+        et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
+        et_polygonnote.setText(breakoff.getnumberofbreakoff());
+        btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+        btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_editdlinfor.dismiss();
+                boolean issuccess = SqliteDb.editBreakoffInfo(getActivity(), breakoff.getUuid(), et_polygonnote.getText().toString());
+                if (issuccess)
+                {
+                    reloadMap();
+                } else
+                {
+                    Toast.makeText(getActivity(), "修改失败！", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_editdlinfor.dismiss();
             }
         });
         customdialog_editdlinfor.show();
@@ -1438,26 +1292,54 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 SqliteDb.save(getActivity(), coordinatesBean);
 
                 reloadMap();
-                btn_addmore.setClickable(true);
+                btn_addbreakoff.setClickable(true);
             }
         });
         showDialog_pickpointinfo.show();
     }
 
-    public void showDialog_houseinfo()
+    public void showDialog_houseinfo(final PolygonBean polygonbean, final LatLng latlng)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_breakoff, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
-        et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
+        tv_ssqy = (TextView) dialog_layout.findViewById(R.id.tv_ssqy);
+        et_numofbreakoff = (EditText) dialog_layout.findViewById(R.id.et_numofbreakoff);
+        cb_sfwc = (CheckBox) dialog_layout.findViewById(R.id.cb_sfwc);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        tv_ssqy.setText(polygonbean.getparkName() + "-" + polygonbean.getareaName() + "-" + polygonbean.getContractname());
         customdialog_editdlinfor.setOnCancelListener(new DialogInterface.OnCancelListener()
         {
             @Override
             public void onCancel(DialogInterface dialog)
             {
                 customdialog_editdlinfor.dismiss();
-                reloadMap();
+                btn_showlayer.setVisibility(View.VISIBLE);
+                btn_setting.setVisibility(View.VISIBLE);
+                btn_addbreakoff.setClickable(true);
+                btn_addbreakoff.setText("添加断蕾");
+                tv_tip.setVisibility(View.GONE);
+                initBreakOff();
+                currentPolygonbean_select=null;
+                tencentMap.removeOverlay(currentpointmarker);
+                tencentMap.removeOverlay(list_Marker_first);
+                tencentMap.removeOverlay(list_Marker_second);
+                tencentMap.removeOverlay(list_Marker_third);
+                list_Marker_first = new ArrayList<Marker>();
+                list_Marker_second = new ArrayList<Marker>();
+                list_Marker_third = new ArrayList<Marker>();
+                showFirstMarker();
+                showSecondMarker();
+                showThirdMarker();
+
+                tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+                {
+                    @Override
+                    public void onMapClick(LatLng latlng)
+                    {
+                    }
+                });
+
             }
         });
         btn_cancle.setOnClickListener(new View.OnClickListener()
@@ -1466,7 +1348,30 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
             public void onClick(View v)
             {
                 customdialog_editdlinfor.dismiss();
-                reloadMap();
+                btn_showlayer.setVisibility(View.VISIBLE);
+                btn_setting.setVisibility(View.VISIBLE);
+                btn_addbreakoff.setClickable(true);
+                btn_addbreakoff.setText("添加断蕾");
+                tv_tip.setVisibility(View.GONE);
+                initBreakOff();
+                currentPolygonbean_select=null;
+                tencentMap.removeOverlay(currentpointmarker);
+                tencentMap.removeOverlay(list_Marker_first);
+                tencentMap.removeOverlay(list_Marker_second);
+                tencentMap.removeOverlay(list_Marker_third);
+                list_Marker_first = new ArrayList<Marker>();
+                list_Marker_second = new ArrayList<Marker>();
+                list_Marker_third = new ArrayList<Marker>();
+                showFirstMarker();
+                showSecondMarker();
+                showThirdMarker();
+                tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+                {
+                    @Override
+                    public void onMapClick(LatLng latlng)
+                    {
+                    }
+                });
             }
         });
         btn_sure.setOnClickListener(new View.OnClickListener()
@@ -1474,57 +1379,92 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
             @Override
             public void onClick(View v)
             {
-                customdialog_editdlinfor.dismiss();
-
+                String batchtime = SqliteDb.getIsExistBatch(getActivity(), "60", "", et_numofbreakoff.getText().toString(), utils.getToday());
                 String uuid_point = java.util.UUID.randomUUID().toString();
-                PolygonBean polygonBean = new PolygonBean();
-                polygonBean.setLat("");
-                polygonBean.setLng("");
-                polygonBean.setNumofplant("");
-                polygonBean.setType("house");
-                polygonBean.setUid("60");
-                polygonBean.setparkId("");
-                polygonBean.setparkName("");
-                polygonBean.setUuid(uuid_point);
-                polygonBean.setAreaId("");
-                polygonBean.setareaName("");
-                polygonBean.setContractid("");
-                polygonBean.setContractname("");
-                polygonBean.setBatchid("");
-                polygonBean.setCoordinatestime(utils.getTime());
-                polygonBean.setRegistime(utils.getTime());
-                polygonBean.setWeightofplant("");
-                polygonBean.setSaleid("");
-                polygonBean.setOrders("");
-                polygonBean.setXxzt("0");
-                polygonBean.setNote(et_polygonnote.getText().toString());
-                SqliteDb.save(getActivity(), polygonBean);
 
-                CoordinatesBean coordinatesBean = new CoordinatesBean();
-                coordinatesBean.setLat(String.valueOf(currentPoint.getLatitude()));
-                coordinatesBean.setLng(String.valueOf(currentPoint.getLongitude()));
-                coordinatesBean.setNumofplant("");
-                coordinatesBean.setType("");
-                coordinatesBean.setUid("");
-                coordinatesBean.setparkId("");
-                coordinatesBean.setparkName("");
-                coordinatesBean.setUuid(uuid_point);
-                coordinatesBean.setAreaId("");
-                coordinatesBean.setareaName("");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
-                coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
-                SqliteDb.save(getActivity(), coordinatesBean);
+                String status = "0";
+                if (cb_sfwc.isSelected())
+                {
+                    status = "1";
+                } else
+                {
+                    boolean IsExistBreakoff = SqliteDb.getIsExistBreakoff(getActivity(), "60", batchtime);
+                    if (IsExistBreakoff)
+                    {
+                        status = "2";
+                    }
+                }
+                BreakOff breakoff = new BreakOff();
+                breakoff.setLat(String.valueOf(latlng.getLatitude()));
+                breakoff.setLng(String.valueOf(latlng.getLongitude()));
+                breakoff.setWeight("");
+                breakoff.setBatchTime(batchtime);
+                breakoff.setLatlngsize("");
+                breakoff.setUuid(uuid_point);
+                breakoff.setStatus(status);
+                breakoff.setid("");
+                breakoff.setuid("60");
+                breakoff.setparkid(polygonbean.getparkId());
+                breakoff.setparkname(polygonbean.getparkName());
+                breakoff.setareaid(polygonbean.getAreaId());
+                breakoff.setareaname(polygonbean.getareaName());
+                breakoff.setcontractid(polygonbean.getContractid());
+                breakoff.setcontractname(polygonbean.getContractname());
+                breakoff.setBreakofftime(utils.getTime());
+                breakoff.setregdate(utils.getTime());
+                breakoff.setXxzt("0");
+                breakoff.setnumberofbreakoff(et_numofbreakoff.getText().toString());
+                SqliteDb.save(getActivity(), breakoff);
 
-                reloadMap();
-                btn_addmore.setClickable(true);
+
+                customdialog_editdlinfor.dismiss();
+                btn_showlayer.setVisibility(View.VISIBLE);
+                btn_setting.setVisibility(View.VISIBLE);
+                btn_addbreakoff.setClickable(true);
+                btn_addbreakoff.setText("添加断蕾");
+                tv_tip.setVisibility(View.GONE);
+                initBreakOff();
+                currentPolygonbean_select=null;
+                tencentMap.removeOverlay(currentpointmarker);
+                tencentMap.removeOverlay(list_Marker_first);
+                tencentMap.removeOverlay(list_Marker_second);
+                tencentMap.removeOverlay(list_Marker_third);
+                list_Marker_first = new ArrayList<Marker>();
+                list_Marker_second = new ArrayList<Marker>();
+                list_Marker_third = new ArrayList<Marker>();
+                showFirstMarker();
+                showSecondMarker();
+                showThirdMarker();
+                tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+                {
+                    @Override
+                    public void onMapClick(LatLng latlng)
+                    {
+                    }
+                });
             }
         });
+        customdialog_editdlinfor.show();
+    }
+
+    public void showDialog_breakoffnote(final String note)
+    {
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_showpolygonifo, null);
+        customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
+        tv_note = (TextView) dialog_layout.findViewById(R.id.tv_note);
+        btn_close = (Button) dialog_layout.findViewById(R.id.btn_close);
+        btn_close.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_editdlinfor.dismiss();
+            }
+        });
+        if (note != null && !note.equals(""))
+        {
+            tv_note.setText(note);
+        }
         customdialog_editdlinfor.show();
     }
 
@@ -1546,6 +1486,40 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         {
             tv_note.setText(note);
         }
+        customdialog_editdlinfor.show();
+    }
+
+    public void showDialog_deletetip_breakoff(final String uuid)
+    {
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_deletetip, null);
+        customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
+        btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+        btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_editdlinfor.dismiss();
+                boolean issuccess = SqliteDb.deleteBreakoff(getActivity(), uuid);
+                if (issuccess)
+                {
+                    Toast.makeText(getActivity(), "删除成功！", Toast.LENGTH_SHORT).show();
+                    reloadMap();
+                } else
+                {
+                    Toast.makeText(getActivity(), "删除失败！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_editdlinfor.dismiss();
+            }
+        });
         customdialog_editdlinfor.show();
     }
 
@@ -1717,11 +1691,11 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
             {
                 customdialog_editpolygoninfor.dismiss();
                 String operation = list_operation.get(position);
-                if (operation.equals("画点"))
+                if (operation.equals("断蕾"))
                 {
-                    drawerType = "画点";
+                    drawerType = "断蕾";
                     tv_tip.setVisibility(View.VISIBLE);
-                    tv_tip.setText("请在地图内选取一个点");
+                    tv_tip.setText("请在地图内选取断蕾的位置");
                     tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
                     {
                         @Override
@@ -1729,108 +1703,9 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                         {
                             Overlays.remove(currentpointmarker);
                             currentPoint = latlng;
-                            Drawable drawable = getResources().getDrawable(R.drawable.location1);
+                            Drawable drawable = getResources().getDrawable(R.drawable.ic_breakoff);
                             Bitmap bitmap = utils.drawable2Bitmap(drawable);
                             currentpointmarker = tencentMap.addMarker(new MarkerOptions().position(latlng).title(latlng.getLatitude() + "," + latlng.getLongitude()).icon(new BitmapDescriptor(bitmap)));
-                        }
-                    });
-                } else if (operation.equals("画线"))
-                {
-                    drawerType = "画线";
-                    tv_tip.setVisibility(View.VISIBLE);
-                    tv_tip.setText("请在地图内画线");
-                    tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-                    {
-                        @Override
-                        public void onMapClick(LatLng latlng)
-                        {
-                            listlatlng_park.add(latlng);
-                            PolylineOptions lineOpt = new PolylineOptions();
-                            lineOpt.add(prelatLng_drawerparklayer);
-                            prelatLng_drawerparklayer = latlng;
-                            lineOpt.add(latlng);
-                            Polyline line = tencentMap.addPolyline(lineOpt);
-                            line.setColor(getActivity().getResources().getColor(R.color.black));
-                            line.setWidth(4f);
-                            Overlays.add(line);
-                        }
-                    });
-                } else if (operation.equals("画面"))
-                {
-                    drawerType = "画面";
-                    tv_tip.setVisibility(View.VISIBLE);
-                    tv_tip.setText("请在地图内画选区域");
-                    tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-                    {
-                        @Override
-                        public void onMapClick(LatLng latlng)
-                        {
-                            listlatlng_park.add(latlng);
-                            PolylineOptions lineOpt = new PolylineOptions();
-                            lineOpt.add(prelatLng_drawerparklayer);
-                            prelatLng_drawerparklayer = latlng;
-                            lineOpt.add(latlng);
-                            Polyline line = tencentMap.addPolyline(lineOpt);
-                            line.setColor(getActivity().getResources().getColor(R.color.black));
-                            line.setWidth(4f);
-                            Overlays.add(line);
-
-                            Overlays.remove(parkpolygon);
-                            parkpolygon = drawPolygon(listlatlng_park, R.color.bg_yellow);
-                            Overlays.add(parkpolygon);
-                        }
-                    });
-                } else if (operation.equals("采点"))
-                {
-                    drawerType = "采点";
-                    showDialog_pickpointinfo();
-                } else if (operation.equals("采线"))
-                {
-                    drawerType = "采线";
-                    tv_tip.setVisibility(View.VISIBLE);
-                    tv_tip.setText("正在记录线路轨迹，请保持行走！");
-                } else if (operation.equals("采面"))
-                {
-                    drawerType = "采面";
-                    tv_tip.setVisibility(View.VISIBLE);
-                    tv_tip.setText("请沿着区域的边界行走，行走路线将组成一个面");
-                } else if (operation.equals("房子"))
-                {
-                    drawerType = "房子";
-                    tv_tip.setVisibility(View.VISIBLE);
-                    tv_tip.setText("请在地图内选取房子的位置");
-                    tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-                    {
-                        @Override
-                        public void onMapClick(LatLng latlng)
-                        {
-                            Overlays.remove(currentpointmarker);
-                            currentPoint = latlng;
-                            Drawable drawable = getResources().getDrawable(R.drawable.icon_house);
-                            Bitmap bitmap = utils.drawable2Bitmap(drawable);
-                            currentpointmarker = tencentMap.addMarker(new MarkerOptions().position(latlng).title(latlng.getLatitude() + "," + latlng.getLongitude()).icon(new BitmapDescriptor(bitmap)));
-                        }
-                    });
-                } else if (operation.equals("道路"))
-                {
-                    drawerType = "道路";
-                    tv_tip.setVisibility(View.VISIBLE);
-                    tv_tip.setText("请在地图内画出道路");
-                    tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-                    {
-                        @Override
-                        public void onMapClick(LatLng latlng)
-                        {
-                            listlatlng_park.add(latlng);
-                            PolylineOptions lineOpt = new PolylineOptions();
-                            lineOpt.add(prelatLng_drawerparklayer);
-                            prelatLng_drawerparklayer = latlng;
-                            lineOpt.add(latlng);
-                            Polyline line = tencentMap.addPolyline(lineOpt);
-                            line.setDottedLine(true);
-                            line.setColor(getActivity().getResources().getColor(R.color.red));
-                            line.setWidth(8f);
-                            Overlays.add(line);
                         }
                     });
                 }
@@ -1864,107 +1739,6 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         });
     }
 
-    public void setMapClickListening_drawerParkPolygon()
-    {
-
-    }
-
-    public void showDialog_department()
-    {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editpolygoninfo, null);
-        customdialog_editpolygoninfor = new CustomDialog_EditPolygonInfo(getActivity(), R.style.MyDialog, dialog_layout);
-        ListView lv_department = (ListView) dialog_layout.findViewById(R.id.lv_department);
-        final Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
-        btn_cancle.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                customdialog_editpolygoninfor.dismiss();
-                btn_addmore.setVisibility(View.VISIBLE);
-                btn_showlayer.setVisibility(View.VISIBLE);
-                btn_setting.setVisibility(View.VISIBLE);
-                btn_addlayer.setText("添加区域");
-            }
-        });
-        customdialog_editpolygoninfor.setOnCancelListener(new DialogInterface.OnCancelListener()
-        {
-            @Override
-            public void onCancel(DialogInterface dialog)
-            {
-                customdialog_editpolygoninfor.dismiss();
-                btn_addmore.setVisibility(View.VISIBLE);
-                btn_showlayer.setVisibility(View.VISIBLE);
-                btn_setting.setVisibility(View.VISIBLE);
-                btn_addlayer.setText("添加区域");
-            }
-        });
-        list_department = getDepartment(getActivity());
-        department_adapter = new Department_Adapter(getActivity(), list_department);
-        lv_department.setAdapter(department_adapter);
-        lv_department.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-//                initMapOnclick();
-//                uiSettings.setZoomGesturesEnabled(false);
-                customdialog_editpolygoninfor.dismiss();
-                departmentselected = list_department.get(position);
-//                list_coordinatesbean = SqliteDb.getBoundaryByID(getActivity(), "60", departmentselected.getParkid(), departmentselected.getAreaid(), departmentselected.getContractid());
-//                showNeedPlanBoundary(list_coordinatesbean);
-
-                if (departmentselected.getIsdrawer().equals("1"))
-                {
-                    Toast.makeText(getActivity(), "这个区域已画！请选择其他区域", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (departmentselected.getType().equals("园区"))
-                {
-                    btn_complete.setVisibility(View.VISIBLE);
-                    tv_tip.setVisibility(View.VISIBLE);
-                    tv_tip.setText("请在地图内画选区域");
-                    tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-                    {
-                        @Override
-                        public void onMapClick(LatLng latlng)
-                        {
-                            listlatlng_park.add(latlng);
-                            PolylineOptions lineOpt = new PolylineOptions();
-                            lineOpt.add(prelatLng_drawerparklayer);
-                            prelatLng_drawerparklayer = latlng;
-                            lineOpt.add(latlng);
-                            Polyline line = tencentMap.addPolyline(lineOpt);
-                            line.setColor(getActivity().getResources().getColor(R.color.black));
-                            line.setWidth(4f);
-                            Overlays.add(line);
-
-                            Overlays.remove(parkpolygon);
-                            parkpolygon = drawPolygon(listlatlng_park, R.color.bg_yellow);
-                            Overlays.add(parkpolygon);
-                        }
-                    });
-                } else
-                {
-                    initMapAndParam();
-                    polygonBean_needPlan = SqliteDb.getNeedPlanlayer(getActivity(), "60", departmentselected.getParkid(), departmentselected.getAreaid(), departmentselected.getContractid());
-                    if (polygonBean_needPlan != null)
-                    {
-                        LatLng latlng = new LatLng(Double.valueOf(polygonBean_needPlan.getLat()), Double.valueOf(polygonBean_needPlan.getLng()));
-                        addCustomMarker(getResources().getColor(R.color.bg_blue), latlng, polygonBean_needPlan.getUuid(), polygonBean_needPlan.getNote());
-                        list_coordinatesbean = SqliteDb.getPoints(getActivity(), polygonBean_needPlan.getUuid());
-                        if (list_coordinatesbean != null && list_coordinatesbean.size() != 0)
-                        {
-                            showNeedPlanBoundary(list_coordinatesbean);
-                        }
-
-                    }
-                }
-
-            }
-        });
-        customdialog_editpolygoninfor.show();
-    }
 
     public void savePolygonInfo(LatLng centerlatlng, final List<LatLng> list_select, final List<LatLng> list_notselect)
     {
@@ -2436,6 +2210,56 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         customdialog_editpolygoninfor.show();
     }
 
+    public void showDialog_OperateBreakOff(final String uuid)
+    {
+        final View dialog_layout = (RelativeLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_operatepolygon, null);
+        customdialog_operatepolygon = new CustomDialog_OperatePolygon(getActivity(), R.style.MyDialog, dialog_layout);
+        Button btn_paint = (Button) dialog_layout.findViewById(R.id.btn_paint);
+        Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
+        Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
+        Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        Button btn_delete = (Button) dialog_layout.findViewById(R.id.btn_delete);
+
+        btn_delete.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_operatepolygon.dismiss();
+                showDialog_deletetip_breakoff(uuid);
+            }
+        });
+        btn_see.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                BreakOff breakoff = SqliteDb.getbreakoffByuuid(getActivity(), uuid);
+                showDialog_breakoffnote(breakoff.getBreakofftime() + "断蕾" + breakoff.getnumberofbreakoff() + "株");
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        btn_change.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                BreakOff breadoff = SqliteDb.getbreakoffByuuid(getActivity(), uuid);
+                showDialog_editbreakoffinfo(breadoff);
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        customdialog_operatepolygon.show();
+    }
+
     public void showDialog_OperatePolygon(final String uuid)
     {
         final View dialog_layout = (RelativeLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_operatepolygon, null);
@@ -2445,15 +2269,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
         Button btn_delete = (Button) dialog_layout.findViewById(R.id.btn_delete);
-        btn_paint.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-//                initMapAndParam();
-                customdialog_operatepolygon.dismiss();
-            }
-        });
+
         btn_delete.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -2523,7 +2339,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         mapview.onDestroy();
     }
 
-    public void  settile()
+    public void settile()
     {
 //        TileOverlay tileOverlay = null;
 //        UrlTileProvider u = null;
@@ -2534,6 +2350,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
 //        tileOverlayOptions.tileProvider(tileProvider);
 //        tencentMap.addTileOverlay(tileOverlayOptions);
     }
+
     @AfterViews
     void afterOncreate()
     {
@@ -2541,28 +2358,11 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
 //        SqliteDb.initArea(getActivity());
 //        SqliteDb.initContract(getActivity());
 //        SqliteDb.getTemp1(getActivity());
-//       List<CoordinatesBean> list11=SqliteDb.getTemp1(getActivity());
-//        CoordinatesBean cc= list11.get(0);
-//        for (int i = 0; i < list11.size(); i++)
-//        {
-//            CoordinatesBean cc= list11.get(i);
-//            cc.setAreaId("");
-//            cc.setareaName("");
-//            SqliteDb.updateCoordinatesOrder(getActivity(),cc);
-//        }
-//        SqliteDb.initPark(AddOrderMap.this);
-//        SqliteDb.initArea(AddOrderMap.this);
-//        SqliteDb.initContract(AddOrderMap.this);
 
-
-//        setBoundary_park(list_boundary_park);
-//        for (int i = 0; i <list_boundary_park.size() ; i++)
-//        {
-//            uploadCoordinatesBean(list_boundary_park.get(i));
-//        }
-//        getBoundary_farm();
-//        SqliteDb.deletetemp(getActivity());
-
+        fillcolor_park = new int[]{Color.argb(150, 218, 112, 214), Color.argb(150, 106, 90, 205), Color.argb(150, 135, 206, 250), Color.argb(150, 0, 128, 128), Color.argb(150, 127, 255, 170), Color.argb(150, 245, 255, 250), Color.argb(150, 60, 179, 113), Color.argb(150, 34, 139, 34), Color.argb(150, 127, 255, 0), Color.argb(150, 255, 69, 0)};
+        fillcolor_area = new int[]{Color.argb(150, 218, 112, 214), Color.argb(150, 106, 90, 205), Color.argb(150, 135, 206, 250), Color.argb(150, 0, 128, 128), Color.argb(150, 127, 255, 170), Color.argb(150, 245, 255, 250), Color.argb(150, 60, 179, 113), Color.argb(150, 34, 139, 34), Color.argb(150, 127, 255, 0), Color.argb(150, 255, 69, 0)};
+        fillcolor_contract = new int[]{Color.argb(150, 218, 112, 214), Color.argb(150, 106, 90, 205), Color.argb(150, 135, 206, 250), Color.argb(150, 0, 128, 128), Color.argb(150, 127, 255, 170), Color.argb(150, 245, 255, 250), Color.argb(150, 60, 179, 113), Color.argb(150, 34, 139, 34), Color.argb(150, 127, 255, 0), Color.argb(150, 255, 69, 0)};
+        ic_breakoff = new int[]{R.drawable.ic_breakoff_black, R.drawable.ic_breakoff_blue1, R.drawable.ic_breakoff_end, R.drawable.ic_breakoff_start, R.drawable.ic_breakoff_red, R.drawable.ic_breakoff, R.drawable.ic_breakoff_gray};
         tencentMap = mapview.getMap();
         tencentMap.setZoom(13);
         uiSettings = mapview.getUiSettings();
@@ -2573,14 +2373,19 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         list_polygon = new ArrayList<Polygon>();
         list_polygon_pq = new ArrayList<Polygon>();
         list_point_pq = new ArrayList<>();
+        list_contractplanpolygonbean = new ArrayList<>();
+        list_contractplanpolygon = new ArrayList<>();
         list_polygon_all = new ArrayList<>();
         list_centermark = new ArrayList<>();
         list_ll_second = new ArrayList<>();
         list_ll_first = new ArrayList<>();
         list_ll_third = new ArrayList<>();
-        list_Marker_first= new ArrayList<>();
+        list_Marker_first = new ArrayList<>();
         list_Marker_second = new ArrayList<>();
         list_Marker_third = new ArrayList<>();
+
+        list_breakoff = new ArrayList<>();
+        list_BatchOfProduct = new ArrayList<>();
 
         list_polygon_road = new ArrayList<>();
         list_polygon_house = new ArrayList<>();
@@ -2592,6 +2397,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
 
         list_Objects_road = new ArrayList<>();
         list_Objects_road_centermarker = new ArrayList<>();
+        list_Objects_breakoff = new ArrayList<>();
         list_Objects_house = new ArrayList<>();
         list_Objects_point = new ArrayList<>();
         list_Objects_line = new ArrayList<>();
@@ -2612,9 +2418,9 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         cb_area.setChecked(true);
         cb_contract.setChecked(true);
 
-        cb_parkdata.setChecked(false);
-        cb_areadata.setChecked(false);
-        cb_contractdata.setChecked(false);
+        cb_parkdata.setChecked(true);
+        cb_areadata.setChecked(true);
+        cb_contractdata.setChecked(true);
 
         list_polygon_allCoordinatesBean = new ArrayList<>();
         map = new HashMap<>();
@@ -2623,96 +2429,26 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
             utils.openGPSSettings(getActivity());
         }
 
-//        String str_farm_boundary_free = SqliteDb.getBoundary_farm_free(getActivity(), "60", "farm_boundary_free");
-//        Result result_farm_boundary_free = JSON.parseObject(str_farm_boundary_free, Result.class);
-//        if (result_farm_boundary_free.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-//        {
-//            if (result_farm_boundary_free.getAffectedRows() != 0)
-//            {
-//                JSONArray jsonArray_Rows = result_farm_boundary_free.getRows();
-//                for (int i = 0; i < jsonArray_Rows.size(); i++)
-//                {
-//                    JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
-//                    if (jsonArray_boundary.size() > 0)
-//                    {
-//                        list_coordinatesbean = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
-//                        setBoundary_park(list_coordinatesbean);
-//                    }
-//                }
-//            }
-//        }
-
         initMapData();
         initMarkOnclick();
         initMapCameraChangeListener();
         initMapOnclickListening();
-//        String str_farm_boundary = SqliteDb.getBoundary_farm_free(getActivity(), "60", "farm_boundary");
-//        Result result_farm_boundary = JSON.parseObject(str_farm_boundary, Result.class);
-//        if (result_farm_boundary.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-//        {
-//            if (result_farm_boundary.getAffectedRows() != 0)
-//            {
-//                JSONArray jsonArray_Rows = result_farm_boundary.getRows();
-//                for (int i = 0; i < jsonArray_Rows.size(); i++)
-//                {
-//                    JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
-//                    if (jsonArray_boundary.size() > 0)
-//                    {
-//                        list_coordinatesbean = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
-//                        setBoundary_park(list_coordinatesbean);
-//                    }
-//                }
-//            }
-//        }
     }
 
     public void initMapData()
     {
-//        String str_farm_boundary = SqliteDb.getPlanMap(getActivity(), "60", "farm_boundary");
-//        Result result_farm_boundary = JSON.parseObject(str_farm_boundary, Result.class);
-//        if (result_farm_boundary.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-//        {
-//            if (result_farm_boundary.getAffectedRows() != 0)
-//            {
-//                JSONArray jsonArray_Rows = result_farm_boundary.getRows();
-//                for (int i = 0; i < jsonArray_Rows.size(); i++)
-//                {
-//                    JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
-//                    if (jsonArray_boundary.size() > 0)
-//                    {
-//                        List<CoordinatesBean> list = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
-//                        initBoundary(list);
-//                    }
-//                }
-//            }
-//        }
-//显示规划图
-//        PolygonBean polygonBean = SqliteDb.getLayer(getActivity(), departmentselected.getParkid(),departmentselected.getAreaid(),departmentselected.getContractid());
-//        if (polygonBean != null)
-//        {
-//            LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
-//            addCustomMarker(latlng, polygonBean.getUuid(), polygonBean.getNote());
-//            list_coordinatesbean = SqliteDb.getPoints(getActivity(), polygonBean.getUuid());
-//            if (list_coordinatesbean != null && list_coordinatesbean.size() != 0)
-//            {
-//                showNeedPlanBoundary(list_coordinatesbean);
-//            }
-//
-//        }
-
         List<parktab> list_parktab = SqliteDb.getparktab(getActivity(), "60");
         for (int i = 0; i < list_parktab.size(); i++)//每个园区
         {
             PolygonBean polygonBean_park = SqliteDb.getLayer_park(getActivity(), list_parktab.get(i).getid());
             if (polygonBean_park != null)
             {
-//                setCenterPointInfo(polygonBean_park);
                 LatLng latlng = new LatLng(Double.valueOf(polygonBean_park.getLat()), Double.valueOf(polygonBean_park.getLng()));
                 addCustomMarkerWithProgressbar(getResources().getColor(R.color.bg_blue), latlng, polygonBean_park.getUuid(), polygonBean_park.getNote());
                 List<CoordinatesBean> list_park = SqliteDb.getPoints(getActivity(), polygonBean_park.getUuid());
                 if (list_park != null && list_park.size() != 0)
                 {
-                    initBoundary(Color.argb(130, 0, 202, 215), 0f, list_park);
+                    initBoundary(fillcolor_park[i], 0f, list_park);
 //                    initBoundaryLine(Color.argb(1000, 57, 72, 61), 0f, list_park);
                 }
 
@@ -2730,7 +2466,9 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                     List<CoordinatesBean> list_area = SqliteDb.getPoints(getActivity(), polygonBean_area.getUuid());
                     if (list_area != null && list_area.size() != 0)
                     {
-                        initBoundary(Color.argb(150, 4, 181, 0), 100f, list_area);
+
+                        int[] random = utils.randomInt(0, 10, 1);
+                        initBoundary(fillcolor_area[k], 100f, list_area);
                         initBoundaryLine(Color.argb(1000, 57, 72, 61), 0f, list_area);
                     }
 
@@ -2743,13 +2481,15 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                     PolygonBean polygonBean_contract = SqliteDb.getLayer_contract(getActivity(), list_parktab.get(i).getid(), list_areatab.get(k).getid(), list_contractTab.get(m).getid());
                     if (polygonBean_contract != null)
                     {
-//                        setCenterPointInfo(polygonBean_contract);
                         LatLng latlng = new LatLng(Double.valueOf(polygonBean_contract.getLat()), Double.valueOf(polygonBean_contract.getLng()));
                         addCustomMarkerWithProgressbar(getResources().getColor(R.color.bg_ask), latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote());
                         List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), polygonBean_contract.getUuid());
                         if (list_contract != null && list_contract.size() != 0)
                         {
-                            initBoundary(Color.argb(160, 177, 15, 0), 200f, list_contract);
+                            list_contractplanpolygonbean.add(polygonBean_contract);
+                            int[] random = utils.randomInt(0, 10, 1);
+                            Polygon p = initBoundary(fillcolor_contract[m], 200f, list_contract);
+                            list_contractplanpolygon.add(p);
                             initBoundaryLine(Color.argb(1000, 57, 72, 61), 0f, list_contract);
                         }
 
@@ -2761,7 +2501,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         }
 //显示点
         initPointPolygon();
-//显示房子
+//显示断蕾
         initHousePolygon();
 //显示线
         initLinePolygon();
@@ -2769,6 +2509,51 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         initRoadPolygon();
 //显示面
         initMianPolygon();
+        //显示断蕾情况
+        initBreakOff();
+    }
+
+    public void initBreakOff()
+    {
+        list_BatchOfProduct = SqliteDb.getBatchOfProduct(getActivity(), "60");
+        for (int i = 0; i < list_BatchOfProduct.size(); i++)
+        {
+            list_breakoff = SqliteDb.getBreakoffByBatchTime(getActivity(), "60", list_BatchOfProduct.get(i).getBatchTime());
+            if (list_breakoff != null && list_breakoff.size() != 0)
+            {
+                for (int j = 0; j < list_breakoff.size(); j++)
+                {
+                    LatLng latlng = new LatLng(Double.valueOf(list_breakoff.get(j).getLat()), Double.valueOf(list_breakoff.get(j).getLng()));
+//                    if (list_breakoff.get(j).getStatus().equals("0"))//起点
+//                    {
+//                        Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff_start, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5,10)+"/"+list_breakoff.get(j).getnumberofbreakoff());
+//                        list_Objects_breakoff.add(marker);
+//                    } else if (list_breakoff.get(j).getStatus().equals("1"))//终点
+//                    {
+//                        Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff_end, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5,10)+"/"+list_breakoff.get(j).getnumberofbreakoff());
+//                        list_Objects_breakoff.add(marker);
+//                    } else
+//                    {
+//                        Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5,10)+"/"+list_breakoff.get(j).getnumberofbreakoff());
+//                        list_Objects_breakoff.add(marker);
+//                    }
+                    if (i < ic_breakoff.length)
+                    {
+                        Marker marker = addCustomMarker_BreakOff(ic_breakoff[i], getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5, 10) + "/" + list_breakoff.get(j).getnumberofbreakoff());
+                        list_Objects_breakoff.add(marker);
+                    } else
+                    {
+                        Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff_spare, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5, 10) + "/" + list_breakoff.get(j).getnumberofbreakoff());
+                        list_Objects_breakoff.add(marker);
+                    }
+
+
+                }
+
+
+            }
+
+        }
     }
 
     public void initHousePolygon()
@@ -2879,7 +2664,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 {
                     Marker marker = addCustomMarker(getResources().getColor(R.color.bg_sq), list_latlang.get(0), list_polygon_line.get(i).getUuid(), list_polygon_line.get(i).getNote());
                     list_Objects_line_centermarker.add(marker);
-                }else
+                } else
                 {
                     Marker marker = addCustomMarker(getResources().getColor(R.color.bg_sq), list_latlang.get(halfsize), list_polygon_line.get(i).getUuid(), list_polygon_line.get(i).getNote());
                     list_Objects_line_centermarker.add(marker);
@@ -2950,7 +2735,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 line.setWidth(4f);
                 Overlays.add(line);
                 listlatlng_cx.add(location_latLng);
-            }else if (drawerType.equals("采面"))
+            } else if (drawerType.equals("采面"))
             {
                 tencentMap.animateTo(location_latLng);
                 listlatlng_park.add(location_latLng);
@@ -3011,48 +2796,83 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         marker.hideInfoWindow();
         return marker;
     }
-    private Marker addFirstView( LatLng latLng, String uuid,String note)
+
+    private Marker addFirstView(String qy, int breakoffnumber, int number_wdl, LatLng latLng, String uuid, String note)
     {
         marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         list_centermark.add(marker);
         marker.set2Top();
-        View view = View.inflate(getActivity(), R.layout.addfirstview, null);
+        View view = View.inflate(getActivity(), R.layout.addview_breakoffinfo, null);
         LinearLayout ll_first = (LinearLayout) view.findViewById(R.id.ll_first);
+        TextView tv_ssqy = (TextView) view.findViewById(R.id.tv_ssqy);
+        TextView tv_wd = (TextView) view.findViewById(R.id.tv_wd);
+        TextView tv_yd = (TextView) view.findViewById(R.id.tv_yd);
+        tv_ssqy.setText(qy);
+        tv_wd.setText(String.valueOf(number_wdl));
+        tv_yd.setText(String.valueOf(breakoffnumber));
+
+        tv_ssqy.setHeight(40);
+        tv_wd.setHeight(10);
+        tv_yd.setHeight(20);
         marker.setMarkerView(view);
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("uuid", uuid);
         bundle.putString("note", note);
+        bundle.putString("type", "polygon");
         marker.setTag(bundle);
         return marker;
     }
-    private Marker addSecondView( LatLng latLng, String uuid,String note)
+
+    private Marker addSecondView(String qy, int breakoffnumber, int number_wdl, LatLng latLng, String uuid, String note)
     {
         marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         list_centermark.add(marker);
         marker.set2Top();
-        View view = View.inflate(getActivity(),R.layout.addsecondview, null);
+        View view = View.inflate(getActivity(), R.layout.addview_breakoffinfo, null);
         LinearLayout ll_second = (LinearLayout) view.findViewById(R.id.ll_second);
+        TextView tv_ssqy = (TextView) view.findViewById(R.id.tv_ssqy);
+        TextView tv_wd = (TextView) view.findViewById(R.id.tv_wd);
+        TextView tv_yd = (TextView) view.findViewById(R.id.tv_yd);
+        tv_ssqy.setText(qy);
+        tv_wd.setText(String.valueOf(number_wdl));
+        tv_yd.setText(String.valueOf(breakoffnumber));
+        tv_ssqy.setHeight(40);
+        tv_wd.setHeight(10);
+        tv_yd.setHeight(20);
         marker.setMarkerView(view);
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("uuid", uuid);
         bundle.putString("note", note);
+        bundle.putString("type", "polygon");
         marker.setTag(bundle);
         return marker;
     }
-    private Marker addThirdView(LatLng latLng, String uuid,String note)
+
+    private Marker addThirdView(String qy, int breakoffnumber, int number_wdl, LatLng latLng, String uuid, String note)
     {
         marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         list_centermark.add(marker);
         marker.set2Top();
-        View view = View.inflate(getActivity(),R.layout.addthirdview, null);
+        View view = View.inflate(getActivity(), R.layout.addview_breakoffinfo, null);
         LinearLayout ll_third = (LinearLayout) view.findViewById(R.id.ll_third);
+        TextView tv_ssqy = (TextView) view.findViewById(R.id.tv_ssqy);
+        TextView tv_wd = (TextView) view.findViewById(R.id.tv_wd);
+        TextView tv_yd = (TextView) view.findViewById(R.id.tv_yd);
+        tv_ssqy.setText(qy);
+        tv_wd.setText(String.valueOf(number_wdl));
+        tv_yd.setText(String.valueOf(breakoffnumber));
+        tv_ssqy.setHeight(40);
+        tv_wd.setHeight(10);
+        tv_yd.setHeight(20);
         marker.setMarkerView(view);
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("uuid", uuid);
         bundle.putString("note", note);
+        bundle.putString("type", "polygon");
         marker.setTag(bundle);
         return marker;
     }
+
     private Marker addCustomMarkerWithProgressbar(int textcolor, LatLng latLng, String uuid, String note)
     {
         Drawable drawable = getResources().getDrawable(R.drawable.location1);
@@ -3060,7 +2880,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         marker = tencentMap.addMarker(new MarkerOptions().position(latLng).icon(new BitmapDescriptor(bitmap)));
         list_centermark.add(marker);
         marker.set2Top();
-        View view = View.inflate(getActivity(),R.layout.markerwithprogressbar, null);
+        View view = View.inflate(getActivity(), R.layout.markerwithprogressbar, null);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
         LinearLayout ll_second = (LinearLayout) view.findViewById(R.id.ll_second);
         LinearLayout ll_first = (LinearLayout) view.findViewById(R.id.ll_first);
@@ -3078,9 +2898,37 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         textView.setTextColor(textcolor);
         textView.setTextSize(12);
         marker.setMarkerView(view);
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("uuid", uuid);
         bundle.putString("note", note);
+        bundle.putString("type", "polygon");
+        marker.setTag(bundle);
+        return marker;
+    }
+
+    private Marker addCustomMarker_BreakOff(int icon, int textcolor, LatLng latLng, String uuid, String note)
+    {
+        marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
+        list_centermark.add(marker);
+        marker.set2Top();
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.markerwithbreafoff, null);
+        View view_marker = (View) view.findViewById(R.id.view_marker);
+        view_marker.setBackgroundResource(icon);
+        TextView textView = (TextView) view.findViewById(R.id.tv_note);
+        if (note == null || note.equals(""))
+        {
+            textView.setText("暂无说明");
+        } else
+        {
+            textView.setText(note);
+        }
+        textView.setTextColor(textcolor);
+        textView.setTextSize(12);
+        marker.setMarkerView(view);
+        Bundle bundle = new Bundle();
+        bundle.putString("uuid", uuid);
+        bundle.putString("note", note);
+        bundle.putString("type", "breakoff");
         marker.setTag(bundle);
         return marker;
     }
@@ -3107,9 +2955,10 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
 //        textView.setTag(R.id.tag_latlng, latLng);
 //        textView.setTag(R.id.tag_uuid, uuid);
         marker.setMarkerView(view);
-        Bundle bundle=new Bundle();
-        bundle.putString("uuid",uuid);
+        Bundle bundle = new Bundle();
+        bundle.putString("uuid", uuid);
         bundle.putString("note", note);
+        bundle.putString("type", "polygon");
         marker.setTag(bundle);
         return marker;
     }
@@ -3136,9 +2985,10 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
 //        textView.setTag(R.id.tag_latlng, latLng);
 //        textView.setTag(R.id.tag_uuid, uuid);
         marker.setMarkerView(view);
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("uuid", uuid);
         bundle.putString("note", note);
+        bundle.putString("type", "polygon");
         marker.setTag(bundle);
         return marker;
     }
@@ -4402,8 +4252,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
 
         btn_complete.setVisibility(View.GONE);
         tv_tip.setVisibility(View.GONE);
-        btn_addlayer.setText("添加区域");
-        btn_addmore.setVisibility(View.VISIBLE);
+        btn_addbreakoff.setVisibility(View.VISIBLE);
         btn_showlayer.setVisibility(View.VISIBLE);
         btn_setting.setVisibility(View.VISIBLE);
         listlatlng_park = new ArrayList<>();
@@ -4422,15 +4271,15 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         firstmarkerselect = true;
         prelatLng = null;
 
-        btn_addlayer.setVisibility(View.VISIBLE);
         btn_showlayer.setVisibility(View.VISIBLE);
         btn_setting.setVisibility(View.VISIBLE);
-        btn_addmore.setText("更多");
+        btn_addbreakoff.setText("添加断蕾");
         drawerType = "";
-        currentpointmarker=null;//点
+        currentpointmarker = null;//点
         listlatlng_park = new ArrayList<>();//线、面
-        prelatLng_drawerparklayer = null;;//线、面
-        btn_addmore.setClickable(true);
+        prelatLng_drawerparklayer = null;
+        ;//线、面
+        btn_addbreakoff.setClickable(true);
 
 
         initMapData();
@@ -4438,15 +4287,16 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         initMapOnclickListening();
         initMapCameraChangeListener();
     }
-    private void   showThirdMarker()
+
+    private void showThirdMarker()
     {
-        if (list_Marker_third.size()>0)
+        if (list_Marker_third.size() > 0)
         {
             for (int i = 0; i < list_Marker_third.size(); i++)
             {
                 list_Marker_third.get(i).setVisible(true);
             }
-        }else
+        } else
         {
             List<parktab> list_parktab = SqliteDb.getparktab(getActivity(), "60");
             for (int i = 0; i < list_parktab.size(); i++)//每个园区
@@ -4458,10 +4308,13 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                     for (int m = 0; m < list_contractTab.size(); m++)//每个承包区
                     {
                         PolygonBean polygonBean_contract = SqliteDb.getLayer_contract(getActivity(), list_parktab.get(i).getid(), list_areatab.get(k).getid(), list_contractTab.get(m).getid());
+
                         if (polygonBean_contract != null)
                         {
+                            int number_breakoff = SqliteDb.getAllNumberOfBreakoff_contract(getActivity(), polygonBean_contract.getparkId(), polygonBean_contract.getAreaId(), polygonBean_contract.getContractid());
+                            int number_wdl = 20000;
                             LatLng latlng = new LatLng(Double.valueOf(polygonBean_contract.getLat()), Double.valueOf(polygonBean_contract.getLng()));
-                            Marker marker= addThirdView(latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote()+"相关信息");
+                            Marker marker = addThirdView(polygonBean_contract.getparkName() + polygonBean_contract.getareaName() + polygonBean_contract.getContractname(), number_breakoff, number_wdl, latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote() + "相关信息");
                             list_Marker_third.add(marker);
                         }
                     }
@@ -4469,15 +4322,16 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
             }
         }
     }
-    private void   showSecondMarker()
+
+    private void showSecondMarker()
     {
-        if (list_Marker_second.size()>0)
+        if (list_Marker_second.size() > 0)
         {
             for (int i = 0; i < list_Marker_second.size(); i++)
             {
                 list_Marker_second.get(i).setVisible(true);
             }
-        }else
+        } else
         {
             List<parktab> list_parktab = SqliteDb.getparktab(getActivity(), "60");
             for (int i = 0; i < list_parktab.size(); i++)//每个园区
@@ -4486,39 +4340,47 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
                 for (int k = 0; k < list_areatab.size(); k++)//每个片区
                 {
                     PolygonBean polygonBean_area = SqliteDb.getLayer_area(getActivity(), list_parktab.get(i).getid(), list_areatab.get(k).getid());
+
                     if (polygonBean_area != null)
                     {
+                        int number_breakoff = SqliteDb.getAllNumberOfBreakoff_area(getActivity(), polygonBean_area.getparkId(), polygonBean_area.getAreaId(), polygonBean_area.getContractid());
+                        int number_wdl = 20000;
                         LatLng latlng = new LatLng(Double.valueOf(polygonBean_area.getLat()), Double.valueOf(polygonBean_area.getLng()));
-                        Marker marker=addSecondView(latlng, polygonBean_area.getUuid(), polygonBean_area.getNote()+"相关信息");
+                        Marker marker = addSecondView(polygonBean_area.getparkName() + polygonBean_area.getareaName(), number_breakoff, number_wdl, latlng, polygonBean_area.getUuid(), polygonBean_area.getNote() + "相关信息");
                         list_Marker_second.add(marker);
                     }
                 }
             }
         }
     }
-    private void   showFirstMarker()
+
+    private void showFirstMarker()
     {
-        if (list_Marker_first.size()>0)
+        if (list_Marker_first.size() > 0)
         {
             for (int i = 0; i < list_Marker_first.size(); i++)
             {
                 list_Marker_first.get(i).setVisible(true);
             }
-        }else
+        } else
         {
             List<parktab> list_parktab = SqliteDb.getparktab(getActivity(), "60");
             for (int i = 0; i < list_parktab.size(); i++)//每个园区
             {
                 PolygonBean polygonBean_park = SqliteDb.getLayer_park(getActivity(), list_parktab.get(i).getid());
+
                 if (polygonBean_park != null)
                 {
+                    int number_breakoff = SqliteDb.getAllNumberOfBreakoff_park(getActivity(), list_parktab.get(i).getid(), "", "");
+                    int number_wdl = 20000;
                     LatLng latlng = new LatLng(Double.valueOf(polygonBean_park.getLat()), Double.valueOf(polygonBean_park.getLng()));
-                    Marker marker=addFirstView(latlng, polygonBean_park.getUuid(), polygonBean_park.getNote()+"相关信息");
+                    Marker marker = addFirstView(polygonBean_park.getparkName(), number_breakoff, number_wdl, latlng, polygonBean_park.getUuid(), polygonBean_park.getNote() + "相关信息");
                     list_Marker_first.add(marker);
                 }
             }
         }
     }
+
     private void initMapCameraChangeListener()
     {
         tencentMap.setOnMapCameraChangeListener(new TencentMap.OnMapCameraChangeListener()
@@ -4527,41 +4389,62 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
             public void onCameraChange(CameraPosition cameraPosition)
             {
                 int zoomlevel = tencentMap.getZoomLevel();
+                if (zoomlevel >= 13 && cb_parkdata.isSelected())
+                {
+                    ll_sm.setVisibility(View.VISIBLE);
+                } else
+                {
+                    ll_sm.setVisibility(View.GONE);
+                }
                 //规划图层信息显示控制
-                if (zoomlevel == 15)
+                if (cb_parkdata.isSelected())
                 {
-                    showFirstMarker();
-                }else
-                {
-                    for (int i = 0; i < list_Marker_first.size(); i++)
+                    if (zoomlevel <= 13)
                     {
-                        list_Marker_first.get(i).setVisible(false);
+
+                        showFirstMarker();
+                    } else
+                    {
+
+                        for (int i = 0; i < list_Marker_first.size(); i++)
+                        {
+                            list_Marker_first.get(i).setVisible(false);
+                        }
                     }
                 }
+
 
                 //片区图层信息显示控制
-                if (zoomlevel ==14)
+                if (cb_areadata.isSelected())
                 {
-                    showSecondMarker();
-                } else
-                {
-                    for (int i = 0; i < list_Marker_second.size(); i++)
+                    if (zoomlevel == 14)
                     {
-                        list_Marker_second.get(i).setVisible(false);
+                        showSecondMarker();
+                    } else
+                    {
+                        for (int i = 0; i < list_Marker_second.size(); i++)
+                        {
+                            list_Marker_second.get(i).setVisible(false);
+                        }
                     }
                 }
 
+
                 //其他图层信息显示控制
-                if (zoomlevel == 13 )
+                if (cb_contractdata.isSelected())
                 {
-                    showThirdMarker();
-                } else
-                {
-                    for (int i = 0; i < list_Marker_third.size(); i++)
+                    if (zoomlevel >= 15)
                     {
-                        list_Marker_third.get(i).setVisible(false);
+                        showThirdMarker();
+                    } else
+                    {
+                        for (int i = 0; i < list_Marker_third.size(); i++)
+                        {
+                            list_Marker_third.get(i).setVisible(false);
+                        }
                     }
                 }
+
 
             }
 
@@ -4572,24 +4455,25 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
             }
         });
     }
+
     private void ResetParamofAddMore()
     {
-        btn_addlayer.setVisibility(View.VISIBLE);
         btn_showlayer.setVisibility(View.VISIBLE);
         btn_setting.setVisibility(View.VISIBLE);
-        btn_addmore.setText("更多");
+        btn_addbreakoff.setText("添加断蕾");
         drawerType = "";
-        currentpointmarker=null;//点
+        currentpointmarker = null;//点
         listlatlng_park = new ArrayList<>();//线、面
-        prelatLng_drawerparklayer = null;;//线、面
-        btn_addmore.setClickable(true);
+        prelatLng_drawerparklayer = null;
+        ;//线、面
+        btn_addbreakoff.setClickable(true);
     }
+
     private void ResetParamofAddLayer()
     {
         btn_complete.setVisibility(View.GONE);
         tv_tip.setVisibility(View.GONE);
-        btn_addlayer.setText("添加区域");
-        btn_addmore.setVisibility(View.VISIBLE);
+        btn_addbreakoff.setVisibility(View.VISIBLE);
         btn_showlayer.setVisibility(View.VISIBLE);
         btn_setting.setVisibility(View.VISIBLE);
         listlatlng_park = new ArrayList<>();
@@ -4608,6 +4492,7 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         firstmarkerselect = true;
         prelatLng = null;
     }
+
     private void initMarkOnclick()
     {
         tencentMap.setOnMarkerClickListener(new TencentMap.OnMarkerClickListener()
@@ -4615,14 +4500,18 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
             @Override
             public boolean onMarkerClick(Marker marker)
             {
-                Bundle bundle= (Bundle) marker.getTag();
-               String note= bundle.getString("note");
-                String uuid= bundle.getString("uuid");
-//                View view = (View) marker.getMarkerView();
-//                TextView textview = (TextView) view.findViewById(R.id.tv_note);
-//                LatLng latLng = (LatLng) textview.getTag(R.id.tag_latlng);
-//                String uuid = (String) textview.getTag(R.id.tag_uuid);
-                showDialog_OperatePolygon(uuid);
+                Bundle bundle = (Bundle) marker.getTag();
+                String note = bundle.getString("note");
+                String uuid = bundle.getString("uuid");
+                String type = bundle.getString("type");
+                if (type.equals("polygon"))
+                {
+                    showDialog_OperatePolygon(uuid);
+                } else if (type.equals("breakoff"))
+                {
+                    showDialog_OperateBreakOff(uuid);
+                }
+
                 return false;
             }
         });
@@ -4777,12 +4666,12 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
         lineOpt.addAll(list_AllLatLng);
         Polyline line = tencentMap.addPolyline(lineOpt);
         line.setColor(color);
-        line.setDottedLine(true);
+//        line.setDottedLine(true);
         line.setWidth(4f);
         Overlays.add(line);
     }
 
-    private void initBoundary(int color, float z, List<CoordinatesBean> list_coordinates)
+    private Polygon initBoundary(int color, float z, List<CoordinatesBean> list_coordinates)
     {
         List<LatLng> list_AllLatLng = new ArrayList<>();
         for (int i = 0; i < list_coordinates.size(); i++)
@@ -4810,9 +4699,9 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
 //        }
         Polygon polygon = drawPolygon(list_AllLatLng, color);
         polygon.setZIndex(z);
-//        list_polygon_all.add(polygon);
 //        list_polygon_allCoordinatesBean.add(list_coordinates);
         Overlays.add(polygon);
+        return polygon;
     }
 
     private void showNeedPlanBoundary(List<CoordinatesBean> list_coordinates)

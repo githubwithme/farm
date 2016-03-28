@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.farm.bean.BatchOfProduct;
+import com.farm.bean.BreakOff;
 import com.farm.bean.CoordinatesBean;
 import com.farm.bean.DepartmentBean;
 import com.farm.bean.HaveReadRecord;
@@ -100,7 +102,46 @@ public class SqliteDb
             e.printStackTrace();
         }
     }
+    public static <T> boolean editBreakoffInfo(Context context, String uuid,String number)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            BreakOff breakoff=db.findFirst(Selector.from(BreakOff.class).where("uuid", "=", uuid));
+            String number_old=breakoff.getnumberofbreakoff();
+            breakoff.setnumberofbreakoff(number);
+            db.update(breakoff, "numberofbreakoff");//修改断蕾数
 
+            BatchOfProduct batchofproduct = db.findFirst(Selector.from(BatchOfProduct.class).where("batchTime", "=", breakoff.getBatchTime()));
+            int newnumber=Integer.valueOf(batchofproduct.getNumber())-Integer.valueOf(number_old)+Integer.valueOf(number);
+            batchofproduct.setNumber(String.valueOf(newnumber));
+            db.update(batchofproduct,"number");//更新相应批次表中的数量
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public static <T> boolean deleteBreakoff(Context context, String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            BreakOff breakoff=db.findFirst(Selector.from(BreakOff.class).where("uuid", "=", uuid));
+            breakoff.setXxzt("1");
+            db.update(breakoff, "xxzt");//删除
+            BatchOfProduct batchofproduct = db.findFirst(Selector.from(BatchOfProduct.class).where("batchTime", "=", breakoff.getBatchTime()));
+            int newnumber=Integer.valueOf(batchofproduct.getNumber())-Integer.valueOf(breakoff.getnumberofbreakoff());
+            batchofproduct.setNumber(String.valueOf(newnumber));
+            db.update(batchofproduct, "number");//更新相应批次表信息
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     public static <T> boolean deleteplanPolygon(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
@@ -205,6 +246,78 @@ public class SqliteDb
         }
         return true;
     }
+    public static boolean getIsExistBreakoff(Context context, String uid, String batchtime)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            BreakOff breakoff = db.findFirst(Selector.from(BreakOff.class).where("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+
+            if (breakoff == null)
+            {
+                return false;
+            }else
+            {
+                return true;
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public static String getIsExistBatch(Context context, String uid, String weight,String number,String datenow)
+    {
+        DbUtils db = DbUtils.create(context);
+        BatchOfProduct batchOfProduct_last = null;
+        try
+        {
+            batchOfProduct_last = db.findFirst(Selector.from(BatchOfProduct.class).where("uid", "=", uid).orderBy("batchTime", true));
+            if (batchOfProduct_last != null)
+            {
+                String aa=utils.getIntervalTime(batchOfProduct_last.getBatchTime(), datenow);
+                int intervalTime=Integer.valueOf(aa);
+                if (intervalTime<=5)//属于batchOfProduct_last批次内
+                {
+                    int number_last=Integer.valueOf(batchOfProduct_last.getNumber());
+                    int number_new=number_last+Integer.valueOf(number);
+                    batchOfProduct_last.setNumber(String.valueOf(number_new));
+                    db.update(batchOfProduct_last,"number");
+                    return batchOfProduct_last.getBatchTime();
+                } else//新的批次
+                {
+                    BatchOfProduct batchofproduct=new BatchOfProduct();
+                    batchofproduct.setid("");
+                    batchofproduct.setuId(uid);
+                    batchofproduct.setWeight(weight);
+                    batchofproduct.setNumber(number);
+                    batchofproduct.setSellnumber("");
+                    batchofproduct.setBatchTime(datenow);
+                    batchofproduct.setRegDate(utils.getTime());
+                    SqliteDb.save(context,batchofproduct);
+                    return datenow;
+                }
+
+            } else
+            {
+                BatchOfProduct batchofproduct=new BatchOfProduct();
+                batchofproduct.setid("");
+                batchofproduct.setuId(uid);
+                batchofproduct.setWeight(weight);
+                batchofproduct.setNumber(number);
+                batchofproduct.setSellnumber("");
+                batchofproduct.setBatchTime(datenow);
+                batchofproduct.setRegDate(utils.getTime());
+                SqliteDb.save(context,batchofproduct);
+                return datenow;
+            }
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        return datenow;
+    }
 
     public static <T> List<T> getTemp1(Context context)
     {
@@ -212,10 +325,12 @@ public class SqliteDb
         List<T> list = null;
         try
         {
-            list = db.findAll(Selector.from(PolygonBean.class));
-            db.deleteAll(list);
-            list = db.findAll(Selector.from(CoordinatesBean.class));
-            db.deleteAll(list);
+            db.dropTable(BatchOfProduct.class);
+            db.dropTable(BreakOff.class);
+//            list = db.findAll(Selector.from(BatchOfProduct.class));
+//            db.deleteAll(list);
+//            list = db.findAll(Selector.from(BreakOff.class));
+//            db.deleteAll(list);
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -525,7 +640,45 @@ public class SqliteDb
 
         return list;
     }
+    public static List<BreakOff> getBreakoffByBatchTime(Context context, String uid,String batchTime)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<BreakOff> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(BreakOff.class));
+            list = db.findAll(Selector.from(BreakOff.class).where("uid", "=", uid).and("batchTime", "=", batchTime).and("xxzt", "=", "0"));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
 
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public static List<BatchOfProduct> getBatchOfProduct(Context context, String uid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<BatchOfProduct> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(BatchOfProduct.class).where("uid", "=", uid));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
     public static List<PolygonBean> getMoreLayer_house(Context context, String uid)
     {
         DbUtils db = DbUtils.create(context);
@@ -564,6 +717,7 @@ public class SqliteDb
 
         return list;
     }
+
     public static List<PolygonBean> getMoreLayer_mian(Context context, String uid)
     {
         DbUtils db = DbUtils.create(context);
@@ -582,6 +736,7 @@ public class SqliteDb
 
         return list;
     }
+
     public static List<PolygonBean> getMoreLayer_road(Context context, String uid)
     {
         DbUtils db = DbUtils.create(context);
@@ -600,7 +755,78 @@ public class SqliteDb
 
         return list;
     }
+    public static int getAllNumberOfBreakoff_park(Context context, String parkid, String areaid, String contractid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<BreakOff> list_BreakOff = null;
+        int count=0;
+        try
+        {
+            list_BreakOff = db.findAll(Selector.from(BreakOff.class).where("parkid", "=", parkid).and("xxzt", "=", "0"));
 
+            if (list_BreakOff != null && list_BreakOff.size()>0)
+            {
+                for (int i = 0; i <list_BreakOff.size() ; i++)
+                {
+                    count=count+ Integer.valueOf(list_BreakOff.get(i).getnumberofbreakoff());
+                }
+            }
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+    public static int getAllNumberOfBreakoff_area(Context context, String parkid, String areaid, String contractid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<BreakOff> list_BreakOff = null;
+        int count=0;
+        try
+        {
+            list_BreakOff = db.findAll(Selector.from(BreakOff.class).where("parkid", "=", parkid).and("areaid", "=", areaid).and("xxzt", "=", "0"));
+
+            if (list_BreakOff != null && list_BreakOff.size()>0)
+            {
+                for (int i = 0; i <list_BreakOff.size() ; i++)
+                {
+                    count=count+ Integer.valueOf(list_BreakOff.get(i).getnumberofbreakoff());
+                }
+            }
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+    public static int getAllNumberOfBreakoff_contract(Context context, String parkid, String areaid, String contractid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<BreakOff> list_BreakOff = null;
+        int count=0;
+        try
+        {
+            list_BreakOff = db.findAll(Selector.from(BreakOff.class).where("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("xxzt", "=", "0"));
+
+            if (list_BreakOff != null && list_BreakOff.size()>0)
+            {
+                for (int i = 0; i <list_BreakOff.size() ; i++)
+                {
+                    count=count+ Integer.valueOf(list_BreakOff.get(i).getnumberofbreakoff());
+                }
+            }
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
     public static PolygonBean getLayer_park(Context context, String parkid)
     {
         DbUtils db = DbUtils.create(context);
@@ -646,7 +872,20 @@ public class SqliteDb
 
         return polygonBean;
     }
+    public static BreakOff getbreakoffByuuid(Context context, String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        BreakOff breakoff = null;
+        try
+        {
+            breakoff = db.findFirst(Selector.from(BreakOff.class).where("uuid", "=", uuid).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
 
+        return breakoff;
+    }
     public static PolygonBean getLayerbyuuid(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);

@@ -97,24 +97,13 @@
 
 
                 <Button
-                    android:id="@+id/btn_addlayer"
+                    android:id="@+id/btn_addbreakoff"
                     android:layout_width="70dip"
                     android:layout_height="30dip"
                     android:layout_marginTop="10dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
-                    android:text="添加区域"
-                    android:textColor="@color/bg_text"
-                    android:textSize="14sp"/>
-
-                <Button
-                    android:id="@+id/btn_addmore"
-                    android:layout_width="70dip"
-                    android:layout_height="30dip"
-                    android:layout_marginTop="10dip"
-                    android:background="@drawable/background_view_rounded_single"
-                    android:gravity="center"
-                    android:text="更多"
+                    android:text="添加断蕾"
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
 
@@ -140,7 +129,47 @@
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
             </LinearLayout>
-
+            <LinearLayout
+                android:id="@+id/ll_sm"
+                android:layout_width="30dip"
+                android:layout_height="140dip"
+                android:layout_margin="10dip"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:background="@color/gray"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:text="区域"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:background="@color/bg_green"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:text="待断量"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:background="@color/red"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:text="已断量"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:background="@null"
+                    android:layout_marginTop="10dip"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:textColor="@color/bg_text"
+                    android:text="☆注"/>
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_setting"
                 android:layout_width="120dip"

@@ -55,6 +55,20 @@ public class StringUtils
 			return null;
 		}
 	}
+	/**
+	 * 将日期加一个时间段
+	 *
+	 * @return
+	 */
+	public static Date ComputeDate(Date date,int d)
+	{
+			Calendar cal=Calendar.getInstance();
+			cal.setTime(date);
+			cal.add(Calendar.DATE, d);
+			date=cal.getTime();
+			return date;
+	}
+
 
 	/**
 	 * 以友好的方式显示时间

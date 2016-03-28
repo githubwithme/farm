@@ -3,13 +3,15 @@ package com.farm.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.lidroid.xutils.db.annotation.Id;
+import com.lidroid.xutils.db.annotation.NoAutoIncrement;
 import com.lidroid.xutils.db.annotation.Table;
 
 /**
  * Description: areatab 实体类</p>
- * <p>
+ * <p/>
  * Copyright: Copyright (c) 2015
- * <p>
+ * <p/>
  * Company: 广州海川信息科技有限公司
  *
  * @version 1.0
@@ -20,75 +22,64 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
     public String id;
     public String uId;
     public String regDate;
-    public String numberofproductbatch;
-    public String dateofproductbatch;
-    public String isSell;
-    public String numberofsold;
-    public String numberforsale;
-    public String output;
+    @Id
+    @NoAutoIncrement
+    public String batchTime;
+    public String number;
+    public String weight;
+    public String sellnumber;
 
 
-    public String getOutput()
+    public void setRegDate(String regDate)
     {
-        return output;
+        this.regDate = regDate;
     }
 
-    public void setOutput(String output)
+    public String getRegDate()
     {
-        this.output = output;
+        return regDate;
     }
 
-    public void setNumberforsale(String numberforsale)
+    public void setSellnumber(String sellnumber)
     {
-        this.numberforsale = numberforsale;
+        this.sellnumber = sellnumber;
     }
 
-    public String getNumberforsale()
+    public String getSellnumber()
     {
-        return numberforsale;
+        return sellnumber;
     }
 
-    public void setNumberofsold(String numberofsold)
+    public void setWeight(String weight)
     {
-        this.numberofsold = numberofsold;
+        this.weight = weight;
     }
 
-    public String getNumberofsold()
+    public String getWeight()
     {
-        return numberofsold;
+        return weight;
     }
 
-    public void setIsSell(String isSell)
+    public void setNumber(String number)
     {
-        this.isSell = isSell;
+        this.number = number;
     }
 
-    public String getIsSell()
+    public String getNumber()
     {
-        return isSell;
-    }
-
-    public void setDateofproductbatch(String dateofproductbatch)
-    {
-        this.dateofproductbatch = dateofproductbatch;
-    }
-
-    public String getDateofproductbatch()
-    {
-        return dateofproductbatch;
-    }
-
-    public void setNumberofproductbatch(String numberofproductbatch)
-    {
-        this.numberofproductbatch = numberofproductbatch;
-    }
-
-    public String getNumberofproductbatch()
-    {
-        return numberofproductbatch;
+        return number;
     }
 
 
+    public void setBatchTime(String batchTime)
+    {
+        this.batchTime = batchTime;
+    }
+
+    public String getBatchTime()
+    {
+        return batchTime;
+    }
 
     public String getid()
     {
@@ -108,16 +99,6 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
     public void setuId(String uId)
     {
         this.uId = uId;
-    }
-
-    public String getregDate()
-    {
-        return regDate;
-    }
-
-    public void setregDate(String regDate)
-    {
-        this.regDate = regDate;
     }
 
 
@@ -142,13 +123,12 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
             BatchOfProduct p = new BatchOfProduct();
             p.setid(source.readString());
             p.setuId(source.readString());
-            p.setregDate(source.readString());
-            p.setNumberofproductbatch(source.readString());
-            p.setDateofproductbatch(source.readString());
-            p.setIsSell(source.readString());
-            p.setNumberofsold(source.readString());
-            p.setNumberforsale(source.readString());
-            p.setOutput(source.readString());
+            p.setRegDate(source.readString());
+            p.setBatchTime(source.readString());
+            p.setNumber(source.readString());
+            p.setWeight(source.readString());
+            p.setSellnumber(source.readString());
+
             return p;
         }
 
@@ -165,12 +145,11 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
         p.writeString(id);
         p.writeString(uId);
         p.writeString(regDate);
-        p.writeString(numberofproductbatch);
-        p.writeString(dateofproductbatch);
-        p.writeString(isSell);
-        p.writeString(numberofsold);
-        p.writeString(numberforsale);
-        p.writeString(output);
+        p.writeString(batchTime);
+        p.writeString(number);
+        p.writeString(weight);
+        p.writeString(sellnumber);
+
     }
 
     @Override
