@@ -3,6 +3,8 @@ package com.farm.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.lidroid.xutils.db.annotation.Id;
+import com.lidroid.xutils.db.annotation.NoAutoIncrement;
 import com.lidroid.xutils.db.annotation.Table;
 
 import java.util.List;
@@ -20,41 +22,186 @@ import java.util.List;
 public class SellOrder implements Parcelable // 与数据库不一致
 {
     public String id;
-    public String SN;
-    public String sellType;
+    public String uid;
+    @Id
+    @NoAutoIncrement
+    public String uuid;
+    public String batchTime;
+    public String selltype;
     public String status;
-    public String sellAmount;
-    public String dataofOrder;
-    public List<sellOrderDetailTab> sellOrderDetailList;
+    public String buyers;
+    public String email;
+    public String phone;
+    public String price;
+    public String number;
+    public String weight;
+    public String allvalues;
+    public String actualweight;
+    public String actualnumber;
+    public String actualallvalues;
+    public String reg;
+    public String saletime;
+    public List<SellOrderDetail> sellOrderDetailList;
 
-    public void setSellOrderDetailList(List<sellOrderDetailTab> sellOrderDetailList)
+
+    public void setUid(String uid)
+    {
+        this.uid = uid;
+    }
+
+    public String getUid()
+    {
+        return uid;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setPhone(String phone)
+    {
+        this.phone = phone;
+    }
+
+    public String getPhone()
+    {
+        return phone;
+    }
+
+    public void setUuid(String uuid)
+    {
+        this.uuid = uuid;
+    }
+
+    public String getUuid()
+    {
+        return uuid;
+    }
+
+    public void setBatchTime(String batchTime)
+    {
+        this.batchTime = batchTime;
+    }
+
+    public String getBatchTime()
+    {
+        return batchTime;
+    }
+
+    public void setSellOrderDetailList(List<SellOrderDetail> sellOrderDetailList)
     {
         this.sellOrderDetailList = sellOrderDetailList;
     }
 
-    public List<sellOrderDetailTab> getSellOrderDetailList()
+    public List<SellOrderDetail> getSellOrderDetailList()
     {
         return sellOrderDetailList;
     }
 
-    public void setDataofOrder(String dataofOrder)
+    public void setSaletime(String saletime)
     {
-        this.dataofOrder = dataofOrder;
+        this.saletime = saletime;
     }
 
-    public String getDataofOrder()
+    public String getSaletime()
     {
-        return dataofOrder;
+        return saletime;
     }
 
-    public void setSellAmount(String sellAmount)
+    public void setReg(String reg)
     {
-        this.sellAmount = sellAmount;
+        this.reg = reg;
     }
 
-    public String getSellAmount()
+    public String getReg()
     {
-        return sellAmount;
+        return reg;
+    }
+
+    public void setActualallvalues(String actualallvalues)
+    {
+        this.actualallvalues = actualallvalues;
+    }
+
+    public String getActualallvalues()
+    {
+        return actualallvalues;
+    }
+
+    public void setActualnumber(String actualnumber)
+    {
+        this.actualnumber = actualnumber;
+    }
+
+    public String getActualnumber()
+    {
+        return actualnumber;
+    }
+
+    public void setActualweight(String actualweight)
+    {
+        this.actualweight = actualweight;
+    }
+
+    public String getActualweight()
+    {
+        return actualweight;
+    }
+
+    public void setAllvalues(String allvalues)
+    {
+        this.allvalues = allvalues;
+    }
+
+    public String getAllvalues()
+    {
+        return allvalues;
+    }
+
+    public void setWeight(String weight)
+    {
+        this.weight = weight;
+    }
+
+    public String getWeight()
+    {
+        return weight;
+    }
+
+    public void setNumber(String number)
+    {
+        this.number = number;
+    }
+
+    public String getNumber()
+    {
+        return number;
+    }
+
+    public void setPrice(String price)
+    {
+        this.price = price;
+    }
+
+    public String getPrice()
+    {
+        return price;
+    }
+
+    public void setBuyers(String buyers)
+    {
+        this.buyers = buyers;
+    }
+
+    public String getBuyers()
+    {
+        return buyers;
     }
 
     public void setStatus(String status)
@@ -67,25 +214,17 @@ public class SellOrder implements Parcelable // 与数据库不一致
         return status;
     }
 
-    public void setSellType(String sellType)
+    public void setSelltype(String selltype)
     {
-        this.sellType = sellType;
+        this.selltype = selltype;
     }
 
-    public String getSellType()
+    public String getSelltype()
     {
-        return sellType;
+        return selltype;
     }
 
-    public void setSN(String SN)
-    {
-        this.SN = SN;
-    }
 
-    public String getSN()
-    {
-        return SN;
-    }
 
     public String getid()
     {
@@ -120,13 +259,27 @@ public class SellOrder implements Parcelable // 与数据库不一致
             // 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错
             SellOrder p = new SellOrder();
             p.setid(source.readString());
-            p.setSN(source.readString());
-            p.setSellType(source.readString());
+            p.setUid(source.readString());
+            p.setUuid(source.readString());
+            p.setBatchTime(source.readString());
+            p.setSelltype(source.readString());
             p.setStatus(source.readString());
-            p.setSellAmount(source.readString());
-            p.setDataofOrder(source.readString());
+            p.setBuyers(source.readString());
+            p.setEmail(source.readString());
+            p.setPhone(source.readString());
+            p.setPrice(source.readString());
+            p.setNumber(source.readString());
+            p.setWeight(source.readString());
+            p.setAllvalues(source.readString());
+            p.setActualweight(source.readString());
+            p.setActualnumber(source.readString());
+            p.setActualallvalues(source.readString());
+            p.setReg(source.readString());
+            p.setSaletime(source.readString());
             p.sellOrderDetailList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
             return p;
+
+
         }
 
         @Override
@@ -140,11 +293,23 @@ public class SellOrder implements Parcelable // 与数据库不一致
     public void writeToParcel(Parcel p, int arg1)
     {
         p.writeString(id);
-        p.writeString(SN);
-        p.writeString(sellType);
+        p.writeString(uid);
+        p.writeString(uuid);
+        p.writeString(batchTime);
+        p.writeString(selltype);
         p.writeString(status);
-        p.writeString(sellAmount);
-        p.writeString(dataofOrder);
+        p.writeString(buyers);
+        p.writeString(email);
+        p.writeString(phone);
+        p.writeString(price);
+        p.writeString(number);
+        p.writeString(weight);
+        p.writeString(allvalues);
+        p.writeString(actualweight);
+        p.writeString(actualnumber);
+        p.writeString(actualallvalues);
+        p.writeString(reg);
+        p.writeString(saletime);
         p.writeList(sellOrderDetailList);
     }
 

@@ -4,8 +4,18 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/tv_noproducttip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="暂无产品需要销售"
+        android:textColor="@color/bg_text"
+        android:textSize="16sp"/>
 
     <RelativeLayout
+        android:id="@+id/rl_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -33,6 +43,7 @@
                 android:id="@+id/tv_tip"
                 android:layout_width="match_parent"
                 android:layout_height="45dip"
+                android:layout_marginTop="35dip"
                 android:background="@color/bg_yellow"
                 android:gravity="center"
                 android:text=""
@@ -44,13 +55,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
-                android:layout_marginRight="5dip"
                 android:layout_marginBottom="110dip"
+                android:layout_marginRight="5dip"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/btn_showlayer"
-                    android:layout_width="40dip"
+                    android:layout_width="45dip"
                     android:layout_height="25dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
@@ -61,7 +72,7 @@
 
                 <Button
                     android:id="@+id/btn_yx"
-                    android:layout_width="40dip"
+                    android:layout_width="45dip"
                     android:layout_height="25dip"
                     android:layout_marginTop="10dip"
                     android:background="@drawable/background_view_rounded_single"
@@ -72,7 +83,7 @@
 
                 <Button
                     android:id="@+id/btn_setting"
-                    android:layout_width="40dip"
+                    android:layout_width="45dip"
                     android:layout_height="25dip"
                     android:layout_marginTop="10dip"
                     android:background="@drawable/background_view_rounded_single"
@@ -86,8 +97,9 @@
                 android:id="@+id/ll_sm"
                 android:layout_width="30dip"
                 android:layout_height="140dip"
+                android:layout_gravity="bottom|left"
+                android:layout_marginBottom="40dip"
                 android:layout_marginLeft="5dip"
-                android:layout_marginTop="40dip"
                 android:orientation="vertical">
 
                 <TextView
@@ -300,53 +312,82 @@
                 android:textSize="14sp"
                 android:visibility="gone"/>
 
-            <Button
-                android:id="@+id/btn_batchofproduct"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dip"
-                android:layout_gravity="top"
-                android:background="@color/white"
-                android:gravity="center"
-                android:text="产品批次"
-                android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="top">
+
+                <Button
+                    android:id="@+id/btn_batchofproduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dip"
+                    android:layout_centerInParent="true"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="产品批次"
+                    android:textColor="@color/bg_text"
+                    android:textSize="14sp"/>
+                <View
+                    android:id="@+id/line_batch"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/btn_batchofproduct"
+                    android:background="@color/line_color"/>
+                <ImageView
+                    android:id="@+id/iv_arrow"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dip"
+                    android:background="@drawable/downward"/>
+            </RelativeLayout>
+
 
             <Button
-                android:id="@+id/btn_addbreakoff"
+                android:id="@+id/btn_sale"
+                android:layout_width="45dip"
+                android:layout_height="25dip"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="55dip"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/background_view_rounded_single"
+                android:gravity="center"
+                android:text="添加"
+                android:textColor="@color/bg_text"
+                android:textSize="12sp"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_createorder"
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
                 android:layout_gravity="bottom"
                 android:background="@drawable/background_view_rounded_single"
-                android:gravity="center"
-                android:text="添加订单"
-                android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
+                >
 
-            <FrameLayout
-                android:layout_width="40dip"
-                android:layout_height="40dip"
-                android:layout_gravity="bottom|right"
-                android:layout_marginBottom="45dip"
-                android:layout_marginRight="5dip">
-
-                <Button
-                    android:id="@+id/btn_orders"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/ic_order"/>
 
                 <TextView
-                    android:id="@+id/tv_numberofnumber"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
-                    android:layout_gravity="top|right"
-                    android:background="@color/bg_yellow"
+                    android:id="@+id/tv_createorder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@null"
                     android:gravity="center"
-                    android:text="1"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:visibility="gone"/>
-            </FrameLayout>
+                    android:text="生成订单"
+                    android:textColor="@color/bg_text"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_numberoforder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/tv_createorder"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="(0)"
+                    android:textColor="@color/bg_text"
+                    android:textSize="16sp"/>
+            </RelativeLayout>
         </FrameLayout>
     </RelativeLayout>
 

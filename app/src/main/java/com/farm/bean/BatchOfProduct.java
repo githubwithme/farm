@@ -28,7 +28,18 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
     public String number;
     public String weight;
     public String sellnumber;
+    public String status;
 
+
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+
+    public String getStatus()
+    {
+        return status;
+    }
 
     public void setRegDate(String regDate)
     {
@@ -128,6 +139,7 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
             p.setNumber(source.readString());
             p.setWeight(source.readString());
             p.setSellnumber(source.readString());
+            p.setStatus(source.readString());
 
             return p;
         }
@@ -149,6 +161,7 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
         p.writeString(number);
         p.writeString(weight);
         p.writeString(sellnumber);
+        p.writeString(status);
 
     }
 

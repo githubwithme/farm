@@ -5,9 +5,8 @@ package com.farm.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.NoAutoIncrement;
 import com.lidroid.xutils.db.annotation.Table;
+
 /**
  *
  * Description: SellOrderDetail 实体类</p>
@@ -17,12 +16,10 @@ import com.lidroid.xutils.db.annotation.Table;
  * Company: 广州海川信息科技有限公司
  * @version 1.0 
  */
-@Table(name="SellOrderDetail")
-public class SellOrderDetail implements Parcelable 
+@Table(name="ShoppingCard")
+public class ShoppingCard implements Parcelable
 {
 	public String id;
-	@Id
-	@NoAutoIncrement
 	public String uuid;
 	public String saleid;
 	public String uid;
@@ -34,7 +31,7 @@ public class SellOrderDetail implements Parcelable
 	public String contractname;
 	public String planprice;
 	public String actualprice;
-	public String planlat;
+	public String planplanlat;
 	public String planlatlngsize;
 	public String actuallatlngsize;
 	public String planlng;
@@ -49,18 +46,7 @@ public class SellOrderDetail implements Parcelable
 	public String reg;
 	public String status;
 	public String isSoldOut;
-	public String xxzt;
 
-
-	public void setXxzt(String xxzt)
-	{
-		this.xxzt = xxzt;
-	}
-
-	public String getXxzt()
-	{
-		return xxzt;
-	}
 
 	public void setUuid(String uuid)
 	{
@@ -182,18 +168,17 @@ public class SellOrderDetail implements Parcelable
 		this.actualprice = actualprice;
 	}
 
-
-	public void setPlanlat(String planlat)
-	{
-		this.planlat = planlat;
+	public String getplanplanlat() 
+    {
+		return planplanlat;
 	}
 
-	public String getPlanlat()
-	{
-		return planlat;
+	public void setplanplanlat(String planplanlat) 
+    {
+		this.planplanlat = planplanlat;
 	}
 
-	public String getplanlatlngsize()
+	public String getplanlatlngsize() 
     {
 		return planlatlngsize;
 	}
@@ -343,13 +328,13 @@ public class SellOrderDetail implements Parcelable
 		return 0;
 	}
     
-   public static final Creator<SellOrderDetail> CREATOR = new Creator()
+   public static final Creator<ShoppingCard> CREATOR = new Creator()
    {  
       @Override  
-      public SellOrderDetail createFromParcel(Parcel source)
+      public ShoppingCard createFromParcel(Parcel source)
       {  
          // 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错  
-    	 SellOrderDetail p = new SellOrderDetail();
+    	 ShoppingCard p = new ShoppingCard();
          p.setid(source.readString());
          p.setUuid(source.readString());
          p.setsaleid(source.readString());
@@ -362,7 +347,7 @@ public class SellOrderDetail implements Parcelable
          p.setcontractname(source.readString());
          p.setplanprice(source.readString());
          p.setactualprice(source.readString());
-         p.setPlanlat(source.readString());
+         p.setplanplanlat(source.readString());
          p.setplanlatlngsize(source.readString());
          p.setactuallatlngsize(source.readString());
          p.setplanlng(source.readString());
@@ -377,14 +362,13 @@ public class SellOrderDetail implements Parcelable
          p.setreg(source.readString());
          p.setstatus(source.readString());
          p.setisSoldOut(source.readString());
-         p.setXxzt(source.readString());
-         return p;
+         return p;  
       }  
 
       @Override  
-      public SellOrderDetail[] newArray(int size) 
+      public ShoppingCard[] newArray(int size)
       {  
-          return new SellOrderDetail[size];  
+          return new ShoppingCard[size];
       }  
    }; 
    
@@ -403,7 +387,7 @@ public class SellOrderDetail implements Parcelable
          p.writeString(contractname);
          p.writeString(planprice);
          p.writeString(actualprice);
-         p.writeString(planlat);
+         p.writeString(planplanlat);
          p.writeString(planlatlngsize);
          p.writeString(actuallatlngsize);
          p.writeString(planlng);
@@ -418,7 +402,6 @@ public class SellOrderDetail implements Parcelable
          p.writeString(reg);
          p.writeString(status);
          p.writeString(isSoldOut);
-         p.writeString(xxzt);
 	}
     @Override
 	public int describeContents()
