@@ -312,27 +312,34 @@ public class SqliteDb
             if (batchOfProduct_last != null)
             {
                 String aa = utils.getIntervalTime(batchOfProduct_last.getBatchTime(), datenow);
-                int intervalTime = Integer.valueOf(aa);
-                if (intervalTime <= 5)//属于batchOfProduct_last批次内
+                if (!aa.equals("-1"))
                 {
-                    int number_last = Integer.valueOf(batchOfProduct_last.getNumber());
-                    int number_new = number_last + Integer.valueOf(number);
-                    batchOfProduct_last.setNumber(String.valueOf(number_new));
-                    db.update(batchOfProduct_last, "number");
-                    return batchOfProduct_last.getBatchTime();
-                } else//新的批次
+                    int intervalTime = Integer.valueOf(aa);
+                    if (intervalTime <= 5)//属于batchOfProduct_last批次内
+                    {
+                        int number_last = Integer.valueOf(batchOfProduct_last.getNumber());
+                        int number_new = number_last + Integer.valueOf(number);
+                        batchOfProduct_last.setNumber(String.valueOf(number_new));
+                        db.update(batchOfProduct_last, "number");
+                        return batchOfProduct_last.getBatchTime();
+                    } else//新的批次
+                    {
+                        BatchOfProduct batchofproduct = new BatchOfProduct();
+                        batchofproduct.setid("");
+                        batchofproduct.setuId(uid);
+                        batchofproduct.setWeight(weight);
+                        batchofproduct.setNumber(number);
+                        batchofproduct.setSellnumber("");
+                        batchofproduct.setBatchTime(datenow);
+                        batchofproduct.setRegDate(utils.getTime());
+                        SqliteDb.save(context, batchofproduct);
+                        return datenow;
+                    }
+                }else
                 {
-                    BatchOfProduct batchofproduct = new BatchOfProduct();
-                    batchofproduct.setid("");
-                    batchofproduct.setuId(uid);
-                    batchofproduct.setWeight(weight);
-                    batchofproduct.setNumber(number);
-                    batchofproduct.setSellnumber("");
-                    batchofproduct.setBatchTime(datenow);
-                    batchofproduct.setRegDate(utils.getTime());
-                    SqliteDb.save(context, batchofproduct);
-                    return datenow;
+                    return  "-1";//异常
                 }
+
 
             } else
             {
@@ -363,6 +370,8 @@ public class SqliteDb
         {
             db.dropTable(SellOrder.class);
             db.dropTable(SellOrderDetail.class);
+            db.dropTable(BreakOff.class);
+            db.dropTable(BatchOfProduct.class);
 //            list = db.findAll(Selector.from(BatchOfProduct.class));
 //            db.deleteAll(list);
 //            list = db.findAll(Selector.from(BreakOff.class));

@@ -94,7 +94,7 @@ public class utils
 
             if (end.before(begin))
             {
-                dt = "已到期";
+                dt = "-1";
                 return dt;
             }
             long between = (end.getTime() - begin.getTime()) / 1000;// 除以1000是为了转换成秒

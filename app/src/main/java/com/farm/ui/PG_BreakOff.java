@@ -1343,50 +1343,58 @@ public class PG_BreakOff extends Fragment implements TencentLocationListener, Vi
             public void onClick(View v)
             {
                 String batchtime = SqliteDb.getIsExistBatch(getActivity(), "60", "", et_numofbreakoff.getText().toString(), utils.getToday());
-                String uuid_point = java.util.UUID.randomUUID().toString();
+                if (batchtime.equals("-1"))
+                {
+                    Toast.makeText(getActivity(),"系统日期异常，请检查！",Toast.LENGTH_SHORT).show();
+                    return;
+                }else
+                {
+                    String uuid_point = java.util.UUID.randomUUID().toString();
 
-                String status = "0";
-                if (cb_sfwc.isSelected())
-                {
-                    status = "1";
-                } else
-                {
-                    boolean IsExistBreakoff = SqliteDb.getIsExistBreakoff(getActivity(), "60", batchtime);
-                    if (IsExistBreakoff)
+                    String status = "0";
+                    if (cb_sfwc.isSelected())
                     {
-                        status = "2";
+                        status = "1";
+                    } else
+                    {
+                        boolean IsExistBreakoff = SqliteDb.getIsExistBreakoff(getActivity(), "60", batchtime);
+                        if (IsExistBreakoff)
+                        {
+                            status = "2";
+                        }
                     }
+                    BreakOff breakoff = new BreakOff();
+                    breakoff.setLat(String.valueOf(latlng.getLatitude()));
+                    breakoff.setLng(String.valueOf(latlng.getLongitude()));
+                    breakoff.setWeight("");
+                    breakoff.setBatchTime(batchtime);
+                    breakoff.setLatlngsize("");
+                    breakoff.setUuid(uuid_point);
+                    breakoff.setStatus(status);
+                    breakoff.setid("");
+                    breakoff.setuid("60");
+                    breakoff.setparkid(polygonbean.getparkId());
+                    breakoff.setparkname(polygonbean.getparkName());
+                    breakoff.setareaid(polygonbean.getAreaId());
+                    breakoff.setareaname(polygonbean.getareaName());
+                    breakoff.setcontractid(polygonbean.getContractid());
+                    breakoff.setcontractname(polygonbean.getContractname());
+                    breakoff.setBreakofftime(utils.getTime());
+                    breakoff.setregdate(utils.getTime());
+                    breakoff.setXxzt("0");
+                    breakoff.setnumberofbreakoff(et_numofbreakoff.getText().toString());
+                    SqliteDb.save(getActivity(), breakoff);
+
+
+                    customdialog_editdlinfor.dismiss();
+                    btn_showlayer.setVisibility(View.VISIBLE);
+                    btn_setting.setVisibility(View.VISIBLE);
+                    btn_addbreakoff.setClickable(true);
+                    btn_addbreakoff.setText("添加断蕾");
+                    tv_tip.setVisibility(View.GONE);
+                    reloadMap();
                 }
-                BreakOff breakoff = new BreakOff();
-                breakoff.setLat(String.valueOf(latlng.getLatitude()));
-                breakoff.setLng(String.valueOf(latlng.getLongitude()));
-                breakoff.setWeight("");
-                breakoff.setBatchTime(batchtime);
-                breakoff.setLatlngsize("");
-                breakoff.setUuid(uuid_point);
-                breakoff.setStatus(status);
-                breakoff.setid("");
-                breakoff.setuid("60");
-                breakoff.setparkid(polygonbean.getparkId());
-                breakoff.setparkname(polygonbean.getparkName());
-                breakoff.setareaid(polygonbean.getAreaId());
-                breakoff.setareaname(polygonbean.getareaName());
-                breakoff.setcontractid(polygonbean.getContractid());
-                breakoff.setcontractname(polygonbean.getContractname());
-                breakoff.setBreakofftime(utils.getTime());
-                breakoff.setregdate(utils.getTime());
-                breakoff.setXxzt("0");
-                breakoff.setnumberofbreakoff(et_numofbreakoff.getText().toString());
-                SqliteDb.save(getActivity(), breakoff);
 
-
-                customdialog_editdlinfor.dismiss();
-                btn_showlayer.setVisibility(View.VISIBLE);
-                btn_setting.setVisibility(View.VISIBLE);
-                btn_addbreakoff.setClickable(true);
-                btn_addbreakoff.setText("添加断蕾");
-                tv_tip.setVisibility(View.GONE);
-                reloadMap();
             }
         });
         customdialog_editdlinfor.show();

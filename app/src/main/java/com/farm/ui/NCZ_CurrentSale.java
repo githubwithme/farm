@@ -2469,7 +2469,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                 {
                     if (list_SellOrderDetail.get(i).getUuid().equals(uuid))
                     {
-                        SellOrderDetail sellOrderDetail =list_SellOrderDetail.get(i);
+                        SellOrderDetail sellOrderDetail = list_SellOrderDetail.get(i);
                         showDialog_editnewsaleinfo(sellOrderDetail, marker);
                         break;
                     }
@@ -2791,44 +2791,41 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 
     public void initBreakOff(String batchtime)
     {
-        for (int i = 0; i < list_BatchOfProduct.size(); i++)
+        list_breakoff = SqliteDb.getBreakoffByBatchTime(getActivity(), "60", batchtime);
+        if (list_breakoff != null && list_breakoff.size() != 0)
         {
-            list_breakoff = SqliteDb.getBreakoffByBatchTime(getActivity(), "60", batchtime);
-            if (list_breakoff != null && list_breakoff.size() != 0)
+            for (int j = 0; j < list_breakoff.size(); j++)
             {
-                for (int j = 0; j < list_breakoff.size(); j++)
+                LatLng latlng = new LatLng(Double.valueOf(list_breakoff.get(j).getLat()), Double.valueOf(list_breakoff.get(j).getLng()));
+                if (list_breakoff.get(j).getStatus().equals("0"))//起点
                 {
-                    LatLng latlng = new LatLng(Double.valueOf(list_breakoff.get(j).getLat()), Double.valueOf(list_breakoff.get(j).getLng()));
-//                    if (list_breakoff.get(j).getStatus().equals("0"))//起点
-//                    {
-//                        Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff_start, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5,10)+"/"+list_breakoff.get(j).getnumberofbreakoff());
-//                        list_Objects_breakoff.add(marker);
-//                    } else if (list_breakoff.get(j).getStatus().equals("1"))//终点
-//                    {
-//                        Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff_end, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5,10)+"/"+list_breakoff.get(j).getnumberofbreakoff());
-//                        list_Objects_breakoff.add(marker);
-//                    } else
-//                    {
-//                        Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5,10)+"/"+list_breakoff.get(j).getnumberofbreakoff());
-//                        list_Objects_breakoff.add(marker);
-//                    }
-                    if (i < ic_breakoff.length)
-                    {
-                        Marker marker = addCustomMarker_BreakOff(ic_breakoff[i], getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5, 10) + "/" + list_breakoff.get(j).getnumberofbreakoff());
-                        list_Objects_breakoff.add(marker);
-                    } else
-                    {
-                        Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff_spare, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5, 10) + "/" + list_breakoff.get(j).getnumberofbreakoff());
-                        list_Objects_breakoff.add(marker);
-                    }
-
-
+                    Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff_start, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5, 10) + "/" + list_breakoff.get(j).getnumberofbreakoff());
+                    list_Objects_breakoff.add(marker);
+                } else if (list_breakoff.get(j).getStatus().equals("1"))//终点
+                {
+                    Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff_end, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5, 10) + "/" + list_breakoff.get(j).getnumberofbreakoff());
+                    list_Objects_breakoff.add(marker);
+                } else
+                {
+                    Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5, 10) + "/" + list_breakoff.get(j).getnumberofbreakoff());
+                    list_Objects_breakoff.add(marker);
                 }
+//                if (i < ic_breakoff.length)
+//                {
+//                    Marker marker = addCustomMarker_BreakOff(ic_breakoff[i], getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5, 10) + "/" + list_breakoff.get(j).getnumberofbreakoff());
+//                    list_Objects_breakoff.add(marker);
+//                } else
+//                {
+//                    Marker marker = addCustomMarker_BreakOff(R.drawable.ic_breakoff_spare, getResources().getColor(R.color.bg_ask), latlng, list_breakoff.get(j).getUuid(), list_breakoff.get(j).getBreakofftime().substring(5, 10) + "/" + list_breakoff.get(j).getnumberofbreakoff());
+//                    list_Objects_breakoff.add(marker);
+//                }
 
 
             }
 
+
         }
+
     }
 
     public void initHousePolygon()
