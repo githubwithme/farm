@@ -49,7 +49,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
 	MyDialog myDialog;
 	Fragment mContent = new Fragment();
 	CZ_MainFragment mainFragment;
-	CZ_SaleMap cz_saleMap;
+	CZ_FeedbackOfSale cz_feedbackOfSale;
 	IFragment iFragment;
 	@ViewById
 	ImageButton imgbtn_home;
@@ -94,7 +94,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
 		tl_sale.setSelected(true);
 		tl_home.setSelected(false);
 		tl_me.setSelected(false);
-		switchContent(mContent, cz_saleMap);
+		switchContent(mContent, cz_feedbackOfSale);
 	}
 
 	@Click
@@ -126,7 +126,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
 		AppManager.getAppManager().addActivity(this);
 		mainFragment = new CZ_MainFragment_();
 		iFragment = new IFragment_();
-		cz_saleMap = new CZ_SaleMap_();
+		cz_feedbackOfSale = new CZ_FeedbackOfSale_();
 
 		commembertab=AppContext.getUserInfo(CZ_MainActivity.this);
 

@@ -25,6 +25,7 @@ public class SellOrderDetail implements Parcelable
 	@NoAutoIncrement
 	public String uuid;
 	public String saleid;
+	public String batchTime;
 	public String uid;
 	public String parkid;
 	public String parkname;
@@ -51,6 +52,16 @@ public class SellOrderDetail implements Parcelable
 	public String isSoldOut;
 	public String xxzt;
 
+
+	public void setBatchTime(String batchTime)
+	{
+		this.batchTime = batchTime;
+	}
+
+	public String getBatchTime()
+	{
+		return batchTime;
+	}
 
 	public void setXxzt(String xxzt)
 	{
@@ -353,6 +364,7 @@ public class SellOrderDetail implements Parcelable
          p.setid(source.readString());
          p.setUuid(source.readString());
          p.setsaleid(source.readString());
+         p.setBatchTime(source.readString());
          p.setuid(source.readString());
          p.setparkid(source.readString());
          p.setparkname(source.readString());
@@ -394,6 +406,7 @@ public class SellOrderDetail implements Parcelable
          p.writeString(id);
          p.writeString(uuid);
          p.writeString(saleid);
+         p.writeString(batchTime);
          p.writeString(uid);
          p.writeString(parkid);
          p.writeString(parkname);

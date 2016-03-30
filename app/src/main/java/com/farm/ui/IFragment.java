@@ -76,7 +76,7 @@ public class IFragment extends Fragment
 	@Click
 	void tv_makemap()
 	{
-		Intent intent = new Intent(getActivity(), CZ_MakeMap_.class);
+		Intent intent = new Intent(getActivity(), CZ_MakeMap_MakeLayer_.class);
 		startActivity(intent);
 
 //		Intent intent = new Intent(getActivity(), MapUtils_.class);

@@ -9,10 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
         android:text="暂无产品需要销售"
         android:textColor="@color/bg_text"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/rl_map"
@@ -112,32 +112,36 @@
                     android:textSize="10sp"/>
 
                 <TextView
+                    android:id="@+id/tv_forsale"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:background="@color/bg_blue"
+                    android:gravity="center"
+                    android:text="待售"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/v_salein"
                     android:layout_width="match_parent"
                     android:layout_height="30dip"
                     android:background="@color/bg_green"
                     android:gravity="center"
-                    android:text="待断量"
+                    android:text="售中"
                     android:textColor="@color/white"
                     android:textSize="10sp"/>
 
                 <TextView
+                    android:id="@+id/tv_saleout"
                     android:layout_width="match_parent"
                     android:layout_height="30dip"
                     android:background="@color/red"
                     android:gravity="center"
-                    android:text="已断量"
+                    android:text="已售"
                     android:textColor="@color/white"
                     android:textSize="10sp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dip"
-                    android:layout_marginTop="10dip"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:text="☆注"
-                    android:textColor="@color/bg_text"
-                    android:textSize="13sp"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -327,12 +331,14 @@
                     android:text="产品批次"
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
+
                 <View
                     android:id="@+id/line_batch"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_below="@+id/btn_batchofproduct"
                     android:background="@color/line_color"/>
+
                 <ImageView
                     android:id="@+id/iv_arrow"
                     android:layout_width="20dip"

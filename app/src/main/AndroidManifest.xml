@@ -59,6 +59,7 @@
         <activity android:name=".ui.CZ_MakeMap_"/>
         <activity android:name=".ui.MakeMap_"/>
         <activity android:name=".ui.MapUtils_"/>
+        <activity android:name=".ui.CZ_MakeMap_MakeLayer_"/>
         <activity android:name=".ui.CreateOrder_"/>
         <activity android:name=".ui.AddOrderMap_"/>
         <activity android:name=".ui.Attendance_Map_"/>
