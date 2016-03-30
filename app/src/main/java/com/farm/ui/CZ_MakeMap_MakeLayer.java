@@ -2732,6 +2732,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
     protected void onCreate(Bundle savedInstanceState)
     {
         commembertab = AppContext.getUserInfo(CZ_MakeMap_MakeLayer.this);
+        getActionBar().hide();
         TencentLocationRequest request = TencentLocationRequest.create();
         TencentLocationManager locationManager = TencentLocationManager.getInstance(CZ_MakeMap_MakeLayer.this);
         locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84

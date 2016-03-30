@@ -170,6 +170,9 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
     List<Marker> list_Marker_first;
     List<Marker> list_Marker_third;
     List<Marker> list_Marker_orders;
+    List<Marker> list_Marker_park;
+    List<Marker> list_Marker_area;
+    List<Marker> list_Marker_contract;
     List<SellOrderDetail> list_SellOrderDetail;
     int last_pos = 0;
     int number_pointselect = 0;
@@ -313,14 +316,22 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
     @CheckedChange
     void cb_park()
     {
+
         if (cb_park.isSelected())
         {
             cb_park.setSelected(false);
+            for (int i = 0; i < list_Marker_park.size(); i++)
+            {
+                list_Marker_park.get(i).setVisible(false);
+            }
         } else
         {
             cb_park.setSelected(true);
+            for (int i = 0; i < list_Marker_park.size(); i++)
+            {
+                list_Marker_park.get(i).setVisible(true);
+            }
         }
-
     }
 
     @CheckedChange
@@ -329,9 +340,17 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         if (cb_area.isSelected())
         {
             cb_area.setSelected(false);
+            for (int i = 0; i < list_Marker_area.size(); i++)
+            {
+                list_Marker_area.get(i).setVisible(false);
+            }
         } else
         {
             cb_area.setSelected(true);
+            for (int i = 0; i < list_Marker_area.size(); i++)
+            {
+                list_Marker_area.get(i).setVisible(true);
+            }
         }
     }
 
@@ -341,9 +360,17 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         if (cb_contract.isSelected())
         {
             cb_contract.setSelected(false);
+            for (int i = 0; i < list_Marker_contract.size(); i++)
+            {
+                list_Marker_contract.get(i).setVisible(false);
+            }
         } else
         {
             cb_contract.setSelected(true);
+            for (int i = 0; i < list_Marker_contract.size(); i++)
+            {
+                list_Marker_contract.get(i).setVisible(true);
+            }
         }
     }
 
@@ -1972,7 +1999,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                 Overlays.add(line);
 
                 Overlays.remove(parkpolygon);
-                parkpolygon = drawPolygon(listlatlng_park, R.color.bg_yellow);
+                parkpolygon = drawPolygon(listlatlng_park, R.color.bg_yellow,2,R.color.bg_text);
                 Overlays.add(parkpolygon);
             }
         });
@@ -2647,6 +2674,10 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             list_Marker_third = new ArrayList<>();
             list_Marker_orders = new ArrayList<>();
 
+            list_Marker_park = new ArrayList<>();
+            list_Marker_area = new ArrayList<>();
+            list_Marker_contract = new ArrayList<>();
+
             list_SellOrderDetail = new ArrayList<>();
             list_SellOrder = new ArrayList<>();
 
@@ -2713,11 +2744,12 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             if (polygonBean_park != null)
             {
                 LatLng latlng = new LatLng(Double.valueOf(polygonBean_park.getLat()), Double.valueOf(polygonBean_park.getLng()));
-                addCustomMarkerWithProgressbar(getResources().getColor(R.color.white), latlng, polygonBean_park.getUuid(), polygonBean_park.getNote());
+                Marker marker=addCustomMarkerWithFlag(R.drawable.ic_flag_park,getResources().getColor(R.color.white), latlng, polygonBean_park.getUuid(), polygonBean_park.getNote());
+                list_Marker_park.add(marker);
                 List<CoordinatesBean> list_park = SqliteDb.getPoints(getActivity(), polygonBean_park.getUuid());
                 if (list_park != null && list_park.size() != 0)
                 {
-                    initBoundary(fillcolor_park[i], 0f, list_park);
+                    initBoundary(fillcolor_park[i], 0f, list_park,0,R.color.transparent);
 //                    initBoundaryLine(Color.argb(1000, 57, 72, 61), 0f, list_park);
                 }
 
@@ -2729,16 +2761,16 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                 PolygonBean polygonBean_area = SqliteDb.getLayer_area(getActivity(), list_parktab.get(i).getid(), list_areatab.get(k).getid());
                 if (polygonBean_area != null)
                 {
-//                    setCenterPointInfo(polygonBean_area);
                     LatLng latlng = new LatLng(Double.valueOf(polygonBean_area.getLat()), Double.valueOf(polygonBean_area.getLng()));
-                    addCustomMarkerWithProgressbar(getResources().getColor(R.color.white), latlng, polygonBean_area.getUuid(), polygonBean_area.getNote());
+                    Marker marker=addCustomMarkerWithFlag(R.drawable.ic_flag_area,getResources().getColor(R.color.white), latlng, polygonBean_area.getUuid(), polygonBean_area.getNote());
+                    list_Marker_area.add(marker);
                     List<CoordinatesBean> list_area = SqliteDb.getPoints(getActivity(), polygonBean_area.getUuid());
                     if (list_area != null && list_area.size() != 0)
                     {
 
                         int[] random = utils.randomInt(0, 10, 1);
-                        initBoundary(Color.argb(150, 255, 0, 255), 100f, list_area);
-                        initBoundaryLine(Color.argb(1000, 0, 0, 0), 0f, list_area);
+                        initBoundary(Color.argb(150, 255, 0, 255), 100f, list_area,2,R.color.bg_text);
+//                        initBoundaryLine(getActivity().getResources().getColor(R.color.bg_text), 0f, list_area);
                     }
 
                 }
@@ -2751,15 +2783,16 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                     if (polygonBean_contract != null)
                     {
                         LatLng latlng = new LatLng(Double.valueOf(polygonBean_contract.getLat()), Double.valueOf(polygonBean_contract.getLng()));
-                        addCustomMarkerWithProgressbar(getResources().getColor(R.color.white), latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote());
+                        Marker marker=addCustomMarkerWithFlag(R.drawable.ic_flag_contract,getResources().getColor(R.color.white), latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote());
+                        list_Marker_contract.add(marker);
                         List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), polygonBean_contract.getUuid());
                         if (list_contract != null && list_contract.size() != 0)
                         {
                             list_contractplanpolygonbean.add(polygonBean_contract);
                             int[] random = utils.randomInt(0, 10, 1);
-                            Polygon p = initBoundary(Color.argb(150, 255, 255, 0), 200f, list_contract);
+                            Polygon p = initBoundary(Color.argb(150, 255, 255, 0), 200f, list_contract,2,R.color.bg_text);
                             list_contractplanpolygon.add(p);
-                            initBoundaryLine(Color.argb(1000, 0, 0, 0), 0f, list_contract);
+//                            initBoundaryLine(getActivity().getResources().getColor(R.color.bg_text), 0f, list_contract);
                         }
 
                     }
@@ -2799,13 +2832,13 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                 for (int j = 0; j < list_SellOrderDetail.size(); j++)
                 {
                     LatLng latlng = new LatLng(Double.valueOf(list_SellOrderDetail.get(j).getPlanlat()), Double.valueOf(list_SellOrderDetail.get(j).getplanlng()));
-                    if (list_SellOrder.get(i).getStatus().equals("0"))//进行中
+                    if (list_SellOrderDetail.get(j).getstatus().equals("0"))//进行中
                     {
                         Marker marker = addCustomMarker_SaleIn(R.drawable.ic_salein, getResources().getColor(R.color.bg_text), latlng, list_SellOrderDetail.get(j).getUuid(), list_SellOrderDetail.get(j).getplannumber() + "株");
                         list_Objects_sale.add(marker);
-                    } else if (list_SellOrder.get(i).getStatus().equals("1"))//已结束
+                    } else if (list_SellOrderDetail.get(j).getstatus().equals("1"))//已结束
                     {
-                        Marker marker = addCustomMarker_SaleOut(R.drawable.ic_saleout, getResources().getColor(R.color.bg_text), latlng, list_SellOrderDetail.get(j).getUuid(), list_SellOrderDetail.get(j).getplannumber() + "株");
+                        Marker marker = addCustomMarker_SaleOut(R.drawable.ic_saleout, getResources().getColor(R.color.bg_text), latlng, list_SellOrderDetail.get(j).getUuid(), list_SellOrderDetail.get(j).getactualnumber() + "株");
                         list_Objects_sale.add(marker);
                     }
                 }
@@ -2887,7 +2920,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             lineOpt.addAll(list_latlang);
             Polyline line = tencentMap.addPolyline(lineOpt);
 //            line.setGeodesic(true);
-            line.setColor(Color.argb(500, 177, 15, 0));
+            line.setColor(Color.argb(500, 255, 255, 255));
             line.setWidth(8f);
             Overlays.add(line);
             list_Objects_road.add(line);
@@ -2991,7 +3024,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                     list_LatLng.add(ll);
                 }
 //                initBoundaryLine(Color.argb(180, 70, 101, 10), 0f, list_mian);
-                Polygon polygon = drawPolygon(list_LatLng, Color.argb(180, 70, 101, 10));
+                Polygon polygon = drawPolygon(list_LatLng, Color.argb(180, 70, 101, 10),2,R.color.bg_text);
                 polygon.setZIndex(0f);
                 Overlays.add(polygon);
                 list_Objects_mian.add(polygon);
@@ -3046,7 +3079,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 //                line.setWidth(4f);
 //                Overlays.add(line);
                 Overlays.remove(parkpolygon);
-                parkpolygon = drawPolygon(listlatlng_park, R.color.bg_yellow);
+                parkpolygon = drawPolygon(listlatlng_park, R.color.bg_yellow,6,R.color.bg_text);
                 Overlays.add(parkpolygon);
             }
         }
@@ -3179,18 +3212,19 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         return marker;
     }
 
-    private Marker addCustomMarkerWithProgressbar(int textcolor, LatLng latLng, String uuid, String note)
+    private Marker addCustomMarkerWithFlag(int icon,int textcolor, LatLng latLng, String uuid, String note)
     {
         Drawable drawable = getResources().getDrawable(R.drawable.location1);
         Bitmap bitmap = utils.drawable2Bitmap(drawable);
         marker = tencentMap.addMarker(new MarkerOptions().position(latLng).icon(new BitmapDescriptor(bitmap)));
         list_centermark.add(marker);
-        marker.set2Top();
-        View view = View.inflate(getActivity(), R.layout.markerwithprogressbar, null);
+        View view = View.inflate(getActivity(), R.layout.markerwithflag, null);
+        View view_marker = (View) view.findViewById(R.id.view_marker);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
         LinearLayout ll_second = (LinearLayout) view.findViewById(R.id.ll_second);
         LinearLayout ll_first = (LinearLayout) view.findViewById(R.id.ll_first);
         LinearLayout ll_third = (LinearLayout) view.findViewById(R.id.ll_third);
+        view_marker.setBackgroundResource(icon);
         list_ll_first.add(ll_first);
         list_ll_second.add(ll_second);
         list_ll_third.add(ll_third);
@@ -3326,7 +3360,6 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         Bitmap bitmap = utils.drawable2Bitmap(drawable);
         marker = tencentMap.addMarker(new MarkerOptions().position(latLng).icon(new BitmapDescriptor(bitmap)));
         list_centermark.add(marker);
-        marker.set2Top();
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.markerwithhouse, null);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
         if (note == null || note.equals(""))
@@ -3356,7 +3389,6 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         Bitmap bitmap = utils.drawable2Bitmap(drawable);
         marker = tencentMap.addMarker(new MarkerOptions().position(latLng).icon(new BitmapDescriptor(bitmap)));
         list_centermark.add(marker);
-        marker.set2Top();
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.markerinfo, null);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
         if (note == null || note.equals(""))
@@ -4548,10 +4580,10 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         }
 
 
-        Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue);
+        Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue,2,R.color.bg_text);
         list_polygon.add(polygon1);
 
-        polygon_complete = drawPolygon(list_LatLng_boundaryselect, R.color.bg_yellow);
+        polygon_complete = drawPolygon(list_LatLng_boundaryselect, R.color.bg_yellow,2,R.color.bg_text);
         list_polygon.add(polygon_complete);
 //        saveCoordinate(list_LatLng_boundaryselect, "13", "片区二号");
 //        saveCoordinate(list_LatLng_boundarynotselect,"-2","未选区域");
@@ -4920,12 +4952,12 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         });
     }
 
-    private Polygon drawPolygon(List<LatLng> list_LatLng, int color)
+    private Polygon drawPolygon(List<LatLng> list_LatLng, int fillcolor,int strokesize,int strokecolor)
     {
         PolygonOptions polygonOp = new PolygonOptions();
-        polygonOp.fillColor(color);// 填充色
-        polygonOp.strokeColor(color);// 线宽
-        polygonOp.strokeWidth(1f);// 线宽
+        polygonOp.fillColor(fillcolor);// 填充色
+        polygonOp.strokeColor(getActivity().getResources().getColor(R.color.bg_text));// 线宽
+        polygonOp.strokeWidth(strokesize);// 线宽
         for (int i = 0; i < list_LatLng.size(); i++)
         {
             polygonOp.add(list_LatLng.get(i));
@@ -5068,8 +5100,20 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             lineOpt.add(latlng);
             Polyline line = tencentMap.addPolyline(lineOpt);
             line.setColor(color);
-            line.setWidth(4f);
+            line.setWidth(8f);
             Overlays.add(line);
+            if (i == list_coordinates.size()-1)
+            {
+                latlng = new LatLng(Double.valueOf(list_coordinates.get(0).getLat()), Double.valueOf(list_coordinates.get(0).getLng()));
+                PolylineOptions lineOpt_end = new PolylineOptions();
+                lineOpt_end.add(prelatlng);
+                prelatlng=latlng;
+                lineOpt_end.add(latlng);
+                Polyline line_end = tencentMap.addPolyline(lineOpt_end);
+                line_end.setColor(color);
+                line_end.setWidth(8f);
+                Overlays.add(line_end);
+            }
         }
 //        LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(0).getLat()), Double.valueOf(list_coordinates.get(0).getLng()));
 //        list_AllLatLng.add(latlng);
@@ -5077,7 +5121,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 
     }
 
-    private Polygon initBoundary(int color, float z, List<CoordinatesBean> list_coordinates)
+    private Polygon initBoundary(int color, float z, List<CoordinatesBean> list_coordinates,int strokesize,int strokecolor)
     {
         List<LatLng> list_AllLatLng = new ArrayList<>();
         for (int i = 0; i < list_coordinates.size(); i++)
@@ -5089,21 +5133,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             }
             list_AllLatLng.add(latlng);
         }
-//        int colors = 0;
-//        if (list_coordinates.get(0).getAreaId().equals("10"))
-//        {
-//            colors = Color.argb(150, 4, 181, 0);
-//        } else if (list_coordinates.get(0).getAreaId().equals("13"))
-//        {
-//            colors = Color.argb(150, 4, 181, 0);
-//        } else if (list_coordinates.get(0).getAreaId().equals("14"))
-//        {
-//            colors = Color.argb(150, 4, 181, 0);
-//        } else
-//        {
-//            colors = Color.argb(150, 4, 181, 0);
-//        }
-        Polygon polygon = drawPolygon(list_AllLatLng, color);
+        Polygon polygon = drawPolygon(list_AllLatLng, color,strokesize,strokecolor);
         polygon.setZIndex(z);
 //        list_polygon_allCoordinatesBean.add(list_coordinates);
         Overlays.add(polygon);
@@ -5123,7 +5153,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             }
             list_AllLatLng.add(latlng);
         }
-        Polygon polygon = drawPolygon(list_AllLatLng, R.color.bg_yellow);
+        Polygon polygon = drawPolygon(list_AllLatLng, R.color.bg_yellow,4,R.color.red);
         list_polygon_all.add(polygon);
         list_polygon_allCoordinatesBean.add(list_coordinates);
         Overlays.add(polygon);
@@ -5177,7 +5207,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 
         }
 //        map.put("a", list_mark);
-        Polygon polygon = drawPolygon(list_AllLatLng, R.color.bg_yellow);
+        Polygon polygon = drawPolygon(list_AllLatLng, R.color.bg_yellow,2,R.color.bg_text);
 //        list_polygon_pq.add(polygon);
         list_polygon_all.add(polygon);
         list_polygon_allCoordinatesBean.add(list_coordinates);
