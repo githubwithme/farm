@@ -91,6 +91,17 @@
                     android:text="设置"
                     android:textColor="@color/bg_text"
                     android:textSize="12sp"/>
+
+                <Button
+                    android:id="@+id/btn_addlayer"
+                    android:layout_width="45dip"
+                    android:layout_height="25dip"
+                    android:layout_marginTop="10dip"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:gravity="center"
+                    android:text="出售"
+                    android:textColor="@color/bg_text"
+                    android:textSize="12sp"/>
             </LinearLayout>
 
             <LinearLayout

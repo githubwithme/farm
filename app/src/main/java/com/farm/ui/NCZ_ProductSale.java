@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,6 +14,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
 
 /**
  * Created by ${hmj} on 2016/1/21.
@@ -24,7 +27,7 @@ public class NCZ_ProductSale extends Activity
     Fragment mContent = new Fragment();
     //    Fragment_Sale sale_fragment;
     Fragment_MegaSales fragment_megaSales;
-//    Fragment_MainSales fragment_mainSales;
+    //    Fragment_MainSales fragment_mainSales;
     NCZ_CurrentSale ncz_currentSale;
     Fragment_SmallSales fragment_smallSales;
     @ViewById
@@ -129,5 +132,53 @@ public class NCZ_ProductSale extends Activity
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
         }
+    }
+
+    /**
+     * 回调接口
+     *
+     */
+    public interface MyTouchListener
+    {
+        public void onTouchEvent(MotionEvent event);
+    }
+
+    /*
+     * 保存MyTouchListener接口的列表
+     */
+    private ArrayList<MyTouchListener> myTouchListeners = new ArrayList<NCZ_ProductSale.MyTouchListener>();
+
+    /**
+     * 提供给Fragment通过getActivity()方法来注册自己的触摸事件的方法
+     *
+     * @param listener
+     */
+    public void registerMyTouchListener(MyTouchListener listener)
+    {
+        myTouchListeners.add(listener);
+    }
+
+    /**
+     * 提供给Fragment通过getActivity()方法来取消注册自己的触摸事件的方法
+     *
+     * @param listener
+     */
+    public void unRegisterMyTouchListener(MyTouchListener listener)
+    {
+        myTouchListeners.remove(listener);
+    }
+
+    /**
+     * 分发触摸事件给所有注册了MyTouchListener的接口
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev)
+    {
+        // TODO Auto-generated method stub
+        for (MyTouchListener listener : myTouchListeners)
+        {
+            listener.onTouchEvent(ev);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

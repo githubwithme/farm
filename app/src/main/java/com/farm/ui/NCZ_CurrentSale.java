@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -41,6 +42,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.BatchOfProduct;
 import com.farm.bean.BreakOff;
 import com.farm.bean.CoordinatesBean;
+import com.farm.bean.CusPoint;
 import com.farm.bean.DepartmentBean;
 import com.farm.bean.Gps;
 import com.farm.bean.Points;
@@ -73,6 +75,7 @@ import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
+import com.tencent.map.geolocation.TencentLocationUtils;
 import com.tencent.mapsdk.raster.model.BitmapDescriptor;
 import com.tencent.mapsdk.raster.model.CameraPosition;
 import com.tencent.mapsdk.raster.model.LatLng;
@@ -101,11 +104,26 @@ import java.util.List;
 @EFragment
 public class NCZ_CurrentSale extends Fragment implements TencentLocationListener, View.OnClickListener
 {
-    String batchTime="";
+    int num = 0;
+    List<LatLng> list_latlng_pick = new ArrayList<>();
+    LatLng lastselect_latlng;
+    boolean isable = false;
+    CusPoint point_dowm;
+    CusPoint point_up;
+    LatLng touchLatlng1;
+    LatLng touchLatlng2;
+    boolean isInner = false;
+    List<List<LatLng>> list_latlng_needplanline;
+    int pos_line1 = 0;
+    int pos_line2 = 0;
+    List<LatLng> list_latlng_firstline;
+    List<LatLng> list_latlng_secondline;
+    String batchTime = "";
     int[] fillcolor_park;
     int[] fillcolor_area;
     int[] fillcolor_contract;
     int[] ic_breakoff;
+    List<LatLng> list_latlng_needplanboundary;
     List<BreakOff> list_breakoff;
     List<BatchOfProduct> list_BatchOfProduct;
     List<SellOrder> list_SellOrder;
@@ -118,6 +136,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
     List<PolygonBean> list_polygon_area;
     List<PolygonBean> list_polygon_contract;
 
+    List<Polyline> list_Objects_divideline;
     List<Polyline> list_Objects_road;
     List<Marker> list_Objects_road_centermarker;
     List<Marker> list_Objects_breakoff;
@@ -238,6 +257,8 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
     MapView mapview;
     @ViewById
     Button btn_showlayer;
+    @ViewById
+    Button btn_addlayer;
     @ViewById
     TextView tv_tip;
     @ViewById
@@ -637,7 +658,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         if (list_BatchOfProduct.size() > 0)
         {
             showPop_batch();
-        }else
+        } else
         {
             Toast.makeText(getActivity(), "暂无产品批次", Toast.LENGTH_SHORT).show();
         }
@@ -656,6 +677,14 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             tencentMap.setSatelliteEnabled(false);
         }
 
+    }
+
+    @Click
+    void btn_addlayer()
+    {
+        btn_showlayer.setVisibility(View.GONE);
+        btn_setting.setVisibility(View.GONE);
+        showDialog_department();
     }
 
     @Click
@@ -839,7 +868,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
 
-                batchTime=list_BatchOfProduct.get(position).getBatchTime();
+                batchTime = list_BatchOfProduct.get(position).getBatchTime();
                 btn_batchofproduct.setText(batchTime);
                 pw_batch.dismiss();
                 WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
@@ -850,6 +879,163 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 //                initBreakOff(list_BatchOfProduct.get(position).getBatchTime());
                 //显示销售情况
 //                initSale(list_BatchOfProduct.get(position).getBatchTime());
+            }
+        });
+    }
+
+    public void showDialog_department()
+    {
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editpolygoninfo, null);
+        customdialog_editpolygoninfor = new CustomDialog_EditPolygonInfo(getActivity(), R.style.MyDialog, dialog_layout);
+        ListView lv_department = (ListView) dialog_layout.findViewById(R.id.lv_department);
+        final Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_editpolygoninfor.dismiss();
+                btn_showlayer.setVisibility(View.VISIBLE);
+                btn_setting.setVisibility(View.VISIBLE);
+                btn_addlayer.setText("添加区域");
+            }
+        });
+        customdialog_editpolygoninfor.setOnCancelListener(new DialogInterface.OnCancelListener()
+        {
+            @Override
+            public void onCancel(DialogInterface dialog)
+            {
+                customdialog_editpolygoninfor.dismiss();
+                btn_showlayer.setVisibility(View.VISIBLE);
+                btn_setting.setVisibility(View.VISIBLE);
+                btn_addlayer.setText("添加区域");
+            }
+        });
+        list_department = getDepartment(getActivity());
+        department_adapter = new Department_Adapter(getActivity(), list_department);
+        lv_department.setAdapter(department_adapter);
+        lv_department.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+//                initMapOnclick();
+//                uiSettings.setZoomGesturesEnabled(false);
+                customdialog_editpolygoninfor.dismiss();
+                departmentselected = list_department.get(position);
+//                list_coordinatesbean = SqliteDb.getBoundaryByID(getActivity(), "60", departmentselected.getParkid(), departmentselected.getAreaid(), departmentselected.getContractid());
+//                showNeedPlanBoundary(list_coordinatesbean);
+
+                if (departmentselected.getIsdrawer().equals("1"))
+                {
+                    Toast.makeText(getActivity(), "这个区域已画！请选择其他区域", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (departmentselected.getType().equals("园区"))
+                {
+
+                } else
+                {
+                    list_Objects_divideline=new ArrayList<Polyline>();
+                    isable = true;
+                    tencentMap.setZoom(14);
+                    initMapClickWhenPaint();
+                    polygonBean_needPlan = SqliteDb.getNeedPlanlayer(getActivity(), "60", departmentselected.getParkid(), departmentselected.getAreaid(), departmentselected.getContractid());
+                    if (polygonBean_needPlan != null)
+                    {
+                        LatLng latlng = new LatLng(Double.valueOf(polygonBean_needPlan.getLat()), Double.valueOf(polygonBean_needPlan.getLng()));
+                        addCustomMarker(getResources().getColor(R.color.bg_blue), latlng, polygonBean_needPlan.getUuid(), polygonBean_needPlan.getNote());
+                        list_coordinatesbean = SqliteDb.getPoints(getActivity(), polygonBean_needPlan.getUuid());
+                        if (list_coordinatesbean != null && list_coordinatesbean.size() != 0)
+                        {
+                            showNeedPlanBoundary(list_coordinatesbean);
+                        }
+
+                    }
+                }
+
+            }
+        });
+        customdialog_editpolygoninfor.show();
+    }
+
+    public void initMapClickWhenPaint()
+    {
+        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+        {
+            @Override
+            public void onMapClick(LatLng latLng)
+            {
+                PolylineOptions lineOpt = new PolylineOptions();
+                lineOpt.add(lastselect_latlng);
+                lineOpt.add(latLng);
+                Polyline line = tencentMap.addPolyline(lineOpt);
+                line.setColor(Color.argb(500, 255, 255, 255));
+                line.setWidth(4f);
+                Overlays.add(line);
+                list_Objects_divideline.add(line);
+
+                if (lastselect_latlng != null)
+                {
+                    Point p1 = mProjection.toScreenLocation(lastselect_latlng);
+                    Point p2 = mProjection.toScreenLocation(latLng);
+                    CusPoint cuspoint1 = new CusPoint(p1.x, p1.y);
+                    CusPoint cuspoint2 = new CusPoint(p2.x, p2.y);
+
+                    for (int i = 0; i < list_latlng_needplanline.size(); i++)
+                    {
+                        List<LatLng> list = list_latlng_needplanline.get(i);
+                        LatLng latlng0 = list.get(0);
+                        LatLng latlng1 = list.get(1);
+                        Point p5 = mProjection.toScreenLocation(latlng0);
+                        Point p6 = mProjection.toScreenLocation(latlng1);
+                        CusPoint cuspoint5 = new CusPoint(p5.x, p5.y);
+                        CusPoint cuspoint6 = new CusPoint(p6.x, p6.y);
+                        CusPoint crosspoint = utils.getCrossPoint(cuspoint1, cuspoint2, cuspoint5, cuspoint6);
+                        if (crosspoint != null)
+                        {
+//                            PolylineOptions lineOpt2 = new PolylineOptions();
+//                            lineOpt2.add(latlng0);
+//                            lineOpt2.add(latlng1);
+//                            Polyline line2 = tencentMap.addPolyline(lineOpt2);
+//                            line2.setColor(Color.argb(500, 255, 255, 255));
+//                            line2.setWidth(14f);
+//                            Overlays.add(line);
+//                            list_Objects_road.add(line);
+
+
+                            Point cp = new Point();
+                            int x = Integer.valueOf(String.valueOf(crosspoint.x).substring(0, String.valueOf(crosspoint.x).indexOf(".")));
+                            int y = Integer.valueOf(String.valueOf(crosspoint.y).substring(0, String.valueOf(crosspoint.y).indexOf(".")));
+                            cp.set(x, y);
+                            LatLng latlng_crosspoint = mProjection.fromScreenLocation(cp);
+//                            addCustomMarker(R.color.bg_ask, latlng_crosspoint, "", "");
+
+
+                            if (list_latlng_firstline == null)
+                            {
+                                list_latlng_firstline = list;
+                                pos_line1 = i;
+                                touchLatlng1 = latlng_crosspoint;
+                                isInner = true;
+                            } else
+                            {
+                                list_latlng_secondline = list;
+                                pos_line2 = i;
+                                touchLatlng2 = latlng_crosspoint;
+                                isInner = false;
+                                divideArea(pos_line1, pos_line2, list_latlng_firstline, list_latlng_secondline, touchLatlng1, touchLatlng2);
+                            }
+                        }
+
+                    }
+                }
+                lastselect_latlng = latLng;//放在后面
+                if (isInner)//放在后面
+                {
+                    list_latlng_pick.add(latLng);
+                }
+
             }
         });
     }
@@ -1999,7 +2185,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                 Overlays.add(line);
 
                 Overlays.remove(parkpolygon);
-                parkpolygon = drawPolygon(listlatlng_park, R.color.bg_yellow,2,R.color.bg_text);
+                parkpolygon = drawPolygon(listlatlng_park, R.color.bg_yellow, 2, R.color.bg_text);
                 Overlays.add(parkpolygon);
             }
         });
@@ -2640,6 +2826,10 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 //        SqliteDb.initContract(getActivity());
 //        SqliteDb.getTemp1(getActivity());
 
+        //在该Fragment的构造函数中注册mTouchListener的回调
+//        ((NCZ_ProductSale) this.getActivity()).registerMyTouchListener(mTouchListener);
+
+
         list_BatchOfProduct = SqliteDb.getBatchOfProductByuid(getActivity(), "60");
         if (list_BatchOfProduct.size() == 0)
         {
@@ -2647,7 +2837,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             tv_noproducttip.setText("暂无产品需要销售");
         } else
         {
-            batchTime=list_BatchOfProduct.get(0).getBatchTime();
+            batchTime = list_BatchOfProduct.get(0).getBatchTime();
             fillcolor_park = new int[]{Color.argb(150, 218, 112, 214), Color.argb(150, 106, 90, 205), Color.argb(150, 135, 206, 250), Color.argb(150, 0, 128, 128), Color.argb(150, 127, 255, 170), Color.argb(150, 245, 255, 250), Color.argb(150, 60, 179, 113), Color.argb(150, 34, 139, 34), Color.argb(150, 127, 255, 0), Color.argb(150, 255, 69, 0)};
             fillcolor_area = new int[]{Color.argb(150, 218, 112, 214), Color.argb(150, 106, 90, 205), Color.argb(150, 135, 206, 250), Color.argb(150, 0, 128, 128), Color.argb(150, 127, 255, 170), Color.argb(150, 245, 255, 250), Color.argb(150, 60, 179, 113), Color.argb(150, 34, 139, 34), Color.argb(150, 127, 255, 0), Color.argb(150, 255, 69, 0)};
             fillcolor_contract = new int[]{Color.argb(150, 218, 112, 214), Color.argb(150, 106, 90, 205), Color.argb(150, 135, 206, 250), Color.argb(150, 0, 128, 128), Color.argb(150, 127, 255, 170), Color.argb(150, 245, 255, 250), Color.argb(150, 60, 179, 113), Color.argb(150, 34, 139, 34), Color.argb(150, 127, 255, 0), Color.argb(150, 255, 69, 0)};
@@ -2682,6 +2872,8 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             list_SellOrder = new ArrayList<>();
 
             list_Objects_sale = new ArrayList<>();
+
+            list_latlng_needplanboundary = new ArrayList<>();
 
             list_breakoff = new ArrayList<>();
 
@@ -2733,6 +2925,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             initMapCameraChangeListener();
             initMapOnclickListening();
         }
+
     }
 
     public void initMapData()
@@ -2744,12 +2937,12 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             if (polygonBean_park != null)
             {
                 LatLng latlng = new LatLng(Double.valueOf(polygonBean_park.getLat()), Double.valueOf(polygonBean_park.getLng()));
-                Marker marker=addCustomMarkerWithFlag(R.drawable.ic_flag_park,getResources().getColor(R.color.white), latlng, polygonBean_park.getUuid(), polygonBean_park.getNote());
+                Marker marker = addCustomMarkerWithFlag(R.drawable.ic_flag_park, getResources().getColor(R.color.white), latlng, polygonBean_park.getUuid(), polygonBean_park.getNote());
                 list_Marker_park.add(marker);
                 List<CoordinatesBean> list_park = SqliteDb.getPoints(getActivity(), polygonBean_park.getUuid());
                 if (list_park != null && list_park.size() != 0)
                 {
-                    initBoundary(fillcolor_park[i], 0f, list_park,0,R.color.transparent);
+                    initBoundary(fillcolor_park[i], 0f, list_park, 0, R.color.transparent);
 //                    initBoundaryLine(Color.argb(1000, 57, 72, 61), 0f, list_park);
                 }
 
@@ -2762,14 +2955,14 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                 if (polygonBean_area != null)
                 {
                     LatLng latlng = new LatLng(Double.valueOf(polygonBean_area.getLat()), Double.valueOf(polygonBean_area.getLng()));
-                    Marker marker=addCustomMarkerWithFlag(R.drawable.ic_flag_area,getResources().getColor(R.color.white), latlng, polygonBean_area.getUuid(), polygonBean_area.getNote());
+                    Marker marker = addCustomMarkerWithFlag(R.drawable.ic_flag_area, getResources().getColor(R.color.white), latlng, polygonBean_area.getUuid(), polygonBean_area.getNote());
                     list_Marker_area.add(marker);
                     List<CoordinatesBean> list_area = SqliteDb.getPoints(getActivity(), polygonBean_area.getUuid());
                     if (list_area != null && list_area.size() != 0)
                     {
 
                         int[] random = utils.randomInt(0, 10, 1);
-                        initBoundary(Color.argb(150, 255, 0, 255), 100f, list_area,2,R.color.bg_text);
+                        initBoundary(Color.argb(150, 255, 0, 255), 100f, list_area, 2, R.color.bg_text);
 //                        initBoundaryLine(getActivity().getResources().getColor(R.color.bg_text), 0f, list_area);
                     }
 
@@ -2783,14 +2976,14 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                     if (polygonBean_contract != null)
                     {
                         LatLng latlng = new LatLng(Double.valueOf(polygonBean_contract.getLat()), Double.valueOf(polygonBean_contract.getLng()));
-                        Marker marker=addCustomMarkerWithFlag(R.drawable.ic_flag_contract,getResources().getColor(R.color.white), latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote());
+                        Marker marker = addCustomMarkerWithFlag(R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote());
                         list_Marker_contract.add(marker);
                         List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), polygonBean_contract.getUuid());
                         if (list_contract != null && list_contract.size() != 0)
                         {
                             list_contractplanpolygonbean.add(polygonBean_contract);
                             int[] random = utils.randomInt(0, 10, 1);
-                            Polygon p = initBoundary(Color.argb(150, 255, 255, 0), 200f, list_contract,2,R.color.bg_text);
+                            Polygon p = initBoundary(Color.argb(150, 255, 255, 0), 200f, list_contract, 2, R.color.bg_text);
                             list_contractplanpolygon.add(p);
 //                            initBoundaryLine(getActivity().getResources().getColor(R.color.bg_text), 0f, list_contract);
                         }
@@ -3024,7 +3217,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                     list_LatLng.add(ll);
                 }
 //                initBoundaryLine(Color.argb(180, 70, 101, 10), 0f, list_mian);
-                Polygon polygon = drawPolygon(list_LatLng, Color.argb(180, 70, 101, 10),2,R.color.bg_text);
+                Polygon polygon = drawPolygon(list_LatLng, Color.argb(180, 70, 101, 10), 2, R.color.bg_text);
                 polygon.setZIndex(0f);
                 Overlays.add(polygon);
                 list_Objects_mian.add(polygon);
@@ -3079,7 +3272,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 //                line.setWidth(4f);
 //                Overlays.add(line);
                 Overlays.remove(parkpolygon);
-                parkpolygon = drawPolygon(listlatlng_park, R.color.bg_yellow,6,R.color.bg_text);
+                parkpolygon = drawPolygon(listlatlng_park, R.color.bg_yellow, 6, R.color.bg_text);
                 Overlays.add(parkpolygon);
             }
         }
@@ -3184,7 +3377,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         return marker;
     }
 
-    private Marker addThirdView(String qy,int number_sakein, int number_saleout, int number_forsale, LatLng latLng, String uuid, String note)
+    private Marker addThirdView(String qy, int number_sakein, int number_saleout, int number_forsale, LatLng latLng, String uuid, String note)
     {
         marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         list_centermark.add(marker);
@@ -3212,7 +3405,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         return marker;
     }
 
-    private Marker addCustomMarkerWithFlag(int icon,int textcolor, LatLng latLng, String uuid, String note)
+    private Marker addCustomMarkerWithFlag(int icon, int textcolor, LatLng latLng, String uuid, String note)
     {
         Drawable drawable = getResources().getDrawable(R.drawable.location1);
         Bitmap bitmap = utils.drawable2Bitmap(drawable);
@@ -4580,10 +4773,10 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         }
 
 
-        Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue,2,R.color.bg_text);
+        Polygon polygon1 = drawPolygon(list_LatLng_boundarynotselect, R.color.bg_blue, 2, R.color.bg_text);
         list_polygon.add(polygon1);
 
-        polygon_complete = drawPolygon(list_LatLng_boundaryselect, R.color.bg_yellow,2,R.color.bg_text);
+        polygon_complete = drawPolygon(list_LatLng_boundaryselect, R.color.bg_yellow, 2, R.color.bg_text);
         list_polygon.add(polygon_complete);
 //        saveCoordinate(list_LatLng_boundaryselect, "13", "片区二号");
 //        saveCoordinate(list_LatLng_boundarynotselect,"-2","未选区域");
@@ -4737,9 +4930,9 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 
                         if (polygonBean_contract != null)
                         {
-                            int[] count_saleout = SqliteDb.getdataofcontractsale(getActivity(), "60", polygonBean_contract.getparkId(), polygonBean_contract.getAreaId(), polygonBean_contract.getContractid(),batchTime);
+                            int[] count_saleout = SqliteDb.getdataofcontractsale(getActivity(), "60", polygonBean_contract.getparkId(), polygonBean_contract.getAreaId(), polygonBean_contract.getContractid(), batchTime);
                             LatLng latlng = new LatLng(Double.valueOf(polygonBean_contract.getLat()), Double.valueOf(polygonBean_contract.getLng()));
-                            Marker marker = addThirdView(polygonBean_contract.getparkName() + polygonBean_contract.getareaName() + polygonBean_contract.getContractname(),  count_saleout[0], count_saleout[1],count_saleout[2], latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote() + "相关信息");
+                            Marker marker = addThirdView(polygonBean_contract.getparkName() + polygonBean_contract.getareaName() + polygonBean_contract.getContractname(), count_saleout[0], count_saleout[1], count_saleout[2], latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote() + "相关信息");
                             list_Marker_third.add(marker);
                         }
                     }
@@ -4768,9 +4961,9 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 
                     if (polygonBean_area != null)
                     {
-                        int[] count_saleout  = SqliteDb.getdataofareasale(getActivity(),"60", polygonBean_area.getparkId(), polygonBean_area.getAreaId(), batchTime);
+                        int[] count_saleout = SqliteDb.getdataofareasale(getActivity(), "60", polygonBean_area.getparkId(), polygonBean_area.getAreaId(), batchTime);
                         LatLng latlng = new LatLng(Double.valueOf(polygonBean_area.getLat()), Double.valueOf(polygonBean_area.getLng()));
-                        Marker marker = addSecondView(polygonBean_area.getparkName() + polygonBean_area.getareaName(),  count_saleout[0], count_saleout[1],count_saleout[2], latlng, polygonBean_area.getUuid(), polygonBean_area.getNote() + "相关信息");
+                        Marker marker = addSecondView(polygonBean_area.getparkName() + polygonBean_area.getareaName(), count_saleout[0], count_saleout[1], count_saleout[2], latlng, polygonBean_area.getUuid(), polygonBean_area.getNote() + "相关信息");
                         list_Marker_second.add(marker);
                     }
                 }
@@ -4797,7 +4990,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                 {
                     int[] count_saleout = SqliteDb.getdataofparksale(getActivity(), "60", list_parktab.get(i).getid(), batchTime);
                     LatLng latlng = new LatLng(Double.valueOf(polygonBean_park.getLat()), Double.valueOf(polygonBean_park.getLng()));
-                    Marker marker = addFirstView(polygonBean_park.getparkName(), count_saleout[0], count_saleout[1],count_saleout[2] ,latlng, polygonBean_park.getUuid(), polygonBean_park.getNote() + "相关信息");
+                    Marker marker = addFirstView(polygonBean_park.getparkName(), count_saleout[0], count_saleout[1], count_saleout[2], latlng, polygonBean_park.getUuid(), polygonBean_park.getNote() + "相关信息");
                     list_Marker_first.add(marker);
                 }
             }
@@ -4952,11 +5145,11 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         });
     }
 
-    private Polygon drawPolygon(List<LatLng> list_LatLng, int fillcolor,int strokesize,int strokecolor)
+    private Polygon drawPolygon(List<LatLng> list_LatLng, int fillcolor, int strokesize, int strokecolor)
     {
         PolygonOptions polygonOp = new PolygonOptions();
         polygonOp.fillColor(fillcolor);// 填充色
-        polygonOp.strokeColor(getActivity().getResources().getColor(R.color.bg_text));// 线宽
+        polygonOp.strokeColor(getResources().getColor(strokecolor));// 线宽
         polygonOp.strokeWidth(strokesize);// 线宽
         for (int i = 0; i < list_LatLng.size(); i++)
         {
@@ -5087,7 +5280,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 
     private void initBoundaryLine(int color, float z, List<CoordinatesBean> list_coordinates)
     {
-        LatLng prelatlng=null;
+        LatLng prelatlng = null;
         List<LatLng> list_AllLatLng = new ArrayList<>();
         for (int i = 0; i < list_coordinates.size(); i++)
         {
@@ -5096,18 +5289,18 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 
             PolylineOptions lineOpt = new PolylineOptions();
             lineOpt.add(prelatlng);
-            prelatlng=latlng;
+            prelatlng = latlng;
             lineOpt.add(latlng);
             Polyline line = tencentMap.addPolyline(lineOpt);
             line.setColor(color);
             line.setWidth(8f);
             Overlays.add(line);
-            if (i == list_coordinates.size()-1)
+            if (i == list_coordinates.size() - 1)
             {
                 latlng = new LatLng(Double.valueOf(list_coordinates.get(0).getLat()), Double.valueOf(list_coordinates.get(0).getLng()));
                 PolylineOptions lineOpt_end = new PolylineOptions();
                 lineOpt_end.add(prelatlng);
-                prelatlng=latlng;
+                prelatlng = latlng;
                 lineOpt_end.add(latlng);
                 Polyline line_end = tencentMap.addPolyline(lineOpt_end);
                 line_end.setColor(color);
@@ -5121,7 +5314,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 
     }
 
-    private Polygon initBoundary(int color, float z, List<CoordinatesBean> list_coordinates,int strokesize,int strokecolor)
+    private Polygon initBoundary(int color, float z, List<CoordinatesBean> list_coordinates, int strokesize, int strokecolor)
     {
         List<LatLng> list_AllLatLng = new ArrayList<>();
         for (int i = 0; i < list_coordinates.size(); i++)
@@ -5133,17 +5326,40 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             }
             list_AllLatLng.add(latlng);
         }
-        Polygon polygon = drawPolygon(list_AllLatLng, color,strokesize,strokecolor);
+        Polygon polygon = drawPolygon(list_AllLatLng, color, strokesize, strokecolor);
         polygon.setZIndex(z);
 //        list_polygon_allCoordinatesBean.add(list_coordinates);
         Overlays.add(polygon);
         return polygon;
     }
 
+    private void setMapOnclickWhenPlant()
+    {
+        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+        {
+            @Override
+            public void onMapClick(LatLng latLng)
+            {
+//                addCustomMarker(R.color.bg_ask,latLng,"","");
+                boolean isin = isPointInLine(latLng);
+                if (isin)
+                {
+                    if (touchLatlng1 == null)
+                    {
+                        touchLatlng1 = latLng;
+                    } else
+                    {
+                        touchLatlng2 = latLng;
+//                        divideArea(touchLatlng1, touchLatlng2);
+                    }
+                }
+
+            }
+        });
+    }
+
     private void showNeedPlanBoundary(List<CoordinatesBean> list_coordinates)
     {
-        //画出区域
-        List<LatLng> list_AllLatLng = new ArrayList<>();
         for (int i = 0; i < list_coordinates.size(); i++)
         {
             LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
@@ -5151,35 +5367,237 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
             {
                 tencentMap.animateTo(latlng);
             }
-            list_AllLatLng.add(latlng);
+//            addCustomMarker(R.color.bg_ask, latlng, list_coordinates.get(i).getUuid(), "");
+            list_latlng_needplanboundary.add(latlng);
         }
-        Polygon polygon = drawPolygon(list_AllLatLng, R.color.bg_yellow,4,R.color.red);
+        Polygon polygon = drawPolygon(list_latlng_needplanboundary, R.color.black, 4, R.color.red);
         list_polygon_all.add(polygon);
         list_polygon_allCoordinatesBean.add(list_coordinates);
         Overlays.add(polygon);
-//显示标志物
-        list_CoordinatesBean_currentPolygon = list_coordinates;
-        polygon_select = polygon;
-        List<LatLng> list_single_polygon = polygon.getPoints();
-        list_mark = new ArrayList<>();
-        intervalNumber = list_single_polygon.size() / 9;
-        int num = intervalNumber;
-        for (int j = 0; j < list_single_polygon.size(); j++)
-        {
-            LatLng ll = new LatLng(Double.valueOf(list_single_polygon.get(j).getLatitude()), Double.valueOf(list_single_polygon.get(j).getLongitude()));
-            if (j == 0)
-            {
-                tencentMap.animateTo(ll);
-            }
-            if (j == num)
-            {
-                num = num + intervalNumber;
-                Marker marker = addMarker_Paint(list_mark.size(), ll, R.drawable.location_start);
-                list_mark.add(marker);
-                list_point_pq.add(ll);
-            }
+//保存边界线
+        list_latlng_needplanline = new ArrayList<>();
 
+        LatLng prelatlng = new LatLng(Double.valueOf(list_coordinates.get(0).getLat()), Double.valueOf(list_coordinates.get(0).getLng()));
+        for (int i = 1; i < list_coordinates.size(); i++)//从1开始
+        {
+            LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
+            List<LatLng> list_lintpoint = new ArrayList<>();
+            list_lintpoint.add(prelatlng);
+            list_lintpoint.add(latlng);
+            prelatlng = latlng;
+            list_latlng_needplanline.add(list_lintpoint);
         }
+    }
+
+    private boolean isPointInLine(LatLng touchLatlng)
+    {
+        Point touchpoint = mProjection.toScreenLocation(touchLatlng);
+        for (int i = 0; i < list_latlng_needplanline.size(); i++)
+        {
+            List<LatLng> list = list_latlng_needplanline.get(i);
+            LatLng latlng0 = list.get(0);
+            LatLng latlng1 = list.get(1);
+            PolylineOptions lineOpt = new PolylineOptions();
+            lineOpt.add(latlng0);
+            lineOpt.add(latlng1);
+            Polyline line = tencentMap.addPolyline(lineOpt);
+            line.setColor(getActivity().getResources().getColor(R.color.bg_yellow));
+            line.setWidth(12f);
+            Point p0 = mProjection.toScreenLocation(latlng0);
+            Point p1 = mProjection.toScreenLocation(latlng1);
+            double d_d0 = TencentLocationUtils.distanceBetween(touchLatlng.getLatitude(), touchLatlng.getLongitude(), latlng0.getLatitude(), latlng0.getLongitude());
+            double d_d1 = TencentLocationUtils.distanceBetween(touchLatlng.getLatitude(), touchLatlng.getLongitude(), latlng1.getLatitude(), latlng1.getLongitude());
+            double d0_d1 = TencentLocationUtils.distanceBetween(latlng0.getLatitude(), latlng0.getLongitude(), latlng1.getLatitude(), latlng1.getLongitude());
+
+            double aa = (d_d1 + d_d0) - d0_d1;
+            if (aa <= 0.01)
+            {
+                return true;
+            }
+            if (i == list_latlng_needplanline.size() - 1)
+            {
+                Toast.makeText(getActivity(), "请点击线上", Toast.LENGTH_SHORT).show();
+            }
+//            boolean isin = utils.isPointInLine(touchpoint, p0, p1);
+//            if (isin)
+//            {
+//                return true;
+//            } else
+//            {
+//                Toast.makeText(getActivity(), "请点击线上", Toast.LENGTH_SHORT).show();
+//            }
+//            break;
+        }
+        return false;
+    }
+
+
+    private void divideArea(int pos_line1, int pos_line2, List<LatLng> list_line1, List<LatLng> list_line2, LatLng touchLatlng1, LatLng touchLatlng2)
+    {
+//        int pos_line1 = 0;
+//        int pos_line2 = 0;
+//        List<LatLng> list_line1 = new ArrayList<>();//被点击的第一条线
+//        List<LatLng> list_line2 = new ArrayList<>();//被点击的第二条线
+//        Point touchpoint1 = mProjection.toScreenLocation(touchLatlng1);
+//        Point touchpoint2 = mProjection.toScreenLocation(touchLatlng2);
+        List<LatLng> list_latlng_select = new ArrayList<>();
+        List<LatLng> list_latlng_notselect = new ArrayList<>();
+//        list_latlng_select.add(touchLatlng1);
+        //找出两个点所在的两条线
+//        for (int i = 0; i < list_latlng_needplanline.size(); i++)
+//        {
+//            List<LatLng> list = list_latlng_needplanline.get(i);
+//            LatLng latlng0 = list.get(0);
+//            LatLng latlng1 = list.get(1);
+//            Point p0 = mProjection.toScreenLocation(latlng0);
+//            Point p1 = mProjection.toScreenLocation(latlng1);
+//            //第一个点
+//            boolean istouchLatlng1in = utils.isPointInLine(touchpoint1, p0, p1);
+//            if (istouchLatlng1in)
+//            {
+//                list_line1 = list;
+//                pos_line1 = i;
+//            }
+//            //第二个点
+//            boolean istouchLatlng2in = utils.isPointInLine(touchpoint2, p0, p1);
+//            if (istouchLatlng2in)
+//            {
+//                list_line2 = list;
+//                pos_line2 = i;
+//            }
+//        }
+
+        int pos_start = 0;
+        int pos_end = 0;
+        if (pos_line1 > pos_line2)
+        {
+            //已选区域
+            list_latlng_select.add(touchLatlng2);//添加已选起始点
+            for (int i = 0; i < list_latlng_needplanboundary.size(); i++)
+            {
+                if (list_latlng_needplanboundary.get(i).toString().equals(list_line2.get(1).toString()))
+                {
+                    pos_start = i;
+                }
+                if (list_latlng_needplanboundary.get(i).toString().equals(list_line1.get(0).toString()))
+                {
+                    pos_end = i;
+                }
+            }
+            for (int i = pos_start; i <= pos_end; i++)//要等于
+            {
+                list_latlng_select.add(list_latlng_needplanboundary.get(i));
+            }
+            list_latlng_select.add(touchLatlng1);//添加已选终点
+            for (int i = 0; i < list_latlng_pick.size(); i++)
+            {
+                list_latlng_select.add(list_latlng_pick.get(i));
+            }
+            // 未选区域
+            list_latlng_notselect.add(touchLatlng1);//添加未选起始点
+            for (int i = 0; i < list_latlng_needplanboundary.size(); i++)
+            {
+                if (list_latlng_needplanboundary.get(i).equals(list_line1.get(1)))
+                {
+                    pos_start = i;
+                }
+                if (list_latlng_needplanboundary.get(i).equals(list_line2.get(0)))
+                {
+                    pos_end = i;
+                }
+            }
+            for (int i = pos_start; i < list_latlng_needplanboundary.size(); i++)
+            {
+                list_latlng_notselect.add(list_latlng_needplanboundary.get(i));
+            }
+            list_latlng_notselect.add(list_latlng_needplanboundary.get(0));//添加分界点
+            for (int i = 0; i <= pos_end; i++)//要等于
+            {
+                list_latlng_notselect.add(list_latlng_needplanboundary.get(i));
+            }
+            list_latlng_notselect.add(touchLatlng2);//添加未选终点
+            for (int i = list_latlng_pick.size() - 1; i >= 0; i--)
+            {
+                list_latlng_notselect.add(list_latlng_pick.get(i));
+            }
+        } else
+        {
+            list_latlng_select.add(touchLatlng1);//添加已选起始点
+            for (int i = 0; i < list_latlng_needplanboundary.size(); i++)
+            {
+                if (list_latlng_needplanboundary.get(i).equals(list_line1.get(1)))
+                {
+                    pos_start = i;
+                }
+                if (list_latlng_needplanboundary.get(i).equals(list_line2.get(0)))
+                {
+                    pos_end = i;
+                }
+            }
+            for (int i = pos_start; i <= pos_end; i++)//要等于
+            {
+                list_latlng_select.add(list_latlng_needplanboundary.get(i));
+            }
+            list_latlng_select.add(touchLatlng2);//添加已选终点
+            for (int i = list_latlng_pick.size() - 1; i >= 0; i--)
+            {
+                list_latlng_select.add(list_latlng_pick.get(i));
+            }
+            // 未选区域
+            list_latlng_notselect.add(touchLatlng2);//添加未选起始点
+            for (int i = 0; i < list_latlng_needplanboundary.size(); i++)
+            {
+                if (list_latlng_needplanboundary.get(i).equals(list_line2.get(1)))
+                {
+                    pos_start = i;
+                }
+                if (list_latlng_needplanboundary.get(i).equals(list_line1.get(0)))
+                {
+                    pos_end = i;
+                }
+            }
+            for (int i = pos_start; i < list_latlng_needplanboundary.size(); i++)
+            {
+                list_latlng_notselect.add(list_latlng_needplanboundary.get(i));
+            }
+            list_latlng_notselect.add(list_latlng_needplanboundary.get(0));//添加分界点
+            for (int i = 0; i <= pos_end; i++)//要等于
+            {
+                list_latlng_notselect.add(list_latlng_needplanboundary.get(i));
+            }
+            list_latlng_notselect.add(touchLatlng1);//添加未选终点
+            for (int i = list_latlng_pick.size() - 1; i >= 0; i--)
+            {
+                list_latlng_notselect.add(list_latlng_pick.get(i));
+            }
+        }
+
+        //画出已选区域
+        Polygon polygon_select = drawPolygon(list_latlng_select, Color.argb(1000, 255, 0, 0), 6, R.color.red);
+        Overlays.add(polygon_select);
+        //画出未选区域
+        Polygon polygon_notselect = drawPolygon(list_latlng_notselect, Color.argb(1000, 0, 0, 255), 6, R.color.bg_blue);
+        Overlays.add(polygon_notselect);
+
+
+        isInner=false;
+        pos_line1 = 0;
+        pos_line2 = 0;
+        for (int i = 0; i < list_Objects_divideline.size(); i++)
+        {
+            tencentMap.removeOverlay(list_Objects_divideline.get(i));
+        }
+
+        list_latlng_firstline = new ArrayList<>();
+        list_latlng_secondline = new ArrayList<>();
+        list_Objects_divideline = new ArrayList<>();
+        list_latlng_pick = new ArrayList<>();
+        list_latlng_needplanboundary = new ArrayList<>();
+        list_latlng_needplanline = new ArrayList<>();
+        lastselect_latlng=null;
+        touchLatlng1 = null;
+        touchLatlng2 = null;
+
     }
 
     private void setBoundary_park(List<CoordinatesBean> list_coordinates)
@@ -5207,7 +5625,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 
         }
 //        map.put("a", list_mark);
-        Polygon polygon = drawPolygon(list_AllLatLng, R.color.bg_yellow,2,R.color.bg_text);
+        Polygon polygon = drawPolygon(list_AllLatLng, R.color.bg_yellow, 2, R.color.bg_text);
 //        list_polygon_pq.add(polygon);
         list_polygon_all.add(polygon);
         list_polygon_allCoordinatesBean.add(list_coordinates);
@@ -5374,4 +5792,80 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
     {
 
     }
+
+    /**
+     * Fragment中，注册
+     * 接收MainActivity的Touch回调的对象
+     * 重写其中的onTouchEvent函数，并进行该Fragment的逻辑处理
+     */
+    private NCZ_ProductSale.MyTouchListener mTouchListener = new NCZ_ProductSale.MyTouchListener()
+    {
+        @Override
+        public void onTouchEvent(MotionEvent event)
+        {
+
+            if (isable)
+            {
+                switch (event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        point_dowm = new CusPoint();
+                        point_dowm.x = event.getX();
+                        point_dowm.y = event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        point_up = new CusPoint();
+                        point_up.x = event.getX();
+                        point_up.y = event.getY();
+                        for (int i = 0; i < list_latlng_needplanline.size(); i++)
+                        {
+                            List<LatLng> list = list_latlng_needplanline.get(i);
+                            LatLng latlng0 = list.get(0);
+                            LatLng latlng1 = list.get(1);
+                            Point p1 = mProjection.toScreenLocation(latlng0);
+                            Point p2 = mProjection.toScreenLocation(latlng1);
+//                            float x1 = p1.x;
+//                            float y1 = p1.y;
+//                            float x2 =p2.x;
+//                            float y2 =p2.y;
+                            CusPoint cuspoint1 = new CusPoint(p1.x, p1.y);
+                            CusPoint cuspoint2 = new CusPoint(p2.x, p2.y);
+                            CusPoint crosspoint = utils.getCrossPoint(cuspoint1, cuspoint2, point_dowm, point_up);
+                            if (crosspoint != null)
+                            {
+                                Point cp = new Point();
+                                int x = Integer.valueOf(String.valueOf(crosspoint.x).substring(0, String.valueOf(crosspoint.x).indexOf(".")));
+                                int y = Integer.valueOf(String.valueOf(crosspoint.y).substring(0, String.valueOf(crosspoint.y).indexOf(".")));
+                                cp.set(x, y);
+                                LatLng latlng = mProjection.fromScreenLocation(cp);
+//                                double d_d0 = TencentLocationUtils.distanceBetween(latlng.getLatitude(), latlng.getLongitude(), latlng0.getLatitude(), latlng0.getLongitude());
+//                                double d_d1 = TencentLocationUtils.distanceBetween(latlng.getLatitude(), latlng.getLongitude(), latlng1.getLatitude(), latlng1.getLongitude());
+//                                double d0_d1 = TencentLocationUtils.distanceBetween(latlng0.getLatitude(), latlng0.getLongitude(), latlng1.getLatitude(), latlng1.getLongitude());
+//                                double aa = (d_d1 + d_d0) - d0_d1;
+
+                                double d_d0 = utils.getDistance(crosspoint.x, crosspoint.y, point_up.x, point_up.y);
+                                double d_d1 = utils.getDistance(crosspoint.x, crosspoint.y, point_dowm.x, point_dowm.y);
+                                double d0_d1 = utils.getDistance(point_dowm.x, point_dowm.y, point_up.x, point_up.y);
+                                double aa = (d_d1 + d_d0) - d0_d1;
+                                if (Math.abs(aa) <= 0.01)
+                                {
+                                    addCustomMarker(R.color.bg_ask, latlng, "", "");
+                                }
+//                                break;
+                            }
+
+                        }
+
+                        break;
+                }
+            }
+
+
+        }
+    };
+
+
 }
