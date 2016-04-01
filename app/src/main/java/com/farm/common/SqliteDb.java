@@ -400,6 +400,8 @@ public class SqliteDb
             db.dropTable(SellOrderDetail.class);
             db.dropTable(BreakOff.class);
             db.dropTable(BatchOfProduct.class);
+            db.dropTable(PolygonBean.class);
+            db.dropTable(CoordinatesBean.class);
 //            list = db.findAll(Selector.from(BatchOfProduct.class));
 //            db.deleteAll(list);
 //            list = db.findAll(Selector.from(BreakOff.class));

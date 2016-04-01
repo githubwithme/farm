@@ -104,6 +104,9 @@ import java.util.List;
 @EFragment
 public class NCZ_CurrentSale extends Fragment implements TencentLocationListener, View.OnClickListener
 {
+    List<Polyline> list_Objects_divideline;
+    Polygon polygon_divide1;
+    Polygon polygon_divide2;
     int num = 0;
     List<LatLng> list_latlng_pick = new ArrayList<>();
     LatLng lastselect_latlng;
@@ -114,6 +117,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
     LatLng touchLatlng2;
     boolean isInner = false;
     List<List<LatLng>> list_latlng_needplanline;
+    List<LatLng> list_latlng_needplanboundary;
     int pos_line1 = 0;
     int pos_line2 = 0;
     List<LatLng> list_latlng_firstline;
@@ -123,7 +127,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
     int[] fillcolor_area;
     int[] fillcolor_contract;
     int[] ic_breakoff;
-    List<LatLng> list_latlng_needplanboundary;
+
     List<BreakOff> list_breakoff;
     List<BatchOfProduct> list_BatchOfProduct;
     List<SellOrder> list_SellOrder;
@@ -136,7 +140,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
     List<PolygonBean> list_polygon_area;
     List<PolygonBean> list_polygon_contract;
 
-    List<Polyline> list_Objects_divideline;
+
     List<Polyline> list_Objects_road;
     List<Marker> list_Objects_road_centermarker;
     List<Marker> list_Objects_breakoff;
@@ -936,7 +940,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 
                 } else
                 {
-                    list_Objects_divideline=new ArrayList<Polyline>();
+                    list_Objects_divideline = new ArrayList<Polyline>();
                     isable = true;
                     tencentMap.setZoom(14);
                     initMapClickWhenPaint();
@@ -1709,6 +1713,223 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         }
     }
 
+    public void savedividedAreaInfo(LatLng centerlatlng, final List<LatLng> list_select, final List<LatLng> list_notselect)
+    {
+        String type = polygonBean_needPlan.getType();
+        String orders = "";
+        String order_new = "";
+        if (type.equals("farm_boundary"))
+        {
+            orders = "0";
+        } else if (type.equals("farm_boundary_free"))
+        {
+            orders = polygonBean_needPlan.getOrders();
+        }
+        order_new = String.valueOf(Integer.valueOf(orders) + 1);
+
+        if (departmentselected.getType().equals("园区"))
+        {
+
+        } else if (departmentselected.getType().equals("片区"))
+        {
+            //已选择区域
+            String uuid_polygon = java.util.UUID.randomUUID().toString();
+            PolygonBean polygonBean = new PolygonBean();
+            polygonBean.setLat(String.valueOf(centerlatlng.getLatitude()));
+            polygonBean.setLng(String.valueOf(centerlatlng.getLongitude()));
+            polygonBean.setNumofplant("");
+            polygonBean.setType("farm_boundary");
+            polygonBean.setUid("60");
+            polygonBean.setparkId(departmentselected.getParkid());
+            polygonBean.setparkName(departmentselected.getParkname());
+            polygonBean.setUuid(uuid_polygon);
+            polygonBean.setAreaId(departmentselected.getAreaid());
+            polygonBean.setareaName(departmentselected.getAreaname());
+            polygonBean.setContractid("");//空
+            polygonBean.setContractname("");
+            polygonBean.setBatchid("");
+            polygonBean.setCoordinatestime(utils.getTime());
+            polygonBean.setRegistime(utils.getTime());
+            polygonBean.setWeightofplant("");
+            polygonBean.setSaleid("");
+            polygonBean.setOrders("");
+            polygonBean.setXxzt("0");
+            polygonBean.setOtherhalf("");
+            polygonBean.setNote(departmentselected.getParkname() + departmentselected.getAreaname() + departmentselected.getContractname());
+            SqliteDb.save(getActivity(), polygonBean);
+            for (int i = 0; i < list_select.size(); i++)
+            {
+                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                coordinatesBean.setLat(String.valueOf(list_select.get(i).getLatitude()));
+                coordinatesBean.setLng(String.valueOf(list_select.get(i).getLongitude()));
+                coordinatesBean.setNumofplant("");
+                coordinatesBean.setType("");
+                coordinatesBean.setUid("");
+                coordinatesBean.setparkId("");
+                coordinatesBean.setparkName("");
+                coordinatesBean.setUuid(uuid_polygon);
+                coordinatesBean.setAreaId("");
+                coordinatesBean.setareaName("");
+                coordinatesBean.setContractid("");
+                coordinatesBean.setContractname("");
+                coordinatesBean.setBatchid("");
+                coordinatesBean.setCoordinatestime(utils.getTime());
+                coordinatesBean.setRegistime(utils.getTime());
+                coordinatesBean.setWeightofplant("");
+                coordinatesBean.setSaleid("");
+                coordinatesBean.setOrders("");
+                SqliteDb.save(getActivity(), coordinatesBean);
+            }
+            //未选择区域
+            String uuid_notselectpolygon = java.util.UUID.randomUUID().toString();
+            PolygonBean polygonBean_notselect = new PolygonBean();
+            polygonBean_notselect.setLat(String.valueOf(centerlatlng.getLatitude()));
+            polygonBean_notselect.setLng(String.valueOf(centerlatlng.getLongitude()));
+            polygonBean_notselect.setNumofplant("");
+            polygonBean_notselect.setType("farm_boundary_free");
+            polygonBean_notselect.setUid("60");
+            polygonBean_notselect.setparkId(departmentselected.getParkid());
+            polygonBean_notselect.setparkName(departmentselected.getParkname());
+            polygonBean_notselect.setUuid(uuid_notselectpolygon);
+            polygonBean_notselect.setAreaId("");//画选片区，list_notselect则只能为园区的未规划图，所以为空
+            polygonBean_notselect.setareaName("");//画选片区，list_notselect则只能为园区的未规划图，所以为空
+            polygonBean_notselect.setContractid("");
+            polygonBean_notselect.setContractname("");
+            polygonBean_notselect.setBatchid("");
+            polygonBean_notselect.setCoordinatestime(utils.getTime());
+            polygonBean_notselect.setRegistime(utils.getTime());
+            polygonBean_notselect.setWeightofplant("");
+            polygonBean_notselect.setSaleid("");
+            polygonBean_notselect.setOrders(order_new);
+            polygonBean_notselect.setXxzt("0");
+            polygonBean_notselect.setOtherhalf(uuid_polygon);
+            polygonBean_notselect.setNote(departmentselected.getParkname() + departmentselected.getAreaname() + departmentselected.getContractname());
+            SqliteDb.save(getActivity(), polygonBean_notselect);
+            for (int i = 0; i < list_notselect.size(); i++)
+            {
+                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                coordinatesBean.setLat(String.valueOf(list_notselect.get(i).getLatitude()));
+                coordinatesBean.setLng(String.valueOf(list_notselect.get(i).getLongitude()));
+                coordinatesBean.setNumofplant("");
+                coordinatesBean.setType("");
+                coordinatesBean.setUid("");
+                coordinatesBean.setparkId("");
+                coordinatesBean.setparkName("");
+                coordinatesBean.setUuid(uuid_notselectpolygon);
+                coordinatesBean.setAreaId("");
+                coordinatesBean.setareaName("");
+                coordinatesBean.setContractid("");
+                coordinatesBean.setContractname("");
+                coordinatesBean.setBatchid("");
+                coordinatesBean.setCoordinatestime(utils.getTime());
+                coordinatesBean.setRegistime(utils.getTime());
+                coordinatesBean.setWeightofplant("");
+                coordinatesBean.setSaleid("");
+                coordinatesBean.setOrders("");
+                SqliteDb.save(getActivity(), coordinatesBean);
+            }
+        } else if (departmentselected.getType().equals("承包区"))
+        {
+            //已选择区域
+            String uuid_polygon = java.util.UUID.randomUUID().toString();
+            PolygonBean polygonBean = new PolygonBean();
+            polygonBean.setLat(String.valueOf(centerlatlng.getLatitude()));
+            polygonBean.setLng(String.valueOf(centerlatlng.getLongitude()));
+            polygonBean.setNumofplant("");
+            polygonBean.setType("farm_boundary");
+            polygonBean.setUid("60");
+            polygonBean.setparkId(departmentselected.getParkid());
+            polygonBean.setparkName(departmentselected.getParkname());
+            polygonBean.setUuid(uuid_polygon);
+            polygonBean.setAreaId(departmentselected.getAreaid());
+            polygonBean.setareaName(departmentselected.getAreaname());
+            polygonBean.setContractid(departmentselected.getContractid());
+            polygonBean.setContractname(departmentselected.getContractname());
+            polygonBean.setBatchid("");
+            polygonBean.setCoordinatestime(utils.getTime());
+            polygonBean.setRegistime(utils.getTime());
+            polygonBean.setWeightofplant("");
+            polygonBean.setSaleid("");
+            polygonBean.setOrders("");
+            polygonBean.setXxzt("0");
+            polygonBean.setOtherhalf("");
+            polygonBean.setNote(departmentselected.getParkname() + departmentselected.getAreaname() + departmentselected.getContractname());
+            SqliteDb.save(getActivity(), polygonBean);
+            for (int i = 0; i < list_select.size(); i++)
+            {
+                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                coordinatesBean.setLat(String.valueOf(list_select.get(i).getLatitude()));
+                coordinatesBean.setLng(String.valueOf(list_select.get(i).getLongitude()));
+                coordinatesBean.setNumofplant("");
+                coordinatesBean.setType("");
+                coordinatesBean.setUid("");
+                coordinatesBean.setparkId("");
+                coordinatesBean.setparkName("");
+                coordinatesBean.setUuid(uuid_polygon);
+                coordinatesBean.setAreaId("");
+                coordinatesBean.setareaName("");
+                coordinatesBean.setContractid("");
+                coordinatesBean.setContractname("");
+                coordinatesBean.setBatchid("");
+                coordinatesBean.setCoordinatestime(utils.getTime());
+                coordinatesBean.setRegistime(utils.getTime());
+                coordinatesBean.setWeightofplant("");
+                coordinatesBean.setSaleid("");
+                coordinatesBean.setOrders("");
+                SqliteDb.save(getActivity(), coordinatesBean);
+            }
+            //未选择区域
+            String uuid_notselectpolygon = java.util.UUID.randomUUID().toString();
+            PolygonBean polygonBean_notselect = new PolygonBean();
+            polygonBean_notselect.setLat(String.valueOf(centerlatlng.getLatitude()));
+            polygonBean_notselect.setLng(String.valueOf(centerlatlng.getLongitude()));
+            polygonBean_notselect.setNumofplant("");
+            polygonBean_notselect.setType("farm_boundary_free");
+            polygonBean_notselect.setUid("60");
+            polygonBean_notselect.setparkId(departmentselected.getParkid());
+            polygonBean_notselect.setparkName(departmentselected.getParkname());
+            polygonBean_notselect.setUuid(uuid_notselectpolygon);
+            polygonBean_notselect.setAreaId(departmentselected.getAreaid());
+            polygonBean_notselect.setareaName(departmentselected.getAreaname());
+            polygonBean_notselect.setContractid("");//画选承包区，list_notselect则只能为片区的未规划图，所以为空
+            polygonBean_notselect.setContractname("");
+            polygonBean_notselect.setBatchid("");
+            polygonBean_notselect.setCoordinatestime(utils.getTime());
+            polygonBean_notselect.setRegistime(utils.getTime());
+            polygonBean_notselect.setWeightofplant("");
+            polygonBean_notselect.setSaleid("");
+            polygonBean_notselect.setOrders(order_new);
+            polygonBean_notselect.setXxzt("0");
+            polygonBean_notselect.setOtherhalf(uuid_polygon);
+            polygonBean_notselect.setNote(departmentselected.getParkname() + departmentselected.getAreaname() + departmentselected.getContractname());
+            SqliteDb.save(getActivity(), polygonBean_notselect);
+            for (int i = 0; i < list_notselect.size(); i++)
+            {
+                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                coordinatesBean.setLat(String.valueOf(list_notselect.get(i).getLatitude()));
+                coordinatesBean.setLng(String.valueOf(list_notselect.get(i).getLongitude()));
+                coordinatesBean.setNumofplant("");
+                coordinatesBean.setType("");
+                coordinatesBean.setUid("");
+                coordinatesBean.setparkId("");
+                coordinatesBean.setparkName("");
+                coordinatesBean.setUuid(uuid_notselectpolygon);
+                coordinatesBean.setAreaId("");
+                coordinatesBean.setareaName("");
+                coordinatesBean.setContractid("");
+                coordinatesBean.setContractname("");
+                coordinatesBean.setBatchid("");
+                coordinatesBean.setCoordinatestime(utils.getTime());
+                coordinatesBean.setRegistime(utils.getTime());
+                coordinatesBean.setWeightofplant("");
+                coordinatesBean.setSaleid("");
+                coordinatesBean.setOrders("");
+                SqliteDb.save(getActivity(), coordinatesBean);
+            }
+        }
+
+        reloadMap();
+    }
     public void showDialog_saleinfo(final PolygonBean polygonbean, final LatLng latlng)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_sale, null);
@@ -5573,14 +5794,34 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         }
 
         //画出已选区域
-        Polygon polygon_select = drawPolygon(list_latlng_select, Color.argb(1000, 255, 0, 0), 6, R.color.red);
-        Overlays.add(polygon_select);
+        polygon_divide1 = drawPolygon(list_latlng_select, Color.argb(1000, 255, 0, 0), 6, R.color.red);
+        Overlays.add(polygon_divide1);
         //画出未选区域
-        Polygon polygon_notselect = drawPolygon(list_latlng_notselect, Color.argb(1000, 0, 0, 255), 6, R.color.bg_blue);
-        Overlays.add(polygon_notselect);
+        polygon_divide2 = drawPolygon(list_latlng_notselect, Color.argb(1000, 0, 0, 255), 6, R.color.bg_blue);
+        Overlays.add(polygon_divide2);
 
+        tv_tip.setVisibility(View.VISIBLE);
+        tv_tip.setBackgroundResource(R.color.bg_job);
+        tv_tip.setText("请选择需要的区域");
 
-        isInner=false;
+        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+        {
+            @Override
+            public void onMapClick(LatLng latLng)
+            {
+                if (polygon_divide1.contains(latLng))
+                {
+                    showDialog_saleinfo(polygonBean_needPlan,latLng);
+                } else if (polygon_divide2.contains(latLng))
+                {
+                } else
+                {
+                    tv_tip.setText("请在划分的两个区域中选择");
+                }
+            }
+        });
+
+        isInner = false;
         pos_line1 = 0;
         pos_line2 = 0;
         for (int i = 0; i < list_Objects_divideline.size(); i++)
@@ -5594,7 +5835,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         list_latlng_pick = new ArrayList<>();
         list_latlng_needplanboundary = new ArrayList<>();
         list_latlng_needplanline = new ArrayList<>();
-        lastselect_latlng=null;
+        lastselect_latlng = null;
         touchLatlng1 = null;
         touchLatlng2 = null;
 
