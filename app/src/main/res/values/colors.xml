@@ -51,6 +51,7 @@
     <color name="bg_work">#fed15c </color>
     <color name="bg_titlebar">#ffffff</color>
     <color name="bg_yellow">#ea871c</color>
+    <color name="yellow">#ffff00</color>
     <color name="bg_green">#4fcf72</color>
     <color name="bg_blue">#59aeef</color>
     <color name="bg_sq">#dec149</color>

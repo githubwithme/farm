@@ -152,13 +152,41 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.delete(PolygonBean.class, WhereBuilder.b("uuid", "=", uuid));
-            db.delete(PolygonBean.class, WhereBuilder.b("otherhalf", "=", uuid));
-        } catch (DbException e)
+            PolygonBean polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("uuid", "=", uuid));
+            if (polygonBean.getAreaId().equals(""))//被删除的是园区
+            {
+                //删除该片区已经规划图
+                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid","=",polygonBean.getparkId()));
+
+            }else  if (polygonBean.getContractid().equals(""))//被删除的是片区
+            {
+                //删除该片区已经规划图
+                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid","=",polygonBean.getparkId()).and("areaid", "!=", ""));
+                //删除该片区未规划图
+                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid", "=", polygonBean.getparkId()).and("areaid","=","").and("type","=","farm_boundary_free"));
+
+            }else //被删除的是承包区
+            {
+                //删除该承包区已经规划图
+                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid","=",polygonBean.getparkId()).and("areaid","=",polygonBean.getAreaId()).and("contractid","!=",""));
+                //删除承包区未规划图
+                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid","=",polygonBean.getparkId()).and("areaid","=",polygonBean.getAreaId()).and("contractid","=","").and("type","=","farm_boundary_free"));
+
+            }
+
+         } catch (DbException e)
         {
             e.printStackTrace();
             String a = e.getMessage();
             return false;
+        }
+        try
+        {
+            List<PolygonBean> list = db.findAll(Selector.from(PolygonBean.class));
+            List<PolygonBean> list1= db.findAll(Selector.from(PolygonBean.class));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
         }
         return true;
     }
@@ -389,8 +417,7 @@ public class SqliteDb
         }
         return datenow;
     }
-
-    public static <T> List<T> getTemp1(Context context)
+    public static <T> List<T> deleteall(Context context)
     {
         DbUtils db = DbUtils.create(context);
         List<T> list = null;
@@ -402,7 +429,35 @@ public class SqliteDb
             db.dropTable(BatchOfProduct.class);
             db.dropTable(PolygonBean.class);
             db.dropTable(CoordinatesBean.class);
-//            list = db.findAll(Selector.from(BatchOfProduct.class));
+//            list = db.findAll(Selector.from(PolygonBean.class));
+//            db.deleteAll(list);
+//            list = db.findAll(Selector.from(BreakOff.class));
+//            db.deleteAll(list);
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        if (null == list || list.isEmpty())
+        {
+            list = new ArrayList<T>();
+        }
+        return list;
+    }
+    public static <T> List<T> getTemp1(Context context)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<T> list = null;
+        List<T> list1 = null;
+        try
+        {
+//            db.dropTable(SellOrder.class);
+//            db.dropTable(SellOrderDetail.class);
+//            db.dropTable(BreakOff.class);
+//            db.dropTable(BatchOfProduct.class);
+//            db.dropTable(PolygonBean.class);
+//            db.dropTable(CoordinatesBean.class);
+            list = db.findAll(Selector.from(PolygonBean.class));
+            list1 = db.findAll(Selector.from(PolygonBean.class));
 //            db.deleteAll(list);
 //            list = db.findAll(Selector.from(BreakOff.class));
 //            db.deleteAll(list);
@@ -624,7 +679,7 @@ public class SqliteDb
             } else//要规划承包区，则获取片区未规划图层或者整个片区
             {
                 String order_last = "0";
-                List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+                List<DbModel> dbModels = db.findDbModelAll(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
                 if (dbModels.size() != 0)//该片区已经开始规划
                 {
                     order_last = dbModels.get(0).getString("orders");
@@ -1175,7 +1230,20 @@ public class SqliteDb
 
         return polygonBean;
     }
+    public static PolygonBean getLayerByuuid(Context context, String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        PolygonBean polygonBean = null;
+        try
+        {
+            polygonBean = db.findFirst(Selector.from(PolygonBean.class).where("uuid", "=", uuid).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
 
+        return polygonBean;
+    }
     public static PolygonBean getLayer(Context context, String parkid, String areaid, String contractid)
     {
         DbUtils db = DbUtils.create(context);

@@ -3163,7 +3163,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                 List<CoordinatesBean> list_park = SqliteDb.getPoints(getActivity(), polygonBean_park.getUuid());
                 if (list_park != null && list_park.size() != 0)
                 {
-                    initBoundary(fillcolor_park[i], 0f, list_park, 0, R.color.transparent);
+                    initBoundary(Color.argb(150, 0, 255, 255), 0f, list_park, 0, R.color.transparent);
 //                    initBoundaryLine(Color.argb(1000, 57, 72, 61), 0f, list_park);
                 }
 
