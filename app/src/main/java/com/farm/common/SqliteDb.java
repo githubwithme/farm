@@ -658,6 +658,20 @@ public class SqliteDb
 //        }
 //        return build.toString();
 //    }
+    public static SellOrderDetail getNeedSalelayer(Context context, String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        SellOrderDetail sellOrderDetail = null;
+        try
+        {
+            sellOrderDetail= db.findFirst(Selector.from(SellOrderDetail.class).where("uuid", "=", uuid).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return sellOrderDetail;
+    }
     public static PolygonBean getNeedPlanlayer(Context context, String uid, String parkid, String areaid, String contractid)
     {
         DbUtils db = DbUtils.create(context);
@@ -1170,7 +1184,20 @@ public class SqliteDb
 
         return polygonBean;
     }
+    public static List<SellOrderDetail> getSaleLayer_contract(Context context, String contractid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<SellOrderDetail> list = null;
+        try
+        {
+            list = db.findFirst(Selector.from(SellOrderDetail.class).where("contractid", "=", contractid));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
 
+        return list;
+    }
     public static PolygonBean getLayer_contract(Context context, String parkid, String areaid, String contractid)
     {
         DbUtils db = DbUtils.create(context);
@@ -2067,7 +2094,18 @@ public class SqliteDb
             e.printStackTrace();
         }
     }
-
+    public static  boolean  deleteSaleInInfo(Context context, Object c)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.update(c, "plannumber", "actualnumber","type");
+        } catch (DbException e)
+        {
+            return false;
+        }
+        return true;
+    }
     public static <T> Object getAutoLoginUser(Context context, Class<T> c)
     {
         DbUtils db = DbUtils.create(context);

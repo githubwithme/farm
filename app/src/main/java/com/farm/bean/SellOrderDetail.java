@@ -51,7 +51,18 @@ public class SellOrderDetail implements Parcelable
 	public String status;
 	public String isSoldOut;
 	public String xxzt;
+	public String type;
 
+
+	public void setType(String type)
+	{
+		this.type = type;
+	}
+
+	public String getType()
+	{
+		return type;
+	}
 
 	public void setBatchTime(String batchTime)
 	{
@@ -390,6 +401,7 @@ public class SellOrderDetail implements Parcelable
          p.setstatus(source.readString());
          p.setisSoldOut(source.readString());
          p.setXxzt(source.readString());
+         p.setType(source.readString());
          return p;
       }  
 
@@ -432,6 +444,7 @@ public class SellOrderDetail implements Parcelable
          p.writeString(status);
          p.writeString(isSoldOut);
          p.writeString(xxzt);
+         p.writeString(type);
 	}
     @Override
 	public int describeContents()

@@ -4,15 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_noproducttip"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="暂无产品需要销售"
-        android:textColor="@color/bg_text"
-        android:textSize="16sp"
-        android:visibility="gone"/>
+
 
     <RelativeLayout
         android:id="@+id/rl_map"
@@ -92,16 +84,7 @@
                     android:textColor="@color/bg_text"
                     android:textSize="12sp"/>
 
-                <Button
-                    android:id="@+id/btn_addlayer"
-                    android:layout_width="45dip"
-                    android:layout_height="25dip"
-                    android:layout_marginTop="10dip"
-                    android:background="@drawable/background_view_rounded_single"
-                    android:gravity="center"
-                    android:text="出售"
-                    android:textColor="@color/bg_text"
-                    android:textSize="12sp"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -358,18 +341,7 @@
             </RelativeLayout>
 
 
-            <Button
-                android:id="@+id/btn_sale"
-                android:layout_width="45dip"
-                android:layout_height="25dip"
-                android:layout_gravity="bottom|right"
-                android:layout_marginBottom="55dip"
-                android:layout_marginRight="5dip"
-                android:background="@drawable/background_view_rounded_single"
-                android:gravity="center"
-                android:text="添加"
-                android:textColor="@color/bg_text"
-                android:textSize="12sp"/>
+
 
             <RelativeLayout
                 android:id="@+id/rl_createorder"
