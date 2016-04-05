@@ -1042,13 +1042,16 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         List<SellOrderDetail> list_SellOrderDetail_soldout = null;
         List<SellOrderDetail> list_SellOrderDetail_soldin = null;
+        List<SellOrderDetail> list_SellOrderDetail_soldfor = null;
         int[] count = new int[3];
         int count_saleout = 0;
         int count_salein = 0;
+        int count_salefor= 0;
         try
         {
-            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("status", "=", "1").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
-            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("status", "=", "0").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "saleout_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "salein_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "salefor_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
             if (list_SellOrderDetail_soldout != null && list_SellOrderDetail_soldout.size() > 0)
             {
                 for (int i = 0; i < list_SellOrderDetail_soldout.size(); i++)
@@ -1063,11 +1066,18 @@ public class SqliteDb
                     count_salein = count_salein + Integer.valueOf(list_SellOrderDetail_soldin.get(i).getplannumber());
                 }
             }
+            if (list_SellOrderDetail_soldfor != null && list_SellOrderDetail_soldfor.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldfor.size(); i++)
+                {
+                    count_salefor = count_salefor + Integer.valueOf(list_SellOrderDetail_soldfor.get(i).getplannumber());
+                }
+            }
 
 
             count[0] = count_salein;
             count[1] = count_saleout;
-            count[2] = 100000 - count_saleout - count_salein;
+            count[2] = count_salefor;
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1081,13 +1091,16 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         List<SellOrderDetail> list_SellOrderDetail_soldout = null;
         List<SellOrderDetail> list_SellOrderDetail_soldin = null;
+        List<SellOrderDetail> list_SellOrderDetail_soldfor= null;
         int[] count = new int[3];
         int count_saleout = 0;
         int count_salein = 0;
+        int count_salefor = 0;
         try
         {
-            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("status", "=", "1").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
-            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("status", "=", "0").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "saleout_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "salein_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldfor= db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "salefor_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
             if (list_SellOrderDetail_soldout != null && list_SellOrderDetail_soldout.size() > 0)
             {
                 for (int i = 0; i < list_SellOrderDetail_soldout.size(); i++)
@@ -1102,11 +1115,18 @@ public class SqliteDb
                     count_salein = count_salein + Integer.valueOf(list_SellOrderDetail_soldin.get(i).getplannumber());
                 }
             }
+            if (list_SellOrderDetail_soldfor != null && list_SellOrderDetail_soldfor.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldfor.size(); i++)
+                {
+                    count_salefor = count_salefor + Integer.valueOf(list_SellOrderDetail_soldfor.get(i).getplannumber());
+                }
+            }
 
 
             count[0] = count_salein;
             count[1] = count_saleout;
-            count[2] = 100000 - count_saleout - count_salein;
+            count[2] = count_salefor;
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1120,13 +1140,16 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         List<SellOrderDetail> list_SellOrderDetail_soldout = null;
         List<SellOrderDetail> list_SellOrderDetail_soldin = null;
+        List<SellOrderDetail> list_SellOrderDetail_soldfor = null;
         int[] count = new int[3];
         int count_saleout = 0;
         int count_salein = 0;
+        int count_salefor = 0;
         try
         {
-            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("status", "=", "1").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
-            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("status", "=", "0").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "saleout_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "salein_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "salefor_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
             if (list_SellOrderDetail_soldout != null && list_SellOrderDetail_soldout.size() > 0)
             {
                 for (int i = 0; i < list_SellOrderDetail_soldout.size(); i++)
@@ -1141,11 +1164,18 @@ public class SqliteDb
                     count_salein = count_salein + Integer.valueOf(list_SellOrderDetail_soldin.get(i).getplannumber());
                 }
             }
+            if (list_SellOrderDetail_soldfor != null && list_SellOrderDetail_soldfor.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldfor.size(); i++)
+                {
+                    count_salefor = count_salefor + Integer.valueOf(list_SellOrderDetail_soldfor.get(i).getplannumber());
+                }
+            }
 
 
             count[0] = count_salein;
             count[1] = count_saleout;
-            count[2] = 100000 - count_saleout - count_salein;
+            count[2] = count_salefor;
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1184,13 +1214,41 @@ public class SqliteDb
 
         return polygonBean;
     }
-    public static List<SellOrderDetail> getSaleLayer_contract(Context context, String contractid)
+    public static List<SellOrderDetail> getSaleLayer_contract(Context context, String contractid,String batchtime)
     {
         DbUtils db = DbUtils.create(context);
         List<SellOrderDetail> list = null;
         try
         {
-            list = db.findFirst(Selector.from(SellOrderDetail.class).where("contractid", "=", contractid));
+            list = db.findAll(Selector.from(SellOrderDetail.class).where("contractid", "=", contractid).and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public static List<BreakOff> getBreakOffInfo(Context context, String contractid,String batchtime)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<BreakOff> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(BreakOff.class).where("contractid", "=", contractid).and("batchTime", "=", batchtime).and("xxzt", "=","0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public static List<SellOrderDetail> getNewSaleList(Context context, String uid,String batchtime)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<SellOrderDetail> list = null;
+        try
+        {
+            list = db.findFirst(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("type", "=", "newsale_boundary").and("batchTime", "=", batchtime));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1834,7 +1892,20 @@ public class SqliteDb
         }
         return true;
     }
-
+    public static <T> boolean deleteSaleForInfo(Context context,  String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.delete(SellOrderDetail.class, WhereBuilder.b("uuid", "=", uuid));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            String a = e.getMessage();
+            return false;
+        }
+        return true;
+    }
     public static <T> boolean deleteAllRecordtemp(Context context, Class<T> c, String BELONG)
     {
         DbUtils db = DbUtils.create(context);
@@ -2094,12 +2165,36 @@ public class SqliteDb
             e.printStackTrace();
         }
     }
+    public static  boolean  salewhole(Context context, Object c)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.update(c, "type", "saleid");
+        } catch (DbException e)
+        {
+            return false;
+        }
+        return true;
+    }
+    public static  boolean  deleteShoppingcartByBatchtime(Context context, String uid,String batchTime)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.delete(SellOrderDetail.class, WhereBuilder.b("uid", "=", uid).and("batchTime", "=", batchTime).and("type", "=", "newsale_boundary"));
+        } catch (DbException e)
+        {
+            return false;
+        }
+        return true;
+    }
     public static  boolean  deleteSaleInInfo(Context context, Object c)
     {
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.update(c, "plannumber", "actualnumber","type");
+            db.update(c, "saleid","type");
         } catch (DbException e)
         {
             return false;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
-
 
 
     <RelativeLayout
@@ -109,7 +109,7 @@
                     android:id="@+id/tv_forsale"
                     android:layout_width="match_parent"
                     android:layout_height="30dip"
-                    android:background="@color/bg_blue"
+                    android:background="@color/blue"
                     android:gravity="center"
                     android:text="待售"
                     android:textColor="@color/white"
@@ -119,7 +119,7 @@
                     android:id="@+id/v_salein"
                     android:layout_width="match_parent"
                     android:layout_height="30dip"
-                    android:background="@color/bg_green"
+                    android:background="@color/green"
                     android:gravity="center"
                     android:text="售中"
                     android:textColor="@color/white"
@@ -340,40 +340,48 @@
                     android:background="@drawable/downward"/>
             </RelativeLayout>
 
-
-
-
             <RelativeLayout
-                android:id="@+id/rl_createorder"
-                android:layout_width="match_parent"
-                android:layout_height="40dip"
-                android:layout_gravity="bottom"
-                android:background="@drawable/background_view_rounded_single"
-                >
+                android:id="@+id/rl_shoppingcart"
+                android:layout_width="45dip"
+                android:layout_height="45dip"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="30dip"
+                android:layout_marginRight="5dip">
 
-
-                <TextView
-                    android:id="@+id/tv_createorder"
-                    android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/btn_shoppingcart"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:text="生成订单"
-                    android:textColor="@color/bg_text"
-                    android:textSize="14sp"/>
+                    android:background="@drawable/ic_shoppingcart"/>
 
-                <TextView
-                    android:id="@+id/tv_numberoforder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/tv_createorder"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:text="(0)"
-                    android:textColor="@color/bg_text"
-                    android:textSize="16sp"/>
+                <FrameLayout
+                    android:id="@+id/fl_salelist"
+                    android:layout_width="18dip"
+                    android:layout_height="18dip"
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone">
+
+                    <com.farm.widget.CircleImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@drawable/hd"
+                        app:border_color="@color/red"
+                        app:border_width="0dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_salelist"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size_10"/>
+                </FrameLayout>
             </RelativeLayout>
+
+
         </FrameLayout>
     </RelativeLayout>
 

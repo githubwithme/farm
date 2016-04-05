@@ -3,13 +3,11 @@ package com.farm.ui;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -159,7 +157,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
     List<Polygon> list_Objects_contract;
     UiSettings uiSettings;
     boolean isfirstcomplete = true;
-//    PolygonBean polygonBean_needPlan;
+    PolygonBean polygonBean_needPlan;
     SellOrderDetail polygon_needsale;
     LatLng currentPoint;
     String drawerType = "";
@@ -286,12 +284,12 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
     ImageView iv_arrow;
     @ViewById
     Button btn_complete;
-    @ViewById
-    RelativeLayout rl_createorder;
-    @ViewById
-    TextView tv_numberoforder;
-    @ViewById
-    TextView tv_noproducttip;
+//    @ViewById
+//    RelativeLayout rl_createorder;
+//    @ViewById
+//    TextView tv_numberoforder;
+//    @ViewById
+//    TextView tv_noproducttip;
     @ViewById
     LinearLayout ll_sm;
     @ViewById
@@ -654,20 +652,20 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         }
     }
 
-    @Click
-    void rl_createorder()
-    {
-        if (list_SellOrderDetail.size() > 0)
-        {
-            Intent intent = new Intent(getActivity(), CreateOrder_.class);
-            intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list_SellOrderDetail);
-            intent.putExtra("batchtime", batchTime);
-            startActivity(intent);
-        } else
-        {
-            Toast.makeText(getActivity(), "请先添加出售区域", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    @Click
+//    void rl_createorder()
+//    {
+//        if (list_SellOrderDetail.size() > 0)
+//        {
+//            Intent intent = new Intent(getActivity(), CreateOrder_.class);
+//            intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list_SellOrderDetail);
+//            intent.putExtra("batchtime", batchTime);
+//            startActivity(intent);
+//        } else
+//        {
+//            Toast.makeText(getActivity(), "请先添加出售区域", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     @Click
     void btn_batchofproduct()
@@ -2281,7 +2279,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                 tv_tip.setVisibility(View.GONE);
                 tencentMap.removeOverlay(currentpointmarker);
 
-                tv_numberoforder.setText("(" + list_SellOrderDetail.size() + ")");
+//                tv_numberoforder.setText("(" + list_SellOrderDetail.size() + ")");
 
                 LatLng latlng = new LatLng(Double.valueOf(SellOrderDetail.getPlanlat()), Double.valueOf(SellOrderDetail.getplanlng()));
                 addCustomMarker_newsale(R.drawable.ic_newsale, R.color.bg_text, latlng, SellOrderDetail.getUuid(), SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname() + "\n" + "出售" + SellOrderDetail.getplannumber() + "株");
@@ -2408,7 +2406,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                         list_SellOrderDetail.remove(i);
                         Toast.makeText(getActivity(), "删除成功！", Toast.LENGTH_SHORT).show();
                         tencentMap.removeOverlay(marker);
-                        tv_numberoforder.setText("(" + list_SellOrderDetail.size() + ")");
+//                        tv_numberoforder.setText("(" + list_SellOrderDetail.size() + ")");
                         break;
                     }
                 }
@@ -3273,8 +3271,8 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
         list_BatchOfProduct = SqliteDb.getBatchOfProductByuid(getActivity(), "60");
         if (list_BatchOfProduct.size() == 0)
         {
-            tv_noproducttip.setVisibility(View.VISIBLE);
-            tv_noproducttip.setText("暂无产品需要销售");
+//            tv_noproducttip.setVisibility(View.VISIBLE);
+//            tv_noproducttip.setText("暂无产品需要销售");
         } else
         {
             batchTime = list_BatchOfProduct.get(0).getBatchTime();
@@ -3442,7 +3440,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
 
                     }
 //承包区销售图
-                    List<SellOrderDetail> list_SellOrderDetail = SqliteDb.getSaleLayer_contract(getActivity(), list_contractTab.get(m).getid());
+                    List<SellOrderDetail> list_SellOrderDetail = SqliteDb.getSaleLayer_contract(getActivity(), list_contractTab.get(m).getid(),batchTime);
                     if (list_SellOrderDetail != null)
                     {
                         for (int j = 0; j <list_SellOrderDetail.size() ; j++)
@@ -5329,7 +5327,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                         tv_tip.setBackgroundResource(R.color.bg_green);
                     } else
                     {
-                        savedividedPolygonInfo(latlng, list_LatLng_boundaryselect, list_LatLng_boundarynotselect);
+                        savedividedPolygonInfo("",latlng, list_LatLng_boundaryselect, list_LatLng_boundarynotselect);
 //                    savePolygonInfo(latlng, list_LatLng_boundaryselect, list_LatLng_boundarynotselect);
 //                    showDialog_EditPolygonInfo(list_LatLng_boundaryselect, list_LatLng_boundarynotselect);
                     }
@@ -6083,11 +6081,11 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                 if (polygon_divide1.contains(latLng))
                 {
                     initMapOnclickListening();
-                    savedividedPolygonInfo(latLng, list_latlng_divide1, list_latlng_divide2);
+                    savedividedPolygonInfo("",latLng, list_latlng_divide1, list_latlng_divide2);
                 } else if (polygon_divide2.contains(latLng))
                 {
                     initMapOnclickListening();
-                    savedividedPolygonInfo(latLng, list_latlng_divide2, list_latlng_divide1);
+                    savedividedPolygonInfo("",latLng, list_latlng_divide2, list_latlng_divide1);
                 } else
                 {
                     tv_tip.setText("请在划分的两个区域中选择");

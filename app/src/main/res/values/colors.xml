@@ -53,7 +53,9 @@
     <color name="bg_yellow">#ea871c</color>
     <color name="yellow">#ffff00</color>
     <color name="bg_green">#4fcf72</color>
+    <color name="green">#00ff00</color>
     <color name="bg_blue">#59aeef</color>
+    <color name="blue">#0000ff</color>
     <color name="bg_sq">#dec149</color>
     <color name="bg_plant">#1ab394</color>
     <color name="bg_job">#23c6c8</color>

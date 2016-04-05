@@ -24,31 +24,43 @@
             android:layout_height="match_parent"
             android:background="@color/line_color"/>
         <Button
-            android:id="@+id/btn_sale"
+            android:id="@+id/btn_createorder"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:text="出售部分"
+            android:text="生成订单"
             android:textSize="15sp"/>
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="@color/line_color"/>
         <Button
-            android:id="@+id/btn_salewhole"
+            android:id="@+id/btn_delete"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:text="出售全区"
+            android:text="删除"
+            android:textSize="15sp"/>
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@color/line_color"/>
+        <Button
+            android:id="@+id/btn_paint"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:visibility="gone"
+            android:text="画图"
             android:textSize="15sp"/>
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="@color/line_color"/>
-
-
         <Button
             android:id="@+id/btn_cancle"
             android:layout_width="0dip"
