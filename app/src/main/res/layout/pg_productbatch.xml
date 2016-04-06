@@ -24,18 +24,7 @@
             android:layout_height="@dimen/titlebar_height"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="断蕾"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/titlebar_textsize"/>
-
-        <Button
-            android:id="@+id/btn_dividebatch"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/titlebar_height"
-            android:layout_alignParentRight="true"
-            android:background="@null"
-            android:gravity="center"
-            android:text="划分批次"
+            android:text="产品批次"
             android:textColor="@color/bg_text"
             android:textSize="@dimen/titlebar_textsize"/>
 
@@ -270,6 +259,26 @@
                     android:layout_weight="1"
                     android:text="承包区标识"/>
 
+                <CheckBox
+                    android:id="@+id/cb_parkdata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="园区图表"/>
+
+                <CheckBox
+                    android:id="@+id/cb_areadata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="片区图表"/>
+
+                <CheckBox
+                    android:id="@+id/cb_contractdata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="承包区图表"/>
 
                 <CheckBox
                     android:id="@+id/cb_house"
@@ -318,6 +327,39 @@
                 android:textColor="@color/bg_text"
                 android:textSize="14sp"
                 android:visibility="gone"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top">
+
+                <Button
+                    android:id="@+id/btn_batchofproduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dip"
+                    android:layout_centerInParent="true"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="产品批次"
+                    android:textColor="@color/bg_text"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:id="@+id/line_batch"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/btn_batchofproduct"
+                    android:background="@color/line_color"/>
+
+                <ImageView
+                    android:id="@+id/iv_arrow"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dip"
+                    android:background="@drawable/downward"/>
+            </RelativeLayout>
 
 
         </FrameLayout>

@@ -56,7 +56,7 @@
         <activity
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".ui.CZ_MakeMap_"/>
+        <activity android:name=".ui.PG_ProductBatch_"/>
         <activity android:name=".ui.MakeMap_"/>
         <activity android:name=".ui.MapUtils_"/>
         <activity android:name=".ui.CZ_MakeMap_MakeLayer_"/>

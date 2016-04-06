@@ -232,6 +232,19 @@ public class SqliteDb
         }
         return true;
     }
+    public static <T> boolean editBreakoff(Context context, Object c)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.update(c, "numberofbreakoff");
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     public static <T> boolean editSellOrderDetail(Context context, Object c)
     {
@@ -1242,6 +1255,20 @@ public class SqliteDb
 
         return list;
     }
+    public static List<BreakOff> getBreakOffInfoByContractId(Context context, String contractid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<BreakOff> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(BreakOff.class).where("contractid", "=", contractid).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
     public static List<SellOrderDetail> getNewSaleList(Context context, String uid,String batchtime)
     {
         DbUtils db = DbUtils.create(context);
@@ -1285,7 +1312,20 @@ public class SqliteDb
 
         return breakoff;
     }
+    public static BreakOff getBreakoffbyuuid(Context context, String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        BreakOff breakOff = null;
+        try
+        {
+            breakOff = db.findFirst(Selector.from(BreakOff.class).where("uuid", "=", uuid).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
 
+        return breakOff;
+    }
     public static SellOrderDetail getSellOrderDetailbyuuid(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
@@ -1906,6 +1946,20 @@ public class SqliteDb
         }
         return true;
     }
+    public static <T> boolean deleteBreakoffInfo(Context context,  String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.delete(BreakOff.class, WhereBuilder.b("uuid", "=", uuid));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            String a = e.getMessage();
+            return false;
+        }
+        return true;
+    }
     public static <T> boolean deleteAllRecordtemp(Context context, Class<T> c, String BELONG)
     {
         DbUtils db = DbUtils.create(context);
@@ -2177,6 +2231,18 @@ public class SqliteDb
         }
         return true;
     }
+    public static  boolean  breakoffwhole(Context context, Object c)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.update(c, "status");
+        } catch (DbException e)
+        {
+            return false;
+        }
+        return true;
+    }
     public static  boolean  deleteShoppingcartByBatchtime(Context context, String uid,String batchTime)
     {
         DbUtils db = DbUtils.create(context);
@@ -2194,7 +2260,19 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.update(c, "saleid","type");
+            db.update(c, "saleid", "type");
+        } catch (DbException e)
+        {
+            return false;
+        }
+        return true;
+    }
+    public static  boolean  deleteBreakoffInfo(Context context, Object c)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.update(c, "status");
         } catch (DbException e)
         {
             return false;
