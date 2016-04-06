@@ -53,7 +53,8 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     PG_EventList pg_eventList;
 //    ProductSale productAndSale;
 //    ProductAndSale productAndSale;
-    PG_BreakOff pg_breakOff;
+//    PG_BreakOff pg_breakOff;
+    PG_BreakBud pg_breakBud;
     PG_EveryDayAssessList pg_EveryDayAssessList;
     IFragment iFragment;
     @ViewById
@@ -119,7 +120,7 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
-        switchContent(mContent, pg_breakOff);
+        switchContent(mContent, pg_breakBud);
     }
     @Click
     void tl_event()
@@ -191,7 +192,7 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         pg_gddList = new PG_GddList_();
         pg_eventList = new PG_EventList_();
 //        productAndSale = new ProductSale_();
-        pg_breakOff=new PG_BreakOff_();
+        pg_breakBud=new PG_BreakBud_();
         pg_EveryDayAssessList = new PG_EveryDayAssessList_();
         iFragment = new IFragment_();
 
