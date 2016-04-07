@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_GcdDetail;
+import com.farm.adapter.ViewPagerAdapter_WZ;
 import com.farm.app.AppContext;
+import com.farm.bean.WZ_Detail;
+import com.farm.bean.goodslisttab;
 import com.farm.widget.CustomViewPager;
 
 import org.androidannotations.annotations.AfterViews;
@@ -28,39 +31,57 @@ import java.util.List;
 @EActivity(R.layout.wz_ck_xxlist)
 public class NCZ_WZ_XXList extends FragmentActivity
 {
-
+//    goodslisttab goods;
+WZ_Detail goods;
+    ViewPagerAdapter_WZ viewPagerAdapter_wz;
     ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
     com.farm.bean.commembertab commembertab;
     int currentItem = 0;
 
     List<Fragment> fragmentList;
     NCZ_WZ_PC ncz_wz_pc;
+    NCZ_WZ_FB ncz_wz_fb;
     Fragment mContent = new Fragment();
     @ViewById
-    CustomViewPager wz_kucun;
+    CustomViewPager cvPager;
     @ViewById
     TextView wz_pici;
     @ViewById
     TextView wz_fenbu;
+    @ViewById
+    TextView wzxx_tab;
     @Click
     void wzbtn_account(){
         finish();
     }
     @Click
-    void wz_pici(){
-        wz_kucun.setCurrentItem(0);
+    void wz_pici()
+    {
+        cvPager.setCurrentItem(0);
 
     }
     @Click
-    void wz_fenbu(){
-        wz_kucun.setCurrentItem(1);
+    void wz_fenbu()
+    {
+        cvPager.setCurrentItem(1);
     }
     @AfterViews
     void afterOncreat(){
+        wzxx_tab.setText(goods.getGoodsName());
         setBackground(0);
-        wz_kucun.setOffscreenPageLimit(1);
-        wz_kucun.setIsScrollable(true);
-        viewPagerAdapter_gcdDetail = new ViewPagerAdapter_GcdDetail(NCZ_WZ_XXList.this.getSupportFragmentManager(), wz_kucun, fragmentList);
+        cvPager.setOffscreenPageLimit(1);
+        cvPager.setIsScrollable(true);
+        viewPagerAdapter_wz=new ViewPagerAdapter_WZ(NCZ_WZ_XXList.this.getSupportFragmentManager(), cvPager, fragmentList);
+        viewPagerAdapter_wz.setOnExtraPageChangeListener(new ViewPagerAdapter_WZ.OnExtraPageChangeListener()
+        {
+            @Override
+            public void onExtraPageScrolled(int i, float v, int i2) {
+                currentItem = i;
+                setBackground(i);
+            }
+        });
+
+       /* viewPagerAdapter_gcdDetail = new ViewPagerAdapter_GcdDetail(NCZ_WZ_XXList.this.getSupportFragmentManager(), cvPager, fragmentList);
         viewPagerAdapter_gcdDetail.setOnExtraPageChangeListener(new ViewPagerAdapter_GcdDetail.OnExtraPageChangeListener() {
             @Override
             public void onExtraPageSelected(int i) {
@@ -68,7 +89,7 @@ public class NCZ_WZ_XXList extends FragmentActivity
                 currentItem = i;
                 setBackground(i);
             }
-        });
+        });*/
     }
     private void setBackground(int pos) {
         wz_pici.setBackgroundResource(R.color.white);
@@ -88,14 +109,19 @@ public class NCZ_WZ_XXList extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        goods=getIntent().getParcelableExtra("goods");
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("goods",goods);
         commembertab = AppContext.getUserInfo(NCZ_WZ_XXList.this);
         fragmentList = new ArrayList<>();
         ncz_wz_pc=new NCZ_WZ_PC_();
-
+        ncz_wz_fb=new NCZ_WZ_FB_();
+        ncz_wz_pc.setArguments(bundle);
+        ncz_wz_fb.setArguments(bundle);
         fragmentList.add(ncz_wz_pc);
+        fragmentList.add(ncz_wz_fb);
 
 
     }

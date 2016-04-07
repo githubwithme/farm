@@ -123,6 +123,8 @@
         <activity android:name=".ui.NCZ_WZ_XXList_"/>
         <activity android:name=".ui.NCZ_WZ_CKWZActivity_"/>
         <activity android:name=".ui.NCZ_CKWZDetail_"/>
+        <activity android:name=".ui.NCZ_WZ_PCDetail_"/>
+        <activity android:name=".ui.NCZ_WZ_Detail_"/>
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
         <activity android:name=".ui.CZ_PQ_TodayCommand_"/>

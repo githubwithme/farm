@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.farm.R;
+import com.farm.bean.WZ_Detail;
 import com.farm.bean.goodslisttab;
 import com.farm.common.BitmapHelper;
 
@@ -16,12 +17,13 @@ import java.util.List;
 public class GoodsAdapter extends BaseAdapter
 {
 
-    private List<goodslisttab> list;
-    private goodslisttab goodslisttab;
+    private List<WZ_Detail> list;
+//    private goodslisttab goodslisttab;
+    private WZ_Detail goodslisttab;
     private Context context;
     Holder view;
 
-    public GoodsAdapter(Context context, List<goodslisttab> list)
+    public GoodsAdapter(Context context, List<WZ_Detail> list)
     {
         this.list = list;
         this.context = context;
@@ -62,7 +64,8 @@ public class GoodsAdapter extends BaseAdapter
         {
             goodslisttab = list.get(position);
             BitmapHelper.setImageViewBackground(context, view.icon,"http://pic4.nipic.com/20090827/3095621_083213047918_2.jpg");
-            view.name.setText(goodslisttab.getgoodsName());
+            view.name.setText(goodslisttab.getGoodsName());
+            view.tv_number.setText(goodslisttab.getQuantity());
         }
 
         return convertView;
@@ -72,11 +75,13 @@ public class GoodsAdapter extends BaseAdapter
     {
         private ImageView icon;
         private TextView name;
+        private TextView tv_number;
 
         public Holder(View view)
         {
             icon = (ImageView) view.findViewById(R.id.typeicon);
             name = (TextView) view.findViewById(R.id.typename);
+            tv_number = (TextView) view.findViewById(R.id.tv_number);
         }
     }
 

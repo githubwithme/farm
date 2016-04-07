@@ -83,8 +83,12 @@ public class NCZ_WZ_CKWZActivity extends FragmentActivity
                     return;
                 Wz_Storehouse wz_storehouse=listData.get(position-1);
                 Intent intent=new Intent(NCZ_WZ_CKWZActivity.this,NCZ_CKWZDetail_.class);
-                intent.putExtra("storehouseId",Wz_Storehouse);
-                intent.putExtra("goods",wz_storehouse);
+                intent.putExtra("storehouseId",Wz_Storehouse.getStorehouseId());
+                intent.putExtra("goodsId",wz_storehouse.getGoodsId());
+                intent.putExtra("localName",Wz_Storehouse.getParkName()+"-"+Wz_Storehouse.getStorehouseName());
+                intent.putExtra("goodsName",wz_storehouse.getGoodsName());
+//                intent.putExtra("storehouseId",Wz_Storehouse);
+//                intent.putExtra("goods",wz_storehouse);
                 startActivity(intent);
                /* commandtab commandtab = listData.get(position - 1);
                 if (commandtab == null) return;

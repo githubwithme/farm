@@ -42,8 +42,13 @@ import java.util.List;
  * Created by user on 2016/4/6.
  */
 @EActivity(R.layout.ncz_ckwzdetail)
-public class NCZ_CKWZDetail extends FragmentActivity
-{
+public class NCZ_CKWZDetail extends FragmentActivity {
+
+    String storehouseId;
+    String goodsId;
+    String localName;
+    String goodsName;
+
     NCZ_CKWZDetailAdapter listadpater;
     commembertab commembertab;
     private List<Wz_Storehouse> listData = new ArrayList<Wz_Storehouse>();
@@ -55,21 +60,26 @@ public class NCZ_CKWZDetail extends FragmentActivity
     TextView tv_title;
     @ViewById
     TextView goodname;
+
     @AfterViews
-    void after()
-    {
-        tv_title.setText(Wz_Storehouse.getParkName()+"-"+Wz_Storehouse.getStorehouseName());
-        tv_title.setText(wz_storehouse.getGoodsName());
+    void after() {
+//        tv_title.setText(Wz_Storehouse.getParkName()+"-"+Wz_Storehouse.getStorehouseName());
+//        tv_title.setText(wz_storehouse.getGoodsName());
+        tv_title.setText(localName);
+        tv_title.setText(goodsName);
         getListData();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        Wz_Storehouse=getIntent().getParcelableExtra("storehouseId");
-        wz_storehouse=getIntent().getParcelableExtra("goods");
-//        String a= Wz_Storehouse.getStorehouseId();
-//        String b= wz_storehouse.getGoodsId();
+//        Wz_Storehouse=getIntent().getParcelableExtra("storehouseId");
+//        wz_storehouse=getIntent().getParcelableExtra("goods");
+        storehouseId=getIntent().getStringExtra("storehouseId");
+        goodsId=getIntent().getStringExtra("goodsId");
+        localName=getIntent().getStringExtra("localName");
+        goodsName=getIntent().getStringExtra("goodsName");
 
     }
 
@@ -78,8 +88,8 @@ public class NCZ_CKWZDetail extends FragmentActivity
         commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("storehouseId", Wz_Storehouse.getStorehouseId());
-        params.addQueryStringParameter("goodsId", wz_storehouse.getGoodsId());
+        params.addQueryStringParameter("storehouseId", storehouseId);
+        params.addQueryStringParameter("goodsId", goodsId);
         params.addQueryStringParameter("action", "getPCSLByWzIdCKId");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
@@ -92,7 +102,7 @@ public class NCZ_CKWZDetail extends FragmentActivity
                 {
                     if (result.getAffectedRows() != 0) {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
-                        listadpater=new NCZ_CKWZDetailAdapter(NCZ_CKWZDetail.this, listNewData);
+                        listadpater = new NCZ_CKWZDetailAdapter(NCZ_CKWZDetail.this, listNewData);
                         wz_frame_listview.setAdapter(listadpater);
                     } else {
                         listNewData = new ArrayList<Wz_Storehouse>();

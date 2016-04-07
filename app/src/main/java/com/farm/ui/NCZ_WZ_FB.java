@@ -11,14 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.NCZ_WZ_FBAdapter;
 import com.farm.adapter.NCZ_WZ_PCAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
@@ -47,13 +46,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by user on 2016/2/26.
+ * Created by user on 2016/4/7.
  */
 @EFragment
-public class NCZ_WZ_PC extends Fragment  {
+public class NCZ_WZ_FB extends Fragment  {
 
-
-    private NCZ_WZ_PCAdapter listadpater;
+    NCZ_WZ_FBAdapter listadpater;
 //    goodslisttab goods;
 WZ_Detail goods;
     Fragment mContent = new Fragment();
@@ -65,11 +63,11 @@ WZ_Detail goods;
     private AppContext appContext;
     @ViewById
     PullToRefreshListView wz_frame_listview;
-@AfterViews
-void after()
-{
-    initAnimalListView();
-}
+    @AfterViews
+    void after()
+    {
+        initAnimalListView();
+    }
 
     @Nullable
     @Override
@@ -80,7 +78,7 @@ void after()
     }
 
     private void initAnimalListView() {
-        listadpater=new NCZ_WZ_PCAdapter(getActivity(), listData);
+        listadpater=new NCZ_WZ_FBAdapter(getActivity(), listData);
         list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
@@ -91,16 +89,14 @@ void after()
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer)
                     return;
-//                Intent intent=new Intent(getActivity(),NCZ_CKWZDetail_.class);
                 WZ_Pcxx wz_pcxx=listData.get(position-1);
-                Intent intent=new Intent(getActivity(),NCZ_WZ_PCDetail_.class);
-                intent.putExtra("goods",goods);
-                intent.putExtra("wz_pcxx",wz_pcxx);
+                Intent intent=new Intent(getActivity(),NCZ_CKWZDetail_.class);
+                intent.putExtra("storehouseId",wz_pcxx.getStorehouseId());
+                intent.putExtra("goodsId", goods.getGoodsId());
+                intent.putExtra("localName",wz_pcxx.getParkName()+"-"+wz_pcxx.getStorehouseName());
+                intent.putExtra("goodsName",goods.getGoodsName());
+
                 startActivity(intent);
-               /* Wz_Storehouse Wz_Storehouse=listData.get((position-1));
-                Intent intent=new Intent(getActivity(),NCZ_WZ_CKWZActivity_.class);
-                intent.putExtra("storehouseId",Wz_Storehouse);
-                startActivity(intent);*/
 
             }
         });
@@ -164,7 +160,7 @@ void after()
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("goodsId", goods.getGoodsId());
-        params.addQueryStringParameter("action", "getWzpcByWzid");
+        params.addQueryStringParameter("action", "getWzfbByWzid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
@@ -201,7 +197,7 @@ void after()
                                         for (WZ_Pcxx Wz_Storehouse1 : listNewData) {
                                             boolean b = false;
                                             for (WZ_Pcxx Wz_Storehouse2 : listData) {
-                                                if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())||Wz_Storehouse1.getBatchNumber().equals(Wz_Storehouse2.getBatchNumber())) {
+                                                if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())) {
                                                     b = true;
                                                     break;
                                                 }
@@ -238,7 +234,7 @@ void after()
                                     for (WZ_Pcxx Wz_Storehouse1 : listNewData) {
                                         boolean b = false;
                                         for (WZ_Pcxx Wz_Storehouse2 : listData) {
-                                            if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())||Wz_Storehouse1.getBatchNumber().equals(Wz_Storehouse2.getBatchNumber())) {
+                                            if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())) {
                                                 b = true;
                                                 break;
                                             }
@@ -296,5 +292,4 @@ void after()
             }
         });
     }
-
 }
