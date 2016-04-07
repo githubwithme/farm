@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/titlebar_height"
+        android:layout_height="@dimen/popuwindow_height"
         android:background="@color/bg_titlebar" >
 
         <ImageButton
@@ -49,15 +49,15 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:gravity="center">
         <TextView
             android:id="@+id/wz_pici"
             android:layout_width="60dip"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dip"
+            android:background="@drawable/red_bottom"
             android:gravity="center"
             android:text="批次"
             android:textColor="@color/textcolor_titlebar"
@@ -67,7 +67,7 @@
             android:layout_width="60dip"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dip"
+            android:layout_marginLeft="5dip"
             android:gravity="center"
             android:text="分布"
             android:textColor="@color/textcolor_titlebar"

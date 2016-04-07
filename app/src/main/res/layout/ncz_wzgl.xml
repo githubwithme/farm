@@ -11,7 +11,7 @@
 
         <ImageButton
             android:id="@+id/imgbtn_back"
-            android:layout_width="wrap_content"
+            android:layout_width="30dip"
             android:layout_height="@dimen/titlebar_height"
             android:layout_marginLeft="5dip"
             android:background="@null"
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/imgbtn_back"
             android:orientation="horizontal">
 
@@ -39,32 +39,41 @@
                 android:textSize="@dimen/titlebar_textsize" />
 
             <TextView
-                android:id="@+id/wz_ck"
+                android:id="@+id/wzck"
                 android:layout_width="60dip"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="20dip"
+                android:layout_marginLeft="5dip"
                 android:gravity="center"
                 android:text="仓库"
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/titlebar_textsize" />
             <TextView
-                android:id="@+id/wz_cr"
+                android:id="@+id/wz_rk"
                 android:layout_width="60dip"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="20dip"
+                android:layout_marginLeft="5dip"
                 android:gravity="center"
-                android:text="出入库"
+                android:text="入库"
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/titlebar_textsize" />
-
+            <TextView
+                android:id="@+id/wz_ck"
+                android:layout_width="60dip"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dip"
+                android:gravity="center"
+                android:text="出库"
+                android:textColor="@color/textcolor_titlebar"
+                android:textSize="@dimen/titlebar_textsize" />
             <TextView
                 android:id="@+id/wz_yc"
                 android:layout_width="60dip"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="20dip"
+                android:layout_marginLeft="5dip"
                 android:gravity="center"
                 android:text="异常"
                 android:textColor="@color/textcolor_titlebar"

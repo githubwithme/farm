@@ -26,13 +26,15 @@ import java.util.List;
  */
 @SuppressLint("NewApi")
 @EActivity(R.layout.wz_ck_xxlist)
-public class NCZ_WZ_XXList extends FragmentActivity implements View.OnClickListener
-{ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
+public class NCZ_WZ_XXList extends FragmentActivity
+{
+
+    ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
     com.farm.bean.commembertab commembertab;
-    String wz_ck;
     int currentItem = 0;
+
     List<Fragment> fragmentList;
-NCZ_WZ_PC ncz_wz_pc;
+    NCZ_WZ_PC ncz_wz_pc;
     Fragment mContent = new Fragment();
     @ViewById
     CustomViewPager wz_kucun;
@@ -87,27 +89,16 @@ NCZ_WZ_PC ncz_wz_pc;
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        getActionBar();
-        Bundle bundle = new Bundle();
-        wz_ck = getIntent().getStringExtra("wzgl");
-        bundle.putString("wzgl", wz_ck);
+        getActionBar().hide();
+
         commembertab = AppContext.getUserInfo(NCZ_WZ_XXList.this);
         fragmentList = new ArrayList<>();
         ncz_wz_pc=new NCZ_WZ_PC_();
-        ncz_wz_pc.setArguments(bundle);
-        fragmentList.add(ncz_wz_pc);
-        fragmentList.add(ncz_wz_pc);
-       /* ncz_wz_ckxxFragment=new NCZ_WZ_CKXXFragment_();
-        ncz_wz_lookFragment=new NCZ_WZ_LOOKFragment_();
-        ncz_wz_lookFragment.setArguments(bundle);
-        ncz_wz_ckxxFragment.setArguments(bundle);
-        fragmentList.add(ncz_wz_lookFragment);
-        fragmentList.add(ncz_wz_ckxxFragment);
-*/
-    }
 
-    @Override
-    public void onClick(View view) {
+        fragmentList.add(ncz_wz_pc);
+
 
     }
+
+
 }

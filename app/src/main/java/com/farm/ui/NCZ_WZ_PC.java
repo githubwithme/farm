@@ -21,14 +21,12 @@ import java.util.List;
  */
 @EFragment
 public class NCZ_WZ_PC extends Fragment  {
-   String [] str={"1","2","3"};
-    @ViewById
-    ListView wz_ggg;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.ncz_wz_ck_item,container,false);
-        wz_ggg.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_expandable_list_item_1,str));
 
         return view;
     }

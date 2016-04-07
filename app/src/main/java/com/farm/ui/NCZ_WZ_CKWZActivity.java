@@ -1,37 +1,25 @@
 package com.farm.ui;
 
-import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_PQ_CommandListAdapter;
+import com.farm.adapter.NCZ_WZ_CKWZAdapter;
 import com.farm.adapter.NCZ_WZ_CKXXlistAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
 import com.farm.bean.Wz_Storehouse;
-import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
-import com.farm.common.DictionaryHelper;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
 import com.farm.widget.NewDataToast;
@@ -44,7 +32,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -52,39 +40,38 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by user on 2016/2/25.
+ * Created by user on 2016/4/6.
  */
-@SuppressLint("NewApi")
-@EFragment
-public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
-
-    String wzll;
-    Fragment mContent = new Fragment();
-    private NCZ_WZ_CKXXlistAdapter listadpater;
-    private NCZ_PQ_CommandListAdapter listAdapter;//5
+@EActivity(R.layout.ncz_wz_ckwzactivity)
+public class NCZ_WZ_CKWZActivity extends FragmentActivity
+{
+    private NCZ_WZ_CKWZAdapter listadpater;
     private int listSumData;
     private View list_footer;//5
     private TextView list_foot_more;//5
     private ProgressBar list_foot_progress;//5
     private List<Wz_Storehouse> listData = new ArrayList<Wz_Storehouse>();
-    private List<String> wzdata;
     private AppContext appContext;
-    private ListView listView;
-
+    Wz_Storehouse Wz_Storehouse;
+    @ViewById
+    TextView tv_title;
     @ViewById
     PullToRefreshListView wz_frame_listview;
-
-
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();;
+        Wz_Storehouse=getIntent().getParcelableExtra("storehouseId");
+    }
     @AfterViews
     void afterwzoncreat() {
-
+        tv_title.setText(Wz_Storehouse.getParkName()+"-"+Wz_Storehouse.getStorehouseName());
         initAnimalListView();
     }
-
-    private void initAnimalListView() {
-        listadpater=new NCZ_WZ_CKXXlistAdapter(getActivity(), listData);
-        list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
+    private void initAnimalListView()
+    {
+        listadpater=new NCZ_WZ_CKWZAdapter(this, listData);
+        list_footer = getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         wz_frame_listview.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
@@ -94,10 +81,10 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer)
                     return;
-
-                Wz_Storehouse Wz_Storehouse=listData.get((position-1));
-                Intent intent=new Intent(getActivity(),NCZ_WZ_CKWZActivity_.class);
+                Wz_Storehouse wz_storehouse=listData.get(position-1);
+                Intent intent=new Intent(NCZ_WZ_CKWZActivity.this,NCZ_CKWZDetail_.class);
                 intent.putExtra("storehouseId",Wz_Storehouse);
+                intent.putExtra("goods",wz_storehouse);
                 startActivity(intent);
                /* commandtab commandtab = listData.get(position - 1);
                 if (commandtab == null) return;
@@ -153,33 +140,13 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
             getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.ncz_wz_ckxx, container, false);
-        appContext = (AppContext) getActivity().getApplication();
-        IntentFilter intentFilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        getActivity().registerReceiver(receiver_update, intentFilter_update);
-
-        return view;
-    }
-
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
-    {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-        }
-    };
-
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX) {
 
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getGoodsByUid");
+        params.addQueryStringParameter("storehouseId", Wz_Storehouse.getStorehouseId());
+        params.addQueryStringParameter("action", "getGoodsByStoreID");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
@@ -195,7 +162,7 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
                         listNewData = new ArrayList<Wz_Storehouse>();
                     }
                 } else {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    AppContext.makeToast(NCZ_WZ_CKWZActivity.this, "error_connectDataBase");
 
                     return;
                 }
@@ -216,7 +183,7 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
                                         for (Wz_Storehouse Wz_Storehouse1 : listNewData) {
                                             boolean b = false;
                                             for (Wz_Storehouse Wz_Storehouse2 : listData) {
-                                                if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())) {
+                                                if (Wz_Storehouse1.getGoodsId().equals(Wz_Storehouse2.getGoodsId())) {
                                                     b = true;
                                                     break;
                                                 }
@@ -237,7 +204,7 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
                         if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
                             // 提示新加载数据
                             if (newdata > 0) {
-                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                NewDataToast.makeText(NCZ_WZ_CKWZActivity.this, getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else {
                                 // NewDataToast.makeText(NCZ_PQ_CommandList.this,
                                 // getString(R.string.new_data_toast_none), false,
@@ -253,7 +220,7 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
                                     for (Wz_Storehouse Wz_Storehouse1 : listNewData) {
                                         boolean b = false;
                                         for (Wz_Storehouse Wz_Storehouse2 : listData) {
-                                            if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())) {
+                                            if (Wz_Storehouse1.getGoodsId().equals(Wz_Storehouse2.getGoodsId())) {
                                                 b = true;
                                                 break;
                                             }
@@ -285,7 +252,7 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
                     // 有异常--显示加载出错 & 弹出错误消息
                     lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                     more.setText(R.string.load_error);
-                    AppContext.makeToast(getActivity(), "load_error");
+                    AppContext.makeToast(NCZ_WZ_CKWZActivity.this, "load_error");
                 }
                 if (adapter.getCount() == 0) {
                     lv.setTag(UIHelper.LISTVIEW_DATA_EMPTY);
@@ -306,16 +273,10 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
             @Override
             public void onFailure(HttpException error, String msg) {
                 String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                AppContext.makeToast(NCZ_WZ_CKWZActivity.this, "error_connectServer");
 
             }
         });
     }
-
-    @Override
-    public void onClick(View view) {
-
-    }
-
 
 }
