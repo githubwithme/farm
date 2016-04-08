@@ -13,7 +13,7 @@
 
     <com.farm.widget.PullToRefreshListView
         android:id="@+id/wz_frame_listview"
-        style="@style/widget_listview" />
+        style="@style/wz_listview" />
 
 
 </LinearLayout>

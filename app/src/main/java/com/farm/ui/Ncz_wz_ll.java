@@ -29,7 +29,9 @@ public class Ncz_wz_ll extends FragmentActivity {
     ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
     NCZ_WZ_LOOKFragment nec_wz_lookFragment;
     NCZ_WZ_CKXXFragment ncz_wz_ckxxFragment;
+    NCZ_WZ_RKFragment ncz_wz_rkFragment;
     NCZ_WZ_CKFRagment ncz_wz_ckfRagment;
+    NCZ_WZ_YCFragment ncz_wz_ycFragment;
     int currentItem = 0;
     List<Fragment> fragmentList;
     Fragment mContent = new Fragment();
@@ -75,7 +77,7 @@ public class Ncz_wz_ll extends FragmentActivity {
     }
     @Click
     void wz_yc() {
-        cvPager.setCurrentItem(3);
+        cvPager.setCurrentItem(4);
     }
 
     @AfterViews
@@ -129,11 +131,15 @@ public class Ncz_wz_ll extends FragmentActivity {
         fragmentList = new ArrayList<>();
         ncz_wz_ckxxFragment=new NCZ_WZ_CKXXFragment_();
         nec_wz_lookFragment=new NCZ_WZ_LOOKFragment_();
-//        ncz_wz_ckfRagment=new NCZ_WZ_CKFRagment_();
+        ncz_wz_rkFragment=new NCZ_WZ_RKFragment_();
+        ncz_wz_ckfRagment=new NCZ_WZ_CKFRagment_();
+        ncz_wz_ycFragment=new NCZ_WZ_YCFragment_();
 
         fragmentList.add(nec_wz_lookFragment);
         fragmentList.add(ncz_wz_ckxxFragment);
-//        fragmentList.add(ncz_wz_ckfRagment);
+        fragmentList.add(ncz_wz_rkFragment);
+        fragmentList.add(ncz_wz_ckfRagment);
+        fragmentList.add(ncz_wz_ycFragment);
 
 
 

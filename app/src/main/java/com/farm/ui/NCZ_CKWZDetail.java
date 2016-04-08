@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -60,6 +62,13 @@ public class NCZ_CKWZDetail extends FragmentActivity {
     TextView tv_title;
     @ViewById
     TextView goodname;
+    @ViewById
+    ImageButton btn_back;
+
+    @Click
+    void btn_back() {
+        finish();
+    }
 
     @AfterViews
     void after() {
@@ -76,10 +85,10 @@ public class NCZ_CKWZDetail extends FragmentActivity {
         getActionBar().hide();
 //        Wz_Storehouse=getIntent().getParcelableExtra("storehouseId");
 //        wz_storehouse=getIntent().getParcelableExtra("goods");
-        storehouseId=getIntent().getStringExtra("storehouseId");
-        goodsId=getIntent().getStringExtra("goodsId");
-        localName=getIntent().getStringExtra("localName");
-        goodsName=getIntent().getStringExtra("goodsName");
+        storehouseId = getIntent().getStringExtra("storehouseId");
+        goodsId = getIntent().getStringExtra("goodsId");
+        localName = getIntent().getStringExtra("localName");
+        goodsName = getIntent().getStringExtra("goodsName");
 
     }
 

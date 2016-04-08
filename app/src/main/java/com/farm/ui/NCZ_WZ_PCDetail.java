@@ -8,8 +8,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_CKWZDetailAdapter;
-import com.farm.adapter.NCZ_WZ_PCExpAdapter;
+import com.farm.adapter.ncz_wz_pcexpadapter;
 import com.farm.adapter.NCZ_WZ_PCInAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
@@ -17,7 +16,6 @@ import com.farm.bean.Result;
 import com.farm.bean.WZ_Detail;
 import com.farm.bean.WZ_Pcxx;
 import com.farm.bean.commembertab;
-import com.farm.bean.goodslisttab;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -43,7 +41,7 @@ public class NCZ_WZ_PCDetail extends FragmentActivity {
 WZ_Detail goods;
     WZ_Pcxx wz_pcxx;
     NCZ_WZ_PCInAdapter ncz_wz_pcInAdapter;
-    NCZ_WZ_PCExpAdapter listadpater;
+    ncz_wz_pcexpadapter listadpater;
     @ViewById
     TextView tv_title;
     @ViewById
@@ -107,7 +105,7 @@ WZ_Detail goods;
                                 it.remove();
                             }
                         }
-                        listadpater=new NCZ_WZ_PCExpAdapter(NCZ_WZ_PCDetail.this, listNewData);
+                        listadpater=new ncz_wz_pcexpadapter(NCZ_WZ_PCDetail.this, listNewData);
                         exdata.setAdapter(listadpater);
                     } else {
                         listNewData = new ArrayList<WZ_Pcxx>();
