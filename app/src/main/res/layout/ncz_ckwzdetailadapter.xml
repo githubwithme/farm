@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:inputType="numberDecimal"
+            android:text="批次号"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
+
+
+
+        <TextView
+            android:id="@+id/batchName"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:inputType="numberDecimal"
+            android:text="叶数"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:inputType="numberDecimal"
+            android:text="数量"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
+
+
+
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:inputType="numberDecimal"
+            android:text="叶数"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:inputType="numberDecimal"
+            android:text="总值"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
+
+
+
+        <TextView
+            android:id="@+id/inGoodsValue"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:inputType="numberDecimal"
+            android:text="叶数"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:inputType="numberDecimal"
+            android:text="过期时间"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
+
+
+
+        <TextView
+            android:id="@+id/expDate"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:inputType="numberDecimal"
+            android:text="叶数"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:inputType="numberDecimal"
+            android:text="入库时间"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
+
+
+
+        <TextView
+            android:id="@+id/inDate"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:inputType="numberDecimal"
+            android:text="叶数"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

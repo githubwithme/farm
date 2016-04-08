@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/wz_title"
+        android:background="@color/line_color_black" />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dip"
+    android:background="@drawable/bg_white">
+
+<TextView
+    android:id="@+id/namess"
+    android:layout_marginLeft="20dip"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:text="物质名称"
+    android:textSize="@dimen/size_14"/>
+    <EditText
+        android:layout_toRightOf="@+id/namess"
+        android:id="@+id/et_goodsname"
+        android:layout_width="200dip"
+        android:layout_height="@dimen/height_colum"
+        android:layout_span="3"
+        android:background="@null"
+        android:hint="请输入事件描述"
+        android:paddingLeft="10dip"
+        android:textColor="@color/bg_yellow"
+        android:textSize="@dimen/size_14"
+        />
+    <ImageButton
+        android:background="@null"
+        android:id="@+id/imgbtn"
+        android:layout_width="40dip"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/et_goodsname"
+        android:src="@drawable/searchitem"/>
+</RelativeLayout>
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"
+        />
+
+
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:childDivider="@color/transparent"
+        android:dividerHeight="0dip"
+        android:layout_height="match_parent"
+        android:groupIndicator="@null"/>
+</LinearLayout>

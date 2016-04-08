@@ -18,8 +18,10 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
+import com.farm.bean.WZ_Detail;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
+import com.farm.ui.NCZ_WZ_Detail_;
 import com.farm.ui.NCZ_WZ_XXList_;
 import com.farm.ui.SingleGoodList_;
 import com.lidroid.xutils.HttpUtils;
@@ -45,6 +47,7 @@ public class CustomExpandableListAdapter_Goods extends BaseExpandableListAdapter
     private int currentItem = 0;
     //    ShopAdapter shopAdapter;
     List<goodslisttab> list_goods = new ArrayList<goodslisttab>();
+    List<WZ_Detail> list_goodsed = new ArrayList<WZ_Detail>();
     Dictionary_wheel dictionary_wheel;
     ExpandableListView mainlistview;
     private Context context;// 运行上下文
@@ -254,7 +257,7 @@ public class CustomExpandableListAdapter_Goods extends BaseExpandableListAdapter
         return true;
     }
 
-    private void getGoodslist()
+  /*  private void getGoodslist()
     {
         commembertab commembertab = AppContext.getUserInfo(context);
         RequestParams params = new RequestParams();
@@ -286,7 +289,9 @@ public class CustomExpandableListAdapter_Goods extends BaseExpandableListAdapter
                                 public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
                                 {
 //                                      Intent intent = new Intent(context, SingleGoodList_.class);
-                                    Intent intent = new Intent(context, NCZ_WZ_XXList_.class);
+                                     Intent intent = new Intent(context, NCZ_WZ_XXList_.class);
+                                    goodslisttab goods=list_goods.get(pos);
+                                    intent.putExtra("goods",goods);
                                       context.startActivity(intent);
                                 }
                             });
@@ -317,7 +322,85 @@ public class CustomExpandableListAdapter_Goods extends BaseExpandableListAdapter
                 AppContext.makeToast(context, "error_connectServer");
             }
         });
+    }*/
+
+    private void getGoodslist()
+    {
+        commembertab commembertab = AppContext.getUserInfo(context);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("wz1", currentParentId);
+        params.addQueryStringParameter("wz2", currentChildId);
+        params.addQueryStringParameter("action", "getGoodsListByTId");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        String aa = result.getRows().toJSONString();
+                        list_goodsed = JSON.parseArray(result.getRows().toJSONString(), WZ_Detail.class);
+                        if (list_goods != null)
+                        {
+                            adapter = new GoodsAdapter(context, list_goodsed);
+                            list.setAdapter(adapter);
+                            list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                @Override
+                                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    Intent intent = new Intent(context, NCZ_WZ_Detail_.class);
+                                    WZ_Detail goods=list_goodsed.get(i);
+                                    intent.putExtra("goods",goods);
+                                    context.startActivity(intent);
+
+                                    return true;
+                                }
+                            });
+                            list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                            {
+                                @Override
+                                public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
+                                {
+//                                      Intent intent = new Intent(context, SingleGoodList_.class);
+                                    Intent intent = new Intent(context, NCZ_WZ_XXList_.class);
+//                                    goodslisttab goods=list_goods.get(pos);
+//                                    intent.putExtra("goods",goods);
+                                    WZ_Detail goods=list_goodsed.get(pos);
+                                    intent.putExtra("goods",goods);
+                                    context.startActivity(intent);
+                                }
+                            });
+                            adapter.notifyDataSetChanged();
+                        } else
+                        {
+                            list_goodsed = new ArrayList<WZ_Detail>();
+                            adapter = new GoodsAdapter(context, list_goodsed);
+                            list.setAdapter(adapter);
+                        }
+
+                    } else
+                    {
+                        list_goodsed = new ArrayList<WZ_Detail>();
+                        adapter = new GoodsAdapter(context, list_goodsed);
+                        list.setAdapter(adapter);
+                    }
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
     }
-
-
 }

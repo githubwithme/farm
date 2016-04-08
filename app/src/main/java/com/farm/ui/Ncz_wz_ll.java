@@ -29,7 +29,9 @@ public class Ncz_wz_ll extends FragmentActivity {
     ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
     NCZ_WZ_LOOKFragment nec_wz_lookFragment;
     NCZ_WZ_CKXXFragment ncz_wz_ckxxFragment;
+    NCZ_WZ_RKFragment ncz_wz_rkFragment;
     NCZ_WZ_CKFRagment ncz_wz_ckfRagment;
+    NCZ_WZ_YCFragment ncz_wz_ycFragment;
     int currentItem = 0;
     List<Fragment> fragmentList;
     Fragment mContent = new Fragment();
@@ -38,9 +40,11 @@ public class Ncz_wz_ll extends FragmentActivity {
     @ViewById
     TextView wz_ll;
     @ViewById
-    TextView wz_ck;
+    TextView wzck;
     @ViewById
-    TextView wz_cr;
+    TextView wz_rk;
+    @ViewById
+    TextView wz_ck;
     @ViewById
     TextView wz_yc;
     @ViewById
@@ -58,18 +62,22 @@ public class Ncz_wz_ll extends FragmentActivity {
     }
 
     @Click
-    void wz_ck() {
+    void wzck() {
         cvPager.setCurrentItem(1);
     }
 
     @Click
-    void wz_cr() {
+    void wz_rk() {
         cvPager.setCurrentItem(2);
     }
 
     @Click
-    void wz_yc() {
+    void wz_ck() {
         cvPager.setCurrentItem(3);
+    }
+    @Click
+    void wz_yc() {
+        cvPager.setCurrentItem(4);
     }
 
     @AfterViews
@@ -91,20 +99,24 @@ public class Ncz_wz_ll extends FragmentActivity {
 
     private void setBackground(int pos) {
         wz_ll.setBackgroundResource(R.color.white);
+        wzck.setBackgroundResource(R.color.white);
+        wz_rk.setBackgroundResource(R.color.white);
         wz_ck.setBackgroundResource(R.color.white);
-        wz_cr.setBackgroundResource(R.color.white);
         wz_yc.setBackgroundResource(R.color.white);
         switch (pos) {
             case 0:
                 wz_ll.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 1:
-                wz_ck.setBackgroundResource(R.drawable.red_bottom);
+                wzck.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 2:
-                wz_cr.setBackgroundResource(R.drawable.red_bottom);
+                wz_rk.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 3:
+                wz_ck.setBackgroundResource(R.drawable.red_bottom);
+                break;
+            case 4:
                 wz_yc.setBackgroundResource(R.drawable.red_bottom);
                 break;
         }
@@ -113,21 +125,21 @@ public class Ncz_wz_ll extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar();
-        Bundle bundle = new Bundle();
-        wzgl = getIntent().getStringExtra("wzgl");
-        bundle.putString("wzgl", wzgl);
+        getActionBar().hide();;
+
         commembertab = AppContext.getUserInfo(Ncz_wz_ll.this);
         fragmentList = new ArrayList<>();
         ncz_wz_ckxxFragment=new NCZ_WZ_CKXXFragment_();
         nec_wz_lookFragment=new NCZ_WZ_LOOKFragment_();
+        ncz_wz_rkFragment=new NCZ_WZ_RKFragment_();
         ncz_wz_ckfRagment=new NCZ_WZ_CKFRagment_();
-        nec_wz_lookFragment.setArguments(bundle);
-        ncz_wz_ckxxFragment.setArguments(bundle);
-        ncz_wz_ckfRagment.setArguments(bundle);
+        ncz_wz_ycFragment=new NCZ_WZ_YCFragment_();
+
         fragmentList.add(nec_wz_lookFragment);
         fragmentList.add(ncz_wz_ckxxFragment);
+        fragmentList.add(ncz_wz_rkFragment);
         fragmentList.add(ncz_wz_ckfRagment);
+        fragmentList.add(ncz_wz_ycFragment);
 
 
 

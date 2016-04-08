@@ -223,8 +223,9 @@ public class Area_Cmd_Adapter extends BaseAdapter
                     }else
                     {
                         Double acountnumber = Double.valueOf(list_goodslisttab.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
-                        Double  neednumber = acountnumber / Double.valueOf(number);
-                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + small_dw + "/株" + "  " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n";
+//                        Double  neednumber = acountnumber / Double.valueOf(number);    //冯
+//                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + small_dw + "/株" + "  " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n"; //冯
+                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " +goodslisttab.getgoodsunit()+ small_dw + "/株" + "  " + "共需" + acountnumber + goodslisttab.getgoodsunit() + "\n";
                     }
                     goodslisttab_flsl.setgoodsNote(goodsnote);
                 }

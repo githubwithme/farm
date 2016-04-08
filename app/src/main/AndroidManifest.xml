@@ -56,7 +56,6 @@
         <activity
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".ui.PG_ProductBatch_"/>
         <activity android:name=".ui.MakeMap_"/>
         <activity android:name=".ui.MapUtils_"/>
         <activity android:name=".ui.CZ_MakeMap_MakeLayer_"/>
@@ -121,7 +120,14 @@
         <activity android:name=".ui.EditUserInfo_"/>
         <activity android:name=".ui.AddPlantObservationRecord_"/>
         <activity android:name=".ui.Ncz_wz_ll_"/>
-        <activity android:name="ui.NCZ_WZ_XXList_"/>
+        <activity android:name=".ui.NCZ_WZ_XXList_"/>
+        <activity android:name=".ui.NCZ_WZ_CKWZActivity_"/>
+        <activity android:name=".ui.NCZ_CKWZDetail_"/>
+        <activity android:name=".ui.NCZ_WZ_PCDetail_"/>
+        <activity android:name=".ui.NCZ_WZ_Detail_"/>
+        <activity android:name=".ui.NCZ_WZ_RKDetail_"/>
+        <activity android:name=".ui.NCZ_WZ_CKDetail_"/>
+        <activity android:name=".ui.NCZ_WZ_YCDetail_"/>
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
         <activity android:name=".ui.CZ_PQ_TodayCommand_"/>

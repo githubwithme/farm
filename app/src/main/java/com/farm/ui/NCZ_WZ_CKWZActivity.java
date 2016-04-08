@@ -1,32 +1,25 @@
 package com.farm.ui;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_WZ_PCAdapter;
+import com.farm.adapter.NCZ_WZ_CKWZAdapter;
+import com.farm.adapter.NCZ_WZ_CKXXlistAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.WZ_Detail;
-import com.farm.bean.WZ_Pcxx;
+import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
-import com.farm.bean.goodslisttab;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
 import com.farm.widget.NewDataToast;
@@ -39,7 +32,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -47,41 +40,38 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by user on 2016/2/26.
+ * Created by user on 2016/4/6.
  */
-@EFragment
-public class NCZ_WZ_PC extends Fragment  {
-
-
-    private NCZ_WZ_PCAdapter listadpater;
-//    goodslisttab goods;
-WZ_Detail goods;
-    Fragment mContent = new Fragment();
+@EActivity(R.layout.ncz_wz_ckwzactivity)
+public class NCZ_WZ_CKWZActivity extends FragmentActivity
+{
+    private NCZ_WZ_CKWZAdapter listadpater;
     private int listSumData;
     private View list_footer;//5
     private TextView list_foot_more;//5
     private ProgressBar list_foot_progress;//5
-    private List<WZ_Pcxx> listData = new ArrayList<WZ_Pcxx>();
+    private List<Wz_Storehouse> listData = new ArrayList<Wz_Storehouse>();
     private AppContext appContext;
+    Wz_Storehouse Wz_Storehouse;
+    @ViewById
+    TextView tv_title;
     @ViewById
     PullToRefreshListView wz_frame_listview;
-@AfterViews
-void after()
-{
-    initAnimalListView();
-}
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.ncz_wz_pclayout,container,false);
-        goods=getArguments().getParcelable("goods");
-        return view;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();;
+        Wz_Storehouse=getIntent().getParcelableExtra("storehouseId");
     }
-
-    private void initAnimalListView() {
-        listadpater=new NCZ_WZ_PCAdapter(getActivity(), listData);
-        list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
+    @AfterViews
+    void afterwzoncreat() {
+        tv_title.setText(Wz_Storehouse.getParkName()+"-"+Wz_Storehouse.getStorehouseName());
+        initAnimalListView();
+    }
+    private void initAnimalListView()
+    {
+        listadpater=new NCZ_WZ_CKWZAdapter(this, listData);
+        list_footer = getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         wz_frame_listview.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
@@ -91,17 +81,22 @@ void after()
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer)
                     return;
-//                Intent intent=new Intent(getActivity(),NCZ_CKWZDetail_.class);
-                WZ_Pcxx wz_pcxx=listData.get(position-1);
-                Intent intent=new Intent(getActivity(),NCZ_WZ_PCDetail_.class);
-                intent.putExtra("goods",goods);
-                intent.putExtra("wz_pcxx",wz_pcxx);
+                Wz_Storehouse wz_storehouse=listData.get(position-1);
+                Intent intent=new Intent(NCZ_WZ_CKWZActivity.this,NCZ_CKWZDetail_.class);
+                intent.putExtra("storehouseId",Wz_Storehouse.getStorehouseId());
+                intent.putExtra("goodsId",wz_storehouse.getGoodsId());
+                intent.putExtra("localName",Wz_Storehouse.getParkName()+"-"+Wz_Storehouse.getStorehouseName());
+                intent.putExtra("goodsName",wz_storehouse.getGoodsName());
+//                intent.putExtra("storehouseId",Wz_Storehouse);
+//                intent.putExtra("goods",wz_storehouse);
                 startActivity(intent);
-               /* Wz_Storehouse Wz_Storehouse=listData.get((position-1));
-                Intent intent=new Intent(getActivity(),NCZ_WZ_CKWZActivity_.class);
-                intent.putExtra("storehouseId",Wz_Storehouse);
+               /* commandtab commandtab = listData.get(position - 1);
+                if (commandtab == null) return;
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                AppContext.updateStatus(getActivity(), "0", commandtab.getId(), "2", commembertab.getId());
+                Intent intent = new Intent(getActivity(), CommandDetail_Show_.class);
+                intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);*/
-
             }
         });
         wz_frame_listview.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -149,38 +144,29 @@ void after()
             getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
     }
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
-    {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-        }
-    };
-
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX) {
 
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("goodsId", goods.getGoodsId());
-        params.addQueryStringParameter("action", "getWzpcByWzid");
+        params.addQueryStringParameter("storehouseId", Wz_Storehouse.getStorehouseId());
+        params.addQueryStringParameter("action", "getGoodsByStoreID");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
-                List<WZ_Pcxx> listNewData = null;
+                List<Wz_Storehouse> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0) {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), WZ_Pcxx.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
                     } else {
-                        listNewData = new ArrayList<WZ_Pcxx>();
+                        listNewData = new ArrayList<Wz_Storehouse>();
                     }
                 } else {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    AppContext.makeToast(NCZ_WZ_CKWZActivity.this, "error_connectDataBase");
 
                     return;
                 }
@@ -198,10 +184,10 @@ void after()
                                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
                                     if (listData.size() > 0)// 页面切换时，若之前列表中已有数据，则往上面添加，并判断去除重复
                                     {
-                                        for (WZ_Pcxx Wz_Storehouse1 : listNewData) {
+                                        for (Wz_Storehouse Wz_Storehouse1 : listNewData) {
                                             boolean b = false;
-                                            for (WZ_Pcxx Wz_Storehouse2 : listData) {
-                                                if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())||Wz_Storehouse1.getBatchNumber().equals(Wz_Storehouse2.getBatchNumber())) {
+                                            for (Wz_Storehouse Wz_Storehouse2 : listData) {
+                                                if (Wz_Storehouse1.getGoodsId().equals(Wz_Storehouse2.getGoodsId())) {
                                                     b = true;
                                                     break;
                                                 }
@@ -222,7 +208,7 @@ void after()
                         if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
                             // 提示新加载数据
                             if (newdata > 0) {
-                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                NewDataToast.makeText(NCZ_WZ_CKWZActivity.this, getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else {
                                 // NewDataToast.makeText(NCZ_PQ_CommandList.this,
                                 // getString(R.string.new_data_toast_none), false,
@@ -235,10 +221,10 @@ void after()
                             case UIHelper.LISTVIEW_DATATYPE_NEWS:
                                 listSumData += size;
                                 if (listNewData.size() > 0) {
-                                    for (WZ_Pcxx Wz_Storehouse1 : listNewData) {
+                                    for (Wz_Storehouse Wz_Storehouse1 : listNewData) {
                                         boolean b = false;
-                                        for (WZ_Pcxx Wz_Storehouse2 : listData) {
-                                            if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())||Wz_Storehouse1.getBatchNumber().equals(Wz_Storehouse2.getBatchNumber())) {
+                                        for (Wz_Storehouse Wz_Storehouse2 : listData) {
+                                            if (Wz_Storehouse1.getGoodsId().equals(Wz_Storehouse2.getGoodsId())) {
                                                 b = true;
                                                 break;
                                             }
@@ -270,7 +256,7 @@ void after()
                     // 有异常--显示加载出错 & 弹出错误消息
                     lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                     more.setText(R.string.load_error);
-                    AppContext.makeToast(getActivity(), "load_error");
+                    AppContext.makeToast(NCZ_WZ_CKWZActivity.this, "load_error");
                 }
                 if (adapter.getCount() == 0) {
                     lv.setTag(UIHelper.LISTVIEW_DATA_EMPTY);
@@ -291,7 +277,7 @@ void after()
             @Override
             public void onFailure(HttpException error, String msg) {
                 String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                AppContext.makeToast(NCZ_WZ_CKWZActivity.this, "error_connectServer");
 
             }
         });

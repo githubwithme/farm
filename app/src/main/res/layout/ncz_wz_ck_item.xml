@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<TextView
-    android:id="@+id/wz_ggg"
-    android:text="ssss"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    android:layout_width="match_parent"
+    android:layout_height="70dip"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/parkName"
+        android:layout_width="wrap_content"
+        android:layout_height="70dip"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="仓库"
+        android:textColor="@color/textcolor_titlebar"
+        android:textSize="@dimen/titlebar_textsize" />
+
+    <TextView
+        android:id="@+id/storehouseName"
+        android:layout_width="wrap_content"
+        android:layout_height="70dip"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="仓库"
+        android:textColor="@color/textcolor_titlebar"
+        android:textSize="@dimen/titlebar_textsize" />
 </LinearLayout>

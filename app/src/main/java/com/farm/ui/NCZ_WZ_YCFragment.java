@@ -3,6 +3,7 @@ package com.farm.ui;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -19,14 +19,14 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_WZ_PCAdapter;
+import com.farm.adapter.NCZ_WZ_CKXXlistAdapter;
+import com.farm.adapter.NCZ_WZ_YClistAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.WZ_Detail;
-import com.farm.bean.WZ_Pcxx;
+import com.farm.bean.WZ_YCxx;
+import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
-import com.farm.bean.goodslisttab;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
 import com.farm.widget.NewDataToast;
@@ -47,40 +47,35 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by user on 2016/2/26.
+ * Created by user on 2016/4/8.
  */
 @EFragment
-public class NCZ_WZ_PC extends Fragment  {
-
-
-    private NCZ_WZ_PCAdapter listadpater;
-//    goodslisttab goods;
-WZ_Detail goods;
+public class NCZ_WZ_YCFragment extends Fragment
+{
+    NCZ_WZ_YClistAdapter listadpater;
     Fragment mContent = new Fragment();
     private int listSumData;
     private View list_footer;//5
     private TextView list_foot_more;//5
     private ProgressBar list_foot_progress;//5
-    private List<WZ_Pcxx> listData = new ArrayList<WZ_Pcxx>();
+    private List<WZ_YCxx> listData = new ArrayList<WZ_YCxx>();
+    private List<String> wzdata;
     private AppContext appContext;
+    private ListView listView;
+
     @ViewById
     PullToRefreshListView wz_frame_listview;
-@AfterViews
-void after()
-{
-    initAnimalListView();
-}
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.ncz_wz_pclayout,container,false);
-        goods=getArguments().getParcelable("goods");
-        return view;
+
+
+    @AfterViews
+    void afterwzoncreat() {
+
+        initAnimalListView();
     }
 
     private void initAnimalListView() {
-        listadpater=new NCZ_WZ_PCAdapter(getActivity(), listData);
+        listadpater=new NCZ_WZ_YClistAdapter(getActivity(), listData);
         list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
@@ -91,16 +86,15 @@ void after()
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer)
                     return;
-//                Intent intent=new Intent(getActivity(),NCZ_CKWZDetail_.class);
-                WZ_Pcxx wz_pcxx=listData.get(position-1);
-                Intent intent=new Intent(getActivity(),NCZ_WZ_PCDetail_.class);
-                intent.putExtra("goods",goods);
-                intent.putExtra("wz_pcxx",wz_pcxx);
-                startActivity(intent);
-               /* Wz_Storehouse Wz_Storehouse=listData.get((position-1));
+
+          /*      Wz_Storehouse Wz_Storehouse=listData.get((position-1));
                 Intent intent=new Intent(getActivity(),NCZ_WZ_CKWZActivity_.class);
                 intent.putExtra("storehouseId",Wz_Storehouse);
                 startActivity(intent);*/
+                WZ_YCxx wz_yCxx=listData.get(position-1);
+                Intent intent=new Intent(getActivity(),NCZ_WZ_YCDetail_.class);
+                intent.putExtra("wz_yCxx",wz_yCxx);
+                startActivity(intent);
 
             }
         });
@@ -149,6 +143,18 @@ void after()
             getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
     }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.ncz_wz_ckxx, container, false);
+        appContext = (AppContext) getActivity().getApplication();
+        IntentFilter intentFilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+        getActivity().registerReceiver(receiver_update, intentFilter_update);
+
+        return view;
+    }
+
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -163,21 +169,20 @@ void after()
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("goodsId", goods.getGoodsId());
-        params.addQueryStringParameter("action", "getWzpcByWzid");
+        params.addQueryStringParameter("action", "getGoodsExecptionByUid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
-                List<WZ_Pcxx> listNewData = null;
+                List<WZ_YCxx> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0) {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), WZ_Pcxx.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), WZ_YCxx.class);
                     } else {
-                        listNewData = new ArrayList<WZ_Pcxx>();
+                        listNewData = new ArrayList<WZ_YCxx>();
                     }
                 } else {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
@@ -198,10 +203,10 @@ void after()
                                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
                                     if (listData.size() > 0)// 页面切换时，若之前列表中已有数据，则往上面添加，并判断去除重复
                                     {
-                                        for (WZ_Pcxx Wz_Storehouse1 : listNewData) {
+                                        for (WZ_YCxx Wz_Storehouse1 : listNewData) {
                                             boolean b = false;
-                                            for (WZ_Pcxx Wz_Storehouse2 : listData) {
-                                                if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())||Wz_Storehouse1.getBatchNumber().equals(Wz_Storehouse2.getBatchNumber())) {
+                                            for (WZ_YCxx Wz_Storehouse2 : listData) {
+                                                if (Wz_Storehouse1.getId().equals(Wz_Storehouse2.getId())) {
                                                     b = true;
                                                     break;
                                                 }
@@ -235,10 +240,10 @@ void after()
                             case UIHelper.LISTVIEW_DATATYPE_NEWS:
                                 listSumData += size;
                                 if (listNewData.size() > 0) {
-                                    for (WZ_Pcxx Wz_Storehouse1 : listNewData) {
+                                    for (WZ_YCxx Wz_Storehouse1 : listNewData) {
                                         boolean b = false;
-                                        for (WZ_Pcxx Wz_Storehouse2 : listData) {
-                                            if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())||Wz_Storehouse1.getBatchNumber().equals(Wz_Storehouse2.getBatchNumber())) {
+                                        for (WZ_YCxx Wz_Storehouse2 : listData) {
+                                            if (Wz_Storehouse1.getId().equals(Wz_Storehouse2.getId())) {
                                                 b = true;
                                                 break;
                                             }

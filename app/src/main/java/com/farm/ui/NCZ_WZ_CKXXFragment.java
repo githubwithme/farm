@@ -28,6 +28,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
+import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.common.DictionaryHelper;
@@ -57,8 +58,6 @@ import java.util.List;
 @EFragment
 public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
 
-    TimeThread timethread;
-    boolean ishidding = false;
     String wzll;
     Fragment mContent = new Fragment();
     private NCZ_WZ_CKXXlistAdapter listadpater;
@@ -67,72 +66,46 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
     private View list_footer;//5
     private TextView list_foot_more;//5
     private ProgressBar list_foot_progress;//5
-    private List<commandtab> listData = new ArrayList<commandtab>();
+    private List<Wz_Storehouse> listData = new ArrayList<Wz_Storehouse>();
     private List<String> wzdata;
     private AppContext appContext;
     private ListView listView;
 
     @ViewById
-    ListView list_wzll;
-    @ViewById
     PullToRefreshListView wz_frame_listview;
 
-    public void onHiddenChanged(boolean hidden) {
-        ishidding = hidden;
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            if (timethread != null) {
-                timethread.setSleep(false);
-            }
-        } else {
-            if (timethread != null) {
-                timethread.setSleep(true);
-            }
-        }
-    }
+
 
     @AfterViews
     void afterwzoncreat() {
-        //dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "NCZ_CMD");
-        //initAnimalListView();
+
         initAnimalListView();
     }
 
     private void initAnimalListView() {
         listadpater=new NCZ_WZ_CKXXlistAdapter(getActivity(), listData);
-       // listAdapter = new NCZ_PQ_CommandListAdapter(getActivity(), listData);
-        listView = (ListView) list_wzll.findViewById(R.id.list_wzll);
         list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         wz_frame_listview.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
-       // wz_frame_listview.setAdapter(listAdapter);
         wz_frame_listview.setAdapter(listadpater);
         wz_frame_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // 点击头部、底部栏无效
-                if (position == 0 || view == list_footer) return;
+                if (position == 0 || view == list_footer)
+                    return;
 
-                // Animal animal = null;
-                // // 判断是否是TextView
-                // if (view instanceof TextView)
-                // {
-                // animal = (Animal) view.getTag();
-                // } else
-                // {
-                // TextView tv = (TextView)
-                // view.findViewById(R.id.news_listitem_title);
-                // animal = (Animal) tv.getTag();
-                // }
-                // if (animal == null)
-                // return;
-                commandtab commandtab = listData.get(position - 1);
+                Wz_Storehouse Wz_Storehouse=listData.get((position-1));
+                Intent intent=new Intent(getActivity(),NCZ_WZ_CKWZActivity_.class);
+                intent.putExtra("storehouseId",Wz_Storehouse);
+                startActivity(intent);
+               /* commandtab commandtab = listData.get(position - 1);
                 if (commandtab == null) return;
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.updateStatus(getActivity(), "0", commandtab.getId(), "2", commembertab.getId());
                 Intent intent = new Intent(getActivity(), CommandDetail_Show_.class);
                 intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
         wz_frame_listview.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -188,11 +161,7 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
         appContext = (AppContext) getActivity().getApplication();
         IntentFilter intentFilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
         getActivity().registerReceiver(receiver_update, intentFilter_update);
-        wzll = getArguments().getString("wzll");
-        timethread = new TimeThread();
-        timethread.setStop(false);
-        timethread.setSleep(false);
-        timethread.start();
+
         return view;
     }
 
@@ -206,38 +175,28 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
     };
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX) {
-//        String strWher = DictionaryHelper.getStrWhere_ncz_cmd(getActivity(), dictionary);
-//        String orderby = selectorUi.getOrderby();
+
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("wzll", wzll);
-        params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("orderby", "");
-        params.addQueryStringParameter("strWhere", "zt:1");
-        params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
-        params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "commandGetList");
+        params.addQueryStringParameter("action", "getGoodsByUid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
-                List<commandtab> listNewData = null;
+                List<Wz_Storehouse> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0) {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), commandtab.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
                     } else {
-                        listNewData = new ArrayList<commandtab>();
+                        listNewData = new ArrayList<Wz_Storehouse>();
                     }
                 } else {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
-                    if (!ishidding && timethread != null) {
-                        timethread.setSleep(false);
-                    }
+
                     return;
                 }
                 // 数据处理
@@ -254,10 +213,10 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
                                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
                                     if (listData.size() > 0)// 页面切换时，若之前列表中已有数据，则往上面添加，并判断去除重复
                                     {
-                                        for (commandtab commandtab1 : listNewData) {
+                                        for (Wz_Storehouse Wz_Storehouse1 : listNewData) {
                                             boolean b = false;
-                                            for (commandtab commandtab2 : listData) {
-                                                if (commandtab1.getId().equals(commandtab2.getId())) {
+                                            for (Wz_Storehouse Wz_Storehouse2 : listData) {
+                                                if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())) {
                                                     b = true;
                                                     break;
                                                 }
@@ -291,15 +250,15 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
                             case UIHelper.LISTVIEW_DATATYPE_NEWS:
                                 listSumData += size;
                                 if (listNewData.size() > 0) {
-                                    for (commandtab commandtab1 : listNewData) {
+                                    for (Wz_Storehouse Wz_Storehouse1 : listNewData) {
                                         boolean b = false;
-                                        for (commandtab commandtab2 : listData) {
-                                            if (commandtab1.getId().equals(commandtab2.getId())) {
+                                        for (Wz_Storehouse Wz_Storehouse2 : listData) {
+                                            if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())) {
                                                 b = true;
                                                 break;
                                             }
                                         }
-                                        if (!b) listData.add(commandtab1);
+                                        if (!b) listData.add(Wz_Storehouse1);
                                     }
                                 } else {
                                     listData.addAll(listNewData);
@@ -341,18 +300,14 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
-                if (!ishidding && timethread != null) {
-                    timethread.setSleep(false);
-                }
+
             }
 
             @Override
             public void onFailure(HttpException error, String msg) {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
-                if (!ishidding && timethread != null) {
-                    timethread.setSleep(false);
-                }
+
             }
         });
     }
@@ -362,33 +317,5 @@ public class NCZ_WZ_CKXXFragment extends Fragment implements OnClickListener {
 
     }
 
-    class TimeThread extends Thread {
-        private boolean isSleep = true;
-        private boolean stop = false;
 
-        public void run() {
-            Long starttime = 0l;
-            while (!stop) {
-                if (isSleep) {
-                } else {
-                    try {
-                        timethread.sleep(AppContext.TIME_REFRESH);
-                        starttime = starttime + 1000;
-                        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-                        timethread.setSleep(true);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        public void setSleep(boolean sleep) {
-            isSleep = sleep;
-        }
-
-        public void setStop(boolean stop) {
-            this.stop = stop;
-        }
-    }
 }

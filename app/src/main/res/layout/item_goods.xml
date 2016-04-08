@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="left|center_vertical"
-                    android:text="规格"
+                    android:text="剩余数量："
                     android:textColor="@color/gray"
                     android:textSize="@dimen/size_12"/>
 
@@ -80,7 +80,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dip"
                     android:layout_toRightOf="@id/tv_gg"
                     android:gravity="center"
                     android:text="剩余量"
