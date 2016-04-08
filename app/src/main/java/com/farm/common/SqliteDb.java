@@ -156,25 +156,25 @@ public class SqliteDb
             if (polygonBean.getAreaId().equals(""))//被删除的是园区
             {
                 //删除该片区已经规划图
-                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid","=",polygonBean.getparkId()));
+                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid", "=", polygonBean.getparkId()));
 
-            }else  if (polygonBean.getContractid().equals(""))//被删除的是片区
+            } else if (polygonBean.getContractid().equals(""))//被删除的是片区
             {
                 //删除该片区已经规划图
-                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid","=",polygonBean.getparkId()).and("areaid", "!=", ""));
+                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid", "=", polygonBean.getparkId()).and("areaid", "!=", ""));
                 //删除该片区未规划图
-                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid", "=", polygonBean.getparkId()).and("areaid","=","").and("type","=","farm_boundary_free"));
+                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid", "=", polygonBean.getparkId()).and("areaid", "=", "").and("type", "=", "farm_boundary_free"));
 
-            }else //被删除的是承包区
+            } else //被删除的是承包区
             {
                 //删除该承包区已经规划图
-                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid","=",polygonBean.getparkId()).and("areaid","=",polygonBean.getAreaId()).and("contractid","!=",""));
+                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid", "=", polygonBean.getparkId()).and("areaid", "=", polygonBean.getAreaId()).and("contractid", "!=", ""));
                 //删除承包区未规划图
-                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid","=",polygonBean.getparkId()).and("areaid","=",polygonBean.getAreaId()).and("contractid","=","").and("type","=","farm_boundary_free"));
+                db.delete(PolygonBean.class, WhereBuilder.b("uid", "=", polygonBean.getUid()).and("parkid", "=", polygonBean.getparkId()).and("areaid", "=", polygonBean.getAreaId()).and("contractid", "=", "").and("type", "=", "farm_boundary_free"));
 
             }
 
-         } catch (DbException e)
+        } catch (DbException e)
         {
             e.printStackTrace();
             String a = e.getMessage();
@@ -183,7 +183,7 @@ public class SqliteDb
         try
         {
             List<PolygonBean> list = db.findAll(Selector.from(PolygonBean.class));
-            List<PolygonBean> list1= db.findAll(Selector.from(PolygonBean.class));
+            List<PolygonBean> list1 = db.findAll(Selector.from(PolygonBean.class));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -232,6 +232,7 @@ public class SqliteDb
         }
         return true;
     }
+
     public static <T> boolean editBreakoff(Context context, Object c)
     {
         DbUtils db = DbUtils.create(context);
@@ -430,6 +431,7 @@ public class SqliteDb
         }
         return datenow;
     }
+
     public static <T> List<T> deleteall(Context context)
     {
         DbUtils db = DbUtils.create(context);
@@ -456,6 +458,7 @@ public class SqliteDb
         }
         return list;
     }
+
     public static <T> List<T> getTemp1(Context context)
     {
         DbUtils db = DbUtils.create(context);
@@ -463,6 +466,7 @@ public class SqliteDb
         List<T> list1 = null;
         try
         {
+            db.deleteAll(BreakOff.class);
 //            db.dropTable(SellOrder.class);
 //            db.dropTable(SellOrderDetail.class);
 //            db.dropTable(BreakOff.class);
@@ -677,7 +681,7 @@ public class SqliteDb
         SellOrderDetail sellOrderDetail = null;
         try
         {
-            sellOrderDetail= db.findFirst(Selector.from(SellOrderDetail.class).where("uuid", "=", uuid).and("xxzt", "=", "0"));
+            sellOrderDetail = db.findFirst(Selector.from(SellOrderDetail.class).where("uuid", "=", uuid).and("xxzt", "=", "0"));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -685,6 +689,7 @@ public class SqliteDb
 
         return sellOrderDetail;
     }
+
     public static PolygonBean getNeedPlanlayer(Context context, String uid, String parkid, String areaid, String contractid)
     {
         DbUtils db = DbUtils.create(context);
@@ -1059,7 +1064,7 @@ public class SqliteDb
         int[] count = new int[3];
         int count_saleout = 0;
         int count_salein = 0;
-        int count_salefor= 0;
+        int count_salefor = 0;
         try
         {
             list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "saleout_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
@@ -1104,7 +1109,7 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         List<SellOrderDetail> list_SellOrderDetail_soldout = null;
         List<SellOrderDetail> list_SellOrderDetail_soldin = null;
-        List<SellOrderDetail> list_SellOrderDetail_soldfor= null;
+        List<SellOrderDetail> list_SellOrderDetail_soldfor = null;
         int[] count = new int[3];
         int count_saleout = 0;
         int count_salein = 0;
@@ -1113,7 +1118,7 @@ public class SqliteDb
         {
             list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "saleout_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
             list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "salein_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
-            list_SellOrderDetail_soldfor= db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "salefor_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "salefor_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
             if (list_SellOrderDetail_soldout != null && list_SellOrderDetail_soldout.size() > 0)
             {
                 for (int i = 0; i < list_SellOrderDetail_soldout.size(); i++)
@@ -1227,7 +1232,8 @@ public class SqliteDb
 
         return polygonBean;
     }
-    public static List<SellOrderDetail> getSaleLayer_contract(Context context, String contractid,String batchtime)
+
+    public static List<SellOrderDetail> getSaleLayer_contract(Context context, String contractid, String batchtime)
     {
         DbUtils db = DbUtils.create(context);
         List<SellOrderDetail> list = null;
@@ -1241,13 +1247,14 @@ public class SqliteDb
 
         return list;
     }
-    public static List<BreakOff> getBreakOffInfo(Context context, String contractid,String batchtime)
+
+    public static List<BreakOff> getBreakOffInfo(Context context, String contractid, String batchtime)
     {
         DbUtils db = DbUtils.create(context);
         List<BreakOff> list = null;
         try
         {
-            list = db.findAll(Selector.from(BreakOff.class).where("contractid", "=", contractid).and("batchTime", "=", batchtime).and("xxzt", "=","0"));
+            list = db.findAll(Selector.from(BreakOff.class).where("contractid", "=", contractid).and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1255,13 +1262,14 @@ public class SqliteDb
 
         return list;
     }
-    public static List<BreakOff> getBreakOffInfoByContractId(Context context, String contractid)
+
+    public static List<BreakOff> getBreakOffInfoByContractId(Context context, String contractid, String year)
     {
         DbUtils db = DbUtils.create(context);
         List<BreakOff> list = null;
         try
         {
-            list = db.findAll(Selector.from(BreakOff.class).where("contractid", "=", contractid).and("xxzt", "=", "0"));
+            list = db.findAll(Selector.from(BreakOff.class).where("contractid", "=", contractid).and("xxzt", "=", "0").and("Year", "=", year));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1269,7 +1277,8 @@ public class SqliteDb
 
         return list;
     }
-    public static List<SellOrderDetail> getNewSaleList(Context context, String uid,String batchtime)
+
+    public static List<SellOrderDetail> getNewSaleList(Context context, String uid, String batchtime)
     {
         DbUtils db = DbUtils.create(context);
         List<SellOrderDetail> list = null;
@@ -1283,6 +1292,7 @@ public class SqliteDb
 
         return list;
     }
+
     public static PolygonBean getLayer_contract(Context context, String parkid, String areaid, String contractid)
     {
         DbUtils db = DbUtils.create(context);
@@ -1312,6 +1322,7 @@ public class SqliteDb
 
         return breakoff;
     }
+
     public static BreakOff getBreakoffbyuuid(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
@@ -1326,6 +1337,7 @@ public class SqliteDb
 
         return breakOff;
     }
+
     public static SellOrderDetail getSellOrderDetailbyuuid(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
@@ -1355,6 +1367,7 @@ public class SqliteDb
 
         return polygonBean;
     }
+
     public static PolygonBean getLayerByuuid(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
@@ -1369,6 +1382,7 @@ public class SqliteDb
 
         return polygonBean;
     }
+
     public static PolygonBean getLayer(Context context, String parkid, String areaid, String contractid)
     {
         DbUtils db = DbUtils.create(context);
@@ -1793,16 +1807,16 @@ public class SqliteDb
     public static boolean alterTable(Context context)
     {
 
-        String[] str = new String[]{"isInnerPoint", "isCenterPoint", "note"};
+        String[] str = new String[]{"Year"};
         DbUtils db = DbUtils.create(context);
         SQLiteDatabase sqLiteDatabase = db.getDatabase();
 
         for (int i = 0; i < str.length; i++)
         {
-            boolean isexist = SqliteDb.checkColumnExist1(sqLiteDatabase, "CoordinatesBean", str[i]);
+            boolean isexist = SqliteDb.checkColumnExist1(sqLiteDatabase, "BreakOff", str[i]);
             if (!isexist)
             {
-                String sql = "alter table  CoordinatesBean  add column " + str[i] + " NVARCHAR(10)";
+                String sql = "alter table  BreakOff  add column " + str[i] + " NVARCHAR(10)";
                 sqLiteDatabase.execSQL(sql);
             }
         }
@@ -1932,7 +1946,8 @@ public class SqliteDb
         }
         return true;
     }
-    public static <T> boolean deleteSaleForInfo(Context context,  String uuid)
+
+    public static <T> boolean deleteSaleForInfo(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -1946,7 +1961,8 @@ public class SqliteDb
         }
         return true;
     }
-    public static <T> boolean deleteBreakoffInfo(Context context,  String uuid)
+
+    public static <T> boolean deleteBreakoffInfo(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -1960,6 +1976,7 @@ public class SqliteDb
         }
         return true;
     }
+
     public static <T> boolean deleteAllRecordtemp(Context context, Class<T> c, String BELONG)
     {
         DbUtils db = DbUtils.create(context);
@@ -2219,7 +2236,8 @@ public class SqliteDb
             e.printStackTrace();
         }
     }
-    public static  boolean  salewhole(Context context, Object c)
+
+    public static boolean salewhole(Context context, Object c)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -2231,7 +2249,8 @@ public class SqliteDb
         }
         return true;
     }
-    public static  boolean  breakoffwhole(Context context, Object c)
+
+    public static boolean breakoffwhole(Context context, Object c)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -2243,7 +2262,8 @@ public class SqliteDb
         }
         return true;
     }
-    public static  boolean  deleteShoppingcartByBatchtime(Context context, String uid,String batchTime)
+
+    public static boolean deleteShoppingcartByBatchtime(Context context, String uid, String batchTime)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -2255,7 +2275,8 @@ public class SqliteDb
         }
         return true;
     }
-    public static  boolean  deleteSaleInInfo(Context context, Object c)
+
+    public static boolean deleteSaleInInfo(Context context, Object c)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -2267,7 +2288,8 @@ public class SqliteDb
         }
         return true;
     }
-    public static  boolean  deleteBreakoffInfo(Context context, Object c)
+
+    public static boolean deleteBreakoffInfo(Context context, Object c)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -2279,6 +2301,7 @@ public class SqliteDb
         }
         return true;
     }
+
     public static <T> Object getAutoLoginUser(Context context, Class<T> c)
     {
         DbUtils db = DbUtils.create(context);

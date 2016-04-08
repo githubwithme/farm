@@ -1167,6 +1167,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
 
     private void showNeedPlanBoundary(List<CoordinatesBean> list_coordinates)
     {
+        list_latlng_needplanboundary = new ArrayList<>();
         for (int i = 0; i < list_coordinates.size(); i++)
         {
             LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));

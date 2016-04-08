@@ -40,6 +40,17 @@ public class BreakOff implements Parcelable
 	public String status;//断蕾情况：0未断蕾 1已经断蕾
 	public String batchTime  ;//批次时间
 	public String xxzt;
+	public String Year;
+
+	public void setYear(String year)
+	{
+		Year = year;
+	}
+
+	public String getYear()
+	{
+		return Year;
+	}
 
 	public void setXxzt(String xxzt)
 	{
@@ -274,6 +285,7 @@ public class BreakOff implements Parcelable
 			p.setStatus(source.readString());
 			p.setBatchTime(source.readString());
 			p.setXxzt(source.readString());
+			p.setYear(source.readString());
 			return p;
 		}
 
@@ -306,6 +318,7 @@ public class BreakOff implements Parcelable
 		p.writeString(status);
 		p.writeString(batchTime);
 		p.writeString(xxzt);
+		p.writeString(Year);
 	}
 	@Override
 	public int describeContents()

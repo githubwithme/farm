@@ -65,6 +65,12 @@ public class utils
         Date curDate = new Date(System.currentTimeMillis());
         return formatter.format(curDate);
     }
+    public static String getYear()
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+        Date curDate = new Date(System.currentTimeMillis());
+        return formatter.format(curDate);
+    }
 
     public static String parseDateToDateString(Date date)
     {
