@@ -37,7 +37,7 @@ public class BreakOff implements Parcelable
 	public String numberofbreakoff;
 	public String regdate;
 	public String weight;
-	public String status;
+	public String status;//断蕾情况：0未断蕾 1已经断蕾
 	public String batchTime  ;//批次时间
 	public String xxzt;
 
