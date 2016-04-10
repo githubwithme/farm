@@ -483,7 +483,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
     @Click
     void btn_dividebatch()
     {
-        Intent intent = new Intent(getActivity(), PG_ProductBatch.class);
+        Intent intent = new Intent(getActivity(), PG_ProductBatch_.class);
         getActivity().startActivity(intent);
 
     }
@@ -705,6 +705,8 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void initLinePolygon()
     {
+        list_Objects_line=new ArrayList<>();
+        list_Objects_line_centermarker=new ArrayList<>();
         List<PolygonBean> list_polygon_line = SqliteDb.getMoreLayer_line(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_polygon_line.size(); i++)
         {
@@ -745,6 +747,8 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void initRoadPolygon()
     {
+        list_Objects_road=new ArrayList<>();
+        list_Objects_road_centermarker=new ArrayList<>();
         list_polygon_road = SqliteDb.getMoreLayer_road(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_polygon_road.size(); i++)
         {
@@ -778,6 +782,8 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void initMianPolygon()
     {
+        list_Objects_mian_centermarker=new ArrayList<>();
+        list_Objects_mian=new ArrayList<>();
         list_polygon_mian = SqliteDb.getMoreLayer_mian(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_polygon_mian.size(); i++)
         {
@@ -804,6 +810,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void initHousePolygon()
     {
+        list_Objects_house=new ArrayList<>();
         list_polygon_house = SqliteDb.getMoreLayer_house(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_polygon_house.size(); i++)
         {
@@ -820,6 +827,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void initPointPolygon()
     {
+        list_Objects_point=new ArrayList<>();
         list_polygon_point = SqliteDb.getMoreLayer_point(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_polygon_point.size(); i++)
         {
@@ -967,7 +975,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
             }
             list_latlng_needplanboundary.add(latlng);
         }
-        Polygon polygon = drawPolygon(10f, list_latlng_needplanboundary, R.color.black, 4, R.color.red);
+        Polygon polygon = drawPolygon(10f, list_latlng_needplanboundary, Color.argb(10, 0, 0, 255), 4, R.color.yellow);
         Overlays.add(polygon);
 //保存边界线
         list_latlng_needplanline = new ArrayList<>();
@@ -981,6 +989,12 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
             prelatlng = latlng;
             list_latlng_needplanline.add(list_lintpoint);
         }
+        LatLng firstlatlng = new LatLng(Double.valueOf(list_coordinates.get(0).getLat()), Double.valueOf(list_coordinates.get(0).getLng()));
+        LatLng lastlatlng = new LatLng(Double.valueOf(list_coordinates.get(list_coordinates.size() - 1).getLat()), Double.valueOf(list_coordinates.get(list_coordinates.size() - 1).getLng()));
+        List<LatLng> list_lintpoint = new ArrayList<>();
+        list_lintpoint.add(lastlatlng);
+        list_lintpoint.add(firstlatlng);
+        list_latlng_needplanline.add(list_lintpoint);
     }
 
     public void initMapLongPressWhenPaint()
@@ -1214,10 +1228,10 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
         }
 
 //        //画出已选区域
-        polygon_divide1 = drawPolygon(10f, list_latlng_divide1, Color.argb(1000, 255, 255, 0),8, R.color.white);
+        polygon_divide1 = drawPolygon(100f, list_latlng_divide1, Color.argb(1000, 255, 255, 0),14, R.color.white);
         Overlays.add(polygon_divide1);
         //画出未选区域
-        polygon_divide2 = drawPolygon(20f, list_latlng_divide2, Color.argb(150, 0, 0, 255),4, R.color.black);
+        polygon_divide2 = drawPolygon(200f, list_latlng_divide2, Color.argb(150, 0, 0, 255),8, R.color.black);
         Overlays.add(polygon_divide2);
 
         tv_tip.setVisibility(View.VISIBLE);
@@ -1428,8 +1442,11 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void initParamAfterPaint()
     {
+        list_latlng_pick=new ArrayList<>();
         btn_connectpaint.setVisibility(View.GONE);
         lastselect_latlng = null;
+        list_latlng_firstline=null;
+        list_latlng_secondline=null;
     }
 
     public void showDialog_deletetip_breakoff(final String uuid, final Marker marker)

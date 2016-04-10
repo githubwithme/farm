@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.farm.bean.BatchOfContract;
 import com.farm.bean.BatchOfProduct;
 import com.farm.bean.BreakOff;
 import com.farm.bean.CoordinatesBean;
@@ -310,6 +311,43 @@ public class SqliteDb
         }
         return true;
     }
+    public static <T> boolean isExistBatch(Context context, String contractid,String batchTime)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            BreakOff breakoff = db.findFirst(Selector.from(BreakOff.class).where("contractid", "=", contractid).and("xxzt", "=", "0").and("batchTime", "=", batchTime));
+
+            if (breakoff == null)
+            {
+                return false;
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            String a = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+    public static <T> boolean isExistSellOrderDetail(Context context, String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            SellOrderDetail sellorderdetail = db.findFirst(Selector.from(SellOrderDetail.class).where("uuid", "=", uuid).and("xxzt", "=", "0"));
+            if (sellorderdetail == null)
+            {
+                return false;
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            String a = e.getMessage();
+            return false;
+        }
+        return true;
+    }
 
     public static <T> boolean isexistarea(Context context, String parkid, String areaid)
     {
@@ -391,6 +429,37 @@ public class SqliteDb
                         int number_new = number_last + Integer.valueOf(number);
                         batchOfProduct_last.setNumber(String.valueOf(number_new));
                         db.update(batchOfProduct_last, "number");
+//添加承包区产品批次
+//                        BatchOfContract batch = db.findFirst(Selector.from(BatchOfContract.class).where("contractId", "=", breakoff_needplan.getcontractid()).and("batchTime","=",batchOfProduct_last.getBatchTime()));
+//                        if (batch == null)//判断该承包区是否存在该批次
+//                        {
+//                            String uuid=java.util.UUID.randomUUID().toString();
+//                            BatchOfContract batchofcontract=new BatchOfContract();
+//                            batchofcontract.setuId(breakoff_needplan.getuid());
+//                            batchofcontract.setParkId(breakoff_needplan.getparkid());
+//                            batchofcontract.setParkName(breakoff_needplan.getparkname());
+//                            batchofcontract.setAreaId(breakoff_needplan.getareaid());
+//                            batchofcontract.setAreaName(breakoff_needplan.getareaname());
+//                            batchofcontract.setContractId(breakoff_needplan.getcontractid());
+//                            batchofcontract.setContractName(breakoff_needplan.getcontractname());
+//                            batchofcontract.setBatchTime(batchOfProduct_last.getBatchTime());
+//                            batchofcontract.setNumber(number);
+//                            batchofcontract.setRegDate(utils.getTime());
+//                            batchofcontract.setWeight("");
+//                            batchofcontract.setid("");
+//                            batchofcontract.setUuid(uuid);
+//                            batchofcontract.setSellnumber("");
+//                            batchofcontract.setStatus("");
+//                            batchofcontract.setIsdrawer("0");
+//                            SqliteDb.save(context, batchofcontract);
+//                        }else
+//                        {
+//                            int count_last = Integer.valueOf(batch.getNumber());
+//                            int count_new = count_last + Integer.valueOf(number);
+//                            batch.setNumber(String.valueOf(count_new));
+//                            db.update(batch, "number");
+//                        }
+
                         return batchOfProduct_last.getBatchTime();
                     } else//新的批次
                     {
@@ -403,6 +472,26 @@ public class SqliteDb
                         batchofproduct.setBatchTime(datenow);
                         batchofproduct.setRegDate(utils.getTime());
                         SqliteDb.save(context, batchofproduct);
+//添加承包区产品批次
+//                           String uuid=java.util.UUID.randomUUID().toString();
+//                            BatchOfContract batchofcontract=new BatchOfContract();
+//                            batchofcontract.setuId(breakoff_needplan.getuid());
+//                            batchofcontract.setParkId(breakoff_needplan.getparkid());
+//                            batchofcontract.setParkName(breakoff_needplan.getparkname());
+//                            batchofcontract.setAreaId(breakoff_needplan.getareaid());
+//                            batchofcontract.setAreaName(breakoff_needplan.getareaname());
+//                            batchofcontract.setContractId(breakoff_needplan.getcontractid());
+//                            batchofcontract.setContractName(breakoff_needplan.getcontractname());
+//                            batchofcontract.setBatchTime(batchOfProduct_last.getBatchTime());
+//                            batchofcontract.setNumber(number);
+//                            batchofcontract.setRegDate(utils.getTime());
+//                            batchofcontract.setWeight("");
+//                            batchofcontract.setid("");
+//                            batchofcontract.setUuid(uuid);
+//                            batchofcontract.setSellnumber("");
+//                            batchofcontract.setStatus("");
+//                            batchofcontract.setIsdrawer("0");
+//                            SqliteDb.save(context, batchofcontract);
                         return datenow;
                     }
                 } else
@@ -459,6 +548,58 @@ public class SqliteDb
         return list;
     }
 
+    public static void startBreakoff(Context context,String uid)
+    {
+        List<parktab> list_parktab = SqliteDb.getparktab(context, uid);
+        for (int i = 0; i < list_parktab.size(); i++)//每个园区
+        {
+            List<areatab> list_areatab = SqliteDb.getareatab(context, list_parktab.get(i).getid());
+            for (int k = 0; k < list_areatab.size(); k++)//每个片区
+            {
+                List<contractTab> list_contractTab = SqliteDb.getcontracttab(context, list_areatab.get(k).getid());
+                for (int m = 0; m < list_contractTab.size(); m++)//每个承包区
+                {
+                    PolygonBean polygonBean_contract = SqliteDb.getLayer_contract(context, list_contractTab.get(m).getparkId(), list_contractTab.get(m).getAreaId(), list_contractTab.get(m).getid());
+                    if (polygonBean_contract != null)
+                    {
+                        //增加未断蕾情况
+                        final String uuid_breakoff = java.util.UUID.randomUUID().toString();
+                        BreakOff breakoff = new BreakOff();
+                        breakoff.setid("");
+                        breakoff.setUuid(uuid_breakoff);
+                        breakoff.setuid("60");
+                        breakoff.setBreakofftime("2016-04-10");
+                        breakoff.setparkid(polygonBean_contract.getparkId());
+                        breakoff.setparkname(polygonBean_contract.getparkName());
+                        breakoff.setareaid(polygonBean_contract.getAreaId());
+                        breakoff.setareaname(polygonBean_contract.getareaName());
+                        breakoff.setcontractid(polygonBean_contract.getContractid());
+                        breakoff.setcontractname(polygonBean_contract.getContractname());
+                        breakoff.setLat(String.valueOf(polygonBean_contract.getLat()));
+                        breakoff.setLng(String.valueOf(polygonBean_contract.getLng()));
+                        breakoff.setLatlngsize("");
+                        breakoff.setnumberofbreakoff("100000");
+                        breakoff.setregdate(utils.getTime());
+                        breakoff.setWeight("");
+                        breakoff.setStatus("0");
+                        breakoff.setBatchTime(utils.getDateAfterNDay(utils.getToday(),5));
+                        breakoff.setXxzt("0");
+                        breakoff.setYear(utils.getYear());
+                        SqliteDb.save(context, breakoff);
+
+                        List<CoordinatesBean> list_coor = SqliteDb.getPoints(context, polygonBean_contract.getUuid());
+                        for (int j = 0; j < list_coor.size(); j++)
+                        {
+                            list_coor.get(j).setUuid(uuid_breakoff);
+                            SqliteDb.save(context, list_coor.get(j));
+                        }
+                    }
+                }
+
+            }
+        }
+
+    }
     public static <T> List<T> getTemp1(Context context)
     {
         DbUtils db = DbUtils.create(context);
@@ -473,8 +614,8 @@ public class SqliteDb
 //            db.dropTable(BatchOfProduct.class);
 //            db.dropTable(PolygonBean.class);
 //            db.dropTable(CoordinatesBean.class);
-            list = db.findAll(Selector.from(PolygonBean.class));
-            list1 = db.findAll(Selector.from(PolygonBean.class));
+//            list = db.findAll(Selector.from(PolygonBean.class));
+//            list1 = db.findAll(Selector.from(PolygonBean.class));
 //            db.deleteAll(list);
 //            list = db.findAll(Selector.from(BreakOff.class));
 //            db.deleteAll(list);
@@ -840,6 +981,19 @@ public class SqliteDb
             e.printStackTrace();
         }
 
+        return list;
+    }
+    public static List<BreakOff> getBreakoffByBatchTimeAndContractId(Context context, String uid, String contractid, String batchTime)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<BreakOff> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(BreakOff.class).where("uid", "=", uid).and("batchTime", "=", batchTime).and("xxzt", "=", "0").and("contractid", "=", contractid));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
         return list;
     }
 
@@ -1321,6 +1475,34 @@ public class SqliteDb
         }
 
         return breakoff;
+    }
+    public static  List<CoordinatesBean>  getCoordinatesBeanByuuid(Context context, String uuid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<CoordinatesBean>  list = null;
+        try
+        {
+            list = db.findAll(Selector.from(CoordinatesBean.class).where("uuid", "=", uuid).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public static  BatchOfContract  getBatchOfContractByIdAndBatchTime(Context context, String contractId,String batchTime)
+    {
+        DbUtils db = DbUtils.create(context);
+        BatchOfContract  batchofcontract = null;
+        try
+        {
+            batchofcontract = db.findFirst(Selector.from(BatchOfContract.class).where("contractId", "=", contractId).and("batchTime", "=", batchTime).and("xxzt", "=", 0));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return batchofcontract;
     }
 
     public static BreakOff getBreakoffbyuuid(Context context, String uuid)
