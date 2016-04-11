@@ -512,13 +512,46 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
     void afterOncreate()
     {
 //        SqliteDb.getTemp1(getActivity());
-        SqliteDb.startBreakoff(getActivity(),commembertab.getuId());
+//        SqliteDb.startBreakoff(getActivity(),commembertab.getuId());
         tencentMap = mapview.getMap();
         tencentMap.setZoom(13);
         uiSettings = mapview.getUiSettings();
         tencentMap.setSatelliteEnabled(true);
         mProjection = mapview.getProjection();
         Overlays = new ArrayList<Object>();
+
+        list_Marker_ParkChart=new ArrayList<>();
+        list_Marker_AreaChart=new ArrayList<>();
+        list_Marker_ContractChart=new ArrayList<>();
+
+        list_Objects_road = new ArrayList<>();
+        list_Objects_road_centermarker = new ArrayList<>();
+
+        list_Objects_house = new ArrayList<>();
+        list_Objects_point = new ArrayList<>();
+
+        list_Objects_line = new ArrayList<>();
+        list_Objects_line_centermarker = new ArrayList<>();
+
+        list_Objects_mian_centermarker = new ArrayList<>();
+        list_Objects_mian = new ArrayList<>();
+
+        list_Objects_park = new ArrayList<>();
+        list_Objects_area = new ArrayList<>();
+        list_Objects_contract = new ArrayList<>();
+        list_Marker_park=new ArrayList<>();
+        list_Marker_area=new ArrayList<>();
+        list_Marker_contract=new ArrayList<>();
+
+        cb_house.setChecked(true);
+        cb_road.setChecked(true);
+        cb_point.setChecked(true);
+        cb_line.setChecked(true);
+        cb_mian.setChecked(true);
+        cb_park.setChecked(true);
+        cb_area.setChecked(true);
+        cb_contract.setChecked(true);
+
 
         initParam();//初始化参数
         initBasicData();//初始化基础数据
@@ -1429,7 +1462,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         SellOrderDetail.setstatus("");
         SellOrderDetail.setisSoldOut("0");
         SellOrderDetail.setXxzt("0");
-        SellOrderDetail.setType("salefor_boundary");
+        SellOrderDetail.setType("salefor");
         SqliteDb.save(getActivity(), SellOrderDetail);
         //设置剩余部分的中心点位置
         tv_tip.setVisibility(View.VISIBLE);
@@ -1714,6 +1747,39 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                 customdialog_operatepolygon.dismiss();
                 breakoff.setStatus("1");
                 boolean issuccess = SqliteDb.breakoffwhole(getActivity(), breakoff);
+                //添加产品销售批次
+                SellOrderDetail SellOrderDetail = new SellOrderDetail();
+                SellOrderDetail.setid("");
+                SellOrderDetail.setUuid(breakoff.getUuid());
+                SellOrderDetail.setsaleid("");
+                SellOrderDetail.setBatchTime(tv_batchtime.getText().toString());
+                SellOrderDetail.setuid(commembertab.getuId());
+                SellOrderDetail.setparkid(polygon_needbreakoff.getparkid());
+                SellOrderDetail.setparkname(polygon_needbreakoff.getparkname());
+                SellOrderDetail.setareaid(polygon_needbreakoff.getareaid());
+                SellOrderDetail.setareaname(polygon_needbreakoff.getareaname());
+                SellOrderDetail.setcontractid(polygon_needbreakoff.getcontractid());
+                SellOrderDetail.setcontractname(polygon_needbreakoff.getcontractname());
+                SellOrderDetail.setplanprice("");
+                SellOrderDetail.setactualprice("");
+                SellOrderDetail.setPlanlat(String.valueOf(breakoff.getLat()));
+                SellOrderDetail.setplanlatlngsize("");
+                SellOrderDetail.setactuallatlngsize("");
+                SellOrderDetail.setplanlng(String.valueOf(breakoff.getLng()));
+                SellOrderDetail.setactuallat("");
+                SellOrderDetail.setactuallng("");
+                SellOrderDetail.setplannumber(breakoff.getnumberofbreakoff());
+                SellOrderDetail.setplanweight("");
+                SellOrderDetail.setactualnumber("");
+                SellOrderDetail.setactualweight("");
+                SellOrderDetail.setplannote("");
+                SellOrderDetail.setactualnote("");
+                SellOrderDetail.setreg(utils.getTime());
+                SellOrderDetail.setstatus("");
+                SellOrderDetail.setisSoldOut("0");
+                SellOrderDetail.setXxzt("0");
+                SellOrderDetail.setType("salefor");
+                SqliteDb.save(getActivity(), SellOrderDetail);
                 if (issuccess)
                 {
                     Toast.makeText(getActivity(), "已经全部断蕾！", Toast.LENGTH_SHORT).show();

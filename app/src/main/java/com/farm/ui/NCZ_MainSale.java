@@ -171,6 +171,8 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
     @ViewById
     FrameLayout fl_salelist;
     @ViewById
+    RelativeLayout rl_batchofproduct;
+    @ViewById
     TextView tv_salelist;
     @ViewById
     Button btn_showlayer;
@@ -590,28 +592,65 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         list_BatchOfProduct = SqliteDb.getBatchOfProductByuid(getActivity(), commembertab.getuId());
         if (list_BatchOfProduct.size() == 0)
         {
-            btn_batchofproduct.setVisibility(View.GONE);
+            btn_batchofproduct.setText("暂无产品批次");
         } else
         {
             batchTime = list_BatchOfProduct.get(0).getBatchTime();
             btn_batchofproduct.setText(batchTime);
-            tencentMap = mapview.getMap();
-            tencentMap.setZoom(13);
-            uiSettings = mapview.getUiSettings();
-            tencentMap.setSatelliteEnabled(true);
-            mProjection = mapview.getProjection();
-            Overlays = new ArrayList<Object>();
-
-            initParam();//初始化参数
-            initBasicData();//初始化基础数据
-            initShoppingCart();//初始化购物车清单
-            initSaleData();//初始化销售数据
-            initBreakoffData();//初始化断蕾数据
-            initMarkerClickListener();
-            initMapCameraChangeListener();
-            initMapClickListener();
-            initMapLongClickListener();
         }
+        tencentMap = mapview.getMap();
+        tencentMap.setZoom(13);
+        uiSettings = mapview.getUiSettings();
+        tencentMap.setSatelliteEnabled(true);
+        mProjection = mapview.getProjection();
+        Overlays = new ArrayList<Object>();
+
+
+        list_Marker_ParkChart = new ArrayList<>();
+        list_Marker_AreaChart = new ArrayList<>();
+        list_Marker_ContractChart = new ArrayList<>();
+
+        list_Objects_road = new ArrayList<>();
+        list_Objects_road_centermarker = new ArrayList<>();
+
+        list_Objects_house = new ArrayList<>();
+        list_Objects_point = new ArrayList<>();
+
+        list_Objects_line = new ArrayList<>();
+        list_Objects_line_centermarker = new ArrayList<>();
+
+        list_Objects_mian_centermarker = new ArrayList<>();
+        list_Objects_mian = new ArrayList<>();
+
+        list_Objects_park = new ArrayList<>();
+        list_Objects_area = new ArrayList<>();
+        list_Objects_contract = new ArrayList<>();
+        list_Marker_park = new ArrayList<>();
+        list_Marker_area = new ArrayList<>();
+        list_Marker_contract = new ArrayList<>();
+
+        cb_house.setChecked(true);
+        cb_road.setChecked(true);
+        cb_point.setChecked(true);
+        cb_line.setChecked(true);
+        cb_mian.setChecked(true);
+        cb_park.setChecked(true);
+        cb_area.setChecked(true);
+        cb_contract.setChecked(true);
+
+        cb_parkdata.setChecked(false);
+        cb_areadata.setChecked(false);
+        cb_contractdata.setChecked(false);
+
+        initParam();//初始化参数
+        initBasicData();//初始化基础数据
+        initShoppingCart();//初始化购物车清单
+        initSaleData();//初始化销售数据
+        initBreakoffData();//初始化断蕾数据
+        initMarkerClickListener();
+        initMapCameraChangeListener();
+        initMapClickListener();
+        initMapLongClickListener();
     }
 
     public void initParam()
@@ -706,34 +745,34 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                             if (sellorderdetail.getType().equals("saleout"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getactuallat()), Double.valueOf(sellorderdetail.getactuallng()));
-                                Marker marker = addCustomMarker("saleout", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), sellorderdetail.getactualnumber());
+                                Marker marker = addCustomMarker("saleout", R.drawable.ic_saleout, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(),"已售"+ sellorderdetail.getactualnumber());
                                 list_Marker_saleout.add(marker);
                                 List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), sellorderdetail.getUuid());
-                                p = initBoundary(Color.argb(150, 255, 0, 0), 10f, list_contract, 2, R.color.bg_text);//红色
+                                p = initBoundary(Color.argb(1000, 255, 0, 0), 10f, list_contract, 2, R.color.bg_text);//红色
                                 list_Objects_saleout.add(p);
                             } else if (sellorderdetail.getType().equals("salein"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
-                                Marker marker = addCustomMarker("salein", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), sellorderdetail.getplannumber());
+                                Marker marker = addCustomMarker("salein", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(),"售中"+ sellorderdetail.getplannumber());
                                 list_Marker_salein.add(marker);
                                 List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), sellorderdetail.getUuid());
-                                p = initBoundary(Color.argb(150, 0, 255, 0), 10f, list_contract, 2, R.color.bg_text);//绿色
+                                p = initBoundary(Color.argb(1000, 0, 255, 0), 10f, list_contract, 2, R.color.bg_text);//绿色
                                 list_Objects_salein.add(p);
                             } else if (sellorderdetail.getType().equals("newsale"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
-                                Marker marker = addCustomMarker("newsale", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), sellorderdetail.getplannumber());
+                                Marker marker = addCustomMarker("newsale", R.drawable.ic_newsale, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(),"拟售"+ sellorderdetail.getplannumber());
                                 list_Marker_newsale.add(marker);
                                 List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), sellorderdetail.getUuid());
-                                p = initBoundary(Color.argb(150, 0, 255, 0), 10f, list_contract, 2, R.color.bg_text);
+                                p = initBoundary(Color.argb(1000, 255, 255, 0), 10f, list_contract, 2, R.color.bg_text);//黄色
                                 list_Objects_newsale.add(p);
                             } else if (sellorderdetail.getType().equals("salefor"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
-                                Marker marker = addCustomMarker("salefor", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), sellorderdetail.getactualnumber());
+                                Marker marker = addCustomMarker("salefor", R.drawable.ic_saleout, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "待售"+sellorderdetail.getplannumber());
                                 list_Marker_salefor.add(marker);
                                 List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), sellorderdetail.getUuid());
-                                p = initBoundary(Color.argb(150, 0, 0, 255), 10f, list_contract, 2, R.color.bg_text);//蓝色
+                                p = initBoundary(Color.argb(1000, 0, 0, 255), 10f, list_contract, 2, R.color.bg_text);//蓝色
                                 list_Objects_salefor.add(p);
                             }
                         }
@@ -746,9 +785,9 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
     public void initBasicData()
     {
         //初始化规划图
-        list_Marker_park=new ArrayList<>();
-        list_Marker_area=new ArrayList<>();
-        list_Marker_contract=new ArrayList<>();
+        list_Marker_park = new ArrayList<>();
+        list_Marker_area = new ArrayList<>();
+        list_Marker_contract = new ArrayList<>();
         List<parktab> list_parktab = SqliteDb.getparktab(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_parktab.size(); i++)//每个园区
         {
@@ -777,7 +816,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                     List<CoordinatesBean> list_area = SqliteDb.getPoints(getActivity(), polygonBean_area.getUuid());
                     if (list_area != null && list_area.size() != 0)
                     {
-                        initBoundary(Color.argb(150, 255, 0, 255), 100f, list_area, 2, R.color.bg_text);
+                        initBoundary(Color.argb(150, 255, 0, 255), 0f, list_area, 2, R.color.bg_text);
                     }
                 }
 
@@ -794,7 +833,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                         List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), polygonBean_contract.getUuid());
                         if (list_contract != null && list_contract.size() != 0)
                         {
-                            initBoundary(Color.argb(150, 255, 255, 0), 200f, list_contract, 2, R.color.bg_text);
+                            initBoundary(Color.argb(150, 255, 255, 0), 0f, list_contract, 2, R.color.bg_text);
                         }
                     }
                 }
@@ -815,6 +854,8 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
 
     public void initLinePolygon()
     {
+        list_Objects_line = new ArrayList<>();
+        list_Objects_line_centermarker = new ArrayList<>();
         List<PolygonBean> list_polygon_line = SqliteDb.getMoreLayer_line(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_polygon_line.size(); i++)
         {
@@ -855,6 +896,8 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
 
     public void initRoadPolygon()
     {
+        list_Objects_road = new ArrayList<>();
+        list_Objects_road_centermarker = new ArrayList<>();
         list_polygon_road = SqliteDb.getMoreLayer_road(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_polygon_road.size(); i++)
         {
@@ -888,6 +931,8 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
 
     public void initMianPolygon()
     {
+        list_Objects_mian_centermarker = new ArrayList<>();
+        list_Objects_mian = new ArrayList<>();
         list_polygon_mian = SqliteDb.getMoreLayer_mian(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_polygon_mian.size(); i++)
         {
@@ -914,6 +959,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
 
     public void initHousePolygon()
     {
+        list_Objects_house = new ArrayList<>();
         list_polygon_house = SqliteDb.getMoreLayer_house(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_polygon_house.size(); i++)
         {
@@ -930,6 +976,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
 
     public void initPointPolygon()
     {
+        list_Objects_point = new ArrayList<>();
         list_polygon_point = SqliteDb.getMoreLayer_point(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_polygon_point.size(); i++)
         {
@@ -1071,7 +1118,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                     showDialog_OperateSalefor(uuid, marker);
                 } else if (type.equals("newsale"))
                 {
-                    showDialog_OperateSalein(uuid, marker);
+                    showDialog_OperateNewSale(uuid, marker);
                 }
 
                 return false;
@@ -1142,7 +1189,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                 customdialog_operatepolygon.dismiss();
                 SellOrderDetail sellOrderDetail = SqliteDb.getSellOrderDetailbyuuid(getActivity(), uuid);
                 sellOrderDetail.setsaleid("");
-                sellOrderDetail.setType("newsale_boundary");
+                sellOrderDetail.setType("newsale");
                 boolean issuccess = SqliteDb.salewhole(getActivity(), sellOrderDetail);
                 if (issuccess)
                 {
@@ -1522,7 +1569,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         SellOrderDetail.setstatus("");
         SellOrderDetail.setisSoldOut("0");
         SellOrderDetail.setXxzt("0");
-        SellOrderDetail.setType("salein_boundary");
+        SellOrderDetail.setType("newsale");
         SqliteDb.save(getActivity(), SellOrderDetail);
         for (int i = 0; i < list_select.size(); i++)
         {
@@ -1590,7 +1637,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                 SellOrderDetail_notsale.setstatus("");
                 SellOrderDetail_notsale.setisSoldOut("0");
                 SellOrderDetail_notsale.setXxzt("0");
-                SellOrderDetail_notsale.setType("salefor_boundary");
+                SellOrderDetail_notsale.setType("salefor");
                 SqliteDb.save(getActivity(), SellOrderDetail_notsale);
                 for (int i = 0; i < list_notselect.size(); i++)
                 {
@@ -1704,7 +1751,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                 customdialog_deletetip.dismiss();
                 SellOrderDetail sellOrderDetail = SqliteDb.getSellOrderDetailbyuuid(getActivity(), uuid);
                 sellOrderDetail.setsaleid("");
-                sellOrderDetail.setType("salefor_boundary");
+                sellOrderDetail.setType("salefor");
                 boolean issuccess = SqliteDb.deleteSaleInInfo(getActivity(), sellOrderDetail);
                 if (issuccess)
                 {
@@ -1807,6 +1854,55 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
             {
                 SellOrderDetail SellOrderDetail = SqliteDb.getSellOrderDetailbyuuid(getActivity(), uuid);
                 showDialog_overlayInfo(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname() + "\n" + SellOrderDetail.getplannumber() + "株" + "出售中...");
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        btn_change.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SellOrderDetail sellOrderDetail = SqliteDb.getSellOrderDetailbyuuid(getActivity(), uuid);
+                showDialog_editsaleininfo(sellOrderDetail, marker);
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        customdialog_operatepolygon.show();
+    }
+    public void showDialog_OperateNewSale(final String uuid, final Marker marker)
+    {
+        final View dialog_layout = (RelativeLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_operatepolygon, null);
+        customdialog_operatepolygon = new CustomDialog_OperatePolygon(getActivity(), R.style.MyDialog, dialog_layout);
+        Button btn_paint = (Button) dialog_layout.findViewById(R.id.btn_paint);
+        Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
+        Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
+        Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        Button btn_delete = (Button) dialog_layout.findViewById(R.id.btn_delete);
+
+        btn_delete.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_operatepolygon.dismiss();
+                showDialog_deletetip_salein(uuid, marker);
+            }
+        });
+        btn_see.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SellOrderDetail SellOrderDetail = SqliteDb.getSellOrderDetailbyuuid(getActivity(), uuid);
+                showDialog_overlayInfo(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname() + "\n" + "拟售"+SellOrderDetail.getplannumber() + "株" );
                 customdialog_operatepolygon.dismiss();
             }
         });
@@ -2009,12 +2105,14 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                 lp.alpha = 1f;
                 getActivity().getWindow().setAttributes(lp);
 
-                initSaleData();//初始化销售数据
-                initBreakoffData();//初始化断蕾数据
-                initMarkerClickListener();
-                initMapLongClickListener();
-                initMapClickListener();
-                initMapCameraChangeListener();
+                reloadMap();
+
+//                initSaleData();//初始化销售数据
+//                initBreakoffData();//初始化断蕾数据
+//                initMarkerClickListener();
+//                initMapLongClickListener();
+//                initMapClickListener();
+//                initMapCameraChangeListener();
             }
         });
     }

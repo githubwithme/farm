@@ -550,6 +550,7 @@ public class SqliteDb
 
     public static void startBreakoff(Context context,String uid)
     {
+        utils.getAllBatchTime(context, "2016-04-10",5);
         List<parktab> list_parktab = SqliteDb.getparktab(context, uid);
         for (int i = 0; i < list_parktab.size(); i++)//每个园区
         {
@@ -608,10 +609,10 @@ public class SqliteDb
         try
         {
             db.deleteAll(BreakOff.class);
-//            db.dropTable(SellOrder.class);
-//            db.dropTable(SellOrderDetail.class);
+            db.deleteAll(SellOrder.class);
+            db.deleteAll(SellOrderDetail.class);
 //            db.dropTable(BreakOff.class);
-//            db.dropTable(BatchOfProduct.class);
+            db.dropTable(BatchOfProduct.class);
 //            db.dropTable(PolygonBean.class);
 //            db.dropTable(CoordinatesBean.class);
 //            list = db.findAll(Selector.from(PolygonBean.class));

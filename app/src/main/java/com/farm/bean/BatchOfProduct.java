@@ -29,7 +29,17 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
     public String weight;
     public String sellnumber;
     public String status;
+    public String year;
 
+    public void setYear(String year)
+    {
+        this.year = year;
+    }
+
+    public String getYear()
+    {
+        return year;
+    }
 
     public void setStatus(String status)
     {
@@ -140,6 +150,7 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
             p.setWeight(source.readString());
             p.setSellnumber(source.readString());
             p.setStatus(source.readString());
+            p.setYear(source.readString());
 
             return p;
         }
@@ -162,6 +173,7 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
         p.writeString(weight);
         p.writeString(sellnumber);
         p.writeString(status);
+        p.writeString(year);
 
     }
 

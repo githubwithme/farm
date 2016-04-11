@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.farm.bean.BatchOfProduct;
 import com.farm.bean.BatchTimeBean;
 import com.farm.bean.CusPoint;
 
@@ -438,12 +439,11 @@ public class utils
         return list_time;
     }
 
-    public static List<BatchTimeBean> getAllBatchTime(Context context, String dateString, int timeInterval)
+    public static void getAllBatchTime(Context context, String dateString, int timeInterval)
     {
         String day_last = dateString;
         String startDay = dateString;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        List<BatchTimeBean> list_time = new ArrayList<>();
         try
         {
             Date sd = sdf.parse(startDay);
@@ -451,19 +451,19 @@ public class utils
             c.setTime(sd);
             for (int i = 0; i < 12; i++)
             {
-                BatchTimeBean batchTimeBean = new BatchTimeBean();
+                BatchOfProduct batchOfProduct = new BatchOfProduct();
                 c.add(Calendar.DATE, timeInterval);
                 String batchTime = day_last + "至" + sdf.format(c.getTime());
-                batchTimeBean.setIsexist("0");
-                batchTimeBean.setBatchtime(batchTime);
-                list_time.add(batchTimeBean);
+                batchOfProduct.setBatchTime(batchTime);
+                batchOfProduct.setuId("60");
+                batchOfProduct.setYear(utils.getYear());
+                SqliteDb.save(context, batchOfProduct);
                 day_last = sdf.format(c.getTime());
             }
         } catch (ParseException e)
         {
             e.printStackTrace();
         }
-        return list_time;
     }
 
     public static String getDateAfterNDay(String dateString, int timeInterval)
