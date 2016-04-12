@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farm.R;
+import com.farm.adapter.BatchColor_Adapter;
 import com.farm.adapter.BatchTime_Adapter;
 import com.farm.app.AppContext;
 import com.farm.bean.BatchTimeBean;
@@ -38,6 +39,7 @@ import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog;
 import com.farm.widget.CustomDialog_AddSaleInInfo;
+import com.farm.widget.CustomDialog_BatchColor;
 import com.farm.widget.CustomDialog_BatchTime;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_OverlayInfo;
@@ -74,10 +76,14 @@ import java.util.List;
 @EFragment
 public class PG_ProductBatch extends Fragment implements TencentLocationListener, View.OnClickListener
 {
+    TextView tv_batchcolor;
     TextView tv_batchtime;
+    List<String> list_BatchColor;
     List<BatchTimeBean> list_BatchTimeBean;
     BatchTime_Adapter batchtime_adapter;
+    BatchColor_Adapter batchcolor_adapter;
     CustomDialog_BatchTime customDialog_BatchTime;
+    CustomDialog_BatchColor customDialog_BatchColor;
     String batchtime;
     CustomDialog customdialog_deletetip;
     CustomDialog_AddSaleInInfo customDialog_addSaleInInfo;
@@ -512,7 +518,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
     void afterOncreate()
     {
 //        SqliteDb.getTemp1(getActivity());
-//        SqliteDb.startBreakoff(getActivity(),commembertab.getuId());
+//        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
         tencentMap = mapview.getMap();
         tencentMap.setZoom(13);
         uiSettings = mapview.getUiSettings();
@@ -520,9 +526,9 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         mProjection = mapview.getProjection();
         Overlays = new ArrayList<Object>();
 
-        list_Marker_ParkChart=new ArrayList<>();
-        list_Marker_AreaChart=new ArrayList<>();
-        list_Marker_ContractChart=new ArrayList<>();
+        list_Marker_ParkChart = new ArrayList<>();
+        list_Marker_AreaChart = new ArrayList<>();
+        list_Marker_ContractChart = new ArrayList<>();
 
         list_Objects_road = new ArrayList<>();
         list_Objects_road_centermarker = new ArrayList<>();
@@ -539,9 +545,9 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         list_Objects_park = new ArrayList<>();
         list_Objects_area = new ArrayList<>();
         list_Objects_contract = new ArrayList<>();
-        list_Marker_park=new ArrayList<>();
-        list_Marker_area=new ArrayList<>();
-        list_Marker_contract=new ArrayList<>();
+        list_Marker_park = new ArrayList<>();
+        list_Marker_area = new ArrayList<>();
+        list_Marker_contract = new ArrayList<>();
 
         cb_house.setChecked(true);
         cb_road.setChecked(true);
@@ -594,6 +600,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                         for (int j = 0; j < list_BreakOff.size(); j++)
                         {
                             BreakOff breakOff = list_BreakOff.get(j);
+                            int batchcolor=utils.getBatchColorByName(breakOff.getBatchColor());
                             Polygon p = null;
                             List<CoordinatesBean> list_coor = SqliteDb.getPoints(getActivity(), breakOff.getUuid());
                             if (breakOff.getStatus().equals("1"))
@@ -601,65 +608,19 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                                 LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
                                 Marker marker = addCustomMarker(breakOff, "breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), breakOff.getareaname() + breakOff.getcontractname() + "\n" + breakOff.getBreakofftime() + "断" + breakOff.getnumberofbreakoff() + "株");
                                 list_Marker_breakoff.add(marker);
-                                p = initBoundary(Color.argb(1000, 255, 0, 0), 0f, list_coor, 0, R.color.transparent);//红色
+                                p = initBoundary(batchcolor, 0f, list_coor, 0, R.color.transparent);//红色
                             } else
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
                                 Marker marker = addCustomMarker(breakOff, "notbreakoff", R.drawable.ic_breakoff_spare, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), breakOff.getareaname() + breakOff.getcontractname() + "\n" + "剩" + breakOff.getnumberofbreakoff() + "株");
                                 list_Marker_breakoff.add(marker);
-                                p = initBoundary(Color.argb(1000, 0, 255, 0), 0f, list_coor, 0, R.color.transparent);//绿色
+                                p = initBoundary(batchcolor, 0f, list_coor, 0, R.color.transparent);//绿色
                             }
                             list_Objects_breakoff.add(p);
                         }
                     } else
                     {
-                        PolygonBean polygonBean_contract = SqliteDb.getLayer_contract(getActivity(), list_contractTab.get(m).getparkId(), list_contractTab.get(m).getAreaId(), list_contractTab.get(m).getid());
-                        if (polygonBean_contract != null)
-                        {
-                            //增加未断蕾情况
-                            final String uuid_breakoff = java.util.UUID.randomUUID().toString();
-                            BreakOff breakoff = new BreakOff();
-                            breakoff.setid("");
-                            breakoff.setUuid(uuid_breakoff);
-                            breakoff.setuid(polygonBean_contract.getUid());
-                            breakoff.setBreakofftime(utils.getTime());
-                            breakoff.setparkid(polygonBean_contract.getparkId());
-                            breakoff.setparkname(polygonBean_contract.getparkName());
-                            breakoff.setareaid(polygonBean_contract.getAreaId());
-                            breakoff.setareaname(polygonBean_contract.getareaName());
-                            breakoff.setcontractid(polygonBean_contract.getContractid());
-                            breakoff.setcontractname(polygonBean_contract.getContractname());
-                            breakoff.setLat(String.valueOf(polygonBean_contract.getLat()));
-                            breakoff.setLng(String.valueOf(polygonBean_contract.getLng()));
-                            breakoff.setLatlngsize("");
-                            breakoff.setnumberofbreakoff("100000");
-                            breakoff.setregdate(utils.getTime());
-                            breakoff.setWeight("");
-                            breakoff.setStatus("0");
-                            breakoff.setBatchTime("");
-                            breakoff.setXxzt("0");
-                            breakoff.setYear(utils.getYear());
-                            SqliteDb.save(getActivity(), breakoff);
 
-                            List<CoordinatesBean> list_coor = SqliteDb.getPoints(getActivity(), polygonBean_contract.getUuid());
-                            for (int j = 0; j < list_coor.size(); j++)
-                            {
-                                list_coor.get(j).setUuid(uuid_breakoff);
-                                SqliteDb.save(getActivity(), list_coor.get(j));
-                            }
-
-                            BreakOff breakOff = SqliteDb.getbreakoffByuuid(getActivity(), uuid_breakoff);
-                            Polygon p = null;
-                            List<CoordinatesBean> list_breakoff = SqliteDb.getPoints(getActivity(), breakOff.getUuid());
-                            p = initBoundary(Color.argb(1000, 0, 255, 0), 0f, list_breakoff, 0, R.color.transparent);//绿色
-                            list_Objects_breakoff.add(p);
-                            LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
-                            Marker marker = addCustomMarker(breakOff, "notbreakoff", R.drawable.ic_breakoff_spare, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), breakOff.getareaname() + breakOff.getcontractname() + "\n" + "剩" + breakOff.getnumberofbreakoff() + "株");
-                            list_Marker_breakoff.add(marker);
-                        } else
-                        {
-                            Toast.makeText(getActivity(), "该承包区不存在!", Toast.LENGTH_SHORT).show();
-                        }
                     }
                 }
             }
@@ -1305,10 +1266,21 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         customDialog_addSaleInInfo = new CustomDialog_AddSaleInInfo(getActivity(), R.style.MyDialog, dialog_layout);
         et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
         tv_batchtime = (TextView) dialog_layout.findViewById(R.id.tv_batchtime);
+        tv_batchcolor = (TextView) dialog_layout.findViewById(R.id.tv_batchcolor);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
         list_BatchTimeBean = utils.getBatchTime(getActivity(), polygon_needbreakoff.getcontractid(), "2016-04-10", 5);
+        list_BatchColor = SqliteDb.getBatchColor(getActivity(), polygon_needbreakoff.getcontractid());
         tv_batchtime.setText(list_BatchTimeBean.get(0).getBatchtime());
+        tv_batchcolor.setText(list_BatchColor.get(0));
+        tv_batchcolor.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                showDialog_batchcolor(tv_batchcolor);
+            }
+        });
         tv_batchtime.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -1382,6 +1354,42 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         customDialog_BatchTime.show();
     }
 
+    public void showDialog_batchcolor(final TextView tv_batchtime)
+    {
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_batchtime, null);
+        customDialog_BatchColor = new CustomDialog_BatchColor(getActivity(), R.style.MyDialog, dialog_layout);
+        ListView lv_department = (ListView) dialog_layout.findViewById(R.id.lv_department);
+        final Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customDialog_BatchColor.dismiss();
+            }
+        });
+        customDialog_BatchColor.setOnCancelListener(new DialogInterface.OnCancelListener()
+        {
+            @Override
+            public void onCancel(DialogInterface dialog)
+            {
+                customDialog_BatchColor.dismiss();
+            }
+        });
+        batchcolor_adapter = new BatchColor_Adapter(getActivity(), list_BatchColor);
+        lv_department.setAdapter(batchcolor_adapter);
+        lv_department.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                customDialog_BatchColor.dismiss();
+                tv_batchcolor.setText(list_BatchColor.get(position));
+            }
+        });
+        customDialog_BatchColor.show();
+    }
+
     public void savedividedPolygonInfo(final String salenumber, final LatLng centerlatlng, final List<LatLng> list_select, final List<LatLng> list_notselect)
     {
         //已选择区域
@@ -1405,6 +1413,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         breakoff.setWeight("");
         breakoff.setStatus("1");
         breakoff.setBatchTime(tv_batchtime.getText().toString());
+        breakoff.setBatchColor(tv_batchcolor.getText().toString());
         breakoff.setXxzt("0");
         breakoff.setYear(utils.getYear());
         SqliteDb.save(getActivity(), breakoff);
@@ -1493,6 +1502,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                 breakoff.setWeight("");
                 breakoff.setStatus("0");
                 breakoff.setBatchTime(tv_batchtime.getText().toString());
+                breakoff.setBatchColor("黄色");
                 breakoff.setXxzt("0");
                 breakoff.setYear(utils.getYear());
                 SqliteDb.save(getActivity(), breakoff);
@@ -1657,7 +1667,6 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                 if (isexist)
                 {
                     showDialog_deletetip_breakoff(uuid, marker);
-                    customdialog_operatepolygon.dismiss();
                 } else
                 {
                     Toast.makeText(getActivity(), "该批次已经在出售，不能删除！", Toast.LENGTH_SHORT).show();
@@ -1680,12 +1689,12 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
             @Override
             public void onClick(View v)
             {
+                customdialog_operatepolygon.dismiss();
                 boolean isexist = SqliteDb.isExistSellOrderDetail(getActivity(), uuid);
                 if (isexist)
                 {
                     BreakOff breakoff = SqliteDb.getbreakoffByuuid(getActivity(), uuid);
                     showDialog_editBreakoffinfo(breakoff, marker);
-                    customdialog_operatepolygon.dismiss();
                 } else
                 {
                     Toast.makeText(getActivity(), "该批次已经在出售，不能修改了！", Toast.LENGTH_SHORT).show();
@@ -1846,11 +1855,12 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
             public void onClick(View v)
             {
                 customDialog_editSaleInInfo.dismiss();
-                SellOrderDetail sellorderdetail=SqliteDb.getSellOrderDetailbyuuid(getActivity(), breakoff.getUuid());
+                int number_difference = Integer.valueOf(breakoff.getnumberofbreakoff()) - Integer.valueOf(et_note.getText().toString());
+                SellOrderDetail sellorderdetail = SqliteDb.getSellOrderDetailbyuuid(getActivity(), breakoff.getUuid());
                 sellorderdetail.setplannumber(et_note.getText().toString());
                 breakoff.setnumberofbreakoff(et_note.getText().toString());
-                boolean issuccess1 = SqliteDb.editBreakoff(getActivity(), sellorderdetail);
-                boolean issuccess2 = SqliteDb.editBreakoff(getActivity(), breakoff);
+                boolean issuccess1 = SqliteDb.editSellOrderDetail(getActivity(), sellorderdetail);
+                boolean issuccess2 = SqliteDb.editBreakoff(getActivity(), breakoff, number_difference);
                 if (issuccess1 && issuccess2)
                 {
                     Toast.makeText(getActivity(), "修改成功！", Toast.LENGTH_SHORT).show();
@@ -1889,7 +1899,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                 sellOrderDetail.setplannumber(et_note.getText().toString());
                 sellOrderDetail.setstatus("0");
                 sellOrderDetail.setisSoldOut("0");
-                boolean issuccess = SqliteDb.editSellOrderDetail_salein(getActivity(), sellOrderDetail);
+                boolean issuccess = SqliteDb.editSellOrderDetail_salein(getActivity(), sellOrderDetail, 0);
                 if (issuccess)
                 {
                     Toast.makeText(getActivity(), "修改成功！", Toast.LENGTH_SHORT).show();

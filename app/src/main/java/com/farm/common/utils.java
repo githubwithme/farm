@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
@@ -437,6 +438,24 @@ public class utils
             e.printStackTrace();
         }
         return list_time;
+    }
+
+    public static int getBatchColorByName( String colorname)
+    {
+        if (colorname.equals("青色"))
+        {
+            return Color.argb(1000, 0, 255, 255);
+        } else  if (colorname.equals("灰色"))
+        {
+            return Color.argb(1000, 192, 192, 192);
+        }  else  if (colorname.equals("深橄榄绿"))
+        {
+            return Color.argb(1000, 79, 79, 47);
+        }  else  if (colorname.equals("土黄色"))
+        {
+            return Color.argb(1000, 159, 159, 95);
+        }
+        return 0;
     }
 
     public static void getAllBatchTime(Context context, String dateString, int timeInterval)

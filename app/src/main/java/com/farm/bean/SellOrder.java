@@ -41,8 +41,19 @@ public class SellOrder implements Parcelable // 与数据库不一致
     public String actualallvalues;
     public String reg;
     public String saletime;
+    public String year;
     public List<SellOrderDetail> sellOrderDetailList;
 
+
+    public void setYear(String year)
+    {
+        this.year = year;
+    }
+
+    public String getYear()
+    {
+        return year;
+    }
 
     public void setUid(String uid)
     {
@@ -276,6 +287,7 @@ public class SellOrder implements Parcelable // 与数据库不一致
             p.setActualallvalues(source.readString());
             p.setReg(source.readString());
             p.setSaletime(source.readString());
+            p.setYear(source.readString());
             p.sellOrderDetailList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
             return p;
 
@@ -310,6 +322,7 @@ public class SellOrder implements Parcelable // 与数据库不一致
         p.writeString(actualallvalues);
         p.writeString(reg);
         p.writeString(saletime);
+        p.writeString(year);
         p.writeList(sellOrderDetailList);
     }
 

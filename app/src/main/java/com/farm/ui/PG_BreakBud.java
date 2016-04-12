@@ -1685,7 +1685,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
             {
                 customDialog_editSaleInInfo.dismiss();
                 breakoff.setnumberofbreakoff(et_note.getText().toString());
-                boolean issuccess = SqliteDb.editBreakoff(getActivity(), breakoff);
+                boolean issuccess = SqliteDb.editBreakoff(getActivity(), breakoff,0);
                 if (issuccess)
                 {
                     Toast.makeText(getActivity(), "修改成功！", Toast.LENGTH_SHORT).show();
@@ -1724,7 +1724,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
                 sellOrderDetail.setplannumber(et_note.getText().toString());
                 sellOrderDetail.setstatus("0");
                 sellOrderDetail.setisSoldOut("0");
-                boolean issuccess = SqliteDb.editSellOrderDetail_salein(getActivity(), sellOrderDetail);
+                boolean issuccess = SqliteDb.editSellOrderDetail_salein(getActivity(), sellOrderDetail,0);
                 if (issuccess)
                 {
                     Toast.makeText(getActivity(), "修改成功！", Toast.LENGTH_SHORT).show();

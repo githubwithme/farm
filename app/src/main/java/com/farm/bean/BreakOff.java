@@ -39,8 +39,20 @@ public class BreakOff implements Parcelable
 	public String weight;
 	public String status;//断蕾情况：0未断蕾 1已经断蕾
 	public String batchTime  ;//批次时间
+	public String batchColor  ;//批次颜色
 	public String xxzt;
 	public String Year;
+
+
+	public void setBatchColor(String batchColor)
+	{
+		this.batchColor = batchColor;
+	}
+
+	public String getBatchColor()
+	{
+		return batchColor;
+	}
 
 	public void setYear(String year)
 	{
@@ -284,6 +296,7 @@ public class BreakOff implements Parcelable
 			p.setWeight(source.readString());
 			p.setStatus(source.readString());
 			p.setBatchTime(source.readString());
+			p.setBatchColor(source.readString());
 			p.setXxzt(source.readString());
 			p.setYear(source.readString());
 			return p;
@@ -317,6 +330,7 @@ public class BreakOff implements Parcelable
 		p.writeString(weight);
 		p.writeString(status);
 		p.writeString(batchTime);
+		p.writeString(batchColor);
 		p.writeString(xxzt);
 		p.writeString(Year);
 	}

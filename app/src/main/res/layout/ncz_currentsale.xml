@@ -83,14 +83,24 @@
                     android:text="设置"
                     android:textColor="@color/bg_text"
                     android:textSize="12sp"/>
-
+                <Button
+                    android:id="@+id/btn_canclepaint"
+                    android:layout_width="45dip"
+                    android:layout_height="25dip"
+                    android:layout_marginTop="10dip"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/bg_text"
+                    android:textSize="12sp"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_sm"
                 android:layout_width="30dip"
-                android:layout_height="140dip"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom|left"
                 android:layout_marginBottom="40dip"
                 android:layout_marginLeft="5dip"
@@ -98,13 +108,22 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="40dip"
+                    android:layout_height="30dip"
                     android:background="@color/gray"
                     android:gravity="center"
                     android:text="区域"
                     android:textColor="@color/white"
                     android:textSize="10sp"/>
 
+                <TextView
+                    android:id="@+id/tv_newsale"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:background="@color/darkbrown"
+                    android:gravity="center"
+                    android:text="拟售"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
                 <TextView
                     android:id="@+id/tv_forsale"
                     android:layout_width="match_parent"
@@ -265,6 +284,19 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="房子"/>
+                <CheckBox
+                    android:id="@+id/cb_saledata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="销售数据"/>
+                <CheckBox
+                    android:id="@+id/cb_breakoffdata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="断蕾数据"/>
+
 
                 <CheckBox
                     android:id="@+id/cb_road"

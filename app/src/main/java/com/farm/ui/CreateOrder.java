@@ -93,6 +93,7 @@ public class CreateOrder extends Activity
         sellOrder.setActualallvalues("");
         sellOrder.setReg(utils.getTime());
         sellOrder.setSaletime(utils.getTime());
+        sellOrder.setYear(utils.getYear());
         boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
         if (issuccess)
         {
@@ -100,6 +101,7 @@ public class CreateOrder extends Activity
             {
                 SellOrderDetail sellOrderDetail=list_SellOrderDetail.get(i);
                 sellOrderDetail.setsaleid(uuid);
+                sellOrderDetail.setType("salein");
                 boolean issucc = SqliteDb.save(CreateOrder.this, sellOrderDetail);
                 if (!issucc)
                 {

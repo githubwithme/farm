@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.alibaba.fastjson.JSONArray;
 import com.farm.bean.BatchOfContract;
 import com.farm.bean.BatchOfProduct;
 import com.farm.bean.BreakOff;
@@ -220,12 +221,18 @@ public class SqliteDb
         return true;
     }
 
-    public static <T> boolean editSellOrderDetail_salein(Context context, Object c)
+    public static <T> boolean editSellOrderDetail_salein(Context context, SellOrderDetail sellorderdetail, int number_difference)
     {
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.update(c, "plannumber");
+            List<SellOrderDetail> list = getSaleForByBatchTimeAndContractId(context, sellorderdetail.getuid(), sellorderdetail.getcontractid(), sellorderdetail.batchTime);
+            if (list != null)
+            {
+                list.get(0).setplannumber(String.valueOf(Integer.valueOf(list.get(0).getplannumber()) + number_difference));
+            }
+            db.update(sellorderdetail, "plannumber");
+            db.update(list.get(0), "plannumber");
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -234,12 +241,18 @@ public class SqliteDb
         return true;
     }
 
-    public static <T> boolean editBreakoff(Context context, Object c)
+    public static <T> boolean editBreakoff(Context context, BreakOff breakOff_edit, int number_difference)
     {
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.update(c, "numberofbreakoff");
+            List<BreakOff> list = getNotBreakoffByBatchTimeAndContractId(context, breakOff_edit.getuid(), breakOff_edit.getcontractid(), breakOff_edit.batchTime);
+            if (list != null)
+            {
+                list.get(0).setnumberofbreakoff(String.valueOf(Integer.valueOf(list.get(0).getnumberofbreakoff()) + number_difference));
+            }
+            db.update(breakOff_edit, "numberofbreakoff");
+            db.update(list.get(0), "numberofbreakoff");
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -311,7 +324,8 @@ public class SqliteDb
         }
         return true;
     }
-    public static <T> boolean isExistBatch(Context context, String contractid,String batchTime)
+
+    public static <T> boolean isExistBatch(Context context, String contractid, String batchTime)
     {
         DbUtils db = DbUtils.create(context);
         try
@@ -330,6 +344,46 @@ public class SqliteDb
         }
         return true;
     }
+
+    public static <T> boolean isExistBatchColor(Context context, String contractid, String batchColor)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            BreakOff breakoff = db.findFirst(Selector.from(BreakOff.class).where("contractid", "=", contractid).and("xxzt", "=", "0").and("batchColor", "=", batchColor));
+
+            if (breakoff == null)
+            {
+                return false;
+            }
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            String a = e.getMessage();
+            return false;
+        }
+        return true;
+    }
+
+    public static List<String> getBatchColor(Context context, String contractid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<String> list_color = new ArrayList<>();
+        JSONArray jsonarray = FileHelper.getAssetsJsonArray(context, "batchcolor");
+
+        for (int i = 0; i < jsonarray.size(); i++)
+        {
+            String batchColor = jsonarray.get(i).toString();
+            boolean isexist = SqliteDb.isExistBatchColor(context, contractid, batchColor);
+            if (!isexist)
+            {
+                list_color.add(batchColor);
+            }
+        }
+
+        return list_color;
+    }
+
     public static <T> boolean isExistSellOrderDetail(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
@@ -548,9 +602,10 @@ public class SqliteDb
         return list;
     }
 
-    public static void startBreakoff(Context context,String uid)
+
+    public static void startBreakoff(Context context, String uid)
     {
-        utils.getAllBatchTime(context, "2016-04-10",5);
+        utils.getAllBatchTime(context, "2016-04-10", 5);
         List<parktab> list_parktab = SqliteDb.getparktab(context, uid);
         for (int i = 0; i < list_parktab.size(); i++)//每个园区
         {
@@ -583,7 +638,8 @@ public class SqliteDb
                         breakoff.setregdate(utils.getTime());
                         breakoff.setWeight("");
                         breakoff.setStatus("0");
-                        breakoff.setBatchTime(utils.getDateAfterNDay(utils.getToday(),5));
+                        breakoff.setBatchTime(utils.getDateAfterNDay(utils.getToday(), 5));
+                        breakoff.setBatchColor("黄色");
                         breakoff.setXxzt("0");
                         breakoff.setYear(utils.getYear());
                         SqliteDb.save(context, breakoff);
@@ -601,6 +657,7 @@ public class SqliteDb
         }
 
     }
+
     public static <T> List<T> getTemp1(Context context)
     {
         DbUtils db = DbUtils.create(context);
@@ -608,10 +665,9 @@ public class SqliteDb
         List<T> list1 = null;
         try
         {
-            db.deleteAll(BreakOff.class);
-            db.deleteAll(SellOrder.class);
-            db.deleteAll(SellOrderDetail.class);
-//            db.dropTable(BreakOff.class);
+            db.dropTable(BreakOff.class);
+            db.dropTable(SellOrder.class);
+            db.dropTable(SellOrderDetail.class);
             db.dropTable(BatchOfProduct.class);
 //            db.dropTable(PolygonBean.class);
 //            db.dropTable(CoordinatesBean.class);
@@ -984,6 +1040,7 @@ public class SqliteDb
 
         return list;
     }
+
     public static List<BreakOff> getBreakoffByBatchTimeAndContractId(Context context, String uid, String contractid, String batchTime)
     {
         DbUtils db = DbUtils.create(context);
@@ -991,6 +1048,34 @@ public class SqliteDb
         try
         {
             list = db.findAll(Selector.from(BreakOff.class).where("uid", "=", uid).and("batchTime", "=", batchTime).and("xxzt", "=", "0").and("contractid", "=", contractid));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static List<BreakOff> getNotBreakoffByBatchTimeAndContractId(Context context, String uid, String contractid, String batchTime)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<BreakOff> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(BreakOff.class).where("uid", "=", uid).and("batchTime", "=", batchTime).and("xxzt", "=", "0").and("status", "=", "0").and("contractid", "=", contractid));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static List<SellOrderDetail> getSaleForByBatchTimeAndContractId(Context context, String uid, String contractid, String batchTime)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<SellOrderDetail> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("batchTime", "=", batchTime).and("xxzt", "=", "0").and("type", "=", "salefor").and("contractid", "=", contractid));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1025,6 +1110,26 @@ public class SqliteDb
         try
         {
             list = db.findAll(Selector.from(SellOrder.class).where("uid", "=", uid).and("batchTime", "=", batchTime));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public static List<SellOrder> getSellOrderByUidAndYear(Context context, String uid, String year)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<SellOrder> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(SellOrder.class).where("uid", "=", uid).and("year", "=", year));
             if (list == null)
             {
                 list = new ArrayList<>();
@@ -1222,9 +1327,58 @@ public class SqliteDb
         int count_salefor = 0;
         try
         {
-            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "saleout_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
-            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "salein_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
-            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "salefor_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "saleout").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "salein").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "salefor").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            if (list_SellOrderDetail_soldout != null && list_SellOrderDetail_soldout.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldout.size(); i++)
+                {
+                    count_saleout = count_saleout + Integer.valueOf(list_SellOrderDetail_soldout.get(i).getactualnumber());
+                }
+            }
+            if (list_SellOrderDetail_soldin != null && list_SellOrderDetail_soldin.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldin.size(); i++)
+                {
+                    count_salein = count_salein + Integer.valueOf(list_SellOrderDetail_soldin.get(i).getplannumber());
+                }
+            }
+            if (list_SellOrderDetail_soldfor != null && list_SellOrderDetail_soldfor.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldfor.size(); i++)
+                {
+                    count_salefor = count_salefor + Integer.valueOf(list_SellOrderDetail_soldfor.get(i).getplannumber());
+                }
+            }
+
+
+            count[0] = count_salein;
+            count[1] = count_saleout;
+            count[2] = count_salefor;
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
+    public static int[] getdataofcontractsaleByContractId(Context context, String uid, String parkid, String areaid, String contractid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<SellOrderDetail> list_SellOrderDetail_soldout = null;
+        List<SellOrderDetail> list_SellOrderDetail_soldin = null;
+        List<SellOrderDetail> list_SellOrderDetail_soldfor = null;
+        int[] count = new int[3];
+        int count_saleout = 0;
+        int count_salein = 0;
+        int count_salefor = 0;
+        try
+        {
+            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "saleout").and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "salein").and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("contractid", "=", contractid).and("type", "=", "salefor").and("xxzt", "=", "0"));
             if (list_SellOrderDetail_soldout != null && list_SellOrderDetail_soldout.size() > 0)
             {
                 for (int i = 0; i < list_SellOrderDetail_soldout.size(); i++)
@@ -1271,9 +1425,58 @@ public class SqliteDb
         int count_salefor = 0;
         try
         {
-            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "saleout_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
-            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "salein_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
-            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "salefor_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "saleout").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "salein").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "salefor").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            if (list_SellOrderDetail_soldout != null && list_SellOrderDetail_soldout.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldout.size(); i++)
+                {
+                    count_saleout = count_saleout + Integer.valueOf(list_SellOrderDetail_soldout.get(i).getactualnumber());
+                }
+            }
+            if (list_SellOrderDetail_soldin != null && list_SellOrderDetail_soldin.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldin.size(); i++)
+                {
+                    count_salein = count_salein + Integer.valueOf(list_SellOrderDetail_soldin.get(i).getplannumber());
+                }
+            }
+            if (list_SellOrderDetail_soldfor != null && list_SellOrderDetail_soldfor.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldfor.size(); i++)
+                {
+                    count_salefor = count_salefor + Integer.valueOf(list_SellOrderDetail_soldfor.get(i).getplannumber());
+                }
+            }
+
+
+            count[0] = count_salein;
+            count[1] = count_saleout;
+            count[2] = count_salefor;
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
+    public static int[] getdataofareasaleByAreaId(Context context, String uid, String parkid, String areaid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<SellOrderDetail> list_SellOrderDetail_soldout = null;
+        List<SellOrderDetail> list_SellOrderDetail_soldin = null;
+        List<SellOrderDetail> list_SellOrderDetail_soldfor = null;
+        int[] count = new int[3];
+        int count_saleout = 0;
+        int count_salein = 0;
+        int count_salefor = 0;
+        try
+        {
+            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "saleout").and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "salein").and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("areaid", "=", areaid).and("type", "=", "salefor").and("xxzt", "=", "0"));
             if (list_SellOrderDetail_soldout != null && list_SellOrderDetail_soldout.size() > 0)
             {
                 for (int i = 0; i < list_SellOrderDetail_soldout.size(); i++)
@@ -1320,9 +1523,58 @@ public class SqliteDb
         int count_salefor = 0;
         try
         {
-            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "saleout_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
-            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "salein_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
-            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "salefor_boundary").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "saleout").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "salein").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "salefor").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            if (list_SellOrderDetail_soldout != null && list_SellOrderDetail_soldout.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldout.size(); i++)
+                {
+                    count_saleout = count_saleout + Integer.valueOf(list_SellOrderDetail_soldout.get(i).getactualnumber());
+                }
+            }
+            if (list_SellOrderDetail_soldin != null && list_SellOrderDetail_soldin.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldin.size(); i++)
+                {
+                    count_salein = count_salein + Integer.valueOf(list_SellOrderDetail_soldin.get(i).getplannumber());
+                }
+            }
+            if (list_SellOrderDetail_soldfor != null && list_SellOrderDetail_soldfor.size() > 0)
+            {
+                for (int i = 0; i < list_SellOrderDetail_soldfor.size(); i++)
+                {
+                    count_salefor = count_salefor + Integer.valueOf(list_SellOrderDetail_soldfor.get(i).getplannumber());
+                }
+            }
+
+
+            count[0] = count_salein;
+            count[1] = count_saleout;
+            count[2] = count_salefor;
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
+    public static int[] getdataofparksaleByParkId(Context context, String uid, String parkid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<SellOrderDetail> list_SellOrderDetail_soldout = null;
+        List<SellOrderDetail> list_SellOrderDetail_soldin = null;
+        List<SellOrderDetail> list_SellOrderDetail_soldfor = null;
+        int[] count = new int[3];
+        int count_saleout = 0;
+        int count_salein = 0;
+        int count_salefor = 0;
+        try
+        {
+            list_SellOrderDetail_soldout = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "saleout").and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldin = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "salein").and("xxzt", "=", "0"));
+            list_SellOrderDetail_soldfor = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("parkid", "=", parkid).and("type", "=", "salefor").and("xxzt", "=", "0"));
             if (list_SellOrderDetail_soldout != null && list_SellOrderDetail_soldout.size() > 0)
             {
                 for (int i = 0; i < list_SellOrderDetail_soldout.size(); i++)
@@ -1403,6 +1655,21 @@ public class SqliteDb
         return list;
     }
 
+    public static List<SellOrderDetail> getSaleLayerByParkId(Context context, String parkid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<SellOrderDetail> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(SellOrderDetail.class).where("parkid", "=", parkid).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
     public static List<BreakOff> getBreakOffInfo(Context context, String contractid, String batchtime)
     {
         DbUtils db = DbUtils.create(context);
@@ -1410,6 +1677,21 @@ public class SqliteDb
         try
         {
             list = db.findAll(Selector.from(BreakOff.class).where("contractid", "=", contractid).and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public static List<BreakOff> getBreakOffInfoByParkId(Context context, String parkid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<BreakOff> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(BreakOff.class).where("parkid", "=", parkid).and("xxzt", "=", "0"));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1439,7 +1721,7 @@ public class SqliteDb
         List<SellOrderDetail> list = null;
         try
         {
-            list = db.findFirst(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("type", "=", "newsale_boundary").and("batchTime", "=", batchtime));
+            list = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("type", "=", "newsale").and("batchTime", "=", batchtime));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1477,10 +1759,11 @@ public class SqliteDb
 
         return breakoff;
     }
-    public static  List<CoordinatesBean>  getCoordinatesBeanByuuid(Context context, String uuid)
+
+    public static List<CoordinatesBean> getCoordinatesBeanByuuid(Context context, String uuid)
     {
         DbUtils db = DbUtils.create(context);
-        List<CoordinatesBean>  list = null;
+        List<CoordinatesBean> list = null;
         try
         {
             list = db.findAll(Selector.from(CoordinatesBean.class).where("uuid", "=", uuid).and("xxzt", "=", "0"));
@@ -1491,10 +1774,11 @@ public class SqliteDb
 
         return list;
     }
-    public static  BatchOfContract  getBatchOfContractByIdAndBatchTime(Context context, String contractId,String batchTime)
+
+    public static BatchOfContract getBatchOfContractByIdAndBatchTime(Context context, String contractId, String batchTime)
     {
         DbUtils db = DbUtils.create(context);
-        BatchOfContract  batchofcontract = null;
+        BatchOfContract batchofcontract = null;
         try
         {
             batchofcontract = db.findFirst(Selector.from(BatchOfContract.class).where("contractId", "=", contractId).and("batchTime", "=", batchTime).and("xxzt", "=", 0));
