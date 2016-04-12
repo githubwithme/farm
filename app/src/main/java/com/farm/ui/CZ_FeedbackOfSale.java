@@ -831,7 +831,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
                 List<CoordinatesBean> list_park = SqliteDb.getPoints(getActivity(), polygonBean_park.getUuid());
                 if (list_park != null && list_park.size() != 0)
                 {
-                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_park, 0, R.color.transparent);
+                    initBoundary(getResources().getColor(R.color.transparent), 0f, list_park, 0, R.color.transparent);
                 }
             }
 
@@ -848,7 +848,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
                     List<CoordinatesBean> list_area = SqliteDb.getPoints(getActivity(), polygonBean_area.getUuid());
                     if (list_area != null && list_area.size() != 0)
                     {
-                        initBoundary(Color.argb(150, 144, 144, 144), 0f, list_area, 2, R.color.bg_text);
+                        initBoundary(getResources().getColor(R.color.transparent), 0f, list_area, 2, R.color.bg_text);
                     }
                 }
 

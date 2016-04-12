@@ -662,7 +662,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                     List<CoordinatesBean> list_area = SqliteDb.getPoints(getActivity(), polygonBean_area.getUuid());
                     if (list_area != null && list_area.size() != 0)
                     {
-                        initBoundary(getResources().getColor(R.color.transparent), 100f, list_area, 2, R.color.bg_text);
+                        initBoundary(getResources().getColor(R.color.transparent), 0f, list_area, 2, R.color.bg_text);
                     }
                 }
 
@@ -679,7 +679,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                         List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), polygonBean_contract.getUuid());
                         if (list_contract != null && list_contract.size() != 0)
                         {
-                            initBoundary(getResources().getColor(R.color.transparent), 200f, list_contract, 2, R.color.bg_text);
+                            initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 2, R.color.bg_text);
                         }
                     }
                 }
