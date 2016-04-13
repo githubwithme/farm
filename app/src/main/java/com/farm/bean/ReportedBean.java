@@ -34,10 +34,16 @@ public class ReportedBean  implements Parcelable
     public String result;
     public String IsUpload;
     public String imageUrl;     //原图
+    public List<FJxx> fjxx;
 
 
+    public List<FJxx> getFjxx() {
+        return fjxx;
+    }
 
-
+    public void setFjxx(List<FJxx> fjxx) {
+        this.fjxx = fjxx;
+    }
 
     public String getEventContent() {
         return eventContent;
@@ -193,7 +199,7 @@ public class ReportedBean  implements Parcelable
             p.setIsUpload(source.readString());
             p.setImageUrl(source.readString());
 
-
+            p.fjxx = source.readArrayList(plantgrowthtab.class.getClassLoader());
       /*      p.imgUrl = source.readArrayList(List.class.getClassLoader());
             p.thumbImageUrl = source.readArrayList(List.class.getClassLoader());*/
             return p;
@@ -225,7 +231,7 @@ public class ReportedBean  implements Parcelable
         p.writeString(result);
         p.writeString(IsUpload);
         p.writeString(imageUrl);
-
+        p.writeList(fjxx);
     /*    p.writeList(imgUrl);
         p.writeList(thumbImageUrl);*/
     }

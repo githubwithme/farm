@@ -331,10 +331,16 @@ public class Guide_List extends FragmentActivity implements OnPageChangeListener
 			t3_next.startAnimation(animationBottom);
 			break;
 		case 3:
-			t3_icon2.getAnimation().cancel();
+	/*		t3_icon2.getAnimation().cancel();
 			t3_icon3.getAnimation().cancel();
 			t3_icon4.getAnimation().cancel();
-			t3_icon5.getAnimation().cancel();
+			t3_icon5.getAnimation().cancel();*/
+                        //2016-4-13  冯
+			t3_icon2.clearAnimation();
+			t3_icon3.clearAnimation();
+			t3_icon4.clearAnimation();
+			t3_icon5.clearAnimation();
+
 			t3_icon2.setVisibility(View.INVISIBLE);
 			t3_icon3.setVisibility(View.INVISIBLE);
 			t3_icon4.setVisibility(View.INVISIBLE);
