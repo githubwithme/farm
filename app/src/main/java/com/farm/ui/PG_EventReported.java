@@ -22,6 +22,7 @@ import com.farm.R;
 import com.farm.adapter.PG_ReportedAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.FJxx;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
@@ -52,6 +53,7 @@ import java.util.List;
 @EFragment
 public class PG_EventReported extends Fragment
 {
+
     String aa;
     commembertab commembertab;
     PG_ReportedAdapter listadpater;
@@ -201,6 +203,7 @@ public class PG_EventReported extends Fragment
 
                     if (result.getAffectedRows() != 0) {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
+
                         Iterator<ReportedBean> it = listNewData.iterator();
                        while (it.hasNext())
                        {
@@ -352,10 +355,9 @@ public class PG_EventReported extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
+
                         listadpater=new PG_ReportedAdapter(getActivity(), listNewData);
                         frame_listview_news.setAdapter(listadpater);
-
-
 
 
                     } else

@@ -14,11 +14,13 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.FJxx;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
 import com.farm.ui.RecordList_;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class PG_ReportedAdapter extends BaseAdapter {
     private Context context;// 运行上下文
     private List<ReportedBean> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
+    List<FJxx> fJxx;
     ReportedBean ReportedBean;
 
     static class ListItemView
@@ -73,6 +76,8 @@ public class PG_ReportedAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent)
     {
         ReportedBean = listItems.get(position);
+        fJxx=new ArrayList<FJxx>();
+        fJxx=ReportedBean.getFjxx();
         // 自定义视图
         ListItemView listItemView = null;
         if (lmap.get(position) == null)
@@ -92,21 +97,11 @@ public class PG_ReportedAdapter extends BaseAdapter {
             listItemView.tv_cmdname = (TextView) convertView.findViewById(R.id.tv_cmdname);
             listItemView.tv_clqk = (TextView) convertView.findViewById(R.id.tv_clqk);
 
-            if (ReportedBean.getImageUrl() != null)
+            if (!fJxx.equals("")&& fJxx.size()>0)
             {
-
-//            String [] imgurl=ReportedBean.getImageUrl().split("[@]");
-//                String [] imgurl=ReportedBean.getImageUrl().split("@");
-
-                if(ReportedBean.getImageUrl().toString().contains("@"))
-                {
-                    String [] imgurl=ReportedBean.getImageUrl().split("[@]");
-                    BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + imgurl[0]);
-
-                }else {
-                    BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + ReportedBean.getImageUrl());
-                }
+                BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(0).getLSTLJ());
             }
+
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
