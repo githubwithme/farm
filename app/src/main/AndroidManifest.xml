@@ -8,6 +8,7 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="22"/>
+
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
@@ -57,7 +58,6 @@
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.MakeMap_"/>
-        <activity android:name=".ui.PG_ProductBatch_"/>
         <activity android:name=".ui.MapUtils_"/>
         <activity android:name=".ui.CZ_MakeMap_MakeLayer_"/>
         <activity android:name=".ui.CreateOrder_"/>
@@ -186,6 +186,15 @@
         <service
             android:name="com.service.SentNotify"
             android:exported="false">
+        </service>
+        <service
+            android:name="com.service.LogService"
+            android:exported="false">
+        </service>
+        <service
+            android:name="com.service.SendExceptionInfoToSerer">
+            android:enabled="true"
+            android:process="system"
         </service>
         <!-- 其他UI -->
         <activity android:name=".ui.GuanYu_"/>

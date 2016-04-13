@@ -240,6 +240,25 @@ public class SqliteDb
         }
         return true;
     }
+    public static <T> boolean editSellOrderDetail_feedbacksale(Context context, SellOrderDetail sellorderdetail, int number_difference)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            List<SellOrderDetail> list = getSaleForByBatchTimeAndContractId(context, sellorderdetail.getuid(), sellorderdetail.getcontractid(), sellorderdetail.batchTime);
+            if (list != null)
+            {
+                list.get(0).setplannumber(String.valueOf(Integer.valueOf(list.get(0).getplannumber()) + number_difference));
+            }
+            db.update(sellorderdetail, "actualnumber");
+            db.update(list.get(0), "plannumber");
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     public static <T> boolean editBreakoff(Context context, BreakOff breakOff_edit, int number_difference)
     {
@@ -1669,6 +1688,20 @@ public class SqliteDb
 
         return list;
     }
+    public static List<SellOrderDetail> getSaleLayerBySaleId(Context context, String saleid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<SellOrderDetail> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(SellOrderDetail.class).where("saleid", "=", saleid).and("xxzt", "=", "0"));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 
     public static List<BreakOff> getBreakOffInfo(Context context, String contractid, String batchtime)
     {
@@ -1685,13 +1718,13 @@ public class SqliteDb
         return list;
     }
 
-    public static List<BreakOff> getBreakOffInfoByParkId(Context context, String parkid)
+    public static List<BreakOff> getBreakOffInfoByParkId(Context context, String parkid, String batchTime,String Year)
     {
         DbUtils db = DbUtils.create(context);
         List<BreakOff> list = null;
         try
         {
-            list = db.findAll(Selector.from(BreakOff.class).where("parkid", "=", parkid).and("xxzt", "=", "0"));
+            list = db.findAll(Selector.from(BreakOff.class).where("parkid", "=", parkid).and("status", "=", "1").and("Year", "=", Year).and("batchTime", "=", batchTime).and("xxzt", "=", "0"));
         } catch (DbException e)
         {
             e.printStackTrace();

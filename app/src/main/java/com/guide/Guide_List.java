@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import com.farm.R;
 import com.farm.ui.GuideViewDoor;
 import com.guide.ViewPager.OnPageChangeListener;
+import com.service.LogService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,10 @@ public class Guide_List extends FragmentActivity implements OnPageChangeListener
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 //		TrayNotification.addNotification(Guide_List.this, R.drawable.logo, "欢迎使用农场易");// 让程序图标显示在托盘通知栏
+
+		Intent intent_log = new Intent(Guide_List.this, LogService.class);
+		startService(intent_log);
+
 		sp = this.getSharedPreferences("MY_PRE", MODE_PRIVATE);
 		firstUse = sp.getString("firstUse", "");
 		if (firstUse.equals("true"))
