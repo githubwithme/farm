@@ -54,7 +54,8 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     Fragment mContent = new Fragment();
     PG_MainFragment mainFragment;
     PG_GddList pg_gddList;
-    PG_EventList pg_eventList;
+//    PG_EventList pg_eventList;
+PG_ListOfEvents pg_listOfEvents;
 //    ProductSale productAndSale;
 //    ProductAndSale productAndSale;
 //    PG_BreakOff pg_breakOff;
@@ -141,7 +142,8 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(true);
-        switchContent(mContent, pg_eventList);
+//        switchContent(mContent, pg_eventList);
+        switchContent(mContent, pg_listOfEvents);
     }
 
     @Click
@@ -204,7 +206,8 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         AppManager.getAppManager().addActivity(this);
         mainFragment = new PG_MainFragment_();
         pg_gddList = new PG_GddList_();
-        pg_eventList = new PG_EventList_();
+//        pg_eventList = new PG_EventList_();
+        pg_listOfEvents=new PG_ListOfEvents_();
 //        productAndSale = new ProductSale_();
         pg_productBatch=new PG_ProductBatch_();
         pg_EveryDayAssessList = new PG_EveryDayAssessList_();
