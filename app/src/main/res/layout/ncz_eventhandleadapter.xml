@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dip"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <TextView
+        android:layout_weight="1"
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="仓库"
+        android:textColor="@color/textcolor_titlebar"
+        android:textSize="@dimen/titlebar_textsize" />
+
+    <TextView
+        android:layout_weight="1"
+        android:id="@+id/state"
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="仓库"
+        android:textColor="@color/textcolor_titlebar"
+        android:textSize="@dimen/titlebar_textsize" />
+</LinearLayout>

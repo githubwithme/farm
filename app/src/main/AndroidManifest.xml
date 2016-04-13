@@ -128,6 +128,9 @@
         <activity android:name=".ui.NCZ_WZ_RKDetail_"/>
         <activity android:name=".ui.NCZ_WZ_CKDetail_"/>
         <activity android:name=".ui.NCZ_WZ_YCDetail_"/>
+        <activity android:name=".ui.NCZ_EventLookList_"/>
+        <activity android:name=".ui.NCZ_EventHandleDetail_"/>
+
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
         <activity android:name=".ui.CZ_PQ_TodayCommand_"/>
@@ -146,6 +149,10 @@
         <activity android:name=".ui.PG_PlantList_"/>
         <activity android:name=".ui.AddEvent_"/>
         <activity android:name=".ui.AddGcd_"/>
+        <activity android:name=".ui.PG_AddEvent_"/>
+        <activity android:name=".ui.PG_ProductBatch_"/>
+        <activity android:name=".ui.PG_EventDetail_"/>
+        <activity android:name=".ui.PG_AddHandle_"/>
         <!-- 共用UI -->
         <activity android:name=".ui.ObservationRecordActivity_"/>
         <activity android:name=".ui.GrowthTreeActivity_"/>

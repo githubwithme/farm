@@ -48,7 +48,8 @@ public class NCZ_MainActivity extends BaseActivity
 	int cmd_videoNum;
 	Fragment mContent = new Fragment();
 	NCZ_MainFragment mainFragment;
-	NCZ_EventList ncz_eventList;
+//	NCZ_EventList ncz_eventList;
+	NCZ_EventofList ncz_eventofList;
 	NCZ_CommandList ncz_CommandList;
 	// NCZ_SaleFragment ncz_SaleFragment;
 	// SaleList saleList;
@@ -166,7 +167,8 @@ public class NCZ_MainActivity extends BaseActivity
 		tl_product.setSelected(false);
 		tl_sale.setSelected(false);
 		tl_money.setSelected(true);
-		switchContent(mContent, ncz_eventList);
+//		switchContent(mContent, ncz_eventList);
+		switchContent(mContent, ncz_eventofList);
 
 	}
 
@@ -227,8 +229,10 @@ public class NCZ_MainActivity extends BaseActivity
 		ncz_CommandList = new NCZ_CommandList_();
 		ncz_CommandList.setArguments(bundle);
 
-		ncz_eventList = new NCZ_EventList_();
-		ncz_eventList.setArguments(bundle);
+//		ncz_eventList = new NCZ_EventList_();
+//		ncz_eventList.setArguments(bundle);
+		ncz_eventofList=new NCZ_EventofList_();
+
 
 		iFragment = new IFragment_();
 
