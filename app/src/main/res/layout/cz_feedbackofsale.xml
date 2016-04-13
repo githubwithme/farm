@@ -3,53 +3,29 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
+
     <RelativeLayout
-        android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/white">
-
-        <ImageButton
-            android:id="@+id/imgbtn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/titlebar_height"
-            android:layout_marginLeft="5dip"
-            android:background="@null"
-            android:visibility="gone"
-            android:contentDescription=""
-            android:src="@drawable/back"/>
+        android:background="@color/bg_titlebar">
 
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="15dip"
+            android:layout_centerInParent="true"
             android:gravity="center"
             android:text="销售"
             android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/size_sp_16"/>
-
-
-
+            android:textSize="@dimen/titlebar_textsize"/>
 
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_below="@id/rl_titlebar"
         android:background="@color/line_color"/>
-    <TextView
-        android:id="@+id/tv_noproducttip"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="暂无产品需要销售"
-        android:textColor="@color/bg_text"
-        android:textSize="16sp"
-        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/rl_map"
@@ -128,12 +104,25 @@
                     android:text="设置"
                     android:textColor="@color/bg_text"
                     android:textSize="12sp"/>
+
+                <Button
+                    android:id="@+id/btn_canclepaint"
+                    android:layout_width="45dip"
+                    android:layout_height="25dip"
+                    android:layout_marginTop="10dip"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/bg_text"
+                    android:textSize="12sp"
+                    android:visibility="gone"/>
+
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_sm"
                 android:layout_width="30dip"
-                android:layout_height="140dip"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom|left"
                 android:layout_marginBottom="40dip"
                 android:layout_marginLeft="5dip"
@@ -141,7 +130,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="40dip"
+                    android:layout_height="30dip"
                     android:background="@color/gray"
                     android:gravity="center"
                     android:text="区域"
@@ -149,32 +138,46 @@
                     android:textSize="10sp"/>
 
                 <TextView
+                    android:id="@+id/tv_newsale"
                     android:layout_width="match_parent"
                     android:layout_height="30dip"
-                    android:background="@color/bg_green"
+                    android:background="@color/darkbrown"
                     android:gravity="center"
-                    android:text="待断量"
+                    android:text="拟售"
                     android:textColor="@color/white"
                     android:textSize="10sp"/>
 
                 <TextView
+                    android:id="@+id/tv_forsale"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:background="@color/blue"
+                    android:gravity="center"
+                    android:text="待售"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/v_salein"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:background="@color/green"
+                    android:gravity="center"
+                    android:text="售中"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/tv_saleout"
                     android:layout_width="match_parent"
                     android:layout_height="30dip"
                     android:background="@color/red"
                     android:gravity="center"
-                    android:text="已断量"
+                    android:text="已售"
                     android:textColor="@color/white"
                     android:textSize="10sp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dip"
-                    android:layout_marginTop="10dip"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:text="☆注"
-                    android:textColor="@color/bg_text"
-                    android:textSize="13sp"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -306,6 +309,21 @@
                     android:text="房子"/>
 
                 <CheckBox
+                    android:id="@+id/cb_saledata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="销售数据"/>
+
+                <CheckBox
+                    android:id="@+id/cb_breakoffdata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="断蕾数据"/>
+
+
+                <CheckBox
                     android:id="@+id/cb_road"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -345,6 +363,40 @@
                 android:textColor="@color/bg_text"
                 android:textSize="14sp"
                 android:visibility="gone"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_batchofproduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top">
+
+                <Button
+                    android:id="@+id/btn_batchofproduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dip"
+                    android:layout_centerInParent="true"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="产品批次"
+                    android:textColor="@color/bg_text"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:id="@+id/line_batch"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/btn_batchofproduct"
+                    android:background="@color/line_color"/>
+
+                <ImageView
+                    android:id="@+id/iv_arrow"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dip"
+                    android:background="@drawable/downward"/>
+            </RelativeLayout>
 
 
         </FrameLayout>

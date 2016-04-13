@@ -16,29 +16,118 @@ import com.lidroid.xutils.db.annotation.Table;
  *
  * @version 1.0
  */
-@Table(name = "BatchOfProduct")
-public class BatchOfProduct implements Parcelable // 与数据库不一致
+@Table(name = "BatchOfContract")
+public class BatchOfContract implements Parcelable // 与数据库不一致
 {
     public String id;
-    public String uId;
-    public String regDate;
     @Id
     @NoAutoIncrement
+    public String uuid;
+    public String uId;
+    public String regDate;
     public String batchTime;
     public String number;
     public String weight;
     public String sellnumber;
     public String status;
-    public String year;
+    public String parkId;
+    public String parkName;
+    public String areaId;
+    public String areaName;
+    public String contractId;
+    public String contractName;
+    public String isdrawer;
+    public String xxzt;
 
-    public void setYear(String year)
+
+    public void setXxzt(String xxzt)
     {
-        this.year = year;
+        this.xxzt = xxzt;
     }
 
-    public String getYear()
+    public String getXxzt()
     {
-        return year;
+        return xxzt;
+    }
+
+    public void setIsdrawer(String isdrawer)
+    {
+        this.isdrawer = isdrawer;
+    }
+
+    public String getIsdrawer()
+    {
+        return isdrawer;
+    }
+
+    public void setUuid(String uuid)
+    {
+        this.uuid = uuid;
+    }
+
+    public String getUuid()
+    {
+        return uuid;
+    }
+
+    public void setContractName(String contractName)
+    {
+        this.contractName = contractName;
+    }
+
+    public String getContractName()
+    {
+        return contractName;
+    }
+
+    public void setContractId(String contractId)
+    {
+        this.contractId = contractId;
+    }
+
+    public String getContractId()
+    {
+        return contractId;
+    }
+
+    public void setAreaName(String areaName)
+    {
+        this.areaName = areaName;
+    }
+
+    public String getAreaName()
+    {
+        return areaName;
+    }
+
+    public void setAreaId(String areaId)
+    {
+        this.areaId = areaId;
+    }
+
+    public String getAreaId()
+    {
+        return areaId;
+    }
+
+    public void setParkName(String parkName)
+    {
+        this.parkName = parkName;
+    }
+
+    public String getParkName()
+    {
+        return parkName;
+    }
+
+    public void setParkId(String parkId)
+    {
+        this.parkId = parkId;
+    }
+
+    public String getParkId()
+    {
+        return parkId;
     }
 
     public void setStatus(String status)
@@ -135,14 +224,15 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
         return 0;
     }
 
-    public static final Creator<BatchOfProduct> CREATOR = new Creator()
+    public static final Creator<BatchOfContract> CREATOR = new Creator()
     {
         @Override
-        public BatchOfProduct createFromParcel(Parcel source)
+        public BatchOfContract createFromParcel(Parcel source)
         {
             // 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错
-            BatchOfProduct p = new BatchOfProduct();
+            BatchOfContract p = new BatchOfContract();
             p.setid(source.readString());
+            p.setUuid(source.readString());
             p.setuId(source.readString());
             p.setRegDate(source.readString());
             p.setBatchTime(source.readString());
@@ -150,15 +240,22 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
             p.setWeight(source.readString());
             p.setSellnumber(source.readString());
             p.setStatus(source.readString());
-            p.setYear(source.readString());
+            p.setParkId(source.readString());
+            p.setParkName(source.readString());
+            p.setAreaId(source.readString());
+            p.setAreaName(source.readString());
+            p.setContractId(source.readString());
+            p.setContractName(source.readString());
+            p.setIsdrawer(source.readString());
+            p.setXxzt(source.readString());
 
             return p;
         }
 
         @Override
-        public BatchOfProduct[] newArray(int size)
+        public BatchOfContract[] newArray(int size)
         {
-            return new BatchOfProduct[size];
+            return new BatchOfContract[size];
         }
     };
 
@@ -166,6 +263,7 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
     public void writeToParcel(Parcel p, int arg1)
     {
         p.writeString(id);
+        p.writeString(uuid);
         p.writeString(uId);
         p.writeString(regDate);
         p.writeString(batchTime);
@@ -173,7 +271,14 @@ public class BatchOfProduct implements Parcelable // 与数据库不一致
         p.writeString(weight);
         p.writeString(sellnumber);
         p.writeString(status);
-        p.writeString(year);
+        p.writeString(parkId);
+        p.writeString(parkName);
+        p.writeString(areaId);
+        p.writeString(areaName);
+        p.writeString(contractId);
+        p.writeString(contractName);
+        p.writeString(isdrawer);
+        p.writeString(xxzt);
 
     }
 

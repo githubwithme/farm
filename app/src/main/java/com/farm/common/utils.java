@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
@@ -19,6 +20,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.farm.bean.BatchOfProduct;
+import com.farm.bean.BatchTimeBean;
 import com.farm.bean.CusPoint;
 
 import java.io.IOException;
@@ -26,8 +29,10 @@ import java.io.InputStream;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 2015-8-9 下午9:27:19
@@ -62,6 +67,13 @@ public class utils
     public static String getToday()
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date curDate = new Date(System.currentTimeMillis());
+        return formatter.format(curDate);
+    }
+
+    public static String getYear()
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
         Date curDate = new Date(System.currentTimeMillis());
         return formatter.format(curDate);
     }
@@ -396,6 +408,102 @@ public class utils
         return result;
     }
 
+    public static List<BatchTimeBean> getBatchTime(Context context, String contractid, String dateString, int timeInterval)
+    {
+        String day_last = dateString;
+        String startDay = dateString;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<BatchTimeBean> list_time = new ArrayList<>();
+        try
+        {
+            Date sd = sdf.parse(startDay);
+            Calendar c = Calendar.getInstance();
+            c.setTime(sd);
+            for (int i = 0; i < 12; i++)
+            {
+                BatchTimeBean batchTimeBean = new BatchTimeBean();
+                c.add(Calendar.DATE, timeInterval);
+                String batchTime = day_last + "至" + sdf.format(c.getTime());
+                boolean isexist = SqliteDb.isExistBatch(context, contractid, batchTime);
+                if (!isexist)
+                {
+                    batchTimeBean.setIsexist("0");
+                    batchTimeBean.setBatchtime(batchTime);
+                    list_time.add(batchTimeBean);
+                }
+                day_last = sdf.format(c.getTime());
+            }
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        return list_time;
+    }
+
+    public static int getBatchColorByName( String colorname)
+    {
+        if (colorname.equals("青色"))
+        {
+            return Color.argb(1000, 0, 255, 255);
+        } else  if (colorname.equals("灰色"))
+        {
+            return Color.argb(1000, 192, 192, 192);
+        }  else  if (colorname.equals("深橄榄绿"))
+        {
+            return Color.argb(1000, 79, 79, 47);
+        }  else  if (colorname.equals("土黄色"))
+        {
+            return Color.argb(1000, 159, 159, 95);
+        }
+        return 0;
+    }
+
+    public static void getAllBatchTime(Context context, String dateString, int timeInterval)
+    {
+        String day_last = dateString;
+        String startDay = dateString;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try
+        {
+            Date sd = sdf.parse(startDay);
+            Calendar c = Calendar.getInstance();
+            c.setTime(sd);
+            for (int i = 0; i < 12; i++)
+            {
+                BatchOfProduct batchOfProduct = new BatchOfProduct();
+                c.add(Calendar.DATE, timeInterval);
+                String batchTime = day_last + "至" + sdf.format(c.getTime());
+                batchOfProduct.setBatchTime(batchTime);
+                batchOfProduct.setuId("60");
+                batchOfProduct.setYear(utils.getYear());
+                SqliteDb.save(context, batchOfProduct);
+                day_last = sdf.format(c.getTime());
+            }
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getDateAfterNDay(String dateString, int timeInterval)
+    {
+        String day = "";
+        String startDay = dateString;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try
+        {
+            Date sd = sdf.parse(startDay);
+            Calendar c = Calendar.getInstance();
+            c.setTime(sd);
+            c.add(Calendar.DATE, timeInterval);
+            day = dateString + "至" + sdf.format(c.getTime());
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        return day;
+    }
+
     public static String[] getMoreDays(String dateString)
     {
         String startDay = dateString;
@@ -548,6 +656,7 @@ public class utils
     /**
      * 求线段交点（非直线）
      * 测试完全可用
+     *
      * @param p1
      * @param p2
      * @param p3
@@ -635,19 +744,23 @@ public class utils
         double d = (x2 - x1) * (x2 - x1) - (y2 - y1) * (y2 - y1);
         return Math.sqrt(d);
     }
+
     /**
      * 判断两条线是否相交 a 线段1起点坐标 b 线段1终点坐标 c 线段2起点坐标 d 线段2终点坐标 intersection 相交点坐标
      * reutrn 是否相交: 0 : 两线平行 -1 : 不平行且未相交 1 : 两线相交
      */
 
-    public static CusPoint GetIntersection(CusPoint a, CusPoint b, CusPoint c, CusPoint d) {
+    public static CusPoint GetIntersection(CusPoint a, CusPoint b, CusPoint c, CusPoint d)
+    {
         CusPoint intersection = new CusPoint(0, 0);
 
-        if (Math.abs(b.y - a.y) + Math.abs(b.x - a.x) + Math.abs(d.y - c.y)
-                + Math.abs(d.x - c.x) == 0) {
-            if ((c.x - a.x) + (c.y - a.y) == 0) {
+        if (Math.abs(b.y - a.y) + Math.abs(b.x - a.x) + Math.abs(d.y - c.y) + Math.abs(d.x - c.x) == 0)
+        {
+            if ((c.x - a.x) + (c.y - a.y) == 0)
+            {
                 System.out.println("ABCD是同一个点！");
-            } else {
+            } else
+            {
                 System.out.println("AB是一个点，CD是一个点，且AC不同！");
             }
 //            return 0;
@@ -655,42 +768,42 @@ public class utils
         }
 
 
-        if (Math.abs(b.y - a.y) + Math.abs(b.x - a.x) == 0) {
-            if ((a.x - d.x) * (c.y - d.y) - (a.y - d.y) * (c.x - d.x) == 0) {
+        if (Math.abs(b.y - a.y) + Math.abs(b.x - a.x) == 0)
+        {
+            if ((a.x - d.x) * (c.y - d.y) - (a.y - d.y) * (c.x - d.x) == 0)
+            {
                 System.out.println("A、B是一个点，且在CD线段上！");
-            } else {
+            } else
+            {
                 System.out.println("A、B是一个点，且不在CD线段上！");
             }
 //            return 0;
             return null;
         }
-        if (Math.abs(d.y - c.y) + Math.abs(d.x - c.x) == 0) {
-            if ((d.x - b.x) * (a.y - b.y) - (d.y - b.y) * (a.x - b.x) == 0) {
+        if (Math.abs(d.y - c.y) + Math.abs(d.x - c.x) == 0)
+        {
+            if ((d.x - b.x) * (a.y - b.y) - (d.y - b.y) * (a.x - b.x) == 0)
+            {
                 System.out.println("C、D是一个点，且在AB线段上！");
-            } else {
+            } else
+            {
                 System.out.println("C、D是一个点，且不在AB线段上！");
             }
 //            return 0;
             return null;
         }
 
-        if ((b.y - a.y) * (c.x - d.x) - (b.x - a.x) * (c.y - d.y) == 0) {
+        if ((b.y - a.y) * (c.x - d.x) - (b.x - a.x) * (c.y - d.y) == 0)
+        {
             System.out.println("线段平行，无交点！");
 //            return 0;
             return null;
         }
 
-        intersection.x = ((b.x - a.x) * (c.x - d.x) * (c.y - a.y) -
-                c.x * (b.x - a.x) * (c.y - d.y) + a.x * (b.y - a.y) * (c.x - d.x)) /
-                ((b.y - a.y) * (c.x - d.x) - (b.x - a.x) * (c.y - d.y));
-        intersection.y = ((b.y - a.y) * (c.y - d.y) * (c.x - a.x) - c.y
-                * (b.y - a.y) * (c.x - d.x) + a.y * (b.x - a.x) * (c.y - d.y))
-                / ((b.x - a.x) * (c.y - d.y) - (b.y - a.y) * (c.x - d.x));
+        intersection.x = ((b.x - a.x) * (c.x - d.x) * (c.y - a.y) - c.x * (b.x - a.x) * (c.y - d.y) + a.x * (b.y - a.y) * (c.x - d.x)) / ((b.y - a.y) * (c.x - d.x) - (b.x - a.x) * (c.y - d.y));
+        intersection.y = ((b.y - a.y) * (c.y - d.y) * (c.x - a.x) - c.y * (b.y - a.y) * (c.x - d.x) + a.y * (b.x - a.x) * (c.y - d.y)) / ((b.x - a.x) * (c.y - d.y) - (b.y - a.y) * (c.x - d.x));
 
-        if ((intersection.x - a.x) * (intersection.x - b.x) <= 0
-                && (intersection.x - c.x) * (intersection.x - d.x) <= 0
-                && (intersection.y - a.y) * (intersection.y - b.y) <= 0
-                && (intersection.y - c.y) * (intersection.y - d.y) <= 0)
+        if ((intersection.x - a.x) * (intersection.x - b.x) <= 0 && (intersection.x - c.x) * (intersection.x - d.x) <= 0 && (intersection.y - a.y) * (intersection.y - b.y) <= 0 && (intersection.y - c.y) * (intersection.y - d.y) <= 0)
         {
 
             System.out.println("线段相交于点(" + intersection.x + "," + intersection.y + ")！");

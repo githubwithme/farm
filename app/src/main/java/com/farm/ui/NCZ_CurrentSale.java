@@ -1797,7 +1797,7 @@ public class NCZ_CurrentSale extends Fragment implements TencentLocationListener
                 sellOrderDetail.setplannumber(et_polygonnote.getText().toString());
                 sellOrderDetail.setstatus("0");
                 sellOrderDetail.setisSoldOut("0");
-                boolean issuccess = SqliteDb.editSellOrderDetail_salein(getActivity(), sellOrderDetail);
+                boolean issuccess = SqliteDb.editSellOrderDetail_salein(getActivity(), sellOrderDetail,0);
                 if (issuccess)
                 {
                     tencentMap.removeOverlay(marker);

@@ -42,6 +42,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.service.LogService;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -126,6 +127,9 @@ public class Login extends Activity
     @AfterViews
     void afterOncreate()
     {
+        Intent intent_log = new Intent(Login.this, LogService.class);
+        startService(intent_log);
+
         commembertab commembertab = AppContext.getUserInfo(this);
         if (commembertab != null && !commembertab.getuserPwd().equals(""))
         {
