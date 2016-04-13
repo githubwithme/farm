@@ -12,9 +12,11 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.bean.ExceptionInfo;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.GetMobilePhoneInfo;
+import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -277,7 +279,7 @@ public class AppException implements UncaughtExceptionHandler
 //        StringBuilder result=new StringBuilder();
 //        result.append("##应用程序发生错误##"+ utils.getTime()+"***\n"+"网络状态:"+GetMobilePhoneInfo.getCurrentNetType(mContext)+"***\n"+"手机型号:"+GetMobilePhoneInfo.getModel()+"***\n"+"手机系统版本:"+GetMobilePhoneInfo.getAndroidVersion()+"***\n"+"SDK版本:"+GetMobilePhoneInfo.getAndroidSDKVersion()+"***\n"+"CPU信息:"+GetMobilePhoneInfo.getCpuInfo()[0]+"***\n"+"总内存:"+GetMobilePhoneInfo.getMemory(mContext)[0]+"可用内存:"+GetMobilePhoneInfo.getMemory(mContext)[1]+"***\n");
 //        result.append(String.valueOf(info));
-        String result = "######应用程序发生错误:" + utils.getTime() + "***\n" + "网络状态:" + GetMobilePhoneInfo.getCurrentNetType(mContext) + "***\n" + "手机型号:" + GetMobilePhoneInfo.getModel() + "***\n" + "手机系统版本:" + GetMobilePhoneInfo.getAndroidVersion() + "***\n" + "SDK版本:" + GetMobilePhoneInfo.getAndroidSDKVersion() + "***\n" + "CPU信息:" + GetMobilePhoneInfo.getCpuInfo()[0] + "***\n" + "总内存:" + GetMobilePhoneInfo.getMemory(mContext)[0] + "可用内存:" + GetMobilePhoneInfo.getMemory(mContext)[1] + "***\n" + String.valueOf(info);
+        String result = "######应用程序发生错误:" +utils.getTime() + "***\n" + "网络状态:" + GetMobilePhoneInfo.getCurrentNetType(mContext) + "***\n" + "手机型号:" + GetMobilePhoneInfo.getModel() + "***\n" + "手机系统版本:" + GetMobilePhoneInfo.getAndroidVersion() + "***\n" + "SDK版本:" + GetMobilePhoneInfo.getAndroidSDKVersion() + "***\n" + "CPU信息:" + GetMobilePhoneInfo.getCpuInfo()[0] + "***\n" + "总内存:" + GetMobilePhoneInfo.getMemory(mContext)[0] + "可用内存:" + GetMobilePhoneInfo.getMemory(mContext)[1] + "***\n" + String.valueOf(info);
         printWriter.close();
         mDeviceCrashInfo.put(STACK_TRACE, result.toString());
         try
@@ -287,7 +289,8 @@ public class AppException implements UncaughtExceptionHandler
             // 保存文件
             File destDirStr = mContext.getFilesDir();
             writeToApplicationFile(fileName, destDirStr, result.toString());//保存手机本地
-            sendExceptionInfoToServer(mContext, result.toString());//保存远程数据库
+            saveExceptionInfoInSqlite(mContext, result);
+//            sendExceptionInfoToServer(mContext, result.toString());//保存远程数据库
 //            Intent intent_log = new Intent(mContext, SendExceptionInfoToSerer.class);
 //            intent_log.putExtra("info", result);
 //            intent_log.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -301,7 +304,8 @@ public class AppException implements UncaughtExceptionHandler
         } catch (Exception e)
         {
             Log.e(TAG, "an error occured while writing report file...", e);
-            sendExceptionInfoToServer(mContext, e.getMessage());//保存远程数据库
+            saveExceptionInfoInSqlite(mContext, result);
+//            sendExceptionInfoToServer(mContext, e.getMessage());//保存远程数据库
         }
         return null;
     }
@@ -326,6 +330,29 @@ public class AppException implements UncaughtExceptionHandler
                 cr.delete();// 删除已发送的报告
             }
         }
+    }
+
+    private void saveExceptionInfoInSqlite(Context ctx, String info)
+    {
+        String userid="10000";
+        String username="未知姓名";
+        String exceptionid=java.util.UUID.randomUUID().toString();
+        commembertab commembertab = AppContext.getUserInfo(mContext);
+        if (commembertab != null)
+        {
+            userid=commembertab.getId();
+            username=commembertab.getrealName();
+        }
+        ExceptionInfo exceptionInfo = new ExceptionInfo();
+        exceptionInfo.setId("");
+        exceptionInfo.setUuid(GetMobilePhoneInfo.getDeviceUuid(ctx).toString());
+        exceptionInfo.setExceptionid(exceptionid);
+        exceptionInfo.setExceptionInfo(info);
+        exceptionInfo.setUserid(userid);
+        exceptionInfo.setUsername(username);
+        exceptionInfo.setRegtime(utils.getTime());
+        exceptionInfo.setIsSolve("0");
+        SqliteDb.save(ctx, exceptionInfo);
     }
 
     /**

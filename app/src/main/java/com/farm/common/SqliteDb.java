@@ -10,6 +10,7 @@ import com.farm.bean.BatchOfProduct;
 import com.farm.bean.BreakOff;
 import com.farm.bean.CoordinatesBean;
 import com.farm.bean.DepartmentBean;
+import com.farm.bean.ExceptionInfo;
 import com.farm.bean.HaveReadRecord;
 import com.farm.bean.PolygonBean;
 import com.farm.bean.SellOrder;
@@ -702,6 +703,19 @@ public class SqliteDb
         if (null == list || list.isEmpty())
         {
             list = new ArrayList<T>();
+        }
+        return list;
+    }
+    public static <T> List<T> getExceptionInfo(Context context)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<T> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(ExceptionInfo.class));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
         }
         return list;
     }
@@ -2782,6 +2796,18 @@ public class SqliteDb
         try
         {
             db.update(c, "saleid", "type");
+        } catch (DbException e)
+        {
+            return false;
+        }
+        return true;
+    }
+    public static boolean deleteExceptionInfo(Context context, String exceptionid)
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.delete(ExceptionInfo.class, WhereBuilder.b("exceptionid", "=", exceptionid));
         } catch (DbException e)
         {
             return false;

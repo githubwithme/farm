@@ -640,7 +640,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
             CurrentsellOrder = list_BatchOfProduct.get(0);
             btn_batchofproduct.setText(CurrentsellOrder.getBuyers() + "订单");
         }
-        tencentMap = mapview.getMap();
+//        tencentMap = mapview.getMap();
         tencentMap.setZoom(13);
         uiSettings = mapview.getUiSettings();
         tencentMap.setSatelliteEnabled(true);

@@ -16,8 +16,10 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.app.AppManager;
+import com.farm.bean.ExceptionInfo;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.farm.widget.MyDialog;
 import com.farm.widget.MyDialog.CustomDialogListener;
@@ -37,6 +39,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.List;
 
 @EActivity(R.layout.activity_pg)
 public class PG_MainActivity extends Activity implements TencentLocationListener
@@ -177,6 +181,15 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     @AfterViews
     void afterOncreate()
     {
+        //将错误信息提交
+        List<ExceptionInfo> list_exception = SqliteDb.getExceptionInfo(PG_MainActivity.this);
+        if (list_exception != null)
+        {
+            for (int i = 0; i < list_exception.size(); i++)
+            {
+                sendExceptionInfoToServer(list_exception.get(i));
+            }
+        }
         switchContent(mContent, mainFragment);
         tv_home.setTextColor(getResources().getColor(R.color.red));
         tl_home.setSelected(true);
@@ -326,5 +339,38 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
 //                Toast.makeText(PG_MainActivity.this,"位置错误",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void sendExceptionInfoToServer(final ExceptionInfo exception)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("UUID", exception.getUuid());
+        params.addQueryStringParameter("exceptionInfo", exception.getExceptionInfo());
+        params.addQueryStringParameter("userid", exception.getUserid());
+        params.addQueryStringParameter("username", exception.getUsername());
+        params.addQueryStringParameter("action", "saveAppException");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        SqliteDb.deleteExceptionInfo(PG_MainActivity.this, exception.getExceptionid());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+            }
+        });
+
     }
 }
