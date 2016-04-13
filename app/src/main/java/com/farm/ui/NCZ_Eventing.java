@@ -198,7 +198,8 @@ public class NCZ_Eventing extends Fragment
                         while (it.hasNext())
                         {
                             String value = it.next().getState();
-                            if (!value.equals("0")||!value.equals("1"))
+
+                            if (value.equals("2")||value.equals("3"))
                             {
                                 it.remove();
                             }
