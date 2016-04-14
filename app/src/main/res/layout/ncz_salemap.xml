@@ -73,9 +73,19 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/btn_orderdetail"
+                    android:layout_width="60dip"
+                    android:layout_height="25dip"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:gravity="center"
+                    android:text="订单详情"
+                    android:textColor="@color/bg_text"
+                    android:textSize="12sp"/>
+                <Button
                     android:id="@+id/btn_showlayer"
                     android:layout_width="45dip"
                     android:layout_height="25dip"
+                    android:layout_marginTop="15dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
                     android:text="图层"
@@ -87,7 +97,7 @@
                     android:id="@+id/btn_yx"
                     android:layout_width="45dip"
                     android:layout_height="25dip"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="15dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
                     android:text="2D"
@@ -98,7 +108,7 @@
                     android:id="@+id/btn_setting"
                     android:layout_width="45dip"
                     android:layout_height="25dip"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="15dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
                     android:text="设置"
@@ -109,7 +119,7 @@
                     android:id="@+id/btn_canclepaint"
                     android:layout_width="45dip"
                     android:layout_height="25dip"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="15dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
                     android:text="取消"
@@ -359,7 +369,7 @@
                     android:layout_centerInParent="true"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:text="产品批次"
+                    android:text="暂无订单"
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
 

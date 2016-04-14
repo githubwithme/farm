@@ -59,9 +59,13 @@ public class CreateOrder extends Activity
     @ViewById
     EditText et_name;
     @ViewById
+    EditText et_address;
+    @ViewById
     EditText et_price;
     @ViewById
     EditText et_weight;
+    @ViewById
+    EditText et_number;
     @ViewById
     EditText et_phone;
     @ViewById
@@ -73,6 +77,46 @@ public class CreateOrder extends Activity
     @Click
     void btn_sure()
     {
+        if (et_name.getText().toString().equals(""))
+        {
+            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_email.getText().toString().equals(""))
+        {
+            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_address.getText().toString().equals(""))
+        {
+            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_phone.getText().toString().equals(""))
+        {
+            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_price.getText().toString().equals(""))
+        {
+            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_weight.getText().toString().equals(""))
+        {
+            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_number.getText().toString().equals(""))
+        {
+            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_values.getText().toString().equals(""))
+        {
+            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            return;
+        }
         String uuid = java.util.UUID.randomUUID().toString();
         SellOrder sellOrder = new SellOrder();
         sellOrder.setid("");
@@ -82,18 +126,22 @@ public class CreateOrder extends Activity
         sellOrder.setSelltype("0");
         sellOrder.setStatus("0");
         sellOrder.setBuyers(et_name.getText().toString());
+        sellOrder.setAddress(et_address.getText().toString());
         sellOrder.setEmail(et_email.getText().toString());
         sellOrder.setPhone(et_phone.getText().toString());
         sellOrder.setPrice(et_price.getText().toString());
-        sellOrder.setNumber(et_weight.getText().toString());
-        sellOrder.setWeight("");
-        sellOrder.setAllvalues(et_values.getText().toString());
+        sellOrder.setNumber(et_number.getText().toString());
+        sellOrder.setWeight(et_weight.getText().toString());
+        sellOrder.setSumvalues(et_values.getText().toString());
+        sellOrder.setActualprice("");
         sellOrder.setActualweight("");
         sellOrder.setActualnumber("");
-        sellOrder.setActualallvalues("");
+        sellOrder.setActualsumvalues("");
+        sellOrder.setDeposit("0");
         sellOrder.setReg(utils.getTime());
         sellOrder.setSaletime(utils.getTime());
         sellOrder.setYear(utils.getYear());
+        sellOrder.setNote(et_note.getText().toString());
         boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
         if (issuccess)
         {

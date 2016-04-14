@@ -30,20 +30,75 @@ public class SellOrder implements Parcelable // 与数据库不一致
     public String selltype;
     public String status;
     public String buyers;
+    public String address;
     public String email;
     public String phone;
     public String price;
     public String number;
     public String weight;
-    public String allvalues;
-    public String actualweight;
-    public String actualnumber;
-    public String actualallvalues;
+    public String sumvalues;
+    public String actualprice="";
+    public String actualweight="";
+    public String actualnumber="";
+    public String actualsumvalues="";
     public String reg;
     public String saletime;
     public String year;
+    public String note;
+    public String feedbacknote;
+    public String deposit;
     public List<SellOrderDetail> sellOrderDetailList;
 
+
+    public void setFeedbacknote(String feedbacknote)
+    {
+        this.feedbacknote = feedbacknote;
+    }
+
+    public String getFeedbacknote()
+    {
+        return feedbacknote;
+    }
+
+    public void setActualprice(String actualprice)
+    {
+        this.actualprice = actualprice;
+    }
+
+    public String getActualprice()
+    {
+        return actualprice;
+    }
+
+    public void setAddress(String address)
+    {
+        this.address = address;
+    }
+
+    public String getAddress()
+    {
+        return address;
+    }
+
+    public void setDeposit(String deposit)
+    {
+        this.deposit = deposit;
+    }
+
+    public String getDeposit()
+    {
+        return deposit;
+    }
+
+    public void setNote(String note)
+    {
+        this.note = note;
+    }
+
+    public String getNote()
+    {
+        return note;
+    }
 
     public void setYear(String year)
     {
@@ -135,14 +190,14 @@ public class SellOrder implements Parcelable // 与数据库不一致
         return reg;
     }
 
-    public void setActualallvalues(String actualallvalues)
+    public void setActualsumvalues(String actualsumvalues)
     {
-        this.actualallvalues = actualallvalues;
+        this.actualsumvalues = actualsumvalues;
     }
 
-    public String getActualallvalues()
+    public String getActualsumvalues()
     {
-        return actualallvalues;
+        return actualsumvalues;
     }
 
     public void setActualnumber(String actualnumber)
@@ -165,14 +220,15 @@ public class SellOrder implements Parcelable // 与数据库不一致
         return actualweight;
     }
 
-    public void setAllvalues(String allvalues)
+
+    public void setSumvalues(String sumvalues)
     {
-        this.allvalues = allvalues;
+        this.sumvalues = sumvalues;
     }
 
-    public String getAllvalues()
+    public String getSumvalues()
     {
-        return allvalues;
+        return sumvalues;
     }
 
     public void setWeight(String weight)
@@ -276,18 +332,23 @@ public class SellOrder implements Parcelable // 与数据库不一致
             p.setSelltype(source.readString());
             p.setStatus(source.readString());
             p.setBuyers(source.readString());
+            p.setAddress(source.readString());
             p.setEmail(source.readString());
             p.setPhone(source.readString());
             p.setPrice(source.readString());
             p.setNumber(source.readString());
             p.setWeight(source.readString());
-            p.setAllvalues(source.readString());
+            p.setSumvalues(source.readString());
+            p.setActualprice(source.readString());
             p.setActualweight(source.readString());
             p.setActualnumber(source.readString());
-            p.setActualallvalues(source.readString());
+            p.setActualsumvalues(source.readString());
             p.setReg(source.readString());
             p.setSaletime(source.readString());
             p.setYear(source.readString());
+            p.setNote(source.readString());
+            p.setFeedbacknote(source.readString());
+            p.setDeposit(source.readString());
             p.sellOrderDetailList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
             return p;
 
@@ -311,18 +372,23 @@ public class SellOrder implements Parcelable // 与数据库不一致
         p.writeString(selltype);
         p.writeString(status);
         p.writeString(buyers);
+        p.writeString(address);
         p.writeString(email);
         p.writeString(phone);
         p.writeString(price);
         p.writeString(number);
         p.writeString(weight);
-        p.writeString(allvalues);
+        p.writeString(sumvalues);
+        p.writeString(actualprice);
         p.writeString(actualweight);
         p.writeString(actualnumber);
-        p.writeString(actualallvalues);
+        p.writeString(actualsumvalues);
         p.writeString(reg);
         p.writeString(saletime);
         p.writeString(year);
+        p.writeString(note);
+        p.writeString(feedbacknote);
+        p.writeString(deposit);
         p.writeList(sellOrderDetailList);
     }
 

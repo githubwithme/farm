@@ -101,6 +101,9 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
     View pv_command;
     View pv_batch;
 
+    PopupWindow pw_orderdetail;
+    View pv_orderdetail;
+
     CustomDialog_OverlayInfo customDialog_overlayInfo;
     CustomDialog_OperatePolygon customdialog_operatepolygon;
     CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
@@ -179,6 +182,8 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
     @ViewById
     Button btn_batchofproduct;
     @ViewById
+    Button btn_orderdetail;
+    @ViewById
     ImageView iv_arrow;
     @ViewById
     View line_batch;
@@ -239,6 +244,19 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
     void btn_canclepaint()
     {
         reloadMap();
+    }
+
+    @Click
+    void btn_orderdetail()
+    {
+        if (CurrentsellOrder != null)
+        {
+            showPop_orderdetail();
+        } else
+        {
+            Toast.makeText(NCZ_SaleMap.this, "暂无订单", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @CheckedChange
@@ -631,6 +649,13 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
     @AfterViews
     void afterOncreate()
     {
+        tencentMap = mapview.getMap();
+        tencentMap.setZoom(13);
+        uiSettings = mapview.getUiSettings();
+        tencentMap.setSatelliteEnabled(true);
+        mProjection = mapview.getProjection();
+        Overlays = new ArrayList<Object>();
+
         list_BatchOfProduct = SqliteDb.getSellOrderByUidAndYear(NCZ_SaleMap.this, commembertab.getuId(), utils.getYear());
         if (list_BatchOfProduct.size() == 0)
         {
@@ -639,43 +664,11 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
         {
             CurrentsellOrder = list_BatchOfProduct.get(0);
             btn_batchofproduct.setText(CurrentsellOrder.getBuyers() + "订单");
+            initSaleData();//初始化销售数据
+            initBreakoffData();//初始化断蕾数据
         }
-        tencentMap = mapview.getMap();
-        tencentMap.setZoom(13);
-        uiSettings = mapview.getUiSettings();
-        tencentMap.setSatelliteEnabled(true);
-        mProjection = mapview.getProjection();
-        Overlays = new ArrayList<Object>();
-
-
-        list_Marker_ParkChart = new ArrayList<>();
-        list_Marker_AreaChart = new ArrayList<>();
-        list_Marker_ContractChart = new ArrayList<>();
-
-        list_Objects_road = new ArrayList<>();
-        list_Objects_road_centermarker = new ArrayList<>();
-
-        list_Objects_house = new ArrayList<>();
-        list_Objects_point = new ArrayList<>();
-
-        list_Objects_line = new ArrayList<>();
-        list_Objects_line_centermarker = new ArrayList<>();
-
-        list_Objects_mian_centermarker = new ArrayList<>();
-        list_Objects_mian = new ArrayList<>();
-
-        list_Objects_park = new ArrayList<>();
-        list_Objects_area = new ArrayList<>();
-        list_Objects_contract = new ArrayList<>();
-        list_Marker_park = new ArrayList<>();
-        list_Marker_area = new ArrayList<>();
-        list_Marker_contract = new ArrayList<>();
-
-
         initParam();//初始化参数
         initBasicData();//初始化基础数据
-        initSaleData();//初始化销售数据
-        initBreakoffData();//初始化断蕾数据
         initMarkerClickListener();
         initMapCameraChangeListener();
         initMapClickListener();
@@ -704,6 +697,26 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
         list_Marker_ParkChart = new ArrayList<>();
         list_Marker_AreaChart = new ArrayList<>();
         list_Marker_ContractChart = new ArrayList<>();
+
+
+        list_Objects_road = new ArrayList<>();
+        list_Objects_road_centermarker = new ArrayList<>();
+
+        list_Objects_house = new ArrayList<>();
+        list_Objects_point = new ArrayList<>();
+
+        list_Objects_line = new ArrayList<>();
+        list_Objects_line_centermarker = new ArrayList<>();
+
+        list_Objects_mian_centermarker = new ArrayList<>();
+        list_Objects_mian = new ArrayList<>();
+
+        list_Objects_park = new ArrayList<>();
+        list_Objects_area = new ArrayList<>();
+        list_Objects_contract = new ArrayList<>();
+        list_Marker_park = new ArrayList<>();
+        list_Marker_area = new ArrayList<>();
+        list_Marker_contract = new ArrayList<>();
     }
 
 
@@ -747,7 +760,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
         list_Marker_saleout = new ArrayList<>();
         list_Objects_allsale = new ArrayList<>();
         list_Objects_salein = new ArrayList<>();
-        list_Objects_saleout= new ArrayList<>();
+        list_Objects_saleout = new ArrayList<>();
 
         List<SellOrderDetail> list_SellOrderDetail = SqliteDb.getSaleLayerBySaleId(NCZ_SaleMap.this, CurrentsellOrder.getUuid());
         if (list_SellOrderDetail != null)
@@ -760,20 +773,20 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
                     Polygon p = null;
                     LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
                     Marker marker = addCustomMarker("salein", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "售中" + sellorderdetail.getplannumber());
-                    marker.setVisible(false);
+//                    marker.setVisible(false);
                     list_Marker_allsale.add(marker);
                     list_Marker_salein.add(marker);
                     List<CoordinatesBean> list_contract = SqliteDb.getPoints(NCZ_SaleMap.this, sellorderdetail.getUuid());
                     p = initBoundary(Color.argb(1000, 0, 255, 0), 20f, list_contract, 2, R.color.bg_text);//绿色
                     list_Objects_allsale.add(p);
                     list_Objects_salein.add(p);
-                } else  if (list_SellOrderDetail.get(j).getType().equals("saleout"))
+                } else if (list_SellOrderDetail.get(j).getType().equals("saleout"))
                 {
                     SellOrderDetail sellorderdetail = list_SellOrderDetail.get(j);
                     Polygon p = null;
                     LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
                     Marker marker = addCustomMarker("saleout", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "已售" + sellorderdetail.getactualnumber());
-                    marker.setVisible(false);
+//                    marker.setVisible(false);
                     list_Marker_allsale.add(marker);
                     list_Marker_saleout.add(marker);
                     List<CoordinatesBean> list_contract = SqliteDb.getPoints(NCZ_SaleMap.this, sellorderdetail.getUuid());
@@ -1118,7 +1131,8 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
                     showDialog_OperateSalein(uuid, marker);
                 } else if (type.equals("saleout"))
                 {
-                    showDialog_OperateSaleOut(uuid, marker);
+//                    showDialog_OperateSaleOut(uuid, marker);
+                    showDialog_overlayInfo(note);
                 }
 
                 return false;
@@ -1813,6 +1827,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
         });
         customdialog_operatepolygon.show();
     }
+
     public void showDialog_OperateSaleOut(final String uuid, final Marker marker)
     {
         final View dialog_layout = (RelativeLayout) LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_feedbackofsale, null);
@@ -1890,9 +1905,10 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
             {
                 customDialog_editSaleInInfo.dismiss();
                 int number_difference = Integer.valueOf(sellOrderDetail.getplannumber()) - Integer.valueOf(et_note.getText().toString());
-                sellOrderDetail.setactualnumber(et_note.getText().toString());
-                sellOrderDetail.setType("saleout");
-                boolean issuccess = SqliteDb.editSellOrderDetail_feedbacksale(NCZ_SaleMap.this, sellOrderDetail, number_difference);
+                sellOrderDetail.setplannumber(et_note.getText().toString());
+                sellOrderDetail.setstatus("0");
+                sellOrderDetail.setisSoldOut("0");
+                boolean issuccess = SqliteDb.editSellOrderDetail_salein(NCZ_SaleMap.this, sellOrderDetail, number_difference);
                 if (issuccess)
                 {
                     Toast.makeText(NCZ_SaleMap.this, "修改成功！", Toast.LENGTH_SHORT).show();
@@ -2034,6 +2050,81 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
                 reloadMap();
             }
         });
+    }
+
+    public void showPop_orderdetail()
+    {
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_SaleMap.this.getSystemService(NCZ_SaleMap.this.LAYOUT_INFLATER_SERVICE);
+        pv_orderdetail = layoutInflater.inflate(R.layout.pop_orderdetail, null);// 外层
+        pv_orderdetail.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_orderdetail.isShowing()))
+                {
+                    pw_orderdetail.dismiss();
+                    WindowManager.LayoutParams lp = NCZ_SaleMap.this.getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    NCZ_SaleMap.this.getWindow().setAttributes(lp);
+                    return true;
+                }
+                return false;
+            }
+        });
+        pv_orderdetail.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_orderdetail.isShowing())
+                {
+                    pw_orderdetail.dismiss();
+                    WindowManager.LayoutParams lp = NCZ_SaleMap.this.getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    NCZ_SaleMap.this.getWindow().setAttributes(lp);
+                }
+                return false;
+            }
+        });
+        pw_orderdetail = new PopupWindow(pv_orderdetail, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        pw_orderdetail.showAsDropDown(line_batch, 0, 0);
+        pw_orderdetail.setOutsideTouchable(true);
+        TextView tv_name = (TextView) pv_orderdetail.findViewById(R.id.tv_name);
+        TextView tv_phone = (TextView) pv_orderdetail.findViewById(R.id.tv_phone);
+        TextView tv_address = (TextView) pv_orderdetail.findViewById(R.id.tv_address);
+        TextView tv_email = (TextView) pv_orderdetail.findViewById(R.id.tv_email);
+        TextView tv_planprice = (TextView) pv_orderdetail.findViewById(R.id.tv_planprice);
+        TextView tv_actualprice = (TextView) pv_orderdetail.findViewById(R.id.tv_actualprice);
+        TextView tv_plannumber = (TextView) pv_orderdetail.findViewById(R.id.tv_plannumber);
+        TextView tv_actualnumber = (TextView) pv_orderdetail.findViewById(R.id.tv_actualnumber);
+        TextView tv_planweight = (TextView) pv_orderdetail.findViewById(R.id.tv_planweight);
+        TextView tv_actualweight = (TextView) pv_orderdetail.findViewById(R.id.tv_actualweight);
+        TextView tv_planallvalues = (TextView) pv_orderdetail.findViewById(R.id.tv_planallvalues);
+        TextView tv_actualallvalues = (TextView) pv_orderdetail.findViewById(R.id.tv_actualallvalues);
+        TextView tv_deposit = (TextView) pv_orderdetail.findViewById(R.id.tv_deposit);
+        TextView tv_note = (TextView) pv_orderdetail.findViewById(R.id.tv_note);
+        TextView tv_feedbacknote = (TextView) pv_orderdetail.findViewById(R.id.tv_feedbacknote);
+
+        if (CurrentsellOrder != null)
+        {
+            tv_name.setText(CurrentsellOrder.getBuyers());
+            tv_phone.setText(CurrentsellOrder.getPhone());
+            tv_address.setText(CurrentsellOrder.getAddress());
+            tv_email.setText(CurrentsellOrder.getEmail());
+            tv_planprice.setText(CurrentsellOrder.getPrice());
+            tv_actualprice.setText(CurrentsellOrder.getActualprice());
+            tv_planweight.setText(CurrentsellOrder.getWeight());
+            tv_actualweight.setText(CurrentsellOrder.getActualweight());
+            tv_plannumber.setText(CurrentsellOrder.getNumber());
+            tv_actualnumber.setText(CurrentsellOrder.getActualnumber());
+            tv_planallvalues.setText(CurrentsellOrder.getSumvalues());
+            tv_actualallvalues.setText(CurrentsellOrder.getActualsumvalues());
+            tv_deposit.setText(CurrentsellOrder.getDeposit());
+            tv_note.setText(CurrentsellOrder.getNote());
+            tv_feedbacknote.setText(CurrentsellOrder.getFeedbacknote());
+        }
+
     }
 
     private void showFirstMarker()

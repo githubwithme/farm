@@ -61,6 +61,8 @@ public class IFragment extends Fragment
 	@ViewById
 	TextView tv_makemap;
 	@ViewById
+	TextView tv_resetMapData;
+	@ViewById
 	CircleImageView circle_img;
 	@ViewById
 	TextView tv_changepwd;
@@ -81,6 +83,13 @@ public class IFragment extends Fragment
 
 //		Intent intent = new Intent(getActivity(), MapUtils_.class);
 //		startActivity(intent);
+	}
+	@Click
+	void tv_resetMapData()
+	{
+		commembertab commembertab = AppContext.getUserInfo(getActivity());
+        SqliteDb.resetmapdata(getActivity());
+        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
 	}
 	@Click
 	void tv_edituser()
