@@ -116,7 +116,7 @@
                     android:textSize="12sp"/>
 
                 <Button
-                    android:id="@+id/btn_connectpaint"
+                    android:id="@+id/btn_canclepaint"
                     android:layout_width="45dip"
                     android:layout_height="25dip"
                     android:layout_marginTop="10dip"

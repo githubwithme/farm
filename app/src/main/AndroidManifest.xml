@@ -57,6 +57,7 @@
         <activity
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".ui.AnalysisActivity_"/>
         <activity android:name=".ui.NCZ_SaleMap_"/>
         <activity android:name=".ui.MakeMap_"/>
         <activity android:name=".ui.MapUtils_"/>

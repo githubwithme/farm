@@ -1844,8 +1844,18 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
 
     public void initParamAfterPaint()
     {
-        list_latlng_pick = new ArrayList<>();
         btn_canclepaint.setVisibility(View.GONE);
+
+        isInner = false;
+        pos_line1 = 0;
+        pos_line2 = 0;
+        list_Objects_divideline = new ArrayList<>();
+        list_latlng_needplanboundary = new ArrayList<>();
+        list_latlng_needplanline = new ArrayList<>();
+        touchLatlng1 = null;
+        touchLatlng2 = null;
+
+        list_latlng_pick = new ArrayList<>();
         lastselect_latlng = null;
         list_latlng_firstline = null;
         list_latlng_secondline = null;
