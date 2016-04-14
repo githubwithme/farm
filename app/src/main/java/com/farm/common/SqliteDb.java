@@ -251,7 +251,7 @@ public class SqliteDb
             {
                 list.get(0).setplannumber(String.valueOf(Integer.valueOf(list.get(0).getplannumber()) + number_difference));
             }
-            db.update(sellorderdetail, "actualnumber");
+            db.update(sellorderdetail, "actualnumber","type");
             db.update(list.get(0), "plannumber");
         } catch (DbException e)
         {
@@ -688,7 +688,35 @@ public class SqliteDb
             db.dropTable(BreakOff.class);
             db.dropTable(SellOrder.class);
             db.dropTable(SellOrderDetail.class);
-            db.dropTable(BatchOfProduct.class);
+//            db.dropTable(BatchOfProduct.class);
+//            db.dropTable(PolygonBean.class);
+//            db.dropTable(CoordinatesBean.class);
+//            list = db.findAll(Selector.from(PolygonBean.class));
+//            list1 = db.findAll(Selector.from(PolygonBean.class));
+//            db.deleteAll(list);
+//            list = db.findAll(Selector.from(BreakOff.class));
+//            db.deleteAll(list);
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        if (null == list || list.isEmpty())
+        {
+            list = new ArrayList<T>();
+        }
+        return list;
+    }
+    public static <T> List<T> resetmapdata(Context context)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<T> list = null;
+        List<T> list1 = null;
+        try
+        {
+            db.dropTable(BreakOff.class);
+            db.dropTable(SellOrder.class);
+            db.dropTable(SellOrderDetail.class);
+//            db.dropTable(BatchOfProduct.class);
 //            db.dropTable(PolygonBean.class);
 //            db.dropTable(CoordinatesBean.class);
 //            list = db.findAll(Selector.from(PolygonBean.class));

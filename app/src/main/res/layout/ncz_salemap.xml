@@ -4,11 +4,34 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/bg_titlebar">
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="订单管理"
+            android:textColor="@color/textcolor_titlebar"
+            android:textSize="@dimen/titlebar_textsize"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_map"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <View
             android:id="@+id/line"
             android:layout_width="match_parent"
@@ -33,6 +56,7 @@
                 android:id="@+id/tv_tip"
                 android:layout_width="match_parent"
                 android:layout_height="45dip"
+                android:layout_marginTop="35dip"
                 android:background="@color/bg_yellow"
                 android:gravity="center"
                 android:text=""
@@ -43,65 +67,109 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top|right"
-                android:layout_margin="15dip"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="110dip"
+                android:layout_marginRight="5dip"
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/btn_orderdetail"
+                    android:layout_width="60dip"
+                    android:layout_height="25dip"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:gravity="center"
+                    android:text="订单详情"
+                    android:textColor="@color/bg_text"
+                    android:textSize="12sp"/>
+                <Button
                     android:id="@+id/btn_showlayer"
-                    android:layout_width="70dip"
-                    android:layout_height="30dip"
+                    android:layout_width="45dip"
+                    android:layout_height="25dip"
+                    android:layout_marginTop="15dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
-                    android:text="显示图层"
+                    android:text="图层"
                     android:textColor="@color/bg_text"
-                    android:textSize="14sp"/>
+                    android:textSize="12sp"/>
 
-
-
-                <Button
-                    android:id="@+id/btn_addlayer"
-                    android:layout_width="70dip"
-                    android:layout_height="30dip"
-                    android:layout_marginTop="10dip"
-                    android:background="@drawable/background_view_rounded_single"
-                    android:gravity="center"
-                    android:text="添加区域"
-                    android:textColor="@color/bg_text"
-                    android:textSize="14sp"/>
-
-                <Button
-                    android:id="@+id/btn_addmore"
-                    android:layout_width="70dip"
-                    android:layout_height="30dip"
-                    android:layout_marginTop="10dip"
-                    android:background="@drawable/background_view_rounded_single"
-                    android:gravity="center"
-                    android:text="更多"
-                    android:textColor="@color/bg_text"
-                    android:textSize="14sp"/>
 
                 <Button
                     android:id="@+id/btn_yx"
-                    android:layout_width="70dip"
-                    android:layout_height="30dip"
-                    android:layout_marginTop="10dip"
+                    android:layout_width="45dip"
+                    android:layout_height="25dip"
+                    android:layout_marginTop="15dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
                     android:text="2D"
                     android:textColor="@color/bg_text"
-                    android:textSize="14sp"/>
+                    android:textSize="12sp"/>
 
                 <Button
                     android:id="@+id/btn_setting"
-                    android:layout_width="70dip"
-                    android:layout_height="30dip"
-                    android:layout_marginTop="10dip"
+                    android:layout_width="45dip"
+                    android:layout_height="25dip"
+                    android:layout_marginTop="15dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
                     android:text="设置"
                     android:textColor="@color/bg_text"
-                    android:textSize="14sp"/>
+                    android:textSize="12sp"/>
+
+                <Button
+                    android:id="@+id/btn_canclepaint"
+                    android:layout_width="45dip"
+                    android:layout_height="25dip"
+                    android:layout_marginTop="15dip"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/bg_text"
+                    android:textSize="12sp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_sm"
+                android:layout_width="30dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|left"
+                android:layout_marginBottom="40dip"
+                android:layout_marginLeft="5dip"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_batchcolor"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:background="@color/gray"
+                    android:gravity="center"
+                    android:text="批次"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+
+
+                <TextView
+                    android:id="@+id/v_salein"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:background="@color/green"
+                    android:gravity="center"
+                    android:text="售中"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/tv_saleout"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:background="@color/red"
+                    android:gravity="center"
+                    android:text="已售"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -110,6 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:layout_marginTop="45dip"
                 android:background="@drawable/background_view_rounded_single"
                 android:orientation="vertical"
                 android:paddingRight="10dp"
@@ -187,24 +256,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:clickable="false"
-                    android:text="园区"/>
+                    android:text="园区标识"/>
 
                 <CheckBox
                     android:id="@+id/cb_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:clickable="false"
-                    android:text="片区"/>
+                    android:text="片区标识"/>
 
                 <CheckBox
                     android:id="@+id/cb_contract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:clickable="false"
-                    android:text="承包区"/>
+                    android:text="承包区标识"/>
+
                 <CheckBox
                     android:id="@+id/cb_parkdata"
                     android:layout_width="wrap_content"
@@ -225,12 +292,28 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="承包区图表"/>
+
                 <CheckBox
                     android:id="@+id/cb_house"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="房子"/>
+
+                <CheckBox
+                    android:id="@+id/cb_saledata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="销售数据"/>
+
+                <CheckBox
+                    android:id="@+id/cb_breakoffdata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="断蕾数据"/>
+
 
                 <CheckBox
                     android:id="@+id/cb_road"
@@ -260,17 +343,53 @@
                     android:layout_weight="1"
                     android:text="面"/>
             </LinearLayout>
+
             <Button
                 android:id="@+id/btn_complete"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="40dip"
+                android:layout_gravity="bottom"
                 android:background="@drawable/background_view_rounded_single"
                 android:gravity="center"
-                android:layout_gravity="bottom"
                 android:text="完成"
                 android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_batchofproduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top">
+
+                <Button
+                    android:id="@+id/btn_batchofproduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dip"
+                    android:layout_centerInParent="true"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="暂无订单"
+                    android:textColor="@color/bg_text"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:id="@+id/line_batch"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/btn_batchofproduct"
+                    android:background="@color/line_color"/>
+
+                <ImageView
+                    android:id="@+id/iv_arrow"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dip"
+                    android:background="@drawable/downward"/>
+            </RelativeLayout>
+
 
         </FrameLayout>
     </RelativeLayout>

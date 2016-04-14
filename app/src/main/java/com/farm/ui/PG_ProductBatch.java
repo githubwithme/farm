@@ -518,6 +518,9 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
     void afterOncreate()
     {
 //        SqliteDb.getTemp1(getActivity());
+//        SqliteDb.initPark(getActivity());
+//        SqliteDb.initArea(getActivity());
+//        SqliteDb.initContract(getActivity());
 //        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
         tencentMap = mapview.getMap();
         tencentMap.setZoom(13);
