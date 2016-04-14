@@ -1,6 +1,5 @@
 package com.farm.ui;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +7,8 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -24,7 +25,6 @@ import com.farm.bean.FJ_SCFJ;
 import com.farm.bean.HandleBean;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
-import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDialog;
@@ -39,7 +39,7 @@ import com.media.HomeFragmentActivity;
 import com.media.MediaChooser;
 
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.io.File;
@@ -51,11 +51,11 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Created by user on 2016/4/12.
+ * Created by user on 2016/4/14.
  */
-@EActivity(R.layout.pg_addhandle)
-public class PG_AddHandle extends Activity {
-    HandleBean handleBean;
+@EFragment
+public class PG_ISAddHandle extends Fragment{
+    HandleBean handleBean;//传值
     CountDownLatch latch;
     MyDialog myDialog;
     CustomDialog_ListView customDialog_listView;
@@ -74,17 +74,11 @@ public class PG_AddHandle extends Activity {
     List<FJ_SCFJ> list_picture = new ArrayList<FJ_SCFJ>();
     List<FJ_SCFJ> list_video = new ArrayList<FJ_SCFJ>();
     List<FJ_SCFJ> list_allfj = new ArrayList<FJ_SCFJ>();
-
-    @Click
-    void imgbtn_back()
-    {
-
-    }
     @Click
     void btn_upload() {
         if( et_sjms.getText().toString().equals(""))
         {
-            Toast.makeText(PG_AddHandle.this, "请先填选相关信息！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "请先填选相关信息！", Toast.LENGTH_SHORT).show();
 
         }else
         {
@@ -92,33 +86,32 @@ public class PG_AddHandle extends Activity {
             makeData();
         }
     }
-
     @Click
     void imgbtn_addpicture() {
-        Intent intent = new Intent(PG_AddHandle.this, HomeFragmentActivity.class);
+        Intent intent = new Intent(getActivity(), HomeFragmentActivity.class);
         intent.putExtra("type", "picture");
         startActivity(intent);
     }
 
     @Click
     void imgbtn_addvideo() {
-        Intent intent = new Intent(PG_AddHandle.this, HomeFragmentActivity.class);
+        Intent intent = new Intent(getActivity(), HomeFragmentActivity.class);
         intent.putExtra("type", "video");
         startActivity(intent);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getActionBar().hide();
-        appContext = (AppContext) getApplication();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.pg_isaddhandle, container, false);
+        handleBean = getArguments().getParcelable("handleBean");
+//        appContext=(AppContext)getContext();//0
+//        appContext = (AppContext) getApplication();
         IntentFilter videoIntentFilter = new IntentFilter(MediaChooser.VIDEO_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
-        registerReceiver(videoBroadcastReceiver, videoIntentFilter);
+       getActivity(). registerReceiver(videoBroadcastReceiver, videoIntentFilter);
 
         IntentFilter imageIntentFilter = new IntentFilter(MediaChooser.IMAGE_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
-        registerReceiver(imageBroadcastReceiver, imageIntentFilter);
-        handleBean=getIntent().getParcelableExtra("handleBean");
-        commembertab = AppContext.getUserInfo(this);
+        getActivity(). registerReceiver(imageBroadcastReceiver, imageIntentFilter);
+        commembertab = AppContext.getUserInfo(getActivity());
+        return rootView;
     }
 
     BroadcastReceiver videoBroadcastReceiver = new BroadcastReceiver()// 植物（0为整体照，1为花照，2为果照，3为叶照）；动物（0为整体照，1为脚印照，2为粪便照）
@@ -128,7 +121,7 @@ public class PG_AddHandle extends Activity {
             List<String> list = intent.getStringArrayListExtra("list");
             for (int i = 0; i < list.size(); i++) {
                 String FJBDLJ = list.get(i);
-                ImageView imageView = new ImageView(PG_AddHandle.this);
+                ImageView imageView = new ImageView(getActivity());
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
                 lp.setMargins(25, 4, 0, 4);
                 imageView.setLayoutParams(lp);
@@ -148,8 +141,8 @@ public class PG_AddHandle extends Activity {
                     @Override
                     public void onClick(View v) {
                         final int index_zp = ll_video.indexOfChild(v);
-                        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                        myDialog = new MyDialog(PG_AddHandle.this, R.style.MyDialog, dialog_layout, "图片", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener() {
+                        View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "图片", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener() {
                             @Override
                             public void OnClick(View v) {
                                 switch (v.getId()) {
@@ -180,12 +173,12 @@ public class PG_AddHandle extends Activity {
             List<String> list = intent.getStringArrayListExtra("list");
             for (int i = 0; i < list.size(); i++) {
                 String FJBDLJ = list.get(i);
-                ImageView imageView = new ImageView(PG_AddHandle.this);
+                ImageView imageView = new ImageView(getActivity());
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
                 lp.setMargins(25, 4, 0, 4);
                 imageView.setLayoutParams(lp);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                BitmapHelper.setImageView(PG_AddHandle.this, imageView, FJBDLJ);
+                BitmapHelper.setImageView(getActivity(), imageView, FJBDLJ);
                 imageView.setTag(FJBDLJ);
 
                 FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
@@ -200,8 +193,8 @@ public class PG_AddHandle extends Activity {
                     @Override
                     public void onClick(View v) {
                         final int index_zp = ll_picture.indexOfChild(v);
-                        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                        myDialog = new MyDialog(PG_AddHandle.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
+                        View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
                             @Override
                             public void OnClick(View v) {
                                 switch (v.getId()) {
@@ -225,8 +218,6 @@ public class PG_AddHandle extends Activity {
             }
         }
     };
-
-
     private void saveData() {
         SimpleDateFormat formatter   =   new   SimpleDateFormat   ("yyyy年MM月dd日   HH:mm:ss");
         Date curDate   =   new Date(System.currentTimeMillis());//获取当前时间
@@ -252,7 +243,7 @@ public class PG_AddHandle extends Activity {
                 {
                     listData = JSON.parseArray(result.getRows().toJSONString(), HandleBean.class);
                     if (listData == null) {
-                        AppContext.makeToast(PG_AddHandle.this, "error_connectDataBase");
+                        AppContext.makeToast(getActivity(), "error_connectDataBase");
                     } else {
                         if (list_picture.size() > 0 )
                         {
@@ -264,13 +255,13 @@ public class PG_AddHandle extends Activity {
                             }
 
                         } else {
-                            Toast.makeText(PG_AddHandle.this, "保存成功！", Toast.LENGTH_SHORT).show();
-                            PG_AddHandle.this.finish();
+                            Toast.makeText(getActivity(),"保存成功！", Toast.LENGTH_SHORT).show();
+                             getActivity().finish();
                         }
                     }
 
                 } else {
-                    AppContext.makeToast(PG_AddHandle.this, "error_connectDataBase");
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
                     return;
                 }
             }
@@ -278,7 +269,7 @@ public class PG_AddHandle extends Activity {
             @Override
             public void onFailure(HttpException error, String arg1) {
                 String a = error.getMessage();
-                AppContext.makeToast(PG_AddHandle.this, "error_connectServer");
+                AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
     }
@@ -314,11 +305,11 @@ public class PG_AddHandle extends Activity {
                         showProgress();
                     } else
                     {
-                        AppContext.makeToast(PG_AddHandle.this, "error_connectDataBase");
+                        AppContext.makeToast(getActivity(), "error_connectDataBase");
                     }
                 } else
                 {
-                    AppContext.makeToast(PG_AddHandle.this, "error_connectDataBase");
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
                     return;
                 }
 
@@ -328,7 +319,7 @@ public class PG_AddHandle extends Activity {
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(PG_AddHandle.this, "error_connectServer");
+                AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
     }
@@ -339,8 +330,8 @@ public class PG_AddHandle extends Activity {
         Long l = latch.getCount();
         if (l.intValue() == 0) // 全部线程是否已经结束
         {
-            Toast.makeText(PG_AddHandle.this, "保存成功！", Toast.LENGTH_SHORT).show();
-            PG_AddHandle.this.finish();
+            Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
+            getActivity().finish();
         }
     }
 
@@ -358,9 +349,9 @@ public class PG_AddHandle extends Activity {
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    Toast.makeText(PG_AddHandle.this, "保存成功！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
                 } else {
-                    AppContext.makeToast(PG_AddHandle.this, "error_connectDataBase");
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
                     return;
                 }
             }
@@ -368,7 +359,7 @@ public class PG_AddHandle extends Activity {
             @Override
             public void onFailure(HttpException error, String arg1) {
                 String a = error.getMessage();
-                AppContext.makeToast(PG_AddHandle.this, "error_connectServer");
+                AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
     }

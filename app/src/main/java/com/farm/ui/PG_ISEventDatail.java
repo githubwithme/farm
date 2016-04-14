@@ -12,32 +12,43 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.FJ_SCFJ;
 import com.farm.bean.FJxx;
+import com.farm.bean.HandleBean;
 import com.farm.bean.ReportedBean;
+import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDialog;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by user on 2016/4/12.
+ * Created by user on 2016/4/14.
  */
 @EFragment
-public class NCZ_EventDetail extends Fragment
+public class PG_ISEventDatail  extends Fragment
 {
-    ReportedBean reportedBean;
+
+
+//    ReportedBean reportedBean;
     MyDialog myDialog;
     @ViewById
     LinearLayout ll_picture;
@@ -56,37 +67,77 @@ public class NCZ_EventDetail extends Fragment
     TextView tv_type;
     @ViewById
     TextView et_sjms;
-
-
-    @AfterViews
-    void aftercreate() {
-        tv_reported.setText(reportedBean.getReportor());
-        tv_time.setText(reportedBean.getReporTime());
-        tv_type.setText(reportedBean.getEventType());
-//       et_sjms.setText(reportedBean.getEventContent());
-        et_sjms.setText(reportedBean.getEventContent());
-        if(!reportedBean.getFjxx().equals(""))
-        {
-            for(int i=0;i<reportedBean.getFjxx().size();i++)
-            {
-                addServerPicture(reportedBean.getFjxx().get(i));
-            }
-        }
-    }
-
+    HandleBean handleBean;//传值
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.event_detaillayout, container, false);
-//        appContext = (AppContext) getActivity().getApplication();
-//        commembertab commembertab = AppContext.getUserInfo(getActivity());
-//        commembertab = AppContext.getUserInfo(getActivity());
-//        goods=getArguments().getParcelable("goods");
-        reportedBean = getArguments().getParcelable("reportedBean");
+        View rootView = inflater.inflate(R.layout.pg_iseventdatail, container, false);
+        handleBean = getArguments().getParcelable("handleBean");
         return rootView;
     }
 
-    private void addServerPicture(FJxx flview) {
+    private void getIndata() {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+//        params.addQueryStringParameter("goodsId", handleBean.getEventId());
+        params.addQueryStringParameter("action", "getEventListByUID");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                String a = responseInfo.result;
+                List<ReportedBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0) {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
+                        Iterator<ReportedBean> it = listNewData.iterator();
+                        while (it.hasNext())
+                        {
+                            String value = it.next().getEventId();
+
+                            if (!value.equals( handleBean.getEventId()))   // handleBean.getEventId()
+                            {
+                                it.remove();
+                            }
+                        }
+
+                        ReportedBean reportedBean=listNewData.get(0);
+                    //数据填写
+                        tv_reported.setText(reportedBean.getReportor());
+                        tv_time.setText(reportedBean.getReporTime());
+                        tv_type.setText(reportedBean.getEventType());
+                        et_sjms.setText(reportedBean.getEventContent());
+                        if(!reportedBean.getFjxx().equals(""))
+                        {
+                            for(int i=0;i<reportedBean.getFjxx().size();i++)
+                            {
+                                addServerPicture(reportedBean.getFjxx().get(i));
+                            }
+                        }
+                    } else {
+                        listNewData = new ArrayList<ReportedBean>();
+                    }
+                } else {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg) {
+                String a = error.getMessage();
+                AppContext.makeToast(getActivity(), "error_connectServer");
+
+            }
+        });
+    }
+    private void addServerPicture(FJxx flview)
+    {
 
         ImageView imageView = new ImageView(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
@@ -105,7 +156,7 @@ public class NCZ_EventDetail extends Fragment
             @Override
             public void onClick(View v) {
                 final int index_zp = ll_picture.indexOfChild(v);
-                View dialog_layout = (LinearLayout)getActivity(). getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                 myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
                     @Override
                     public void OnClick(View v) {

@@ -14,19 +14,24 @@
         android:layout_centerInParent="true"
         android:layout_marginRight="10dip"
         android:id="@+id/handle"
-        android:text="sssss"
+        android:text="请选择人员"
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 
     <Button
-        android:layout_alignParentRight="true"
         android:id="@+id/btn_handle"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="@null"
-        android:text="选择人员"
-        android:textSize="@dimen/size_15"/>
+        android:layout_width="60dip"
+        android:layout_height="45dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dip"
+        android:background="@drawable/background_view_rounded_single"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_14"/>
 </RelativeLayout>
     <View
         android:id="@+id/line"

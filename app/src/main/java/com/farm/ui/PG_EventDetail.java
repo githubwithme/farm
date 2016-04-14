@@ -20,6 +20,7 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.FJ_SCFJ;
+import com.farm.bean.FJxx;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
@@ -89,7 +90,14 @@ public class PG_EventDetail extends Activity {
     Button btn_save;
 
     @Click
-    void tv_delete() {
+    void imgbtn_back()
+    {
+        finish();
+    }
+    @Click
+    void tv_delete()
+    {
+
         delete();
     }
 
@@ -109,8 +117,15 @@ public class PG_EventDetail extends Activity {
 //       et_sjms.setText(reportedBean.getEventContent());
         et_sjms.setText(reportedBean.getEventContent());
 
-        if (!reportedBean.getImageUrl().equals(""))
-        addServerPicture(reportedBean.getImageUrl());
+     /*   if (!reportedBean.getImageUrl().equals(""))
+        addServerPicture(reportedBean.getImageUrl());*/
+        if(!reportedBean.getFjxx().equals(""))
+        {
+           for(int i=0;i<reportedBean.getFjxx().size();i++)
+           {
+               addServerPicture(reportedBean.getFjxx().get(i));
+           }
+        }
     }
 
     @Click
@@ -243,20 +258,15 @@ public class PG_EventDetail extends Activity {
     }
 
 
-    private void addServerPicture(String aa) {
-        if (aa.contains("@")) {
-            imgurls = aa.split("[@]");
-        } else {
-            imgurls[0] = aa;
-        }
-        for (int i = 0; i < imgurls.length; i++) {
+    private void addServerPicture(FJxx flview) {
+
             ImageView imageView = new ImageView(PG_EventDetail.this);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, LayoutParams.MATCH_PARENT, 0);
             lp.setMargins(25, 4, 0, 4);
             imageView.setLayoutParams(lp);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.url + fj_SCFJ.getFJLJ());// ?
-            BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.baseurl + imgurls[i]);
+            BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.baseurl +flview.getFJLJ());
 
             FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
 //            fj_SCFJ.setFJBDLJ(FJBDLJ);
@@ -294,5 +304,5 @@ public class PG_EventDetail extends Activity {
                 }
             });
         }
-    }
+
 }

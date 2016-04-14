@@ -1,0 +1,184 @@
+package com.farm.ui;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
+import com.farm.bean.FJ_SCFJ;
+import com.farm.bean.FJxx;
+import com.farm.bean.HandleBean;
+import com.farm.bean.ReportedBean;
+import com.farm.bean.Result;
+import com.farm.common.BitmapHelper;
+import com.farm.widget.CustomDialog_ListView;
+import com.farm.widget.MyDialog;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by user on 2016/4/14.
+ */
+@EActivity(R.layout.ncz_handledetail)
+public class NCZ_HandleDetail extends Activity
+{
+
+    MyDialog myDialog;
+    @ViewById
+    LinearLayout ll_picture;
+    @ViewById
+    LinearLayout ll_video;
+    CustomDialog_ListView customDialog_listView;
+    List<FJ_SCFJ> list_picture = new ArrayList<FJ_SCFJ>();
+    List<FJ_SCFJ> list_video = new ArrayList<FJ_SCFJ>();
+    List<FJ_SCFJ> list_allfj = new ArrayList<FJ_SCFJ>();
+    @ViewById
+    TextView tv_reported;
+    @ViewById
+    TextView tv_time;
+    @ViewById
+    TextView et_sjms;
+
+    HandleBean handleBean;
+
+
+    @Click
+    void btn_delete()
+    {
+        deletehandle();
+    }
+    @Click
+    void imgbtn_back()
+    {
+        finish();
+    }
+    @AfterViews
+    void afteroncreate()
+    {
+        tv_reported.setText(handleBean.getSolveName());
+        tv_time.setText(handleBean.getRegistime());
+        et_sjms.setText(handleBean.getResult());
+        if(!handleBean.getFjxx().equals(""))
+        {
+            for(int i=0;i<handleBean.getFjxx().size();i++)
+            {
+                addServerPicture(handleBean.getFjxx().get(i));
+            }
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();
+        handleBean=getIntent().getParcelableExtra("handleBean");
+    }
+
+    private void addServerPicture(FJxx flview) {
+
+        ImageView imageView = new ImageView(NCZ_HandleDetail.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+        lp.setMargins(25, 4, 0, 4);
+        imageView.setLayoutParams(lp);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.url + fj_SCFJ.getFJLJ());// ?
+        BitmapHelper.setImageView(NCZ_HandleDetail.this, imageView, AppConfig.baseurl + flview.getFJLJ());
+
+        FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
+//            fj_SCFJ.setFJBDLJ(FJBDLJ);
+        fj_SCFJ.setFJLX("1");
+        ll_picture.addView(imageView);
+        list_picture.add(fj_SCFJ);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int index_zp = ll_picture.indexOfChild(v);
+                View dialog_layout = (LinearLayout)getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                myDialog = new MyDialog(NCZ_HandleDetail.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
+                    @Override
+                    public void OnClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.btn_sure:
+                          /*      Intent intent = new Intent(PG_EventDetail.this, ShowPhoto_.class);
+                                intent.putExtra("url", list_picture.get(index_zp).getFJLJ());
+                                startActivity(intent);*/
+                                File file = new File(list_picture.get(index_zp).getFJBDLJ());
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setDataAndType(Uri.fromFile(file), "image");
+                                startActivity(intent);
+                                break;
+                            case R.id.btn_cancle:
+//                                deletePhotos(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
+                                ll_picture.removeViewAt(index_zp);
+                                list_picture.remove(index_zp);
+                                myDialog.dismiss();
+                                break;
+                        }
+                    }
+                });
+                myDialog.show();
+            }
+        });
+    }
+
+    private void deletehandle()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "HandleDelete");
+        params.addQueryStringParameter("id", handleBean.getResultId());
+
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                String a = responseInfo.result;
+                List<ReportedBean> listData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+
+                    NCZ_HandleDetail.this.finish();
+               /*     listData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
+                    if (listData == null) {
+                        AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
+                    } else {
+                        String event = listData.get(0).getEventId();
+
+                    }
+*/
+                } else {
+                    AppContext.makeToast(NCZ_HandleDetail.this, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String arg1) {
+                String a = error.getMessage();
+                AppContext.makeToast(NCZ_HandleDetail.this, "error_connectServer");
+            }
+        });
+    }
+}
