@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@drawable/bg_white">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height" >
@@ -21,43 +21,30 @@
             android:layout_height="@dimen/titlebar_height"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="事件处理"
+            android:text="事件处理详细信息"
             android:textColor="@color/black"
             android:textSize="@dimen/titlebar_textsize" />
 
-        <Button
-            android:id="@+id/btn_upload"
-            android:layout_width="60dip"
-            android:layout_height="35dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:background="@null"
-            android:gravity="center"
-            android:text="上传"
-            android:textColor="@color/black"
-            android:textSize="@dimen/size_14" />
 
-        <ProgressBar
-            android:id="@+id/pb_upload"
-            android:layout_width="60dip"
-            android:layout_height="35dip"
+
+        <Button
+            android:layout_marginRight="20dip"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:background="@null"
+            android:id="@+id/btn_delete"
+            android:layout_width="60dip"
+            android:layout_height="45dip"
+            android:layout_margin="10dip"
+            android:background="@drawable/background_view_rounded_single"
             android:gravity="center"
-            android:text="上传"
-            android:textColor="@color/white"
-            android:textSize="@dimen/titlebar_textsize"
-            android:visibility="gone" />
+            android:text="删除"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
         android:background="@color/bg_yellow" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,7 +57,72 @@
             android:layout_marginRight="20dip"
             android:layout_marginTop="5dip"
             android:stretchColumns="1" >
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
 
+                <TextView
+                    android:layout_width="@dimen/width_colum"
+                    android:layout_height="match_parent"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="left|center_vertical"
+                    android:text="处理者"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:id="@+id/tv_reported"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_colum"
+                    android:layout_span="3"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请选择事件类型"
+                    android:paddingLeft="10dip"
+                    android:textColor="@color/bg_yellow"
+                    android:textSize="@dimen/size_14" />
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5px"
+                android:layout_marginTop="5dip"
+                android:background="@color/bg_selectitem" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="@dimen/width_colum"
+                    android:layout_height="match_parent"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="left|center_vertical"
+                    android:text="处理时间"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_colum"
+                    android:layout_span="3"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请选择事件类型"
+                    android:paddingLeft="10dip"
+                    android:textColor="@color/bg_yellow"
+                    android:textSize="@dimen/size_14" />
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5px"
+                android:layout_marginTop="5dip"
+                android:background="@color/bg_selectitem" />
 
 
             <TableRow
@@ -82,21 +134,17 @@
                     android:layout_width="@dimen/width_colum"
                     android:layout_height="match_parent"
                     android:gravity="left|center_vertical"
-                    android:inputType="number"
                     android:text="处理结果"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14" />
 
-                <EditText
+                <TextView
                     android:id="@+id/et_sjms"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_colum"
-                    android:layout_span="3"
-                    android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="请输入处理结果"
+                    android:hint="未处理"
                     android:paddingLeft="10dip"
-                    android:textColor="@color/bg_yellow"
                     android:textSize="@dimen/size_14" />
             </TableRow>
 
@@ -143,7 +191,7 @@
                     android:layout_width="@dimen/width_colum"
                     android:layout_height="120dip"
                     android:gravity="left|center_vertical"
-                    android:text="现场照片"
+                    android:text="处理图片"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14" />
 
@@ -160,13 +208,7 @@
                         android:orientation="horizontal" />
                 </HorizontalScrollView>
 
-                <ImageButton
-                    android:id="@+id/imgbtn_addpicture"
-                    android:layout_width="@dimen/size_40"
-                    android:layout_height="120dip"
-                    android:layout_alignParentRight="true"
-                    android:background="@null"
-                    android:src="@drawable/plus" />
+
             </RelativeLayout>
 
             <View
@@ -185,7 +227,7 @@
                     android:layout_width="@dimen/width_colum"
                     android:layout_height="120dip"
                     android:gravity="left|center_vertical"
-                    android:text="现场视频"
+                    android:text="处理视频"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14" />
 
@@ -202,13 +244,7 @@
                         android:orientation="horizontal" />
                 </HorizontalScrollView>
 
-                <ImageButton
-                    android:id="@+id/imgbtn_addvideo"
-                    android:layout_width="@dimen/size_40"
-                    android:layout_height="120dip"
-                    android:layout_alignParentRight="true"
-                    android:background="@null"
-                    android:src="@drawable/plus" />
+
             </RelativeLayout>
         </TableLayout>
     </ScrollView>

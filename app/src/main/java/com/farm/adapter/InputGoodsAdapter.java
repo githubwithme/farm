@@ -82,7 +82,8 @@ public class InputGoodsAdapter extends BaseAdapter
                 listItemView.tv_dw.setText("倍(兑水)");
             }else
             {
-                listItemView.tv_dw.setText(small_dw+"/株");
+//                listItemView.tv_dw.setText(small_dw+"/株");
+                listItemView.tv_dw.setText(large_dw+"/株");
             }
             listItemView.tv_syl.setText( list.get(arg0).getGoodsSum()+large_dw);
             listItemView.tv_spec.setText( number+small_dw+"/"+large_dw);

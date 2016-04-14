@@ -304,7 +304,10 @@ public class NCZ_EventHandle extends Fragment
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer)
                     return;
-
+                Intent intent=new Intent(getActivity(),NCZ_HandleDetail_.class);
+                HandleBean handleBean=listData.get(position-1);
+                intent.putExtra("handleBean",handleBean);
+                startActivity(intent);
     /*            Wz_Storehouse Wz_Storehouse = listData.get((position - 1));
                 Intent intent = new Intent(getActivity(), NCZ_WZ_CKWZActivity_.class);
                 intent.putExtra("storehouseId", Wz_Storehouse);
@@ -431,7 +434,7 @@ public class NCZ_EventHandle extends Fragment
                         if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
                             // 提示新加载数据
                             if (newdata > 0) {
-                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+//                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else {
                                 // NewDataToast.makeText(NCZ_PQ_CommandList.this,
                                 // getString(R.string.new_data_toast_none), false,

@@ -90,7 +90,8 @@ public class PG_EventProcessed extends Fragment
                     return;
 
                 HandleBean handleBean = listData.get((position - 1));
-                Intent intent = new Intent(getActivity(), PG_AddHandle_.class);
+//                Intent intent = new Intent(getActivity(), PG_AddHandle_.class);
+                Intent intent = new Intent(getActivity(), PG_HandleFragment_.class);
                 intent.putExtra("handleBean", handleBean);
                 startActivity(intent);
 

@@ -278,7 +278,7 @@ public class AppException implements UncaughtExceptionHandler
 
 //        StringBuilder result=new StringBuilder();
 //        result.append("##应用程序发生错误##"+ utils.getTime()+"***\n"+"网络状态:"+GetMobilePhoneInfo.getCurrentNetType(mContext)+"***\n"+"手机型号:"+GetMobilePhoneInfo.getModel()+"***\n"+"手机系统版本:"+GetMobilePhoneInfo.getAndroidVersion()+"***\n"+"SDK版本:"+GetMobilePhoneInfo.getAndroidSDKVersion()+"***\n"+"CPU信息:"+GetMobilePhoneInfo.getCpuInfo()[0]+"***\n"+"总内存:"+GetMobilePhoneInfo.getMemory(mContext)[0]+"可用内存:"+GetMobilePhoneInfo.getMemory(mContext)[1]+"***\n");
-//        result.append(String.valueOf(info));
+//        resul//t.append(String.valueOf(info));
         String result = "######应用程序发生错误:" +utils.getTime() + "***\n" + "网络状态:" + GetMobilePhoneInfo.getCurrentNetType(mContext) + "***\n" + "手机型号:" + GetMobilePhoneInfo.getModel() + "***\n" + "手机系统版本:" + GetMobilePhoneInfo.getAndroidVersion() + "***\n" + "SDK版本:" + GetMobilePhoneInfo.getAndroidSDKVersion() + "***\n" + "CPU信息:" + GetMobilePhoneInfo.getCpuInfo()[0] + "***\n" + "总内存:" + GetMobilePhoneInfo.getMemory(mContext)[0] + "可用内存:" + GetMobilePhoneInfo.getMemory(mContext)[1] + "***\n" + String.valueOf(info);
         printWriter.close();
         mDeviceCrashInfo.put(STACK_TRACE, result.toString());

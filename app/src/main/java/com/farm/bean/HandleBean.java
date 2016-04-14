@@ -7,6 +7,8 @@ import com.lidroid.xutils.db.annotation.Id;
 import com.lidroid.xutils.db.annotation.NoAutoIncrement;
 import com.lidroid.xutils.db.annotation.Table;
 
+import java.util.List;
+
 /**
  * Created by user on 2016/4/12.
  */
@@ -25,6 +27,15 @@ public class HandleBean implements Parcelable
     public String state ;
     public String thumbImageUrl;//缩略图
     public String imageUrl;     //原图
+    public List<FJxx> fjxx;
+
+    public List<FJxx> getFjxx() {
+        return fjxx;
+    }
+
+    public void setFjxx(List<FJxx> fjxx) {
+        this.fjxx = fjxx;
+    }
 
     public String getEventId() {
         return eventId;
@@ -122,10 +133,7 @@ public class HandleBean implements Parcelable
             p.setState(source.readString());
             p.setThumbImageUrl(source.readString());
             p.setImageUrl(source.readString());
-
-
-      /*      p.imgUrl = source.readArrayList(List.class.getClassLoader());
-            p.thumbImageUrl = source.readArrayList(List.class.getClassLoader());*/
+            p.fjxx = source.readArrayList(plantgrowthtab.class.getClassLoader());
             return p;
         }
 
@@ -150,6 +158,7 @@ public class HandleBean implements Parcelable
         p.writeString(thumbImageUrl);
 
         p.writeString(imageUrl);
+        p.writeList(fjxx);
 
     /*    p.writeList(imgUrl);
         p.writeList(thumbImageUrl);*/

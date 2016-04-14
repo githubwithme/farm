@@ -38,7 +38,6 @@
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/tv_bianjie"
-        android:layout_toRightOf="@+id/tv_bianjie"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
