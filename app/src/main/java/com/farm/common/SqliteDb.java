@@ -251,7 +251,7 @@ public class SqliteDb
             {
                 list.get(0).setplannumber(String.valueOf(Integer.valueOf(list.get(0).getplannumber()) + number_difference));
             }
-            db.update(sellorderdetail, "actualnumber");
+            db.update(sellorderdetail, "actualnumber","type");
             db.update(list.get(0), "plannumber");
         } catch (DbException e)
         {

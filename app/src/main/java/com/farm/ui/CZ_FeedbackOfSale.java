@@ -165,6 +165,8 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
     @ViewById
     TextView tv_tip;
     @ViewById
+    TextView tv_batchcolor;
+    @ViewById
     FrameLayout fl_salelist;
     @ViewById
     RelativeLayout rl_batchofproduct;
@@ -640,7 +642,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
             CurrentsellOrder = list_BatchOfProduct.get(0);
             btn_batchofproduct.setText(CurrentsellOrder.getBuyers() + "订单");
         }
-//        tencentMap = mapview.getMap();
+        tencentMap = mapview.getMap();
         tencentMap.setZoom(13);
         uiSettings = mapview.getUiSettings();
         tencentMap.setSatelliteEnabled(true);
@@ -729,8 +731,9 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
                         Polygon p = null;
                         List<CoordinatesBean> list_CoordinatesBean = SqliteDb.getPoints(getActivity(), breakOff.getUuid());
                         int batchcolor = utils.getBatchColorByName(breakOff.getBatchColor());
-                        p = initBoundary(batchcolor, 20f, list_CoordinatesBean, 0, R.color.transparent);//注意20f，数值越大越在顶层
+                        p = initBoundary(batchcolor, 10f, list_CoordinatesBean, 0, R.color.transparent);//注意10f，数值越大越在顶层
                         list_Objects_breakoff.add(p);
+                        tv_batchcolor.setBackgroundColor(getResources().getColor(utils.returnBatchColorByName(breakOff.getBatchColor())));
                     } else//该批次未断蕾情况
                     {
                     }
@@ -743,25 +746,44 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
     {
         list_Marker_allsale = new ArrayList<>();
         list_Marker_salein = new ArrayList<>();
+        list_Marker_saleout = new ArrayList<>();
         list_Objects_allsale = new ArrayList<>();
         list_Objects_salein = new ArrayList<>();
+        list_Objects_saleout= new ArrayList<>();
 
         List<SellOrderDetail> list_SellOrderDetail = SqliteDb.getSaleLayerBySaleId(getActivity(), CurrentsellOrder.getUuid());
         if (list_SellOrderDetail != null)
         {
             for (int j = 0; j < list_SellOrderDetail.size(); j++)
             {
-                SellOrderDetail sellorderdetail = list_SellOrderDetail.get(j);
-                Polygon p = null;
-                LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
-                Marker marker = addCustomMarker("salein", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "售中" + sellorderdetail.getplannumber());
-                marker.setVisible(false);
-                list_Marker_allsale.add(marker);
-                list_Marker_salein.add(marker);
-                List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), sellorderdetail.getUuid());
-                p = initBoundary(Color.argb(1000, 0, 255, 0), 10f, list_contract, 2, R.color.bg_text);//绿色
-                list_Objects_allsale.add(p);
-                list_Objects_salein.add(p);
+                if (list_SellOrderDetail.get(j).getType().equals("salein"))
+                {
+                    SellOrderDetail sellorderdetail = list_SellOrderDetail.get(j);
+                    Polygon p = null;
+                    LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
+                    Marker marker = addCustomMarker("salein", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "售中" + sellorderdetail.getplannumber());
+                    marker.setVisible(false);
+                    list_Marker_allsale.add(marker);
+                    list_Marker_salein.add(marker);
+                    List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), sellorderdetail.getUuid());
+                    p = initBoundary(Color.argb(1000, 0, 255, 0), 20f, list_contract, 2, R.color.bg_text);//绿色
+                    list_Objects_allsale.add(p);
+                    list_Objects_salein.add(p);
+                } else  if (list_SellOrderDetail.get(j).getType().equals("saleout"))
+                {
+                    SellOrderDetail sellorderdetail = list_SellOrderDetail.get(j);
+                    Polygon p = null;
+                    LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
+                    Marker marker = addCustomMarker("saleout", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "已售" + sellorderdetail.getactualnumber());
+                    marker.setVisible(false);
+                    list_Marker_allsale.add(marker);
+                    list_Marker_saleout.add(marker);
+                    List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), sellorderdetail.getUuid());
+                    p = initBoundary(Color.argb(1000, 255, 0, 0), 10f, list_contract, 2, R.color.bg_text);//绿色
+                    list_Objects_allsale.add(p);
+                    list_Objects_saleout.add(p);
+                }
+
             }
         }
     }
@@ -1096,6 +1118,9 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
                 } else if (type.equals("salein"))
                 {
                     showDialog_OperateSalein(uuid, marker);
+                } else if (type.equals("saleout"))
+                {
+                    showDialog_OperateSaleOut(uuid, marker);
                 }
 
                 return false;
@@ -1790,6 +1815,45 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
         });
         customdialog_operatepolygon.show();
     }
+    public void showDialog_OperateSaleOut(final String uuid, final Marker marker)
+    {
+        final View dialog_layout = (RelativeLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_feedbackofsale, null);
+        customdialog_operatepolygon = new CustomDialog_OperatePolygon(getActivity(), R.style.MyDialog, dialog_layout);
+        Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
+        Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
+        Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+
+
+        btn_see.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SellOrderDetail SellOrderDetail = SqliteDb.getSellOrderDetailbyuuid(getActivity(), uuid);
+                showDialog_overlayInfo(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname() + "\n" + SellOrderDetail.getplannumber() + "株" + "出售中...");
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        btn_change.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SellOrderDetail sellOrderDetail = SqliteDb.getSellOrderDetailbyuuid(getActivity(), uuid);
+                showDialog_editsaleininfo(sellOrderDetail, marker);
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_operatepolygon.dismiss();
+            }
+        });
+        customdialog_operatepolygon.show();
+    }
 
 
     public void showDialog_overlayInfo(final String note)
@@ -1830,7 +1894,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
                 int number_difference = Integer.valueOf(sellOrderDetail.getplannumber()) - Integer.valueOf(et_note.getText().toString());
                 sellOrderDetail.setactualnumber(et_note.getText().toString());
                 sellOrderDetail.setType("saleout");
-                boolean issuccess = SqliteDb.editSellOrderDetail_salein(getActivity(), sellOrderDetail, number_difference);
+                boolean issuccess = SqliteDb.editSellOrderDetail_feedbacksale(getActivity(), sellOrderDetail, number_difference);
                 if (issuccess)
                 {
                     Toast.makeText(getActivity(), "修改成功！", Toast.LENGTH_SHORT).show();

@@ -129,33 +129,15 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_batchcolor"
                     android:layout_width="match_parent"
                     android:layout_height="30dip"
                     android:background="@color/gray"
                     android:gravity="center"
-                    android:text="区域"
+                    android:text="批次"
                     android:textColor="@color/white"
                     android:textSize="10sp"/>
 
-                <TextView
-                    android:id="@+id/tv_newsale"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dip"
-                    android:background="@color/darkbrown"
-                    android:gravity="center"
-                    android:text="拟售"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"/>
-
-                <TextView
-                    android:id="@+id/tv_forsale"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dip"
-                    android:background="@color/blue"
-                    android:gravity="center"
-                    android:text="待售"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/v_salein"

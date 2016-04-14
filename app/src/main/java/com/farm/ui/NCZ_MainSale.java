@@ -182,6 +182,8 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
     @ViewById
     Button btn_yx;
     @ViewById
+    Button btn_orders;
+    @ViewById
     LinearLayout ll_sm;
     @ViewById
     MapView mapview;
@@ -248,6 +250,13 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
     void btn_canclepaint()
     {
         reloadMap();
+    }
+
+    @Click
+    void btn_orders()
+    {
+        Intent intent = new Intent(getActivity(),NCZ_SaleMap_.class);
+        getActivity().startActivity(intent);
     }
 
     @CheckedChange
@@ -768,7 +777,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                                 list_Marker_breakoff.add(marker);
                                 Polygon p = null;
                                 List<CoordinatesBean> list_breakoff = SqliteDb.getPoints(getActivity(), breakOff.getUuid());
-                                int batchcolor=utils.getBatchColorByName(breakOff.getBatchColor());
+                                int batchcolor = utils.getBatchColorByName(breakOff.getBatchColor());
                                 p = initBoundary(batchcolor, 20f, list_breakoff, 0, R.color.transparent);//注意20f，数值越大越在顶层
                                 p.setVisible(false);
                                 list_Objects_breakoff.add(p);
@@ -812,7 +821,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                             Polygon p = null;
                             if (sellorderdetail.getType().equals("saleout"))
                             {
-                                LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getactuallat()), Double.valueOf(sellorderdetail.getactuallng()));
+                                LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
                                 Marker marker = addCustomMarker("saleout", R.drawable.ic_saleout, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "已售" + sellorderdetail.getactualnumber());
                                 marker.setVisible(false);
                                 list_Marker_allsale.add(marker);
@@ -1917,7 +1926,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
             @Override
             public void onClick(View v)
             {
-
+                customdialog_operatepolygon.dismiss();
             }
         });
         btn_createorder.setOnClickListener(new View.OnClickListener()
@@ -1925,6 +1934,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
             @Override
             public void onClick(View v)
             {
+                customdialog_operatepolygon.dismiss();
                 List<SellOrderDetail> list = SqliteDb.getNewSaleList(getActivity(), commembertab.getuId(), batchTime);
                 if (list != null && list.size() > 0)
                 {
@@ -2088,7 +2098,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                 sellOrderDetail.setplannumber(et_note.getText().toString());
                 sellOrderDetail.setstatus("0");
                 sellOrderDetail.setisSoldOut("0");
-                boolean issuccess = SqliteDb.editSellOrderDetail_salein(getActivity(), sellOrderDetail,number_difference);
+                boolean issuccess = SqliteDb.editSellOrderDetail_salein(getActivity(), sellOrderDetail, number_difference);
                 if (issuccess)
                 {
                     Toast.makeText(getActivity(), "修改成功！", Toast.LENGTH_SHORT).show();

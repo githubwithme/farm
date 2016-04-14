@@ -57,6 +57,7 @@
         <activity
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".ui.NCZ_SaleMap_"/>
         <activity android:name=".ui.MakeMap_"/>
         <activity android:name=".ui.MapUtils_"/>
         <activity android:name=".ui.CZ_MakeMap_MakeLayer_"/>
@@ -151,7 +152,6 @@
         <activity android:name=".ui.AddEvent_"/>
         <activity android:name=".ui.AddGcd_"/>
         <activity android:name=".ui.PG_AddEvent_"/>
-        <activity android:name=".ui.PG_ProductBatch_"/>
         <activity android:name=".ui.PG_EventDetail_"/>
         <activity android:name=".ui.PG_AddHandle_"/>
         <!-- 共用UI -->

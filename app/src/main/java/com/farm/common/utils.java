@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.farm.R;
 import com.farm.bean.BatchOfProduct;
 import com.farm.bean.BatchTimeBean;
 import com.farm.bean.CusPoint;
@@ -454,6 +455,23 @@ public class utils
         }  else  if (colorname.equals("土黄色"))
         {
             return Color.argb(1000, 159, 159, 95);
+        }
+        return 0;
+    }
+    public static int returnBatchColorByName( String colorname)
+    {
+        if (colorname.equals("青色"))
+        {
+            return R.color.navyblue;
+        } else  if (colorname.equals("灰色"))
+        {
+            return R.color.curegray;
+        }  else  if (colorname.equals("深橄榄绿"))
+        {
+            return R.color.darkOlivegreen;
+        }  else  if (colorname.equals("土黄色"))
+        {
+            return R.color.soilyellow;
         }
         return 0;
     }

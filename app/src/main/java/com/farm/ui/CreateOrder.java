@@ -111,6 +111,7 @@ public class CreateOrder extends Activity
                 if (i == list_SellOrderDetail.size() - 1)
                 {
                     Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         } else

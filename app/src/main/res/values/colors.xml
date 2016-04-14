@@ -30,6 +30,10 @@
     <!-- 首页文字颜色 -->
     <color name="transparent">#00000000</color>
     <!-- 首页文字颜色 -->
+    <color name="navyblue">#00ffff</color>
+    <color name="curegray">#c0c0c0</color>
+    <color name="darkOlivegreen">#4f4f2f</color>
+    <color name="soilyellow">#9f9f5f</color>
     <color name="gray">#909090</color>
     <color name="darkgray">#959595</color>
     <color name="find_textcolor">#000000</color>
