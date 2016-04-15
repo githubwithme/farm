@@ -8,6 +8,9 @@ import android.os.Parcelable;
 import com.lidroid.xutils.db.annotation.Id;
 import com.lidroid.xutils.db.annotation.NoAutoIncrement;
 import com.lidroid.xutils.db.annotation.Table;
+
+import java.util.List;
+
 /**
  *
  * Description: SellOrderDetail 实体类</p>
@@ -52,7 +55,29 @@ public class SellOrderDetail implements Parcelable
 	public String isSoldOut;
 	public String xxzt;
 	public String type;
+	public String year;
+	public List<CoordinatesBean> coordinatesBeanList;
 
+
+	public void setYear(String year)
+	{
+		this.year = year;
+	}
+
+	public String getYear()
+	{
+		return year;
+	}
+
+	public void setCoordinatesBeanList(List<CoordinatesBean> coordinatesBeanList)
+	{
+		this.coordinatesBeanList = coordinatesBeanList;
+	}
+
+	public List<CoordinatesBean> getCoordinatesBeanList()
+	{
+		return coordinatesBeanList;
+	}
 
 	public void setType(String type)
 	{
@@ -402,6 +427,8 @@ public class SellOrderDetail implements Parcelable
          p.setisSoldOut(source.readString());
          p.setXxzt(source.readString());
          p.setType(source.readString());
+         p.setYear(source.readString());
+		  p.coordinatesBeanList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
          return p;
       }  
 
@@ -445,6 +472,8 @@ public class SellOrderDetail implements Parcelable
          p.writeString(isSoldOut);
          p.writeString(xxzt);
          p.writeString(type);
+         p.writeString(year);
+		p.writeList(coordinatesBeanList);
 	}
     @Override
 	public int describeContents()

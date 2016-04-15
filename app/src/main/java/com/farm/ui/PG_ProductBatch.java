@@ -1425,22 +1425,8 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
             CoordinatesBean coordinatesBean = new CoordinatesBean();
             coordinatesBean.setLat(String.valueOf(list_select.get(i).getLatitude()));
             coordinatesBean.setLng(String.valueOf(list_select.get(i).getLongitude()));
-            coordinatesBean.setNumofplant("");
-            coordinatesBean.setType("");
-            coordinatesBean.setUid("");
-            coordinatesBean.setparkId("");
-            coordinatesBean.setparkName("");
             coordinatesBean.setUuid(uuid_breakoff);
-            coordinatesBean.setAreaId("");
-            coordinatesBean.setareaName("");
-            coordinatesBean.setContractid("");
-            coordinatesBean.setContractname("");
-            coordinatesBean.setBatchid("");
-            coordinatesBean.setCoordinatestime(utils.getTime());
             coordinatesBean.setRegistime(utils.getTime());
-            coordinatesBean.setWeightofplant("");
-            coordinatesBean.setSaleid("");
-            coordinatesBean.setOrders("");
             SqliteDb.save(getActivity(), coordinatesBean);
         }
 //添加产品销售批次
@@ -1475,6 +1461,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         SellOrderDetail.setisSoldOut("0");
         SellOrderDetail.setXxzt("0");
         SellOrderDetail.setType("salefor");
+        SellOrderDetail.setYear(utils.getYear());
         SqliteDb.save(getActivity(), SellOrderDetail);
         //设置剩余部分的中心点位置
         tv_tip.setVisibility(View.VISIBLE);
@@ -1514,22 +1501,8 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                     CoordinatesBean coordinatesBean = new CoordinatesBean();
                     coordinatesBean.setLat(String.valueOf(list_notselect.get(i).getLatitude()));
                     coordinatesBean.setLng(String.valueOf(list_notselect.get(i).getLongitude()));
-                    coordinatesBean.setNumofplant("");
-                    coordinatesBean.setType("");
-                    coordinatesBean.setUid("");
-                    coordinatesBean.setparkId("");
-                    coordinatesBean.setparkName("");
                     coordinatesBean.setUuid(uuid_notbreakoff);
-                    coordinatesBean.setAreaId("");
-                    coordinatesBean.setareaName("");
-                    coordinatesBean.setContractid("");
-                    coordinatesBean.setContractname("");
-                    coordinatesBean.setBatchid("");
-                    coordinatesBean.setCoordinatestime(utils.getTime());
                     coordinatesBean.setRegistime(utils.getTime());
-                    coordinatesBean.setWeightofplant("");
-                    coordinatesBean.setSaleid("");
-                    coordinatesBean.setOrders("");
                     SqliteDb.save(getActivity(), coordinatesBean);
                 }
                 boolean issuccess = SqliteDb.deleteBreakoffInfo(getActivity(), polygon_needbreakoff.getUuid());

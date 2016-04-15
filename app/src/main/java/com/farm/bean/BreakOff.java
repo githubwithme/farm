@@ -7,6 +7,8 @@ import com.lidroid.xutils.db.annotation.Id;
 import com.lidroid.xutils.db.annotation.NoAutoIncrement;
 import com.lidroid.xutils.db.annotation.Table;
 
+import java.util.List;
+
 /**
  *
  * Description: breakofftab 实体类</p>
@@ -42,7 +44,17 @@ public class BreakOff implements Parcelable
 	public String batchColor  ;//批次颜色
 	public String xxzt;
 	public String Year;
+	public List<CoordinatesBean> coordinatesBeanList;
 
+	public void setCoordinatesBeanList(List<CoordinatesBean> coordinatesBeanList)
+	{
+		this.coordinatesBeanList = coordinatesBeanList;
+	}
+
+	public List<CoordinatesBean> getCoordinatesBeanList()
+	{
+		return coordinatesBeanList;
+	}
 
 	public void setBatchColor(String batchColor)
 	{
@@ -299,6 +311,7 @@ public class BreakOff implements Parcelable
 			p.setBatchColor(source.readString());
 			p.setXxzt(source.readString());
 			p.setYear(source.readString());
+			p.coordinatesBeanList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
 			return p;
 		}
 
@@ -333,6 +346,7 @@ public class BreakOff implements Parcelable
 		p.writeString(batchColor);
 		p.writeString(xxzt);
 		p.writeString(Year);
+		p.writeList(coordinatesBeanList);
 	}
 	@Override
 	public int describeContents()

@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.lidroid.xutils.db.annotation.Id;
 import com.lidroid.xutils.db.annotation.Table;
 
+import java.util.List;
+
 /**
  * Description: areatab 实体类</p>
  * <p/>
@@ -44,6 +46,18 @@ public class PolygonBean implements Parcelable // 与数据库不一致
     public String note;
     public String xxzt;
     public String otherhalf;
+    public List<CoordinatesBean> coordinatesBeanList;
+
+
+    public void setCoordinatesBeanList(List<CoordinatesBean> coordinatesBeanList)
+    {
+        this.coordinatesBeanList = coordinatesBeanList;
+    }
+
+    public List<CoordinatesBean> getCoordinatesBeanList()
+    {
+        return coordinatesBeanList;
+    }
 
     public void setOtherhalf(String otherhalf)
     {
@@ -329,7 +343,7 @@ public class PolygonBean implements Parcelable // 与数据库不一致
             p.setNote(source.readString());
             p.setXxzt(source.readString());
             p.setOtherhalf(source.readString());
-
+            p.coordinatesBeanList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
             return p;
         }
 
@@ -368,6 +382,7 @@ public class PolygonBean implements Parcelable // 与数据库不一致
         p.writeString(note);
         p.writeString(xxzt);
         p.writeString(otherhalf);
+        p.writeList(coordinatesBeanList);
 
     }
 

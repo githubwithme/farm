@@ -22,77 +22,13 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
     @Id
     public int id;
     public String uuid;
-    public String type;
-    public String uid;
-    public String parkId;
-    public String parkName;
-    public String areaId;
-    public String areaName;
-    public String contractid;
-    public String contractname;
-    public String batchid;
-    public String saleid;
     public String lat;
     public String lng;
-    public String numofplant;
-    public String weightofplant;
     public String registime;
-    public String coordinatestime;
-    public String orders;
-    public String isInnerPoint;
-    public String isCenterPoint;
-    public String note;
 
 
-    public void setNote(String note)
-    {
-        this.note = note;
-    }
 
-    public String getNote()
-    {
-        return note;
-    }
 
-    public void setIsCenterPoint(String isCenterPoint)
-    {
-        this.isCenterPoint = isCenterPoint;
-    }
-
-    public String getIsCenterPoint()
-    {
-        return isCenterPoint;
-    }
-
-    public void setIsInnerPoint(String isInnerPoint)
-    {
-        this.isInnerPoint = isInnerPoint;
-    }
-
-    public String getIsInnerPoint()
-    {
-        return isInnerPoint;
-    }
-
-    public void setOrders(String orders)
-    {
-        this.orders = orders;
-    }
-
-    public String getOrders()
-    {
-        return orders;
-    }
-
-    public void setCoordinatestime(String coordinatestime)
-    {
-        this.coordinatestime = coordinatestime;
-    }
-
-    public String getCoordinatestime()
-    {
-        return coordinatestime;
-    }
 
     public void setRegistime(String registime)
     {
@@ -104,35 +40,6 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
         return registime;
     }
 
-    public void setAreaId(String areaId)
-    {
-        this.areaId = areaId;
-    }
-
-    public String getAreaId()
-    {
-        return areaId;
-    }
-
-    public void setWeightofplant(String weightofplant)
-    {
-        this.weightofplant = weightofplant;
-    }
-
-    public String getWeightofplant()
-    {
-        return weightofplant;
-    }
-
-    public void setNumofplant(String numofplant)
-    {
-        this.numofplant = numofplant;
-    }
-
-    public String getNumofplant()
-    {
-        return numofplant;
-    }
 
     public void setLng(String lng)
     {
@@ -154,65 +61,6 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
         return lat;
     }
 
-    public void setSaleid(String saleid)
-    {
-        this.saleid = saleid;
-    }
-
-    public String getSaleid()
-    {
-        return saleid;
-    }
-
-    public void setBatchid(String batchid)
-    {
-        this.batchid = batchid;
-    }
-
-    public String getBatchid()
-    {
-        return batchid;
-    }
-
-    public void setContractname(String contractname)
-    {
-        this.contractname = contractname;
-    }
-
-    public String getContractname()
-    {
-        return contractname;
-    }
-
-    public void setContractid(String contractid)
-    {
-        this.contractid = contractid;
-    }
-
-    public String getContractid()
-    {
-        return contractid;
-    }
-
-    public void setUid(String uid)
-    {
-        this.uid = uid;
-    }
-
-    public String getUid()
-    {
-        return uid;
-    }
-
-    public void setType(String type)
-    {
-        this.type = type;
-    }
-
-    public String getType()
-    {
-        return type;
-    }
 
     public void setUuid(String uuid)
     {
@@ -234,36 +82,7 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
         return id;
     }
 
-    public String getareaName()
-    {
-        return areaName;
-    }
 
-    public void setareaName(String areaName)
-    {
-        this.areaName = areaName;
-    }
-
-
-    public String getparkId()
-    {
-        return parkId;
-    }
-
-    public void setparkId(String parkId)
-    {
-        this.parkId = parkId;
-    }
-
-    public String getparkName()
-    {
-        return parkName;
-    }
-
-    public void setparkName(String parkName)
-    {
-        this.parkName = parkName;
-    }
 
 
     public boolean equals(Object o)
@@ -285,28 +104,9 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
             CoordinatesBean p = new CoordinatesBean();
             p.setId(source.readInt());
             p.setUuid(source.readString());
-            p.setType(source.readString());
-            p.setUid(source.readString());
-            p.setparkId(source.readString());
-            p.setparkName(source.readString());
-            p.setparkName(source.readString());
-            p.setAreaId(source.readString());
-            p.setareaName(source.readString());
-            p.setContractid(source.readString());
-            p.setContractname(source.readString());
-            p.setBatchid(source.readString());
-            p.setSaleid(source.readString());
             p.setLat(source.readString());
             p.setLng(source.readString());
-            p.setNumofplant(source.readString());
-            p.setWeightofplant(source.readString());
             p.setRegistime(source.readString());
-            p.setCoordinatestime(source.readString());
-            p.setOrders(source.readString());
-            p.setIsInnerPoint(source.readString());
-            p.setIsCenterPoint(source.readString());
-            p.setNote(source.readString());
-
             return p;
         }
 
@@ -322,28 +122,9 @@ public class CoordinatesBean implements Parcelable // 与数据库不一致
     {
         p.writeInt(id);
         p.writeString(uuid);
-        p.writeString(type);
-        p.writeString(uid);
-        p.writeString(parkId);
-        p.writeString(parkName);
-        p.writeString(parkName);
-        p.writeString(areaId);
-        p.writeString(areaName);
-        p.writeString(contractid);
-        p.writeString(contractname);
-        p.writeString(batchid);
-        p.writeString(saleid);
         p.writeString(lat);
         p.writeString(lng);
-        p.writeString(numofplant);
-        p.writeString(weightofplant);
         p.writeString(registime);
-        p.writeString(coordinatestime);
-        p.writeString(orders);
-        p.writeString(isInnerPoint);
-        p.writeString(isCenterPoint);
-        p.writeString(note);
-
     }
 
     @Override

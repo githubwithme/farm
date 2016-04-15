@@ -1599,22 +1599,8 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
             CoordinatesBean coordinatesBean = new CoordinatesBean();
             coordinatesBean.setLat(String.valueOf(list_select.get(i).getLatitude()));
             coordinatesBean.setLng(String.valueOf(list_select.get(i).getLongitude()));
-            coordinatesBean.setNumofplant("");
-            coordinatesBean.setType("");
-            coordinatesBean.setUid("");
-            coordinatesBean.setparkId("");
-            coordinatesBean.setparkName("");
             coordinatesBean.setUuid(uuid_sale);
-            coordinatesBean.setAreaId("");
-            coordinatesBean.setareaName("");
-            coordinatesBean.setContractid("");
-            coordinatesBean.setContractname("");
-            coordinatesBean.setBatchid("");
-            coordinatesBean.setCoordinatestime(utils.getTime());
             coordinatesBean.setRegistime(utils.getTime());
-            coordinatesBean.setWeightofplant("");
-            coordinatesBean.setSaleid("");
-            coordinatesBean.setOrders("");
             SqliteDb.save(NCZ_SaleMap.this, coordinatesBean);
         }
 //        addCustomMarker("newsale", R.drawable.umeng_socialize_follow_on, R.color.white, centerlatlng, uuid_sale, et_note.getText().toString());
@@ -1667,22 +1653,8 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
                     CoordinatesBean coordinatesBean = new CoordinatesBean();
                     coordinatesBean.setLat(String.valueOf(list_notselect.get(i).getLatitude()));
                     coordinatesBean.setLng(String.valueOf(list_notselect.get(i).getLongitude()));
-                    coordinatesBean.setNumofplant("");
-                    coordinatesBean.setType("");
-                    coordinatesBean.setUid("");
-                    coordinatesBean.setparkId("");
-                    coordinatesBean.setparkName("");
                     coordinatesBean.setUuid(uuid_notsale);
-                    coordinatesBean.setAreaId("");
-                    coordinatesBean.setareaName("");
-                    coordinatesBean.setContractid("");
-                    coordinatesBean.setContractname("");
-                    coordinatesBean.setBatchid("");
-                    coordinatesBean.setCoordinatestime(utils.getTime());
                     coordinatesBean.setRegistime(utils.getTime());
-                    coordinatesBean.setWeightofplant("");
-                    coordinatesBean.setSaleid("");
-                    coordinatesBean.setOrders("");
                     SqliteDb.save(NCZ_SaleMap.this, coordinatesBean);
                 }
 //                addCustomMarker("salefor", R.drawable.umeng_socialize_follow_on, R.color.white, centerlatlng, uuid_notsale, String.valueOf(Integer.valueOf(polygon_needsale.getplannumber()) - Integer.valueOf(salenumber)));

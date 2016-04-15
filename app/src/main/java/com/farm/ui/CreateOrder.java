@@ -142,6 +142,7 @@ public class CreateOrder extends Activity
         sellOrder.setSaletime(utils.getTime());
         sellOrder.setYear(utils.getYear());
         sellOrder.setNote(et_note.getText().toString());
+        sellOrder.setXxzt("0");
         boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
         if (issuccess)
         {

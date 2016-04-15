@@ -59,11 +59,11 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.AnalysisActivity_"/>
         <activity android:name=".ui.NCZ_SaleMap_"/>
-        <activity android:name=".ui.MakeMap_"/>
+        <activity android:name=".ui.PG_HandleFragment_"/>
+        <activity android:name=".ui.NCZ_HandleDetail_"/>
         <activity android:name=".ui.MapUtils_"/>
         <activity android:name=".ui.CZ_MakeMap_MakeLayer_"/>
         <activity android:name=".ui.CreateOrder_"/>
-        <activity android:name=".ui.AddOrderMap_"/>
         <activity android:name=".ui.Attendance_Map_"/>
         <activity android:name=".ui.OrderDetail_"/>
         <activity android:name=".ui.AddOrder_"/>

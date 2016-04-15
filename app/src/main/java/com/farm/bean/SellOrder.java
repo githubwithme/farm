@@ -47,8 +47,19 @@ public class SellOrder implements Parcelable // 与数据库不一致
     public String note;
     public String feedbacknote;
     public String deposit;
+    public String xxzt;
     public List<SellOrderDetail> sellOrderDetailList;
 
+
+    public void setXxzt(String xxzt)
+    {
+        this.xxzt = xxzt;
+    }
+
+    public String getXxzt()
+    {
+        return xxzt;
+    }
 
     public void setFeedbacknote(String feedbacknote)
     {
@@ -349,6 +360,7 @@ public class SellOrder implements Parcelable // 与数据库不一致
             p.setNote(source.readString());
             p.setFeedbacknote(source.readString());
             p.setDeposit(source.readString());
+            p.setXxzt(source.readString());
             p.sellOrderDetailList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
             return p;
 
@@ -389,6 +401,7 @@ public class SellOrder implements Parcelable // 与数据库不一致
         p.writeString(note);
         p.writeString(feedbacknote);
         p.writeString(deposit);
+        p.writeString(xxzt);
         p.writeList(sellOrderDetailList);
     }
 
