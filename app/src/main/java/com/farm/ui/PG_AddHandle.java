@@ -21,6 +21,7 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.FJ_SCFJ;
+import com.farm.bean.FJxx;
 import com.farm.bean.HandleBean;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
@@ -38,6 +39,7 @@ import com.lidroid.xutils.http.client.entity.FileUploadEntity;
 import com.media.HomeFragmentActivity;
 import com.media.MediaChooser;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -71,15 +73,11 @@ public class PG_AddHandle extends Activity {
     LinearLayout ll_picture;
     @ViewById
     LinearLayout ll_video;
-    List<FJ_SCFJ> list_picture = new ArrayList<FJ_SCFJ>();
-    List<FJ_SCFJ> list_video = new ArrayList<FJ_SCFJ>();
-    List<FJ_SCFJ> list_allfj = new ArrayList<FJ_SCFJ>();
+    List<FJxx> list_picture = new ArrayList<FJxx>();
+    List<FJxx> list_video = new ArrayList<FJxx>();
+    List<FJxx> list_allfj = new ArrayList<FJxx>();
 
-    @Click
-    void imgbtn_back()
-    {
 
-    }
     @Click
     void btn_upload() {
         if( et_sjms.getText().toString().equals(""))
@@ -93,6 +91,11 @@ public class PG_AddHandle extends Activity {
         }
     }
 
+    @AfterViews
+    void afoncrate()
+    {
+
+    }
     @Click
     void imgbtn_addpicture() {
         Intent intent = new Intent(PG_AddHandle.this, HomeFragmentActivity.class);
@@ -136,7 +139,7 @@ public class PG_AddHandle extends Activity {
                 imageView.setTag(FJBDLJ);
                 imageView.setImageBitmap(BitmapHelper.getVideoThumbnail(FJBDLJ, 120, 120, MediaStore.Images.Thumbnails.MICRO_KIND));
 
-                FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
+                FJxx fj_SCFJ = new FJxx();
                 fj_SCFJ.setFJBDLJ(FJBDLJ);
                 fj_SCFJ.setFJLX("2");
 
@@ -149,7 +152,7 @@ public class PG_AddHandle extends Activity {
                     public void onClick(View v) {
                         final int index_zp = ll_video.indexOfChild(v);
                         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                        myDialog = new MyDialog(PG_AddHandle.this, R.style.MyDialog, dialog_layout, "图片", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener() {
+                        myDialog = new MyDialog(PG_AddHandle.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener() {
                             @Override
                             public void OnClick(View v) {
                                 switch (v.getId()) {
@@ -188,7 +191,7 @@ public class PG_AddHandle extends Activity {
                 BitmapHelper.setImageView(PG_AddHandle.this, imageView, FJBDLJ);
                 imageView.setTag(FJBDLJ);
 
-                FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
+                FJxx fj_SCFJ = new FJxx();
                 fj_SCFJ.setFJBDLJ(FJBDLJ);
                 fj_SCFJ.setFJLX("1");
 

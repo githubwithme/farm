@@ -6,7 +6,23 @@
     android:background="@drawable/bg_white">
 
 
-
+    <RelativeLayout
+        android:id="@+id/rl_match"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/pb_upload"
+            android:layout_width="60dip"
+            android:layout_height="45dip"
+            android:layout_marginRight="10dip"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:gravity="center"
+            android:text="上传"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"
+            />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"

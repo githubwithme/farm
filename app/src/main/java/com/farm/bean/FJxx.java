@@ -21,9 +21,18 @@ public class FJxx implements Parcelable
     public String SCRXM;  //上传人姓名
     public String FJLX;    // 附件类型 :1为照片,2为视频,3为录音,4为其他
     public String BZ;      //附件描述
+    private String FJBDLJ;
 
     public String getBZ() {
         return BZ;
+    }
+
+    public String getFJBDLJ() {
+        return FJBDLJ;
+    }
+
+    public void setFJBDLJ(String FJBDLJ) {
+        this.FJBDLJ = FJBDLJ;
     }
 
     public void setBZ(String BZ) {
@@ -119,6 +128,7 @@ public class FJxx implements Parcelable
             p.setSCRXM(source.readString());
             p.setFJLX(source.readString());
             p.setBZ(source.readString());
+            p.setFJBDLJ(source.readString());
             return p;
         }
 
@@ -142,6 +152,7 @@ public class FJxx implements Parcelable
         p.writeString(SCRXM);
         p.writeString(FJLX);
         p.writeString(BZ);
+        p.writeString(FJBDLJ);
     }
 
     @Override

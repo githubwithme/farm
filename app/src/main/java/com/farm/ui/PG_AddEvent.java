@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.ViewGroup.LayoutParams;
@@ -25,6 +26,7 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.FJ_SCFJ;
+import com.farm.bean.FJxx;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
@@ -69,6 +71,8 @@ public class PG_AddEvent extends Activity {
     FragmentCallBack_AddPlantObservation fragmentCallBack = null;
     String zzsl = "";
     @ViewById
+    ProgressBar pb_upload;
+    @ViewById
     Button btn_upload;
     @ViewById
     TextView tv_type;
@@ -82,19 +86,22 @@ public class PG_AddEvent extends Activity {
     LinearLayout ll_picture;
     @ViewById
     LinearLayout ll_video;
-    List<FJ_SCFJ> list_picture = new ArrayList<FJ_SCFJ>();
-    List<FJ_SCFJ> list_video = new ArrayList<FJ_SCFJ>();
-    List<FJ_SCFJ> list_allfj = new ArrayList<FJ_SCFJ>();
+    List<FJxx> list_picture = new ArrayList<FJxx>();
+    List<FJxx> list_video = new ArrayList<FJxx>();
+    List<FJxx> list_allfj = new ArrayList<FJxx>();
 
     @Click
     void btn_upload()
     {
+
         if( tv_type.getText().toString().equals("")||et_sjms.getText().toString().equals(""))
         {
             Toast.makeText(PG_AddEvent.this, "请先填选相关信息！", Toast.LENGTH_SHORT).show();
 
         }else
         {
+            btn_upload.setVisibility(View.GONE);
+            pb_upload.setVisibility(View.VISIBLE);
             saveData();
         }
 
@@ -179,7 +186,7 @@ public class PG_AddEvent extends Activity {
                 BitmapHelper.setImageView(PG_AddEvent.this, imageView, FJBDLJ);
                 imageView.setTag(FJBDLJ);
 
-                FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
+                FJxx fj_SCFJ = new FJxx();
                 fj_SCFJ.setFJBDLJ(FJBDLJ);
                 fj_SCFJ.setFJLX("1");
 
@@ -238,7 +245,7 @@ public class PG_AddEvent extends Activity {
                 imageView.setTag(FJBDLJ);
                 imageView.setImageBitmap(BitmapHelper.getVideoThumbnail(FJBDLJ, 120, 120, MediaStore.Images.Thumbnails.MICRO_KIND));
 
-                FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
+                FJxx fj_SCFJ = new FJxx();
                 fj_SCFJ.setFJBDLJ(FJBDLJ);
                 fj_SCFJ.setFJLX("2");
 
@@ -312,11 +319,11 @@ public class PG_AddEvent extends Activity {
                         AppContext.makeToast(PG_AddEvent.this, "error_connectDataBase");
                     } else {
                         String event = listData.get(0).getEventId();
-                        if (list_picture.size() > 0 ) {
-                            latch = new CountDownLatch(list_picture.size() );
-                            for (int j = 0; j < list_picture.size(); j++) {
-                                uploadMedia(listData.get(0).getEventId(), list_picture.get(j).getFJBDLJ(),list_picture.get(j).getFJLX());
-//                                uploadMedia(event, list_picture.get(j).getFJBDLJ());
+                        if (list_allfj.size() > 0 ) {
+                            latch = new CountDownLatch(list_allfj.size() );
+                            for (int j = 0; j < list_allfj.size(); j++) {
+//                                uploadMedia(listData.get(0).getEventId(), list_picture.get(j).getFJBDLJ(),list_picture.get(j).getFJLX());
+                                uploadMedia(listData.get(0).getEventId(), list_allfj.get(j).getFJBDLJ(),list_allfj.get(j).getFJLX());
                             }
 
                         } else {
@@ -326,6 +333,8 @@ public class PG_AddEvent extends Activity {
                     }
 
                 } else {
+                    btn_upload.setVisibility(View.VISIBLE);
+                    pb_upload.setVisibility(View.GONE);
                     AppContext.makeToast(PG_AddEvent.this, "error_connectDataBase");
                     return;
                 }

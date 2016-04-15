@@ -67,7 +67,7 @@ public class PG_EventProcessedAdapter extends BaseAdapter
             view = lmap.get(i);
             listItemView = (ListItemView) view.getTag();
         }
-        listItemView.name.setText(HandleBean.getResultId());
+        listItemView.name.setText("事件"+HandleBean.getEventId());
         if(HandleBean.getState().equals("0"))
         {
             listItemView.state.setText("未处理");
