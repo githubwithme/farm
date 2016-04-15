@@ -178,7 +178,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
     @ViewById
     Button btn_yx;
     @ViewById
-    Button btn_connectpaint;
+    Button btn_canclepaint;
     @ViewById
     LinearLayout ll_sm;
     @ViewById
@@ -495,7 +495,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
 
 
     @Click
-    void btn_connectpaint()
+    void btn_canclepaint()
     {
         reloadMap();
     }
@@ -1569,8 +1569,18 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
 
     public void initParamAfterPaint()
     {
+        btn_canclepaint.setVisibility(View.GONE);
+
+        isInner = false;
+        pos_line1 = 0;
+        pos_line2 = 0;
+        list_Objects_divideline = new ArrayList<>();
+        list_latlng_needplanboundary = new ArrayList<>();
+        list_latlng_needplanline = new ArrayList<>();
+        touchLatlng1 = null;
+        touchLatlng2 = null;
+
         list_latlng_pick = new ArrayList<>();
-        btn_connectpaint.setVisibility(View.GONE);
         lastselect_latlng = null;
         list_latlng_firstline = null;
         list_latlng_secondline = null;
@@ -1742,7 +1752,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                         return false;
                     }
                 });
-                btn_connectpaint.setVisibility(View.VISIBLE);
+                btn_canclepaint.setVisibility(View.VISIBLE);
                 List<CoordinatesBean> list_coordinatesbean = SqliteDb.getPoints(getActivity(), polygon_needbreakoff.getUuid());
                 if (list_coordinatesbean != null && list_coordinatesbean.size() != 0)
                 {

@@ -1,24 +1,21 @@
 package com.farm.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.farm.R;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 
 @SuppressLint("NewApi")
-@EFragment
-public class AnalysisActivity extends Fragment
+@EActivity(R.layout.analysisactivity)
+public class AnalysisActivity extends Activity
 {
     HoursWeatherFragment hoursWeatherFragment;
     Fragment mContent_hours = new Fragment();
@@ -28,49 +25,49 @@ public class AnalysisActivity extends Fragment
     @Click
     void rl_kc()
     {
-        Intent intent = new Intent(getActivity(), AnalysisGoodActivity_.class);
+        Intent intent = new Intent(AnalysisActivity.this, AnalysisGoodActivity_.class);
         startActivity(intent);
     }
 
     @Click
     void rl_zz()
     {
-        Intent intent = new Intent(getActivity(), AnalysisProductActivity_.class);
+        Intent intent = new Intent(AnalysisActivity.this, AnalysisProductActivity_.class);
         startActivity(intent);
     }
 
     @Click
     void rl_gz()
     {
-        Intent intent = new Intent(getActivity(), AnalysisProductActivity_.class);
+        Intent intent = new Intent(AnalysisActivity.this, AnalysisProductActivity_.class);
         startActivity(intent);
     }
 
     @Click
     void rl_cw()
     {
-        Intent intent = new Intent(getActivity(), AnalysisProductActivity_.class);
+        Intent intent = new Intent(AnalysisActivity.this, AnalysisProductActivity_.class);
         startActivity(intent);
     }
 
     @Click
     void rl_xs()
     {
-        Intent intent = new Intent(getActivity(), AnalysisSaleActivity_.class);
+        Intent intent = new Intent(AnalysisActivity.this, AnalysisSaleActivity_.class);
         startActivity(intent);
     }
 
     @Click
     void rl_cp()
     {
-        Intent intent = new Intent(getActivity(), AnalysisProductActivity_.class);
+        Intent intent = new Intent(AnalysisActivity.this, AnalysisProductActivity_.class);
         startActivity(intent);
     }
 
     @Click
     void btn_back()
     {
-        getActivity().finish();
+        AnalysisActivity.this.finish();
     }
 
     @AfterViews
@@ -79,17 +76,17 @@ public class AnalysisActivity extends Fragment
         switchContent_day(mContent_hours, hoursWeatherFragment);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.analysisactivity, container, false);
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();
         Bundle bundle = new Bundle();
         bundle.putString("parkid", "8");
         hoursWeatherFragment = new HoursWeatherFragment();
         hoursWeatherFragment.setArguments(bundle);
-        return rootView;
     }
+
 
     public void switchContent_day(Fragment from, Fragment to)
     {

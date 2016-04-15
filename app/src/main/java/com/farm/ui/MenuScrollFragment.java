@@ -97,10 +97,10 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
 			{
 				inflateView = inflater.inflate(R.layout.menu_secondpage, null);
 				ll_zg = (LinearLayout) inflateView.findViewById(R.id.ll_zg);
-
+				ll_tj = (LinearLayout) inflateView.findViewById(R.id.ll_tj);
 				ll_bwl = (LinearLayout) inflateView.findViewById(R.id.ll_bwl);
+				ll_tj.setOnClickListener(this);
 				ll_zg.setOnClickListener(this);
-
 				ll_bwl.setOnClickListener(this);
 			}
 			list_view.add(inflateView);
@@ -272,7 +272,7 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
 			getActivity().startActivity(intent);
 			break;
 		case R.id.ll_tj:
-			intent = new Intent(getActivity(), NCZ_CostFragment_.class);
+			intent = new Intent(getActivity(), AnalysisActivity_.class);
 			getActivity().startActivity(intent);
 			break;
 

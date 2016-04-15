@@ -2,6 +2,7 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -17,23 +18,25 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.Attendance_Park_Adapter;
 import com.farm.adapter.DL_ZS_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.BoundaryBean;
+import com.farm.bean.CoordinatesBean;
 import com.farm.bean.Gps;
 import com.farm.bean.LocationBean;
 import com.farm.bean.Points;
+import com.farm.bean.PolygonBean;
 import com.farm.bean.Result;
+import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
+import com.farm.bean.contractTab;
 import com.farm.bean.parktab;
 import com.farm.common.CoordinateConvertUtil;
+import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditDLInfor;
 import com.lidroid.xutils.HttpUtils;
@@ -78,8 +81,10 @@ import java.util.Map;
 @EActivity(R.layout.attendance_map)
 public class Attendance_Map extends Activity implements TencentLocationListener, View.OnClickListener
 {
+    List<PolygonBean> list_PolygonBean_park;//园区标识对象
+    TimeThread timethread;
+    List<Marker> list_mark_userlocation=new ArrayList<>();
     List<LocationBean> list_locationInfo;
-    List<BoundaryBean> list_boundary;
     List<String> list_yq = new ArrayList<>();
     List<String> list_user = new ArrayList<>();
     String note_lg = "";
@@ -87,7 +92,6 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
     DL_ZS_Adapter dl_zs_adapter;
     commembertab commembertab;
     ListView lv_zs;
-    List<Polygon> list_polygon;
     LatLng latlng_clickpostion;
     PopupWindow pw_command;
     View pv_command;
@@ -97,7 +101,6 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
     EditText et_dlzs;
     CustomDialog_EditDLInfor customdialog_editdlinfor;
     boolean isStart = false;
-    //    List<Object> area_Overlays = new ArrayList<Object>();
     LatLng lastlatLng = null;
     LatLng prelatLng = null;
     int error;
@@ -251,14 +254,14 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                for (int i = 0; i < list_boundary.size(); i++)
+                for (int i = 0; i < list_PolygonBean_park.size(); i++)
                 {
                     TextView textview = (TextView) view.findViewById(R.id.tv_name);
                     String str = textview.getText().toString();
-                    if (list_boundary.get(i).getParkname().equals(str))
+                    if (list_PolygonBean_park.get(i).getparkName().equals(str))
                     {
-                        String lat = list_boundary.get(i).getPointsList().get(0).getLat();
-                        String lon = list_boundary.get(i).getPointsList().get(0).getLon();
+                        String lat =list_PolygonBean_park.get(i).getLat();
+                        String lon =list_PolygonBean_park.get(i).getLng();
                         LatLng latlng = new LatLng(Double.valueOf(lat), Double.valueOf(lon));
                         tencentMap.animateTo(latlng);
                         WindowManager.LayoutParams lp = Attendance_Map.this.getWindow().getAttributes();
@@ -297,43 +300,25 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
     @AfterViews
     void afterOncreate()
     {
-        TencentLocationRequest request = TencentLocationRequest.create();
-        TencentLocationManager locationManager = TencentLocationManager.getInstance(Attendance_Map.this);
-        locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84
-        error = locationManager.requestLocationUpdates(request, this);
-        Overlays = new ArrayList<Object>();
-        list_polygon = new ArrayList<Polygon>();
+
         if (!utils.isOPen(Attendance_Map.this))
         {
             utils.openGPSSettings(Attendance_Map.this);
         }
-//        mapview.setAlpha(0.2f);
-        tencentMap = mapview.getMap();
-        tencentMap.setZoom(17);
-//        tencentMap.setSatelliteEnabled(true);
-        mProjection = mapview.getProjection();
-//        animateToLocation();
-        getTestData("boundary");
-        getLocationInfo(commembertab.getuId());
-        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
-        {
-            @Override
-            public void onMapClick(LatLng latlng)
-            {
-                latlng_clickpostion = latlng;
-                if (latlng_clickpostion != null)
-                {
-                    for (int i = 0; i < list_polygon.size(); i++)
-                    {
-                        if (list_polygon.get(i).contains(latlng_clickpostion))
-                        {
-                            Toast.makeText(Attendance_Map.this, "", Toast.LENGTH_SHORT).show();
-                        }
-                    }
 
-                }
-            }
-        });
+        tencentMap = mapview.getMap();
+        tencentMap.setZoom(13);
+        tencentMap.setSatelliteEnabled(true);
+        mProjection = mapview.getProjection();
+        Overlays = new ArrayList<Object>();
+
+        initBasicData();//初始化基础数据
+//        getLocationInfo(commembertab.getuId());
+
+        timethread = new TimeThread();
+        timethread.setStop(false);
+        timethread.setSleep(false);
+        timethread.start();
     }
 
     @Override
@@ -342,6 +327,10 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(this);
+        TencentLocationRequest request = TencentLocationRequest.create();
+        TencentLocationManager locationManager = TencentLocationManager.getInstance(Attendance_Map.this);
+        locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84
+        error = locationManager.requestLocationUpdates(request, this);
     }
 
 
@@ -393,46 +382,15 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         }
     }
 
-    private void addMarker(LatLng latLng, int icon, String info)
+    private Marker addMarker(LatLng latLng, int icon, String info)
     {
         Drawable drawable = getResources().getDrawable(icon);
         Bitmap bitmap = utils.drawable2Bitmap(drawable);
         marker = tencentMap.addMarker(new MarkerOptions().position(latLng).title(info).icon(new BitmapDescriptor(bitmap)));
         marker.showInfoWindow();
+        return  marker;
     }
 
-    private void getTestData(String from)
-    {
-        JSONObject jsonObject = utils.parseJsonFile(Attendance_Map.this, "dictionary.json");
-        Result result = JSON.parseObject(jsonObject.getString(from), Result.class);
-        list_boundary = JSON.parseArray(result.getRows().toJSONString(), BoundaryBean.class);
-//        showPatro(listData);
-
-        for (int i = 0; i < list_boundary.size(); i++)
-        {
-            String parkid = list_boundary.get(i).getParkid();
-            String parkname = list_boundary.get(i).getParkname();
-            list_yq.add(parkname);
-            List<Points> list = list_boundary.get(i).getPointsList();
-            List<LatLng> list_LatLng = new ArrayList<>();
-            for (int j = 0; j < list.size(); j++)
-            {
-                if (j == 0)
-                {
-                    LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLon()));
-                    tencentMap.animateTo(latlng);
-                    addMarker(latlng, R.drawable.location_start, parkname);
-                }
-                LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLon()));
-                list_LatLng.add(latlng);
-            }
-            Polygon polygon = drawPolygon(list_LatLng, R.color.bg_yellow);
-            map_polygon.put(parkid, polygon);
-            list_polygon.add(polygon);
-            Overlays.add(polygon);
-        }
-
-    }
 
     private void showPatro(List<Points> listNewData)
     {
@@ -469,7 +427,20 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
             Overlays.add(line);
         }
     }
-
+    private Polygon drawPolygon(float z, List<LatLng> list_LatLng, int fillcolor, int strokesize, int strokecolor)
+    {
+        PolygonOptions polygonOp = new PolygonOptions();
+        polygonOp.fillColor(fillcolor);// 填充色
+        polygonOp.strokeColor(getResources().getColor(strokecolor));// 线颜色
+        polygonOp.strokeWidth(strokesize);// 线宽
+        for (int i = 0; i < list_LatLng.size(); i++)
+        {
+            polygonOp.add(list_LatLng.get(i));
+        }
+        Polygon polygon = mapview.getMap().addPolygon(polygonOp);
+        polygon.setZIndex(z);
+        return polygon;
+    }
     private Polygon drawPolygon(List<LatLng> list_LatLng, int color)
     {
         PolygonOptions polygonOp = new PolygonOptions();
@@ -482,7 +453,117 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
         Polygon polygon = mapview.getMap().addPolygon(polygonOp);
         return polygon;
     }
+    public void initBasicData()
+    {
+        list_PolygonBean_park=new ArrayList<>();
+        //初始化规划图
+        List<parktab> list_parktab = SqliteDb.getparktab(Attendance_Map.this, commembertab.getuId());
+        for (int i = 0; i < list_parktab.size(); i++)//每个园区
+        {
+            PolygonBean polygonBean_park = SqliteDb.getLayer_park(Attendance_Map.this, list_parktab.get(i).getid());
+            if (polygonBean_park != null)
+            {
+                LatLng latlng = new LatLng(Double.valueOf(polygonBean_park.getLat()), Double.valueOf(polygonBean_park.getLng()));
+                Marker marker = addCustomMarker("normal", R.drawable.ic_flag_park, getResources().getColor(R.color.white), latlng, polygonBean_park.getUuid(), polygonBean_park.getNote());
+                List<CoordinatesBean> list_park = SqliteDb.getPoints(Attendance_Map.this, polygonBean_park.getUuid());
+                if (list_park != null && list_park.size() != 0)
+                {
+                   Polygon p= initBoundary(getResources().getColor(R.color.transparent), 0f, list_park, 0, R.color.transparent);
+                    map_polygon.put(list_parktab.get(i).getid(), p);
+                    list_PolygonBean_park.add(polygonBean_park);
+                    list_yq.add(list_parktab.get(i).getparkName());
+                }
 
+            }
+
+            List<areatab> list_areatab = SqliteDb.getareatab(Attendance_Map.this, list_parktab.get(i).getid());
+            for (int k = 0; k < list_areatab.size(); k++)//每个片区
+            {
+                PolygonBean polygonBean_area = SqliteDb.getLayer_area(Attendance_Map.this, list_parktab.get(i).getid(), list_areatab.get(k).getid());
+                if (polygonBean_area != null)
+                {
+                    LatLng latlng = new LatLng(Double.valueOf(polygonBean_area.getLat()), Double.valueOf(polygonBean_area.getLng()));
+                    Marker marker = addCustomMarker("normal", R.drawable.ic_flag_area, getResources().getColor(R.color.white), latlng, polygonBean_area.getUuid(), polygonBean_area.getNote());
+                    marker.setVisible(false);
+                    List<CoordinatesBean> list_area = SqliteDb.getPoints(Attendance_Map.this, polygonBean_area.getUuid());
+                    if (list_area != null && list_area.size() != 0)
+                    {
+                        initBoundary(getResources().getColor(R.color.transparent), 0f, list_area, 2, R.color.bg_text);
+                    }
+                }
+
+                List<contractTab> list_contractTab = SqliteDb.getcontracttab(Attendance_Map.this, list_areatab.get(k).getid());
+                for (int m = 0; m < list_contractTab.size(); m++)//每个承包区
+                {
+                    //承包区规划图
+                    PolygonBean polygonBean_contract = SqliteDb.getLayer_contract(Attendance_Map.this, list_parktab.get(i).getid(), list_areatab.get(k).getid(), list_contractTab.get(m).getid());
+                    if (polygonBean_contract != null)
+                    {
+                        LatLng latlng = new LatLng(Double.valueOf(polygonBean_contract.getLat()), Double.valueOf(polygonBean_contract.getLng()));
+                        Marker marker = addCustomMarker("normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote());
+                        marker.setVisible(false);
+                        List<CoordinatesBean> list_contract = SqliteDb.getPoints(Attendance_Map.this, polygonBean_contract.getUuid());
+                        if (list_contract != null && list_contract.size() != 0)
+                        {
+                            initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 2, R.color.bg_text);
+                        }
+                    }
+                }
+            }
+
+        }
+//显示点
+        initPointPolygon();
+//显示断蕾
+        initHousePolygon();
+//显示线
+        initLinePolygon();
+//显示道路
+        initRoadPolygon();
+//显示面
+        initMianPolygon();
+    }
+    private Polygon initBoundary(int fillcolor, float z, List<CoordinatesBean> list_coordinates, int strokesize, int strokecolor)
+    {
+        List<LatLng> list_AllLatLng = new ArrayList<>();
+        for (int i = 0; i < list_coordinates.size(); i++)
+        {
+            LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
+            if (i == 0)
+            {
+                tencentMap.animateTo(latlng);
+            }
+            list_AllLatLng.add(latlng);
+        }
+        Polygon polygon = drawPolygon(10f, list_AllLatLng, fillcolor, strokesize, strokecolor);
+        polygon.setZIndex(z);
+        Overlays.add(polygon);
+        return polygon;
+    }
+    private Marker addCustomMarker(String type, int icon, int textcolor, LatLng latLng, String uuid, String note)
+    {
+        Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
+        View view = LayoutInflater.from(Attendance_Map.this).inflate(R.layout.marker_sale, null);
+        View view_marker = (View) view.findViewById(R.id.view_marker);
+        view_marker.setBackgroundResource(icon);
+        TextView textView = (TextView) view.findViewById(R.id.tv_note);
+        if (note == null || note.equals(""))
+        {
+            textView.setText("暂无说明");
+        } else
+        {
+            textView.setText(note);
+        }
+        textView.setTextColor(textcolor);
+        textView.setTextSize(12);
+        marker.setMarkerView(view);
+        Bundle bundle = new Bundle();
+        bundle.putString("uuid", uuid);
+        bundle.putString("note", note);
+        bundle.putString("type", type);
+        marker.setTag(bundle);
+        return marker;
+    }
     private void getLocationInfo(String uid)
     {
         commembertab commembertab = AppContext.getUserInfo(Attendance_Map.this);
@@ -502,13 +583,20 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
                     if (result.getAffectedRows() != 0)
                     {
                         list_locationInfo = JSON.parseArray(result.getRows().toJSONString(), LocationBean.class);
+                        for (int i = 0; i < list_mark_userlocation.size(); i++)
+                        {
+                            tencentMap.removeOverlay(list_mark_userlocation.get(i));
+                        }
+
+                        list_mark_userlocation=new ArrayList<Marker>();
                         for (int i = 0; i < list_locationInfo.size(); i++)
                         {
                             LatLng latLng = new LatLng(Double.valueOf(list_locationInfo.get(i).getLat().toString()), Double.valueOf(list_locationInfo.get(i).getLng()));
                             if (latLng != null)
                             {
                                 list_user.add(list_locationInfo.get(i).getuserName());
-                                addMarker(latLng, R.drawable.user, list_locationInfo.get(i).getparkName() + "-" + list_locationInfo.get(i).getuserName());
+                                Marker marker=addMarker(latLng, R.drawable.user, list_locationInfo.get(i).getparkName() + "-" + list_locationInfo.get(i).getuserName());
+                                list_mark_userlocation.add(marker);
                                 Polygon polygon = map_polygon.get(list_locationInfo.get(i).getparkId());
                                 if (polygon != null)
                                 {
@@ -550,11 +638,131 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-//                AppContext.makeToast(getActivity(), "error_connectServer");
+//                AppContext.makeToast(Attendance_Map.this, "error_connectServer");
             }
         });
     }
+    public void initLinePolygon()
+    {
+        List<PolygonBean> list_polygon_line = SqliteDb.getMoreLayer_line(Attendance_Map.this, commembertab.getuId());
+        for (int i = 0; i < list_polygon_line.size(); i++)
+        {
+            List<CoordinatesBean> list = SqliteDb.getPoints(Attendance_Map.this, list_polygon_line.get(i).getUuid());
+            List<LatLng> list_latlang = new ArrayList();
+            for (int j = 0; j < list.size(); j++)
+            {
+                LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLng()));
+                list_latlang.add(latlng);
+            }
+            PolylineOptions lineOpt = new PolylineOptions();
+//            lineOpt.setDottedLine(true);
+            lineOpt.addAll(list_latlang);
+            Polyline line = tencentMap.addPolyline(lineOpt);
+//            line.setGeodesic(true);
+            line.setColor(Color.argb(500, 177, 15, 0));
+            line.setWidth(8f);
+            Overlays.add(line);
 
+            if (list_latlang.size() > 0)
+            {
+                int halfsize = list_latlang.size() / 2;
+                if (halfsize == 0)
+                {
+                    Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_sq), list_latlang.get(0), list_polygon_line.get(i).getUuid(), list_polygon_line.get(i).getNote());
+                } else
+                {
+                    Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_sq), list_latlang.get(halfsize), list_polygon_line.get(i).getUuid(), list_polygon_line.get(i).getNote());
+                }
+
+            }
+
+        }
+    }
+
+    public void initRoadPolygon()
+    {
+       List<PolygonBean> list_polygon_road = SqliteDb.getMoreLayer_road(Attendance_Map.this, commembertab.getuId());
+        for (int i = 0; i < list_polygon_road.size(); i++)
+        {
+            List<CoordinatesBean> list = SqliteDb.getPoints(Attendance_Map.this, list_polygon_road.get(i).getUuid());
+            List<LatLng> list_latlang = new ArrayList();
+            for (int j = 0; j < list.size(); j++)
+            {
+                LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLng()));
+                list_latlang.add(latlng);
+            }
+            PolylineOptions lineOpt = new PolylineOptions();
+            lineOpt.setDottedLine(true);
+            lineOpt.addAll(list_latlang);
+            Polyline line = tencentMap.addPolyline(lineOpt);
+//            line.setGeodesic(true);
+            line.setColor(Color.argb(500, 255, 255, 255));
+            line.setWidth(8f);
+            Overlays.add(line);
+
+            if (list_latlang.size() > 0)
+            {
+                int halfsize = list_latlang.size() / 2;
+                Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_sq), list_latlang.get(halfsize), list_polygon_road.get(i).getUuid(), list_polygon_road.get(i).getNote());
+            }
+
+        }
+    }
+
+
+    public void initMianPolygon()
+    {
+        List<PolygonBean>  list_polygon_mian = SqliteDb.getMoreLayer_mian(Attendance_Map.this, commembertab.getuId());
+        for (int i = 0; i < list_polygon_mian.size(); i++)
+        {
+            LatLng latlng = new LatLng(Double.valueOf(list_polygon_mian.get(i).getLat()), Double.valueOf(list_polygon_mian.get(i).getLng()));
+            Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_ask), latlng, list_polygon_mian.get(i).getUuid(), list_polygon_mian.get(i).getNote());
+            List<CoordinatesBean> list_mian = SqliteDb.getPoints(Attendance_Map.this, list_polygon_mian.get(i).getUuid());
+            List<LatLng> list_LatLng = new ArrayList<>();
+            if (list_mian != null && list_mian.size() != 0)
+            {
+                for (int j = 0; j < list_mian.size(); j++)
+                {
+                    LatLng ll = new LatLng(Double.valueOf(list_mian.get(j).getLat()), Double.valueOf(list_mian.get(j).getLng()));
+                    list_LatLng.add(ll);
+                }
+                Polygon polygon = drawPolygon(10f, list_LatLng, Color.argb(180, 70, 101, 10), 2, R.color.bg_text);
+                polygon.setZIndex(0f);
+                Overlays.add(polygon);
+            }
+
+        }
+    }
+
+    public void initHousePolygon()
+    {
+        List<PolygonBean>    list_polygon_house = SqliteDb.getMoreLayer_house(Attendance_Map.this, commembertab.getuId());
+        for (int i = 0; i < list_polygon_house.size(); i++)
+        {
+            List<CoordinatesBean> list = SqliteDb.getPoints(Attendance_Map.this, list_polygon_house.get(i).getUuid());
+            if (list != null && list.size() != 0)
+            {
+                LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
+                Marker marker = addCustomMarker("normal", R.drawable.icon_house, getResources().getColor(R.color.bg_ask), latlng, list_polygon_house.get(i).getUuid(), list_polygon_house.get(i).getNote());
+            }
+
+        }
+    }
+
+    public void initPointPolygon()
+    {
+        List<PolygonBean>  list_polygon_point = SqliteDb.getMoreLayer_point(Attendance_Map.this, commembertab.getuId());
+        for (int i = 0; i < list_polygon_point.size(); i++)
+        {
+            List<CoordinatesBean> list = SqliteDb.getPoints(Attendance_Map.this, list_polygon_point.get(i).getUuid());
+            if (list != null && list.size() != 0)
+            {
+                LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
+                Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_job), latlng, list_polygon_point.get(i).getUuid(), list_polygon_point.get(i).getNote());
+            }
+
+        }
+    }
     private void getUserInfo(String uid)
     {
         commembertab commembertab = AppContext.getUserInfo(Attendance_Map.this);
@@ -592,7 +800,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-//                AppContext.makeToast(getActivity(), "error_connectServer");
+//                AppContext.makeToast(Attendance_Map.this, "error_connectServer");
             }
         });
     }
@@ -633,7 +841,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-//                AppContext.makeToast(getActivity(), "error_connectServer");
+//                AppContext.makeToast(Attendance_Map.this, "error_connectServer");
             }
         });
     }
@@ -642,5 +850,43 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
     public void onClick(View v)
     {
 
+    }
+    class TimeThread extends Thread
+    {
+        private boolean isSleep = true;
+        private boolean stop = false;
+
+        public void run()
+        {
+            Long starttime = 0l;
+            while (!stop)
+            {
+                if (isSleep)
+                {
+                } else
+                {
+                    try
+                    {
+                        timethread.sleep(AppContext.TIME_REFRESH);
+                        starttime = starttime + 60000;
+//                        getLocationInfo(commembertab.getuId());
+                        timethread.setSleep(true);
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        public void setSleep(boolean sleep)
+        {
+            isSleep = sleep;
+        }
+
+        public void setStop(boolean stop)
+        {
+            this.stop = stop;
+        }
     }
 }

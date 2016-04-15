@@ -293,7 +293,7 @@ PG_ListOfEvents pg_listOfEvents;
             if (diff > 3)// 每隔15秒记录一次
             {
                 lasttime = newtime;
-//                MarkLocation(location);
+                MarkLocation(location);
 //                Toast.makeText(PG_MainActivity.this,location.toString(),Toast.LENGTH_LONG).show();
             }
         }
