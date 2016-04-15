@@ -2,6 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl_match"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/pb_upload"
+            android:layout_width="60dip"
+            android:layout_height="45dip"
+            android:layout_marginRight="10dip"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:gravity="center"
+            android:text="上传"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"
+            />
+    </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -127,6 +144,7 @@
                     android:textSize="@dimen/size_14" />
 
                 <TextView
+                    android:textColor="@color/bg_yellow"
                     android:id="@+id/et_sjms"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_colum"

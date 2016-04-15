@@ -36,30 +36,29 @@
     android:layout_alignParentRight="true"
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
-    <TextView
+    <Button
         android:id="@+id/tv_bianjie"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="50dip"
+        android:layout_height="45dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/background_view_rounded_single"
         android:gravity="center"
         android:text="编辑"
-        android:textColor="@color/textcolor_titlebar"
-        android:textSize="@dimen/home_menu_textsize"
-        />
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:layout_below="@id/rl_titlebar"
-        android:background="@color/bg_main"/>
-    <TextView
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_14"/>
+
+    <Button
         android:id="@+id/tv_delete"
-        android:layout_toRightOf="@+id/tv_bianjie"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="50dip"
+        android:layout_height="45dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/background_view_rounded_single"
         android:gravity="center"
         android:text="删除"
-        android:textColor="@color/textcolor_titlebar"
-        android:textSize="@dimen/home_menu_textsize"
-        />
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_14"/>
 </LinearLayout>
     </RelativeLayout>
 
@@ -70,7 +69,23 @@
         android:layout_below="@id/rl_titlebar"
         android:background="@color/bg_main"/>
 
-
+<RelativeLayout
+    android:id="@+id/rl_match"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ProgressBar
+        android:id="@+id/pb_upload"
+        android:layout_width="60dip"
+        android:layout_height="45dip"
+        android:layout_marginRight="10dip"
+        android:layout_centerInParent="true"
+        android:background="@null"
+        android:gravity="center"
+        android:text="上传"
+        android:textColor="@color/white"
+        android:textSize="@dimen/titlebar_textsize"
+         />
+</RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -85,6 +100,7 @@
             android:layout_marginTop="5dip"
             android:stretchColumns="1" >
             <TableRow
+                android:id="@+id/tablie1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -113,11 +129,13 @@
             </TableRow>
 
             <View
+                android:id="@+id/view_line1"
                 android:layout_width="match_parent"
                 android:layout_height="0.5px"
                 android:layout_marginTop="5dip"
                 android:background="@color/bg_selectitem" />
             <TableRow
+                android:id="@+id/tablie2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -146,6 +164,7 @@
             </TableRow>
 
             <View
+                android:id="@+id/view_line2"
                 android:layout_width="match_parent"
                 android:layout_height="0.5px"
                 android:layout_marginTop="5dip"
@@ -196,13 +215,16 @@
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14" />
 
-                <TextView
+                <EditText
                     android:id="@+id/et_sjms"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_colum"
+                    android:layout_span="3"
+                    android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="请输入事件描述"
                     android:paddingLeft="10dip"
+                    android:textColor="@color/bg_yellow"
                     android:textSize="@dimen/size_14" />
             </TableRow>
 
@@ -267,6 +289,7 @@
                 </HorizontalScrollView>
 
                 <ImageButton
+                    android:visibility="gone"
                     android:id="@+id/imgbtn_addpicture"
                     android:layout_width="@dimen/size_40"
                     android:layout_height="120dip"
@@ -309,6 +332,7 @@
                 </HorizontalScrollView>
 
                 <ImageButton
+                    android:visibility="gone"
                     android:id="@+id/imgbtn_addvideo"
                     android:layout_width="@dimen/size_40"
                     android:layout_height="120dip"
@@ -319,12 +343,16 @@
         </TableLayout>
     </ScrollView>
     <LinearLayout
+        android:layout_marginTop="10dip"
+        android:id="@+id/ll_add"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="45dip"
         android:gravity="center">
         <Button
+            android:layout_weight="1"
             android:id="@+id/btn_save"
-            android:layout_width="60dip"
+            android:layout_width="0dip"
             android:layout_height="45dip"
             android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
@@ -335,8 +363,9 @@
             android:textColor="@color/bg_text"
             android:textSize="@dimen/size_14"/>
         <Button
+            android:layout_weight="1"
             android:id="@+id/btn_case"
-            android:layout_width="60dip"
+            android:layout_width="0dip"
             android:layout_height="45dip"
             android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"

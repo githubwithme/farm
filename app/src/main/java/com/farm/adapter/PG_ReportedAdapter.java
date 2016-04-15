@@ -99,7 +99,9 @@ public class PG_ReportedAdapter extends BaseAdapter {
 
             if (!fJxx.equals("")&& fJxx.size()>0)
             {
-                BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(0).getLSTLJ());
+                if(fJxx.get(0).getFJLX().equals("1")) {
+                    BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(0).getLSTLJ());
+                }
             }
 
             // 设置控件集到convertView
@@ -112,7 +114,18 @@ public class PG_ReportedAdapter extends BaseAdapter {
         }
         // 设置文字和图片
 
-        listItemView.tv_clqk.setText(ReportedBean.getState());
+//        listItemView.tv_clqk.setText(ReportedBean.getState());
+        if(ReportedBean.getState().equals("0"))
+        {
+            listItemView.tv_clqk.setText("未处理");
+        }else if(ReportedBean.getState().equals("1"))
+        {
+            listItemView.tv_clqk.setText("待处理");
+        }else
+        {
+            listItemView.tv_clqk.setText("已处理");
+        }
+
         listItemView.tv_cmdname.setText(ReportedBean.getEventType());
         listItemView.tv_qx.setText(ReportedBean.getReporTime());
 

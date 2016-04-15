@@ -55,12 +55,15 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
     CZ_MainFragment mainFragment;
     CZ_FeedbackOfSale cz_feedbackOfSale;
     IFragment iFragment;
+    PG_ListOfEvents pg_listOfEvents;
     @ViewById
     ImageButton imgbtn_home;
     @ViewById
     ImageButton imgbtn_me;
     @ViewById
     ImageButton imgbtn_sale;
+    @ViewById
+    ImageButton imgbtn_event;
 
     @ViewById
     TextView tv_home;
@@ -68,6 +71,8 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
     TextView tv_me;
     @ViewById
     TextView tv_sale;
+    @ViewById
+    TextView tv_event;
 
     @ViewById
     TableLayout tl_home;
@@ -75,6 +80,8 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
     TableLayout tl_me;
     @ViewById
     TableLayout tl_sale;
+    @ViewById
+    TableLayout tl_event;
 
     @Click
     void tl_home()
@@ -82,10 +89,12 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         tv_home.setTextColor(getResources().getColor(R.color.bg_blue));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_home.setSelected(true);
         tl_me.setSelected(false);
         tl_sale.setSelected(false);
+        tl_event.setSelected(false);
         switchContent(mContent, mainFragment);
     }
 
@@ -95,10 +104,12 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         tv_sale.setTextColor(getResources().getColor(R.color.bg_blue));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_sale.setSelected(true);
         tl_home.setSelected(false);
         tl_me.setSelected(false);
+        tl_event.setSelected(false);
         switchContent(mContent, cz_feedbackOfSale);
     }
 
@@ -108,11 +119,29 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         tv_me.setTextColor(getResources().getColor(R.color.bg_blue));
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
+
 
         tl_me.setSelected(true);
         tl_home.setSelected(false);
         tl_sale.setSelected(false);
+        tl_event.setSelected(false);
         switchContent(mContent, iFragment);
+    }
+    @Click
+    void tl_event()
+    {
+        tv_event.setTextColor(getResources().getColor(R.color.bg_blue));
+        tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
+
+
+        tl_event.setSelected(true);
+        tl_home.setSelected(false);
+        tl_sale.setSelected(false);
+        tl_me.setSelected(false);
+        switchContent(mContent, pg_listOfEvents);
     }
 
     @AfterViews
@@ -142,7 +171,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         mainFragment = new CZ_MainFragment_();
         iFragment = new IFragment_();
         cz_feedbackOfSale = new CZ_FeedbackOfSale_();
-
+        pg_listOfEvents=new PG_ListOfEvents_();
         commembertab = AppContext.getUserInfo(CZ_MainActivity.this);
 
         TencentLocationRequest request = TencentLocationRequest.create();

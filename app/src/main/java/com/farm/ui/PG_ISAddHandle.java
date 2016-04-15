@@ -11,9 +11,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.FJ_SCFJ;
+import com.farm.bean.FJxx;
 import com.farm.bean.HandleBean;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
@@ -38,6 +42,7 @@ import com.lidroid.xutils.http.client.entity.FileUploadEntity;
 import com.media.HomeFragmentActivity;
 import com.media.MediaChooser;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
@@ -61,8 +66,15 @@ public class PG_ISAddHandle extends Fragment{
     CustomDialog_ListView customDialog_listView;
     com.farm.bean.commembertab commembertab;
     AppContext appContext;
+
+    @ViewById
+    RelativeLayout rl_match;
+    @ViewById
+    ProgressBar pb_uploaded;
     @ViewById
     TextView et_sjms;
+    @ViewById
+    Button btn_upload;
     @ViewById
     ImageButton imgbtn_addvideo;
     @ViewById
@@ -71,9 +83,9 @@ public class PG_ISAddHandle extends Fragment{
     LinearLayout ll_picture;
     @ViewById
     LinearLayout ll_video;
-    List<FJ_SCFJ> list_picture = new ArrayList<FJ_SCFJ>();
-    List<FJ_SCFJ> list_video = new ArrayList<FJ_SCFJ>();
-    List<FJ_SCFJ> list_allfj = new ArrayList<FJ_SCFJ>();
+    List<FJxx> list_picture = new ArrayList<FJxx>();
+    List<FJxx> list_video = new ArrayList<FJxx>();
+    List<FJxx> list_allfj = new ArrayList<FJxx>();
     @Click
     void btn_upload() {
         if( et_sjms.getText().toString().equals(""))
@@ -82,9 +94,41 @@ public class PG_ISAddHandle extends Fragment{
 
         }else
         {
+            btn_upload.setVisibility(View.GONE);
+            pb_uploaded.setVisibility(View.VISIBLE);
             saveData();
             makeData();
         }
+    }
+    @AfterViews
+    void afteroncreate()
+    {
+
+        et_sjms.setText("事件"+handleBean.getResult());
+        if(!handleBean.getFjxx().equals(""))
+        {
+            for(int i=0;i<handleBean.getFjxx().size();i++) {
+                if (i==(handleBean.getFjxx().size()-1))
+                {
+                    handleBean.getFjxx().size();
+                }
+                if (handleBean.getFjxx().get(i).getFJLX().equals("1")) {
+                    addServerPicture(handleBean.getFjxx().get(i));
+                }
+                if (handleBean.getFjxx().get(i).getFJLX().equals("2")) {
+                    ProgressBar progressBar = new ProgressBar(getActivity(), null, android.R.attr.progressBarStyleHorizontal);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(400, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                    lp.setMargins(25, 4, 0, 4);
+                    progressBar.setLayoutParams(lp);
+                    ll_video.addView(progressBar);// BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.baseurl +flview.getFJLJ());
+                    downloadVideo(handleBean.getFjxx().get(i), AppConfig.baseurl + handleBean.getFjxx().get(i).getFJLJ(), AppConfig.DOWNLOADPATH_VIDEO + handleBean.getFjxx().get(i).getFJMC(), progressBar);
+                }
+            }
+        }else
+        {
+            rl_match.setVisibility(View.GONE);
+        }
+        rl_match.setVisibility(View.GONE);
     }
     @Click
     void imgbtn_addpicture() {
@@ -129,7 +173,7 @@ public class PG_ISAddHandle extends Fragment{
                 imageView.setTag(FJBDLJ);
                 imageView.setImageBitmap(BitmapHelper.getVideoThumbnail(FJBDLJ, 120, 120, MediaStore.Images.Thumbnails.MICRO_KIND));
 
-                FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
+                FJxx fj_SCFJ = new FJxx();
                 fj_SCFJ.setFJBDLJ(FJBDLJ);
                 fj_SCFJ.setFJLX("2");
 
@@ -181,7 +225,7 @@ public class PG_ISAddHandle extends Fragment{
                 BitmapHelper.setImageView(getActivity(), imageView, FJBDLJ);
                 imageView.setTag(FJBDLJ);
 
-                FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
+                FJxx fj_SCFJ = new FJxx();
                 fj_SCFJ.setFJBDLJ(FJBDLJ);
                 fj_SCFJ.setFJLX("1");
 
@@ -245,12 +289,12 @@ public class PG_ISAddHandle extends Fragment{
                     if (listData == null) {
                         AppContext.makeToast(getActivity(), "error_connectDataBase");
                     } else {
-                        if (list_picture.size() > 0 )
+                        if (list_allfj.size() > 0 )
                         {
-                            latch = new CountDownLatch(list_picture.size() );
-                            for (int j = 0; j < list_picture.size(); j++)
+                            latch = new CountDownLatch(list_allfj.size() );
+                            for (int j = 0; j < list_allfj.size(); j++)
                             {
-                                uploadMedia(handleBean.getResultId(), list_picture.get(j).getFJBDLJ(),list_picture.get(j).getFJLX());
+                                uploadMedia(handleBean.getResultId(), list_allfj.get(j).getFJBDLJ(),list_allfj.get(j).getFJLX());
 //                                uploadMedia(event, list_picture.get(j).getFJBDLJ());
                             }
 
@@ -261,6 +305,7 @@ public class PG_ISAddHandle extends Fragment{
                     }
 
                 } else {
+                    btn_upload.setVisibility(View.VISIBLE);
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
                     return;
                 }
@@ -268,6 +313,7 @@ public class PG_ISAddHandle extends Fragment{
 
             @Override
             public void onFailure(HttpException error, String arg1) {
+
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
             }
@@ -318,6 +364,7 @@ public class PG_ISAddHandle extends Fragment{
             @Override
             public void onFailure(HttpException error, String msg)
             {
+
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
             }
@@ -349,8 +396,9 @@ public class PG_ISAddHandle extends Fragment{
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
                 } else {
+                    btn_upload.setVisibility(View.VISIBLE);
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
                     return;
                 }
@@ -362,5 +410,187 @@ public class PG_ISAddHandle extends Fragment{
                 AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
+    }
+
+    private void addServerPicture(FJxx flview) {
+
+        ImageView imageView = new ImageView(getActivity());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+        lp.setMargins(25, 4, 0, 4);
+        imageView.setLayoutParams(lp);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.url + fj_SCFJ.getFJLJ());// ?
+        BitmapHelper.setImageView(getActivity(), imageView, AppConfig.baseurl +flview.getFJLJ());
+
+        FJxx fj_SCFJ = new FJxx();
+//            fj_SCFJ.setFJBDLJ(FJBDLJ);
+        fj_SCFJ.setFJLX("1");
+        ll_picture.addView(imageView);
+        list_picture.add(fj_SCFJ);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int index_zp = ll_picture.indexOfChild(v);
+                View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
+                    @Override
+                    public void OnClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.btn_sure:
+                          /*      Intent intent = new Intent(PG_EventDetail.this, ShowPhoto_.class);
+                                intent.putExtra("url", list_picture.get(index_zp).getFJLJ());
+                                startActivity(intent);*/
+                                File file = new File(list_picture.get(index_zp).getFJBDLJ());
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setDataAndType(Uri.fromFile(file), "image");
+                                startActivity(intent);
+                                break;
+                            case R.id.btn_cancle:
+//                                deletePhotos(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
+                                ll_picture.removeViewAt(index_zp);
+                                list_picture.remove(index_zp);
+                                myDialog.dismiss();
+                                break;
+                        }
+                    }
+                });
+                myDialog.show();
+            }
+        });
+    }
+
+    public void downloadVideo(final FJxx fj_SCFJ, String path, final String target, final ProgressBar progressBar)
+    {
+        HttpUtils http = new HttpUtils();
+        http.download(path, target, true, true, new RequestCallBack<File>()
+        {
+            @Override
+            public void onLoading(long total, long current, boolean isUploading)
+            {
+                if (total > 0)
+                {
+                    progressBar.setProgress((int) ((double) current / (double) total * 100));
+                } else
+                {
+                    progressBar.setProgress(0);
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                if (msg.equals("maybe the file has downloaded completely"))
+                {
+                    ll_video.removeView(progressBar);
+                    ImageView imageView = new ImageView(getActivity());
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(400, ViewGroup.LayoutParams.MATCH_PARENT, 0); // ,
+                    // 1是可选写的
+                    lp.setMargins(25, 4, 0, 4);
+                    imageView.setLayoutParams(lp);// 显示图片的大小
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    imageView.setImageBitmap(BitmapHelper.getVideoThumbnail(target, 120, 120, MediaStore.Images.Thumbnails.MICRO_KIND));
+
+                    /*fj_SCFJ.setFJBDLJ(target);
+                    fj_SCFJ.setFJLX("2");
+                    fj_SCFJ.setISUPLOAD("1");*/
+
+                    list_video.add(fj_SCFJ);
+
+                    ll_video.addView(imageView);
+
+                    imageView.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            final int index_zp = ll_video.indexOfChild(v);
+                            View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                            myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "取消", new MyDialog.CustomDialogListener()
+                            {
+                                @Override
+                                public void OnClick(View v)
+                                {
+                                    switch (v.getId())
+                                    {
+                                        case R.id.btn_sure:
+//                                            File file = new File(list_video.get(index_zp).getFJBDLJ());
+                                            File file = new File(list_video.get(index_zp).getFJLJ());
+                                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                                            intent.setDataAndType(Uri.fromFile(file), "video/*");
+                                            startActivity(intent);
+                                            break;
+                                        case R.id.btn_cancle:
+
+                                            myDialog.dismiss();
+                                            break;
+                                    }
+                                }
+                            });
+                            myDialog.show();
+                        }
+                    });
+                } else
+                {
+                    Toast.makeText(getActivity(), "下载失败！找不到文件!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<File> responseInfo)
+            {
+                // progressBar.setVisibility(View.INVISIBLE);
+                ll_video.removeView(progressBar);
+                Toast.makeText(getActivity(), "下载成功！", Toast.LENGTH_SHORT).show();
+
+                ImageView imageView = new ImageView(getActivity());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                lp.setMargins(25, 4, 0, 4);
+                imageView.setLayoutParams(lp);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setTag(target);
+                imageView.setImageBitmap(BitmapHelper.getVideoThumbnail(target, 120, 120, MediaStore.Images.Thumbnails.MICRO_KIND));
+
+             /*   fj_SCFJ.setFJBDLJ(target);
+                fj_SCFJ.setFJLX("2");
+                fj_SCFJ.setISUPLOAD("1");*/
+
+                list_video.add(fj_SCFJ);
+                ll_video.addView(imageView);
+
+                imageView.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        final int index_zp = ll_video.indexOfChild(v);
+                        View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "取消", new MyDialog.CustomDialogListener()
+                        {
+                            @Override
+                            public void OnClick(View v)
+                            {
+                                switch (v.getId())
+                                {
+                                    case R.id.btn_sure:
+//                                        File file = new File(list_video.get(index_zp).getFJBDLJ());
+                                        File file = new File(list_video.get(index_zp).getFJLJ());
+                                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setDataAndType(Uri.fromFile(file), "video/*");
+                                        startActivity(intent);
+                                        break;
+                                    case R.id.btn_cancle:
+//                                        FJxx fj_SCFJ =list_video.get(index_zp);
+//                                        deleteFJ(list_video.get(index_zp).getFJID(), list_video, ll_video, index_zp);
+                                        myDialog.dismiss();
+                                        break;
+                                }
+                            }
+                        });
+                        myDialog.show();
+                    }
+                });
+            }
+        });
+
     }
 }

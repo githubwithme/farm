@@ -3,6 +3,7 @@ package com.farm.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -32,6 +36,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -54,9 +59,9 @@ public class PG_ISEventDatail  extends Fragment
     LinearLayout ll_picture;
     @ViewById
     LinearLayout ll_video;
-    List<FJ_SCFJ> list_picture = new ArrayList<FJ_SCFJ>();
-    List<FJ_SCFJ> list_video = new ArrayList<FJ_SCFJ>();
-    List<FJ_SCFJ> list_allfj = new ArrayList<FJ_SCFJ>();
+    List<FJxx> list_picture = new ArrayList<FJxx>();
+    List<FJxx> list_video = new ArrayList<FJxx>();
+    List<FJxx> list_allfj = new ArrayList<FJxx>();
     com.farm.bean.commembertab commembertab;
     CustomDialog_ListView customDialog_listView;
     @ViewById
@@ -68,6 +73,14 @@ public class PG_ISEventDatail  extends Fragment
     @ViewById
     TextView et_sjms;
     HandleBean handleBean;//传值
+    @ViewById
+    RelativeLayout rl_match;
+
+    @AfterViews
+    void afteroncreate()
+    {
+        getIndata();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -103,7 +116,7 @@ public class PG_ISEventDatail  extends Fragment
                                 it.remove();
                             }
                         }
-
+                        rl_match.setVisibility(View.GONE);
                         ReportedBean reportedBean=listNewData.get(0);
                     //数据填写
                         tv_reported.setText(reportedBean.getReportor());
@@ -114,9 +127,28 @@ public class PG_ISEventDatail  extends Fragment
                         {
                             for(int i=0;i<reportedBean.getFjxx().size();i++)
                             {
+                               /* if (i==(reportedBean.getFjxx().size()-1))
+                                {
+                                    rl_match.setVisibility(View.GONE);
+                                }*/
+                                if (reportedBean.getFjxx().get(i).getFJLX().equals("1")) {
                                 addServerPicture(reportedBean.getFjxx().get(i));
+                                 }
+                                if (reportedBean.getFjxx().get(i).getFJLX().equals("2")) {
+                                    ProgressBar progressBar = new ProgressBar(getActivity(), null, android.R.attr.progressBarStyleHorizontal);
+                                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(400, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                                    lp.setMargins(25, 4, 0, 4);
+                                    progressBar.setLayoutParams(lp);
+                                    ll_video.addView(progressBar);// BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.baseurl +flview.getFJLJ());
+                                    downloadVideo(reportedBean.getFjxx().get(i), AppConfig.baseurl + reportedBean.getFjxx().get(i).getFJLJ(), AppConfig.DOWNLOADPATH_VIDEO + reportedBean.getFjxx().get(i).getFJMC(), progressBar);
+                                }
                             }
-                        }
+
+                        }/*else
+                        {
+                            rl_match.setVisibility(View.GONE);
+                        }*/
+
                     } else {
                         listNewData = new ArrayList<ReportedBean>();
                     }
@@ -147,7 +179,7 @@ public class PG_ISEventDatail  extends Fragment
 //        BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.url + fj_SCFJ.getFJLJ());// ?
         BitmapHelper.setImageView(getActivity(), imageView, AppConfig.baseurl + flview.getFJLJ());
 
-        FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
+        FJxx fj_SCFJ = new FJxx();
 //            fj_SCFJ.setFJBDLJ(FJBDLJ);
         fj_SCFJ.setFJLX("1");
         ll_picture.addView(imageView);
@@ -182,5 +214,140 @@ public class PG_ISEventDatail  extends Fragment
                 myDialog.show();
             }
         });
+    }
+
+    public void downloadVideo(final FJxx fj_SCFJ, String path, final String target, final ProgressBar progressBar)
+    {
+        HttpUtils http = new HttpUtils();
+        http.download(path, target, true, true, new RequestCallBack<File>()
+        {
+            @Override
+            public void onLoading(long total, long current, boolean isUploading)
+            {
+                if (total > 0)
+                {
+                    progressBar.setProgress((int) ((double) current / (double) total * 100));
+                } else
+                {
+                    progressBar.setProgress(0);
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                if (msg.equals("maybe the file has downloaded completely"))
+                {
+                    ll_video.removeView(progressBar);
+                    ImageView imageView = new ImageView(getActivity());
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(400, ViewGroup.LayoutParams.MATCH_PARENT, 0); // ,
+                    // 1是可选写的
+                    lp.setMargins(25, 4, 0, 4);
+                    imageView.setLayoutParams(lp);// 显示图片的大小
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    imageView.setImageBitmap(BitmapHelper.getVideoThumbnail(target, 120, 120, MediaStore.Images.Thumbnails.MICRO_KIND));
+
+                    /*fj_SCFJ.setFJBDLJ(target);
+                    fj_SCFJ.setFJLX("2");
+                    fj_SCFJ.setISUPLOAD("1");*/
+
+                    list_video.add(fj_SCFJ);
+
+                    ll_video.addView(imageView);
+
+                    imageView.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            final int index_zp = ll_video.indexOfChild(v);
+                            View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                            myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "取消", new MyDialog.CustomDialogListener()
+                            {
+                                @Override
+                                public void OnClick(View v)
+                                {
+                                    switch (v.getId())
+                                    {
+                                        case R.id.btn_sure:
+//                                            File file = new File(list_video.get(index_zp).getFJBDLJ());
+                                            File file = new File(list_video.get(index_zp).getFJLJ());
+                                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                                            intent.setDataAndType(Uri.fromFile(file), "video/*");
+                                            startActivity(intent);
+                                            break;
+                                        case R.id.btn_cancle:
+
+                                            myDialog.dismiss();
+                                            break;
+                                    }
+                                }
+                            });
+                            myDialog.show();
+                        }
+                    });
+                } else
+                {
+                    Toast.makeText(getActivity(), "下载失败！找不到文件!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<File> responseInfo)
+            {
+                // progressBar.setVisibility(View.INVISIBLE);
+                ll_video.removeView(progressBar);
+                Toast.makeText(getActivity(), "下载成功！", Toast.LENGTH_SHORT).show();
+
+                ImageView imageView = new ImageView(getActivity());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                lp.setMargins(25, 4, 0, 4);
+                imageView.setLayoutParams(lp);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setTag(target);
+                imageView.setImageBitmap(BitmapHelper.getVideoThumbnail(target, 120, 120, MediaStore.Images.Thumbnails.MICRO_KIND));
+
+             /*   fj_SCFJ.setFJBDLJ(target);
+                fj_SCFJ.setFJLX("2");
+                fj_SCFJ.setISUPLOAD("1");*/
+
+                list_video.add(fj_SCFJ);
+                ll_video.addView(imageView);
+
+                imageView.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        final int index_zp = ll_video.indexOfChild(v);
+                        View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "取消", new MyDialog.CustomDialogListener()
+                        {
+                            @Override
+                            public void OnClick(View v)
+                            {
+                                switch (v.getId())
+                                {
+                                    case R.id.btn_sure:
+//                                        File file = new File(list_video.get(index_zp).getFJBDLJ());
+                                        File file = new File(list_video.get(index_zp).getFJLJ());
+                                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setDataAndType(Uri.fromFile(file), "video/*");
+                                        startActivity(intent);
+                                        break;
+                                    case R.id.btn_cancle:
+//                                        FJxx fj_SCFJ =list_video.get(index_zp);
+//                                        deleteFJ(list_video.get(index_zp).getFJID(), list_video, ll_video, index_zp);
+                                        myDialog.dismiss();
+                                        break;
+                                }
+                            }
+                        });
+                        myDialog.show();
+                    }
+                });
+            }
+        });
+
     }
 }
