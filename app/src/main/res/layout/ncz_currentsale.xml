@@ -42,6 +42,33 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:visibility="gone"/>
+            <LinearLayout
+                android:id="@+id/ll_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:background="@drawable/background_view_rounded_single"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:text="观察点情况"
+                    android:textColor="@color/bg_text"
+                    android:gravity="center"/>
+                <FrameLayout
+                    android:id="@+id/menu_container"
+                    android:layout_width="250dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+                <Button
+                    android:id="@+id/btn_canclecontainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:text="关闭"
+                    android:textColor="@color/bg_text"
+                    android:gravity="center"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"

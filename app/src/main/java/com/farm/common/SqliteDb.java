@@ -1054,6 +1054,25 @@ public class SqliteDb
         return list;
     }
 
+    public static List<PolygonBean> getMoreLayer_gcd(Context context, String uid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<PolygonBean> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(PolygonBean.class).where("uid", "=", uid).and("type", "=", "GCD").and("xxzt", "=", "0"));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
     public static List<PolygonBean> getMoreLayer_point(Context context, String uid)
     {
         DbUtils db = DbUtils.create(context);
