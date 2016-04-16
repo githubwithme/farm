@@ -1051,51 +1051,51 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 //                    ll_sm.setVisibility(View.GONE);
                 }
                 //规划图层信息显示控制
-                if (cb_parkdata.isSelected())
-                {
-                    if (zoomlevel <= 13)
-                    {
-                        showFirstMarker();
-                    } else
-                    {
-                        for (int i = 0; i < list_Marker_ParkChart.size(); i++)
-                        {
-                            list_Marker_ParkChart.get(i).setVisible(false);
-                        }
-                    }
-                }
+//                if (cb_parkdata.isSelected())
+//                {
+//                    if (zoomlevel <= 13)
+//                    {
+//                        showFirstMarker();
+//                    } else
+//                    {
+//                        for (int i = 0; i < list_Marker_ParkChart.size(); i++)
+//                        {
+//                            list_Marker_ParkChart.get(i).setVisible(false);
+//                        }
+//                    }
+//                }
 
 
                 //片区图层信息显示控制
-                if (cb_areadata.isSelected())
-                {
-                    if (zoomlevel == 14)
-                    {
-                        showSecondMarker();
-                    } else
-                    {
-                        for (int i = 0; i < list_Marker_AreaChart.size(); i++)
-                        {
-                            list_Marker_AreaChart.get(i).setVisible(false);
-                        }
-                    }
-                }
+//                if (cb_areadata.isSelected())
+//                {
+//                    if (zoomlevel == 14)
+//                    {
+//                        showSecondMarker();
+//                    } else
+//                    {
+//                        for (int i = 0; i < list_Marker_AreaChart.size(); i++)
+//                        {
+//                            list_Marker_AreaChart.get(i).setVisible(false);
+//                        }
+//                    }
+//                }
 
 
                 //其他图层信息显示控制
-                if (cb_contractdata.isSelected())
-                {
-                    if (zoomlevel >= 15)
-                    {
-                        showThirdMarker();
-                    } else
-                    {
-                        for (int i = 0; i < list_Marker_ContractChart.size(); i++)
-                        {
-                            list_Marker_ContractChart.get(i).setVisible(false);
-                        }
-                    }
-                }
+//                if (cb_contractdata.isSelected())
+//                {
+//                    if (zoomlevel >= 15)
+//                    {
+//                        showThirdMarker();
+//                    } else
+//                    {
+//                        for (int i = 0; i < list_Marker_ContractChart.size(); i++)
+//                        {
+//                            list_Marker_ContractChart.get(i).setVisible(false);
+//                        }
+//                    }
+//                }
 
 
             }
@@ -1509,18 +1509,38 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
             @Override
             public void onMapClick(LatLng latLng)
             {
-                if (polygon_divide1.contains(latLng))
+                for (int i = 0; i < list_Objects_divideline.size(); i++)
+                {
+                    tencentMap.removeOverlay(list_Objects_divideline.get(i));
+                }
+                Point[] pts1=new Point[list_latlng_divide1.size()];
+                Point p1=mProjection.toScreenLocation(latLng);
+                for (int i = 0; i <list_latlng_divide1.size(); i++)
+                {
+                    pts1[i]=mProjection.toScreenLocation(list_latlng_divide1.get(i));
+                }
+                int n=utils.CheckInPloy(pts1,pts1.length,p1);
+                if (n == -1)
                 {
                     initMapClickListener();
                     showDialog_addsaleinfo(latLng, list_latlng_divide1, list_latlng_divide2);
-                } else if (polygon_divide2.contains(latLng))
+                    return;
+                }
+
+                Point[] pts2=new Point[list_latlng_divide2.size()];
+                Point p2=mProjection.toScreenLocation(latLng);
+                for (int i = 0; i <list_latlng_divide2.size(); i++)
+                {
+                    pts2[i]=mProjection.toScreenLocation(list_latlng_divide2.get(i));
+                }
+                n=utils.CheckInPloy(pts2,pts2.length,p2);
+                if (n == -1)
                 {
                     initMapClickListener();
                     showDialog_addsaleinfo(latLng, list_latlng_divide2, list_latlng_divide1);
-                } else
-                {
-                    tv_tip.setText("请在划分的两个区域中选择");
+                    return;
                 }
+                tv_tip.setText("请在划分的两个区域中选择");
             }
         });
 

@@ -659,7 +659,7 @@ public class SqliteDb
                         breakoff.setWeight("");
                         breakoff.setStatus("0");
                         breakoff.setBatchTime(utils.getDateAfterNDay(utils.getToday(), 5));
-                        breakoff.setBatchColor("黄色");
+                        breakoff.setBatchColor("绿色");
                         breakoff.setXxzt("0");
                         breakoff.setYear(utils.getYear());
                         SqliteDb.save(context, breakoff);
@@ -686,11 +686,8 @@ public class SqliteDb
         try
         {
             db.dropTable(BreakOff.class);
-            db.dropTable(SellOrder.class);
-            db.dropTable(SellOrderDetail.class);
-            db.dropTable(parktab.class);
-            db.dropTable(areatab.class);
-            db.dropTable(contractTab.class);
+//            db.dropTable(SellOrder.class);
+//            db.dropTable(SellOrderDetail.class);
 //            db.dropTable(BatchOfProduct.class);
 //            db.dropTable(PolygonBean.class);
 //            db.dropTable(CoordinatesBean.class);
@@ -720,9 +717,11 @@ public class SqliteDb
             db.dropTable(SellOrder.class);
             db.dropTable(SellOrderDetail.class);
             db.dropTable(BatchOfProduct.class);
-//            db.dropTable(BatchOfProduct.class);
-//            db.dropTable(PolygonBean.class);
-//            db.dropTable(CoordinatesBean.class);
+            db.dropTable(parktab.class);
+            db.dropTable(areatab.class);
+            db.dropTable(contractTab.class);
+            db.dropTable(PolygonBean.class);
+            db.dropTable(CoordinatesBean.class);
 //            list = db.findAll(Selector.from(PolygonBean.class));
 //            list1 = db.findAll(Selector.from(PolygonBean.class));
 //            db.deleteAll(list);
@@ -963,6 +962,11 @@ public class SqliteDb
             {
                 String order_last = "0";
                 List<DbModel> dbModels = db.findDbModelAll(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+                if (dbModels == null)
+                {
+                    return polygonBean;
+                }
+
                 if (dbModels.size() != 0)//该园区已经开始规划
                 {
                     order_last = dbModels.get(0).getString("orders");
@@ -975,6 +979,10 @@ public class SqliteDb
             {
                 String order_last = "0";
                 List<DbModel> dbModels = db.findDbModelAll(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+                if (dbModels == null)
+                {
+                    return polygonBean;
+                }
                 if (dbModels.size() != 0)//该片区已经开始规划
                 {
                     order_last = dbModels.get(0).getString("orders");
@@ -2516,7 +2524,7 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.update(c, "status");
+            db.update(c, "status","batchTime","batchColor","Year");
         } catch (DbException e)
         {
             return false;
@@ -2567,7 +2575,7 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.update(c, "status");
+            db.update(c, "status","batchColor","batchTime","Year");
         } catch (DbException e)
         {
             return false;

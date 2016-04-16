@@ -89,7 +89,10 @@ public class IFragment extends Fragment
 	void tv_resetMapData()
 	{
 		commembertab commembertab = AppContext.getUserInfo(getActivity());
-        SqliteDb.resetmapdata(getActivity());
+		SqliteDb.resetmapdata(getActivity());
+        SqliteDb.initPark(getActivity());
+        SqliteDb.initArea(getActivity());
+        SqliteDb.initContract(getActivity());
         SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
 		Toast.makeText(getActivity(), "重置成功！", Toast.LENGTH_SHORT).show();
 	}
