@@ -1232,8 +1232,11 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                     PolygonBean polygonbean = SqliteDb.getLayerbyuuid(getActivity(), uuid);
 //                    showDialog_overlayInfo(polygonbean.getNote());
                     ll_container.setVisibility(View.VISIBLE);
-                    MenuScrollFragment menuScrollFragment = new MenuScrollFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.menu_container, menuScrollFragment).commit();
+                    PictureScrollFragment pictureScrollFragment = new PictureScrollFragment();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putStringArrayList("imgurl", (ArrayList<String>) initURL());
+                    pictureScrollFragment.setArguments(bundle1);
+                    getFragmentManager().beginTransaction().replace(R.id.menu_container, pictureScrollFragment).commit();
                 } else if (type.equals("breakoff"))
                 {
                     showDialog_overlayInfo(note);
@@ -1274,7 +1277,16 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         Overlays.add(polygon);
         return polygon;
     }
-
+    private List<String> initURL()
+    {
+        List<String> list = new ArrayList<String>();
+        list.add("http://www.bsnyy.com/cpzs/images/banana02.jpg");
+        list.add("http://img.jdzj.com/UserDocument/2014d/MandyRH/Picture/201410892155.jpg");
+        list.add("http://pic51.nipic.com/file/20141027/19372969_105919439000_2.jpg");
+        list.add("http://pic19.nipic.com/20120223/7238648_182611701193_2.jpg");
+        list.add("http://newsxml.cnool.net/newspic2010/2010/2010-4/2010-4-15/634069236900937500.jpg");
+        return list;
+    }
     public void showDialog_OperateSalefor(final String uuid, final Marker marker)
     {
         final View dialog_layout = (RelativeLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_operatepolygon_salefor, null);

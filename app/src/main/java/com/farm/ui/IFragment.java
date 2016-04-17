@@ -93,8 +93,14 @@ public class IFragment extends Fragment
         SqliteDb.initPark(getActivity());
         SqliteDb.initArea(getActivity());
         SqliteDb.initContract(getActivity());
-        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
 		Toast.makeText(getActivity(), "重置成功！", Toast.LENGTH_SHORT).show();
+	}
+	@Click
+	void tv_startBreakoff()
+	{
+		commembertab commembertab = AppContext.getUserInfo(getActivity());
+        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
+		Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
 	}
 	@Click
 	void tv_edituser()
