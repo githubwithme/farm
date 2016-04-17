@@ -16,12 +16,13 @@ import com.github.mikephil.charting.data.ChartData;
 public class BarChartItem extends ChartItem
 {
 
+	int res;
 	private Typeface mTf;
 
-	public BarChartItem(ChartData<?> cd, Context c)
+	public BarChartItem(int res,ChartData<?> cd, Context c)
 	{
 		super(cd);
-
+		this.res=res;
 		mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
 	}
 
@@ -42,7 +43,7 @@ public class BarChartItem extends ChartItem
 
 			holder = new ViewHolder();
 
-			convertView = LayoutInflater.from(c).inflate(R.layout.list_item_barchart, null);
+			convertView = LayoutInflater.from(c).inflate(res, null);
 			holder.chart = (BarChart) convertView.findViewById(R.id.chart);
 
 			convertView.setTag(holder);

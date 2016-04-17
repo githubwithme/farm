@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dip"
@@ -10,8 +11,8 @@
         android:gravity="center"
         android:background="@color/bg_green"
         android:textColor="@color/white"
-        android:text="2015年事件统计分析"/>
-    <com.github.mikephil.charting.charts.BarChart
+        android:text="2015年植株统计分析"/>
+    <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="200dp" />

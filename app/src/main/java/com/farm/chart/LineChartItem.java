@@ -16,12 +16,13 @@ import com.github.mikephil.charting.data.LineData;
 public class LineChartItem extends ChartItem
 {
 
+	int res;
 	private Typeface mTf;
 
-	public LineChartItem(ChartData<?> cd, Context c)
+	public LineChartItem(int res,ChartData<?> cd, Context c)
 	{
 		super(cd);
-
+this.res=res;
 		mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
 	}
 
@@ -42,7 +43,7 @@ public class LineChartItem extends ChartItem
 
 			holder = new ViewHolder();
 
-			convertView = LayoutInflater.from(c).inflate(R.layout.list_item_linechart, null);
+			convertView = LayoutInflater.from(c).inflate(res, null);
 			holder.chart = (LineChart) convertView.findViewById(R.id.chart);
 
 			convertView.setTag(holder);

@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.farm.R;
+import com.farm.chart.BarChartActivity_;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -272,7 +273,7 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
 			getActivity().startActivity(intent);
 			break;
 		case R.id.ll_tj:
-			intent = new Intent(getActivity(), Analysis_.class);
+			intent = new Intent(getActivity(), BarChartActivity_.class);
 			getActivity().startActivity(intent);
 			break;
 

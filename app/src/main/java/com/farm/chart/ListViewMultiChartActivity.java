@@ -49,10 +49,10 @@ public class ListViewMultiChartActivity extends DemoBase
 
 			if (i % 3 == 0)
 			{
-				list.add(new LineChartItem(generateDataLine(i + 1), getApplicationContext()));
+				list.add(new LineChartItem(R.layout.list_item_linechart_goods,generateDataLine(i + 1), getApplicationContext()));
 			} else if (i % 3 == 1)
 			{
-				list.add(new BarChartItem(generateDataBar(i + 1), getApplicationContext()));
+				list.add(new BarChartItem(R.layout.list_item_barchart_command,generateDataBar(i + 1), getApplicationContext()));
 			} else if (i % 3 == 2)
 			{
 				list.add(new PieChartItem(generateDataPie(i + 1), getApplicationContext()));

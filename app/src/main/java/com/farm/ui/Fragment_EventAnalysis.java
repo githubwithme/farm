@@ -69,11 +69,12 @@ public class Fragment_EventAnalysis extends Fragment
 
 			if (i % 3 == 0)
 			{
-				list.add(new LineChartItem(generateDataLine(i + 1), getActivity().getApplicationContext()));
+				list.add(new LineChartItem(R.layout.list_item_linechart_goods,generateDataLine(i + 1), getActivity().getApplicationContext()));
 			}
 		}
 		cda = new ChartDataAdapter(getActivity().getApplicationContext(), list);
 		lv.setAdapter(cda);
+		utils.setListViewHeight(lv);
 		return rootView;
 	}
 
@@ -203,7 +204,7 @@ public class Fragment_EventAnalysis extends Fragment
 						{
 							if (i % 3 == 0)
 							{
-								list.add(new LineChartItem(generateDataLine(i + 1), getActivity().getApplicationContext()));
+								list.add(new LineChartItem(R.layout.list_item_linechart_goods,generateDataLine(i + 1), getActivity().getApplicationContext()));
 							}
 						}
 						cda.notifyDataSetChanged();
