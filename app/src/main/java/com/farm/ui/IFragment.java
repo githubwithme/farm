@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -88,8 +89,18 @@ public class IFragment extends Fragment
 	void tv_resetMapData()
 	{
 		commembertab commembertab = AppContext.getUserInfo(getActivity());
-        SqliteDb.resetmapdata(getActivity());
+		SqliteDb.resetmapdata(getActivity());
+        SqliteDb.initPark(getActivity());
+        SqliteDb.initArea(getActivity());
+        SqliteDb.initContract(getActivity());
+		Toast.makeText(getActivity(), "重置成功！", Toast.LENGTH_SHORT).show();
+	}
+	@Click
+	void tv_startBreakoff()
+	{
+		commembertab commembertab = AppContext.getUserInfo(getActivity());
         SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
+		Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
 	}
 	@Click
 	void tv_edituser()

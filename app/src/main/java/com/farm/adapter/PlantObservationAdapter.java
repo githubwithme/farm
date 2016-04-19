@@ -15,7 +15,7 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.bean.plantgrowthtab;
 import com.farm.common.BitmapHelper;
-import com.farm.ui.ShowPhotos_;
+import com.farm.ui.DisplayImage_;
 
 import java.util.List;
 
@@ -130,7 +130,7 @@ public class PlantObservationAdapter extends BaseAdapter
                     public void onClick(View v)
                     {
                       String url=v.getTag().toString();
-                        Intent intent=new Intent(context, ShowPhotos_.class);
+                        Intent intent=new Intent(context, DisplayImage_.class);
                         intent.putExtra("url",url);
                         context.startActivity(intent);
                     }

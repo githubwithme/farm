@@ -15,7 +15,7 @@
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/quick_set_create_zg" />
+            android:background="@drawable/quick_set_create_bwl" />
 
         <TextView
             android:layout_width="match_parent"
@@ -56,6 +56,7 @@
         android:id="@+id/ll_bwl"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_weight="1"
         android:orientation="vertical" >
 

@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -126,6 +127,12 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
     @ViewById
     FrameLayout fl_map;
 
+    @Click
+    void btn_more()
+    {
+        Intent intent = new Intent(Attendance_Map.this, DaoGangList_.class);
+        startActivity(intent);
+    }
     @Click
     void btn_people()
     {

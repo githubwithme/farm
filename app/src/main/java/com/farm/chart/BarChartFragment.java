@@ -52,17 +52,17 @@ public class BarChartFragment extends Fragment
 		ArrayList<ChartItem> list = new ArrayList<ChartItem>();
 
 		// 30 items
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 12; i++)
 		{
-
-			if (i % 3 == 0)
-			{
-				list.add(new LineChartItem(generateDataLine(i + 1), getActivity().getApplicationContext()));
-			} 
+			list.add(new BarChartItem(R.layout.list_item_barchart_job,generateDataBar(i + 1), getActivity().getApplicationContext()));
+//			if (i % 3 == 0)
+//			{
+//				list.add(new LineChartItem(generateDataLine(i + 1), getActivity().getApplicationContext()));
+//			}
 //			else if (i % 3 == 1)
 //			{
 //				list.add(new BarChartItem(generateDataBar(i + 1), getActivity().getApplicationContext()));
-//			} 
+//			}
 //			else if (i % 3 == 2)
 //			{
 //				list.add(new PieChartItem(generateDataPie(i + 1), getActivity().getApplicationContext()));
@@ -71,6 +71,7 @@ public class BarChartFragment extends Fragment
 
 		ChartDataAdapter cda = new ChartDataAdapter(getActivity().getApplicationContext(), list);
 		lv.setAdapter(cda);
+//		utils.setListViewHeight(lv);
 		return rootView;
 	}
 

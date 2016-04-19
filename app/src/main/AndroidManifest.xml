@@ -59,11 +59,13 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.AnalysisActivity_"/>
         <activity android:name=".ui.NCZ_SaleMap_"/>
-        <activity android:name=".ui.MakeMap_"/>
+        <activity android:name=".ui.DisplayImage_"/>
+        <activity android:name=".ui.Analysis_"/>
+        <activity android:name=".ui.PG_HandleFragment_"/>
+        <activity android:name=".ui.NCZ_HandleDetail_"/>
         <activity android:name=".ui.MapUtils_"/>
         <activity android:name=".ui.CZ_MakeMap_MakeLayer_"/>
         <activity android:name=".ui.CreateOrder_"/>
-        <activity android:name=".ui.AddOrderMap_"/>
         <activity android:name=".ui.Attendance_Map_"/>
         <activity android:name=".ui.OrderDetail_"/>
         <activity android:name=".ui.AddOrder_"/>
@@ -133,7 +135,6 @@
         <activity android:name=".ui.NCZ_WZ_YCDetail_"/>
         <activity android:name=".ui.NCZ_EventLookList_"/>
         <activity android:name=".ui.NCZ_EventHandleDetail_"/>
-        <activity android:name=".ui.NCZ_HandleDetail_"/>
 
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
@@ -156,8 +157,8 @@
         <activity android:name=".ui.PG_AddEvent_"/>
         <activity android:name=".ui.PG_EventDetail_"/>
         <activity android:name=".ui.PG_AddHandle_"/>
-        <activity android:name=".ui.PG_HandleFragment_"/>
         <!-- 共用UI -->
+        <activity android:name=".chart.BarChartActivity_"/>
         <activity android:name=".ui.ObservationRecordActivity_"/>
         <activity android:name=".ui.GrowthTreeActivity_"/>
         <activity android:name=".ui.Register_StepTwo_"/>

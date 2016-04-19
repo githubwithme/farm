@@ -90,7 +90,7 @@ public class PictureScrollFragment extends Fragment
 				@Override
 				public void onClick(View v)
 				{
-					Intent intent = new Intent(getActivity(), ShowPhotos_.class);
+					Intent intent = new Intent(getActivity(), DisplayImage_.class);
 					intent.putExtra("url", imgurl.get(v.getId()));
 					getActivity().startActivity(intent);
 				}

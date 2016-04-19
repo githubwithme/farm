@@ -194,7 +194,7 @@ public class WeekWeatherFragment extends Fragment
 						{
 							if (i % 3 == 0)
 							{
-								list.add(new LineChartItem(generateDataLine(i + 1), getActivity().getApplicationContext()));
+								list.add(new LineChartItem(R.layout.list_item_linechart,generateDataLine(i + 1), getActivity().getApplicationContext()));
 							}
 						}
 						cda.notifyDataSetChanged();

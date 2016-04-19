@@ -52,17 +52,18 @@ public class PieChartFragment extends Fragment
 		ArrayList<ChartItem> list = new ArrayList<ChartItem>();
 
 		// 30 items
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 30; i++)
 		{
-
-			if (i % 3 == 0)
-			{
-				list.add(new LineChartItem(generateDataLine(i + 1), getActivity().getApplicationContext()));
-			} 
+			list.add(new LineChartItem(R.layout.list_item_linechart_goods,generateDataLine(i + 1), getActivity().getApplicationContext()));
+//			list.add(new PieChartItem(generateDataPie(i + 1), getActivity().getApplicationContext()));
+//			if (i % 3 == 0)
+//			{
+//				list.add(new LineChartItem(generateDataLine(i + 1), getActivity().getApplicationContext()));
+//			}
 //			else if (i % 3 == 1)
 //			{
 //				list.add(new BarChartItem(generateDataBar(i + 1), getActivity().getApplicationContext()));
-//			} 
+//			}
 //			else if (i % 3 == 2)
 //			{
 //				list.add(new PieChartItem(generateDataPie(i + 1), getActivity().getApplicationContext()));
@@ -71,6 +72,7 @@ public class PieChartFragment extends Fragment
 
 		ChartDataAdapter cda = new ChartDataAdapter(getActivity().getApplicationContext(), list);
 		lv.setAdapter(cda);
+//		utils.setListViewHeight(lv);
 		return rootView;
 	}
 

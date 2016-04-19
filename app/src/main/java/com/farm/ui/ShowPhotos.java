@@ -29,10 +29,11 @@ public class ShowPhotos extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
-		String  temp = getIntent().getStringExtra("url");
-		String name=temp.substring(temp.lastIndexOf("/")+1, temp.length());
-
-		String name1=name.substring(6,name.length());
-		url=temp.substring(0, temp.lastIndexOf("/")+1)+name1;
+//		String  temp = getIntent().getStringExtra("url");
+//		String name=temp.substring(temp.lastIndexOf("/")+1, temp.length());
+//
+//		String name1=name.substring(6,name.length());
+//		url=temp.substring(0, temp.lastIndexOf("/")+1)+name1;
+		url= getIntent().getStringExtra("url");
 	}
 }

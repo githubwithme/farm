@@ -659,7 +659,7 @@ public class SqliteDb
                         breakoff.setWeight("");
                         breakoff.setStatus("0");
                         breakoff.setBatchTime(utils.getDateAfterNDay(utils.getToday(), 5));
-                        breakoff.setBatchColor("黄色");
+                        breakoff.setBatchColor("绿色");
                         breakoff.setXxzt("0");
                         breakoff.setYear(utils.getYear());
                         SqliteDb.save(context, breakoff);
@@ -686,8 +686,8 @@ public class SqliteDb
         try
         {
             db.dropTable(BreakOff.class);
-            db.dropTable(SellOrder.class);
-            db.dropTable(SellOrderDetail.class);
+//            db.dropTable(SellOrder.class);
+//            db.dropTable(SellOrderDetail.class);
 //            db.dropTable(BatchOfProduct.class);
 //            db.dropTable(PolygonBean.class);
 //            db.dropTable(CoordinatesBean.class);
@@ -716,9 +716,12 @@ public class SqliteDb
             db.dropTable(BreakOff.class);
             db.dropTable(SellOrder.class);
             db.dropTable(SellOrderDetail.class);
-//            db.dropTable(BatchOfProduct.class);
-//            db.dropTable(PolygonBean.class);
-//            db.dropTable(CoordinatesBean.class);
+            db.dropTable(BatchOfProduct.class);
+            db.dropTable(parktab.class);
+            db.dropTable(areatab.class);
+            db.dropTable(contractTab.class);
+            db.dropTable(PolygonBean.class);
+            db.dropTable(CoordinatesBean.class);
 //            list = db.findAll(Selector.from(PolygonBean.class));
 //            list1 = db.findAll(Selector.from(PolygonBean.class));
 //            db.deleteAll(list);
@@ -959,6 +962,11 @@ public class SqliteDb
             {
                 String order_last = "0";
                 List<DbModel> dbModels = db.findDbModelAll(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+                if (dbModels == null)
+                {
+                    return polygonBean;
+                }
+
                 if (dbModels.size() != 0)//该园区已经开始规划
                 {
                     order_last = dbModels.get(0).getString("orders");
@@ -971,6 +979,10 @@ public class SqliteDb
             {
                 String order_last = "0";
                 List<DbModel> dbModels = db.findDbModelAll(Selector.from(PolygonBean.class).where("parkid", "=", parkid).and("type", "=", "farm_boundary_free").and("areaid", "=", areaid).and("contractid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
+                if (dbModels == null)
+                {
+                    return polygonBean;
+                }
                 if (dbModels.size() != 0)//该片区已经开始规划
                 {
                     order_last = dbModels.get(0).getString("orders");
@@ -1042,6 +1054,25 @@ public class SqliteDb
         return list;
     }
 
+    public static List<PolygonBean> getMoreLayer_gcd(Context context, String uid)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<PolygonBean> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(PolygonBean.class).where("uid", "=", uid).and("type", "=", "GCD").and("xxzt", "=", "0"));
+            if (list == null)
+            {
+                list = new ArrayList<>();
+            }
+
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
     public static List<PolygonBean> getMoreLayer_point(Context context, String uid)
     {
         DbUtils db = DbUtils.create(context);
@@ -1144,13 +1175,13 @@ public class SqliteDb
         return list;
     }
 
-    public static List<BatchOfProduct> getBatchOfProductByuid(Context context, String uid)
+    public static List<BatchOfProduct> getBatchOfProductByuid(Context context, String uid,String year)
     {
         DbUtils db = DbUtils.create(context);
         List<BatchOfProduct> list = null;
         try
         {
-            list = db.findAll(Selector.from(BatchOfProduct.class).where("uid", "=", uid));
+            list = db.findAll(Selector.from(BatchOfProduct.class).where("uid", "=", uid).and("year","=",year));
             if (list == null)
             {
                 list = new ArrayList<>();
@@ -1190,7 +1221,7 @@ public class SqliteDb
         List<SellOrder> list = null;
         try
         {
-            list = db.findAll(Selector.from(SellOrder.class).where("uid", "=", uid).and("year", "=", year));
+            list = db.findAll(Selector.from(SellOrder.class).where("uid", "=", uid).and("year", "=", year).and("xxzt", "=", 0));
             if (list == null)
             {
                 list = new ArrayList<>();
@@ -1701,13 +1732,13 @@ public class SqliteDb
         return polygonBean;
     }
 
-    public static List<SellOrderDetail> getSaleLayer_contract(Context context, String contractid, String batchtime)
+    public static List<SellOrderDetail> getSaleLayer_contract(Context context, String contractid, String batchtime,String year)
     {
         DbUtils db = DbUtils.create(context);
         List<SellOrderDetail> list = null;
         try
         {
-            list = db.findAll(Selector.from(SellOrderDetail.class).where("contractid", "=", contractid).and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
+            list = db.findAll(Selector.from(SellOrderDetail.class).where("contractid", "=", contractid).and("batchTime", "=", batchtime).and("year", "=",year).and("xxzt", "=", "0"));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1796,7 +1827,7 @@ public class SqliteDb
         List<SellOrderDetail> list = null;
         try
         {
-            list = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("type", "=", "newsale").and("batchTime", "=", batchtime));
+            list = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("type", "=", "newsale").and("batchTime", "=", batchtime).and("xxzt", "=", "0"));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1997,294 +2028,9 @@ public class SqliteDb
         return list;
     }
 
-    public static String getPlanMap(Context context, String uid, String farm_boundary)
-    {
-        StringBuffer build = new StringBuffer();
-        build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
-        DbUtils db = DbUtils.create(context);
-        try
-        {
-            List<parktab> list_parktab = db.findAll(Selector.from(parktab.class).where("uid", "=", uid));
-            if (list_parktab.size() != 0)
-            {
-                for (int i = 0; i < list_parktab.size(); i++)//每个园区
-                {
-                    build.append("[");
-                    PolygonBean polygonBean_park = db.findFirst(Selector.from(PolygonBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", "").and("xxzt", "=", "0"));
-
-                    if (polygonBean_park != null)
-                    {
-                        List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("uuid", "=", polygonBean_park.getUuid()));
-                        for (int j = 0; j < list_CoordinatesBean_park.size(); j++)
-                        {
-                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLng() + "\"" + "}" + ",");
-                        }
-                        build.replace(build.length() - 1, build.length(), "");
-                        build.append("],");
-                    } else
-                    {
-                        build.append("],");
-                    }
-
-                    //片区
-                    List<areatab> list_areatab = db.findAll(Selector.from(areatab.class).where("parkid", "=", list_parktab.get(i).getid()));
-                    if (list_areatab.size() != 0)
-                    {
-                        for (int j = 0; j < list_areatab.size(); j++)//该园区每个片区
-                        {
-                            build.append("[");
-                            PolygonBean polygonBean_area = db.findFirst(Selector.from(PolygonBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("contractid", "=", "").and("type", "=", farm_boundary).and("xxzt", "=", "0"));
-
-                            if (polygonBean_area != null)
-                            {
-                                List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("uuid", "=", polygonBean_area.getUuid()));
-                                for (int k = 0; k < list_CoordinatesBean_area.size(); k++)
-                                {
-                                    build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLng() + "\"" + "}" + ",");
-                                }
-                                build.replace(build.length() - 1, build.length(), "");
-                                build.append("],");
-
-                            } else
-                            {
-                                build.append("],");
-                            }
-//承包区
-                            List<contractTab> list_contractTab = db.findAll(Selector.from(contractTab.class).where("areaid", "=", list_areatab.get(j).getid()));
-                            if (list_contractTab.size() != 0)
-                            {
-                                for (int m = 0; m < list_contractTab.size(); m++)//该园区该片区每个承包区
-                                {
-                                    build.append("[");
-                                    PolygonBean list_PolygonBean_contractTab = db.findFirst(Selector.from(PolygonBean.class).where("contractid", "=", list_contractTab.get(m).getid()).and("type", "=", farm_boundary).and("xxzt", "=", "0"));
-
-                                    if (list_PolygonBean_contractTab != null)
-                                    {
-                                        List<CoordinatesBean> list_CoordinatesBean_contractTab = db.findAll(Selector.from(CoordinatesBean.class).where("uuid", "=", list_PolygonBean_contractTab.getUuid()));
-                                        for (int k = 0; k < list_CoordinatesBean_contractTab.size(); k++)
-                                        {
-                                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLng() + "\"" + "}" + ",");
-                                        }
-                                        build.replace(build.length() - 1, build.length(), "");
-                                        build.append("],");
-                                    } else
-                                    {
-                                        build.append("],");
-                                    }
 
 
-                                }
-                            }
 
-
-                        }
-                    }
-                }
-            }
-
-            build.replace(build.length() - 1, build.length(), "");
-            build.append("]}");
-            build.toString();
-            build.toString();
-
-
-        } catch (DbException e)
-        {
-            e.printStackTrace();
-        }
-        return build.toString();
-    }
-
-    public static String getBoundary_farm(Context context, String uid, String farm_boundary)
-    {
-        StringBuffer build = new StringBuffer();
-        build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
-        DbUtils db = DbUtils.create(context);
-        try
-        {
-            List<parktab> list_parktab = db.findAll(Selector.from(parktab.class).where("uid", "=", uid));
-            if (list_parktab.size() != 0)
-            {
-                for (int i = 0; i < list_parktab.size(); i++)//每个园区
-                {
-                    build.append("[");
-                    List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", ""));
-                    if (list_CoordinatesBean_park.size() != 0)
-                    {
-                        for (int j = 0; j < list_CoordinatesBean_park.size(); j++)
-                        {
-                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLng() + "\"" + "}" + ",");
-                        }
-                        build.replace(build.length() - 1, build.length(), "");
-                        build.append("],");
-                    } else
-                    {
-                        build.append("],");
-                    }
-
-                    //片区
-                    List<areatab> list_areatab = db.findAll(Selector.from(areatab.class).where("parkid", "=", list_parktab.get(i).getid()));
-                    if (list_areatab.size() != 0)
-                    {
-                        for (int j = 0; j < list_areatab.size(); j++)//该园区每个片区
-                        {
-                            build.append("[");
-                            List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("contractid", "=", "").and("type", "=", farm_boundary));
-                            if (list_CoordinatesBean_area.size() != 0)
-                            {
-                                for (int k = 0; k < list_CoordinatesBean_area.size(); k++)
-                                {
-                                    build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLng() + "\"" + "}" + ",");
-                                }
-                                build.replace(build.length() - 1, build.length(), "");
-                                build.append("],");
-
-                            } else
-                            {
-                                build.append("],");
-                            }
-//承包区
-                            List<contractTab> list_contractTab = db.findAll(Selector.from(contractTab.class).where("areaid", "=", list_areatab.get(j).getid()));
-                            if (list_contractTab.size() != 0)
-                            {
-                                for (int m = 0; m < list_contractTab.size(); m++)//该园区该片区每个承包区
-                                {
-                                    build.append("[");
-                                    List<CoordinatesBean> list_CoordinatesBean_contractTab = db.findAll(Selector.from(CoordinatesBean.class).where("contractid", "=", list_contractTab.get(m).getid()).and("type", "=", farm_boundary));
-                                    if (list_CoordinatesBean_contractTab.size() != 0)
-                                    {
-                                        for (int k = 0; k < list_CoordinatesBean_contractTab.size(); k++)
-                                        {
-                                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLng() + "\"" + "}" + ",");
-                                        }
-                                        build.replace(build.length() - 1, build.length(), "");
-                                        build.append("],");
-                                    } else
-                                    {
-                                        build.append("],");
-                                    }
-
-
-                                }
-                            }
-
-
-                        }
-                    }
-                }
-            }
-
-            build.replace(build.length() - 1, build.length(), "");
-            build.append("]}");
-            build.toString();
-            build.toString();
-
-
-        } catch (DbException e)
-        {
-            e.printStackTrace();
-        }
-        return build.toString();
-    }
-
-    public static String getBoundary_farm_free(Context context, String uid, String farm_boundary)
-    {
-        StringBuffer build = new StringBuffer();
-        build.append("{\"ResultCode\":1,\"Exception\":\"\",\"AffectedRows\":\"3\",\"Rows\":[");
-        DbUtils db = DbUtils.create(context);
-        try
-        {
-            List<parktab> list_parktab = db.findAll(Selector.from(parktab.class).where("uid", "=", uid));
-            if (list_parktab.size() != 0)
-            {
-                for (int i = 0; i < list_parktab.size(); i++)//每个园区
-                {
-                    build.append("[");
-                    String order_last = "0";
-                    List<DbModel> dbModels = db.findDbModelAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", "").groupBy("orders").select("orders", "count(orders)").orderBy("orders", true));
-                    if (dbModels.size() != 0)
-                    {
-                        order_last = dbModels.get(0).getString("orders");
-                    }
-                    List<CoordinatesBean> list_CoordinatesBean_park = db.findAll(Selector.from(CoordinatesBean.class).where("parkid", "=", list_parktab.get(i).getid()).and("type", "=", farm_boundary).and("areaid", "=", "").and("orders", "=", order_last));
-                    if (list_CoordinatesBean_park.size() != 0)
-                    {
-                        for (int j = 0; j < list_CoordinatesBean_park.size(); j++)
-                        {
-                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_park.get(j).getLng() + "\"" + "}" + ",");
-                        }
-                        build.replace(build.length() - 1, build.length(), "");
-                        build.append("],");
-                    } else
-                    {
-                        build.append("],");
-                    }
-
-//片区
-                    List<areatab> list_areatab = db.findAll(Selector.from(areatab.class).where("parkid", "=", list_parktab.get(i).getid()));
-                    if (list_areatab.size() != 0)
-                    {
-                        for (int j = 0; j < list_areatab.size(); j++)//该园区每个片区
-                        {
-                            build.append("[");
-                            List<CoordinatesBean> list_CoordinatesBean_area = db.findAll(Selector.from(CoordinatesBean.class).where("areaid", "=", list_areatab.get(j).getid()).and("contractid", "=", "").and("type", "=", farm_boundary));
-                            if (list_CoordinatesBean_area.size() != 0)
-                            {
-                                for (int k = 0; k < list_CoordinatesBean_area.size(); k++)
-                                {
-                                    build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_area.get(k).getLng() + "\"" + "}" + ",");
-                                }
-                                build.replace(build.length() - 1, build.length(), "");
-                                build.append("],");
-
-                            } else
-                            {
-                                build.append("],");
-                            }
-
-
-//承包区
-                            List<contractTab> list_contractTab = db.findAll(Selector.from(contractTab.class).where("areaid", "=", list_areatab.get(j).getid()));
-                            if (list_contractTab.size() != 0)
-                            {
-                                for (int m = 0; m < list_contractTab.size(); m++)//该园区该片区每个承包区
-                                {
-                                    build.append("[");
-                                    List<CoordinatesBean> list_CoordinatesBean_contractTab = db.findAll(Selector.from(CoordinatesBean.class).where("contractid", "=", list_contractTab.get(m).getid()).and("type", "=", farm_boundary));
-                                    if (list_CoordinatesBean_contractTab.size() != 0)
-                                    {
-                                        for (int k = 0; k < list_CoordinatesBean_contractTab.size(); k++)
-                                        {
-                                            build.append("{" + "\"" + "id" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getId() + "\"" + "," + "\"" + "uid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUid() + "\"" + "," + "\"" + "parkid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkId() + "\"" + "," + "\"" + "areaid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getAreaId() + "\"" + "," + "\"" + "contractid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractid() + "\"" + "," + "\"" + "type" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getType() + "\"" + "," + "\"" + "batchid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getBatchid() + "\"" + "," + "\"" + "numofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getNumofplant() + "\"" + "," + "\"" + "saleid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getSaleid() + "\"" + "," + "\"" + "weightofplant" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getWeightofplant() + "\"" + "," + "\"" + "uuid" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getUuid() + "\"" + "," + "\"" + "parkname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getparkName() + "\"" + "," + "\"" + "areaname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getareaName() + "\"" + "," + "\"" + "contractname" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getContractname() + "\"" + "," + "\"" + "orders" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getOrders() + "\"" + "," + "\"" + "coordinatestime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getCoordinatestime() + "\"" + "," + "\"" + "registime" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getRegistime() + "\"" + "," + "\"" + "lat" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLat() + "\"" + "," + "\"" + "lng" + "\"" + ":" + "\"" + list_CoordinatesBean_contractTab.get(k).getLng() + "\"" + "}" + ",");
-                                        }
-                                        build.replace(build.length() - 1, build.length(), "");
-                                        build.append("],");
-                                    } else
-                                    {
-                                        build.append("],");
-                                    }
-
-
-                                }
-                            }
-
-                        }
-                    }
-                }
-            }
-
-            build.replace(build.length() - 1, build.length(), "");
-            build.append("]}");
-            build.toString();
-            build.toString();
-
-
-        } catch (DbException e)
-        {
-            e.printStackTrace();
-        }
-        return build.toString();
-    }
 
     public static List<contractTab> getBreakOffListByAreaID(Context context)
     {
@@ -2797,7 +2543,7 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.update(c, "status");
+            db.update(c, "status","batchTime","batchColor","Year");
         } catch (DbException e)
         {
             return false;
@@ -2848,7 +2594,7 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.update(c, "status");
+            db.update(c, "status","batchColor","batchTime","Year");
         } catch (DbException e)
         {
             return false;

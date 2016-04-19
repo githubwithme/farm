@@ -455,6 +455,9 @@ public class utils
         }  else  if (colorname.equals("土黄色"))
         {
             return Color.argb(1000, 159, 159, 95);
+        } else  if (colorname.equals("绿色"))
+        {
+            return Color.argb(1000, 0, 255, 0);
         }
         return 0;
     }
@@ -602,7 +605,34 @@ public class utils
 
         return totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
     }
+    public static int CheckInPloy(Point[] pts, int n, Point pt) //pts为多边形的顶点数组，n为多边形顶点数，pt为将要被判断的点
+    {
+        int i,j,k,wn=0;
+        for(i=n-1, j=0; j<n; i=j, j++)
+        {
+            k = (pt.x - pts[i].x) * (pts[j].y - pts[i].y) - (pts[j].x - pts[i].x) * (pt.y - pts[i].y);
+            if((pt.y >= pts[i].y && pt.y <= pts[j].y)||(pt.y <= pts[i].y && pt.y >= pts[j].y))
+            {
+                if( k < 0)
+                    wn++;
+                else if(k > 0)
+                    wn--;
+                else
+                {
+                    if( (pt.y <= pts[i].y && pt.y >= pts[j].y && pt.x <= pts[i].x && pt.x >= pts[j].x) ||
+                            (pt.y <= pts[i].y && pt.y >= pts[j].y && pt.x >= pts[i].x && pt.x <= pts[j].x) ||
+                            (pt.y >= pts[i].y && pt.y <= pts[j].y && pt.x <= pts[i].x && pt.x >= pts[j].x) ||
+                            (pt.y >= pts[i].y && pt.y <= pts[j].y && pt.x >= pts[i].x && pt.x <= pts[j].x) )
+                        return 0; //点在多边形边界上
+                }
 
+            }
+        }
+        if(wn == 0)
+            return 1; //点在多边形外部
+        else
+            return -1; //点在多边形内部
+    }
     /**
      * 判断点是否在线上
      *

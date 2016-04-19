@@ -626,7 +626,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                     polygonBean.setLng(String.valueOf(latlng.getLongitude()));
                     polygonBean.setNumofplant("10000");
                     polygonBean.setType("farm_boundary");
-                    polygonBean.setUid("60");
+                    polygonBean.setUid(commembertab.getuId());
                     polygonBean.setparkId(departmentselected.getParkid());
                     polygonBean.setparkName(departmentselected.getParkname());
                     polygonBean.setUuid(uuid_polygon);
@@ -648,22 +648,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                         CoordinatesBean coordinatesBean = new CoordinatesBean();
                         coordinatesBean.setLat(String.valueOf(listlatlng_park.get(i).getLatitude()));
                         coordinatesBean.setLng(String.valueOf(listlatlng_park.get(i).getLongitude()));
-                        coordinatesBean.setNumofplant("");
-                        coordinatesBean.setType("");
-                        coordinatesBean.setUid("");
-                        coordinatesBean.setparkId("");
-                        coordinatesBean.setparkName("");
                         coordinatesBean.setUuid(uuid_polygon);
-                        coordinatesBean.setAreaId("");
-                        coordinatesBean.setareaName("");
-                        coordinatesBean.setContractid("");
-                        coordinatesBean.setContractname("");
-                        coordinatesBean.setBatchid("");
-                        coordinatesBean.setCoordinatestime(utils.getTime());
                         coordinatesBean.setRegistime(utils.getTime());
-                        coordinatesBean.setWeightofplant("");
-                        coordinatesBean.setSaleid("");
-                        coordinatesBean.setOrders("");
                         SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
                     }
                     tv_tip.setVisibility(View.VISIBLE);
@@ -775,22 +761,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 CoordinatesBean coordinatesBean = new CoordinatesBean();
                 coordinatesBean.setLat(String.valueOf(pointsList.get(i).getLatitude()));
                 coordinatesBean.setLng(String.valueOf(pointsList.get(i).getLongitude()));
-                coordinatesBean.setNumofplant("10000");
-                coordinatesBean.setType("farm_boundary");
-                coordinatesBean.setUid("60");
-                coordinatesBean.setparkId("15");
-                coordinatesBean.setparkName("一号园区");
                 coordinatesBean.setUuid(uuid);
-                coordinatesBean.setAreaId("10");
-                coordinatesBean.setareaName("片区一号");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
                 coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("400000");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
 //                SqliteDb.save(AddOrderMap.this, coordinatesBean);
 //                uploadCoordinatesBean(coordinatesBean);
             }
@@ -1179,7 +1151,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 polygonBean.setLng("");
                 polygonBean.setNumofplant("");
                 polygonBean.setType("X");
-                polygonBean.setUid("60");
+                polygonBean.setUid(commembertab.getuId());
                 polygonBean.setparkId("");
                 polygonBean.setparkName("");
                 polygonBean.setUuid(uuid_line);
@@ -1201,22 +1173,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                     CoordinatesBean coordinatesBean = new CoordinatesBean();
                     coordinatesBean.setLat(String.valueOf(listlatlng_cx.get(i).getLatitude()));
                     coordinatesBean.setLng(String.valueOf(listlatlng_cx.get(i).getLongitude()));
-                    coordinatesBean.setNumofplant("");
-                    coordinatesBean.setType("");
-                    coordinatesBean.setUid("");
-                    coordinatesBean.setparkId("");
-                    coordinatesBean.setparkName("");
                     coordinatesBean.setUuid(uuid_line);
-                    coordinatesBean.setAreaId("");
-                    coordinatesBean.setareaName("");
-                    coordinatesBean.setContractid("");
-                    coordinatesBean.setContractname("");
-                    coordinatesBean.setBatchid("");
-                    coordinatesBean.setCoordinatestime(utils.getTime());
                     coordinatesBean.setRegistime(utils.getTime());
-                    coordinatesBean.setWeightofplant("");
-                    coordinatesBean.setSaleid("");
-                    coordinatesBean.setOrders("");
                     SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
                 }
                 listlatlng_cx = new ArrayList<>();
@@ -1267,7 +1225,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 polygonBean.setLng("");
                 polygonBean.setNumofplant("");
                 polygonBean.setType("road");
-                polygonBean.setUid("60");
+                polygonBean.setUid(commembertab.getuId());
                 polygonBean.setparkId("");
                 polygonBean.setparkName("");
                 polygonBean.setUuid(uuid_line);
@@ -1289,22 +1247,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                     CoordinatesBean coordinatesBean = new CoordinatesBean();
                     coordinatesBean.setLat(String.valueOf(listlatlng_park.get(i).getLatitude()));
                     coordinatesBean.setLng(String.valueOf(listlatlng_park.get(i).getLongitude()));
-                    coordinatesBean.setNumofplant("");
-                    coordinatesBean.setType("");
-                    coordinatesBean.setUid("");
-                    coordinatesBean.setparkId("");
-                    coordinatesBean.setparkName("");
                     coordinatesBean.setUuid(uuid_line);
-                    coordinatesBean.setAreaId("");
-                    coordinatesBean.setareaName("");
-                    coordinatesBean.setContractid("");
-                    coordinatesBean.setContractname("");
-                    coordinatesBean.setBatchid("");
-                    coordinatesBean.setCoordinatestime(utils.getTime());
                     coordinatesBean.setRegistime(utils.getTime());
-                    coordinatesBean.setWeightofplant("");
-                    coordinatesBean.setSaleid("");
-                    coordinatesBean.setOrders("");
                     SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
                 }
                 listlatlng_park = new ArrayList<>();
@@ -1355,7 +1299,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 polygonBean.setLng(String.valueOf(latlng.getLongitude()));
                 polygonBean.setNumofplant("");
                 polygonBean.setType("M");
-                polygonBean.setUid("60");
+                polygonBean.setUid(commembertab.getuId());
                 polygonBean.setparkId("");
                 polygonBean.setparkName("");
                 polygonBean.setUuid(uuid_polygon);
@@ -1377,22 +1321,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                     CoordinatesBean coordinatesBean = new CoordinatesBean();
                     coordinatesBean.setLat(String.valueOf(listlatlng_park.get(i).getLatitude()));
                     coordinatesBean.setLng(String.valueOf(listlatlng_park.get(i).getLongitude()));
-                    coordinatesBean.setNumofplant("");
-                    coordinatesBean.setType("");
-                    coordinatesBean.setUid("");
-                    coordinatesBean.setparkId("");
-                    coordinatesBean.setparkName("");
                     coordinatesBean.setUuid(uuid_polygon);
-                    coordinatesBean.setAreaId("");
-                    coordinatesBean.setareaName("");
-                    coordinatesBean.setContractid("");
-                    coordinatesBean.setContractname("");
-                    coordinatesBean.setBatchid("");
-                    coordinatesBean.setCoordinatestime(utils.getTime());
                     coordinatesBean.setRegistime(utils.getTime());
-                    coordinatesBean.setWeightofplant("");
-                    coordinatesBean.setSaleid("");
-                    coordinatesBean.setOrders("");
                     SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
                 }
                 tv_tip.setVisibility(View.VISIBLE);
@@ -1443,7 +1373,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 polygonBean.setLng("");
                 polygonBean.setNumofplant("");
                 polygonBean.setType("X");
-                polygonBean.setUid("60");
+                polygonBean.setUid(commembertab.getuId());
                 polygonBean.setparkId("");
                 polygonBean.setparkName("");
                 polygonBean.setUuid(uuid_line);
@@ -1465,22 +1395,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                     CoordinatesBean coordinatesBean = new CoordinatesBean();
                     coordinatesBean.setLat(String.valueOf(listlatlng_park.get(i).getLatitude()));
                     coordinatesBean.setLng(String.valueOf(listlatlng_park.get(i).getLongitude()));
-                    coordinatesBean.setNumofplant("");
-                    coordinatesBean.setType("");
-                    coordinatesBean.setUid("");
-                    coordinatesBean.setparkId("");
-                    coordinatesBean.setparkName("");
                     coordinatesBean.setUuid(uuid_line);
-                    coordinatesBean.setAreaId("");
-                    coordinatesBean.setareaName("");
-                    coordinatesBean.setContractid("");
-                    coordinatesBean.setContractname("");
-                    coordinatesBean.setBatchid("");
-                    coordinatesBean.setCoordinatestime(utils.getTime());
                     coordinatesBean.setRegistime(utils.getTime());
-                    coordinatesBean.setWeightofplant("");
-                    coordinatesBean.setSaleid("");
-                    coordinatesBean.setOrders("");
                     SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
                 }
                 listlatlng_park = new ArrayList<>();
@@ -1531,7 +1447,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 polygonBean.setLng("");
                 polygonBean.setNumofplant("");
                 polygonBean.setType("D");
-                polygonBean.setUid("60");
+                polygonBean.setUid(commembertab.getuId());
                 polygonBean.setparkId("");
                 polygonBean.setparkName("");
                 polygonBean.setUuid(uuid_point);
@@ -1552,22 +1468,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 CoordinatesBean coordinatesBean = new CoordinatesBean();
                 coordinatesBean.setLat(String.valueOf(currentPoint.getLatitude()));
                 coordinatesBean.setLng(String.valueOf(currentPoint.getLongitude()));
-                coordinatesBean.setNumofplant("");
-                coordinatesBean.setType("");
-                coordinatesBean.setUid("");
-                coordinatesBean.setparkId("");
-                coordinatesBean.setparkName("");
                 coordinatesBean.setUuid(uuid_point);
-                coordinatesBean.setAreaId("");
-                coordinatesBean.setareaName("");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
                 coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
                 SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
 
                 reloadMap();
@@ -1659,7 +1561,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 polygonBean.setLng(tv_lng.getText().toString());
                 polygonBean.setNumofplant("");
                 polygonBean.setType("D");
-                polygonBean.setUid("60");
+                polygonBean.setUid(commembertab.getuId());
                 polygonBean.setparkId("");
                 polygonBean.setparkName("");
                 polygonBean.setUuid(uuid_point);
@@ -1680,22 +1582,84 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 CoordinatesBean coordinatesBean = new CoordinatesBean();
                 coordinatesBean.setLat(tv_lat.getText().toString());
                 coordinatesBean.setLng(tv_lng.getText().toString());
-                coordinatesBean.setNumofplant("");
-                coordinatesBean.setType("");
-                coordinatesBean.setUid("");
-                coordinatesBean.setparkId("");
-                coordinatesBean.setparkName("");
                 coordinatesBean.setUuid(uuid_point);
-                coordinatesBean.setAreaId("");
-                coordinatesBean.setareaName("");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
                 coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
+                SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
+
+                reloadMap();
+                btn_addmore.setClickable(true);
+            }
+        });
+        showDialog_pickpointinfo.show();
+    }
+    public void showDialog_pickObservationinfo()
+    {
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_pickpointinfo, null);
+        showDialog_pickpointinfo = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
+        et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
+        tv_lng = (TextView) dialog_layout.findViewById(R.id.tv_lng);
+        tv_lat = (TextView) dialog_layout.findViewById(R.id.tv_lat);
+        rl_getlocation = (RelativeLayout) dialog_layout.findViewById(R.id.rl_getlocation);
+        ll_locationinfo = (LinearLayout) dialog_layout.findViewById(R.id.ll_locationinfo);
+        btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        btn_close = (Button) dialog_layout.findViewById(R.id.btn_close);
+        btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+        tv_lng.setText(String.valueOf(location_latLng.getLongitude()));
+        tv_lat.setText(String.valueOf(location_latLng.getLatitude()));
+        btn_close.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                showDialog_pickpointinfo.dismiss();
+                reloadMap();
+            }
+        });
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                showDialog_pickpointinfo.dismiss();
+                reloadMap();
+            }
+        });
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                showDialog_pickpointinfo.dismiss();
+
+                String uuid_point = java.util.UUID.randomUUID().toString();
+                PolygonBean polygonBean = new PolygonBean();
+                polygonBean.setLat(tv_lat.getText().toString());
+                polygonBean.setLng(tv_lng.getText().toString());
+                polygonBean.setNumofplant("");
+                polygonBean.setType("GCD");
+                polygonBean.setUid(commembertab.getuId());
+                polygonBean.setparkId("");
+                polygonBean.setparkName("");
+                polygonBean.setUuid(uuid_point);
+                polygonBean.setAreaId("");
+                polygonBean.setareaName("");
+                polygonBean.setContractid("");
+                polygonBean.setContractname("");
+                polygonBean.setBatchid("");
+                polygonBean.setCoordinatestime(utils.getTime());
+                polygonBean.setRegistime(utils.getTime());
+                polygonBean.setWeightofplant("");
+                polygonBean.setSaleid("");
+                polygonBean.setOrders("");
+                polygonBean.setXxzt("0");
+                polygonBean.setNote(et_polygonnote.getText().toString());
+                SqliteDb.save(CZ_MakeMap_MakeLayer.this, polygonBean);
+
+                CoordinatesBean coordinatesBean = new CoordinatesBean();
+                coordinatesBean.setLat(tv_lat.getText().toString());
+                coordinatesBean.setLng(tv_lng.getText().toString());
+                coordinatesBean.setUuid(uuid_point);
+                coordinatesBean.setRegistime(utils.getTime());
                 SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
 
                 reloadMap();
@@ -1743,7 +1707,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 polygonBean.setLng("");
                 polygonBean.setNumofplant("");
                 polygonBean.setType("house");
-                polygonBean.setUid("60");
+                polygonBean.setUid(commembertab.getuId());
                 polygonBean.setparkId("");
                 polygonBean.setparkName("");
                 polygonBean.setUuid(uuid_point);
@@ -1764,22 +1728,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 CoordinatesBean coordinatesBean = new CoordinatesBean();
                 coordinatesBean.setLat(String.valueOf(currentPoint.getLatitude()));
                 coordinatesBean.setLng(String.valueOf(currentPoint.getLongitude()));
-                coordinatesBean.setNumofplant("");
-                coordinatesBean.setType("");
-                coordinatesBean.setUid("");
-                coordinatesBean.setparkId("");
-                coordinatesBean.setparkName("");
                 coordinatesBean.setUuid(uuid_point);
-                coordinatesBean.setAreaId("");
-                coordinatesBean.setareaName("");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
                 coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
                 SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
 
                 reloadMap();
@@ -1874,7 +1824,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                     department.setName(list_parktab.get(i).getparkName());
                     department.setIsdrawer(isdrawer_park);
                     list.add(department);//添加
-                    list_areatab = db.findAll(Selector.from(areatab.class).where("uid", "=", "60").and("parkid", "=", list_parktab.get(i).getid()));
+                    list_areatab = db.findAll(Selector.from(areatab.class).where("uid", "=", commembertab.getuId()).and("parkid", "=", list_parktab.get(i).getid()));
                     list_areatab_all.addAll(list_areatab);
                     if (list_areatab != null)
                     {
@@ -1899,7 +1849,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                             department1.setName(list_parktab.get(i).getparkName() + "-" + list_areatab.get(j).getareaName());
                             department1.setIsdrawer(isdrawer_area);
                             list.add(department1);//添加
-                            list_contractTab = db.findAll(Selector.from(contractTab.class).where("uid", "=", "60").and("parkid", "=", list_parktab.get(i).getid()).and("areaid", "=", list_areatab.get(j).getid()));
+                            list_contractTab = db.findAll(Selector.from(contractTab.class).where("uid", "=", commembertab.getuId()).and("parkid", "=", list_parktab.get(i).getid()).and("areaid", "=", list_areatab.get(j).getid()));
                             list_contractTab_all.addAll(list_contractTab);
                             if (list_contractTab != null)
                             {
@@ -2041,6 +1991,10 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                             Overlays.add(parkpolygon);
                         }
                     });
+                } else if (operation.equals("观测点"))
+                {
+                    drawerType = "观测点";
+                    showDialog_pickObservationinfo();
                 } else if (operation.equals("采点"))
                 {
                     drawerType = "采点";
@@ -2172,7 +2126,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 //                uiSettings.setZoomGesturesEnabled(false);
                 customdialog_editpolygoninfor.dismiss();
                 departmentselected = list_department.get(position);
-//                list_coordinatesbean = SqliteDb.getBoundaryByID(CZ_MakeMap_MakeLayer.this, "60", departmentselected.getParkid(), departmentselected.getAreaid(), departmentselected.getContractid());
+//                list_coordinatesbean = SqliteDb.getBoundaryByID(CZ_MakeMap_MakeLayer.this, commembertab.getuId(), departmentselected.getParkid(), departmentselected.getAreaid(), departmentselected.getContractid());
 //                showNeedPlanBoundary(list_coordinatesbean);
 
                 if (departmentselected.getIsdrawer().equals("1"))
@@ -2211,8 +2165,9 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                     isable = true;
                     tencentMap.setZoom(14);
                     initMapClickWhenPaint();
+                    initMarkClickListenner();
                     initMapLongPressWhenPaint();
-                    polygonBean_needPlan = SqliteDb.getNeedPlanlayer(CZ_MakeMap_MakeLayer.this, "60", departmentselected.getParkid(), departmentselected.getAreaid(), departmentselected.getContractid());
+                    polygonBean_needPlan = SqliteDb.getNeedPlanlayer(CZ_MakeMap_MakeLayer.this, commembertab.getuId(), departmentselected.getParkid(), departmentselected.getAreaid(), departmentselected.getContractid());
                     if (polygonBean_needPlan != null)
                     {
                         LatLng latlng = new LatLng(Double.valueOf(polygonBean_needPlan.getLat()), Double.valueOf(polygonBean_needPlan.getLng()));
@@ -2223,6 +2178,9 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                             showNeedPlanBoundary(list_coordinatesbean);
                         }
 
+                    } else
+                    {
+                        Toast.makeText(CZ_MakeMap_MakeLayer.this, "给图层的底层还没制作，请先制作该图层的底层！", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -2231,24 +2189,6 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
         customdialog_editpolygoninfor.show();
     }
 
-    public void savePolygonInfo(LatLng centerlatlng, final List<LatLng> list_select, final List<LatLng> list_notselect)
-    {
-        String orders = list_coordinatesbean.get(0).getOrders();
-        if (orders.equals(""))
-        {
-            orders = "0";
-        }
-        String order_new = String.valueOf(Integer.valueOf(orders) + 1);
-        for (int i = 0; i < list_select.size(); i++)
-        {
-            saveCoordinatesBean("farm_boundary", "0", "0", order_new, list_select.get(i), departmentselected);
-        }
-        for (int i = 0; i < list_notselect.size(); i++)
-        {
-            saveCoordinatesBean("farm_boundary_free", "0", "0", order_new, list_notselect.get(i), departmentselected);
-        }
-        saveCoordinatesBean("farm_boundary", "0", "1", order_new, centerlatlng, departmentselected);
-    }
 
     public void initMapLongPressWhenPaint()
     {
@@ -2425,7 +2365,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             {
                 list_latlng_divide1.add(list_latlng_pick.get(i));
             }
-            // 未选区域
+            // 未选区域//ok
             list_latlng_divide2.add(touchLatlng1);//添加未选起始点
             for (int i = 0; i < list_latlng_needplanboundary.size(); i++)
             {
@@ -2478,7 +2418,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             {
                 list_latlng_divide1.add(list_latlng_pick.get(i));
             }
-            // 未选区域
+            // 未选区域//notok
             list_latlng_divide2.add(touchLatlng2);//添加未选起始点
             for (int i = 0; i < list_latlng_needplanboundary.size(); i++)
             {
@@ -2510,12 +2450,11 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 list_latlng_divide2.add(list_latlng_pick.get(i));
             }
         }
-
 //        //画出已选区域
-        polygon_divide1 = drawPolygon(10f, list_latlng_divide1, Color.argb(1000, 255, 255, 0), 6, R.color.white);
+        polygon_divide1 = drawPolygon(10f, list_latlng_divide1, Color.argb(1000, 255, 255, 0), 6, R.color.white);//黄色
         Overlays.add(polygon_divide1);
         //画出未选区域
-        polygon_divide2 = drawPolygon(20f, list_latlng_divide2, Color.argb(100, 0, 0, 255), 2, R.color.black);
+        polygon_divide2 = drawPolygon(20f, list_latlng_divide2, Color.argb(1000, 0, 0, 255), 2, R.color.black);//蓝色
         Overlays.add(polygon_divide2);
 
         tv_tip.setVisibility(View.VISIBLE);
@@ -2527,26 +2466,43 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             @Override
             public void onMapClick(LatLng latLng)
             {
-                if (polygon_divide1.contains(latLng))
+                for (int i = 0; i < list_Objects_divideline.size(); i++)
+                {
+                    tencentMap.removeOverlay(list_Objects_divideline.get(i));
+                }
+                Point[] pts1=new Point[list_latlng_divide1.size()];
+                Point p1=mProjection.toScreenLocation(latLng);
+                for (int i = 0; i <list_latlng_divide1.size(); i++)
+                {
+                    pts1[i]=mProjection.toScreenLocation(list_latlng_divide1.get(i));
+                }
+                int n=utils.CheckInPloy(pts1,pts1.length,p1);
+                if (n == -1)
                 {
                     initMapOnclickListening();
                     savedividedPolygonInfo(latLng, list_latlng_divide1, list_latlng_divide2);
-                } else if (polygon_divide2.contains(latLng))
+                    return;
+                }
+
+                Point[] pts2=new Point[list_latlng_divide2.size()];
+                Point p2=mProjection.toScreenLocation(latLng);
+                for (int i = 0; i <list_latlng_divide2.size(); i++)
+                {
+                    pts2[i]=mProjection.toScreenLocation(list_latlng_divide2.get(i));
+                }
+                 n=utils.CheckInPloy(pts2,pts2.length,p2);
+                if (n == -1)
                 {
                     initMapOnclickListening();
                     savedividedPolygonInfo(latLng, list_latlng_divide2, list_latlng_divide1);
-                } else
-                {
-                    tv_tip.setText("请在划分的两个区域中选择");
+                    return;
                 }
+                tv_tip.setText("请在划分的两个区域中选择");
             }
         });
 
 
-        for (int i = 0; i < list_Objects_divideline.size(); i++)
-        {
-            tencentMap.removeOverlay(list_Objects_divideline.get(i));
-        }
+
     }
 
     public void resetParamsAfterPaint()
@@ -2592,7 +2548,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             polygonBean.setLng(String.valueOf(centerlatlng.getLongitude()));
             polygonBean.setNumofplant("");
             polygonBean.setType("farm_boundary");
-            polygonBean.setUid("60");
+            polygonBean.setUid(commembertab.getuId());
             polygonBean.setparkId(departmentselected.getParkid());
             polygonBean.setparkName(departmentselected.getParkname());
             polygonBean.setUuid(uuid_polygon);
@@ -2615,22 +2571,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 CoordinatesBean coordinatesBean = new CoordinatesBean();
                 coordinatesBean.setLat(String.valueOf(list_select.get(i).getLatitude()));
                 coordinatesBean.setLng(String.valueOf(list_select.get(i).getLongitude()));
-                coordinatesBean.setNumofplant("");
-                coordinatesBean.setType("");
-                coordinatesBean.setUid("");
-                coordinatesBean.setparkId("");
-                coordinatesBean.setparkName("");
                 coordinatesBean.setUuid(uuid_polygon);
-                coordinatesBean.setAreaId("");
-                coordinatesBean.setareaName("");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
                 coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
                 SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
             }
             //未选择区域
@@ -2640,7 +2582,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             polygonBean_notselect.setLng(String.valueOf(centerlatlng.getLongitude()));
             polygonBean_notselect.setNumofplant("");
             polygonBean_notselect.setType("farm_boundary_free");
-            polygonBean_notselect.setUid("60");
+            polygonBean_notselect.setUid(commembertab.getuId());
             polygonBean_notselect.setparkId(departmentselected.getParkid());
             polygonBean_notselect.setparkName(departmentselected.getParkname());
             polygonBean_notselect.setUuid(uuid_notselectpolygon);
@@ -2663,22 +2605,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 CoordinatesBean coordinatesBean = new CoordinatesBean();
                 coordinatesBean.setLat(String.valueOf(list_notselect.get(i).getLatitude()));
                 coordinatesBean.setLng(String.valueOf(list_notselect.get(i).getLongitude()));
-                coordinatesBean.setNumofplant("");
-                coordinatesBean.setType("");
-                coordinatesBean.setUid("");
-                coordinatesBean.setparkId("");
-                coordinatesBean.setparkName("");
                 coordinatesBean.setUuid(uuid_notselectpolygon);
-                coordinatesBean.setAreaId("");
-                coordinatesBean.setareaName("");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
                 coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
                 SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
             }
         } else if (departmentselected.getType().equals("承包区"))
@@ -2690,7 +2618,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             polygonBean.setLng(String.valueOf(centerlatlng.getLongitude()));
             polygonBean.setNumofplant("");
             polygonBean.setType("farm_boundary");
-            polygonBean.setUid("60");
+            polygonBean.setUid(commembertab.getuId());
             polygonBean.setparkId(departmentselected.getParkid());
             polygonBean.setparkName(departmentselected.getParkname());
             polygonBean.setUuid(uuid_polygon);
@@ -2713,22 +2641,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 CoordinatesBean coordinatesBean = new CoordinatesBean();
                 coordinatesBean.setLat(String.valueOf(list_select.get(i).getLatitude()));
                 coordinatesBean.setLng(String.valueOf(list_select.get(i).getLongitude()));
-                coordinatesBean.setNumofplant("");
-                coordinatesBean.setType("");
-                coordinatesBean.setUid("");
-                coordinatesBean.setparkId("");
-                coordinatesBean.setparkName("");
                 coordinatesBean.setUuid(uuid_polygon);
-                coordinatesBean.setAreaId("");
-                coordinatesBean.setareaName("");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
                 coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
                 SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
             }
             //未选择区域
@@ -2738,7 +2652,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             polygonBean_notselect.setLng(String.valueOf(centerlatlng.getLongitude()));
             polygonBean_notselect.setNumofplant("");
             polygonBean_notselect.setType("farm_boundary_free");
-            polygonBean_notselect.setUid("60");
+            polygonBean_notselect.setUid(commembertab.getuId());
             polygonBean_notselect.setparkId(departmentselected.getParkid());
             polygonBean_notselect.setparkName(departmentselected.getParkname());
             polygonBean_notselect.setUuid(uuid_notselectpolygon);
@@ -2761,22 +2675,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 CoordinatesBean coordinatesBean = new CoordinatesBean();
                 coordinatesBean.setLat(String.valueOf(list_notselect.get(i).getLatitude()));
                 coordinatesBean.setLng(String.valueOf(list_notselect.get(i).getLongitude()));
-                coordinatesBean.setNumofplant("");
-                coordinatesBean.setType("");
-                coordinatesBean.setUid("");
-                coordinatesBean.setparkId("");
-                coordinatesBean.setparkName("");
                 coordinatesBean.setUuid(uuid_notselectpolygon);
-                coordinatesBean.setAreaId("");
-                coordinatesBean.setareaName("");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
                 coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
                 SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
             }
         }
@@ -2811,7 +2711,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             polygonBean.setLng(String.valueOf(centerlatlng.getLongitude()));
             polygonBean.setNumofplant("");
             polygonBean.setType("farm_boundary");
-            polygonBean.setUid("60");
+            polygonBean.setUid(commembertab.getuId());
             polygonBean.setparkId(departmentselected.getParkid());
             polygonBean.setparkName(departmentselected.getParkname());
             polygonBean.setUuid(uuid_polygon);
@@ -2834,22 +2734,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 CoordinatesBean coordinatesBean = new CoordinatesBean();
                 coordinatesBean.setLat(String.valueOf(list_select.get(i).getLatitude()));
                 coordinatesBean.setLng(String.valueOf(list_select.get(i).getLongitude()));
-                coordinatesBean.setNumofplant("");
-                coordinatesBean.setType("");
-                coordinatesBean.setUid("");
-                coordinatesBean.setparkId("");
-                coordinatesBean.setparkName("");
                 coordinatesBean.setUuid(uuid_polygon);
-                coordinatesBean.setAreaId("");
-                coordinatesBean.setareaName("");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
                 coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
                 SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
             }
 
@@ -2862,7 +2748,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             polygonBean.setLng(String.valueOf(centerlatlng.getLongitude()));
             polygonBean.setNumofplant("");
             polygonBean.setType("farm_boundary");
-            polygonBean.setUid("60");
+            polygonBean.setUid(commembertab.getuId());
             polygonBean.setparkId(departmentselected.getParkid());
             polygonBean.setparkName(departmentselected.getParkname());
             polygonBean.setUuid(uuid_polygon);
@@ -2885,22 +2771,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 CoordinatesBean coordinatesBean = new CoordinatesBean();
                 coordinatesBean.setLat(String.valueOf(list_select.get(i).getLatitude()));
                 coordinatesBean.setLng(String.valueOf(list_select.get(i).getLongitude()));
-                coordinatesBean.setNumofplant("");
-                coordinatesBean.setType("");
-                coordinatesBean.setUid("");
-                coordinatesBean.setparkId("");
-                coordinatesBean.setparkName("");
                 coordinatesBean.setUuid(uuid_polygon);
-                coordinatesBean.setAreaId("");
-                coordinatesBean.setareaName("");
-                coordinatesBean.setContractid("");
-                coordinatesBean.setContractname("");
-                coordinatesBean.setBatchid("");
-                coordinatesBean.setCoordinatestime(utils.getTime());
                 coordinatesBean.setRegistime(utils.getTime());
-                coordinatesBean.setWeightofplant("");
-                coordinatesBean.setSaleid("");
-                coordinatesBean.setOrders("");
                 SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
             }
 
@@ -2916,232 +2788,12 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
         CoordinatesBean coordinatesBean = new CoordinatesBean();
         coordinatesBean.setLat(String.valueOf(latlng.getLatitude()));
         coordinatesBean.setLng(String.valueOf(latlng.getLongitude()));
-        coordinatesBean.setNumofplant("10000");
-        coordinatesBean.setType(type);
-        coordinatesBean.setUid("60");
-        coordinatesBean.setparkId(departmentbean.getParkid());
-        coordinatesBean.setparkName("");
         coordinatesBean.setUuid(uuid);
-        coordinatesBean.setAreaId(departmentbean.getAreaid());
-        coordinatesBean.setareaName("");
-        coordinatesBean.setContractid(departmentbean.getContractid());
-        coordinatesBean.setContractname("");
-        coordinatesBean.setBatchid("");
-        coordinatesBean.setCoordinatestime(utils.getTime());
         coordinatesBean.setRegistime(utils.getTime());
-        coordinatesBean.setWeightofplant("400000");
-        coordinatesBean.setSaleid("");
-        coordinatesBean.setOrders(orders);
-        coordinatesBean.setIsInnerPoint(isInnerPoint);
-        coordinatesBean.setIsCenterPoint(isCenterPoint);
         SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
     }
 
-    public void showDialog_EditPolygonInfo(final List<LatLng> list_select, final List<LatLng> list_notselect)
-    {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_editpolygoninfo, null);
-        customdialog_editpolygoninfor = new CustomDialog_EditPolygonInfo(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
-        ListView lv_department = (ListView) dialog_layout.findViewById(R.id.lv_department);
-        Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
-        list_department = getDepartment(CZ_MakeMap_MakeLayer.this);
-        department_adapter = new Department_Adapter(CZ_MakeMap_MakeLayer.this, list_department);
-        lv_department.setAdapter(department_adapter);
-        lv_department.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                customdialog_editpolygoninfor.dismiss();
-                DepartmentBean d = list_department.get(position);
-                String orders = list_coordinatesbean.get(0).getOrders();
-                if (orders.equals(""))
-                {
-                    orders = "0";
-                }
-                String order_new = String.valueOf(Integer.valueOf(orders) + 1);
-                if (d.getType().equals("园区"))
-                {
-                    for (int i = 0; i < list_parktab.size(); i++)
-                    {
-                        if (d.getId().equals(list_parktab.get(i).getid()))
-                        {
-                            for (int m = 0; m < list_select.size(); m++)
-                            {
-                                String uuid = java.util.UUID.randomUUID().toString();
-                                CoordinatesBean coordinatesBean = new CoordinatesBean();
-                                coordinatesBean.setLat(String.valueOf(list_select.get(m).getLatitude()));
-                                coordinatesBean.setLng(String.valueOf(list_select.get(m).getLongitude()));
-                                coordinatesBean.setNumofplant("10000");
-                                coordinatesBean.setType("farm_boundary");
-                                coordinatesBean.setUid("60");
-                                coordinatesBean.setparkId(list_parktab.get(i).getid());
-                                coordinatesBean.setparkName(list_parktab.get(i).getparkName());
-                                coordinatesBean.setUuid(uuid);
-                                coordinatesBean.setAreaId("");
-                                coordinatesBean.setareaName("");
-                                coordinatesBean.setContractid("");
-                                coordinatesBean.setContractname("");
-                                coordinatesBean.setBatchid("");
-                                coordinatesBean.setCoordinatestime(utils.getTime());
-                                coordinatesBean.setRegistime(utils.getTime());
-                                coordinatesBean.setWeightofplant("400000");
-                                coordinatesBean.setSaleid("");
-                                coordinatesBean.setOrders(order_new);
-                                SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
-//                uploadCoordinatesBean(coordinatesBean);
-                            }
-                            for (int m = 0; m < list_notselect.size(); m++)
-                            {
-                                String uuid = java.util.UUID.randomUUID().toString();
-                                CoordinatesBean coordinatesBean = new CoordinatesBean();
-                                coordinatesBean.setLat(String.valueOf(list_notselect.get(m).getLatitude()));
-                                coordinatesBean.setLng(String.valueOf(list_notselect.get(m).getLongitude()));
-                                coordinatesBean.setNumofplant("10000");
-                                coordinatesBean.setType("farm_boundary_free");
-                                coordinatesBean.setUid("60");
-                                coordinatesBean.setparkId(list_parktab.get(i).getid());
-                                coordinatesBean.setparkName(list_parktab.get(i).getparkName());
-                                coordinatesBean.setUuid(uuid);
-                                coordinatesBean.setAreaId("");
-                                coordinatesBean.setareaName("");
-                                coordinatesBean.setContractid("");
-                                coordinatesBean.setContractname("");
-                                coordinatesBean.setBatchid("");
-                                coordinatesBean.setCoordinatestime(utils.getTime());
-                                coordinatesBean.setRegistime(utils.getTime());
-                                coordinatesBean.setWeightofplant("400000");
-                                coordinatesBean.setSaleid("");
-                                coordinatesBean.setOrders(order_new);
-                                SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
-//                uploadCoordinatesBean(coordinatesBean);
-                            }
-                            break;
-                        }
-                    }
-                } else if (d.getType().equals("片区"))
-                {
-                    for (int i = 0; i < list_areatab_all.size(); i++)
-                    {
-                        if (d.getId().equals(list_areatab_all.get(i).getid()))
-                        {
-                            for (int m = 0; m < list_select.size(); m++)
-                            {
-                                String uuid = java.util.UUID.randomUUID().toString();
-                                CoordinatesBean coordinatesBean = new CoordinatesBean();
-                                coordinatesBean.setLat(String.valueOf(list_select.get(m).getLatitude()));
-                                coordinatesBean.setLng(String.valueOf(list_select.get(m).getLongitude()));
-                                coordinatesBean.setNumofplant("10000");
-                                coordinatesBean.setType("farm_boundary");
-                                coordinatesBean.setUid("60");
-                                coordinatesBean.setparkId(list_areatab_all.get(i).getparkId());
-                                coordinatesBean.setparkName(list_areatab_all.get(i).getparkName());
-                                coordinatesBean.setUuid(uuid);
-                                coordinatesBean.setAreaId(list_areatab_all.get(i).getid());
-                                coordinatesBean.setareaName(list_areatab_all.get(i).getareaName());
-                                coordinatesBean.setContractid("");
-                                coordinatesBean.setContractname("");
-                                coordinatesBean.setBatchid("");
-                                coordinatesBean.setCoordinatestime(utils.getTime());
-                                coordinatesBean.setRegistime(utils.getTime());
-                                coordinatesBean.setWeightofplant("400000");
-                                coordinatesBean.setSaleid("");
-                                coordinatesBean.setOrders(order_new);
-                                SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
-//                uploadCoordinatesBean(coordinatesBean);
-                            }
-                            for (int m = 0; m < list_notselect.size(); m++)
-                            {
-                                String uuid = java.util.UUID.randomUUID().toString();
-                                CoordinatesBean coordinatesBean = new CoordinatesBean();
-                                coordinatesBean.setLat(String.valueOf(list_notselect.get(m).getLatitude()));
-                                coordinatesBean.setLng(String.valueOf(list_notselect.get(m).getLongitude()));
-                                coordinatesBean.setNumofplant("10000");
-                                coordinatesBean.setType("farm_boundary_free");
-                                coordinatesBean.setUid("60");
-                                coordinatesBean.setparkId(list_areatab_all.get(i).getparkId());
-                                coordinatesBean.setparkName(list_areatab_all.get(i).getparkName());
-                                coordinatesBean.setUuid(uuid);
-                                coordinatesBean.setAreaId("");//画选片区，list_notselect则只能为园区的未规划图，所以为空
-                                coordinatesBean.setareaName("");//画选片区，list_notselect则只能为园区的未规划图，所以为空
-                                coordinatesBean.setContractid("");
-                                coordinatesBean.setContractname("");
-                                coordinatesBean.setBatchid("");
-                                coordinatesBean.setCoordinatestime(utils.getTime());
-                                coordinatesBean.setRegistime(utils.getTime());
-                                coordinatesBean.setWeightofplant("400000");
-                                coordinatesBean.setSaleid("");
-                                coordinatesBean.setOrders(order_new);
-                                SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
-//                uploadCoordinatesBean(coordinatesBean);
-                            }
-                            break;
-                        }
-                    }
-                } else
-                {
-                    for (int i = 0; i < list_contractTab_all.size(); i++)
-                    {
-                        if (d.getId().equals(list_contractTab.get(i).getid()))
-                        {
-                            for (int m = 0; m < list_select.size(); m++)
-                            {
-                                String uuid = java.util.UUID.randomUUID().toString();
-                                CoordinatesBean coordinatesBean = new CoordinatesBean();
-                                coordinatesBean.setLat(String.valueOf(list_select.get(m).getLatitude()));
-                                coordinatesBean.setLng(String.valueOf(list_select.get(m).getLongitude()));
-                                coordinatesBean.setNumofplant("10000");
-                                coordinatesBean.setType("farm_boundary");
-                                coordinatesBean.setUid("60");
-                                coordinatesBean.setparkId(list_contractTab_all.get(i).getparkId());
-                                coordinatesBean.setparkName(list_contractTab_all.get(i).getparkName());
-                                coordinatesBean.setUuid(uuid);
-                                coordinatesBean.setAreaId(list_contractTab_all.get(i).getAreaId());
-                                coordinatesBean.setareaName(list_contractTab_all.get(i).getareaName());
-                                coordinatesBean.setContractid(list_contractTab_all.get(i).getid());
-                                coordinatesBean.setContractname(list_contractTab_all.get(i).getContractNum());
-                                coordinatesBean.setBatchid("");
-                                coordinatesBean.setCoordinatestime(utils.getTime());
-                                coordinatesBean.setRegistime(utils.getTime());
-                                coordinatesBean.setWeightofplant("400000");
-                                coordinatesBean.setSaleid("");
-                                coordinatesBean.setOrders(order_new);
-                                SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
-//                uploadCoordinatesBean(coordinatesBean);
-                            }
-                            for (int m = 0; m < list_notselect.size(); m++)
-                            {
-                                String uuid = java.util.UUID.randomUUID().toString();
-                                CoordinatesBean coordinatesBean = new CoordinatesBean();
-                                coordinatesBean.setLat(String.valueOf(list_notselect.get(m).getLatitude()));
-                                coordinatesBean.setLng(String.valueOf(list_notselect.get(m).getLongitude()));
-                                coordinatesBean.setNumofplant("10000");
-                                coordinatesBean.setType("farm_boundary_free");
-                                coordinatesBean.setUid("60");
-                                coordinatesBean.setparkId(list_contractTab_all.get(i).getparkId());
-                                coordinatesBean.setparkName(list_contractTab_all.get(i).getparkName());
-                                coordinatesBean.setUuid(uuid);
-                                coordinatesBean.setAreaId(list_contractTab_all.get(i).getAreaId());
-                                coordinatesBean.setareaName(list_contractTab_all.get(i).getareaName());
-                                coordinatesBean.setContractid("");//画选承包区，list_notselect则只能为片区的未规划图，所以为空
-                                coordinatesBean.setContractname("");//画选承包区，list_notselect则只能为片区的未规划图，所以为空
-                                coordinatesBean.setBatchid("");
-                                coordinatesBean.setCoordinatestime(utils.getTime());
-                                coordinatesBean.setRegistime(utils.getTime());
-                                coordinatesBean.setWeightofplant("400000");
-                                coordinatesBean.setSaleid("");
-                                coordinatesBean.setOrders(order_new);
-                                SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
-//                uploadCoordinatesBean(coordinatesBean);
-                            }
-                            break;
-                        }
-                    }
-                }
 
-            }
-        });
-        customdialog_editpolygoninfor.show();
-    }
 
     public void showDialog_SelectWholePolygon(final LatLng latlng)
     {
@@ -3280,31 +2932,6 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
     @AfterViews
     void afterOncreate()
     {
-//        SqliteDb.initPark(CZ_MakeMap_MakeLayer.this);
-//        SqliteDb.initArea(CZ_MakeMap_MakeLayer.this);
-//        SqliteDb.initContract(CZ_MakeMap_MakeLayer.this);
-//        SqliteDb.getTemp1(CZ_MakeMap_MakeLayer.this);
-//       List<CoordinatesBean> list11=SqliteDb.getTemp1(CZ_MakeMap_MakeLayer.this);
-//        CoordinatesBean cc= list11.get(0);
-//        for (int i = 0; i < list11.size(); i++)
-//        {
-//            CoordinatesBean cc= list11.get(i);
-//            cc.setAreaId("");
-//            cc.setareaName("");
-//            SqliteDb.updateCoordinatesOrder(CZ_MakeMap_MakeLayer.this,cc);
-//        }
-//        SqliteDb.initPark(AddOrderMap.this);
-//        SqliteDb.initArea(AddOrderMap.this);
-//        SqliteDb.initContract(AddOrderMap.this);
-
-
-//        setBoundary_park(list_boundary_park);
-//        for (int i = 0; i <list_boundary_park.size() ; i++)
-//        {
-//            uploadCoordinatesBean(list_boundary_park.get(i));
-//        }
-//        getBoundary_farm();
-//        SqliteDb.deletetemp(CZ_MakeMap_MakeLayer.this);
 
         tencentMap = mapview.getMap();
         tencentMap.setZoom(13);
@@ -3368,97 +2995,26 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             utils.openGPSSettings(CZ_MakeMap_MakeLayer.this);
         }
 
-//        String str_farm_boundary_free = SqliteDb.getBoundary_farm_free(CZ_MakeMap_MakeLayer.this, "60", "farm_boundary_free");
-//        Result result_farm_boundary_free = JSON.parseObject(str_farm_boundary_free, Result.class);
-//        if (result_farm_boundary_free.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-//        {
-//            if (result_farm_boundary_free.getAffectedRows() != 0)
-//            {
-//                JSONArray jsonArray_Rows = result_farm_boundary_free.getRows();
-//                for (int i = 0; i < jsonArray_Rows.size(); i++)
-//                {
-//                    JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
-//                    if (jsonArray_boundary.size() > 0)
-//                    {
-//                        list_coordinatesbean = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
-//                        setBoundary_park(list_coordinatesbean);
-//                    }
-//                }
-//            }
-//        }
-
         initMapData();
         initMarkOnclick();
         initMapCameraChangeListener();
         initMapOnclickListening();
-//        String str_farm_boundary = SqliteDb.getBoundary_farm_free(CZ_MakeMap_MakeLayer.this, "60", "farm_boundary");
-//        Result result_farm_boundary = JSON.parseObject(str_farm_boundary, Result.class);
-//        if (result_farm_boundary.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-//        {
-//            if (result_farm_boundary.getAffectedRows() != 0)
-//            {
-//                JSONArray jsonArray_Rows = result_farm_boundary.getRows();
-//                for (int i = 0; i < jsonArray_Rows.size(); i++)
-//                {
-//                    JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
-//                    if (jsonArray_boundary.size() > 0)
-//                    {
-//                        list_coordinatesbean = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
-//                        setBoundary_park(list_coordinatesbean);
-//                    }
-//                }
-//            }
-//        }
     }
 
     public void initMapData()
     {
-//        String str_farm_boundary = SqliteDb.getPlanMap(CZ_MakeMap_MakeLayer.this, "60", "farm_boundary");
-//        Result result_farm_boundary = JSON.parseObject(str_farm_boundary, Result.class);
-//        if (result_farm_boundary.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-//        {
-//            if (result_farm_boundary.getAffectedRows() != 0)
-//            {
-//                JSONArray jsonArray_Rows = result_farm_boundary.getRows();
-//                for (int i = 0; i < jsonArray_Rows.size(); i++)
-//                {
-//                    JSONArray jsonArray_boundary = jsonArray_Rows.getJSONArray(i);
-//                    if (jsonArray_boundary.size() > 0)
-//                    {
-//                        List<CoordinatesBean> list = JSON.parseArray(jsonArray_boundary.toJSONString(), CoordinatesBean.class);
-//                        initBoundary(list);
-//                    }
-//                }
-//            }
-//        }
-//显示规划图
-//        PolygonBean polygonBean = SqliteDb.getLayer(CZ_MakeMap_MakeLayer.this, departmentselected.getParkid(),departmentselected.getAreaid(),departmentselected.getContractid());
-//        if (polygonBean != null)
-//        {
-//            LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
-//            addCustomMarker(latlng, polygonBean.getUuid(), polygonBean.getNote());
-//            list_coordinatesbean = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, polygonBean.getUuid());
-//            if (list_coordinatesbean != null && list_coordinatesbean.size() != 0)
-//            {
-//                showNeedPlanBoundary(list_coordinatesbean);
-//            }
-//
-//        }
-
-        List<parktab> list_parktab = SqliteDb.getparktab(CZ_MakeMap_MakeLayer.this, "60");
+        List<parktab> list_parktab = SqliteDb.getparktab(CZ_MakeMap_MakeLayer.this, commembertab.getuId());
         for (int i = 0; i < list_parktab.size(); i++)//每个园区
         {
             PolygonBean polygonBean_park = SqliteDb.getLayer_park(CZ_MakeMap_MakeLayer.this, list_parktab.get(i).getid());
             if (polygonBean_park != null)
             {
-//                setCenterPointInfo(polygonBean_park);
                 LatLng latlng = new LatLng(Double.valueOf(polygonBean_park.getLat()), Double.valueOf(polygonBean_park.getLng()));
                 addCustomMarkerWithProgressbar(getResources().getColor(R.color.bg_blue), latlng, polygonBean_park.getUuid(), polygonBean_park.getNote());
                 List<CoordinatesBean> list_park = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, polygonBean_park.getUuid());
                 if (list_park != null && list_park.size() != 0)
                 {
                     initBoundary(Color.argb(150, 0, 255, 255), 0f, list_park, 2, R.color.bg_green);
-//                    initBoundaryLine(Color.argb(1000, 57, 72, 61), 0f, list_park);
                 }
 
             }
@@ -3469,14 +3025,11 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 PolygonBean polygonBean_area = SqliteDb.getLayer_area(CZ_MakeMap_MakeLayer.this, list_parktab.get(i).getid(), list_areatab.get(k).getid());
                 if (polygonBean_area != null)
                 {
-//                    setCenterPointInfo(polygonBean_area);
                     LatLng latlng = new LatLng(Double.valueOf(polygonBean_area.getLat()), Double.valueOf(polygonBean_area.getLng()));
                     addCustomMarkerWithProgressbar(getResources().getColor(R.color.bg_green), latlng, polygonBean_area.getUuid(), polygonBean_area.getNote());
                     List<CoordinatesBean> list_area = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, polygonBean_area.getUuid());
                     if (list_area != null && list_area.size() != 0)
                     {
-//                        initBoundary(Color.argb(160, 163, 145, 191), 200f, list_area);
-//                        initBoundaryLine(Color.argb(1000, 0, 0, 0), 0f, list_area);
                         initBoundary(Color.argb(150, 255, 0, 255), 0f, list_area, 2, R.color.bg_green);
                     }
 
@@ -3489,14 +3042,11 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                     PolygonBean polygonBean_contract = SqliteDb.getLayer_contract(CZ_MakeMap_MakeLayer.this, list_parktab.get(i).getid(), list_areatab.get(k).getid(), list_contractTab.get(m).getid());
                     if (polygonBean_contract != null)
                     {
-//                        setCenterPointInfo(polygonBean_contract);
                         LatLng latlng = new LatLng(Double.valueOf(polygonBean_contract.getLat()), Double.valueOf(polygonBean_contract.getLng()));
                         addCustomMarkerWithProgressbar(getResources().getColor(R.color.bg_ask), latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote());
                         List<CoordinatesBean> list_contract = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, polygonBean_contract.getUuid());
                         if (list_contract != null && list_contract.size() != 0)
                         {
-//                            initBoundary(Color.argb(160, 163, 145, 191), 200f, list_contract);
-//                            initBoundaryLine(Color.argb(1000, 0, 0, 0), 0f, list_contract);
                             initBoundary(Color.argb(150, 255, 255, 0), 0f, list_contract, 2, R.color.bg_green);
                         }
 
@@ -3506,6 +3056,23 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             }
 
         }
+        //显示规划图
+//        List<parktab> list_parktab = SqliteDb.getparktab(CZ_MakeMap_MakeLayer.this, commembertab.getuId());
+//        for (int i = 0; i < list_parktab.size(); i++)//每个园区
+//        {
+//            getPlanMap("park", list_parktab.get(i).getid(), "", "", "farm_boundary", "0");
+//            List<areatab> list_areatab = SqliteDb.getareatab(CZ_MakeMap_MakeLayer.this, list_parktab.get(i).getid());
+//            for (int k = 0; k < list_areatab.size(); k++)//每个片区
+//            {
+//                getPlanMap("area", list_parktab.get(i).getid(), list_areatab.get(k).getid(), "", "farm_boundary", "0");
+//                List<contractTab> list_contractTab = SqliteDb.getcontracttab(CZ_MakeMap_MakeLayer.this, list_areatab.get(k).getid());
+//                for (int m = 0; m < list_contractTab.size(); m++)//每个承包区
+//                {
+//                    getPlanMap("contract", list_parktab.get(i).getid(), list_areatab.get(k).getid(), list_contractTab.get(m).getid(), "farm_boundary", "0");
+//                }
+//            }
+//
+//        }
 //显示点
         initPointPolygon();
 //显示房子
@@ -3517,10 +3084,33 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 //显示面
         initMianPolygon();
     }
-
+    //    public void initHousePolygon()
+//    {
+//        getPlanMap_Custom(commembertab.getuId(), "house");
+//    }
+//
+//    public void initRoadPolygon()
+//    {
+//        getPlanMap_Custom(commembertab.getuId(), "road");
+//    }
+//
+//    public void initPointPolygon()
+//    {
+//        getPlanMap_Custom(commembertab.getuId(), "D");
+//    }
+//
+//    public void initLinePolygon()
+//    {
+//        getPlanMap_Custom(commembertab.getuId(), "X");
+//    }
+//
+//    public void initMianPolygon()
+//    {
+//        getPlanMap_Custom(commembertab.getuId(), "M");
+//    }
     public void initHousePolygon()
     {
-        list_polygon_house = SqliteDb.getMoreLayer_house(CZ_MakeMap_MakeLayer.this, "60");
+        list_polygon_house = SqliteDb.getMoreLayer_house(CZ_MakeMap_MakeLayer.this, commembertab.getuId());
         for (int i = 0; i < list_polygon_house.size(); i++)
         {
             List<CoordinatesBean> list = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, list_polygon_house.get(i).getUuid());
@@ -3536,7 +3126,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void initRoadPolygon()
     {
-        list_polygon_road = SqliteDb.getMoreLayer_road(CZ_MakeMap_MakeLayer.this, "60");
+        list_polygon_road = SqliteDb.getMoreLayer_road(CZ_MakeMap_MakeLayer.this, commembertab.getuId());
         for (int i = 0; i < list_polygon_road.size(); i++)
         {
             List<CoordinatesBean> list = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, list_polygon_road.get(i).getUuid());
@@ -3583,7 +3173,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void initPointPolygon()
     {
-        list_polygon_point = SqliteDb.getMoreLayer_point(CZ_MakeMap_MakeLayer.this, "60");
+        list_polygon_point = SqliteDb.getMoreLayer_point(CZ_MakeMap_MakeLayer.this, commembertab.getuId());
         for (int i = 0; i < list_polygon_point.size(); i++)
         {
             List<CoordinatesBean> list = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, list_polygon_point.get(i).getUuid());
@@ -3599,7 +3189,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void initLinePolygon()
     {
-        list_polygon_line = SqliteDb.getMoreLayer_line(CZ_MakeMap_MakeLayer.this, "60");
+        list_polygon_line = SqliteDb.getMoreLayer_line(CZ_MakeMap_MakeLayer.this, commembertab.getuId());
         for (int i = 0; i < list_polygon_line.size(); i++)
         {
             List<CoordinatesBean> list = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, list_polygon_line.get(i).getUuid());
@@ -3639,7 +3229,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void initMianPolygon()
     {
-        list_polygon_mian = SqliteDb.getMoreLayer_mian(CZ_MakeMap_MakeLayer.this, "60");
+        list_polygon_mian = SqliteDb.getMoreLayer_mian(CZ_MakeMap_MakeLayer.this, commembertab.getuId());
         for (int i = 0; i < list_polygon_mian.size(); i++)
         {
             LatLng latlng = new LatLng(Double.valueOf(list_polygon_mian.get(i).getLat()), Double.valueOf(list_polygon_mian.get(i).getLng()));
@@ -3684,7 +3274,15 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                     rl_getlocation.setVisibility(View.GONE);
                     ll_locationinfo.setVisibility(View.VISIBLE);
                 }
-            } else if (drawerType.equals("采线"))
+            } else if (drawerType.equals("观测点"))
+            {
+                tencentMap.animateTo(location_latLng);
+                if (showDialog_pickpointinfo.isShowing())
+                {
+                    rl_getlocation.setVisibility(View.GONE);
+                    ll_locationinfo.setVisibility(View.VISIBLE);
+                }
+            }  else if (drawerType.equals("采线"))
             {
                 tencentMap.animateTo(location_latLng);
                 PolylineOptions lineOpt = new PolylineOptions();
@@ -3748,6 +3346,17 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             tencentMap.animateTo(location_latLng);
             addMarker(location_latLng, R.drawable.location1);
         }
+    }
+    public void initMarkClickListenner()
+    {
+        tencentMap.setOnMarkerClickListener(new TencentMap.OnMarkerClickListener()
+        {
+            @Override
+            public boolean onMarkerClick(Marker marker)
+            {
+                return false;
+            }
+        });
     }
 
     private Marker addMarker_Paint(int pos, LatLng latLng, int icon)
@@ -5201,7 +4810,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             }
         } else
         {
-            List<parktab> list_parktab = SqliteDb.getparktab(CZ_MakeMap_MakeLayer.this, "60");
+            List<parktab> list_parktab = SqliteDb.getparktab(CZ_MakeMap_MakeLayer.this, commembertab.getuId());
             for (int i = 0; i < list_parktab.size(); i++)//每个园区
             {
                 List<areatab> list_areatab = SqliteDb.getareatab(CZ_MakeMap_MakeLayer.this, list_parktab.get(i).getid());
@@ -5233,7 +4842,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             }
         } else
         {
-            List<parktab> list_parktab = SqliteDb.getparktab(CZ_MakeMap_MakeLayer.this, "60");
+            List<parktab> list_parktab = SqliteDb.getparktab(CZ_MakeMap_MakeLayer.this, commembertab.getuId());
             for (int i = 0; i < list_parktab.size(); i++)//每个园区
             {
                 List<areatab> list_areatab = SqliteDb.getareatab(CZ_MakeMap_MakeLayer.this, list_parktab.get(i).getid());
@@ -5261,7 +4870,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             }
         } else
         {
-            List<parktab> list_parktab = SqliteDb.getparktab(CZ_MakeMap_MakeLayer.this, "60");
+            List<parktab> list_parktab = SqliteDb.getparktab(CZ_MakeMap_MakeLayer.this, commembertab.getuId());
             for (int i = 0; i < list_parktab.size(); i++)//每个园区
             {
                 PolygonBean polygonBean_park = SqliteDb.getLayer_park(CZ_MakeMap_MakeLayer.this, list_parktab.get(i).getid());
@@ -5401,7 +5010,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                                 LatLng latlng = new LatLng(Double.valueOf(list_coordinatesbean.get(i).getLat()), Double.valueOf(list_coordinatesbean.get(i).getLng()));
                                 list_latlng.add(latlng);
                             }
-                             polygonselect_frommark = drawPolygon(0f, list_latlng, R.color.red, 10, R.color.red);
+                            polygonselect_frommark = drawPolygon(0f, list_latlng, R.color.red, 10, R.color.red);
                             Overlays.add(polygonselect_frommark);
                         }
                     }
@@ -5431,68 +5040,21 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
         polygonOp.fillColor(fillcolor);// 填充色
         polygonOp.strokeColor(getResources().getColor(strokecolor));// 线宽
         polygonOp.strokeWidth(strokesize);// 线宽
-        for (int i = 0; i < list_LatLng.size(); i++)
-        {
-            polygonOp.add(list_LatLng.get(i));
-        }
+        polygonOp.addAll(list_LatLng);
+//        for (int i = 0; i < list_LatLng.size(); i++)
+//        {
+//            polygonOp.add(list_LatLng.get(i));
+//        }
         Polygon polygon = mapview.getMap().addPolygon(polygonOp);
         polygon.setZIndex(z);
         return polygon;
     }
 
-    private void uploadCoordinatesBean(CoordinatesBean coordinatesbean)
-    {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("action", "AddCoordinates");
-        params.addQueryStringParameter("uuid", coordinatesbean.getUuid());
-        params.addQueryStringParameter("type", coordinatesbean.getType());
-        params.addQueryStringParameter("uid", coordinatesbean.getUid());
-        params.addQueryStringParameter("parkId", coordinatesbean.getparkId());
-        params.addQueryStringParameter("parkName", coordinatesbean.getparkName());
-        params.addQueryStringParameter("areaId", coordinatesbean.getAreaId());
-        params.addQueryStringParameter("areaName", coordinatesbean.getareaName());
-        params.addQueryStringParameter("contractid", coordinatesbean.getContractid());
-        params.addQueryStringParameter("contractname", coordinatesbean.getContractname());
-        params.addQueryStringParameter("batchid", coordinatesbean.getBatchid());
-        params.addQueryStringParameter("saleid", coordinatesbean.getSaleid());
-        params.addQueryStringParameter("lat", coordinatesbean.getLat());
-        params.addQueryStringParameter("lng", coordinatesbean.getLng());
-        params.addQueryStringParameter("numofplant", coordinatesbean.getNumofplant());
-        params.addQueryStringParameter("weightofplant", coordinatesbean.getWeightofplant());
-        params.addQueryStringParameter("registime", coordinatesbean.getRegistime());
-        params.addQueryStringParameter("coordinatestime", coordinatesbean.getCoordinatestime());
-        params.addQueryStringParameter("orders", "");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-//                    Toast.makeText(AddOrderMap.this, "添加成功！", Toast.LENGTH_SHORT).show();
-                } else
-                {
-                    AppContext.makeToast(CZ_MakeMap_MakeLayer.this, "error_connectDataBase");
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException error, String arg1)
-            {
-                String A = "";
-                AppContext.makeToast(CZ_MakeMap_MakeLayer.this, "error_connectServer");
-            }
-        });
-    }
 
     private void getBoundary_farm()
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", "60");
+        params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "Getfarm_boundary");
         params.addQueryStringParameter("type", "farm_boundary");
         HttpUtils http = new HttpUtils();
@@ -5728,34 +5290,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     }
 
-    public void saveCoordinate(List<LatLng> list, String id, String name)
-    {
-        for (int i = 0; i < list.size(); i++)
-        {
-            String uuid = java.util.UUID.randomUUID().toString();
-            CoordinatesBean coordinatesBean = new CoordinatesBean();
-            coordinatesBean.setLat(String.valueOf(list.get(i).getLatitude()));
-            coordinatesBean.setLng(String.valueOf(list.get(i).getLongitude()));
-            coordinatesBean.setNumofplant("10000");
-            coordinatesBean.setType("farm_boundary");
-            coordinatesBean.setUid("60");
-            coordinatesBean.setparkId("15");
-            coordinatesBean.setparkName("一号园区");
-            coordinatesBean.setUuid(uuid);
-            coordinatesBean.setAreaId(id);
-            coordinatesBean.setareaName(name);
-            coordinatesBean.setContractid("");
-            coordinatesBean.setContractname("");
-            coordinatesBean.setBatchid("");
-            coordinatesBean.setCoordinatestime(utils.getTime());
-            coordinatesBean.setRegistime(utils.getTime());
-            coordinatesBean.setWeightofplant("400000");
-            coordinatesBean.setSaleid("");
-            coordinatesBean.setOrders("");
-            SqliteDb.save(CZ_MakeMap_MakeLayer.this, coordinatesBean);
-//                uploadCoordinatesBean(coordinatesBean);
-        }
-    }
+
 
     private void initMapAndParam()
     {
@@ -5884,5 +5419,368 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
     public void onClick(View v)
     {
 
+    }
+    private void getPlanMap(final String witcharea, String parkId, String areaid, String contractid, String type, String xxzt)
+    {
+        commembertab commembertab = AppContext.getUserInfo(CZ_MakeMap_MakeLayer.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("parkId", parkId);
+        params.addQueryStringParameter("areaid", areaid);
+        params.addQueryStringParameter("contractid", contractid);
+        params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("action", "getPlanMap");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<PolygonBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listNewData = new ArrayList<PolygonBean>();
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PolygonBean.class);
+                        PolygonBean polygonBean = listNewData.get(0);
+                        if (witcharea.equals("park"))
+                        {
+                            if (polygonBean != null)
+                            {
+                                LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
+                                addCustomMarkerWithProgressbar(getResources().getColor(R.color.bg_blue), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                List<CoordinatesBean> list_park = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, polygonBean.getUuid());
+                                if (list_park != null && list_park.size() != 0)
+                                {
+                                    initBoundary(Color.argb(150, 0, 255, 255), 0f, list_park, 2, R.color.bg_green);
+                                }
+
+                            }
+                        } else if (witcharea.equals("area"))
+                        {
+                            if (polygonBean != null)
+                            {
+                                LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
+                                addCustomMarkerWithProgressbar(getResources().getColor(R.color.bg_green), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                List<CoordinatesBean> list_area = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, polygonBean.getUuid());
+                                if (list_area != null && list_area.size() != 0)
+                                {
+                                    initBoundary(Color.argb(150, 255, 0, 255), 0f, list_area, 2, R.color.bg_green);
+                                }
+
+                            }
+                        } else if (witcharea.equals("contract"))
+                        {
+                            if (polygonBean != null)
+                            {
+                                LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
+                                addCustomMarkerWithProgressbar(getResources().getColor(R.color.bg_ask), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                List<CoordinatesBean> list_contract = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, polygonBean.getUuid());
+                                if (list_contract != null && list_contract.size() != 0)
+                                {
+                                    initBoundary(Color.argb(150, 255, 255, 0), 0f, list_contract, 2, R.color.bg_green);
+                                }
+
+                            }
+                        }
+
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(CZ_MakeMap_MakeLayer.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(CZ_MakeMap_MakeLayer.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void getNeedPlanMap(final String witcharea, String parkId, String areaid, String contractid, String type, String xxzt)
+    {
+        commembertab commembertab = AppContext.getUserInfo(CZ_MakeMap_MakeLayer.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("parkId", parkId);
+        params.addQueryStringParameter("areaid", areaid);
+        params.addQueryStringParameter("contractid", contractid);
+        params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("action", "getNeedPlanMap");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<PolygonBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listNewData = new ArrayList<PolygonBean>();
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PolygonBean.class);
+                        PolygonBean polygonBean = listNewData.get(0);
+                        if (witcharea.equals("park"))
+                        {
+                            if (polygonBean != null)
+                            {
+                                LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
+                                addCustomMarkerWithProgressbar(getResources().getColor(R.color.bg_blue), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                List<CoordinatesBean> list_park = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, polygonBean.getUuid());
+                                if (list_park != null && list_park.size() != 0)
+                                {
+                                    initBoundary(Color.argb(150, 0, 255, 255), 0f, list_park, 2, R.color.bg_green);
+                                }
+
+                            }
+                        } else if (witcharea.equals("area"))
+                        {
+                            if (polygonBean != null)
+                            {
+                                LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
+                                addCustomMarkerWithProgressbar(getResources().getColor(R.color.bg_green), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                List<CoordinatesBean> list_area = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, polygonBean.getUuid());
+                                if (list_area != null && list_area.size() != 0)
+                                {
+                                    initBoundary(Color.argb(150, 255, 0, 255), 0f, list_area, 2, R.color.bg_green);
+                                }
+
+                            }
+                        } else if (witcharea.equals("contract"))
+                        {
+                            if (polygonBean != null)
+                            {
+                                LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
+                                addCustomMarkerWithProgressbar(getResources().getColor(R.color.bg_ask), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                List<CoordinatesBean> list_contract = SqliteDb.getPoints(CZ_MakeMap_MakeLayer.this, polygonBean.getUuid());
+                                if (list_contract != null && list_contract.size() != 0)
+                                {
+                                    initBoundary(Color.argb(150, 255, 255, 0), 0f, list_contract, 2, R.color.bg_green);
+                                }
+
+                            }
+                        }
+
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(CZ_MakeMap_MakeLayer.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(CZ_MakeMap_MakeLayer.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void getPlanMap_Custom(String uid, final String type)
+    {
+        commembertab commembertab = AppContext.getUserInfo(CZ_MakeMap_MakeLayer.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", uid);
+        params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("action", "getPlanMap_Custom");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<PolygonBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listNewData = new ArrayList<PolygonBean>();
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PolygonBean.class);
+                        if (type.equals("D"))
+                        {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                for (int j = 0; j < listNewData.size(); j++)
+                                {
+                                    List<CoordinatesBean> list = listNewData.get(j).getCoordinatesBeanList();
+                                    if (list != null && list.size() != 0)
+                                    {
+                                        LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
+                                        Marker marker = addCustomMarker(getResources().getColor(R.color.bg_job), latlng, listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                        list_Objects_point.add(marker);
+                                    }
+                                }
+
+                            }
+
+                        } else if (type.equals("X"))
+                        {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                List<CoordinatesBean> list = listNewData.get(i).getCoordinatesBeanList();
+                                List<LatLng> list_latlang = new ArrayList();
+                                for (int j = 0; j < list.size(); j++)
+                                {
+                                    LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLng()));
+                                    list_latlang.add(latlng);
+                                }
+                                PolylineOptions lineOpt = new PolylineOptions();
+                                lineOpt.addAll(list_latlang);
+                                Polyline line = tencentMap.addPolyline(lineOpt);
+                                line.setColor(Color.argb(500, 177, 15, 0));
+                                line.setWidth(8f);
+                                Overlays.add(line);
+                                list_Objects_line.add(line);
+
+                                if (list_latlang.size() > 0)
+                                {
+                                    int halfsize = list_latlang.size() / 2;
+                                    if (halfsize == 0)
+                                    {
+                                        Marker marker = addCustomMarker(getResources().getColor(R.color.bg_sq), list_latlang.get(0), listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                        list_Objects_line_centermarker.add(marker);
+                                    } else
+                                    {
+                                        Marker marker = addCustomMarker(getResources().getColor(R.color.bg_sq), list_latlang.get(halfsize), listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                        list_Objects_line_centermarker.add(marker);
+                                    }
+
+                                }
+
+                            }
+                        } else if (type.equals("M"))
+                        {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                LatLng latlng = new LatLng(Double.valueOf(listNewData.get(i).getLat()), Double.valueOf(listNewData.get(i).getLng()));
+                                Marker marker = addCustomMarker(getResources().getColor(R.color.bg_ask), latlng, listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                list_Objects_mian_centermarker.add(marker);
+                                List<CoordinatesBean> list_mian = listNewData.get(i).getCoordinatesBeanList();
+                                List<LatLng> list_LatLng = new ArrayList<>();
+                                if (list_mian != null && list_mian.size() != 0)
+                                {
+                                    for (int j = 0; j < list_mian.size(); j++)
+                                    {
+                                        LatLng ll = new LatLng(Double.valueOf(list_mian.get(j).getLat()), Double.valueOf(list_mian.get(j).getLng()));
+                                        list_LatLng.add(ll);
+                                    }
+                                    Polygon polygon = drawPolygon(0f, list_LatLng, Color.argb(180, 70, 101, 10), 2, R.color.bg_text);
+                                    polygon.setZIndex(0f);
+                                    Overlays.add(polygon);
+                                    list_Objects_mian.add(polygon);
+                                }
+
+                            }
+                        } else if (type.equals("road"))
+                        {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                List<CoordinatesBean> list = listNewData.get(i).getCoordinatesBeanList();
+                                List<LatLng> list_latlang = new ArrayList();
+                                for (int j = 0; j < list.size(); j++)
+                                {
+                                    LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLng()));
+                                    list_latlang.add(latlng);
+                                }
+                                PolylineOptions lineOpt = new PolylineOptions();
+                                lineOpt.setDottedLine(true);
+                                lineOpt.addAll(list_latlang);
+                                Polyline line = tencentMap.addPolyline(lineOpt);
+                                line.setColor(Color.argb(500, 177, 15, 0));
+                                line.setWidth(8f);
+                                Overlays.add(line);
+                                list_Objects_road.add(line);
+
+                                if (list_latlang.size() > 0)
+                                {
+                                    int halfsize = list_latlang.size() / 2;
+                                    Marker marker = addCustomMarker(getResources().getColor(R.color.bg_sq), list_latlang.get(halfsize), listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                    list_Objects_road_centermarker.add(marker);
+                                }
+
+                            }
+                        } else if (type.equals("house"))
+                        {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                List<CoordinatesBean> list = listNewData.get(i).getCoordinatesBeanList();
+                                if (list != null && list.size() != 0)
+                                {
+                                    LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
+                                    Marker marker = addCustomMarkerWithHouse(getResources().getColor(R.color.bg_ask), latlng, listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                    list_Objects_house.add(marker);
+                                }
+
+                            }
+                        }
+
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(CZ_MakeMap_MakeLayer.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(CZ_MakeMap_MakeLayer.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void addPlanMap(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("data", data);
+        params.addQueryStringParameter("action", "addPlanMap");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<PolygonBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listNewData = new ArrayList<PolygonBean>();
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(CZ_MakeMap_MakeLayer.this, "保存成功", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(CZ_MakeMap_MakeLayer.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(CZ_MakeMap_MakeLayer.this, "error_connectServer");
+            }
+        });
     }
 }

@@ -57,7 +57,7 @@ public class MutilChartFragment extends Fragment
 
 			if (i % 3 == 0)
 			{
-				list.add(new LineChartItem(generateDataLine(i + 1), getActivity().getApplicationContext()));
+				list.add(new LineChartItem(R.layout.list_item_linechart_goods,generateDataLine(i + 1), getActivity().getApplicationContext()));
 			} 
 //			else if (i % 3 == 1)
 //			{
