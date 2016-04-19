@@ -103,8 +103,29 @@ public class NCZ_EventHandle extends Fragment
     @Click
     void btn_handle()
     {
-        saveData();
-        addDate();
+
+        View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "指派人员", "是否指派"+name+"处理这件事", "确认", "取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        saveData();
+                        addDate();
+                        break;
+                    case R.id.btn_cancle:
+
+                        myDialog.dismiss();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+//        saveData();
+//        addDate();
     }
     @AfterViews
     void afteroncreate()

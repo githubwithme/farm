@@ -153,7 +153,8 @@ public class WeekWeatherFragment extends Fragment
 	{
 		String[] days = utils.getMoreDays(utils.getToday());
 		ArrayList<String> m = new ArrayList<String>();
-		for (int i = 0; i < days.length; i++)
+//		for (int i = 0; i < days.length; i++)//只获取了6天，day是7
+		for (int i = 0; i < listNewData.size(); i++)
 		{
 //			if (i == 0)
 //			{
