@@ -41,6 +41,8 @@ public class Command_ExecuteArea_Adapter extends BaseAdapter
     {
         public Button btn_delete;
         public TextView tv_area;
+        public TextView tv_name;
+        public TextView tv_amount;
 
         public TextView tv_yq;
         public TextView tv_pq;
@@ -83,6 +85,8 @@ public class Command_ExecuteArea_Adapter extends BaseAdapter
             // 获取控件对象
             listItemView.btn_delete = (Button) convertView.findViewById(R.id.btn_delete);
             listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
+            listItemView.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+            listItemView.tv_amount = (TextView) convertView.findViewById(R.id.tv_amount);
             listItemView.btn_delete.setId(position);
             listItemView.btn_delete.setOnClickListener(new OnClickListener()
             {
@@ -102,6 +106,8 @@ public class Command_ExecuteArea_Adapter extends BaseAdapter
         }
         // 设置文字和图片
         listItemView.tv_area.setText(commandtab.getparkName() + "  " + commandtab.getareaName());
+        listItemView.tv_name.setText(commandtab.getnongziName());
+        listItemView.tv_amount.setText(commandtab.getamount()+commandtab.getAmountDW());
         return convertView;
     }
 

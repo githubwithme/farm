@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -65,6 +66,8 @@ public class NCZ_HandleDetail extends Activity
     TextView tv_time;
     @ViewById
     TextView et_sjms;
+    @ViewById
+    Button btn_delete;
 
     HandleBean handleBean;
 
@@ -82,6 +85,10 @@ public class NCZ_HandleDetail extends Activity
     @AfterViews
     void afteroncreate()
     {
+        if (handleBean.getState().equals("1"))
+        {
+            btn_delete.setVisibility(View.GONE);
+        }
         tv_reported.setText(handleBean.getSolveName());
         tv_time.setText(handleBean.getRegistime());
         et_sjms.setText(handleBean.getResult());

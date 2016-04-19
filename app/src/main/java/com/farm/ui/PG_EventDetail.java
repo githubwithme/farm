@@ -171,6 +171,13 @@ View view_line2;
 
     @AfterViews
     void aftercreate() {
+        if(!reportedBean.getEventType().equals("0"))
+        {
+            tv_bianjie.setVisibility(View.GONE);
+            tv_delete.setVisibility(View.GONE);
+        }
+
+
         tv_type.setEnabled(false);
         et_sjms.setEnabled(false);
 

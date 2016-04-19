@@ -29,7 +29,9 @@ public class commandtab implements Parcelable
 	public String stdJobName;
 	public String nongziName;
 	public String amount;
+	public String amountDW;
 	public String commNote;
+
 	public String execLevel;
 	public String commFromID;
 	public String commFromName;
@@ -61,6 +63,13 @@ public class commandtab implements Parcelable
 	public String percent;
 	public List<jobtab> jobList;
 
+	public String getAmountDW() {
+		return amountDW;
+	}
+
+	public void setAmountDW(String amountDW) {
+		this.amountDW = amountDW;
+	}
 
 	public String getPercent()
 	{
@@ -478,6 +487,7 @@ public class commandtab implements Parcelable
 			p.setstdJobName(source.readString());
 			p.setnongziName(source.readString());
 			p.setamount(source.readString());
+			p.setAmountDW(source.readString());
 			p.setcommNote(source.readString());
 			p.setexecLevel(source.readString());
 			p.setcommFromID(source.readString());
@@ -530,6 +540,7 @@ public class commandtab implements Parcelable
 		p.writeString(stdJobName);
 		p.writeString(nongziName);
 		p.writeString(amount);
+		p.writeString(amountDW);
 		p.writeString(commNote);
 		p.writeString(execLevel);
 		p.writeString(commFromID);

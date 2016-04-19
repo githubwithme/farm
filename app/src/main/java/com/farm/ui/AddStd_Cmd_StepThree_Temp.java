@@ -224,6 +224,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
+                String a = responseInfo.result;//0
                 List<Dictionary> lsitNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
