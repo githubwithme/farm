@@ -107,7 +107,14 @@ public class Login extends Activity
     void rl_down()
     {
         list = SqliteDb.getUserList(this, commembertab.class);
-        showPop_tab();
+        if (popupWindow_tab!=null && popupWindow_tab.isShowing())
+        {
+            Toast.makeText(this, "请不要重复点击", Toast.LENGTH_SHORT).show();
+        } else
+        {
+            showPop_tab();
+        }
+
     }
 
     @Click
@@ -180,7 +187,7 @@ public class Login extends Activity
                                 Intent intent = new Intent(Login.this, NCZ_MainActivity_.class);
                                 startActivity(intent);
                                 finish();
-                            } else if (level.equals("0"))// 技术部门主管
+                            } else if (level.equals("-1"))// 技术部门主管
                             {
                                 Intent intent = new Intent(Login.this, NCZ_MainActivity_.class);
                                 startActivity(intent);

@@ -57,6 +57,7 @@ public class NCZ_MainFragment extends Fragment
 	{
 		// tv_title.setTypeface(FontManager.getTypefaceByFontName(getActivity(),
 		// "wsyh.ttf"));
+		ncz_WorkList = new NCZ_YQPQ_();
 		tv_day.setText(utils.getTodayAndwWeek());
 		tv_title.setText("首页");
 		switchContent_todayjob(mContent_todayjob, ncz_WorkList);
@@ -75,7 +76,6 @@ public class NCZ_MainFragment extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View rootView = inflater.inflate(R.layout.ncz_fragment_main, container, false);
-		ncz_WorkList = new NCZ_YQPQ_();
 		return rootView;
 	}
 

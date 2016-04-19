@@ -53,7 +53,7 @@ import java.util.List;
 @EFragment
 public class IFragment extends Fragment
 {
-	TimeThread timethread;
+//	TimeThread timethread;
 	Fragment mContent = new Fragment();
 	@ViewById
 	FrameLayout fl_new;
@@ -174,7 +174,7 @@ public class IFragment extends Fragment
 	@AfterViews
 	void afterOncreate()
 	{
-		getListData();
+//		getListData();
 		commembertab commembertab = AppContext.getUserInfo(getActivity());
 //		BitmapHelper.setImageViewBackground(getActivity(), circle_img,AppConfig.baseurl+ commembertab.getimgurl());
 //		BitmapHelper.setImageViewBackground(getActivity(), circle_img, AppConfig.baseurl + "/upload/201511/02/201511021602504091.jpg");
@@ -213,48 +213,48 @@ public class IFragment extends Fragment
 		SqliteDb.existSystem(getActivity(), commembertab);
 	}
 
-	class TimeThread extends Thread
-	{
-		private boolean isSleep = true;
-		private boolean stop = false;
-
-		public void run()
-		{
-			Long starttime = 0l;
-			while (!stop)
-			{
-				if (isSleep)
-				{
-				} else
-				{
-					try
-					{
-						Thread.sleep(60000);
-						starttime = starttime + 1000;
-						if (fl_new.isShown())
-						{
-						} else
-						{
-							getListData();
-						}
-					} catch (InterruptedException e)
-					{
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-
-		public void setSleep(boolean sleep)
-		{
-			isSleep = sleep;
-		}
-
-		public void setStop(boolean stop)
-		{
-			this.stop = stop;
-		}
-	}
+//	class TimeThread extends Thread
+//	{
+//		private boolean isSleep = true;
+//		private boolean stop = false;
+//
+//		public void run()
+//		{
+//			Long starttime = 0l;
+//			while (!stop)
+//			{
+//				if (isSleep)
+//				{
+//				} else
+//				{
+//					try
+//					{
+//						Thread.sleep(60000);
+//						starttime = starttime + 1000;
+//						if (fl_new.isShown())
+//						{
+//						} else
+//						{
+//							getListData();
+//						}
+//					} catch (InterruptedException e)
+//					{
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		}
+//
+//		public void setSleep(boolean sleep)
+//		{
+//			isSleep = sleep;
+//		}
+//
+//		public void setStop(boolean stop)
+//		{
+//			this.stop = stop;
+//		}
+//	}
 
 	private void getListData()
 	{

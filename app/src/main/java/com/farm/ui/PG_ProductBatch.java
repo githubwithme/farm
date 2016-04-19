@@ -2131,15 +2131,15 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
     @Override
     public void onLocationChanged(TencentLocation tencentLocation, int i, String s)
     {
-        if (TencentLocation.ERROR_OK == error) // 定位成功
-        {
-            // 用于定位
-            location_latLng = new LatLng(tencentLocation.getLatitude(), tencentLocation.getLongitude());
-            //全局记录坐标
-            AppContext appContext = (AppContext) getActivity().getApplication();
-            appContext.setLOCATION_X(String.valueOf(location_latLng.getLatitude()));
-            appContext.setLOCATION_Y(String.valueOf(location_latLng.getLongitude()));
-        }
+//        if (TencentLocation.ERROR_OK == error) // 定位成功
+//        {
+//            // 用于定位
+//            location_latLng = new LatLng(tencentLocation.getLatitude(), tencentLocation.getLongitude());
+//            //全局记录坐标
+//            AppContext appContext = (AppContext) getActivity().getApplication();
+//            appContext.setLOCATION_X(String.valueOf(location_latLng.getLatitude()));
+//            appContext.setLOCATION_Y(String.valueOf(location_latLng.getLongitude()));
+//        }
     }
 
     @Override
