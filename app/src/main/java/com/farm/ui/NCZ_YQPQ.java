@@ -15,6 +15,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -301,8 +302,12 @@ public class NCZ_YQPQ extends Fragment
                 // main_head_progress.setVisibility(ProgressBar.GONE);
                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
                 {
-                    lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
-                    lv.setSelection(0);
+                    if (isAdded()) {
+                        lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
+                        lv.setSelection(0);
+                    }
+                /*    lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
+                    lv.setSelection(0);*/
                 } else if (actiontype == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG)
                 {
                     lv.onRefreshComplete();
@@ -319,6 +324,7 @@ public class NCZ_YQPQ extends Fragment
             {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
+//                Toast.makeText(getActivity(), "连接服务器异常！", Toast.LENGTH_SHORT).show();
                 if (!ishidding  && timethread!=null)
                 {
                     timethread.setSleep(false);
