@@ -149,8 +149,10 @@ public class IFragment extends Fragment
 	void tv_renewversion()
 	{
 		Intent intent = new Intent(getActivity(), UpdateApk.class);
-		intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+//		intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		getActivity().startService(intent);
+
 	}
 
 	@Click

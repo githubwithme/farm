@@ -115,6 +115,7 @@ public class ShowPlantGrowth extends Activity
 		btn_foundation.setTextColor(getResources().getColor(R.color.black));
 	}
 
+	@SuppressLint("ValidFragment")
 	class FoundationFragment extends Fragment
 	{
 		@Override
@@ -146,6 +147,7 @@ public class ShowPlantGrowth extends Activity
 		}
 	}
 
+	@SuppressLint("ValidFragment")
 	class OtherFragment extends Fragment
 	{
 		@Override

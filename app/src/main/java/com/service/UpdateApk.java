@@ -74,6 +74,7 @@ public class UpdateApk extends Service
 		action = intent.getAction();
 		getListData();
 		return super.onStartCommand(intent, flags, startId);
+
 	}
 
 	/*
@@ -227,6 +228,7 @@ public class UpdateApk extends Service
 
 	public void showDialog(final String path, final String target, String title, String message, String str_Positive, String str_Negative)
 	{
+
 		AlertDialog.Builder builder = new Builder(UpdateApk.this);
 		builder.setTitle(title);
 		builder.setMessage(message);

@@ -164,7 +164,8 @@ public class ShowPlant extends Activity
         btn_foundation.setTextColor(getResources().getColor(R.color.black));
     }
 
-    class FoundationFragment extends Fragment
+    @SuppressLint("ValidFragment")
+    public class FoundationFragment extends Fragment
     {
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -216,8 +217,8 @@ public class ShowPlant extends Activity
             return rootView;
         }
     }
-
-    class OtherFragment extends Fragment
+    @SuppressLint("ValidFragment")
+    public class OtherFragment extends Fragment
     {
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)

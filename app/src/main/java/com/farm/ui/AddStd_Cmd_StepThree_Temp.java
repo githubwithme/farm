@@ -285,7 +285,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
-                    {
+                        {
                         String aa = result.getRows().toJSONString();
                         int size = result.getRows().size();
                         map_goods = new HashMap<String, List<goodslisttab>>();
@@ -293,7 +293,9 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                         {
                             String parkId = result.getRows().getJSONObject(i).getString("parkId");
                             String parkName = result.getRows().getJSONObject(i).getString("parkName");
-                            JSONArray jsonarray = result.getRows().getJSONObject(i).getJSONArray("goodsSum");
+//                            JSONArray jsonarray = result.getRows().getJSONObject(i).getJSONArray("goodsSum");
+                            String jsonarray = result.getRows().getJSONObject(i).getString("goodsSum");
+                            String [] listsum=jsonarray.split("[,]");
                             HashMap<String, String> map = new HashMap<String, String>();
                             List<goodslisttab> list = new ArrayList<goodslisttab>();
                             for (int k = 0; k < list_goods.size(); k++)
@@ -306,7 +308,17 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                                 goodslisttab.setgoodsNote(list_goods.get(k).getgoodsNote());
                                 goodslisttab.setgoodsProducer(list_goods.get(k).getgoodsProducer());
                                 goodslisttab.setgoodsSpec(list_goods.get(k).getgoodsSpec());
-                                goodslisttab.setGoodsSum(jsonarray.get(k).toString());
+//                                goodslisttab.setGoodsSum(jsonarray.get(k).toString());
+                                if (listsum.length!=0) {
+                                    if (listsum[k].equals(""))
+                                    {
+                                        listsum[k] = "0";
+                                        goodslisttab.setGoodsSum(listsum[k]);
+                                    }else {
+                                        goodslisttab.setGoodsSum(listsum[k]);
+                                    }
+
+                                }
                                 goodslisttab.setgoodsTypeID(list_goods.get(k).getgoodsTypeID());
                                 goodslisttab.setgoodsunit(list_goods.get(k).getgoodsunit());
                                 goodslisttab.setId(list_goods.get(k).getId());
