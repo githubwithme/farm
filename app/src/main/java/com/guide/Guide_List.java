@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.farm.R;
-import com.farm.ui.GuideViewDoor;
 import com.farm.ui.Login_;
 import com.guide.ViewPager.OnPageChangeListener;
 import com.service.LogService;
@@ -256,10 +255,16 @@ public class Guide_List extends FragmentActivity implements OnPageChangeListener
 		case 1:
 			if (preIndex > position)
 			{
-				t3_icon2.getAnimation().cancel();
-				t3_icon3.getAnimation().cancel();
-				t3_icon4.getAnimation().cancel();
-				t3_icon5.getAnimation().cancel();
+//				t3_icon2.getAnimation().cancel();
+//				t3_icon3.getAnimation().cancel();
+//				t3_icon4.getAnimation().cancel();
+//				t3_icon5.getAnimation().cancel();
+
+				t3_icon2.clearAnimation();
+				t3_icon3.clearAnimation();
+				t3_icon4.clearAnimation();
+				t3_icon5.clearAnimation();
+
 				t3_icon2.setVisibility(View.INVISIBLE);
 				t3_icon3.setVisibility(View.INVISIBLE);
 				t3_icon4.setVisibility(View.INVISIBLE);
