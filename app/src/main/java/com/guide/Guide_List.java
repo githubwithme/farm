@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 
 import com.farm.R;
 import com.farm.ui.GuideViewDoor;
+import com.farm.ui.Login_;
 import com.guide.ViewPager.OnPageChangeListener;
 import com.service.LogService;
 
@@ -77,7 +78,7 @@ public class Guide_List extends FragmentActivity implements OnPageChangeListener
 		firstUse = sp.getString("firstUse", "");
 		if (firstUse.equals("true"))
 		{
-			Intent intent1 = new Intent(Guide_List.this, GuideViewDoor.class);
+			Intent intent1 = new Intent(Guide_List.this, Login_.class);
 			startActivity(intent1);
 			Guide_List.this.finish();
 		} else
@@ -162,7 +163,7 @@ public class Guide_List extends FragmentActivity implements OnPageChangeListener
 				@Override
 				public void onClick(View arg0)
 				{
-					Intent intent = new Intent(Guide_List.this, GuideViewDoor.class);
+					Intent intent = new Intent(Guide_List.this, Login_.class);
 					startActivity(intent);
 					Guide_List.this.finish();
 				}

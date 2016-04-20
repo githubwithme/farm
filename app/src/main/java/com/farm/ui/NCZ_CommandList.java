@@ -386,8 +386,12 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 // main_head_progress.setVisibility(ProgressBar.GONE);
                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
                 {
-                    lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
-                    lv.setSelection(0);
+                    if (isAdded()) {
+                        lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
+                        lv.setSelection(0);
+                    }
+                /*    lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
+                    lv.setSelection(0);*/
                 } else if (actiontype == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG)
                 {
                     lv.onRefreshComplete();
