@@ -20,11 +20,11 @@ public class AppConfig
     public static String DOWNLOADPATH_VIDEO = Environment.getExternalStorageDirectory().getPath() + "/bhq/FJ/VIDEO/"; /* 事件附件下载到本地的路径 */
     /* 多媒体制作保存路径 */
     public static String MEDIA_PATH = Environment.getExternalStorageDirectory().getPath() + "/Farm/MEDIA/";
-    //	 public static String baseurl = "http://192.168.31.163:8055/";//
+//    	 public static String baseurl = "http://192.168.31.163:8055/";//
     // 注意将8055端口添加到防火墙规则中
-//    public static String baseurl = "http://www.farmm.cn/";// 注意将8055端口添加到防火墙规则中
+    public static String baseurl = "http://www.farmm.cn/";// 注意将8055端口添加到防火墙规则中
     //	 public static String baseurl = "http://192.168.23.1:8055/";//
-	 public static String baseurl = "http://192.168.20.108:8055/";//
+//	 public static String baseurl = "http://192.168.20.108:8055/";//
     // 注意将8055端口添加到防火墙规则中
     public static String testurl = baseurl + "webService.ashx";
     public static String uploadurl = baseurl + "tools/upload_ajax.ashx";

@@ -84,16 +84,16 @@ public class Login extends Activity
     @Click
     void register()
     {
-        Intent intent = new Intent(Login.this, Register_StepOne_.class);
-        startActivity(intent);
+//        Intent intent = new Intent(Login.this, Register_StepOne_.class);
+//        startActivity(intent);
     }
 
     @Click
     void vistor()
     {
-        Intent intent = new Intent(Login.this, NCZ_MainActivity_.class);
-        startActivity(intent);
-        finish();
+//        Intent intent = new Intent(Login.this, NCZ_MainActivity_.class);
+//        startActivity(intent);
+//        finish();
     }
 
     @Click
