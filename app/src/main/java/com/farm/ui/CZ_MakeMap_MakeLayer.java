@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -232,6 +233,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
     Button btn_addlayer;
     @ViewById
     Button btn_showlayer;
+    @ViewById
+    ProgressBar pb_upload;
     @ViewById
     Button btn_addmore;
     @ViewById
@@ -562,7 +565,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             btn_addmore.setVisibility(View.GONE);
             btn_showlayer.setVisibility(View.GONE);
             btn_setting.setVisibility(View.GONE);
-            showDialog_department();
+            getDepartMent(commembertab.getuId());
         }
 
 
@@ -2199,7 +2202,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     }
 
-    public void showDialog_department()
+    public void showDialog_department(final List<DepartmentBean> list_department)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_editpolygoninfo, null);
         customdialog_editpolygoninfor = new CustomDialog_EditPolygonInfo(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
@@ -2229,10 +2232,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 btn_addlayer.setText("添加区域");
             }
         });
-//        list_department = getDepartment(CZ_MakeMap_MakeLayer.this);
-//        department_adapter = new Department_Adapter(CZ_MakeMap_MakeLayer.this, list_department);
-//        lv_department.setAdapter(department_adapter);
-        getDepartMent(commembertab.getuId(), lv_department);
+        department_adapter = new Department_Adapter(CZ_MakeMap_MakeLayer.this, list_department);
+        lv_department.setAdapter(department_adapter);
         lv_department.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -5592,7 +5593,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     }
 
-    private void getDepartMent(final String uid, final ListView lv_department)
+    private void getDepartMent(final String uid)
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_MakeMap_MakeLayer.this);
         RequestParams params = new RequestParams();
@@ -5613,8 +5614,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                     if (result.getAffectedRows() != 0)
                     {
                         list_department = JSON.parseArray(result.getRows().toJSONString(), DepartmentBean.class);
-                        department_adapter = new Department_Adapter(CZ_MakeMap_MakeLayer.this, list_department);
-                        lv_department.setAdapter(department_adapter);
+                        showDialog_department(list_department);
                     }
 
                 } else
@@ -6021,12 +6021,23 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     private void addPlanMap(String data)
     {
+        pb_upload.setVisibility(View.VISIBLE);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("data", data);
         params.addQueryStringParameter("action", "addPlanMap");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
+//            @Override
+//            public void onLoading(long total, long current, boolean isUploading)
+//            {
+//                super.onLoading(total, current, isUploading);
+//                if (total == current)
+//                {
+//                    pb_upload.setVisibility(View.GONE);
+//                }
+//            }
+
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
@@ -6099,6 +6110,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                             listlatlng_park = new ArrayList<>();
                             btn_addmore.setClickable(true);
                         }
+                        pb_upload.setVisibility(View.GONE);
                         drawerType = "";
                         Toast.makeText(CZ_MakeMap_MakeLayer.this, "保存成功", Toast.LENGTH_SHORT).show();
                         reloadMap();
