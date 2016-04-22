@@ -24,7 +24,7 @@ public class AppConfig
     // 注意将8055端口添加到防火墙规则中
 //    public static String baseurl = "http://www.farmm.cn/";// 注意将8055端口添加到防火墙规则中
     //	 public static String baseurl = "http://192.168.23.1:8055/";//
-	 public static String baseurl = "http://192.168.2.108:8055/";//
+	 public static String baseurl = "http://192.168.2.101:8055/";//
     // 注意将8055端口添加到防火墙规则中
     public static String testurl = baseurl + "webService.ashx";
     public static String uploadurl = baseurl + "tools/upload_ajax.ashx";

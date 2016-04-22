@@ -26,14 +26,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.BatchList_Adapter;
+import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.BatchOfProduct;
 import com.farm.bean.BreakOff;
 import com.farm.bean.CoordinatesBean;
 import com.farm.bean.CusPoint;
 import com.farm.bean.PolygonBean;
+import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.areatab;
 import com.farm.bean.contractTab;
@@ -45,6 +48,12 @@ import com.farm.widget.CustomDialog_AddSaleInInfo;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_OverlayInfo;
 import com.farm.widget.swipelistview.CustomDialog_OperatePolygon;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
@@ -265,6 +274,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
     {
         ll_container.setVisibility(View.GONE);
     }
+
     @Click
     void btn_orders()
     {
@@ -743,6 +753,45 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         list_Marker_ContractChart = new ArrayList<>();
     }
 
+    public void initGCDPolygon()
+    {
+        list_Objects_gcd = new ArrayList<>();
+        getPlanMap_Custom(commembertab.getuId(), "GCD");
+    }
+
+    public void initHousePolygon()
+    {
+        list_Objects_house = new ArrayList<>();
+        getPlanMap_Custom(commembertab.getuId(), "house");
+    }
+
+    public void initRoadPolygon()
+    {
+        list_Objects_road = new ArrayList<>();
+        list_Objects_road_centermarker = new ArrayList<>();
+        getPlanMap_Custom(commembertab.getuId(), "road");
+    }
+
+    public void initPointPolygon()
+    {
+        list_Objects_point = new ArrayList<>();
+        getPlanMap_Custom(commembertab.getuId(), "D");
+    }
+
+    public void initLinePolygon()
+    {
+        list_Objects_line = new ArrayList<>();
+        list_Objects_line_centermarker = new ArrayList<>();
+        getPlanMap_Custom(commembertab.getuId(), "X");
+    }
+
+    public void initMianPolygon()
+    {
+        list_Objects_mian_centermarker = new ArrayList<>();
+        list_Objects_mian = new ArrayList<>();
+        getPlanMap_Custom(commembertab.getuId(), "M");
+    }
+
     public void initShoppingCart()
     {
         List<SellOrderDetail> list = SqliteDb.getNewSaleList(getActivity(), commembertab.getuId(), batchTime);
@@ -785,7 +834,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                             if (breakOff.getStatus().equals("1"))//该批次已断蕾情况
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
-                                Marker marker = addCustomMarker("breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), "批次" + batchTime + "共断蕾" + String.valueOf(count) + "株");
+                                Marker marker = addCustomMarker(breakOff, "breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), "批次" + batchTime + "共断蕾" + String.valueOf(count) + "株");
                                 marker.setVisible(false);
                                 list_Marker_breakoff.add(marker);
                                 Polygon p = null;
@@ -835,7 +884,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                             if (sellorderdetail.getType().equals("saleout"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
-                                Marker marker = addCustomMarker("saleout", R.drawable.ic_saleout, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "已售" + sellorderdetail.getactualnumber());
+                                Marker marker = addCustomMarker(sellorderdetail, "saleout", R.drawable.ic_saleout, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "已售" + sellorderdetail.getactualnumber());
 //                                marker.setVisible(false);
                                 list_Marker_allsale.add(marker);
                                 list_Marker_saleout.add(marker);
@@ -846,7 +895,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                             } else if (sellorderdetail.getType().equals("salein"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
-                                Marker marker = addCustomMarker("salein", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "售中" + sellorderdetail.getplannumber());
+                                Marker marker = addCustomMarker(sellorderdetail, "salein", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "售中" + sellorderdetail.getplannumber());
 //                                marker.setVisible(false);
                                 list_Marker_allsale.add(marker);
                                 list_Marker_salein.add(marker);
@@ -857,7 +906,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                             } else if (sellorderdetail.getType().equals("newsale"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
-                                Marker marker = addCustomMarker("newsale", R.drawable.ic_newsale, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "拟售" + sellorderdetail.getplannumber());
+                                Marker marker = addCustomMarker(sellorderdetail, "newsale", R.drawable.ic_newsale, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "拟售" + sellorderdetail.getplannumber());
 //                                marker.setVisible(false);
                                 list_Marker_allsale.add(marker);
                                 list_Marker_newsale.add(marker);
@@ -868,7 +917,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                             } else if (sellorderdetail.getType().equals("salefor"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
-                                Marker marker = addCustomMarker("salefor", R.drawable.ic_saleout, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "待售" + sellorderdetail.getplannumber());
+                                Marker marker = addCustomMarker(sellorderdetail, "salefor", R.drawable.ic_saleout, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "待售" + sellorderdetail.getplannumber());
 //                                marker.setVisible(false);
                                 list_Marker_allsale.add(marker);
                                 list_Marker_salefor.add(marker);
@@ -886,65 +935,85 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
 
     public void initBasicData()
     {
-        //初始化规划图
         list_Marker_park = new ArrayList<>();
         list_Marker_area = new ArrayList<>();
         list_Marker_contract = new ArrayList<>();
         List<parktab> list_parktab = SqliteDb.getparktab(getActivity(), commembertab.getuId());
         for (int i = 0; i < list_parktab.size(); i++)//每个园区
         {
-            PolygonBean polygonBean_park = SqliteDb.getLayer_park(getActivity(), list_parktab.get(i).getid());
-            if (polygonBean_park != null)
-            {
-                LatLng latlng = new LatLng(Double.valueOf(polygonBean_park.getLat()), Double.valueOf(polygonBean_park.getLng()));
-                Marker marker = addCustomMarker("normal", R.drawable.ic_flag_park, getResources().getColor(R.color.white), latlng, polygonBean_park.getUuid(), polygonBean_park.getNote());
-                marker.setVisible(false);
-                list_Marker_park.add(marker);
-                List<CoordinatesBean> list_park = SqliteDb.getPoints(getActivity(), polygonBean_park.getUuid());
-                if (list_park != null && list_park.size() != 0)
-                {
-                    initBoundary(getResources().getColor(R.color.transparent), 0f, list_park, 0, R.color.transparent);
-                }
-            }
-
+            getPlanMap("park", list_parktab.get(i).getid(), "", "", "farm_boundary", "0");
             List<areatab> list_areatab = SqliteDb.getareatab(getActivity(), list_parktab.get(i).getid());
             for (int k = 0; k < list_areatab.size(); k++)//每个片区
             {
-                PolygonBean polygonBean_area = SqliteDb.getLayer_area(getActivity(), list_parktab.get(i).getid(), list_areatab.get(k).getid());
-                if (polygonBean_area != null)
-                {
-                    LatLng latlng = new LatLng(Double.valueOf(polygonBean_area.getLat()), Double.valueOf(polygonBean_area.getLng()));
-                    Marker marker = addCustomMarker("normal", R.drawable.ic_flag_area, getResources().getColor(R.color.white), latlng, polygonBean_area.getUuid(), polygonBean_area.getNote());
-                    marker.setVisible(false);
-                    list_Marker_area.add(marker);
-                    List<CoordinatesBean> list_area = SqliteDb.getPoints(getActivity(), polygonBean_area.getUuid());
-                    if (list_area != null && list_area.size() != 0)
-                    {
-                        initBoundary(getResources().getColor(R.color.transparent), 0f, list_area, 2, R.color.bg_text);
-                    }
-                }
-
+                getPlanMap("area", list_parktab.get(i).getid(), list_areatab.get(k).getid(), "", "farm_boundary", "0");
                 List<contractTab> list_contractTab = SqliteDb.getcontracttab(getActivity(), list_areatab.get(k).getid());
                 for (int m = 0; m < list_contractTab.size(); m++)//每个承包区
                 {
-                    //承包区规划图
-                    PolygonBean polygonBean_contract = SqliteDb.getLayer_contract(getActivity(), list_parktab.get(i).getid(), list_areatab.get(k).getid(), list_contractTab.get(m).getid());
-                    if (polygonBean_contract != null)
-                    {
-                        LatLng latlng = new LatLng(Double.valueOf(polygonBean_contract.getLat()), Double.valueOf(polygonBean_contract.getLng()));
-                        Marker marker = addCustomMarker("normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote());
-                        marker.setVisible(false);
-                        list_Marker_contract.add(marker);
-                        List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), polygonBean_contract.getUuid());
-                        if (list_contract != null && list_contract.size() != 0)
-                        {
-                            initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 2, R.color.bg_text);
-                        }
-                    }
+                    getPlanMap("contract", list_parktab.get(i).getid(), list_areatab.get(k).getid(), list_contractTab.get(m).getid(), "farm_boundary", "0");
                 }
             }
 
         }
+
+        //初始化规划图
+//        list_Marker_park = new ArrayList<>();
+//        list_Marker_area = new ArrayList<>();
+//        list_Marker_contract = new ArrayList<>();
+//        List<parktab> list_parktab = SqliteDb.getparktab(getActivity(), commembertab.getuId());
+//        for (int i = 0; i < list_parktab.size(); i++)//每个园区
+//        {
+//            PolygonBean polygonBean_park = SqliteDb.getLayer_park(getActivity(), list_parktab.get(i).getid());
+//            if (polygonBean_park != null)
+//            {
+//                LatLng latlng = new LatLng(Double.valueOf(polygonBean_park.getLat()), Double.valueOf(polygonBean_park.getLng()));
+//                Marker marker = addCustomMarker("normal", R.drawable.ic_flag_park, getResources().getColor(R.color.white), latlng, polygonBean_park.getUuid(), polygonBean_park.getNote());
+//                marker.setVisible(false);
+//                list_Marker_park.add(marker);
+//                List<CoordinatesBean> list_park = SqliteDb.getPoints(getActivity(), polygonBean_park.getUuid());
+//                if (list_park != null && list_park.size() != 0)
+//                {
+//                    initBoundary(getResources().getColor(R.color.transparent), 0f, list_park, 0, R.color.transparent);
+//                }
+//            }
+//
+//            List<areatab> list_areatab = SqliteDb.getareatab(getActivity(), list_parktab.get(i).getid());
+//            for (int k = 0; k < list_areatab.size(); k++)//每个片区
+//            {
+//                PolygonBean polygonBean_area = SqliteDb.getLayer_area(getActivity(), list_parktab.get(i).getid(), list_areatab.get(k).getid());
+//                if (polygonBean_area != null)
+//                {
+//                    LatLng latlng = new LatLng(Double.valueOf(polygonBean_area.getLat()), Double.valueOf(polygonBean_area.getLng()));
+//                    Marker marker = addCustomMarker("normal", R.drawable.ic_flag_area, getResources().getColor(R.color.white), latlng, polygonBean_area.getUuid(), polygonBean_area.getNote());
+//                    marker.setVisible(false);
+//                    list_Marker_area.add(marker);
+//                    List<CoordinatesBean> list_area = SqliteDb.getPoints(getActivity(), polygonBean_area.getUuid());
+//                    if (list_area != null && list_area.size() != 0)
+//                    {
+//                        initBoundary(getResources().getColor(R.color.transparent), 0f, list_area, 2, R.color.bg_text);
+//                    }
+//                }
+//
+//                List<contractTab> list_contractTab = SqliteDb.getcontracttab(getActivity(), list_areatab.get(k).getid());
+//                for (int m = 0; m < list_contractTab.size(); m++)//每个承包区
+//                {
+//                    //承包区规划图
+//                    PolygonBean polygonBean_contract = SqliteDb.getLayer_contract(getActivity(), list_parktab.get(i).getid(), list_areatab.get(k).getid(), list_contractTab.get(m).getid());
+//                    if (polygonBean_contract != null)
+//                    {
+//                        LatLng latlng = new LatLng(Double.valueOf(polygonBean_contract.getLat()), Double.valueOf(polygonBean_contract.getLng()));
+//                        Marker marker = addCustomMarker("normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, polygonBean_contract.getUuid(), polygonBean_contract.getNote());
+//                        marker.setVisible(false);
+//                        list_Marker_contract.add(marker);
+//                        List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), polygonBean_contract.getUuid());
+//                        if (list_contract != null && list_contract.size() != 0)
+//                        {
+//                            initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 2, R.color.bg_text);
+//                        }
+//                    }
+//                }
+//            }
+//
+//        }
 //显示点
         initGCDPolygon();
 //显示点
@@ -959,161 +1028,161 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         initMianPolygon();
     }
 
-    public void initLinePolygon()
-    {
-        list_Objects_line = new ArrayList<>();
-        list_Objects_line_centermarker = new ArrayList<>();
-        List<PolygonBean> list_polygon_line = SqliteDb.getMoreLayer_line(getActivity(), commembertab.getuId());
-        for (int i = 0; i < list_polygon_line.size(); i++)
-        {
-            List<CoordinatesBean> list = SqliteDb.getPoints(getActivity(), list_polygon_line.get(i).getUuid());
-            List<LatLng> list_latlang = new ArrayList();
-            for (int j = 0; j < list.size(); j++)
-            {
-                LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLng()));
-                list_latlang.add(latlng);
-            }
-            PolylineOptions lineOpt = new PolylineOptions();
+//    public void initLinePolygon()
+//    {
+//        list_Objects_line = new ArrayList<>();
+//        list_Objects_line_centermarker = new ArrayList<>();
+//        List<PolygonBean> list_polygon_line = SqliteDb.getMoreLayer_line(getActivity(), commembertab.getuId());
+//        for (int i = 0; i < list_polygon_line.size(); i++)
+//        {
+//            List<CoordinatesBean> list = SqliteDb.getPoints(getActivity(), list_polygon_line.get(i).getUuid());
+//            List<LatLng> list_latlang = new ArrayList();
+//            for (int j = 0; j < list.size(); j++)
+//            {
+//                LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLng()));
+//                list_latlang.add(latlng);
+//            }
+//            PolylineOptions lineOpt = new PolylineOptions();
+////            lineOpt.setDottedLine(true);
+//            lineOpt.addAll(list_latlang);
+//            Polyline line = tencentMap.addPolyline(lineOpt);
+////            line.setGeodesic(true);
+//            line.setColor(Color.argb(500, 177, 15, 0));
+//            line.setWidth(8f);
+//            Overlays.add(line);
+//            list_Objects_line.add(line);
+//
+//            if (list_latlang.size() > 0)
+//            {
+//                int halfsize = list_latlang.size() / 2;
+//                if (halfsize == 0)
+//                {
+//                    Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_sq), list_latlang.get(0), list_polygon_line.get(i).getUuid(), list_polygon_line.get(i).getNote());
+//                    list_Objects_line_centermarker.add(marker);
+//                } else
+//                {
+//                    Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_sq), list_latlang.get(halfsize), list_polygon_line.get(i).getUuid(), list_polygon_line.get(i).getNote());
+//                    list_Objects_line_centermarker.add(marker);
+//                }
+//
+//            }
+//
+//        }
+//    }
+
+//    public void initRoadPolygon()
+//    {
+//        list_Objects_road = new ArrayList<>();
+//        list_Objects_road_centermarker = new ArrayList<>();
+//        list_polygon_road = SqliteDb.getMoreLayer_road(getActivity(), commembertab.getuId());
+//        for (int i = 0; i < list_polygon_road.size(); i++)
+//        {
+//            List<CoordinatesBean> list = SqliteDb.getPoints(getActivity(), list_polygon_road.get(i).getUuid());
+//            List<LatLng> list_latlang = new ArrayList();
+//            for (int j = 0; j < list.size(); j++)
+//            {
+//                LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLng()));
+//                list_latlang.add(latlng);
+//            }
+//            PolylineOptions lineOpt = new PolylineOptions();
 //            lineOpt.setDottedLine(true);
-            lineOpt.addAll(list_latlang);
-            Polyline line = tencentMap.addPolyline(lineOpt);
-//            line.setGeodesic(true);
-            line.setColor(Color.argb(500, 177, 15, 0));
-            line.setWidth(8f);
-            Overlays.add(line);
-            list_Objects_line.add(line);
-
-            if (list_latlang.size() > 0)
-            {
-                int halfsize = list_latlang.size() / 2;
-                if (halfsize == 0)
-                {
-                    Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_sq), list_latlang.get(0), list_polygon_line.get(i).getUuid(), list_polygon_line.get(i).getNote());
-                    list_Objects_line_centermarker.add(marker);
-                } else
-                {
-                    Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_sq), list_latlang.get(halfsize), list_polygon_line.get(i).getUuid(), list_polygon_line.get(i).getNote());
-                    list_Objects_line_centermarker.add(marker);
-                }
-
-            }
-
-        }
-    }
-
-    public void initRoadPolygon()
-    {
-        list_Objects_road = new ArrayList<>();
-        list_Objects_road_centermarker = new ArrayList<>();
-        list_polygon_road = SqliteDb.getMoreLayer_road(getActivity(), commembertab.getuId());
-        for (int i = 0; i < list_polygon_road.size(); i++)
-        {
-            List<CoordinatesBean> list = SqliteDb.getPoints(getActivity(), list_polygon_road.get(i).getUuid());
-            List<LatLng> list_latlang = new ArrayList();
-            for (int j = 0; j < list.size(); j++)
-            {
-                LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLng()));
-                list_latlang.add(latlng);
-            }
-            PolylineOptions lineOpt = new PolylineOptions();
-            lineOpt.setDottedLine(true);
-            lineOpt.addAll(list_latlang);
-            Polyline line = tencentMap.addPolyline(lineOpt);
-//            line.setGeodesic(true);
-            line.setColor(Color.argb(500, 255, 255, 255));
-            line.setWidth(8f);
-            Overlays.add(line);
-            list_Objects_road.add(line);
-
-            if (list_latlang.size() > 0)
-            {
-                int halfsize = list_latlang.size() / 2;
-                Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_sq), list_latlang.get(halfsize), list_polygon_road.get(i).getUuid(), list_polygon_road.get(i).getNote());
-                list_Objects_road_centermarker.add(marker);
-            }
-
-        }
-    }
+//            lineOpt.addAll(list_latlang);
+//            Polyline line = tencentMap.addPolyline(lineOpt);
+////            line.setGeodesic(true);
+//            line.setColor(Color.argb(500, 255, 255, 255));
+//            line.setWidth(8f);
+//            Overlays.add(line);
+//            list_Objects_road.add(line);
+//
+//            if (list_latlang.size() > 0)
+//            {
+//                int halfsize = list_latlang.size() / 2;
+//                Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_sq), list_latlang.get(halfsize), list_polygon_road.get(i).getUuid(), list_polygon_road.get(i).getNote());
+//                list_Objects_road_centermarker.add(marker);
+//            }
+//
+//        }
+//    }
 
 
-    public void initMianPolygon()
-    {
-        list_Objects_mian_centermarker = new ArrayList<>();
-        list_Objects_mian = new ArrayList<>();
-        list_polygon_mian = SqliteDb.getMoreLayer_mian(getActivity(), commembertab.getuId());
-        for (int i = 0; i < list_polygon_mian.size(); i++)
-        {
-            LatLng latlng = new LatLng(Double.valueOf(list_polygon_mian.get(i).getLat()), Double.valueOf(list_polygon_mian.get(i).getLng()));
-            Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_ask), latlng, list_polygon_mian.get(i).getUuid(), list_polygon_mian.get(i).getNote());
-            list_Objects_mian_centermarker.add(marker);
-            List<CoordinatesBean> list_mian = SqliteDb.getPoints(getActivity(), list_polygon_mian.get(i).getUuid());
-            List<LatLng> list_LatLng = new ArrayList<>();
-            if (list_mian != null && list_mian.size() != 0)
-            {
-                for (int j = 0; j < list_mian.size(); j++)
-                {
-                    LatLng ll = new LatLng(Double.valueOf(list_mian.get(j).getLat()), Double.valueOf(list_mian.get(j).getLng()));
-                    list_LatLng.add(ll);
-                }
-                Polygon polygon = drawPolygon(10f, list_LatLng, Color.argb(180, 70, 101, 10), 2, R.color.bg_text);
-                polygon.setZIndex(0f);
-                Overlays.add(polygon);
-                list_Objects_mian.add(polygon);
-            }
+//    public void initMianPolygon()
+//    {
+//        list_Objects_mian_centermarker = new ArrayList<>();
+//        list_Objects_mian = new ArrayList<>();
+//        list_polygon_mian = SqliteDb.getMoreLayer_mian(getActivity(), commembertab.getuId());
+//        for (int i = 0; i < list_polygon_mian.size(); i++)
+//        {
+//            LatLng latlng = new LatLng(Double.valueOf(list_polygon_mian.get(i).getLat()), Double.valueOf(list_polygon_mian.get(i).getLng()));
+//            Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_ask), latlng, list_polygon_mian.get(i).getUuid(), list_polygon_mian.get(i).getNote());
+//            list_Objects_mian_centermarker.add(marker);
+//            List<CoordinatesBean> list_mian = SqliteDb.getPoints(getActivity(), list_polygon_mian.get(i).getUuid());
+//            List<LatLng> list_LatLng = new ArrayList<>();
+//            if (list_mian != null && list_mian.size() != 0)
+//            {
+//                for (int j = 0; j < list_mian.size(); j++)
+//                {
+//                    LatLng ll = new LatLng(Double.valueOf(list_mian.get(j).getLat()), Double.valueOf(list_mian.get(j).getLng()));
+//                    list_LatLng.add(ll);
+//                }
+//                Polygon polygon = drawPolygon(10f, list_LatLng, Color.argb(180, 70, 101, 10), 2, R.color.bg_text);
+//                polygon.setZIndex(0f);
+//                Overlays.add(polygon);
+//                list_Objects_mian.add(polygon);
+//            }
+//
+//        }
+//    }
 
-        }
-    }
+//    public void initHousePolygon()
+//    {
+//        list_Objects_house = new ArrayList<>();
+//        list_polygon_house = SqliteDb.getMoreLayer_house(getActivity(), commembertab.getuId());
+//        for (int i = 0; i < list_polygon_house.size(); i++)
+//        {
+//            List<CoordinatesBean> list = SqliteDb.getPoints(getActivity(), list_polygon_house.get(i).getUuid());
+//            if (list != null && list.size() != 0)
+//            {
+//                LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
+//                Marker marker = addCustomMarker("normal", R.drawable.icon_house, getResources().getColor(R.color.bg_ask), latlng, list_polygon_house.get(i).getUuid(), list_polygon_house.get(i).getNote());
+//                list_Objects_house.add(marker);
+//            }
+//
+//        }
+//    }
 
-    public void initHousePolygon()
-    {
-        list_Objects_house = new ArrayList<>();
-        list_polygon_house = SqliteDb.getMoreLayer_house(getActivity(), commembertab.getuId());
-        for (int i = 0; i < list_polygon_house.size(); i++)
-        {
-            List<CoordinatesBean> list = SqliteDb.getPoints(getActivity(), list_polygon_house.get(i).getUuid());
-            if (list != null && list.size() != 0)
-            {
-                LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
-                Marker marker = addCustomMarker("normal", R.drawable.icon_house, getResources().getColor(R.color.bg_ask), latlng, list_polygon_house.get(i).getUuid(), list_polygon_house.get(i).getNote());
-                list_Objects_house.add(marker);
-            }
+//    public void initPointPolygon()
+//    {
+//        list_Objects_point = new ArrayList<>();
+//        list_polygon_point = SqliteDb.getMoreLayer_point(getActivity(), commembertab.getuId());
+//        for (int i = 0; i < list_polygon_point.size(); i++)
+//        {
+//            List<CoordinatesBean> list = SqliteDb.getPoints(getActivity(), list_polygon_point.get(i).getUuid());
+//            if (list != null && list.size() != 0)
+//            {
+//                LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
+//                Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_job), latlng, list_polygon_point.get(i).getUuid(), list_polygon_point.get(i).getNote());
+//                list_Objects_point.add(marker);
+//            }
+//
+//        }
+//    }
 
-        }
-    }
-
-    public void initPointPolygon()
-    {
-        list_Objects_point = new ArrayList<>();
-        list_polygon_point = SqliteDb.getMoreLayer_point(getActivity(), commembertab.getuId());
-        for (int i = 0; i < list_polygon_point.size(); i++)
-        {
-            List<CoordinatesBean> list = SqliteDb.getPoints(getActivity(), list_polygon_point.get(i).getUuid());
-            if (list != null && list.size() != 0)
-            {
-                LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
-                Marker marker = addCustomMarker("normal", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_job), latlng, list_polygon_point.get(i).getUuid(), list_polygon_point.get(i).getNote());
-                list_Objects_point.add(marker);
-            }
-
-        }
-    }
-
-    public void initGCDPolygon()
-    {
-        list_Objects_gcd = new ArrayList<>();
-        list_polygon_gcd = SqliteDb.getMoreLayer_gcd(getActivity(), commembertab.getuId());
-        for (int i = 0; i < list_polygon_gcd.size(); i++)
-        {
-            List<CoordinatesBean> list = SqliteDb.getPoints(getActivity(), list_polygon_gcd.get(i).getUuid());
-            if (list != null && list.size() != 0)
-            {
-                LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
-                Marker marker = addCustomMarker("gcd", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_job), latlng, list_polygon_gcd.get(i).getUuid(), list_polygon_gcd.get(i).getNote());
-                list_Objects_gcd.add(marker);
-            }
-
-        }
-    }
+//    public void initGCDPolygon()
+//    {
+//        list_Objects_gcd = new ArrayList<>();
+//        list_polygon_gcd = SqliteDb.getMoreLayer_gcd(getActivity(), commembertab.getuId());
+//        for (int i = 0; i < list_polygon_gcd.size(); i++)
+//        {
+//            List<CoordinatesBean> list = SqliteDb.getPoints(getActivity(), list_polygon_gcd.get(i).getUuid());
+//            if (list != null && list.size() != 0)
+//            {
+//                LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
+//                Marker marker = addCustomMarker("gcd", R.drawable.umeng_socialize_follow_on, getResources().getColor(R.color.bg_job), latlng, list_polygon_gcd.get(i).getUuid(), list_polygon_gcd.get(i).getNote());
+//                list_Objects_gcd.add(marker);
+//            }
+//
+//        }
+//    }
 
     public void initMapClickListener()
     {
@@ -1277,6 +1346,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         Overlays.add(polygon);
         return polygon;
     }
+
     private List<String> initURL()
     {
         List<String> list = new ArrayList<String>();
@@ -1287,6 +1357,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         list.add("http://newsxml.cnool.net/newspic2010/2010/2010-4/2010-4-15/634069236900937500.jpg");
         return list;
     }
+
     public void showDialog_OperateSalefor(final String uuid, final Marker marker)
     {
         final View dialog_layout = (RelativeLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_operatepolygon_salefor, null);
@@ -2392,7 +2463,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         return marker;
     }
 
-    private Marker addCustomMarker(String type, int icon, int textcolor, LatLng latLng, String uuid, String note)
+    private Marker addCustomMarker(Parcelable obj, String type, int icon, int textcolor, LatLng latLng, String uuid, String note)
     {
         Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.marker_sale, null);
@@ -2456,5 +2527,264 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
     public void onStatusUpdate(String s, int i, String s1)
     {
 
+    }
+
+    private void getPlanMap(final String witcharea, String parkId, String areaid, String contractid, String type, String xxzt)
+    {
+        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("parkId", parkId);
+        params.addQueryStringParameter("areaid", areaid);
+        params.addQueryStringParameter("contractid", contractid);
+        params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("action", "getPlanMap");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<PolygonBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listNewData = new ArrayList<PolygonBean>();
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PolygonBean.class);
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            PolygonBean polygonBean = listNewData.get(i);
+                            if (witcharea.equals("park"))
+                            {
+                                if (polygonBean != null)
+                                {
+                                    LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
+                                    Marker marker = addCustomMarker(polygonBean, "normal", R.drawable.ic_flag_park, getResources().getColor(R.color.white), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                    marker.setVisible(false);
+                                    list_Marker_park.add(marker);
+                                    List<CoordinatesBean> list_park = SqliteDb.getPoints(getActivity(), polygonBean.getUuid());
+                                    if (list_park != null && list_park.size() != 0)
+                                    {
+                                        initBoundary(getResources().getColor(R.color.transparent), 0f, list_park, 0, R.color.transparent);
+                                    }
+
+                                }
+                            } else if (witcharea.equals("area"))
+                            {
+                                if (polygonBean != null)
+                                {
+                                    LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
+                                    Marker marker = addCustomMarker(polygonBean, "normal", R.drawable.ic_flag_area, getResources().getColor(R.color.white), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                    marker.setVisible(false);
+                                    list_Marker_area.add(marker);
+                                    List<CoordinatesBean> list_area = SqliteDb.getPoints(getActivity(), polygonBean.getUuid());
+                                    if (list_area != null && list_area.size() != 0)
+                                    {
+                                        initBoundary(getResources().getColor(R.color.transparent), 0f, list_area, 2, R.color.bg_text);
+                                    }
+
+                                }
+                            } else if (witcharea.equals("contract"))
+                            {
+                                if (polygonBean != null)
+                                {
+                                    LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
+                                    Marker marker = addCustomMarker(polygonBean, "normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                    marker.setVisible(false);
+                                    list_Marker_contract.add(marker);
+                                    List<CoordinatesBean> list_contract = SqliteDb.getPoints(getActivity(), polygonBean.getUuid());
+                                    if (list_contract != null && list_contract.size() != 0)
+                                    {
+                                        initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 2, R.color.bg_text);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
+
+    private void getPlanMap_Custom(String uid, final String type)
+    {
+        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", uid);
+        params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("action", "getPlanMap_Custom");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<PolygonBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listNewData = new ArrayList<PolygonBean>();
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PolygonBean.class);
+                        if (type.equals("D"))
+                        {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                List<CoordinatesBean> list = listNewData.get(i).getCoordinatesBeanList();
+                                if (list != null && list.size() != 0)
+                                {
+                                    LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
+                                    Marker marker = addCustomMarker(listNewData.get(i), "normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                    list_Objects_point.add(marker);
+                                }
+
+                            }
+
+                        } else if (type.equals("GCD"))
+                        {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                List<CoordinatesBean> list = listNewData.get(i).getCoordinatesBeanList();
+                                if (list != null && list.size() != 0)
+                                {
+                                    LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
+                                    Marker marker = addCustomMarker(listNewData.get(i), "normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                    list_Objects_point.add(marker);
+                                }
+
+                            }
+                        } else if (type.equals("X"))
+                        {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                List<CoordinatesBean> list = listNewData.get(i).getCoordinatesBeanList();
+                                List<LatLng> list_latlang = new ArrayList();
+                                for (int j = 0; j < list.size(); j++)
+                                {
+                                    LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLng()));
+                                    list_latlang.add(latlng);
+                                }
+                                PolylineOptions lineOpt = new PolylineOptions();
+                                lineOpt.addAll(list_latlang);
+                                Polyline line = tencentMap.addPolyline(lineOpt);
+                                line.setColor(Color.argb(500, 177, 15, 0));
+                                line.setWidth(8f);
+                                Overlays.add(line);
+                                list_Objects_line.add(line);
+
+                                if (list_latlang.size() > 0)
+                                {
+                                    int halfsize = list_latlang.size() / 2;
+                                    if (halfsize == 0)
+                                    {
+                                        Marker marker = addCustomMarker(listNewData.get(i), "normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), list_latlang.get(0), listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                        list_Objects_line_centermarker.add(marker);
+                                    } else
+                                    {
+                                        Marker marker = addCustomMarker(listNewData.get(i), "normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), list_latlang.get(0), listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                        list_Objects_line_centermarker.add(marker);
+                                    }
+
+                                }
+
+                            }
+                        } else if (type.equals("M"))
+                        {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                LatLng latlng = new LatLng(Double.valueOf(listNewData.get(i).getLat()), Double.valueOf(listNewData.get(i).getLng()));
+                                Marker marker = addCustomMarker(listNewData.get(i), "normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                list_Objects_mian_centermarker.add(marker);
+                                List<CoordinatesBean> list_mian = listNewData.get(i).getCoordinatesBeanList();
+                                List<LatLng> list_LatLng = new ArrayList<>();
+                                if (list_mian != null && list_mian.size() != 0)
+                                {
+                                    for (int j = 0; j < list_mian.size(); j++)
+                                    {
+                                        LatLng ll = new LatLng(Double.valueOf(list_mian.get(j).getLat()), Double.valueOf(list_mian.get(j).getLng()));
+                                        list_LatLng.add(ll);
+                                    }
+                                    Polygon polygon = drawPolygon(0f, list_LatLng, Color.argb(180, 70, 101, 10), 2, R.color.bg_text);
+                                    polygon.setZIndex(0f);
+                                    Overlays.add(polygon);
+                                    list_Objects_mian.add(polygon);
+                                }
+
+                            }
+                        } else if (type.equals("road"))
+                        {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                List<CoordinatesBean> list = listNewData.get(i).getCoordinatesBeanList();
+                                List<LatLng> list_latlang = new ArrayList();
+                                for (int j = 0; j < list.size(); j++)
+                                {
+                                    LatLng latlng = new LatLng(Double.valueOf(list.get(j).getLat()), Double.valueOf(list.get(j).getLng()));
+                                    list_latlang.add(latlng);
+                                }
+                                PolylineOptions lineOpt = new PolylineOptions();
+                                lineOpt.setDottedLine(true);
+                                lineOpt.addAll(list_latlang);
+                                Polyline line = tencentMap.addPolyline(lineOpt);
+                                line.setColor(Color.argb(500, 177, 15, 0));
+                                line.setWidth(8f);
+                                Overlays.add(line);
+                                list_Objects_road.add(line);
+
+                                if (list_latlang.size() > 0)
+                                {
+                                    int halfsize = list_latlang.size() / 2;
+                                    Marker marker = addCustomMarker(listNewData.get(i), "normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), list_latlang.get(halfsize), listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                    list_Objects_road_centermarker.add(marker);
+                                }
+
+                            }
+                        } else if (type.equals("house"))
+                        {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                List<CoordinatesBean> list = listNewData.get(i).getCoordinatesBeanList();
+                                if (list != null && list.size() != 0)
+                                {
+                                    LatLng latlng = new LatLng(Double.valueOf(list.get(0).getLat()), Double.valueOf(list.get(0).getLng()));
+                                    Marker marker = addCustomMarker(listNewData.get(i), "normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, listNewData.get(i).getUuid(), listNewData.get(i).getNote());
+                                    list_Objects_house.add(marker);
+                                }
+
+                            }
+                        }
+
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
     }
 }
