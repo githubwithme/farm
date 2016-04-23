@@ -10,7 +10,12 @@
         android:id="@+id/rl_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <ProgressBar
+            android:id="@+id/pb_upload"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
         <View
             android:id="@+id/line"
             android:layout_width="match_parent"
