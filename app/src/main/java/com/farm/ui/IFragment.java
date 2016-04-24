@@ -23,9 +23,11 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.app.AppManager;
 import com.farm.bean.Apk;
+import com.farm.bean.BreakOff;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.SqliteDb;
+import com.farm.common.utils;
 import com.farm.widget.CircleImageView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -98,9 +100,10 @@ public class IFragment extends Fragment
 	@Click
 	void tv_startBreakoff()
 	{
-		commembertab commembertab = AppContext.getUserInfo(getActivity());
-        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
-		Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
+		startBreakoff();
+//		commembertab commembertab = AppContext.getUserInfo(getActivity());
+//        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
+//		Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
 	}
 	@Click
 	void tv_edituser()
@@ -303,6 +306,49 @@ public class IFragment extends Fragment
 					AppContext.makeToast(getActivity(), "error_connectDataBase");
 					return;
 				}
+			}
+
+			@Override
+			public void onFailure(HttpException error, String msg)
+			{
+				AppContext.makeToast(getActivity(), "error_connectServer");
+			}
+		});
+	}
+	public void startBreakoff()
+	{
+		commembertab commembertab = AppContext.getUserInfo(getActivity());
+		RequestParams params = new RequestParams();
+		params.addQueryStringParameter("uid", commembertab.getuId());
+		params.addQueryStringParameter("Year", utils.getYear());
+		params.addQueryStringParameter("Starttime", utils.getToday());
+		params.addQueryStringParameter("action", "startBreakOff");
+		HttpUtils http = new HttpUtils();
+		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+		{
+			@Override
+			public void onSuccess(ResponseInfo<String> responseInfo)
+			{
+				String a = responseInfo.result;
+				List<BreakOff> listNewData = null;
+				Result result = JSON.parseObject(responseInfo.result, Result.class);
+				if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+				{
+					String rows=result.getRows().get(0).toString();
+					if (rows.equals("1"))
+					{
+						Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
+					}else 	if (rows.equals("0"))
+					{
+						Toast.makeText(getActivity(), "今年已经开始断蕾了", Toast.LENGTH_SHORT).show();
+					}
+
+				} else
+				{
+					AppContext.makeToast(getActivity(), "error_connectDataBase");
+					return;
+				}
+
 			}
 
 			@Override

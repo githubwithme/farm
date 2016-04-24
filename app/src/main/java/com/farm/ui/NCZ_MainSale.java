@@ -1063,10 +1063,11 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                         for (int i = 0; i < listNewData.size(); i++)
                         {
                             PolygonBean polygonBean = listNewData.get(i);
-                            if (polygonBean.getAreaId().equals(""))
+                            if (polygonBean.getAreaId().equals("-1"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
                                 Marker marker = addCustomMarker(polygonBean, "normal", R.drawable.ic_flag_park, getResources().getColor(R.color.white), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                marker.setVisible(false);
                                 list_Marker_park.add(marker);
                                 List<CoordinatesBean> list_park = polygonBean.getCoordinatesBeanList();
                                 if (list_park != null && list_park.size() != 0)
@@ -1074,10 +1075,11 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                                     initBoundary(Color.argb(150, 0, 255, 255), 0f, list_park, 2, R.color.bg_green);
                                 }
 
-                            } else if (polygonBean.getContractid().equals(""))
+                            } else if (polygonBean.getContractid().equals("-1"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
                                 Marker marker = addCustomMarker(polygonBean, "normal", R.drawable.ic_flag_area, getResources().getColor(R.color.white), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                marker.setVisible(false);
                                 list_Marker_area.add(marker);
                                 List<CoordinatesBean> list_area = polygonBean.getCoordinatesBeanList();
                                 if (list_area != null && list_area.size() != 0)
@@ -1089,6 +1091,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
                                 Marker marker = addCustomMarker(polygonBean, "normal", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                                marker.setVisible(false);
                                 list_Marker_contract.add(marker);
                                 List<CoordinatesBean> list_contract = polygonBean.getCoordinatesBeanList();
                                 if (list_contract != null && list_contract.size() != 0)
