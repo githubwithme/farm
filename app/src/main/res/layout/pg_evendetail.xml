@@ -70,6 +70,7 @@
         android:background="@color/bg_main"/>
 
 <RelativeLayout
+    android:visibility="gone"
     android:id="@+id/rl_match"
     android:layout_width="match_parent"
     android:layout_height="match_parent">

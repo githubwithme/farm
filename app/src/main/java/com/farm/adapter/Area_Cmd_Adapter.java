@@ -217,15 +217,17 @@ public class Area_Cmd_Adapter extends BaseAdapter
                     String number = goodsspc[0];
                     String small_dw = goodsspc[1];
                     String large_dw = goodsspc[2];
-                    if (small_dw.equals("ml"))
+//                    if (small_dw.equals("ml"))
+                    if (goodslisttab.getgoodsunit().equals("mL")||goodslisttab.getgoodsunit().equals("L"))
                     {
-                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + "陪(兑水)" +  "\n";
+                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + "倍(兑水)" +  "\n";
                     }else
                     {
                         Double acountnumber = Double.valueOf(list_goodslisttab.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
 //                        Double  neednumber = acountnumber / Double.valueOf(number);    //冯
 //                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + small_dw + "/株" + "  " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n"; //冯
-                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " +goodslisttab.getgoodsunit()+ small_dw + "/株" + "  " + "共需" + acountnumber + goodslisttab.getgoodsunit() + "\n";
+//                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " +goodslisttab.getgoodsunit()+ small_dw + "/株" + "  " + "共需" + acountnumber + goodslisttab.getgoodsunit() + "\n";
+                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL()+ "g/株" + "  " + "共需" +acountnumber+ "g" + "\n";
                     }
                     goodslisttab_flsl.setgoodsNote(goodsnote);
                 }

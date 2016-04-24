@@ -136,8 +136,10 @@ public class AddStd_Cmd_StepSix extends Fragment
         params.addQueryStringParameter("action", "commandTabAdd");
         params.addQueryStringParameter("parkId", commandtab_single.getparkId());
         params.addQueryStringParameter("parkName", commandtab_single.getparkName());
-        params.addQueryStringParameter("nongziName", nongzi.substring(0, nongzi.length() - 1));
-        params.addQueryStringParameter("amount", nongziId.substring(0, nongziId.length() - 1));
+//        params.addQueryStringParameter("nongziName", nongzi.substring(0, nongzi.length() - 1));//单位
+        params.addQueryStringParameter("nongziName", nongzi.substring(0, nongzi.length() - 1));//单位
+//        params.addQueryStringParameter("amount", nongziId.substring(0, nongziId.length() - 1));//数量
+        params.addQueryStringParameter("amount", nongziId.substring(0, nongziId.length() - 1));//数量
         params.addQueryStringParameter("commNote", commandtab_single.getcommNote());
         params.addQueryStringParameter("commDays", commandtab_single.getcommDays());
         params.addQueryStringParameter("commComDate", commandtab_single.getcommComDate());

@@ -94,20 +94,28 @@ public class NCZ_YQPQ extends Fragment
     public void  setThreadStatus(boolean hidden)
     {
         ishidding = hidden;
-        super.onHiddenChanged(hidden);
-        if (!hidden)
+        super.onHiddenChanged(hidden);//true
+        if(hidden==true)
+        {
+            timethread = new TimeThread();
+            timethread.setStop(false);
+            timethread.setSleep(false);
+            timethread.start();
+        }
+       /* if (!hidden)
         {
             if (timethread != null)
             {
                 timethread.setSleep(false);
+
             }
         } else
         {
             if (timethread != null)
             {
-                timethread.setSleep(true);
+                timethread.setSleep(true);////true
             }
-        }
+        }*/
     }
 
     @Override
@@ -134,10 +142,10 @@ public class NCZ_YQPQ extends Fragment
     {
         View rootView = inflater.inflate(R.layout.ncz_yqpq, container, false);
         appContext = (AppContext) getActivity().getApplication();
-        timethread = new TimeThread();
+   /*     timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
-        timethread.start();
+        timethread.start();*/
         return rootView;
     }
 
@@ -460,13 +468,15 @@ public class NCZ_YQPQ extends Fragment
             {
                 if (isSleep)
                 {
+                    return;
                 } else
                 {
                     try
                     {
                         timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
-                        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_YQPQ, 0);
+                            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_YQPQ, 0);
+
                         timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {

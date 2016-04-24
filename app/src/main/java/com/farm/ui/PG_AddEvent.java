@@ -5,11 +5,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +33,7 @@ import com.farm.bean.FJxx;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.bean.goodslisttab;
 import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
 import com.farm.common.BitmapHelper;
 import com.farm.common.utils;
@@ -48,9 +52,12 @@ import com.media.MediaChooser;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.LongClick;
 import org.androidannotations.annotations.ViewById;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,7 +82,9 @@ public class PG_AddEvent extends Activity {
     @ViewById
     Button btn_upload;
     @ViewById
-    TextView tv_type;
+    ImageView imageview111;
+    @ViewById
+    EditText tv_type;
     @ViewById
     TextView et_sjms;
     @ViewById
@@ -107,7 +116,7 @@ public class PG_AddEvent extends Activity {
 
 
     }
-    @Click
+    @LongClick
     void tv_type()
     {
         JSONObject jsonObject = utils.parseJsonFile(PG_AddEvent.this, "dictionary.json");
@@ -178,7 +187,7 @@ public class PG_AddEvent extends Activity {
             for (int i = 0; i < list.size(); i++)
             {
                 String FJBDLJ = list.get(i);
-                ImageView imageView = new ImageView(PG_AddEvent.this);
+                final ImageView imageView = new ImageView(PG_AddEvent.this);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, LayoutParams.MATCH_PARENT, 0);
                 lp.setMargins(25, 4, 0, 4);
                 imageView.setLayoutParams(lp);
@@ -201,7 +210,7 @@ public class PG_AddEvent extends Activity {
                     {
                         final int index_zp = ll_picture.indexOfChild(v);
                         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                        myDialog = new MyDialog(PG_AddEvent.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener()
+                        myDialog = new MyDialog(PG_AddEvent.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "取消", "删除", new MyDialog.CustomDialogListener()
                         {
                             @Override
                             public void OnClick(View v)
@@ -209,10 +218,23 @@ public class PG_AddEvent extends Activity {
                                 switch (v.getId())
                                 {
                                     case R.id.btn_sure:
-                                        File file = new File(list_picture.get(index_zp).getFJBDLJ());
+
+                                     /*   File file = new File(list_picture.get(index_zp).getFJBDLJ());
                                         Intent intent = new Intent(Intent.ACTION_VIEW);
                                         intent.setDataAndType(Uri.fromFile(file), "image");
-                                        startActivity(intent);
+                                        startActivity(intent);*/
+                                 /*       try {
+                                            FileInputStream fis = new FileInputStream(list_picture.get(index_zp).getFJBDLJ());
+                                            Bitmap bitmap = BitmapFactory.decodeStream(fis);
+                                            imageview111 .setImageBitmap(bitmap);
+                                        } catch (FileNotFoundException e) {
+                                            e.printStackTrace();
+                                        }*/
+
+                                        //只有远程有用
+                                  /*      Intent intent = new Intent(PG_AddEvent.this,DisplayImage_.class);
+                                        intent.putExtra("url", AppConfig.baseurl+list_picture.get(index_zp).getFJBDLJ());
+                                        startActivity(intent);*/
                                         break;
                                     case R.id.btn_cancle:
                                         ll_picture.removeViewAt(index_zp);
@@ -270,7 +292,7 @@ public class PG_AddEvent extends Activity {
                                     case R.id.btn_sure:
                                         File file = new File(list_video.get(index_zp).getFJBDLJ());
                                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                                        intent.setDataAndType(Uri.fromFile(file), "video");
+                                        intent.setDataAndType(Uri.fromFile(file), "video/*");
                                         startActivity(intent);
                                         break;
                                     case R.id.btn_cancle:
@@ -356,7 +378,7 @@ public class PG_AddEvent extends Activity {
         params.addQueryStringParameter("FJID", uuid.toString());
         params.addQueryStringParameter("SCR", commembertab.getId());
         params.addQueryStringParameter("SCRXM", commembertab.getrealName());
-        params.addQueryStringParameter("BZ", "");
+        params.addQueryStringParameter("BZ", "test");
         params.addQueryStringParameter("GLID", eventId);
         params.addQueryStringParameter("FJLX", aa);
 //        params.addQueryStringParameter("imagename", plantId);s
@@ -415,4 +437,50 @@ public class PG_AddEvent extends Activity {
         super.onAttach(activity);
         fragmentCallBack = (FragmentCallBack_AddPlantObservation) activity;
     }*/
+ public void getGoodsSum(goodslisttab goodslisttab)
+ {
+     RequestParams params = new RequestParams();
+     params.addQueryStringParameter("uid", commembertab.getuId());
+     params.addQueryStringParameter("goodsId", goodslisttab.getId());
+//        params.addQueryStringParameter("parkId", commembertab.getparkId());
+     params.addQueryStringParameter("parkId", "16");
+     params.addQueryStringParameter("areaId", commembertab.getareaId());
+//        params.addQueryStringParameter("action", "getGoodsSum");
+     params.addQueryStringParameter("action", "getGoodsSumAndPlants");
+     HttpUtils http = new HttpUtils();
+     http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+     {
+         @Override
+         public void onSuccess(ResponseInfo<String> responseInfo)
+         {
+             String a = responseInfo.result;
+             Result result = JSON.parseObject(responseInfo.result, Result.class);
+             if (result.getResultCode() == 1)
+             {
+                 if (result.getAffectedRows() != 0)
+                 {
+                     String parkId = result.getRows().getJSONObject(0).getString("parkId");
+                     String parkName = result.getRows().getJSONObject(0).getString("parkName");
+                     String areaPlants = result.getRows().getJSONObject(0).getString("areaPlants");
+                     String jsonarray = result.getRows().getJSONObject(0).getString("goodsSum");
+
+
+                 } else
+                 {
+//                        lsitNewData = new ArrayList<Dictionary>();
+                 }
+             } else
+             {
+                 AppContext.makeToast(PG_AddEvent.this, "error_connectDataBase");
+                 return;
+             }
+         }
+
+         @Override
+         public void onFailure(HttpException error, String msg)
+         {
+             AppContext.makeToast(PG_AddEvent.this, "error_connectServer");
+         }
+     });
+ }
 }

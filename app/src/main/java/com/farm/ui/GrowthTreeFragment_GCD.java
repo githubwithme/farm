@@ -387,19 +387,19 @@ public class GrowthTreeFragment_GCD extends Fragment
                 {
                     BitmapHelper.setImageViewBackground(context, listItemView.iv_img_right, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
                 }
-                if (Integer.valueOf(PlantGcjl.getcDate()) > 0)
+                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getcDate()) > 0)
                 {
                     listItemView.ll_tip_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfcl_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfcl_right.setText(PlantGcjl.getcDate() + "株抽蕾");
                 }
-                if (Integer.valueOf(PlantGcjl.getzDate()) > 0)
+                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getzDate()) > 0)
                 {
                     listItemView.ll_tip_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfly_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfly_right.setText(PlantGcjl.getzDate() + "株留芽");
                 }
-                if (Integer.valueOf(PlantGcjl.getPlantType()) > 0)
+                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getPlantType()) > 0)
                 {
                     listItemView.ll_tip_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfyz_right.setVisibility(View.VISIBLE);
@@ -419,19 +419,19 @@ public class GrowthTreeFragment_GCD extends Fragment
                 {
                     BitmapHelper.setImageViewBackground(context, listItemView.iv_img_left, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
                 }
-                if (Integer.valueOf(PlantGcjl.getcDate()) > 0)
+                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getcDate()) > 0)
                 {
                     listItemView.ll_tip_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfcl_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfcl_left.setText(PlantGcjl.getcDate() + "株抽蕾");
                 }
-                if (Integer.valueOf(PlantGcjl.getzDate()) > 0)
+                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getzDate()) > 0)
                 {
                     listItemView.ll_tip_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfly_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfly_left.setText(PlantGcjl.getzDate() + "株留芽");
                 }
-                if (Integer.valueOf(PlantGcjl.getPlantType()) > 0)
+                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getPlantType()) > 0)
                 {
                     listItemView.ll_tip_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfyz_left.setVisibility(View.VISIBLE);

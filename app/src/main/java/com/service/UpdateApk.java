@@ -13,7 +13,10 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -25,6 +28,7 @@ import com.farm.bean.Apk;
 import com.farm.bean.Result;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
+import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -53,7 +57,7 @@ public class UpdateApk extends Service
 	private NotificationManager manager;
 	private PendingIntent pendingIntent;
 	private Intent intent;
-
+	MyDialog myDialog;
 	@Override
 	public IBinder onBind(Intent intent)
 	{
@@ -109,7 +113,6 @@ public class UpdateApk extends Service
 		// TODO Auto-generated method stub
 		Log.e("OpenFile", file.getName());
 		Intent intent = new Intent();
-
 		startActivity(intent);
 	}
 
@@ -133,15 +136,19 @@ public class UpdateApk extends Service
 						if (listNewData != null)
 						{
 							Apk apk = listNewData.get(0);
+
 							PackageInfo packageInfo = null;
 							try
 							{
 								packageInfo = UpdateApk.this.getApplicationContext().getPackageManager().getPackageInfo(UpdateApk.this.getPackageName(), 0);
+								createNotification();
+								downloadApk(AppConfig.baseurl + apk.getUrl(), AppConfig.apkpath+apk.getVersiontext()+".apk");
+
 							} catch (NameNotFoundException e)
 							{
 								e.printStackTrace();
 							}
-							String localVersion = packageInfo.versionName;
+						/*	String localVersion = packageInfo.versionName;
 							if (localVersion.equals(apk.getVersion()))
 							{
 								Toast.makeText(UpdateApk.this, "当前版本已经是最新版本!", Toast.LENGTH_SHORT).show();
@@ -150,7 +157,10 @@ public class UpdateApk extends Service
 								File file = new File(AppConfig.apkpath);
 								FileHelper.RecursionDeleteFile(file);
 								showDialog(AppConfig.baseurl + apk.getUrl(), AppConfig.apkpath, "系统更新", apk.getVersiontext().toString(), "更新", "取消");
-							}
+*//*								Intent intent=new Intent();
+								intent.setAction(AppContext.BROADCAST_SHOWDIALOG);
+								sendBroadcast(intent);*//*
+							}*/
 						}
 					} else
 					{
@@ -201,7 +211,7 @@ public class UpdateApk extends Service
 					Toast.makeText(UpdateApk.this, "下载成功!", Toast.LENGTH_SHORT).show();
 				} else
 				{
-					Toast.makeText(UpdateApk.this, "更新失败!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(UpdateApk.this, "更新失败!"+ error.getMessage(),Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -260,4 +270,5 @@ public class UpdateApk extends Service
 		dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 		dialog.show();
 	}
+
 }

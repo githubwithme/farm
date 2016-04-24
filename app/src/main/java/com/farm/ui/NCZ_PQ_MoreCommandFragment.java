@@ -250,8 +250,10 @@ public class NCZ_PQ_MoreCommandFragment extends Fragment implements OnClickListe
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
-                            } else
+                                if (isAdded()) {
+                                    NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                }
+                                } else
                             {
                                 // NewDataToast.makeText(NCZ_PQ_CommandList.this,
                                 // getString(R.string.new_data_toast_none), false,
@@ -320,8 +322,10 @@ public class NCZ_PQ_MoreCommandFragment extends Fragment implements OnClickListe
                 // main_head_progress.setVisibility(ProgressBar.GONE);
                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
                 {
-                    lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
-                    lv.setSelection(0);
+                    if (isAdded()) {
+                        lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
+                        lv.setSelection(0);
+                    }
                 } else if (actiontype == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG)
                 {
                     lv.onRefreshComplete();

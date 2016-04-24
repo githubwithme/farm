@@ -1,7 +1,10 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -39,6 +42,9 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.lidroid.xutils.http.client.entity.FileUploadEntity;
+import com.media.HomeFragmentActivity;
+import com.media.MediaChooser;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -51,6 +57,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -61,7 +68,7 @@ public class PG_EventDetail extends Activity {
 
     String[] imgurls;
     MyDialog myDialog;
-
+    CountDownLatch latch;
     @ViewById
     RelativeLayout rl_match;
     @ViewById
@@ -166,15 +173,29 @@ View view_line2;
     }
 
 
+    @Click
+    void imgbtn_addpicture()
+    {
+        Intent intent = new Intent(PG_EventDetail.this, HomeFragmentActivity.class);
+        intent.putExtra("type", "picture");
+        startActivity(intent);
+    }
 
+    @Click
+    void imgbtn_addvideo()
+    {
+        Intent intent = new Intent(PG_EventDetail.this, HomeFragmentActivity.class);
+        intent.putExtra("type", "video");
+        startActivity(intent);
+    }
 
 
     @AfterViews
     void aftercreate() {
         if(!reportedBean.getEventType().equals("0"))
         {
-            tv_bianjie.setVisibility(View.GONE);
-            tv_delete.setVisibility(View.GONE);
+            tv_bianjie.setVisibility(View.VISIBLE);
+            tv_delete.setVisibility(View.VISIBLE);
         }
 
 
@@ -244,6 +265,11 @@ View view_line2;
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         reportedBean = getIntent().getParcelableExtra("reportedBean");
+        IntentFilter videoIntentFilter = new IntentFilter(MediaChooser.VIDEO_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
+        registerReceiver(videoBroadcastReceiver, videoIntentFilter);
+
+        IntentFilter imageIntentFilter = new IntentFilter(MediaChooser.IMAGE_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
+        registerReceiver(imageBroadcastReceiver, imageIntentFilter);
         commembertab = AppContext.getUserInfo(this);
     }
 
@@ -288,7 +314,17 @@ View view_line2;
                     if (listData == null) {
                         AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
                     } else {
-                        String event = listData.get(0).getEventId();
+                        if (list_allfj.size() > 0 ) {
+                            latch = new CountDownLatch(list_allfj.size() );
+                            for (int j = 0; j < list_allfj.size(); j++) {
+//                                uploadMedia(listData.get(0).getEventId(), list_picture.get(j).getFJBDLJ(),list_picture.get(j).getFJLX());
+                                uploadMedia(listData.get(0).getEventId(), list_allfj.get(j).getFJBDLJ(),list_allfj.get(j).getFJLX());
+                            }
+
+                        } else {
+                            Toast.makeText(PG_EventDetail.this, "保存成功！", Toast.LENGTH_SHORT).show();
+                            PG_EventDetail.this.finish();
+                        }
 
                     }
 
@@ -375,15 +411,22 @@ View view_line2;
                           /*      Intent intent = new Intent(PG_EventDetail.this, ShowPhoto_.class);
                                 intent.putExtra("url", list_picture.get(index_zp).getFJLJ());
                                 startActivity(intent);*/
-                                    File file = new File(list_picture.get(index_zp).getFJLJ());
-                                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                                    intent.setDataAndType(Uri.fromFile(file), "image");
+//                                    File file = new File(list_picture.get(index_zp).getFJLJ());
+//                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+//                                    intent.setDataAndType(Uri.fromFile(file), "image");
+//                                    startActivity(intent);
+
+                                    Intent intent = new Intent(PG_EventDetail.this,DisplayImage_.class);
+                                    intent.putExtra("url",AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
                                     startActivity(intent);
                                     break;
                                 case R.id.btn_cancle:
-                                deleteFJ(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
-//                                    ll_picture.removeViewAt(index_zp);
-//                                    list_picture.remove(index_zp);
+//                                    if (list_picture.get(index_zp).getFJID().equals("")) {
+                                        deleteFJ(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
+//                                    }else {
+//                                        ll_picture.removeViewAt(index_zp);
+//                                        list_picture.remove(index_zp);
+//                                    }
                                     myDialog.dismiss();
                                     break;
                             }
@@ -568,5 +611,185 @@ View view_line2;
         });
 
     }
+    BroadcastReceiver imageBroadcastReceiver = new BroadcastReceiver()// 植物（0为整体照，1为花照，2为果照，3为叶照）；动物（0为整体照，1为脚印照，2为粪便照）
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            List<String> list = intent.getStringArrayListExtra("list");
+            for (int i = 0; i < list.size(); i++)
+            {
+                String FJBDLJ = list.get(i);
+                ImageView imageView = new ImageView(PG_EventDetail.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, LayoutParams.MATCH_PARENT, 0);
+                lp.setMargins(25, 4, 0, 4);
+                imageView.setLayoutParams(lp);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                BitmapHelper.setImageView(PG_EventDetail.this, imageView, FJBDLJ);
+                imageView.setTag(FJBDLJ);
 
+                FJxx fj_SCFJ = new FJxx();
+                fj_SCFJ.setFJBDLJ(FJBDLJ);
+                fj_SCFJ.setFJLX("1");
+
+                list_picture.add(fj_SCFJ);
+                list_allfj.add(fj_SCFJ);
+                ll_picture.addView(imageView);
+
+                imageView.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        final int index_zp = ll_picture.indexOfChild(v);
+                        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener()
+                        {
+                            @Override
+                            public void OnClick(View v)
+                            {
+                                switch (v.getId())
+                                {
+                                    case R.id.btn_sure:
+                                        File file = new File(list_picture.get(index_zp).getFJBDLJ());
+                                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setDataAndType(Uri.fromFile(file), "image");
+                                        startActivity(intent);
+                                        break;
+                                    case R.id.btn_cancle:
+                                        ll_picture.removeViewAt(index_zp);
+                                        list_picture.remove(index_zp);
+                                        myDialog.dismiss();
+                                        break;
+                                }
+                            }
+                        });
+                        myDialog.show();
+                    }
+                });
+            }
+        }
+    };
+    BroadcastReceiver videoBroadcastReceiver = new BroadcastReceiver()// 植物（0为整体照，1为花照，2为果照，3为叶照）；动物（0为整体照，1为脚印照，2为粪便照）
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            List<String> list = intent.getStringArrayListExtra("list");
+            for (int i = 0; i < list.size(); i++)
+            {
+                String FJBDLJ = list.get(i);
+                ImageView imageView = new ImageView(PG_EventDetail.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, LayoutParams.MATCH_PARENT, 0);
+                lp.setMargins(25, 4, 0, 4);
+                imageView.setLayoutParams(lp);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setTag(FJBDLJ);
+                imageView.setImageBitmap(BitmapHelper.getVideoThumbnail(FJBDLJ, 120, 120, MediaStore.Images.Thumbnails.MICRO_KIND));
+
+                FJxx fj_SCFJ = new FJxx();
+                fj_SCFJ.setFJBDLJ(FJBDLJ);
+                fj_SCFJ.setFJLX("2");
+
+                list_video.add(fj_SCFJ);
+                list_allfj.add(fj_SCFJ);
+                ll_video.addView(imageView);
+
+                imageView.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        final int index_zp = ll_video.indexOfChild(v);
+                        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "图片", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
+                        {
+                            @Override
+                            public void OnClick(View v)
+                            {
+                                switch (v.getId())
+                                {
+                                    case R.id.btn_sure:
+                                        File file = new File(list_video.get(index_zp).getFJBDLJ());
+                                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setDataAndType(Uri.fromFile(file), "video");
+                                        startActivity(intent);
+                                        break;
+                                    case R.id.btn_cancle:
+                                        ll_video.removeViewAt(index_zp);
+                                        list_video.remove(index_zp);
+                                        myDialog.dismiss();
+                                        break;
+                                }
+                            }
+                        });
+                        myDialog.show();
+                    }
+                });
+            }
+        }
+    };
+    private void uploadMedia(String eventId, String path,String aa)
+    {
+        File file = new File(path);
+        UUID uuid = UUID.randomUUID();
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "UpLoadFileEventImg");
+        params.addQueryStringParameter("FJID", uuid.toString());
+        params.addQueryStringParameter("SCR", commembertab.getId());
+        params.addQueryStringParameter("SCRXM", commembertab.getrealName());
+        params.addQueryStringParameter("BZ", "test");
+        params.addQueryStringParameter("GLID", eventId);
+        params.addQueryStringParameter("FJLX", aa);
+//        params.addQueryStringParameter("imagename", plantId);s
+        params.addQueryStringParameter("FJMC", file.getName());
+        params.setBodyEntity(new FileUploadEntity(file, "text/html"));
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.configSoTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.uploadurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        showProgress();
+                    } else
+                    {
+                        AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
+                    }
+                } else
+                {
+                    AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(PG_EventDetail.this, "error_connectServer");
+            }
+        });
+    }
+
+
+
+    private void showProgress()
+    {
+        latch.countDown();
+        Long l = latch.getCount();
+        if (l.intValue() == 0) // 全部线程是否已经结束
+        {
+            Toast.makeText(PG_EventDetail.this, "保存成功！", Toast.LENGTH_SHORT).show();
+            PG_EventDetail.this.finish();
+        }
+    }
 }

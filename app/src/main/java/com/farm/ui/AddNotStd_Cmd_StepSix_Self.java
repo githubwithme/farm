@@ -108,12 +108,14 @@ public class AddNotStd_Cmd_StepSix_Self extends Fragment
             String number = goodsspc[0];
             String small_dw = goodsspc[1];
             String large_dw = goodsspc[2];
-            if (small_dw.equals("ml"))
+//            if (small_dw.equals("ml"))
+            if (small_dw.equals("mL")||small_dw.equals("L"))
             {
-                tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+"陪(兑水)"+ "  "+"共需：待定"+"\n";
+                tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+"倍(兑水)"+ "  "+"共需：待定"+"\n";
             }else
             {
-                tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+small_dw+"/株"+ "  "+"共需："+list_goodslisttab.get(i).getGX()+large_dw+"\n";
+//                tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+small_dw+"/株"+ "  "+"共需："+list_goodslisttab.get(i).getGX()+large_dw+"\n";
+                tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+small_dw+"g/株"+ "  "+"共需："+list_goodslisttab.get(i).getGX()+"g"+"\n";
             }
         }
         commandtab_single = com.farm.bean.commandtab_single.getInstance();

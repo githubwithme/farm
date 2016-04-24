@@ -191,6 +191,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -201,6 +202,7 @@
                 android:textSize="@dimen/size_sp_14"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_allnumber"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"

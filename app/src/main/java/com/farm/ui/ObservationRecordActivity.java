@@ -91,6 +91,7 @@ public class ObservationRecordActivity extends Activity
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("gcjlid", gcid);
         params.addQueryStringParameter("action", "getGCJLByID");
+//        params.addQueryStringParameter("action", "getGCJLByID1");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

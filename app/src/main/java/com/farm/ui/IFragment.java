@@ -2,11 +2,17 @@ package com.farm.ui;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -14,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +32,12 @@ import com.farm.app.AppManager;
 import com.farm.bean.Apk;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.common.FileHelper;
 import com.farm.common.SqliteDb;
+import com.farm.common.UIHelper;
+import com.farm.common.utils;
 import com.farm.widget.CircleImageView;
+import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -41,6 +52,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +65,12 @@ import java.util.List;
 @EFragment
 public class IFragment extends Fragment
 {
+	public static final int NOTIFICATIN_ID = 100;
+	private Notification mNotification;
+	private NotificationManager manager;
+	private PendingIntent pendingIntent;
+	private Intent intent;
+	MyDialog myDialog;
 //	TimeThread timethread;
 	Fragment mContent = new Fragment();
 	@ViewById
@@ -148,10 +166,13 @@ public class IFragment extends Fragment
 	@Click
 	void tv_renewversion()
 	{
-		Intent intent = new Intent(getActivity(), UpdateApk.class);
-//		intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		getActivity().startService(intent);
+		getListData();
+
+
+
+		/*Intent intent = new Intent(getActivity(), UpdateApk.class);
+		intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+		getActivity().startService(intent);*/
 
 	}
 
@@ -186,9 +207,40 @@ public class IFragment extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View rootView = inflater.inflate(R.layout.ifragment, container, false);
+		/*IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_SHOWDIALOG);
+		getActivity().registerReceiver(receiver_update, intentfilter_update);*/
 		return rootView;
 	}
+	BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+	{
+		@SuppressWarnings("deprecation")
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+//			intent.getStringArrayExtra()
+//			View dialog_layout = (LinearLayout) LayoutInflater.from(UpdateApk.this).inflate(R.layout.customdialog_callback, null);
+			View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+			myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "系统更新", "是否系统更新?", "确认", "取消", new MyDialog.CustomDialogListener()
+			{
+				@Override
+				public void OnClick(View v)
+				{
+					switch (v.getId())
+					{
+						case R.id.btn_sure:
+							getListData();
+							myDialog.dismiss();
+							break;
+						case R.id.btn_cancle:
 
+							myDialog.dismiss();
+							break;
+					}
+				}
+			});
+			myDialog.show();
+		}
+	};
 	public void switchContent(Fragment from, Fragment to)
 	{
 		if (mContent != to)
@@ -258,25 +310,65 @@ public class IFragment extends Fragment
 //		}
 //	}
 
+	/*private void getListData()
+	{
+		RequestParams params = new RequestParams();
+		params.addQueryStringParameter("action", "getVersion");
+		HttpUtils http = new HttpUtils();
+		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+			@Override
+			public void onSuccess(ResponseInfo<String> responseInfo) {
+				List<Apk> listNewData = null;
+				Result result = JSON.parseObject(responseInfo.result, Result.class);
+				if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+				{
+					if (result.getAffectedRows() != 0) {
+						listNewData = JSON.parseArray(result.getRows().toJSONString(), Apk.class);
+						if (listNewData != null) {
+							Apk apk = listNewData.get(0);
+							PackageInfo packageInfo = null;
+							try {
+								packageInfo = getActivity().getApplicationContext().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+							} catch (NameNotFoundException e) {
+								e.printStackTrace();
+							}
+							String localVersion = packageInfo.versionName;
+							if (localVersion.equals(apk.getVersion())) {
+							} else {
+								fl_new.setVisibility(View.VISIBLE);
+							}
+						}
+					} else {
+						listNewData = new ArrayList<Apk>();
+					}
+				} else {
+					AppContext.makeToast(getActivity(), "error_connectDataBase");
+					return;
+				}
+			}
+
+			@Override
+			public void onFailure(HttpException error, String msg) {
+				AppContext.makeToast(getActivity(), "error_connectServer");
+			}
+		});
+	}*/
+
 	private void getListData()
 	{
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("action", "getVersion");
 		HttpUtils http = new HttpUtils();
-		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-		{
+		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
 			@Override
-			public void onSuccess(ResponseInfo<String> responseInfo)
-			{
+			public void onSuccess(ResponseInfo<String> responseInfo) {
 				List<Apk> listNewData = null;
 				Result result = JSON.parseObject(responseInfo.result, Result.class);
 				if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
 				{
-					if (result.getAffectedRows() != 0)
-					{
+					if (result.getAffectedRows() != 0) {
 						listNewData = JSON.parseArray(result.getRows().toJSONString(), Apk.class);
-						if (listNewData != null)
-						{
+						if (listNewData != null) {
 							Apk apk = listNewData.get(0);
 							PackageInfo packageInfo = null;
 							try
@@ -289,27 +381,116 @@ public class IFragment extends Fragment
 							String localVersion = packageInfo.versionName;
 							if (localVersion.equals(apk.getVersion()))
 							{
+								Toast.makeText(getActivity(), "当前版本已经是最新版本!", Toast.LENGTH_SHORT).show();
 							} else
 							{
-								fl_new.setVisibility(View.VISIBLE);
+								View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+								myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "系统更新", "是否系统更新?", "确认", "取消", new MyDialog.CustomDialogListener()
+								{
+									@Override
+									public void OnClick(View v)
+									{
+										switch (v.getId())
+										{
+											case R.id.btn_sure:
+												Intent intent = new Intent(getActivity(), UpdateApk.class);
+												intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+												getActivity().startService(intent);
+												myDialog.dismiss();
+												break;
+											case R.id.btn_cancle:
+
+												myDialog.dismiss();
+												break;
+										}
+									}
+								});
+								myDialog.show();
 							}
 						}
-					} else
-					{
+					} else {
 						listNewData = new ArrayList<Apk>();
 					}
-				} else
-				{
+				} else {
 					AppContext.makeToast(getActivity(), "error_connectDataBase");
 					return;
 				}
 			}
 
 			@Override
-			public void onFailure(HttpException error, String msg)
-			{
+			public void onFailure(HttpException error, String msg) {
 				AppContext.makeToast(getActivity(), "error_connectServer");
 			}
 		});
+	}
+
+	public void downloadApk(String path, final String target)
+	{
+		String sss = path;
+		HttpUtils http = new HttpUtils();
+		http.download(path, target, true, true, new RequestCallBack<File>() {
+			@Override
+			public void onStart() {
+				super.onStart();
+			}
+
+			@Override
+			public void onLoading(long total, long current, boolean isUploading) {
+				super.onLoading(total, current, isUploading);
+				int jd = Integer.valueOf(utils.getRateoffloat(current, total));
+				mNotification.contentView.setTextViewText(R.id.content_view_text1, jd + "%");
+				mNotification.contentView.setProgressBar(R.id.content_view_progress, 100, jd, false);
+//          startForeground(NOTIFICATIN_ID, mNotification);
+			}
+
+			@Override
+			public void onFailure(HttpException error, String msg)
+			{
+				if (msg.equals("maybe the file has downloaded completely")) {
+					Toast.makeText(getActivity(), "下载成功!", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getActivity(), "更新失败!"+ error.getMessage(), Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<File> responseInfo) {
+				File file = new File(target);
+				if (!file.exists()) {
+				}
+				mNotification.contentView.setTextViewText(R.id.content_view_text1, "下载成功！请点击安装！");
+				mNotification.defaults = Notification.DEFAULT_SOUND;
+				Toast.makeText(getActivity(), "下载完成，请在通知栏点击安装！", Toast.LENGTH_LONG).show();
+				Intent updateIntent = new Intent(Intent.ACTION_VIEW);
+				updateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				updateIntent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+				startActivity(updateIntent);
+				pendingIntent = PendingIntent.getActivity(getActivity(), 0, updateIntent, 0);
+				mNotification.contentIntent = pendingIntent;
+//          startForeground(NOTIFICATIN_ID, mNotification);
+			}
+		});
+	}
+
+	public void createNotification()
+	{
+		if (mNotification == null)
+		{
+			mNotification = new Notification();
+			mNotification.icon = R.drawable.logo;
+			mNotification.flags |= Notification.FLAG_AUTO_CANCEL;// 表示正处于活动中
+			mNotification.flags |= Notification.FLAG_SHOW_LIGHTS;
+			intent = new Intent(getActivity(), UpdateApk.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			pendingIntent = PendingIntent.getActivity(getActivity(), 0, intent, 0);
+			mNotification.contentIntent = pendingIntent;
+
+			RemoteViews contentView = new RemoteViews(getActivity().getPackageName(), R.layout.notification_layout);
+
+			contentView.setImageViewResource(R.id.content_view_image, R.drawable.logo);
+			mNotification.contentView = contentView;
+		}
+//    startForeground(NOTIFICATIN_ID, mNotification);
+
 	}
 }

@@ -30,7 +30,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
-@EActivity(R.layout.mutilchartfragment)
+@EActivity(R.layout.barchartactivity)
 public class BarChartActivity extends Activity
 {
 	List<parkweathertab> listNewData = null;
