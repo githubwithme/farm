@@ -106,7 +106,7 @@ public class AddPlantObservation_StepThree extends Fragment
     private void getPlantlist()
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("areaid", "4");
+        params.addQueryStringParameter("areaid", commembertab.getareaId());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());

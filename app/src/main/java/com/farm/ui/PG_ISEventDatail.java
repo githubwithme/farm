@@ -1,6 +1,9 @@
 package com.farm.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,6 +38,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.media.MediaChooser;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -85,6 +89,11 @@ public class PG_ISEventDatail  extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.pg_iseventdatail, container, false);
+        IntentFilter videoIntentFilter = new IntentFilter(MediaChooser.VIDEO_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
+        getActivity().registerReceiver(videoBroadcastReceiver, videoIntentFilter);
+
+        IntentFilter imageIntentFilter = new IntentFilter(MediaChooser.IMAGE_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
+        getActivity().registerReceiver(imageBroadcastReceiver, imageIntentFilter);
         handleBean = getArguments().getParcelable("handleBean");
         return rootView;
     }
@@ -183,13 +192,13 @@ public class PG_ISEventDatail  extends Fragment
 //            fj_SCFJ.setFJBDLJ(FJBDLJ);
         fj_SCFJ.setFJLX("1");
         ll_picture.addView(imageView);
-        list_picture.add(fj_SCFJ);
+        list_picture.add(flview);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final int index_zp = ll_picture.indexOfChild(v);
                 View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
+                myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "取消", new MyDialog.CustomDialogListener() {
                     @Override
                     public void OnClick(View v) {
                         switch (v.getId()) {
@@ -197,15 +206,18 @@ public class PG_ISEventDatail  extends Fragment
                           /*      Intent intent = new Intent(PG_EventDetail.this, ShowPhoto_.class);
                                 intent.putExtra("url", list_picture.get(index_zp).getFJLJ());
                                 startActivity(intent);*/
-                                File file = new File(list_picture.get(index_zp).getFJBDLJ());
+                               /* File file = new File(list_picture.get(index_zp).getFJBDLJ());
                                 Intent intent = new Intent(Intent.ACTION_VIEW);
                                 intent.setDataAndType(Uri.fromFile(file), "image");
+                                startActivity(intent);*/
+                                Intent intent = new Intent(getActivity(),DisplayImage_.class);
+                                intent.putExtra("url", AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
                                 startActivity(intent);
                                 break;
                             case R.id.btn_cancle:
 //                                deletePhotos(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
-                                ll_picture.removeViewAt(index_zp);
-                                list_picture.remove(index_zp);
+//                                ll_picture.removeViewAt(index_zp);
+//                                list_picture.remove(index_zp);
                                 myDialog.dismiss();
                                 break;
                         }
@@ -348,6 +360,136 @@ public class PG_ISEventDatail  extends Fragment
                 });
             }
         });
-
     }
+    BroadcastReceiver imageBroadcastReceiver = new BroadcastReceiver()// 植物（0为整体照，1为花照，2为果照，3为叶照）；动物（0为整体照，1为脚印照，2为粪便照）
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            List<String> list = intent.getStringArrayListExtra("list");
+            for (int i = 0; i < list.size(); i++)
+            {
+                String FJBDLJ = list.get(i);
+                final ImageView imageView = new ImageView(getActivity());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                lp.setMargins(25, 4, 0, 4);
+                imageView.setLayoutParams(lp);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                BitmapHelper.setImageView(getActivity(), imageView, FJBDLJ);
+                imageView.setTag(FJBDLJ);
+
+                FJxx fj_SCFJ = new FJxx();
+                fj_SCFJ.setFJBDLJ(FJBDLJ);
+                fj_SCFJ.setFJLX("1");
+
+                list_picture.add(fj_SCFJ);
+                list_allfj.add(fj_SCFJ);
+                ll_picture.addView(imageView);
+
+                imageView.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        final int index_zp = ll_picture.indexOfChild(v);
+                        View dialog_layout = (LinearLayout)getActivity(). getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "取消", "删除", new MyDialog.CustomDialogListener()
+                        {
+                            @Override
+                            public void OnClick(View v)
+                            {
+                                switch (v.getId())
+                                {
+                                    case R.id.btn_sure:
+
+                                     /*   File file = new File(list_picture.get(index_zp).getFJBDLJ());
+                                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setDataAndType(Uri.fromFile(file), "image");
+                                        startActivity(intent);*/
+                                 /*       try {
+                                            FileInputStream fis = new FileInputStream(list_picture.get(index_zp).getFJBDLJ());
+                                            Bitmap bitmap = BitmapFactory.decodeStream(fis);
+                                            imageview111 .setImageBitmap(bitmap);
+                                        } catch (FileNotFoundException e) {
+                                            e.printStackTrace();
+                                        }*/
+
+                                        //只有远程有用
+                                  /*      Intent intent = new Intent(PG_AddEvent.this,DisplayImage_.class);
+                                        intent.putExtra("url", AppConfig.baseurl+list_picture.get(index_zp).getFJBDLJ());
+                                        startActivity(intent);*/
+                                        break;
+                                    case R.id.btn_cancle:
+                                        ll_picture.removeViewAt(index_zp);
+                                        list_picture.remove(index_zp);
+                                        myDialog.dismiss();
+                                        break;
+                                }
+                            }
+                        });
+                        myDialog.show();
+                    }
+                });
+            }
+        }
+    };
+    BroadcastReceiver videoBroadcastReceiver = new BroadcastReceiver()// 植物（0为整体照，1为花照，2为果照，3为叶照）；动物（0为整体照，1为脚印照，2为粪便照）
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            List<String> list = intent.getStringArrayListExtra("list");
+            for (int i = 0; i < list.size(); i++)
+            {
+                String FJBDLJ = list.get(i);
+                ImageView imageView = new ImageView(getActivity());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                lp.setMargins(25, 4, 0, 4);
+                imageView.setLayoutParams(lp);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setTag(FJBDLJ);
+                imageView.setImageBitmap(BitmapHelper.getVideoThumbnail(FJBDLJ, 120, 120, MediaStore.Images.Thumbnails.MICRO_KIND));
+
+                FJxx fj_SCFJ = new FJxx();
+                fj_SCFJ.setFJBDLJ(FJBDLJ);
+                fj_SCFJ.setFJLX("2");
+
+                list_video.add(fj_SCFJ);
+                list_allfj.add(fj_SCFJ);
+                ll_video.addView(imageView);
+
+                imageView.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        final int index_zp = ll_video.indexOfChild(v);
+                        View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "图片", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
+                        {
+                            @Override
+                            public void OnClick(View v)
+                            {
+                                switch (v.getId())
+                                {
+                                    case R.id.btn_sure:
+                                        File file = new File(list_video.get(index_zp).getFJBDLJ());
+                                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setDataAndType(Uri.fromFile(file), "video/*");
+                                        startActivity(intent);
+                                        break;
+                                    case R.id.btn_cancle:
+                                        ll_video.removeViewAt(index_zp);
+                                        list_video.remove(index_zp);
+                                        myDialog.dismiss();
+                                        break;
+                                }
+                            }
+                        });
+                        myDialog.show();
+                    }
+                });
+            }
+        }
+    };
 }

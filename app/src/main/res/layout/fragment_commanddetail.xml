@@ -54,11 +54,13 @@
                     </LinearLayout>
 
                     <View
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:background="@color/line_color"/>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/ll_flyl"
                         android:layout_width="fill_parent"
                         android:layout_height="60dip"

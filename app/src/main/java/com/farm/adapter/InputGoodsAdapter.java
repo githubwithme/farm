@@ -77,13 +77,14 @@ public class InputGoodsAdapter extends BaseAdapter
             String number = goodsspc[0];
             String small_dw = goodsspc[1];
             String large_dw = goodsspc[2];
-            if (small_dw.equals("ml"))
+//            if (small_dw.equals("ml"))
+            if (large_dw.equals("mL")||large_dw.equals("L"))
             {
                 listItemView.tv_dw.setText("倍(兑水)");
             }else
             {
 //                listItemView.tv_dw.setText(small_dw+"/株");
-                listItemView.tv_dw.setText(large_dw+"/株");
+                listItemView.tv_dw.setText("kg/株");
             }
 //            listItemView.tv_syl.setText( list.get(arg0).getGoodsSum()+large_dw);
             listItemView.tv_syl.setText( list.get(arg0).getGoodsSum());

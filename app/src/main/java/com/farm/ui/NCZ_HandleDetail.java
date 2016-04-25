@@ -140,7 +140,7 @@ public class NCZ_HandleDetail extends Activity
 //            fj_SCFJ.setFJBDLJ(FJBDLJ);
         fj_SCFJ.setFJLX("1");
         ll_picture.addView(imageView);
-        list_picture.add(fj_SCFJ);
+        list_picture.add(flview);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,18 +151,21 @@ public class NCZ_HandleDetail extends Activity
                     public void OnClick(View v) {
                         switch (v.getId()) {
                             case R.id.btn_sure:
-                          /*      Intent intent = new Intent(PG_EventDetail.this, ShowPhoto_.class);
-                                intent.putExtra("url", list_picture.get(index_zp).getFJLJ());
+                       /*         Intent intent = new Intent(PG_EventDetail.this,DisplayImage_.class);
+                                intent.putExtra("url",AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
                                 startActivity(intent);*/
-                                File file = new File(list_picture.get(index_zp).getFJBDLJ());
+                              /*  File file = new File(list_picture.get(index_zp).getFJBDLJ());
                                 Intent intent = new Intent(Intent.ACTION_VIEW);
                                 intent.setDataAndType(Uri.fromFile(file), "image");
+                                startActivity(intent);*/
+                                Intent intent = new Intent(NCZ_HandleDetail.this,DisplayImage_.class);
+                                intent.putExtra("url", AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
                                 startActivity(intent);
                                 break;
                             case R.id.btn_cancle:
 //                                deletePhotos(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
-                                ll_picture.removeViewAt(index_zp);
-                                list_picture.remove(index_zp);
+//                                ll_picture.removeViewAt(index_zp);
+//                                list_picture.remove(index_zp);
                                 myDialog.dismiss();
                                 break;
                         }

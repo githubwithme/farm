@@ -104,7 +104,7 @@ public class PG_ISAddHandle extends Fragment{
     void afteroncreate()
     {
 
-        et_sjms.setText("事件"+handleBean.getResult());
+        et_sjms.setText(handleBean.getResult());
         if(!handleBean.getFjxx().equals(""))
         {
             for(int i=0;i<handleBean.getFjxx().size();i++) {
@@ -238,15 +238,16 @@ public class PG_ISAddHandle extends Fragment{
                     public void onClick(View v) {
                         final int index_zp = ll_picture.indexOfChild(v);
                         View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                        myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
+                        myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "取消", "删除", new MyDialog.CustomDialogListener() {
                             @Override
                             public void OnClick(View v) {
                                 switch (v.getId()) {
                                     case R.id.btn_sure:
-                                        File file = new File(list_picture.get(index_zp).getFJBDLJ());
+                                     /*   File file = new File(list_picture.get(index_zp).getFJBDLJ());
                                         Intent intent = new Intent(Intent.ACTION_VIEW);
                                         intent.setDataAndType(Uri.fromFile(file), "image");
-                                        startActivity(intent);
+                                        startActivity(intent);*/
+                                        myDialog.dismiss();
                                         break;
                                     case R.id.btn_cancle:
                                         ll_picture.removeViewAt(index_zp);
@@ -412,7 +413,8 @@ public class PG_ISAddHandle extends Fragment{
         });
     }
 
-    private void addServerPicture(FJxx flview) {
+    private void addServerPicture(FJxx flview)
+    {
 
         ImageView imageView = new ImageView(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
@@ -420,13 +422,13 @@ public class PG_ISAddHandle extends Fragment{
         imageView.setLayoutParams(lp);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.url + fj_SCFJ.getFJLJ());// ?
-        BitmapHelper.setImageView(getActivity(), imageView, AppConfig.baseurl +flview.getFJLJ());
+        BitmapHelper.setImageView(getActivity(), imageView, AppConfig.baseurl + flview.getFJLJ());
 
         FJxx fj_SCFJ = new FJxx();
 //            fj_SCFJ.setFJBDLJ(FJBDLJ);
         fj_SCFJ.setFJLX("1");
         ll_picture.addView(imageView);
-        list_picture.add(fj_SCFJ);
+        list_picture.add(flview);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -440,15 +442,18 @@ public class PG_ISAddHandle extends Fragment{
                           /*      Intent intent = new Intent(PG_EventDetail.this, ShowPhoto_.class);
                                 intent.putExtra("url", list_picture.get(index_zp).getFJLJ());
                                 startActivity(intent);*/
-                                File file = new File(list_picture.get(index_zp).getFJBDLJ());
+                               /* File file = new File(list_picture.get(index_zp).getFJBDLJ());
                                 Intent intent = new Intent(Intent.ACTION_VIEW);
                                 intent.setDataAndType(Uri.fromFile(file), "image");
+                                startActivity(intent);*/
+                                Intent intent = new Intent(getActivity(), DisplayImage_.class);
+                                intent.putExtra("url", AppConfig.baseurl + list_picture.get(index_zp).getFJLJ());
                                 startActivity(intent);
                                 break;
                             case R.id.btn_cancle:
-//                                deletePhotos(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
-                                ll_picture.removeViewAt(index_zp);
-                                list_picture.remove(index_zp);
+                                deleteFJ(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
+                             /*   ll_picture.removeViewAt(index_zp);
+                                list_picture.remove(index_zp);*/
                                 myDialog.dismiss();
                                 break;
                         }
@@ -592,5 +597,44 @@ public class PG_ISAddHandle extends Fragment{
             }
         });
 
+    }
+    public void deleteFJ(String FJID,final List<FJxx> list_pic, final LinearLayout ll_pic, final int index_zp) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "UpLoadDeleteFJ");
+        params.addQueryStringParameter("FJID", FJID);
+
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                String a = responseInfo.result;
+                List<ReportedBean> listData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+
+                    ll_pic.removeViewAt(index_zp);
+                    list_pic.remove(index_zp);
+                    Toast.makeText(getActivity(), "删除成功！", Toast.LENGTH_SHORT).show();
+               /*     listData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
+                    if (listData == null) {
+                        AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
+                    } else {
+                        String event = listData.get(0).getEventId();
+
+                    }
+*/
+                } else {
+                    Toast.makeText(getActivity(), "删除失败！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String arg1) {
+                String a = error.getMessage();
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
     }
 }

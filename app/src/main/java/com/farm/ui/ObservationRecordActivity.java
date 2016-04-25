@@ -15,6 +15,7 @@ import com.farm.adapter.PlantObservationAdapter;
 import com.farm.app.AppConfig;
 import com.farm.bean.PlantGcjl;
 import com.farm.bean.Result;
+import com.farm.bean.plantgrowthtab;
 import com.farm.widget.CustomListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -34,6 +35,7 @@ import java.util.List;
 public class ObservationRecordActivity extends Activity
 {
     List<PlantGcjl> lsitNewData = null;
+    List<plantgrowthtab> lsitData = null;
     String gcid;
     @ViewById
     RelativeLayout rl_pb;
@@ -91,6 +93,7 @@ public class ObservationRecordActivity extends Activity
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("gcjlid", gcid);
         params.addQueryStringParameter("action", "getGCJLByID");
+//        params.addQueryStringParameter("action", "getGCJLByID1");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -105,6 +108,10 @@ public class ObservationRecordActivity extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         lsitNewData = JSON.parseArray(result.getRows().toJSONString(), PlantGcjl.class);
+                /*        lsitData = JSON.parseArray(result.getRows().toJSONString(), plantgrowthtab.class);
+
+                        PlantObservationAdapter addPlantObservationAdapter = new PlantObservationAdapter(ObservationRecordActivity.this, lsitData);
+                        lv.setAdapter(addPlantObservationAdapter);*/
                         if (lsitNewData != null)
                         {
                             showData();

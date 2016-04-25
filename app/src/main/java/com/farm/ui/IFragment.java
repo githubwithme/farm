@@ -2,11 +2,17 @@ package com.farm.ui;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -14,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +30,14 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.app.AppManager;
 import com.farm.bean.Apk;
-import com.farm.bean.BreakOff;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.common.FileHelper;
 import com.farm.common.SqliteDb;
+import com.farm.common.UIHelper;
 import com.farm.common.utils;
 import com.farm.widget.CircleImageView;
+import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -43,6 +52,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,172 +65,207 @@ import java.util.List;
 @EFragment
 public class IFragment extends Fragment
 {
-    commembertab commembertab;
-    //	TimeThread timethread;
-    Fragment mContent = new Fragment();
-    @ViewById
-    FrameLayout fl_new;
-    @ViewById
-    TextView tv_exist;
-    @ViewById
-    TextView tv_makemap;
-    @ViewById
-    TextView tv_resetMapData;
-    @ViewById
-    CircleImageView circle_img;
-    @ViewById
-    TextView tv_changepwd;
-    @ViewById
-    TextView tv_username;
-    @ViewById
-    LinearLayout ll_edituser;
+	public static final int NOTIFICATIN_ID = 100;
+	private Notification mNotification;
+	private NotificationManager manager;
+	private PendingIntent pendingIntent;
+	private Intent intent;
+	MyDialog myDialog;
+//	TimeThread timethread;
+	Fragment mContent = new Fragment();
+	@ViewById
+	FrameLayout fl_new;
+	@ViewById
+	TextView tv_exist;
+	@ViewById
+	TextView tv_makemap;
+	@ViewById
+	TextView tv_resetMapData;
+	@ViewById
+	CircleImageView circle_img;
+	@ViewById
+	TextView tv_changepwd;
+	@ViewById
+	LinearLayout ll_edituser;
 
-    @Click
-    void tv_detail()
-    {
-        Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
-        startActivity(intent);
-    }
-
-    @Click
-    void tv_makemap()
-    {
-        Intent intent = new Intent(getActivity(), CZ_MakeMap_MakeLayer_.class);
-        startActivity(intent);
+	@Click
+	void tv_detail()
+	{
+		Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
+		startActivity(intent);
+	}
+	@Click
+	void tv_makemap()
+	{
+		Intent intent = new Intent(getActivity(), CZ_MakeMap_MakeLayer_.class);
+		startActivity(intent);
 
 //		Intent intent = new Intent(getActivity(), MapUtils_.class);
 //		startActivity(intent);
-    }
-
-    @Click
-    void tv_resetMapData()
-    {
-        SqliteDb.resetmapdata(getActivity());
+	}
+	@Click
+	void tv_resetMapData()
+	{
+		commembertab commembertab = AppContext.getUserInfo(getActivity());
+		SqliteDb.resetmapdata(getActivity());
         SqliteDb.initPark(getActivity());
         SqliteDb.initArea(getActivity());
         SqliteDb.initContract(getActivity());
-        Toast.makeText(getActivity(), "重置成功！", Toast.LENGTH_SHORT).show();
-    }
+		Toast.makeText(getActivity(), "重置成功！", Toast.LENGTH_SHORT).show();
+	}
+	@Click
+	void tv_startBreakoff()
+	{
+		commembertab commembertab = AppContext.getUserInfo(getActivity());
+        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
+		Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
+	}
+	@Click
+	void tv_edituser()
+	{
+		Intent intent = new Intent(getActivity(), EditUserInfo_.class);
+		startActivity(intent);
+	}
 
-    @Click
-    void tv_startBreakoff()
-    {
-        startBreakoff();
-    }
+	@Click
+	void tv_yj()
+	{
+		Intent intent = new Intent(getActivity(), YiJianFanKui_.class);
+		startActivity(intent);
+	}
 
-    @Click
-    void tv_edituser()
-    {
-        Intent intent = new Intent(getActivity(), EditUserInfo_.class);
-        startActivity(intent);
-    }
+	@Click
+	void tv_bz()
+	{
+		Intent intent = new Intent(getActivity(), Helper_.class);
+		startActivity(intent);
+	}
 
-    @Click
-    void tv_yj()
-    {
-        Intent intent = new Intent(getActivity(), YiJianFanKui_.class);
-        startActivity(intent);
-    }
+	@Click
+	void tv_gy()
+	{
+		Intent intent = new Intent(getActivity(), GuanYu_.class);
+		startActivity(intent);
+	}
 
-    @Click
-    void tv_bz()
-    {
-        Intent intent = new Intent(getActivity(), Helper_.class);
-        startActivity(intent);
-    }
+	@Click
+	void tv_share()
+	{
+		// Intent inte = new Intent(Intent.ACTION_SEND);
+		// inte.setType("image/*");
+		// inte.putExtra(Intent.EXTRA_SUBJECT, "Share");
+		// inte.putExtra(Intent.EXTRA_TEXT,
+		// "I would like to share this with you...");
+		// inte.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		// startActivity(Intent.createChooser(inte, "good"));
+		String imgPath = Environment.getExternalStorageDirectory().getPath() + "/Farm/IMAGE/IMG_20151103_212607.jpg";
+		AndroidShare as = new AndroidShare(getActivity(), "这个应用不错喔，快来使用吧!点击下载http://www.farmm.cn/upload/farm.apk", "");
+		as.show();
+	}
 
-    @Click
-    void tv_gy()
-    {
-        Intent intent = new Intent(getActivity(), GuanYu_.class);
-        startActivity(intent);
-    }
+	@Click
+	void tv_renewversion()
+	{
+		getListData();
 
-    @Click
-    void tv_share()
-    {
-        // Intent inte = new Intent(Intent.ACTION_SEND);
-        // inte.setType("image/*");
-        // inte.putExtra(Intent.EXTRA_SUBJECT, "Share");
-        // inte.putExtra(Intent.EXTRA_TEXT,
-        // "I would like to share this with you...");
-        // inte.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        // startActivity(Intent.createChooser(inte, "good"));
-        String imgPath = Environment.getExternalStorageDirectory().getPath() + "/Farm/IMAGE/IMG_20151103_212607.jpg";
-        AndroidShare as = new AndroidShare(getActivity(), "这个应用不错喔，快来使用吧!点击下载http://www.farmm.cn/upload/farm.apk", "");
-        as.show();
-    }
 
-    @Click
-    void tv_renewversion()
-    {
-        Intent intent = new Intent(getActivity(), UpdateApk.class);
-        intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
-//		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getActivity().startService(intent);
 
-    }
+		/*Intent intent = new Intent(getActivity(), UpdateApk.class);
+		intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+		getActivity().startService(intent);*/
 
-    @Click
-    void tv_changepwd()
-    {
-        Intent intent = new Intent(getActivity(), ChangePwd_.class);
-        startActivity(intent);
+	}
 
-    }
+	@Click
+	void tv_changepwd()
+	{
+		Intent intent = new Intent(getActivity(), ChangePwd_.class);
+		startActivity(intent);
 
-    @Click
-    void tv_exist()
-    {
-        CleanLoginInfo();
-        AppManager.getAppManager().AppExit(getActivity());
-        NotificationManager manger = (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
-        manger.cancel(101);
-        manger.cancel(100);
-    }
+	}
 
-    @AfterViews
-    void afterOncreate()
-    {
+	@Click
+	void tv_exist()
+	{
+		CleanLoginInfo();
+		AppManager.getAppManager().AppExit(getActivity());
+		NotificationManager manger =  (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
+		manger.cancel(101);
+		manger.cancel(100);
+	}
+
+	@AfterViews
+	void afterOncreate()
+	{
 //		getListData();
-        tv_username.setText(commembertab.getuserlevelName()+"--"+commembertab.getrealName());
+		commembertab commembertab = AppContext.getUserInfo(getActivity());
 //		BitmapHelper.setImageViewBackground(getActivity(), circle_img,AppConfig.baseurl+ commembertab.getimgurl());
 //		BitmapHelper.setImageViewBackground(getActivity(), circle_img, AppConfig.baseurl + "/upload/201511/02/201511021602504091.jpg");
-    }
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View rootView = inflater.inflate(R.layout.ifragment, container, false);
-        commembertab = AppContext.getUserInfo(getActivity());
-        return rootView;
-    }
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+		View rootView = inflater.inflate(R.layout.ifragment, container, false);
+		/*IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_SHOWDIALOG);
+		getActivity().registerReceiver(receiver_update, intentfilter_update);*/
+		return rootView;
+	}
+	BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+	{
+		@SuppressWarnings("deprecation")
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+//			intent.getStringArrayExtra()
+//			View dialog_layout = (LinearLayout) LayoutInflater.from(UpdateApk.this).inflate(R.layout.customdialog_callback, null);
+			View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+			myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "系统更新", "是否系统更新?", "确认", "取消", new MyDialog.CustomDialogListener()
+			{
+				@Override
+				public void OnClick(View v)
+				{
+					switch (v.getId())
+					{
+						case R.id.btn_sure:
+							getListData();
+							myDialog.dismiss();
+							break;
+						case R.id.btn_cancle:
 
-    public void switchContent(Fragment from, Fragment to)
-    {
-        if (mContent != to)
-        {
-            mContent = to;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if (!to.isAdded())
-            { // 先判断是否被add过
-                transaction.hide(from).add(R.id.container_weather, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else
-            {
-                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
-            }
-        }
-    }
+							myDialog.dismiss();
+							break;
+					}
+				}
+			});
+			myDialog.show();
+		}
+	};
+	public void switchContent(Fragment from, Fragment to)
+	{
+		if (mContent != to)
+		{
+			mContent = to;
+			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+			if (!to.isAdded())
+			{ // 先判断是否被add过
+				transaction.hide(from).add(R.id.container_weather, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+			} else
+			{
+				transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+			}
+		}
+	}
 
-    private void CleanLoginInfo()
-    {
-        SharedPreferences sp = getActivity().getSharedPreferences("userInfo", getActivity().MODE_PRIVATE);
-        String userName = sp.getString("userName", "");
-        commembertab commembertab = (com.farm.bean.commembertab) SqliteDb.getCurrentUser(getActivity(), commembertab.class, userName);
-        commembertab.setuserPwd("");
-        commembertab.setAutoLogin("0");
-        SqliteDb.existSystem(getActivity(), commembertab);
-    }
+	private void CleanLoginInfo()
+	{
+		SharedPreferences sp = getActivity().getSharedPreferences("userInfo", getActivity().MODE_PRIVATE);
+		String userName = sp.getString("userName", "");
+		commembertab commembertab = (com.farm.bean.commembertab) SqliteDb.getCurrentUser(getActivity(), commembertab.class, userName);
+		commembertab.setuserPwd("");
+		commembertab.setAutoLogin("0");
+		SqliteDb.existSystem(getActivity(), commembertab);
+	}
 
 //	class TimeThread extends Thread
 //	{
@@ -265,101 +310,187 @@ public class IFragment extends Fragment
 //		}
 //	}
 
-    private void getListData()
-    {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("action", "getVersion");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                List<Apk> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Apk.class);
-                        if (listNewData != null)
-                        {
-                            Apk apk = listNewData.get(0);
-                            PackageInfo packageInfo = null;
-                            try
-                            {
-                                packageInfo = getActivity().getApplicationContext().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
-                            } catch (NameNotFoundException e)
-                            {
-                                e.printStackTrace();
-                            }
-                            String localVersion = packageInfo.versionName;
-                            if (localVersion.equals(apk.getVersion()))
-                            {
-                            } else
-                            {
-                                fl_new.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    } else
-                    {
-                        listNewData = new ArrayList<Apk>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-                    return;
-                }
-            }
+	/*private void getListData()
+	{
+		RequestParams params = new RequestParams();
+		params.addQueryStringParameter("action", "getVersion");
+		HttpUtils http = new HttpUtils();
+		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+			@Override
+			public void onSuccess(ResponseInfo<String> responseInfo) {
+				List<Apk> listNewData = null;
+				Result result = JSON.parseObject(responseInfo.result, Result.class);
+				if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+				{
+					if (result.getAffectedRows() != 0) {
+						listNewData = JSON.parseArray(result.getRows().toJSONString(), Apk.class);
+						if (listNewData != null) {
+							Apk apk = listNewData.get(0);
+							PackageInfo packageInfo = null;
+							try {
+								packageInfo = getActivity().getApplicationContext().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+							} catch (NameNotFoundException e) {
+								e.printStackTrace();
+							}
+							String localVersion = packageInfo.versionName;
+							if (localVersion.equals(apk.getVersion())) {
+							} else {
+								fl_new.setVisibility(View.VISIBLE);
+							}
+						}
+					} else {
+						listNewData = new ArrayList<Apk>();
+					}
+				} else {
+					AppContext.makeToast(getActivity(), "error_connectDataBase");
+					return;
+				}
+			}
 
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(getActivity(), "error_connectServer");
-            }
-        });
-    }
+			@Override
+			public void onFailure(HttpException error, String msg) {
+				AppContext.makeToast(getActivity(), "error_connectServer");
+			}
+		});
+	}*/
 
-    public void startBreakoff()
-    {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("Year", utils.getYear());
-        params.addQueryStringParameter("Starttime", utils.getToday());
-        params.addQueryStringParameter("action", "startBreakOff");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<BreakOff> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    String rows = result.getRows().get(0).toString();
-                    if (rows.equals("1"))
-                    {
-                        Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
-                    } else if (rows.equals("0"))
-                    {
-                        Toast.makeText(getActivity(), "今年已经开始断蕾了", Toast.LENGTH_SHORT).show();
-                    }
+	private void getListData()
+	{
+		RequestParams params = new RequestParams();
+		params.addQueryStringParameter("action", "getVersion");
+		HttpUtils http = new HttpUtils();
+		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+			@Override
+			public void onSuccess(ResponseInfo<String> responseInfo) {
+				List<Apk> listNewData = null;
+				Result result = JSON.parseObject(responseInfo.result, Result.class);
+				if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+				{
+					if (result.getAffectedRows() != 0) {
+						listNewData = JSON.parseArray(result.getRows().toJSONString(), Apk.class);
+						if (listNewData != null) {
+							Apk apk = listNewData.get(0);
+							PackageInfo packageInfo = null;
+							try
+							{
+								packageInfo = getActivity().getApplicationContext().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+							} catch (NameNotFoundException e)
+							{
+								e.printStackTrace();
+							}
+							String localVersion = packageInfo.versionName;
+							if (localVersion.equals(apk.getVersion()))
+							{
+								Toast.makeText(getActivity(), "当前版本已经是最新版本!", Toast.LENGTH_SHORT).show();
+							} else
+							{
+								View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+								myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "系统更新", "是否系统更新?", "确认", "取消", new MyDialog.CustomDialogListener()
+								{
+									@Override
+									public void OnClick(View v)
+									{
+										switch (v.getId())
+										{
+											case R.id.btn_sure:
+												Intent intent = new Intent(getActivity(), UpdateApk.class);
+												intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+												getActivity().startService(intent);
+												myDialog.dismiss();
+												break;
+											case R.id.btn_cancle:
 
-                } else
-                {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-                    return;
-                }
+												myDialog.dismiss();
+												break;
+										}
+									}
+								});
+								myDialog.show();
+							}
+						}
+					} else {
+						listNewData = new ArrayList<Apk>();
+					}
+				} else {
+					AppContext.makeToast(getActivity(), "error_connectDataBase");
+					return;
+				}
+			}
 
-            }
+			@Override
+			public void onFailure(HttpException error, String msg) {
+				AppContext.makeToast(getActivity(), "error_connectServer");
+			}
+		});
+	}
 
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(getActivity(), "error_connectServer");
-            }
-        });
-    }
+	public void downloadApk(String path, final String target)
+	{
+		String sss = path;
+		HttpUtils http = new HttpUtils();
+		http.download(path, target, true, true, new RequestCallBack<File>() {
+			@Override
+			public void onStart() {
+				super.onStart();
+			}
+
+			@Override
+			public void onLoading(long total, long current, boolean isUploading) {
+				super.onLoading(total, current, isUploading);
+				int jd = Integer.valueOf(utils.getRateoffloat(current, total));
+				mNotification.contentView.setTextViewText(R.id.content_view_text1, jd + "%");
+				mNotification.contentView.setProgressBar(R.id.content_view_progress, 100, jd, false);
+//          startForeground(NOTIFICATIN_ID, mNotification);
+			}
+
+			@Override
+			public void onFailure(HttpException error, String msg)
+			{
+				if (msg.equals("maybe the file has downloaded completely")) {
+					Toast.makeText(getActivity(), "下载成功!", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getActivity(), "更新失败!"+ error.getMessage(), Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<File> responseInfo) {
+				File file = new File(target);
+				if (!file.exists()) {
+				}
+				mNotification.contentView.setTextViewText(R.id.content_view_text1, "下载成功！请点击安装！");
+				mNotification.defaults = Notification.DEFAULT_SOUND;
+				Toast.makeText(getActivity(), "下载完成，请在通知栏点击安装！", Toast.LENGTH_LONG).show();
+				Intent updateIntent = new Intent(Intent.ACTION_VIEW);
+				updateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				updateIntent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+				startActivity(updateIntent);
+				pendingIntent = PendingIntent.getActivity(getActivity(), 0, updateIntent, 0);
+				mNotification.contentIntent = pendingIntent;
+//          startForeground(NOTIFICATIN_ID, mNotification);
+			}
+		});
+	}
+
+	public void createNotification()
+	{
+		if (mNotification == null)
+		{
+			mNotification = new Notification();
+			mNotification.icon = R.drawable.logo;
+			mNotification.flags |= Notification.FLAG_AUTO_CANCEL;// 表示正处于活动中
+			mNotification.flags |= Notification.FLAG_SHOW_LIGHTS;
+			intent = new Intent(getActivity(), UpdateApk.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			pendingIntent = PendingIntent.getActivity(getActivity(), 0, intent, 0);
+			mNotification.contentIntent = pendingIntent;
+
+			RemoteViews contentView = new RemoteViews(getActivity().getPackageName(), R.layout.notification_layout);
+
+			contentView.setImageViewResource(R.id.content_view_image, R.drawable.logo);
+			mNotification.contentView = contentView;
+		}
+//    startForeground(NOTIFICATIN_ID, mNotification);
+
+	}
 }

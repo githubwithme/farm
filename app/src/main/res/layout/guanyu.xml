@@ -29,6 +29,7 @@
             android:textSize="@dimen/titlebar_textsize" />
     </RelativeLayout>
     <TextView
+        android:id="@+id/tv_gy"
         android:layout_width="match_parent"
         android:layout_height="180dip"
         android:gravity="center"

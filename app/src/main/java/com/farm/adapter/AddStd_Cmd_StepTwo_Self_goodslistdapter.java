@@ -48,6 +48,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
     View currentparentview;
     TextView tv_tip_gg;
     TextView tv_dw;
+    TextView tv_spec;
     TextView tv_tip_number;
     TextView tv_goodsname;
     Button btn_sure;
@@ -58,6 +59,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
     private goodslisttab goodslisttab;
     private Context context;
     ImageView currentiv_tip = null;
+    String plants;
 
     public AddStd_Cmd_StepTwo_Self_goodslistdapter(Context context, ImageView currentiv_tip, List<goodslisttab> list)
     {
@@ -162,6 +164,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
             {
                 if (list_goodslisttab.get(i).getId().equals(goodslisttab.getId()))
                 {
+                    Double acountnumber=0d;
                     isrecovery = true;
                     String[] goodsspc = list_goodslisttab.get(i).getgoodsSpec().split("/");
                     String number = goodsspc[0];
@@ -171,7 +174,23 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                     listItemView.ll_flsl.setVisibility(View.VISIBLE);
                     listItemView.tv_flsl.setText(list_goodslisttab.get(i).getYL() + small_dw + "/株");
 
-                    listItemView.tv_allnumber.setText(list_goodslisttab.get(i).getGX() + large_dw);
+//                    listItemView.tv_allnumber.setText(list_goodslisttab.get(i).getGX() + large_dw);
+
+//                    listItemView.tv_allnumber.setText(list_goodslisttab.get(i).getGX() + "");
+                 /*   if (large_dw.equals("mL")||large_dw.equals("L"))
+                    {
+                        currentgoods.setGX("待定");
+                    }else
+                    {
+                        if (!et_flsl.getText().toString().equals(""))
+                        {
+                            acountnumber = Double.valueOf(et_flsl.getText().toString()) * Integer.valueOf(plants);//株数
+//                     neednumber = acountnumber / Double.valueOf(number);
+//                    currentgoods.setGX(neednumber.toString());
+                            currentgoods.setGX(acountnumber.toString());
+                        }
+
+                    }*/
                     isrecovery = false;
                     if (currentiv_tip != null)
                     {
@@ -202,6 +221,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         TextView tv_zzs;
         CheckBox cb_fl;
         LinearLayout ll_flsl;
+        LinearLayout tv_spec;
     }
 
     public void getGoodsSum(goodslisttab goodslisttab)
@@ -209,8 +229,10 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("goodsId", goodslisttab.getId());
+//        params.addQueryStringParameter("parkId", commembertab.getparkId());
         params.addQueryStringParameter("parkId", commembertab.getparkId());
         params.addQueryStringParameter("areaId", commembertab.getareaId());
+//        params.addQueryStringParameter("action", "getGoodsSum");
         params.addQueryStringParameter("action", "getGoodsSumAndPlants");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -227,8 +249,10 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                         String parkId = result.getRows().getJSONObject(0).getString("parkId");
                         String parkName = result.getRows().getJSONObject(0).getString("parkName");
                         String areaPlants = result.getRows().getJSONObject(0).getString("areaPlants");
-                        JSONArray jsonarray = result.getRows().getJSONObject(0).getJSONArray("goodsSum");
-                        showDialog_flsl(areaPlants,jsonarray.get(0).toString());
+                        String jsonarray = result.getRows().getJSONObject(0).getString("goodsSum");
+                        plants=areaPlants;
+//                        JSONArray jsonarray = result.getRows().getJSONObject(0).getJSONArray("goodsSum");
+                        showDialog_flsl(areaPlants,jsonarray.toString());
 
                     } else
                     {
@@ -256,6 +280,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         tv_dw = (TextView) dialog_layout.findViewById(R.id.tv_dw);
         tv_tip_number = (TextView) dialog_layout.findViewById(R.id.tv_tip_number);
         tv_tip_gg = (TextView) dialog_layout.findViewById(R.id.tv_tip_gg);
+        tv_spec = (TextView) dialog_layout.findViewById(R.id.tv_spec);
         tv_dw = (TextView) dialog_layout.findViewById(R.id.tv_dw);
         tv_goodsname = (TextView) dialog_layout.findViewById(R.id.tv_goodsname);
         et_flsl = (EditText) dialog_layout.findViewById(R.id.et_flsl);
@@ -264,16 +289,19 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         number = goodsspc[0];
         small_dw = goodsspc[1];
         large_dw = goodsspc[2];
-        tv_tip_number.setText("剩余：" + goodssum + large_dw);
-        tv_tip_gg.setText(number + small_dw + "/" + large_dw);
+//        tv_tip_number.setText("剩余：" + goodssum + large_dw);
+        tv_tip_number.setText("剩余：" + goodssum);
+//        tv_tip_gg.setText(number + small_dw + "/" + large_dw);
+        tv_spec.setText(number + small_dw + "/" + large_dw);
         tv_goodsname.setText(list.get(currentpos).getgoodsName());
-        if (small_dw.equals("ml"))
+//        if (small_dw.equals("ml"))
+        if (large_dw.equals("mL")||large_dw.equals("L"))
         {
 
             tv_dw.setText("倍(兑水)");
         }else
         {
-            tv_dw.setText(small_dw + "/株");
+            tv_dw.setText( "kg/株");
         }
 
         btn_sure.setOnClickListener(new View.OnClickListener()
@@ -288,14 +316,20 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 currentgoods.setAreaId(commembertab.getareaId());
                 currentgoods.setAreaName(commembertab.getareaName());
                 currentgoods.setYL(et_flsl.getText().toString());
-                if (small_dw.equals("ml"))
+//                if (small_dw.equals("ml"))
+                if (large_dw.equals("mL")||large_dw.equals("L"))
                 {
                     currentgoods.setGX("待定");
                 }else
                 {
-                     acountnumber = Double.valueOf(et_flsl.getText().toString()) * Integer.valueOf(zzs);//株数
-                     neednumber = acountnumber / Double.valueOf(number);
-                    currentgoods.setGX(neednumber.toString());
+                    if (!et_flsl.getText().toString().equals(""))
+                    {
+                        acountnumber = Double.valueOf(et_flsl.getText().toString()) * Integer.valueOf(zzs);//株数
+//                     neednumber = acountnumber / Double.valueOf(number);
+//                    currentgoods.setGX(neednumber.toString());
+                        currentgoods.setGX(acountnumber.toString());
+                    }
+
                 }
                 SqliteDb.save(context, currentgoods);
 
@@ -306,13 +340,15 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 TextView tv_allnumber = (TextView) currentparentview.findViewById(R.id.tv_allnumber);
                 TextView tv_zzs = (TextView) currentparentview.findViewById(R.id.tv_zzs);
 
-                if (small_dw.equals("ml"))
+//                if (small_dw.equals("ml"))
+                    if (large_dw.equals("mL")||large_dw.equals("L"))
                 {
                     tv_flsl.setText(et_flsl.getText() +"陪(兑水)");
                     tv_allnumber.setText("待定");
                 }else
                 {
-                    tv_flsl.setText(et_flsl.getText() + small_dw + "/株");
+//                    tv_flsl.setText(et_flsl.getText() + small_dw + "/株");
+                    tv_flsl.setText(et_flsl.getText() +"kg/株");
                     tv_allnumber.setText(neednumber + large_dw);
                 }
 

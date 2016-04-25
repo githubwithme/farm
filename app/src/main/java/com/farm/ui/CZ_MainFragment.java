@@ -44,6 +44,7 @@ import java.util.List;
 @EFragment
 public class CZ_MainFragment extends Fragment
 {
+    boolean ishidding=false;
     TimeThread timethread;
     commembertab commembertab;
     Fragment mContent = new Fragment();
@@ -78,7 +79,41 @@ public class CZ_MainFragment extends Fragment
 //        intent.putExtra("parkid", commembertab.getparkId());
 //        startActivity(intent);
 //    }
-
+//@Override
+//public void onHiddenChanged(boolean hidden)
+//{
+//    ishidding=hidden;
+//    super.onHiddenChanged(hidden);
+//    if(hidden==true)
+//    {
+//        timethread.setSleep(true);
+//    } else
+//    {
+//        timethread = new TimeThread();
+//        timethread.setStop(false);
+//        timethread.setSleep(false);
+//        timethread.start();
+//    }
+ /*       if (!hidden)
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(false);
+            }
+        } else
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(true);
+            }
+        }*/
+//}
+@Override
+public void onHiddenChanged(boolean hidden)
+{
+    super.onHiddenChanged(hidden);
+    common_TodayJob.setThreadStatus(hidden);
+}
     @Click
     void ll_jrpq()
     {
@@ -108,7 +143,7 @@ public class CZ_MainFragment extends Fragment
         bundle.putString("workuserid", commembertab.getId());
         common_TodayJob.setArguments(bundle);
         timethread = new TimeThread();
-        timethread.setStop(false);
+//        timethread.setStop(false);
         timethread.setSleep(false);
         timethread.start();
         return rootView;
@@ -272,6 +307,7 @@ public class CZ_MainFragment extends Fragment
             {
                 if (isSleep)
                 {
+                    return;
                 } else
                 {
                     try
@@ -303,9 +339,15 @@ public class CZ_MainFragment extends Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
-        timethread.setStop(true);
+    /*    timethread.setStop(true);
         timethread.interrupt();
-        timethread = null;
+        timethread = null;*/
+        if (timethread != null && timethread.isAlive())
+        {
+            timethread.setStop(true);
+            timethread.interrupt();
+            timethread = null;
+        }
     }
 
 }
