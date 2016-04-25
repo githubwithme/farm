@@ -52,6 +52,7 @@ public class CommandDetail_Show_DetailFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.commanddetail_show_detail, null);
         commandtab = getArguments().getParcelable("bean");
+
         return view;
     }
 
@@ -67,11 +68,13 @@ public class CommandDetail_Show_DetailFragment extends Fragment
             rl_jobname_tip.setVisibility(View.GONE);
         }
         String[] nongzi = commandtab.getnongziName().split(",");
+        String[] shuliang = commandtab.getamount().split(";");
+        String[] danwei = commandtab.getAmountDW().split(",");
 //        String[] yl = commandtab.getamount().split(";");
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)
         {
-            flyl = flyl + nongzi[i] + "\n";
+            flyl = flyl + nongzi[i] +":"+shuliang[i]+danwei[i]+ "\n";
         }
 
         tv_yl.setText(flyl);

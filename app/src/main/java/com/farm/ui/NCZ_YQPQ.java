@@ -97,6 +97,9 @@ public class NCZ_YQPQ extends Fragment
         super.onHiddenChanged(hidden);//true
         if(hidden==true)
         {
+            timethread.setSleep(true);
+        } else
+        {
             timethread = new TimeThread();
             timethread.setStop(false);
             timethread.setSleep(false);
@@ -142,10 +145,9 @@ public class NCZ_YQPQ extends Fragment
     {
         View rootView = inflater.inflate(R.layout.ncz_yqpq, container, false);
         appContext = (AppContext) getActivity().getApplication();
-   /*     timethread = new TimeThread();
-        timethread.setStop(false);
+        timethread = new TimeThread();
         timethread.setSleep(false);
-        timethread.start();*/
+        timethread.start();
         return rootView;
     }
 
@@ -475,9 +477,8 @@ public class NCZ_YQPQ extends Fragment
                     {
                         timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
-                            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_YQPQ, 0);
-
-                        timethread.setSleep(true);
+                        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_YQPQ, 0);
+//                        timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();
@@ -501,8 +502,12 @@ public class NCZ_YQPQ extends Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
-        timethread.setStop(true);
-        timethread.interrupt();
-        timethread = null;
+        if (timethread != null && timethread.isAlive())
+        {
+            timethread.setStop(true);
+            timethread.interrupt();
+            timethread = null;
+        }
+
     }
 }

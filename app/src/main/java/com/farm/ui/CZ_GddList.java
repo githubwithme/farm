@@ -113,11 +113,18 @@ public class CZ_GddList extends Activity
     {
         super.onResume();
         ishidding = false;
-        if (timethread != null)
+  /*      if (timethread != null)
         {
+            timethread = new TimeThread();
+            timethread.setStop(false);
             timethread.setSleep(false);
+            timethread.start();
         }
-
+*/
+        timethread = new TimeThread();
+        timethread.setStop(false);
+        timethread.setSleep(false);
+        timethread.start();
     }
 
     @Override
@@ -125,10 +132,10 @@ public class CZ_GddList extends Activity
     {
         super.onStop();
         ishidding = true;
-        if (timethread != null)
+ /*       if (timethread != null)
         {
             timethread.setSleep(true);
-        }
+        }*/
 
     }
 
@@ -142,7 +149,6 @@ public class CZ_GddList extends Activity
         CZ_GddList.this.registerReceiver(receiver_update, intentfilter_update);
         areaid = getIntent().getStringExtra("areaid");
         timethread = new TimeThread();
-        timethread.setStop(false);
         timethread.setSleep(false);
         timethread.start();
     }
@@ -532,6 +538,7 @@ public class CZ_GddList extends Activity
             {
                 if (isSleep)
                 {
+                    return;
                 } else
                 {
                     try
@@ -539,7 +546,6 @@ public class CZ_GddList extends Activity
                         timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-                        timethread.setSleep(true);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();
@@ -563,9 +569,12 @@ public class CZ_GddList extends Activity
     protected void onDestroy()
     {
         super.onDestroy();
-        timethread.setStop(true);
-        timethread.interrupt();
-        timethread = null;
+        if (timethread != null && timethread.isAlive())
+        {
+            timethread.setStop(true);
+            timethread.interrupt();
+            timethread = null;
+        }
     }
 
 }

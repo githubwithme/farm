@@ -118,7 +118,7 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
             }else
             {
 //                tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+small_dw+"/株"+ "  "+"共需："+list_goodslisttab.get(i).getGX()+large_dw+"\n";
-                tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+small_dw+"g/株"+ "  "+"共需："+list_goodslisttab.get(i).getGX()+"g"+"\n";
+                tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+small_dw+"kg/株"+ "  "+"共需："+list_goodslisttab.get(i).getGX()+"kg"+"\n";
             }
 
         }

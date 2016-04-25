@@ -170,6 +170,8 @@ public class Area_Cmd_Adapter extends BaseAdapter
             {
                 String goodsYL = "";
                 String goodsnote = "";
+//                String danwei = "";
+//                String shuliang = "";
                 goodslisttab_flsl goodslisttab_flsl = new goodslisttab_flsl();
                 List<goodslisttab> list_goodslisttab = inputGoodsAdapter.getGoosList();
 
@@ -218,17 +220,24 @@ public class Area_Cmd_Adapter extends BaseAdapter
                     String small_dw = goodsspc[1];
                     String large_dw = goodsspc[2];
 //                    if (small_dw.equals("ml"))
+//                    if (goodslisttab.getgoodsunit().equals("mL")||goodslisttab.getgoodsunit().equals("L"))
                     if (goodslisttab.getgoodsunit().equals("mL")||goodslisttab.getgoodsunit().equals("L"))
                     {
                         goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + "倍(兑水)" +  "\n";
+//                        danwei=danwei+"倍(兑水),";
+//                        shuliang=shuliang+ goodslisttab.getYL()+",";
                     }else
                     {
                         Double acountnumber = Double.valueOf(list_goodslisttab.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
 //                        Double  neednumber = acountnumber / Double.valueOf(number);    //冯
 //                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + small_dw + "/株" + "  " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n"; //冯
 //                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " +goodslisttab.getgoodsunit()+ small_dw + "/株" + "  " + "共需" + acountnumber + goodslisttab.getgoodsunit() + "\n";
-                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL()+ "g/株" + "  " + "共需" +acountnumber+ "g" + "\n";
+                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL()+ "kg/株" + "  " + "共需" +acountnumber+ "kg" + "\n";
+//                        danwei=danwei+"g/株,";
+//                        shuliang=shuliang+ goodslisttab.getYL()+",";
                     }
+                 /*   goodslisttab_flsl.setDanwei(danwei);
+                    goodslisttab_flsl.setShuliang(shuliang);*/
                     goodslisttab_flsl.setgoodsNote(goodsnote);
                 }
                 SqliteDb.save(context, goodslisttab_flsl);

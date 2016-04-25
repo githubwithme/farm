@@ -34,7 +34,24 @@ public class goodslisttab_flsl implements Parcelable
     public String areaName="";
     public String YL="";
     public String ZZ="";
+//    public String danwei="";
+//    public String shuliang="";
 
+/*    public String getDanwei() {
+        return danwei;
+    }
+
+    public void setDanwei(String danwei) {
+        this.danwei = danwei;
+    }
+
+    public String getShuliang() {
+        return shuliang;
+    }
+
+    public void setShuliang(String shuliang) {
+        this.shuliang = shuliang;
+    }*/
 
     public String getZZ()
     {
@@ -295,6 +312,8 @@ public class goodslisttab_flsl implements Parcelable
             p.setAreaName(source.readString());
             p.setYL(source.readString());
             p.setZZ(source.readString());
+//            p.setDanwei(source.readString());
+//            p.setShuliang(source.readString());
             return p;
         }
 
@@ -330,6 +349,8 @@ public class goodslisttab_flsl implements Parcelable
         p.writeString(areaName);
         p.writeString(YL);
         p.writeString(ZZ);
+//        p.writeString(danwei);
+//        p.writeString(shuliang);
 
     }
 

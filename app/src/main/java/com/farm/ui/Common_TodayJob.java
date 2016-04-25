@@ -116,25 +116,50 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
         intent.putExtra("workuserid", workuserid);
         startActivity(intent);
     }
-    @Override
-    public void onHiddenChanged(boolean hidden)
+    public void  setThreadStatus(boolean hidden)
     {
-        ishidding=hidden;
-        super.onHiddenChanged(hidden);
-        if (!hidden)
+        ishidding = hidden;
+        super.onHiddenChanged(hidden);//true
+        if(hidden==true)
         {
-            if (timethread != null)
-            {
-                timethread.setSleep(false);
-            }
+            timethread.setSleep(true);
         } else
         {
-            if (timethread != null)
-            {
-                timethread.setSleep(true);
-            }
+            timethread = new TimeThread();
+            timethread.setStop(false);
+            timethread.setSleep(false);
+            timethread.start();
         }
     }
+//    @Override
+//    public void onHiddenChanged(boolean hidden)
+//    {
+//        ishidding=hidden;
+//        super.onHiddenChanged(hidden);
+//        if(hidden==true)
+//        {
+//            timethread.setSleep(true);
+//        } else
+//        {
+//            timethread = new TimeThread();
+//            timethread.setStop(false);
+//            timethread.setSleep(false);
+//            timethread.start();
+//        }
+// /*       if (!hidden)
+//        {
+//            if (timethread != null)
+//            {
+//                timethread.setSleep(false);
+//            }
+//        } else
+//        {
+//            if (timethread != null)
+//            {
+//                timethread.setSleep(true);
+//            }
+//        }*/
+//    }
 
     @AfterViews
     void afterOncreate()
@@ -166,7 +191,6 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
         appContext = (AppContext) getActivity().getApplication();
         commembertab = AppContext.getUserInfo(getActivity());
         timethread = new TimeThread();
-        timethread.setStop(false);
         timethread.setSleep(false);
         timethread.start();
         return rootView;
@@ -223,7 +247,10 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                if(getActivity()!=null)
+                {
+                    AppContext.makeToast(getActivity(), "error_connectServer");
+                }
                 if (!ishidding  && timethread!=null)
                 {
                     timethread.setSleep(false);
@@ -569,16 +596,13 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
             {
                 if (isSleep)
                 {
-                } else
-                {
+                    return;
+                } else {
                     try
                     {
                         timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
-
-                            getCmdNum();
-
-                        timethread.setSleep(true);
+                        getCmdNum();
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();
@@ -648,8 +672,14 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
     public void onDestroyView()
     {
         super.onDestroyView();
-        timethread.setStop(true);
+ /*       timethread.setStop(true);
         timethread.interrupt();
-        timethread = null;
+        timethread = null;*/
+        if (timethread != null && timethread.isAlive())
+        {
+            timethread.setStop(true);
+            timethread.interrupt();
+            timethread = null;
+        }
     }
 }

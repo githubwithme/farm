@@ -84,7 +84,7 @@ public class InputGoodsAdapter extends BaseAdapter
             }else
             {
 //                listItemView.tv_dw.setText(small_dw+"/株");
-                listItemView.tv_dw.setText("g/株");
+                listItemView.tv_dw.setText("kg/株");
             }
 //            listItemView.tv_syl.setText( list.get(arg0).getGoodsSum()+large_dw);
             listItemView.tv_syl.setText( list.get(arg0).getGoodsSum());

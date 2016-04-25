@@ -230,7 +230,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("goodsId", goodslisttab.getId());
 //        params.addQueryStringParameter("parkId", commembertab.getparkId());
-        params.addQueryStringParameter("parkId", "16");
+        params.addQueryStringParameter("parkId", commembertab.getparkId());
         params.addQueryStringParameter("areaId", commembertab.getareaId());
 //        params.addQueryStringParameter("action", "getGoodsSum");
         params.addQueryStringParameter("action", "getGoodsSumAndPlants");
@@ -301,7 +301,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
             tv_dw.setText("倍(兑水)");
         }else
         {
-            tv_dw.setText( "g/株");
+            tv_dw.setText( "kg/株");
         }
 
         btn_sure.setOnClickListener(new View.OnClickListener()
@@ -348,7 +348,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 }else
                 {
 //                    tv_flsl.setText(et_flsl.getText() + small_dw + "/株");
-                    tv_flsl.setText(et_flsl.getText() +"g/株");
+                    tv_flsl.setText(et_flsl.getText() +"kg/株");
                     tv_allnumber.setText(neednumber + large_dw);
                 }
 
