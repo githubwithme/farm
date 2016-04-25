@@ -1153,7 +1153,7 @@ public class SqliteDb
         List<BreakOff> list = null;
         try
         {
-            list = db.findAll(Selector.from(BreakOff.class).where("uid", "=", uid).and("batchTime", "=", batchTime).and("xxzt", "=", "0").and("status", "=", "0").and("contractid", "=", contractid));
+            list = db.findAll(Selector.from(BreakOff.class).where("uid", "=", uid).and("batchTime", "=", batchTime).and("xxzt", "=", "0").and("status", "=", "0").and("Year", "=",utils.getYear()).and("contractid", "=", contractid));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1167,7 +1167,7 @@ public class SqliteDb
         List<SellOrderDetail> list = null;
         try
         {
-            list = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("batchTime", "=", batchTime).and("xxzt", "=", "0").and("type", "=", "salefor").and("contractid", "=", contractid));
+            list = db.findAll(Selector.from(SellOrderDetail.class).where("uid", "=", uid).and("batchTime", "=", batchTime).and("xxzt", "=", "0").and("year", "=", utils.getYear()).and("type", "=", "salefor").and("contractid", "=", contractid));
         } catch (DbException e)
         {
             e.printStackTrace();
