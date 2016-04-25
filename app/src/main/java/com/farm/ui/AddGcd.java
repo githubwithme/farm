@@ -28,6 +28,11 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
+import com.tencent.map.geolocation.TencentLocationManager;
+import com.tencent.map.geolocation.TencentLocationRequest;
+import com.tencent.mapsdk.raster.model.LatLng;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -38,8 +43,10 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 @EActivity(R.layout.addgcd)
-public class AddGcd extends Activity
+public class AddGcd extends Activity implements TencentLocationListener
 {
+    LatLng location_latLng;
+    int error;
     CountDownLatch latch;
     CustomDialog_ListView customDialog_listView;
     Dictionary dic_comm;
@@ -52,6 +59,8 @@ public class AddGcd extends Activity
     EditText et_plantNote;
     @ViewById
     TextView tv_zzsl;
+    @ViewById
+    TextView tv_location;
     @ViewById
     ProgressBar pb_upload;
     @ViewById
@@ -97,6 +106,10 @@ public class AddGcd extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        TencentLocationRequest request = TencentLocationRequest.create();
+        TencentLocationManager locationManager = TencentLocationManager.getInstance(AddGcd.this);
+        locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84
+        error = locationManager.requestLocationUpdates(request, this);
         getActionBar().hide();
     }
 
@@ -116,8 +129,8 @@ public class AddGcd extends Activity
         params.addQueryStringParameter("gcdName", et_plantName.getText().toString());
         params.addQueryStringParameter("gcdNote", et_plantNote.getText().toString());
 
-        params.addQueryStringParameter("x", "112.25482264");
-        params.addQueryStringParameter("y", "23.548768");
+        params.addQueryStringParameter("x", String.valueOf(location_latLng.getLatitude()));
+        params.addQueryStringParameter("y", String.valueOf(location_latLng.getLongitude()));
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -205,8 +218,9 @@ public class AddGcd extends Activity
         params.addQueryStringParameter("plantNote", plantnote);
         params.addQueryStringParameter("plantType", "0");
 
-        params.addQueryStringParameter("x", "112.25482264");
-        params.addQueryStringParameter("y", "23.548768");
+
+        params.addQueryStringParameter("x", String.valueOf(location_latLng.getLatitude()));
+        params.addQueryStringParameter("y", String.valueOf(location_latLng.getLongitude()));
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -250,5 +264,26 @@ public class AddGcd extends Activity
             Toast.makeText(AddGcd.this, "保存成功！", Toast.LENGTH_SHORT).show();
             AddGcd.this.finish();
         }
+    }
+
+    @Override
+    public void onLocationChanged(TencentLocation tencentLocation, int i, String s)
+    {
+        if (TencentLocation.ERROR_OK == error) // 定位成功
+        {
+            // 用于定位
+            location_latLng = new LatLng(tencentLocation.getLatitude(), tencentLocation.getLongitude());
+            //全局记录坐标
+            AppContext appContext = (AppContext) AddGcd.this.getApplication();
+            appContext.setLOCATION_X(String.valueOf(location_latLng.getLatitude()));
+            appContext.setLOCATION_Y(String.valueOf(location_latLng.getLongitude()));
+            tv_location.setText("经度"+location_latLng.getLatitude()+"纬度"+location_latLng.getLongitude());
+        }
+    }
+
+    @Override
+    public void onStatusUpdate(String s, int i, String s1)
+    {
+
     }
 }

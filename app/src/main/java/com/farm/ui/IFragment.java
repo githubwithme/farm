@@ -55,168 +55,172 @@ import java.util.List;
 @EFragment
 public class IFragment extends Fragment
 {
-//	TimeThread timethread;
-	Fragment mContent = new Fragment();
-	@ViewById
-	FrameLayout fl_new;
-	@ViewById
-	TextView tv_exist;
-	@ViewById
-	TextView tv_makemap;
-	@ViewById
-	TextView tv_resetMapData;
-	@ViewById
-	CircleImageView circle_img;
-	@ViewById
-	TextView tv_changepwd;
-	@ViewById
-	LinearLayout ll_edituser;
+    commembertab commembertab;
+    //	TimeThread timethread;
+    Fragment mContent = new Fragment();
+    @ViewById
+    FrameLayout fl_new;
+    @ViewById
+    TextView tv_exist;
+    @ViewById
+    TextView tv_makemap;
+    @ViewById
+    TextView tv_resetMapData;
+    @ViewById
+    CircleImageView circle_img;
+    @ViewById
+    TextView tv_changepwd;
+    @ViewById
+    TextView tv_username;
+    @ViewById
+    LinearLayout ll_edituser;
 
-	@Click
-	void tv_detail()
-	{
-		Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
-		startActivity(intent);
-	}
-	@Click
-	void tv_makemap()
-	{
-		Intent intent = new Intent(getActivity(), CZ_MakeMap_MakeLayer_.class);
-		startActivity(intent);
+    @Click
+    void tv_detail()
+    {
+        Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
+        startActivity(intent);
+    }
+
+    @Click
+    void tv_makemap()
+    {
+        Intent intent = new Intent(getActivity(), CZ_MakeMap_MakeLayer_.class);
+        startActivity(intent);
 
 //		Intent intent = new Intent(getActivity(), MapUtils_.class);
 //		startActivity(intent);
-	}
-	@Click
-	void tv_resetMapData()
-	{
-		commembertab commembertab = AppContext.getUserInfo(getActivity());
-		SqliteDb.resetmapdata(getActivity());
+    }
+
+    @Click
+    void tv_resetMapData()
+    {
+        SqliteDb.resetmapdata(getActivity());
         SqliteDb.initPark(getActivity());
         SqliteDb.initArea(getActivity());
         SqliteDb.initContract(getActivity());
-		Toast.makeText(getActivity(), "重置成功！", Toast.LENGTH_SHORT).show();
-	}
-	@Click
-	void tv_startBreakoff()
-	{
-		startBreakoff();
-//		commembertab commembertab = AppContext.getUserInfo(getActivity());
-//        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
-//		Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
-	}
-	@Click
-	void tv_edituser()
-	{
-		Intent intent = new Intent(getActivity(), EditUserInfo_.class);
-		startActivity(intent);
-	}
+        Toast.makeText(getActivity(), "重置成功！", Toast.LENGTH_SHORT).show();
+    }
 
-	@Click
-	void tv_yj()
-	{
-		Intent intent = new Intent(getActivity(), YiJianFanKui_.class);
-		startActivity(intent);
-	}
+    @Click
+    void tv_startBreakoff()
+    {
+        startBreakoff();
+    }
 
-	@Click
-	void tv_bz()
-	{
-		Intent intent = new Intent(getActivity(), Helper_.class);
-		startActivity(intent);
-	}
+    @Click
+    void tv_edituser()
+    {
+        Intent intent = new Intent(getActivity(), EditUserInfo_.class);
+        startActivity(intent);
+    }
 
-	@Click
-	void tv_gy()
-	{
-		Intent intent = new Intent(getActivity(), GuanYu_.class);
-		startActivity(intent);
-	}
+    @Click
+    void tv_yj()
+    {
+        Intent intent = new Intent(getActivity(), YiJianFanKui_.class);
+        startActivity(intent);
+    }
 
-	@Click
-	void tv_share()
-	{
-		// Intent inte = new Intent(Intent.ACTION_SEND);
-		// inte.setType("image/*");
-		// inte.putExtra(Intent.EXTRA_SUBJECT, "Share");
-		// inte.putExtra(Intent.EXTRA_TEXT,
-		// "I would like to share this with you...");
-		// inte.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		// startActivity(Intent.createChooser(inte, "good"));
-		String imgPath = Environment.getExternalStorageDirectory().getPath() + "/Farm/IMAGE/IMG_20151103_212607.jpg";
-		AndroidShare as = new AndroidShare(getActivity(), "这个应用不错喔，快来使用吧!点击下载http://www.farmm.cn/upload/farm.apk", "");
-		as.show();
-	}
+    @Click
+    void tv_bz()
+    {
+        Intent intent = new Intent(getActivity(), Helper_.class);
+        startActivity(intent);
+    }
 
-	@Click
-	void tv_renewversion()
-	{
-		Intent intent = new Intent(getActivity(), UpdateApk.class);
-		intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
+    @Click
+    void tv_gy()
+    {
+        Intent intent = new Intent(getActivity(), GuanYu_.class);
+        startActivity(intent);
+    }
+
+    @Click
+    void tv_share()
+    {
+        // Intent inte = new Intent(Intent.ACTION_SEND);
+        // inte.setType("image/*");
+        // inte.putExtra(Intent.EXTRA_SUBJECT, "Share");
+        // inte.putExtra(Intent.EXTRA_TEXT,
+        // "I would like to share this with you...");
+        // inte.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        // startActivity(Intent.createChooser(inte, "good"));
+        String imgPath = Environment.getExternalStorageDirectory().getPath() + "/Farm/IMAGE/IMG_20151103_212607.jpg";
+        AndroidShare as = new AndroidShare(getActivity(), "这个应用不错喔，快来使用吧!点击下载http://www.farmm.cn/upload/farm.apk", "");
+        as.show();
+    }
+
+    @Click
+    void tv_renewversion()
+    {
+        Intent intent = new Intent(getActivity(), UpdateApk.class);
+        intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
 //		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		getActivity().startService(intent);
+        getActivity().startService(intent);
 
-	}
+    }
 
-	@Click
-	void tv_changepwd()
-	{
-		Intent intent = new Intent(getActivity(), ChangePwd_.class);
-		startActivity(intent);
+    @Click
+    void tv_changepwd()
+    {
+        Intent intent = new Intent(getActivity(), ChangePwd_.class);
+        startActivity(intent);
 
-	}
+    }
 
-	@Click
-	void tv_exist()
-	{
-		CleanLoginInfo();
-		AppManager.getAppManager().AppExit(getActivity());
-		NotificationManager manger =  (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
-		manger.cancel(101);
-		manger.cancel(100);
-	}
+    @Click
+    void tv_exist()
+    {
+        CleanLoginInfo();
+        AppManager.getAppManager().AppExit(getActivity());
+        NotificationManager manger = (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
+        manger.cancel(101);
+        manger.cancel(100);
+    }
 
-	@AfterViews
-	void afterOncreate()
-	{
+    @AfterViews
+    void afterOncreate()
+    {
 //		getListData();
-		commembertab commembertab = AppContext.getUserInfo(getActivity());
+        tv_username.setText(commembertab.getuserlevelName()+"--"+commembertab.getrealName());
 //		BitmapHelper.setImageViewBackground(getActivity(), circle_img,AppConfig.baseurl+ commembertab.getimgurl());
 //		BitmapHelper.setImageViewBackground(getActivity(), circle_img, AppConfig.baseurl + "/upload/201511/02/201511021602504091.jpg");
-	}
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
-		View rootView = inflater.inflate(R.layout.ifragment, container, false);
-		return rootView;
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View rootView = inflater.inflate(R.layout.ifragment, container, false);
+        commembertab = AppContext.getUserInfo(getActivity());
+        return rootView;
+    }
 
-	public void switchContent(Fragment from, Fragment to)
-	{
-		if (mContent != to)
-		{
-			mContent = to;
-			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-			if (!to.isAdded())
-			{ // 先判断是否被add过
-				transaction.hide(from).add(R.id.container_weather, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-			} else
-			{
-				transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
-			}
-		}
-	}
+    public void switchContent(Fragment from, Fragment to)
+    {
+        if (mContent != to)
+        {
+            mContent = to;
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            if (!to.isAdded())
+            { // 先判断是否被add过
+                transaction.hide(from).add(R.id.container_weather, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else
+            {
+                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+            }
+        }
+    }
 
-	private void CleanLoginInfo()
-	{
-		SharedPreferences sp = getActivity().getSharedPreferences("userInfo", getActivity().MODE_PRIVATE);
-		String userName = sp.getString("userName", "");
-		commembertab commembertab = (com.farm.bean.commembertab) SqliteDb.getCurrentUser(getActivity(), commembertab.class, userName);
-		commembertab.setuserPwd("");
-		commembertab.setAutoLogin("0");
-		SqliteDb.existSystem(getActivity(), commembertab);
-	}
+    private void CleanLoginInfo()
+    {
+        SharedPreferences sp = getActivity().getSharedPreferences("userInfo", getActivity().MODE_PRIVATE);
+        String userName = sp.getString("userName", "");
+        commembertab commembertab = (com.farm.bean.commembertab) SqliteDb.getCurrentUser(getActivity(), commembertab.class, userName);
+        commembertab.setuserPwd("");
+        commembertab.setAutoLogin("0");
+        SqliteDb.existSystem(getActivity(), commembertab);
+    }
 
 //	class TimeThread extends Thread
 //	{
@@ -261,101 +265,101 @@ public class IFragment extends Fragment
 //		}
 //	}
 
-	private void getListData()
-	{
-		RequestParams params = new RequestParams();
-		params.addQueryStringParameter("action", "getVersion");
-		HttpUtils http = new HttpUtils();
-		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-		{
-			@Override
-			public void onSuccess(ResponseInfo<String> responseInfo)
-			{
-				List<Apk> listNewData = null;
-				Result result = JSON.parseObject(responseInfo.result, Result.class);
-				if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-				{
-					if (result.getAffectedRows() != 0)
-					{
-						listNewData = JSON.parseArray(result.getRows().toJSONString(), Apk.class);
-						if (listNewData != null)
-						{
-							Apk apk = listNewData.get(0);
-							PackageInfo packageInfo = null;
-							try
-							{
-								packageInfo = getActivity().getApplicationContext().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
-							} catch (NameNotFoundException e)
-							{
-								e.printStackTrace();
-							}
-							String localVersion = packageInfo.versionName;
-							if (localVersion.equals(apk.getVersion()))
-							{
-							} else
-							{
-								fl_new.setVisibility(View.VISIBLE);
-							}
-						}
-					} else
-					{
-						listNewData = new ArrayList<Apk>();
-					}
-				} else
-				{
-					AppContext.makeToast(getActivity(), "error_connectDataBase");
-					return;
-				}
-			}
+    private void getListData()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "getVersion");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                List<Apk> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Apk.class);
+                        if (listNewData != null)
+                        {
+                            Apk apk = listNewData.get(0);
+                            PackageInfo packageInfo = null;
+                            try
+                            {
+                                packageInfo = getActivity().getApplicationContext().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+                            } catch (NameNotFoundException e)
+                            {
+                                e.printStackTrace();
+                            }
+                            String localVersion = packageInfo.versionName;
+                            if (localVersion.equals(apk.getVersion()))
+                            {
+                            } else
+                            {
+                                fl_new.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    } else
+                    {
+                        listNewData = new ArrayList<Apk>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+            }
 
-			@Override
-			public void onFailure(HttpException error, String msg)
-			{
-				AppContext.makeToast(getActivity(), "error_connectServer");
-			}
-		});
-	}
-	public void startBreakoff()
-	{
-		commembertab commembertab = AppContext.getUserInfo(getActivity());
-		RequestParams params = new RequestParams();
-		params.addQueryStringParameter("uid", commembertab.getuId());
-		params.addQueryStringParameter("Year", utils.getYear());
-		params.addQueryStringParameter("Starttime", utils.getToday());
-		params.addQueryStringParameter("action", "startBreakOff");
-		HttpUtils http = new HttpUtils();
-		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-		{
-			@Override
-			public void onSuccess(ResponseInfo<String> responseInfo)
-			{
-				String a = responseInfo.result;
-				List<BreakOff> listNewData = null;
-				Result result = JSON.parseObject(responseInfo.result, Result.class);
-				if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-				{
-					String rows=result.getRows().get(0).toString();
-					if (rows.equals("1"))
-					{
-						Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
-					}else 	if (rows.equals("0"))
-					{
-						Toast.makeText(getActivity(), "今年已经开始断蕾了", Toast.LENGTH_SHORT).show();
-					}
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
 
-				} else
-				{
-					AppContext.makeToast(getActivity(), "error_connectDataBase");
-					return;
-				}
+    public void startBreakoff()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("Year", utils.getYear());
+        params.addQueryStringParameter("Starttime", utils.getToday());
+        params.addQueryStringParameter("action", "startBreakOff");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<BreakOff> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    String rows = result.getRows().get(0).toString();
+                    if (rows.equals("1"))
+                    {
+                        Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
+                    } else if (rows.equals("0"))
+                    {
+                        Toast.makeText(getActivity(), "今年已经开始断蕾了", Toast.LENGTH_SHORT).show();
+                    }
 
-			}
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
 
-			@Override
-			public void onFailure(HttpException error, String msg)
-			{
-				AppContext.makeToast(getActivity(), "error_connectServer");
-			}
-		});
-	}
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
 }

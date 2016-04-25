@@ -79,6 +79,7 @@
                 android:id="@+id/btn_more"
                 android:layout_width="50dip"
                 android:layout_height="35dip"
+                android:visibility="gone"
                 android:background="@null"
                 android:textSize="14sp"
                 android:text="更多"/>

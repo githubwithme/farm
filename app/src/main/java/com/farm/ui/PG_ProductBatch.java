@@ -86,6 +86,7 @@ import java.util.List;
 @EFragment
 public class PG_ProductBatch extends Fragment implements TencentLocationListener, View.OnClickListener
 {
+    boolean isanimateToCenter=false;
     List<CoordinatesBean> list_coordinate_select = new ArrayList<CoordinatesBean>();
     List<CoordinatesBean> list_coordinate_notselect = new ArrayList<CoordinatesBean>();
     BreakOff breakOff_select = new BreakOff();
@@ -544,7 +545,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
 //        SqliteDb.initContract(getActivity());
 //        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
         tencentMap = mapview.getMap();
-        tencentMap.setZoom(13);
+        tencentMap.setZoom(18);
         uiSettings = mapview.getUiSettings();
         tencentMap.setSatelliteEnabled(true);
         mProjection = mapview.getProjection();
@@ -637,13 +638,13 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                                 LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
                                 Marker marker = addCustomMarker(breakOff, "breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), breakOff.getareaname() + breakOff.getcontractname() + "\n" + breakOff.getBreakofftime() + "断" + breakOff.getnumberofbreakoff() + "株");
                                 list_Marker_breakoff.add(marker);
-                                p = initBoundary(batchcolor, 0f, list_coor, 0, R.color.transparent);//红色
+                                p = initBoundary(batchcolor, 10f, list_coor,2, R.color.red);//红色
                             } else
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
                                 Marker marker = addCustomMarker(breakOff, "notbreakoff", R.drawable.ic_breakoff_spare, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), breakOff.getareaname() + breakOff.getcontractname() + "\n" + "剩" + breakOff.getnumberofbreakoff() + "株");
                                 list_Marker_breakoff.add(marker);
-                                p = initBoundary(batchcolor, 0f, list_coor, 0, R.color.transparent);//绿色
+                                p = initBoundary(batchcolor, 10f, list_coor, 2, R.color.red);//绿色
                             }
                             list_Objects_breakoff.add(p);
                         }
@@ -663,46 +664,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                 AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });
-//        List<parktab> list_parktab = SqliteDb.getparktab(getActivity(), commembertab.getuId());
-//        for (int i = 0; i < list_parktab.size(); i++)//每个园区
-//        {
-//            List<areatab> list_areatab = SqliteDb.getareatab(getActivity(), list_parktab.get(i).getid());
-//            for (int k = 0; k < list_areatab.size(); k++)//每个片区
-//            {
-//                List<contractTab> list_contractTab = SqliteDb.getcontracttab(getActivity(), list_areatab.get(k).getid());
-//                for (int m = 0; m < list_contractTab.size(); m++)//每个承包区
-//                {
-//                    List<BreakOff> list_BreakOff = SqliteDb.getBreakOffInfoByContractId(getActivity(), list_contractTab.get(m).getid(), utils.getYear());
-//                    if (list_BreakOff != null && list_BreakOff.size() > 0)
-//                    {
-//                        for (int j = 0; j < list_BreakOff.size(); j++)
-//                        {
-//                            BreakOff breakOff = list_BreakOff.get(j);
-//                            int batchcolor = utils.getBatchColorByName(breakOff.getBatchColor());
-//                            Polygon p = null;
-//                            List<CoordinatesBean> list_coor = SqliteDb.getPoints(getActivity(), breakOff.getUuid());
-//                            if (breakOff.getStatus().equals("1"))
-//                            {
-//                                LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
-//                                Marker marker = addCustomMarker(breakOff, "breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), breakOff.getareaname() + breakOff.getcontractname() + "\n" + breakOff.getBreakofftime() + "断" + breakOff.getnumberofbreakoff() + "株");
-//                                list_Marker_breakoff.add(marker);
-//                                p = initBoundary(batchcolor, 0f, list_coor, 0, R.color.transparent);//红色
-//                            } else
-//                            {
-//                                LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
-//                                Marker marker = addCustomMarker(breakOff, "notbreakoff", R.drawable.ic_breakoff_spare, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), breakOff.getareaname() + breakOff.getcontractname() + "\n" + "剩" + breakOff.getnumberofbreakoff() + "株");
-//                                list_Marker_breakoff.add(marker);
-//                                p = initBoundary(batchcolor, 0f, list_coor, 0, R.color.transparent);//绿色
-//                            }
-//                            list_Objects_breakoff.add(p);
-//                        }
-//                    } else
-//                    {
-//
-//                    }
-//                }
-//            }
-//        }
+
     }
 
 
@@ -963,9 +925,13 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                                 List<CoordinatesBean> list_park = polygonBean.getCoordinatesBeanList();
                                 if (list_park != null && list_park.size() != 0)
                                 {
-                                    initBoundary(Color.argb(150, 0, 255, 255), 0f, list_park, 2, R.color.bg_green);
+                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_park, 2, R.color.bg_green);
                                 }
-
+                                if (!isanimateToCenter)
+                                {
+                                    tencentMap.animateTo(latlng);
+                                    isanimateToCenter=true;
+                                }
                             } else if (polygonBean.getContractid().equals("-1"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
@@ -975,7 +941,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                                 List<CoordinatesBean> list_area = polygonBean.getCoordinatesBeanList();
                                 if (list_area != null && list_area.size() != 0)
                                 {
-                                    initBoundary(Color.argb(150, 255, 0, 255), 0f, list_area, 2, R.color.bg_green);
+                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_area, 2, R.color.bg_green);
                                 }
 
                             } else
@@ -987,7 +953,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                                 List<CoordinatesBean> list_contract = polygonBean.getCoordinatesBeanList();
                                 if (list_contract != null && list_contract.size() != 0)
                                 {
-                                    initBoundary(Color.argb(150, 255, 255, 0), 0f, list_contract, 2, R.color.bg_green);
+                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 2, R.color.bg_green);
                                 }
 
                             }
@@ -1246,7 +1212,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
             }
             list_AllLatLng.add(latlng);
         }
-        Polygon polygon = drawPolygon(10f, list_AllLatLng, fillcolor, strokesize, strokecolor);
+        Polygon polygon = drawPolygon(z, list_AllLatLng, fillcolor, strokesize, strokecolor);
         polygon.setZIndex(z);
         Overlays.add(polygon);
         return polygon;
@@ -1281,7 +1247,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
             }
             list_latlng_needplanboundary.add(latlng);
         }
-        Polygon polygon = drawPolygon(10f, list_latlng_needplanboundary, Color.argb(10, 0, 0, 255), 4, R.color.yellow);
+        Polygon polygon = drawPolygon(20f, list_latlng_needplanboundary, Color.argb(1000, 0, 0, 255), 0, R.color.transparent);
         Overlays.add(polygon);
 //保存边界线
         list_latlng_needplanline = new ArrayList<>();
@@ -1967,15 +1933,19 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
 //                    Toast.makeText(getActivity(), "区域选择失败！", Toast.LENGTH_SHORT).show();
 //                }
 
+                List<CoordinatesBean> CoordinatesBeanLists=new ArrayList<>();
+                List<BreakOff> BreakOffList=new ArrayList<>();
+                BreakOffList.add(breakOff_select);
+                BreakOffList.add(breakOff_notselect);
+                CoordinatesBeanLists.addAll(list_coordinate_select);
+                CoordinatesBeanLists.addAll(list_coordinate_notselect);
 
                 StringBuilder builder = new StringBuilder();
-                builder.append("{\"BreadOffList\": [");
-                builder.append(JSON.toJSONString(breakOff_select));
-                builder.append(JSON.toJSONString(breakOff_notselect));
-                builder.append("], \"CoordinatesBeanLists\": ");
-                builder.append(JSON.toJSONString(list_coordinate_select));
-                builder.append(JSON.toJSONString(list_coordinate_notselect));
-                builder.append(",{\"SellOrderDetail\": [");
+                builder.append("{\"BreakOffList\": ");
+                builder.append(JSON.toJSONString(BreakOffList));
+                builder.append(", \"CoordinatesBeanLists\": ");
+                builder.append(JSON.toJSONString(CoordinatesBeanLists));
+                builder.append(",\"SellOrderDetail\": [");
                 builder.append(JSON.toJSONString(sellOrderDetail_new));
                 builder.append("]");
                 builder.append("} ");
@@ -1996,7 +1966,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         {
             e.printStackTrace();
         }
-        params.addQueryStringParameter("uuid", uuid);
+        params.addQueryStringParameter("uuid", polygon_needbreakoff.getUuid());
         params.addQueryStringParameter("batchTime", batchtime);
         params.addQueryStringParameter("batchColor", batchcolor);
         params.addQueryStringParameter("year", year);
@@ -2050,7 +2020,8 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         {
             e.printStackTrace();
         }
-        params.addQueryStringParameter("action", "addSellOrderDetailMap");
+        params.addQueryStringParameter("uuid", polygon_needbreakoff.getUuid());
+        params.addQueryStringParameter("action", "addBreakOffLayer");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -2299,7 +2270,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                     }
                 });
                 btn_canclepaint.setVisibility(View.VISIBLE);
-                List<CoordinatesBean> list_coordinatesbean = SqliteDb.getPoints(getActivity(), polygon_needbreakoff.getUuid());
+                List<CoordinatesBean> list_coordinatesbean =breakoff.getCoordinatesBeanList();
                 if (list_coordinatesbean != null && list_coordinatesbean.size() != 0)
                 {
                     showNeedPlanBoundary(list_coordinatesbean);
