@@ -171,6 +171,7 @@
                     android:background="@color/red"
                     android:gravity="center"
                     android:text="已断蕾"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="10sp"/>
 

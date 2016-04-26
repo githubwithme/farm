@@ -17,7 +17,6 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.commembertab;
-import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -30,7 +29,9 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.apache.http.entity.StringEntity;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,42 +80,42 @@ public class CreateOrder extends Activity
     {
         if (et_name.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_email.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_address.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_phone.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_price.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_weight.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_number.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_values.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this,"请先填写信息",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         String uuid = java.util.UUID.randomUUID().toString();
@@ -143,30 +144,60 @@ public class CreateOrder extends Activity
         sellOrder.setYear(utils.getYear());
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
-        boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
-        if (issuccess)
+
+        List<String>  list_detail=new ArrayList<>();
+        for (int i = 0; i < list_SellOrderDetail.size(); i++)
         {
-            for (int i = 0; i < list_SellOrderDetail.size(); i++)
-            {
-                SellOrderDetail sellOrderDetail=list_SellOrderDetail.get(i);
-                sellOrderDetail.setsaleid(uuid);
-                sellOrderDetail.setType("salein");
-                boolean issucc = SqliteDb.save(CreateOrder.this, sellOrderDetail);
-                if (!issucc)
-                {
-                    Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (i == list_SellOrderDetail.size() - 1)
-                {
-                    Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-        } else
-        {
-            Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
+            list_detail.add(list_SellOrderDetail.get(i).getUuid());
+//            SellOrderDetail sellOrderDetail = list_SellOrderDetail.get(i);
+//            sellOrderDetail.setsaleid(uuid);
+//            sellOrderDetail.setType("salein");
+//            boolean issucc = SqliteDb.save(CreateOrder.this, sellOrderDetail);
+//            if (!issucc)
+//            {
+//                Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
+//                break;
+//            }
+//            if (i == list_SellOrderDetail.size() - 1)
+//            {
+//                Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+//                finish();
+//            }
         }
+
+        List<SellOrder> SellOrderList = new ArrayList<>();
+        SellOrderList.add(sellOrder);
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"SellOrderList\": ");
+        builder.append(JSON.toJSONString(SellOrderList));
+        builder.append(", \"SellOrderDetailLists\": ");
+        builder.append(JSON.toJSONString(list_detail));
+        builder.append("} ");
+        addOrder(builder.toString());
+//        boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
+//        if (issuccess)
+//        {
+//            for (int i = 0; i < list_SellOrderDetail.size(); i++)
+//            {
+//                SellOrderDetail sellOrderDetail=list_SellOrderDetail.get(i);
+//                sellOrderDetail.setsaleid(uuid);
+//                sellOrderDetail.setType("salein");
+//                boolean issucc = SqliteDb.save(CreateOrder.this, sellOrderDetail);
+//                if (!issucc)
+//                {
+//                    Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
+//                    break;
+//                }
+//                if (i == list_SellOrderDetail.size() - 1)
+//                {
+//                    Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+//                    finish();
+//                }
+//            }
+//        } else
+//        {
+//            Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     @AfterViews
@@ -271,5 +302,50 @@ public class CreateOrder extends Activity
 //        {
 //            tv_cmdname.setText(SellOrderDetail.getstdJobTypeName() + "——" + SellOrderDetail.getstdJobName());
 //        }
+    }
+
+    private void addOrder(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "addOrder");
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(CreateOrder.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(CreateOrder.this, "error_connectServer");
+            }
+        });
     }
 }

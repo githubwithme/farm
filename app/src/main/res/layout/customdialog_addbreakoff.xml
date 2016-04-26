@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="请填写出售信息"
+            android:text="请填写断蕾信息"
             android:textColor="#000000"
             android:textSize="15sp"/>
     </LinearLayout>
@@ -38,7 +38,7 @@
                 android:layout_width="80dip"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="批次时间"
+                android:text="断蕾时间"
                 android:textSize="@dimen/size_sp_14"/>
 
             <View
@@ -50,6 +50,7 @@
                 android:id="@+id/tv_batchtime"
                 android:layout_width="match_parent"
                 android:gravity="center"
+                android:hint="请选择断蕾时间"
                 android:layout_height="match_parent"/>
         </LinearLayout>
 
@@ -78,6 +79,7 @@
                 android:id="@+id/tv_batchcolor"
                 android:layout_width="match_parent"
                 android:gravity="center"
+                android:hint="请选择批次颜色"
                 android:layout_height="match_parent"/>
         </LinearLayout>
 
@@ -95,7 +97,7 @@
                 android:layout_width="80dip"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="出售株数"
+                android:text="断蕾株数"
                 android:textSize="@dimen/size_sp_14"/>
 
             <View
@@ -106,6 +108,7 @@
             <EditText
                 android:id="@+id/et_note"
                 android:layout_width="match_parent"
+                android:hint=""
                 android:layout_height="match_parent"/>
         </LinearLayout>
 

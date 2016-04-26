@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.BatchTimeBean;
+import com.farm.bean.BatchOfProduct;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,11 +17,11 @@ import java.util.List;
 public class BatchTime_Adapter extends BaseAdapter
 {
     private Context context;// 运行上下文
-    private List<BatchTimeBean> list_department;// 数据集合
+    private List<BatchOfProduct> list_department;// 数据集合
     private LayoutInflater listContainer;// 视图容器
     ListItemView listItemView = null;
 
-    BatchTimeBean BatchTimeBean;
+    BatchOfProduct BatchOfProduct;
 
     static class ListItemView
     {
@@ -29,7 +29,7 @@ public class BatchTime_Adapter extends BaseAdapter
         public ImageView iv_selectet;
     }
 
-    public BatchTime_Adapter(Context context, List<BatchTimeBean> data)
+    public BatchTime_Adapter(Context context, List<BatchOfProduct> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -55,7 +55,7 @@ public class BatchTime_Adapter extends BaseAdapter
 
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        BatchTimeBean = list_department.get(position);
+        BatchOfProduct = list_department.get(position);
         // 自定义视图
 
         if (lmap.get(position) == null)
@@ -75,12 +75,12 @@ public class BatchTime_Adapter extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
-        listItemView.tv_name.setText((list_department.get(position).getBatchtime()));
-        if (list_department.get(position).getIsexist().equals("1"))
-        {
-            listItemView.iv_selectet.setVisibility(View.VISIBLE);
-            lmap.get(position).setBackgroundResource(R.color.light_gray);
-        }
+        listItemView.tv_name.setText((list_department.get(position).getBatchTime()));
+//        if (list_department.get(position).getIsexist().equals("1"))
+//        {
+//            listItemView.iv_selectet.setVisibility(View.VISIBLE);
+//            lmap.get(position).setBackgroundResource(R.color.light_gray);
+//        }
         return convertView;
     }
 }

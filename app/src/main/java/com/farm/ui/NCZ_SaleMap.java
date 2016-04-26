@@ -620,12 +620,12 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
     @Click
     void btn_batchofproduct()
     {
-        if (list_SellOrder.size() > 0)
+        if (list_SellOrder!=null && list_SellOrder.size() > 0)
         {
             showPop_batch();
         } else
         {
-            Toast.makeText(NCZ_SaleMap.this, "暂无产品批次", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_SaleMap.this, "暂无订单", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -1504,7 +1504,7 @@ public void initBasicData()
             {
                 customdialog_operatepolygon.dismiss();
                 list_Objects_divideline = new ArrayList<Polyline>();
-                tencentMap.setZoom(14);
+                tencentMap.setZoom(18);
                 initMapClickWhenPaint();
                 tencentMap.setOnMarkerClickListener(new TencentMap.OnMarkerClickListener()
                 {
