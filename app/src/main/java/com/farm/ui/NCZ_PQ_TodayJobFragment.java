@@ -61,7 +61,8 @@ public class NCZ_PQ_TodayJobFragment extends Fragment
     LinearLayout ll_tip;
     Fragment mContent = new Fragment();
 
-String workuserid;
+    String workuserid;
+
     @Click
     void btn_more()
     {
@@ -201,7 +202,8 @@ String workuserid;
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                if (isAdded()) {
+                                if (isAdded())
+                                {
                                     NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                                 }
                             } else
@@ -273,7 +275,8 @@ String workuserid;
                 // main_head_progress.setVisibility(ProgressBar.GONE);
                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
                 {
-                    if (isAdded()) {
+                    if (isAdded())
+                    {
                         lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
                         lv.setSelection(0);
                     }
@@ -336,7 +339,7 @@ String workuserid;
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.updateStatus(getActivity(), "0", jobtab.getId(), "1", commembertab.getId());
 
-                if (commembertab.getnlevel().equals("0") )
+                if (commembertab.getnlevel().equals("0"))
                 {
                     Intent intent = new Intent(getActivity(), Common_JobDetail_Show_.class);
                     intent.putExtra("bean", jobtab);// 因为list中添加了头部,因此要去掉一个

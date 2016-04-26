@@ -63,7 +63,16 @@
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:stretchColumns="1">
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_colum"
+                android:background="@null"
+                android:gravity="center"
+                android:text="请确保当前位置为观测点位置"
+                android:paddingLeft="40dip"
+                android:paddingRight="10dip"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_18"/>
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,6 +164,40 @@
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="请选择植株数量"
+                    android:paddingLeft="40dip"
+                    android:paddingRight="10dip"
+                    android:textColor="@color/bg_yellow"
+                    android:textSize="@dimen/size_14"/>
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5px"
+                android:layout_marginTop="5dip"
+                android:background="@color/bg_selectitem"/>
+            <!-- 生长状况 -->
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dip"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center_vertical"
+                    android:text="当前位置坐标"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_14"/>
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_colum"
+                    android:layout_span="3"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="正在获取中.."
                     android:paddingLeft="40dip"
                     android:paddingRight="10dip"
                     android:textColor="@color/bg_yellow"

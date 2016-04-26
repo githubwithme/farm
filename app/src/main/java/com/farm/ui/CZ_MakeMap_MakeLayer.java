@@ -97,6 +97,8 @@ import java.util.List;
 @EActivity(R.layout.cz_makemap_makelayer)
 public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationListener, View.OnClickListener
 {
+
+    boolean isanimateToCenter=false;
     CustomDialog_OverlayInfo customDialog_overlayInfo;
     boolean isStopPaint = false;
     boolean isfirstpoint = true;
@@ -3201,7 +3203,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
     {
 
         tencentMap = mapview.getMap();
-        tencentMap.setZoom(13);
+        tencentMap.setZoom(18);
         uiSettings = mapview.getUiSettings();
         tencentMap.setSatelliteEnabled(true);
         mProjection = mapview.getProjection();
@@ -5518,7 +5520,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
             }
             list_AllLatLng.add(latlng);
         }
-        Polygon polygon = drawPolygon(0f, list_AllLatLng, color, strokesize, strokecolor);
+        Polygon polygon = drawPolygon(z, list_AllLatLng, color, strokesize, strokecolor);
         polygon.setZIndex(z);
 //        list_polygon_allCoordinatesBean.add(list_coordinates);
         Overlays.add(polygon);
@@ -5941,9 +5943,13 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                                 List<CoordinatesBean> list_park = polygonBean.getCoordinatesBeanList();
                                 if (list_park != null && list_park.size() != 0)
                                 {
-                                    initBoundary(Color.argb(150, 0, 255, 255), 0f, list_park, 2, R.color.bg_green);
+                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_park, 2, R.color.bg_green);
                                 }
-
+                                if (!isanimateToCenter)
+                                {
+                                    tencentMap.animateTo(latlng);
+                                    isanimateToCenter=true;
+                                }
                             } else if (polygonBean.getContractid().equals("-1"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
@@ -5953,7 +5959,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                                 List<CoordinatesBean> list_area =  polygonBean.getCoordinatesBeanList();
                                 if (list_area != null && list_area.size() != 0)
                                 {
-                                    initBoundary(Color.argb(150, 255, 0, 255), 0f, list_area, 2, R.color.bg_green);
+                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_area, 2, R.color.bg_green);
                                 }
 
                             } else
@@ -5965,7 +5971,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                                 List<CoordinatesBean> list_contract =  polygonBean.getCoordinatesBeanList();
                                 if (list_contract != null && list_contract.size() != 0)
                                 {
-                                    initBoundary(Color.argb(150, 255, 255, 0), 0f, list_contract, 2, R.color.bg_green);
+                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 2, R.color.bg_green);
                                 }
 
                             }
