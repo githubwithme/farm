@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"
+        />
+
+<TextView
+    android:id="@+id/tv_tesxxx"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:childDivider="@color/transparent"
+        android:dividerHeight="0dip"
+        android:layout_height="match_parent"
+        android:groupIndicator="@null"/>
+</LinearLayout>

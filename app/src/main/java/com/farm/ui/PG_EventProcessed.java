@@ -67,6 +67,7 @@ public class PG_EventProcessed extends Fragment
     {
 //listview
         initAnimalListView();
+//        wz_frame_listview.invalidateViews();
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {

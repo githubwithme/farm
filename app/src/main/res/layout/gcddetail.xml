@@ -38,6 +38,7 @@
                 android:textSize="@dimen/titlebar_textsize"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_zz"
                 android:layout_width="80dip"
                 android:layout_height="match_parent"

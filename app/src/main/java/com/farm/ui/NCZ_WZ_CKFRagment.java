@@ -99,11 +99,11 @@ public class NCZ_WZ_CKFRagment extends Fragment {
                         wz_ckExecute_adapter = new WZ_CKExecute_Adapter(getActivity(), listNewData, expandableListView);
                         expandableListView.setAdapter(wz_ckExecute_adapter);
 
-                        for (int i = 0; i < listNewData.size(); i++)
+                  /*      for (int i = 0; i < listNewData.size(); i++)
                         {
                             expandableListView.expandGroup(i);//展开
 //                                  expandableListView.collapseGroup(i);//关闭
-                        }
+                        }*/
                     } else
                     {
                         listNewData = new ArrayList<WZ_CRk>();

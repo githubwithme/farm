@@ -102,7 +102,7 @@ public class PG_EventDetail extends Activity {
     @ViewById
     Button btn_save;
     @ViewById
-    LinearLayout ll_add;
+    RelativeLayout ll_add;
     @ViewById
     TableRow tablie2;
     @ViewById
@@ -111,6 +111,8 @@ public class PG_EventDetail extends Activity {
 View view_line1;
     @ViewById
 View view_line2;
+    @ViewById
+    ProgressBar add_upload;
     @Click
     void imgbtn_back()
     {
@@ -192,10 +194,10 @@ View view_line2;
 
     @AfterViews
     void aftercreate() {
-        if(!reportedBean.getEventType().equals("0"))
+        if(!reportedBean.getState().equals("0"))
         {
-            tv_bianjie.setVisibility(View.VISIBLE);
-            tv_delete.setVisibility(View.VISIBLE);
+            tv_bianjie.setVisibility(View.GONE);
+            tv_delete.setVisibility(View.GONE);
         }
 
 
@@ -253,7 +255,8 @@ View view_line2;
             Toast.makeText(PG_EventDetail.this, "请先填选相关信息！", Toast.LENGTH_SHORT).show();
 
         } else {
-            btn_save.setVisibility(View.INVISIBLE);
+            btn_save.setVisibility(View.GONE);
+            add_upload.setVisibility(View.VISIBLE);
             saveData();
         }
 
