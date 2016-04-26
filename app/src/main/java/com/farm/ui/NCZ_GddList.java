@@ -137,8 +137,8 @@ public class NCZ_GddList extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         appContext = (AppContext) NCZ_GddList.this.getApplication();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        NCZ_GddList.this.registerReceiver(receiver_update, intentfilter_update);
+//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+//        NCZ_GddList.this.registerReceiver(receiver_update, intentfilter_update);
         areatab = getIntent().getParcelableExtra("bean");
         timethread = new TimeThread();
 //        timethread.setStop(false);
@@ -146,15 +146,15 @@ public class NCZ_GddList extends Activity
         timethread.start();
     }
 
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
-    {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-        }
-    };
+//    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+//    {
+//        @SuppressWarnings("deprecation")
+//        @Override
+//        public void onReceive(Context context, Intent intent)
+//        {
+//            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+//        }
+//    };
 
 
 

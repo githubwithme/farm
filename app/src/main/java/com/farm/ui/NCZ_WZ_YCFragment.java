@@ -149,20 +149,20 @@ public class NCZ_WZ_YCFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ncz_wz_ckxx, container, false);
         appContext = (AppContext) getActivity().getApplication();
-        IntentFilter intentFilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        getActivity().registerReceiver(receiver_update, intentFilter_update);
+   /*     IntentFilter intentFilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+        getActivity().registerReceiver(receiver_update, intentFilter_update);*/
 
         return view;
     }
 
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+  /*  BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
         public void onReceive(Context context, Intent intent) {
             getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
-    };
+    };*/
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX) {
 

@@ -149,6 +149,7 @@ public class NCZ_todayDetail_zz extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        circle_zl.setVisibility(View.GONE);
         if (commembertab.getnlevel().equals("0") || commembertab.getnlevel().equals("1"))
         {
             circle_add.setVisibility(View.GONE);

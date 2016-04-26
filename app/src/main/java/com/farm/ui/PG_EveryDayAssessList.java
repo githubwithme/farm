@@ -91,12 +91,12 @@ public class PG_EveryDayAssessList extends Fragment implements OnClickListener
 		View rootView = inflater.inflate(R.layout.pg_everydayassesslist, container, false);
 		appContext = (AppContext) getActivity().getApplication();
 		timeSeLectorFragment = new TimeSeLectorFragment_();
-		IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-		getActivity().registerReceiver(receiver_update, intentfilter_update);
+/*		IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+		getActivity().registerReceiver(receiver_update, intentfilter_update);*/
 		return rootView;
 	}
 
-	BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+/*	BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
 	{
 		@SuppressWarnings("deprecation")
 		@Override
@@ -104,7 +104,7 @@ public class PG_EveryDayAssessList extends Fragment implements OnClickListener
 		{
 			getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
 		}
-	};
+	};*/
 
 	public void switchContent_timefragment(Fragment from, Fragment to)
 	{

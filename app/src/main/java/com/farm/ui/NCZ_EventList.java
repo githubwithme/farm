@@ -114,8 +114,8 @@ public class NCZ_EventList extends Fragment implements OnClickListener
         appContext = (AppContext) getActivity().getApplication();
         dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "NCZ_CMD");
         selectorUi = new SelectorFragment_();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        getActivity().registerReceiver(receiver_update, intentfilter_update);
+      /*  IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+        getActivity().registerReceiver(receiver_update, intentfilter_update);*/
         workuserid = getArguments().getString("workuserid");
 //        timethread = new TimeThread();
 //        timethread.setStop(false);
@@ -124,6 +124,7 @@ public class NCZ_EventList extends Fragment implements OnClickListener
         return rootView;
     }
 
+/*
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -133,6 +134,7 @@ public class NCZ_EventList extends Fragment implements OnClickListener
             getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
     };
+*/
 
     public void switchContent(Fragment from, Fragment to)
     {

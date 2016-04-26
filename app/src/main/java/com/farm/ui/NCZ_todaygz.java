@@ -19,6 +19,7 @@ import com.farm.bean.Today_job;
 import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
 import com.farm.common.StringUtils;
+import com.farm.common.UIHelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -41,24 +42,47 @@ import java.util.List;
 @EFragment
 public class NCZ_todaygz extends Fragment
 {
-
-
+    TimeThread timethread;
+    boolean ishidding = false;
+NCZ_todaygzExecute_Adapter ncz_todaygzExecute_adapter;
     @ViewById
     ExpandableListView expandableListView;
-    @ViewById
-    TextView tv_tesxxx;
-    List<Today_job> listdate;
 
+    List<Today_job> listdate;
+    public void  setThreadStatus(boolean hidden)
+    {
+        ishidding = hidden;
+        super.onHiddenChanged(hidden);//true
+
+        if (timethread!=null)
+        {
+            if (hidden == true)
+            {
+                timethread.setSleep(true);
+            } else
+            {
+                timethread = new TimeThread();
+                timethread.setStop(false);
+                timethread.setSleep(false);
+                timethread.start();
+            }
+
+        }
+    }
     @AfterViews
     void afterOncreate()
     {
-        tv_tesxxx.setText("gz");
+
         getBreakOffInfoOfContract();
     }
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.ncz_todaygz, container, false);
+        timethread = new TimeThread();
+        timethread.setSleep(false);
+        timethread.start();
         return rootView;
     }
 
@@ -88,10 +112,10 @@ public class NCZ_todaygz extends Fragment
                     if (result.getAffectedRows() != 0) {
 
 
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Today_job.class);
+                        ncz_todaygzExecute_adapter=new NCZ_todaygzExecute_Adapter(getActivity(),listNewData,expandableListView);
+                        expandableListView.setAdapter(ncz_todaygzExecute_adapter);
 
-
-//                        wz_rkExecute_adapter = new WZ_RKExecute_Adapter(getActivity(), listNewData, expandableListView);
-//                        expandableListView.setAdapter(wz_rkExecute_adapter);
 
     /*                    for (int i = 0; i < listNewData.size(); i++)
                         {
@@ -106,6 +130,10 @@ public class NCZ_todaygz extends Fragment
 
                 } else
                 {
+                    if (!ishidding && timethread != null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
                     return;
                 }
@@ -115,8 +143,66 @@ public class NCZ_todaygz extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
+                    AppContext.makeToast(getActivity(), "error_connectServer");
+
             }
         });
     }
+
+    class TimeThread extends Thread
+    {
+        private boolean isSleep = true;
+        private boolean stop = false;
+
+        public void run()
+        {
+            Long starttime = 0l;
+            while (!stop)
+            {
+                if (isSleep)
+                {
+                    return;
+                } else
+                {
+                    try
+                    {
+                        timethread.sleep(AppContext.TIME_GZ);
+                        starttime = starttime + 1000;
+                        getBreakOffInfoOfContract();
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        public void setSleep(boolean sleep)
+        {
+            isSleep = sleep;
+        }
+
+        public void setStop(boolean stop)
+        {
+            this.stop = stop;
+        }
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        if (timethread != null && timethread.isAlive())
+        {
+            timethread.setStop(true);
+            timethread.interrupt();
+            timethread = null;
+        }
+
+    }
+
 }

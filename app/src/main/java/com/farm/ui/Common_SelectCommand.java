@@ -179,15 +179,15 @@ public class Common_SelectCommand extends Activity implements OnClickListener
         commembertab = AppContext.getUserInfo(Common_SelectCommand.this);
         joblist = getIntent().getParcelableArrayListExtra("jobtablist");
         appContext = (AppContext) getApplication();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        registerReceiver(receiver_update, intentfilter_update);
+   /*     IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+        registerReceiver(receiver_update, intentfilter_update);*/
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
         timethread.start();
     }
 
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+/*    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
@@ -195,7 +195,7 @@ public class Common_SelectCommand extends Activity implements OnClickListener
         {
             getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
-    };
+    };*/
 
     public void switchContent(Fragment from, Fragment to)
     {

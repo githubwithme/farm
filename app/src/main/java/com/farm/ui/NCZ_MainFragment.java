@@ -54,11 +54,12 @@ public class NCZ_MainFragment extends Fragment {
     TextView tv_title;
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
+    public void onHiddenChanged(boolean hidden)
+    {
         super.onHiddenChanged(hidden);
         ncz_WorkList.setThreadStatus(hidden);
         ncz_todaymq.setThreadStatus(hidden);
-//        ncz_todaygz.setThreadStatus(hidden);
+        ncz_todaygz.setThreadStatus(hidden);
     }
 
     @AfterViews

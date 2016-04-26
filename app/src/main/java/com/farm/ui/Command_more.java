@@ -113,8 +113,8 @@ ImageView btn_back;
         appContext = (AppContext) Command_more.this.getApplication();
         dictionary = DictionaryHelper.getDictionaryFromAssess(Command_more.this, "NCZ_CMD");
         selectorUi = new SelectorFragment_();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        Command_more.this.registerReceiver(receiver_update, intentfilter_update);
+   /*     IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+        Command_more.this.registerReceiver(receiver_update, intentfilter_update);*/
         workuserid = getIntent().getStringExtra("workuserid");
         timethread = new TimeThread();
         timethread.setStop(false);
@@ -123,7 +123,7 @@ ImageView btn_back;
     }
 
 
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+  /*  BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
@@ -131,7 +131,7 @@ ImageView btn_back;
         {
             getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
-    };
+    };*/
 
     public void switchContent(Fragment from, Fragment to)
     {

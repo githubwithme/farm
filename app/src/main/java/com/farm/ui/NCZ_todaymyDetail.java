@@ -118,6 +118,8 @@ public class NCZ_todaymyDetail extends FragmentActivity
         commembertab = AppContext.getUserInfo(NCZ_todaymyDetail.this);
         fragmentList = new ArrayList<>();
         ncz_todayDetail_zz=new NCZ_todayDetail_zz_();
+
+
 //        growthTreeFragment_gcd = new GrowthTreeFragment_GCD_();
 //        growthTreeFragment_zz = GrowthTreeFragment_ZZ.newInstance(0);
 //        growthTreeFragment_gcd.setArguments(bundle);

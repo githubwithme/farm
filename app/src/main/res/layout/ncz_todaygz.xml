@@ -9,15 +9,13 @@
         android:background="@color/line_color"
         />
 
-<TextView
-    android:id="@+id/tv_tesxxx"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+
     <ExpandableListView
         android:id="@+id/expandableListView"
         android:layout_width="match_parent"
+        android:layout_height="300dip"
         android:childDivider="@color/transparent"
         android:dividerHeight="0dip"
-        android:layout_height="match_parent"
+
         android:groupIndicator="@null"/>
 </LinearLayout>

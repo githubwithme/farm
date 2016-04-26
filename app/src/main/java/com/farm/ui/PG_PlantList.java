@@ -141,8 +141,8 @@ public class PG_PlantList extends Activity
         plantGcd = getIntent().getParcelableExtra("bean");
         gcdid = getIntent().getStringExtra("gcdid");
         gcdName = getIntent().getStringExtra("gcdName");
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        PG_PlantList.this.registerReceiver(receiver_update, intentfilter_update);
+    /*    IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+        PG_PlantList.this.registerReceiver(receiver_update, intentfilter_update);*/
         areaid = plantGcd.getareaId();
         timethread = new TimeThread();
         timethread.setStop(false);
@@ -151,7 +151,7 @@ public class PG_PlantList extends Activity
     }
 
 
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+  /*  BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
@@ -159,7 +159,7 @@ public class PG_PlantList extends Activity
         {
             getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
-    };
+    };*/
 
     public void switchContent(Fragment from, Fragment to)
     {

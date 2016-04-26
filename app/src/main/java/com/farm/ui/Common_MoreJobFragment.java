@@ -107,15 +107,15 @@ public class Common_MoreJobFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.common_morejob, container, false);
         appContext = (AppContext) getActivity().getApplication();
-        IntentFilter intentfilter_updateselect = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        getActivity().registerReceiver(receiver_updateselect, intentfilter_updateselect);
-        IntentFilter intentfilter_updatesort = new IntentFilter(AppContext.BROADCAST_UPDATEPCMD_SORT);
-        getActivity().registerReceiver(receiver_updatesort, intentfilter_updatesort);
+/*        IntentFilter intentfilter_updateselect = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+        getActivity().registerReceiver(receiver_updateselect, intentfilter_updateselect);*/
+ /*       IntentFilter intentfilter_updatesort = new IntentFilter(AppContext.BROADCAST_UPDATEPCMD_SORT);
+        getActivity().registerReceiver(receiver_updatesort, intentfilter_updatesort);*/
         workuserid = getArguments().getString("workuserid");
         return rootView;
     }
 
-    BroadcastReceiver receiver_updatesort = new BroadcastReceiver()// 从扩展页面返回信息
+/*    BroadcastReceiver receiver_updatesort = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
@@ -123,8 +123,8 @@ public class Common_MoreJobFragment extends Fragment
         {
             getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
-    };
-    BroadcastReceiver receiver_updateselect = new BroadcastReceiver()// 从扩展页面返回信息
+    };*/
+/*    BroadcastReceiver receiver_updateselect = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
@@ -132,7 +132,7 @@ public class Common_MoreJobFragment extends Fragment
         {
             getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
-    };
+    };*/
 
     public void switchContent(Fragment from, Fragment to)
     {
