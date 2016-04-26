@@ -50,7 +50,8 @@ import java.util.List;
 @EFragment
 public class NCZ_Evented extends Fragment
 {
-
+    boolean ishidding=false;
+    TimeThread timethread;
     com.farm.bean.commembertab commembertab;
     PG_ReportedAdapter listadpater;
     private AppContext appContext;
@@ -73,7 +74,25 @@ public class NCZ_Evented extends Fragment
         initAnimalListView();
 //        getBreakOffInfoOfContract();
     }
-
+    @Override
+    public void onHiddenChanged(boolean hidden)
+    {
+        ishidding=hidden;
+        super.onHiddenChanged(hidden);
+        if (!hidden)
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(false);
+            }
+        } else
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(true);
+            }
+        }
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -192,7 +211,10 @@ public class NCZ_Evented extends Fragment
                     }
                 } else {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
-
+                    if (!ishidding  && timethread!=null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     return;
                 }
                 // 数据处理
@@ -296,17 +318,69 @@ public class NCZ_Evented extends Fragment
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
-
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
             }
 
             @Override
             public void onFailure(HttpException error, String msg) {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
-
+                if (!ishidding  && timethread!=null)
+                {
+                    timethread.setSleep(false);
+                }
             }
         });
     }
+    class TimeThread extends Thread
+    {
+        private boolean isSleep = true;
+        private boolean stop = false;
 
+        public void run()
+        {
+            Long starttime = 0l;
+            while (!stop)
+            {
+                if (isSleep)
+                {
+                } else
+                {
+                    try
+                    {
+                        timethread.sleep(AppContext.TIME_REFRESH);
+                        starttime = starttime + 1000;
+                        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                        timethread.setSleep(true);
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        public void setSleep(boolean sleep)
+        {
+            isSleep = sleep;
+        }
+
+        public void setStop(boolean stop)
+        {
+            this.stop = stop;
+        }
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        timethread.setStop(true);
+        timethread.interrupt();
+        timethread = null;
+    }
 
 }

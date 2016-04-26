@@ -114,14 +114,14 @@ public class Common_MoreJob extends Activity
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
 		appContext = (AppContext) Common_MoreJob.this.getApplication();
-		IntentFilter intentfilter_updateselect = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-		Common_MoreJob.this.registerReceiver(receiver_updateselect, intentfilter_updateselect);
-		IntentFilter intentfilter_updatesort = new IntentFilter(AppContext.BROADCAST_UPDATEPCMD_SORT);
-		Common_MoreJob.this.registerReceiver(receiver_updatesort, intentfilter_updatesort);
+	/*	IntentFilter intentfilter_updateselect = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+		Common_MoreJob.this.registerReceiver(receiver_updateselect, intentfilter_updateselect);*/
+	/*	IntentFilter intentfilter_updatesort = new IntentFilter(AppContext.BROADCAST_UPDATEPCMD_SORT);
+		Common_MoreJob.this.registerReceiver(receiver_updatesort, intentfilter_updatesort);*/
 		workuserid = getIntent().getStringExtra("workuserid");
 	}
 
-	BroadcastReceiver receiver_updatesort = new BroadcastReceiver()// 从扩展页面返回信息
+/*	BroadcastReceiver receiver_updatesort = new BroadcastReceiver()// 从扩展页面返回信息
 	{
 		@SuppressWarnings("deprecation")
 		@Override
@@ -129,8 +129,8 @@ public class Common_MoreJob extends Activity
 		{
 			getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
 		}
-	};
-	BroadcastReceiver receiver_updateselect = new BroadcastReceiver()// 从扩展页面返回信息
+	};*/
+/*	BroadcastReceiver receiver_updateselect = new BroadcastReceiver()// 从扩展页面返回信息
 	{
 		@SuppressWarnings("deprecation")
 		@Override
@@ -138,7 +138,7 @@ public class Common_MoreJob extends Activity
 		{
 			getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
 		}
-	};
+	};*/
 
 	public void switchContent(Fragment from, Fragment to)
 	{

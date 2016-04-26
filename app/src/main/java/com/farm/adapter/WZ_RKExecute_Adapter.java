@@ -130,8 +130,8 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
             //数据添加
             listItemView.goodsname.setText(wz_rKxx.getGoodsname());
             listItemView.local.setText(wz_rKxx.getParkName() + "-" + wz_rKxx.getStorehouseName());
-            listItemView.quantity.setText(wz_rKxx.getQuantity());
-            listItemView.inGoodsvalue.setText(wz_rKxx.getInGoodsvalue() + "元");
+            listItemView.quantity.setText("数量:"+wz_rKxx.getQuantity());
+            listItemView.inGoodsvalue.setText("总值:"+wz_rKxx.getInGoodsvalue() + "元");
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);

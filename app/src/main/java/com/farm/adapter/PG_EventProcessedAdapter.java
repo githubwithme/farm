@@ -7,10 +7,25 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
 import com.farm.bean.HandleBean;
+import com.farm.bean.ReportedBean;
+import com.farm.bean.Result;
+import com.farm.bean.Today_job;
+import com.farm.bean.commembertab;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,7 +37,7 @@ public class PG_EventProcessedAdapter extends BaseAdapter
     private List<com.farm.bean.HandleBean> listItems;// 数据集合
     private LayoutInflater listContainer;
     HandleBean HandleBean;
-
+    String names;
     public PG_EventProcessedAdapter(Context context, List<HandleBean> data)
     {
         this.context = context;
@@ -67,7 +82,9 @@ public class PG_EventProcessedAdapter extends BaseAdapter
             view = lmap.get(i);
             listItemView = (ListItemView) view.getTag();
         }
-        listItemView.name.setText("事件"+HandleBean.getEventId());
+//        getBreakOffInfoOfContract();
+        listItemView.name.setText("突发事件"+HandleBean.getEventId());
+//        listItemView.name.setText(names);
         if(HandleBean.getState().equals("0"))
         {
             listItemView.state.setText("未处理");
@@ -79,5 +96,56 @@ public class PG_EventProcessedAdapter extends BaseAdapter
 
         return view;
     }
+    private void getBreakOffInfoOfContract()
+    {
+        commembertab commembertab = AppContext.getUserInfo(context);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getEventListByUID");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<ReportedBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0) {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
 
+                        Iterator<ReportedBean> it = listNewData.iterator();
+                        while (it.hasNext())
+                        {
+                            String value = it.next().getEventId();
+                            if (!value.equals(HandleBean.getEventId()))
+                            {
+                                it.remove();
+                            }
+                        }
+                        names=listNewData.get(0).getEventType();
+                        //数据处理
+
+                    } else
+                    {
+                        listNewData = new ArrayList<ReportedBean>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
 }

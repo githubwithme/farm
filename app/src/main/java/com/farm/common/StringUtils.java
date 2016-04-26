@@ -57,7 +57,7 @@ public class StringUtils
 	}
 	/**
 	 * 将日期加一个时间段
-	 *
+	 *F
 	 * @return
 	 */
 	public static Date ComputeDate(Date date,int d)
@@ -246,5 +246,25 @@ public class StringUtils
 		{
 		}
 		return false;
+	}
+
+//计算日期
+	public static String getDayBefore( String startDay, int timeInterval)
+	{
+		String datbefore="";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try
+		{
+			Date sd = sdf.parse(startDay);
+			Calendar c = Calendar.getInstance();
+			c.setTime(sd);
+			c.add(Calendar.DATE, timeInterval);
+			datbefore=sdf.format(c.getTime());
+
+		} catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		return datbefore;
 	}
 }

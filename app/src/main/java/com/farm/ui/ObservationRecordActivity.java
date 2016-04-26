@@ -56,6 +56,8 @@ public class ObservationRecordActivity extends Activity
     @ViewById
     TextView tv_gcsj;
     @ViewById
+    TextView tv_gcor;
+    @ViewById
     TextView tv_lbx;
     @ViewById
     TextView tv_gsbx;
@@ -147,7 +149,7 @@ public class ObservationRecordActivity extends Activity
 
         PlantObservationAdapter addPlantObservationAdapter = new PlantObservationAdapter(ObservationRecordActivity.this, lsitNewData.get(0).getPlantGrowth());
         lv.setAdapter(addPlantObservationAdapter);
-
+        tv_gcor.setText(lsitNewData.get(0).getCjUserName());
         tv_gcq.setText(lsitNewData.get(0).getGcq());
         tv_gcsj.setText(lsitNewData.get(0).getRegDate());
         if (lsitNewData.get(0).getJjbx().equals(""))

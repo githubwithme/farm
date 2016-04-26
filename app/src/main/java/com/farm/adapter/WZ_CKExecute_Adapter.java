@@ -122,8 +122,8 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
             //数据添加
             listItemView.goodsname.setText(wz_rKxx.getGoodsname());
             listItemView.local.setText(wz_rKxx.getParkName() + "-" + wz_rKxx.getStorehouseName());
-            listItemView.quantity.setText(wz_rKxx.getQuantity());
-            listItemView.inGoodsvalue.setText(wz_rKxx.getOutGoodsvalue() + "元");
+            listItemView.quantity.setText("数量:"+wz_rKxx.getQuantity());
+            listItemView.inGoodsvalue.setText("总值:"+wz_rKxx.getOutGoodsvalue() + "元");
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -198,9 +198,9 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
         TextView loadingFee = (TextView) convertView.findViewById(R.id.loadingFee);
         TextView shippingFee = (TextView) convertView.findViewById(R.id.shippingFee);
         TextView inGoodsValue = (TextView) convertView.findViewById(R.id.inGoodsValue);
-        String indata=listData.get(groupPosition).getInDate().substring(0,listData.get(groupPosition).getInDate().length()-8);
-//        inDate.setText(listData.get(groupPosition).getInDate());
-        inDate.setText(indata);
+//        String indata=listData.get(groupPosition).getInDate().substring(0,listData.get(groupPosition).getInDate().length()-8);
+        inDate.setText(listData.get(groupPosition).getInDate());
+//        inDate.setText(indata);
         batchName.setText(listData.get(groupPosition).getInType());
         loadingFee.setText("装卸费:"+listData.get(groupPosition).getLoadingFee()+"元");
         shippingFee.setText("运费:" + listData.get(groupPosition).getShippingFee() + "元");

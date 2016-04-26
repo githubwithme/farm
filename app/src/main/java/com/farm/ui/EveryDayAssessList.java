@@ -111,12 +111,12 @@ public class EveryDayAssessList extends Activity implements OnClickListener
 		getActionBar().hide();
 		appContext = (AppContext) getApplication();
 		timeSeLectorFragment = new TimeSeLectorFragment_();
-		IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-		registerReceiver(receiver_update, intentfilter_update);
+	/*	IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+		registerReceiver(receiver_update, intentfilter_update);*/
 
 	}
 
-	BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+/*	BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
 	{
 		@SuppressWarnings("deprecation")
 		@Override
@@ -124,7 +124,7 @@ public class EveryDayAssessList extends Activity implements OnClickListener
 		{
 			getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
 		}
-	};
+	};*/
 
 	public void switchContent(Fragment from, Fragment to)
 	{

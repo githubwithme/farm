@@ -127,7 +127,6 @@ public class NCZ_GddList extends Activity
         Bundle bundle = new Bundle();
         bundle.putSerializable("bean", dictionary);
         selectorUi.setArguments(bundle);
-        switchContent(mContent, selectorUi);
         initAnimalListView();
     }
 
@@ -138,8 +137,8 @@ public class NCZ_GddList extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         appContext = (AppContext) NCZ_GddList.this.getApplication();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        NCZ_GddList.this.registerReceiver(receiver_update, intentfilter_update);
+//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+//        NCZ_GddList.this.registerReceiver(receiver_update, intentfilter_update);
         areatab = getIntent().getParcelableExtra("bean");
         timethread = new TimeThread();
 //        timethread.setStop(false);
@@ -147,31 +146,16 @@ public class NCZ_GddList extends Activity
         timethread.start();
     }
 
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
-    {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-        }
-    };
+//    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+//    {
+//        @SuppressWarnings("deprecation")
+//        @Override
+//        public void onReceive(Context context, Intent intent)
+//        {
+//            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+//        }
+//    };
 
-    public void switchContent(Fragment from, Fragment to)
-    {
-        if (mContent != to)
-        {
-            mContent = to;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if (!to.isAdded())
-            { // 先判断是否被add过
-                transaction.hide(from).add(R.id.top_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else
-            {
-                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
-            }
-        }
-    }
 
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)

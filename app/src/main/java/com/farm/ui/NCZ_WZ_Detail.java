@@ -85,7 +85,7 @@ public class NCZ_WZ_Detail extends FragmentActivity {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), WZ_Detail.class);
                           WZ_Detail wz_detail=listNewData.get(0);
                         daysBeforeWarning.setText(wz_detail.getDaysBeforeWarning()+"天");
-                        levelOfWarning.setText(wz_detail.getLevelOfWarning()+"天");
+                        levelOfWarning.setText(wz_detail.getLevelOfWarning()+wz_detail.getFirs());
 
                         if (wz_detail.getGoodsNote().equals(""))
                         {

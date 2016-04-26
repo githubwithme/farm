@@ -160,11 +160,55 @@
                     android:textSize="24sp"
                     android:visibility="gone"/>
             </RelativeLayout>
-
-            <FrameLayout
-                android:id="@+id/container_todayjob"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/tv_gz"
+                        android:layout_width="60dip"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dip"
+                        android:gravity="center"
+                        android:text="今日工作"
+                        android:textColor="@color/textcolor_titlebar"
+                        android:textSize="@dimen/titlebar_textsize"/>
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/tv_mq"
+                        android:layout_width="60dip"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dip"
+                        android:gravity="center"
+                        android:text="今日苗情"
+                        android:textColor="@color/textcolor_titlebar"
+                        android:textSize="@dimen/titlebar_textsize"/>
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/tv_all"
+                        android:layout_width="60dip"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dip"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="@color/textcolor_titlebar"
+                        android:textSize="@dimen/titlebar_textsize"/>
+                </LinearLayout>
+                <FrameLayout
+                    android:id="@+id/container_todayjob"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

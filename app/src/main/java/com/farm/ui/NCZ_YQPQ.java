@@ -95,30 +95,21 @@ public class NCZ_YQPQ extends Fragment
     {
         ishidding = hidden;
         super.onHiddenChanged(hidden);//true
-        if(hidden==true)
-        {
-            timethread.setSleep(true);
-        } else
-        {
-            timethread = new TimeThread();
-            timethread.setStop(false);
-            timethread.setSleep(false);
-            timethread.start();
-        }
-       /* if (!hidden)
-        {
-            if (timethread != null)
-            {
-                timethread.setSleep(false);
 
-            }
-        } else
+        if (timethread!=null)
         {
-            if (timethread != null)
+            if (hidden == true)
             {
-                timethread.setSleep(true);////true
+                timethread.setSleep(true);
+            } else
+            {
+                timethread = new TimeThread();
+                timethread.setStop(false);
+                timethread.setSleep(false);
+                timethread.start();
             }
-        }*/
+
+        }
     }
 
     @Override
