@@ -176,7 +176,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="20dip"
                         android:gravity="center"
-                        android:text="今日工作"
+                        android:text="最近工作"
                         android:textColor="@color/textcolor_titlebar"
                         android:textSize="@dimen/titlebar_textsize"/>
                     <TextView
@@ -187,7 +187,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="20dip"
                         android:gravity="center"
-                        android:text="今日苗情"
+                        android:text="苗情观测"
                         android:textColor="@color/textcolor_titlebar"
                         android:textSize="@dimen/titlebar_textsize"/>
                     <TextView

@@ -34,24 +34,62 @@ public class goodslisttab_flsl implements Parcelable
     public String areaName="";
     public String YL="";
     public String ZZ="";
-//    public String danwei="";
-//    public String shuliang="";
+    //坚添加
+    public String isExchange="";
+    public String firs="";
+    public String sec="";
+    public String secNum="";
+    public String three="";
+    public String threeNum="";
 
-/*    public String getDanwei() {
-        return danwei;
+
+    public String getFirs() {
+        return firs;
     }
 
-    public void setDanwei(String danwei) {
-        this.danwei = danwei;
+    public void setFirs(String firs) {
+        this.firs = firs;
     }
 
-    public String getShuliang() {
-        return shuliang;
+    public String getIsExchange() {
+        return isExchange;
     }
 
-    public void setShuliang(String shuliang) {
-        this.shuliang = shuliang;
-    }*/
+    public void setIsExchange(String isExchange) {
+        this.isExchange = isExchange;
+    }
+
+    public String getSec() {
+        return sec;
+    }
+
+    public void setSec(String sec) {
+        this.sec = sec;
+    }
+
+    public String getSecNum() {
+        return secNum;
+    }
+
+    public void setSecNum(String secNum) {
+        this.secNum = secNum;
+    }
+
+    public String getThree() {
+        return three;
+    }
+
+    public void setThree(String three) {
+        this.three = three;
+    }
+
+    public String getThreeNum() {
+        return threeNum;
+    }
+
+    public void setThreeNum(String threeNum) {
+        this.threeNum = threeNum;
+    }
 
     public String getZZ()
     {
@@ -313,7 +351,12 @@ public class goodslisttab_flsl implements Parcelable
             p.setYL(source.readString());
             p.setZZ(source.readString());
 //            p.setDanwei(source.readString());
-//            p.setShuliang(source.readString());
+            p.setIsExchange(source.readString());
+            p.setFirs(source.readString());
+            p.setSec(source.readString());
+            p.setSecNum(source.readString());
+            p.setThree(source.readString());
+            p.setThreeNum(source.readString());
             return p;
         }
 
@@ -350,8 +393,12 @@ public class goodslisttab_flsl implements Parcelable
         p.writeString(YL);
         p.writeString(ZZ);
 //        p.writeString(danwei);
-//        p.writeString(shuliang);
-
+        p.writeString(isExchange);
+        p.writeString(firs);
+        p.writeString(sec);
+        p.writeString(secNum);
+        p.writeString(three);
+        p.writeString(threeNum);
     }
 
     @Override

@@ -328,6 +328,14 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                                 goodslisttab.setregDate(list_goods.get(k).getregDate());
                                 goodslisttab.setuID(list_goods.get(k).getuID());
                                 goodslisttab.setuserDefTypeID(list_goods.get(k).getuserDefTypeID());
+                                //坚修改
+                                goodslisttab.setIsExchange(list_goods.get(k).getIsExchange());
+                                goodslisttab.setFirs(list_goods.get(k).getFirs());
+                                goodslisttab.setSec(list_goods.get(k).getSec());
+                                goodslisttab.setThree(list_goods.get(k).getThree());
+                                goodslisttab.setThreeNum(list_goods.get(k).getThreeNum());
+
+
                                 list.add(goodslisttab);
                             }
                             map_goods.put(parkId, list);

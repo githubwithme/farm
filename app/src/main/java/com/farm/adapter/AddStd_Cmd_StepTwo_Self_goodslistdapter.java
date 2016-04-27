@@ -38,9 +38,11 @@ import java.util.List;
 public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
 {
     int currentpos;
-    String number;
+/*    String number;
     String small_dw;
+    String large_dw;*/
     String large_dw;
+    String iiduishui;
     String gx;
     commembertab commembertab;
     goodslisttab currentgoods;
@@ -111,12 +113,15 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 {
                     BitmapHelper.setImageViewBackground(context, listItemView.typeicon, goodslisttab.getImgurl());
                 }
-                String[] goodsspc = goodslisttab.getgoodsSpec().split("/");
+                String large_dw = goodslisttab.getgoodsSpec().substring(1, goodslisttab.getgoodsSpec().length());
+
+
+             /*   String[] goodsspc = goodslisttab.getgoodsSpec().split("/");
                 String number = goodsspc[0];
                 String small_dw = goodsspc[1];
-                String large_dw = goodsspc[2];
+                String large_dw = goodsspc[2];*/
                 listItemView.typename.setText(goodslisttab.getgoodsName());
-                listItemView.tv_gg.setText("规格：" + number + small_dw + "/" + large_dw);
+                listItemView.tv_gg.setText("规格：" +goodslisttab.getFirs() + "/" + large_dw);
             }
             listItemView.cb_fl.setTag(R.id.tag_bean, goodslisttab);
             listItemView.cb_fl.setTag(R.id.tag_postion, position);
@@ -166,13 +171,17 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 {
                     Double acountnumber=0d;
                     isrecovery = true;
-                    String[] goodsspc = list_goodslisttab.get(i).getgoodsSpec().split("/");
+
+                    String large_dw = list_goodslisttab.get(i).getgoodsSpec().substring(1, list_goodslisttab.get(i).getgoodsSpec().length());
+
+                  /*  String[] goodsspc = list_goodslisttab.get(i).getgoodsSpec().split("/");
                     String number = goodsspc[0];
                     String small_dw = goodsspc[1];
-                    String large_dw = goodsspc[2];
+                    String large_dw = goodsspc[2];*/
                     listItemView.cb_fl.setChecked(true);
                     listItemView.ll_flsl.setVisibility(View.VISIBLE);
-                    listItemView.tv_flsl.setText(list_goodslisttab.get(i).getYL() + small_dw + "/株");
+//                    listItemView.tv_flsl.setText(list_goodslisttab.get(i).getYL() + small_dw + "/株");
+                    listItemView.tv_flsl.setText(list_goodslisttab.get(i).getYL() + "/株");
 
 //                    listItemView.tv_allnumber.setText(list_goodslisttab.get(i).getGX() + large_dw);
 
@@ -285,17 +294,24 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         tv_goodsname = (TextView) dialog_layout.findViewById(R.id.tv_goodsname);
         et_flsl = (EditText) dialog_layout.findViewById(R.id.et_flsl);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
-        String[] goodsspc = list.get(currentpos).getgoodsSpec().split("/");
+
+        large_dw= list.get(currentpos).getgoodsSpec().substring(1,list.get(currentpos).getgoodsSpec().length());
+        iiduishui=list.get(currentpos).getIsExchange();
+      /*  String[] goodsspc = list.get(currentpos).getgoodsSpec().split("/");
         number = goodsspc[0];
         small_dw = goodsspc[1];
-        large_dw = goodsspc[2];
+        large_dw = goodsspc[2];*/
 //        tv_tip_number.setText("剩余：" + goodssum + large_dw);
         tv_tip_number.setText("剩余：" + goodssum);
 //        tv_tip_gg.setText(number + small_dw + "/" + large_dw);
-        tv_spec.setText(number + small_dw + "/" + large_dw);
+//        tv_spec.setText(number + small_dw + "/" + large_dw);
+
+        tv_spec.setText(list.get(currentpos).getFirs()+ "/" + large_dw);
         tv_goodsname.setText(list.get(currentpos).getgoodsName());
 //        if (small_dw.equals("ml"))
-        if (large_dw.equals("mL")||large_dw.equals("L"))
+//        if (large_dw.equals("mL")||large_dw.equals("L"))
+        if (list.get(currentpos).getIsExchange().equals("True"))
+
         {
 
             tv_dw.setText("倍(兑水)");
@@ -317,7 +333,8 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 currentgoods.setAreaName(commembertab.getareaName());
                 currentgoods.setYL(et_flsl.getText().toString());
 //                if (small_dw.equals("ml"))
-                if (large_dw.equals("mL")||large_dw.equals("L"))
+//                if (large_dw.equals("mL")||large_dw.equals("L"))
+                if (list.get(currentpos).getIsExchange().equals("True"))
                 {
                     currentgoods.setGX("待定");
                 }else
@@ -341,9 +358,10 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 TextView tv_zzs = (TextView) currentparentview.findViewById(R.id.tv_zzs);
 
 //                if (small_dw.equals("ml"))
-                    if (large_dw.equals("mL")||large_dw.equals("L"))
+//                    if (large_dw.equals("mL")||large_dw.equals("L"))
+                    if (iiduishui.equals("True"))
                 {
-                    tv_flsl.setText(et_flsl.getText() +"陪(兑水)");
+                    tv_flsl.setText(et_flsl.getText() +"倍(兑水)");
                     tv_allnumber.setText("待定");
                 }else
                 {

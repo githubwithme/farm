@@ -79,8 +79,8 @@ public class IFragment extends Fragment
 	TextView tv_exist;
 	@ViewById
 	TextView tv_makemap;
-	@ViewById
-	TextView tv_resetMapData;
+/*	@ViewById
+	TextView tv_resetMapData;*/
 	@ViewById
 	CircleImageView circle_img;
 	@ViewById
@@ -103,7 +103,7 @@ public class IFragment extends Fragment
 //		Intent intent = new Intent(getActivity(), MapUtils_.class);
 //		startActivity(intent);
 	}
-	@Click
+/*	@Click
 	void tv_resetMapData()
 	{
 		commembertab commembertab = AppContext.getUserInfo(getActivity());
@@ -112,7 +112,7 @@ public class IFragment extends Fragment
         SqliteDb.initArea(getActivity());
         SqliteDb.initContract(getActivity());
 		Toast.makeText(getActivity(), "重置成功！", Toast.LENGTH_SHORT).show();
-	}
+	}*/
 	@Click
 	void tv_startBreakoff()
 	{

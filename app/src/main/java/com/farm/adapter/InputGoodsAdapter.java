@@ -74,11 +74,15 @@ public class InputGoodsAdapter extends BaseAdapter
 //            listItemView.tv_dw.setText(list.get(arg0).getgoodsSpec());
 
             String[] goodsspc = list.get(arg0).getgoodsSpec().split("/");
-            String number = goodsspc[0];
-            String small_dw = goodsspc[1];
-            String large_dw = goodsspc[2];
+
+            String large_dw=list.get(arg0).getgoodsSpec().substring(1,list.get(arg0).getgoodsSpec().length());
+//            String number = goodsspc[0];
+//            String small_dw = goodsspc[1];
+//            String large_dw = goodsspc[1];
 //            if (small_dw.equals("ml"))
-            if (large_dw.equals("mL")||large_dw.equals("L"))
+//            if (large_dw.equals("mL")||large_dw.equals("L"))
+//            if ( list.get(arg0).getIsExchange().equals("False"))
+            if ( list.get(arg0).getIsExchange().equals("True"))
             {
                 listItemView.tv_dw.setText("倍(兑水)");
             }else
@@ -88,7 +92,8 @@ public class InputGoodsAdapter extends BaseAdapter
             }
 //            listItemView.tv_syl.setText( list.get(arg0).getGoodsSum()+large_dw);
             listItemView.tv_syl.setText( list.get(arg0).getGoodsSum());
-            listItemView.tv_spec.setText( number+small_dw+"/"+large_dw);
+//            listItemView.tv_spec.setText( number+small_dw+"/"+large_dw);
+            listItemView.tv_spec.setText(  list.get(arg0).getFirs()+"/"+large_dw);
 
             lmap.put(arg0, convertView);
             convertView.setTag(listItemView);
