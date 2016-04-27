@@ -144,6 +144,10 @@ public class NCZ_YQPQ extends Fragment
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
+        if (getActivity()==null)
+        {
+            return;
+        }
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userid", commembertab.getId());

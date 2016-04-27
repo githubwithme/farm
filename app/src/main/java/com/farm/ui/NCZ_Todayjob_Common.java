@@ -34,10 +34,12 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by user on 2016/4/27.
+ */
 @EActivity(R.layout.common_jobdetail_assess)
-public class Common_JobDetail_Assess extends Activity
-{
-    jobtab jobtab;
+public class NCZ_Todayjob_Common extends Activity {
+    com.farm.bean.jobtab jobtab;
     CZ_PG_JobDetail_ExpandAdapter cz_pg_assess_expandAdapter;
     @ViewById
     CustomExpandableListView expandableListView;
@@ -169,7 +171,7 @@ public class Common_JobDetail_Assess extends Activity
 
     private void getJob()
     {
-        commembertab commembertab = AppContext.getUserInfo(Common_JobDetail_Assess.this);
+        commembertab commembertab = AppContext.getUserInfo(NCZ_Todayjob_Common.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("jobid", jobtab.getId());
         params.addQueryStringParameter("userid", commembertab.getId());
@@ -190,8 +192,7 @@ public class Common_JobDetail_Assess extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
-                        String bb=listNewData.get(0).getjobStatus();
-                        if (listNewData.get(0).getjobStatus().equals("1"))
+                        if (listNewData.get(0).getjobStatus().equals("1")||(!listNewData.get(0).getareaId().equals("0")))
                         {
                             btn_score.setVisibility(View.GONE);
                         }
@@ -204,7 +205,7 @@ public class Common_JobDetail_Assess extends Activity
                     }
                 } else
                 {
-                    AppContext.makeToast(Common_JobDetail_Assess.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_Todayjob_Common.this, "error_connectDataBase");
                     return;
                 }
             }
@@ -212,7 +213,7 @@ public class Common_JobDetail_Assess extends Activity
             @Override
             public void onFailure(HttpException e, String s)
             {
-                AppContext.makeToast(Common_JobDetail_Assess.this, "error_connectServer");
+                AppContext.makeToast(NCZ_Todayjob_Common.this, "error_connectServer");
             }
         });
     }

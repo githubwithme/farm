@@ -344,6 +344,10 @@ public class NCZ_PQ_TodayCommandFragment extends Fragment implements OnClickList
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
+                if (getActivity()==null)
+                {
+                    return;
+                }
                 AppContext.makeToast(getActivity(), "error_connectServer");
                 if (!ishidding && timethread != null)
                 {

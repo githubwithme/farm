@@ -50,8 +50,8 @@ import java.util.List;
 @EFragment
 public class NCZ_Evented extends Fragment
 {
-    boolean ishidding=false;
-    TimeThread timethread;
+  /*  boolean ishidding=false;
+    TimeThread timethread;*/
     com.farm.bean.commembertab commembertab;
     PG_ReportedAdapter listadpater;
     private AppContext appContext;
@@ -74,7 +74,7 @@ public class NCZ_Evented extends Fragment
         initAnimalListView();
 //        getBreakOffInfoOfContract();
     }
-    @Override
+  /*  @Override
     public void onHiddenChanged(boolean hidden)
     {
         ishidding=hidden;
@@ -83,7 +83,11 @@ public class NCZ_Evented extends Fragment
         {
             if (timethread != null)
             {
+//                timethread.setSleep(false);
+                timethread = new TimeThread();
+                timethread.setStop(false);
                 timethread.setSleep(false);
+                timethread.start();
             }
         } else
         {
@@ -92,7 +96,7 @@ public class NCZ_Evented extends Fragment
                 timethread.setSleep(true);
             }
         }
-    }
+    }*/
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -100,6 +104,9 @@ public class NCZ_Evented extends Fragment
         appContext = (AppContext) getActivity().getApplication();
 //        commembertab commembertab = AppContext.getUserInfo(getActivity());
         commembertab = AppContext.getUserInfo(getActivity());
+   /*     timethread = new TimeThread();
+        timethread.setSleep(false);
+        timethread.start();*/
         return rootView;
     }
 
@@ -211,10 +218,10 @@ public class NCZ_Evented extends Fragment
                     }
                 } else {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
-                    if (!ishidding  && timethread!=null)
+              /*      if (!ishidding  && timethread!=null)
                     {
                         timethread.setSleep(false);
-                    }
+                    }*/
                     return;
                 }
                 // 数据处理
@@ -318,24 +325,24 @@ public class NCZ_Evented extends Fragment
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
-                if (!ishidding  && timethread!=null)
+            /*    if (!ishidding  && timethread!=null)
                 {
                     timethread.setSleep(false);
-                }
+                }*/
             }
 
             @Override
             public void onFailure(HttpException error, String msg) {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
-                if (!ishidding  && timethread!=null)
+        /*        if (!ishidding  && timethread!=null)
                 {
                     timethread.setSleep(false);
-                }
+                }*/
             }
         });
     }
-    class TimeThread extends Thread
+/*    class TimeThread extends Thread
     {
         private boolean isSleep = true;
         private boolean stop = false;
@@ -381,6 +388,6 @@ public class NCZ_Evented extends Fragment
         timethread.setStop(true);
         timethread.interrupt();
         timethread = null;
-    }
+    }*/
 
 }
