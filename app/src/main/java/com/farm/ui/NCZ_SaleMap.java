@@ -80,7 +80,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_salemap)
 public class NCZ_SaleMap extends Activity implements TencentLocationListener, View.OnClickListener
 {
-    boolean isanimateToCenter=false;
+    boolean isanimateToCenter = false;
     CustomDialog customdialog_deletetip;
     CustomDialog_AddSaleInInfo customDialog_addSaleInInfo;
     Polygon polygon_divide1;
@@ -263,7 +263,13 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
     {
         if (CurrentsellOrder != null)
         {
-            showPop_orderdetail();
+            if (pw_orderdetail == null || !pw_orderdetail.isShowing())
+            {
+                showPop_orderdetail();
+            } else
+            {
+                Toast.makeText(NCZ_SaleMap.this, "请不要重复点击", Toast.LENGTH_SHORT).show();
+            }
         } else
         {
             Toast.makeText(NCZ_SaleMap.this, "暂无订单", Toast.LENGTH_SHORT).show();
@@ -620,7 +626,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
     @Click
     void btn_batchofproduct()
     {
-        if (list_SellOrder!=null && list_SellOrder.size() > 0)
+        if (list_SellOrder != null && list_SellOrder.size() > 0)
         {
             showPop_batch();
         } else
@@ -671,17 +677,6 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 
         InitSellOrder();
 
-//        list_SellOrder = SqliteDb.getSellOrderByUidAndYear(NCZ_SaleMap.this, commembertab.getuId(), utils.getYear());
-//        if (list_SellOrder.size() == 0)
-//        {
-//            btn_batchofproduct.setText("暂无订单");
-//        } else
-//        {
-//            CurrentsellOrder = list_SellOrder.get(0);
-//            btn_batchofproduct.setText(CurrentsellOrder.getBuyers() + "订单");
-//            initSaleData();//初始化销售数据
-//            initBreakoffData();//初始化断蕾数据
-//        }
         initParam();//初始化参数
         initBasicData();//初始化基础数据
         initMarkerClickListener();
@@ -768,7 +763,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 //        }
 //    }
 
-//    public void initSaleData()
+    //    public void initSaleData()
 //    {
 //        list_Marker_allsale = new ArrayList<>();
 //        list_Marker_salein = new ArrayList<>();
@@ -813,23 +808,24 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 //            }
 //        }
 //    }
-public void initBasicData()
-{
+    public void initBasicData()
+    {
 //显示规划图
-    InitPlanMap();
+        InitPlanMap();
 //显示点
-    initGCDPolygon();
+        initGCDPolygon();
 //显示点
-    initPointPolygon();
+        initPointPolygon();
 //显示断蕾
-    initHousePolygon();
+        initHousePolygon();
 //显示线
-    initLinePolygon();
+        initLinePolygon();
 //显示道路
-    initRoadPolygon();
+        initRoadPolygon();
 //显示面
-    initMianPolygon();
-}
+        initMianPolygon();
+    }
+
     private void InitPlanMap()
     {
         list_Marker_park = new ArrayList<>();
@@ -869,7 +865,7 @@ public void initBasicData()
                                 if (!isanimateToCenter)
                                 {
                                     tencentMap.animateTo(latlng);
-                                    isanimateToCenter=true;
+                                    isanimateToCenter = true;
                                 }
                             } else if (polygonBean.getContractid().equals("-1"))
                             {
@@ -894,7 +890,7 @@ public void initBasicData()
                                 {
                                     initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 2, R.color.bg_green);
                                 }
-
+                                initBoundaryLine(100f, list_contract, 6, getResources().getColor(R.color.red));
                             }
                         }
                     }
@@ -914,6 +910,7 @@ public void initBasicData()
             }
         });
     }
+
     public void initGCDPolygon()
     {
         list_Objects_gcd = new ArrayList<>();
@@ -1275,14 +1272,14 @@ public void initBasicData()
                 Parcelable obj = bundle.getParcelable("bean");
                 if (type.equals("normal"))
                 {
-                    PolygonBean polygonbean =(PolygonBean)obj;
+                    PolygonBean polygonbean = (PolygonBean) obj;
                     showDialog_overlayInfo(polygonbean.getNote());
                 } else if (type.equals("breakoff"))
                 {
                     showDialog_overlayInfo(note);
                 } else if (type.equals("salein"))
                 {
-                    SellOrderDetail sellOrderDetail =(SellOrderDetail)obj;
+                    SellOrderDetail sellOrderDetail = (SellOrderDetail) obj;
                     showDialog_OperateSalein(sellOrderDetail, marker);
                 } else if (type.equals("saleout"))
                 {
@@ -1294,7 +1291,22 @@ public void initBasicData()
             }
         });
     }
-
+    private void initBoundaryLine(float z, List<CoordinatesBean> list_coordinates, int strokesize, int strokecolor)
+    {
+        List<LatLng> list_AllLatLng = new ArrayList<>();
+        for (int i = 0; i < list_coordinates.size(); i++)
+        {
+            LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
+            list_AllLatLng.add(latlng);
+        }
+        PolylineOptions lineOpt = new PolylineOptions();
+        lineOpt.addAll(list_AllLatLng);
+        Polyline line = tencentMap.addPolyline(lineOpt);
+        line.setColor(strokecolor);
+        line.setWidth(strokesize);
+        line.setZIndex(z);
+        Overlays.add(line);
+    }
     private Polygon initBoundary(int fillcolor, float z, List<CoordinatesBean> list_coordinates, int strokesize, int strokecolor)
     {
         List<LatLng> list_AllLatLng = new ArrayList<>();
@@ -1312,6 +1324,7 @@ public void initBasicData()
         Overlays.add(polygon);
         return polygon;
     }
+
     private void getPlanMap_Custom(String uid, final String type)
     {
         com.farm.bean.commembertab commembertab = AppContext.getUserInfo(NCZ_SaleMap.this);
@@ -1479,6 +1492,7 @@ public void initBasicData()
             }
         });
     }
+
     public void showDialog_OperateSalefor(final String uuid, final Marker marker)
     {
         final View dialog_layout = (RelativeLayout) LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_operatepolygon_salefor, null);
@@ -1834,13 +1848,13 @@ public void initBasicData()
                 {
                     tencentMap.removeOverlay(list_Objects_divideline.get(i));
                 }
-                Point[] pts1=new Point[list_latlng_divide1.size()];
-                Point p1=mProjection.toScreenLocation(latLng);
-                for (int i = 0; i <list_latlng_divide1.size(); i++)
+                Point[] pts1 = new Point[list_latlng_divide1.size()];
+                Point p1 = mProjection.toScreenLocation(latLng);
+                for (int i = 0; i < list_latlng_divide1.size(); i++)
                 {
-                    pts1[i]=mProjection.toScreenLocation(list_latlng_divide1.get(i));
+                    pts1[i] = mProjection.toScreenLocation(list_latlng_divide1.get(i));
                 }
-                int n=utils.CheckInPloy(pts1,pts1.length,p1);
+                int n = utils.CheckInPloy(pts1, pts1.length, p1);
                 if (n == -1)
                 {
                     initMapClickListener();
@@ -1848,13 +1862,13 @@ public void initBasicData()
                     return;
                 }
 
-                Point[] pts2=new Point[list_latlng_divide2.size()];
-                Point p2=mProjection.toScreenLocation(latLng);
-                for (int i = 0; i <list_latlng_divide2.size(); i++)
+                Point[] pts2 = new Point[list_latlng_divide2.size()];
+                Point p2 = mProjection.toScreenLocation(latLng);
+                for (int i = 0; i < list_latlng_divide2.size(); i++)
                 {
-                    pts2[i]=mProjection.toScreenLocation(list_latlng_divide2.get(i));
+                    pts2[i] = mProjection.toScreenLocation(list_latlng_divide2.get(i));
                 }
-                n=utils.CheckInPloy(pts2,pts2.length,p2);
+                n = utils.CheckInPloy(pts2, pts2.length, p2);
                 if (n == -1)
                 {
                     initMapClickListener();
@@ -2113,7 +2127,7 @@ public void initBasicData()
     }
 
 
-    public void showDialog_OperateSalein(final  SellOrderDetail sellOrderDetail, final Marker marker)
+    public void showDialog_OperateSalein(final SellOrderDetail sellOrderDetail, final Marker marker)
     {
         final View dialog_layout = (RelativeLayout) LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_feedbackofsale, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(NCZ_SaleMap.this, R.style.MyDialog, dialog_layout);
@@ -2231,15 +2245,20 @@ public void initBasicData()
                 sellOrderDetail.setplannumber(et_note.getText().toString());
                 sellOrderDetail.setstatus("0");
                 sellOrderDetail.setisSoldOut("0");
-                boolean issuccess = SqliteDb.editSellOrderDetail_salein(NCZ_SaleMap.this, sellOrderDetail, number_difference);
-                if (issuccess)
-                {
-                    Toast.makeText(NCZ_SaleMap.this, "修改成功！", Toast.LENGTH_SHORT).show();
-                    reloadMap();
-                } else
-                {
-                    Toast.makeText(NCZ_SaleMap.this, "修改失败！", Toast.LENGTH_SHORT).show();
-                }
+                editSellOrderDetail(sellOrderDetail,String.valueOf(number_difference),et_note.getText().toString());
+//                int number_difference = Integer.valueOf(sellOrderDetail.getplannumber()) - Integer.valueOf(et_note.getText().toString());
+//                sellOrderDetail.setplannumber(et_note.getText().toString());
+//                sellOrderDetail.setstatus("0");
+//                sellOrderDetail.setisSoldOut("0");
+//                boolean issuccess = SqliteDb.editSellOrderDetail_salein(NCZ_SaleMap.this, sellOrderDetail, number_difference);
+//                if (issuccess)
+//                {
+//                    Toast.makeText(NCZ_SaleMap.this, "修改成功！", Toast.LENGTH_SHORT).show();
+//                    reloadMap();
+//                } else
+//                {
+//                    Toast.makeText(NCZ_SaleMap.this, "修改失败！", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
         btn_cancle.setOnClickListener(new View.OnClickListener()
@@ -2375,80 +2394,308 @@ public void initBasicData()
         });
     }
 
+    private void editOrder(SellOrder sellOrder)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uuid", sellOrder.getUuid());
+        params.addQueryStringParameter("buyers", sellOrder.getBuyers());
+        params.addQueryStringParameter("address", sellOrder.getAddress());
+        params.addQueryStringParameter("email", sellOrder.getEmail());
+        params.addQueryStringParameter("phone", sellOrder.getPhone());
+        params.addQueryStringParameter("price", sellOrder.getPrice());
+        params.addQueryStringParameter("number", sellOrder.getNumber());
+        params.addQueryStringParameter("weight", sellOrder.getWeight());
+        params.addQueryStringParameter("sumvalues", sellOrder.getSumvalues());
+        params.addQueryStringParameter("note", sellOrder.getNote());
+        params.addQueryStringParameter("action", "editSellOrder");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() > 0)
+                    {
+                        Toast.makeText(NCZ_SaleMap.this, "修改成功！", Toast.LENGTH_SHORT).show();
+                        reloadMap();
+                    } else
+                    {
+                        Toast.makeText(NCZ_SaleMap.this, "修改失败！", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_SaleMap.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_SaleMap.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void editSellOrderDetail(SellOrderDetail sellOrderdetail,String number_difference,String number_new)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uuid", sellOrderdetail.getUuid());
+        params.addQueryStringParameter("number_difference", number_difference);
+        params.addQueryStringParameter("uid", sellOrderdetail.getuid());
+        params.addQueryStringParameter("contractid", sellOrderdetail.getcontractid());
+        params.addQueryStringParameter("year",sellOrderdetail.getYear());
+        params.addQueryStringParameter("batchTime", sellOrderdetail.getBatchTime());
+        params.addQueryStringParameter("number_new", number_new);
+        params.addQueryStringParameter("action", "editSellOrderDetail");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() > 0)
+                    {
+                        Toast.makeText(NCZ_SaleMap.this, "修改成功！", Toast.LENGTH_SHORT).show();
+                        reloadMap();
+                    } else
+                    {
+                        Toast.makeText(NCZ_SaleMap.this, "修改失败！", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_SaleMap.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_SaleMap.this, "error_connectServer");
+            }
+        });
+    }
+
     public void showPop_orderdetail()
     {
         LayoutInflater layoutInflater = (LayoutInflater) NCZ_SaleMap.this.getSystemService(NCZ_SaleMap.this.LAYOUT_INFLATER_SERVICE);
-        pv_orderdetail = layoutInflater.inflate(R.layout.pop_orderdetail, null);// 外层
-        pv_orderdetail.setOnKeyListener(new View.OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_orderdetail.isShowing()))
-                {
-                    pw_orderdetail.dismiss();
-                    WindowManager.LayoutParams lp = NCZ_SaleMap.this.getWindow().getAttributes();
-                    lp.alpha = 1f;
-                    NCZ_SaleMap.this.getWindow().setAttributes(lp);
-                    return true;
-                }
-                return false;
-            }
-        });
-        pv_orderdetail.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_orderdetail.isShowing())
-                {
-                    pw_orderdetail.dismiss();
-                    WindowManager.LayoutParams lp = NCZ_SaleMap.this.getWindow().getAttributes();
-                    lp.alpha = 1f;
-                    NCZ_SaleMap.this.getWindow().setAttributes(lp);
-                }
-                return false;
-            }
-        });
+        pv_orderdetail = layoutInflater.inflate(R.layout.pop_editorderdetail, null);// 外层
+//        pv_orderdetail.setOnKeyListener(new View.OnKeyListener()
+//        {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event)
+//            {
+//                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_orderdetail.isShowing()))
+//                {
+//                    pw_orderdetail.dismiss();
+//                    WindowManager.LayoutParams lp = NCZ_SaleMap.this.getWindow().getAttributes();
+//                    lp.alpha = 1f;
+//                    NCZ_SaleMap.this.getWindow().setAttributes(lp);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        pv_orderdetail.setOnTouchListener(new View.OnTouchListener()
+//        {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event)
+//            {
+//                if (pw_orderdetail.isShowing())
+//                {
+//                    pw_orderdetail.dismiss();
+//                    WindowManager.LayoutParams lp = NCZ_SaleMap.this.getWindow().getAttributes();
+//                    lp.alpha = 1f;
+//                    NCZ_SaleMap.this.getWindow().setAttributes(lp);
+//                }
+//                return false;
+//            }
+//        });
         pw_orderdetail = new PopupWindow(pv_orderdetail, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
         pw_orderdetail.showAsDropDown(line_batch, 0, 0);
-        pw_orderdetail.setOutsideTouchable(true);
-        TextView tv_name = (TextView) pv_orderdetail.findViewById(R.id.tv_name);
-        TextView tv_phone = (TextView) pv_orderdetail.findViewById(R.id.tv_phone);
-        TextView tv_address = (TextView) pv_orderdetail.findViewById(R.id.tv_address);
-        TextView tv_email = (TextView) pv_orderdetail.findViewById(R.id.tv_email);
-        TextView tv_planprice = (TextView) pv_orderdetail.findViewById(R.id.tv_planprice);
-        TextView tv_actualprice = (TextView) pv_orderdetail.findViewById(R.id.tv_actualprice);
-        TextView tv_plannumber = (TextView) pv_orderdetail.findViewById(R.id.tv_plannumber);
-        TextView tv_actualnumber = (TextView) pv_orderdetail.findViewById(R.id.tv_actualnumber);
-        TextView tv_planweight = (TextView) pv_orderdetail.findViewById(R.id.tv_planweight);
-        TextView tv_actualweight = (TextView) pv_orderdetail.findViewById(R.id.tv_actualweight);
-        TextView tv_planallvalues = (TextView) pv_orderdetail.findViewById(R.id.tv_planallvalues);
-        TextView tv_actualallvalues = (TextView) pv_orderdetail.findViewById(R.id.tv_actualallvalues);
-        TextView tv_deposit = (TextView) pv_orderdetail.findViewById(R.id.tv_deposit);
-        TextView tv_note = (TextView) pv_orderdetail.findViewById(R.id.tv_note);
-        TextView tv_feedbacknote = (TextView) pv_orderdetail.findViewById(R.id.tv_feedbacknote);
+        pw_orderdetail.setOutsideTouchable(false);
+        final EditText et_name = (EditText) pv_orderdetail.findViewById(R.id.et_name);
+        final EditText et_phone = (EditText) pv_orderdetail.findViewById(R.id.et_phone);
+        final EditText et_address = (EditText) pv_orderdetail.findViewById(R.id.et_address);
+        final EditText et_email = (EditText) pv_orderdetail.findViewById(R.id.et_email);
+        final EditText et_planprice = (EditText) pv_orderdetail.findViewById(R.id.et_planprice);
+        final TextView tv_actualprice = (TextView) pv_orderdetail.findViewById(R.id.tv_actualprice);
+        final EditText et_plannumber = (EditText) pv_orderdetail.findViewById(R.id.et_plannumber);
+        final TextView tv_actualnumber = (TextView) pv_orderdetail.findViewById(R.id.tv_actualnumber);
+        final EditText et_planweight = (EditText) pv_orderdetail.findViewById(R.id.et_planweight);
+        final TextView tv_actualweight = (TextView) pv_orderdetail.findViewById(R.id.tv_actualweight);
+        final EditText et_planallvalues = (EditText) pv_orderdetail.findViewById(R.id.et_planallvalues);
+        final TextView tv_actualallvalues = (TextView) pv_orderdetail.findViewById(R.id.tv_actualallvalues);
+        final TextView tv_deposit = (TextView) pv_orderdetail.findViewById(R.id.tv_deposit);
+        final EditText et_note = (EditText) pv_orderdetail.findViewById(R.id.et_note);
+        final TextView tv_feedbacknote = (TextView) pv_orderdetail.findViewById(R.id.tv_feedbacknote);
+        Button btn_sure = (Button) pv_orderdetail.findViewById(R.id.btn_sure);
+        Button btn_cancle = (Button) pv_orderdetail.findViewById(R.id.btn_cancle);
 
-        if (CurrentsellOrder != null)
+        btn_cancle.setOnClickListener(new View.OnClickListener()
         {
-            tv_name.setText(CurrentsellOrder.getBuyers());
-            tv_phone.setText(CurrentsellOrder.getPhone());
-            tv_address.setText(CurrentsellOrder.getAddress());
-            tv_email.setText(CurrentsellOrder.getEmail());
-            tv_planprice.setText(CurrentsellOrder.getPrice());
+            @Override
+            public void onClick(View v)
+            {
+                pw_orderdetail.dismiss();
+            }
+        });
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                pw_orderdetail.dismiss();
+                CurrentsellOrder.setBuyers(et_name.getText().toString());
+                CurrentsellOrder.setPhone(et_phone.getText().toString());
+                CurrentsellOrder.setAddress(et_address.getText().toString());
+                CurrentsellOrder.setEmail(et_email.getText().toString());
+                CurrentsellOrder.setPrice(et_planprice.getText().toString());
+                CurrentsellOrder.setWeight(et_planweight.getText().toString());
+                CurrentsellOrder.setNumber(et_plannumber.getText().toString());
+                CurrentsellOrder.setSumvalues(et_planallvalues.getText().toString());
+                CurrentsellOrder.setNote(et_note.getText().toString());
+                editOrder(CurrentsellOrder);
+            }
+        });
+        et_name.setText(CurrentsellOrder.getBuyers());
+        et_phone.setText(CurrentsellOrder.getPhone());
+        et_address.setText(CurrentsellOrder.getAddress());
+        et_email.setText(CurrentsellOrder.getEmail());
+        et_planprice.setText(CurrentsellOrder.getPrice());
+
+        et_planweight.setText(CurrentsellOrder.getWeight());
+        et_plannumber.setText(CurrentsellOrder.getNumber());
+        et_planallvalues.setText(CurrentsellOrder.getSumvalues());
+        tv_deposit.setText(CurrentsellOrder.getDeposit());
+        et_note.setText(CurrentsellOrder.getNote());
+
+
+        if (CurrentsellOrder.getActualprice().equals(""))
+        {
+            tv_actualprice.setText("暂无反馈");
+        } else
+        {
             tv_actualprice.setText(CurrentsellOrder.getActualprice());
-            tv_planweight.setText(CurrentsellOrder.getWeight());
+        }
+        if (CurrentsellOrder.getActualweight().equals(""))
+        {
+            tv_actualweight.setText("暂无反馈");
+        } else
+        {
             tv_actualweight.setText(CurrentsellOrder.getActualweight());
-            tv_plannumber.setText(CurrentsellOrder.getNumber());
+        }
+        if (CurrentsellOrder.getActualnumber().equals(""))
+        {
+            tv_actualnumber.setText("暂无反馈");
+        } else
+        {
             tv_actualnumber.setText(CurrentsellOrder.getActualnumber());
-            tv_planallvalues.setText(CurrentsellOrder.getSumvalues());
+        }
+        if (CurrentsellOrder.getActualsumvalues().equals(""))
+        {
+            tv_actualallvalues.setText("暂无反馈");
+        } else
+        {
             tv_actualallvalues.setText(CurrentsellOrder.getActualsumvalues());
-            tv_deposit.setText(CurrentsellOrder.getDeposit());
-            tv_note.setText(CurrentsellOrder.getNote());
+        }
+        if (CurrentsellOrder.getFeedbacknote().equals(""))
+        {
+            tv_feedbacknote.setText("暂无反馈");
+        } else
+        {
             tv_feedbacknote.setText(CurrentsellOrder.getFeedbacknote());
         }
-
     }
+//    public void showPop_orderdetail()
+//    {
+//        LayoutInflater layoutInflater = (LayoutInflater) NCZ_SaleMap.this.getSystemService(NCZ_SaleMap.this.LAYOUT_INFLATER_SERVICE);
+//        pv_orderdetail = layoutInflater.inflate(R.layout.pop_orderdetail, null);// 外层
+//        pv_orderdetail.setOnKeyListener(new View.OnKeyListener()
+//        {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event)
+//            {
+//                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_orderdetail.isShowing()))
+//                {
+//                    pw_orderdetail.dismiss();
+//                    WindowManager.LayoutParams lp = NCZ_SaleMap.this.getWindow().getAttributes();
+//                    lp.alpha = 1f;
+//                    NCZ_SaleMap.this.getWindow().setAttributes(lp);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        pv_orderdetail.setOnTouchListener(new View.OnTouchListener()
+//        {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event)
+//            {
+//                if (pw_orderdetail.isShowing())
+//                {
+//                    pw_orderdetail.dismiss();
+//                    WindowManager.LayoutParams lp = NCZ_SaleMap.this.getWindow().getAttributes();
+//                    lp.alpha = 1f;
+//                    NCZ_SaleMap.this.getWindow().setAttributes(lp);
+//                }
+//                return false;
+//            }
+//        });
+//        pw_orderdetail = new PopupWindow(pv_orderdetail, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+//        pw_orderdetail.showAsDropDown(line_batch, 0, 0);
+//        pw_orderdetail.setOutsideTouchable(true);
+//        TextView tv_name = (TextView) pv_orderdetail.findViewById(R.id.tv_name);
+//        TextView tv_phone = (TextView) pv_orderdetail.findViewById(R.id.tv_phone);
+//        TextView tv_address = (TextView) pv_orderdetail.findViewById(R.id.tv_address);
+//        TextView tv_email = (TextView) pv_orderdetail.findViewById(R.id.tv_email);
+//        TextView tv_planprice = (TextView) pv_orderdetail.findViewById(R.id.tv_planprice);
+//        TextView tv_actualprice = (TextView) pv_orderdetail.findViewById(R.id.tv_actualprice);
+//        TextView tv_plannumber = (TextView) pv_orderdetail.findViewById(R.id.tv_plannumber);
+//        TextView tv_actualnumber = (TextView) pv_orderdetail.findViewById(R.id.tv_actualnumber);
+//        TextView tv_planweight = (TextView) pv_orderdetail.findViewById(R.id.tv_planweight);
+//        TextView tv_actualweight = (TextView) pv_orderdetail.findViewById(R.id.tv_actualweight);
+//        TextView tv_planallvalues = (TextView) pv_orderdetail.findViewById(R.id.tv_planallvalues);
+//        TextView tv_actualallvalues = (TextView) pv_orderdetail.findViewById(R.id.tv_actualallvalues);
+//        TextView tv_deposit = (TextView) pv_orderdetail.findViewById(R.id.tv_deposit);
+//        TextView tv_note = (TextView) pv_orderdetail.findViewById(R.id.tv_note);
+//        TextView tv_feedbacknote = (TextView) pv_orderdetail.findViewById(R.id.tv_feedbacknote);
+//
+//        if (CurrentsellOrder != null)
+//        {
+//            tv_name.setText(CurrentsellOrder.getBuyers());
+//            tv_phone.setText(CurrentsellOrder.getPhone());
+//            tv_address.setText(CurrentsellOrder.getAddress());
+//            tv_email.setText(CurrentsellOrder.getEmail());
+//            tv_planprice.setText(CurrentsellOrder.getPrice());
+//            tv_actualprice.setText(CurrentsellOrder.getActualprice());
+//            tv_planweight.setText(CurrentsellOrder.getWeight());
+//            tv_actualweight.setText(CurrentsellOrder.getActualweight());
+//            tv_plannumber.setText(CurrentsellOrder.getNumber());
+//            tv_actualnumber.setText(CurrentsellOrder.getActualnumber());
+//            tv_planallvalues.setText(CurrentsellOrder.getSumvalues());
+//            tv_actualallvalues.setText(CurrentsellOrder.getActualsumvalues());
+//            tv_deposit.setText(CurrentsellOrder.getDeposit());
+//            tv_note.setText(CurrentsellOrder.getNote());
+//            tv_feedbacknote.setText(CurrentsellOrder.getFeedbacknote());
+//        }
+//
+//    }
 
     private void showFirstMarker()
     {
@@ -2517,7 +2764,7 @@ public void initBasicData()
         return marker;
     }
 
-//    private Marker addCustomMarker(String type, int icon, int textcolor, LatLng latLng, String uuid, String note)
+    //    private Marker addCustomMarker(String type, int icon, int textcolor, LatLng latLng, String uuid, String note)
 //    {
 //        Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
 //        View view = LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.marker_sale, null);
@@ -2541,30 +2788,32 @@ public void initBasicData()
 //        marker.setTag(bundle);
 //        return marker;
 //    }
-private Marker addCustomMarker(Parcelable obj, String type, int icon, int textcolor, LatLng latLng, String uuid, String note)
-{
-    Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
-    View view = LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.marker_sale, null);
-    View view_marker = (View) view.findViewById(R.id.view_marker);
-    view_marker.setBackgroundResource(icon);
-    TextView textView = (TextView) view.findViewById(R.id.tv_note);
-    if (note == null || note.equals(""))
+    private Marker addCustomMarker(Parcelable obj, String type, int icon, int textcolor, LatLng latLng, String uuid, String note)
     {
-        textView.setText("暂无说明");
-    } else
-    {
-        textView.setText(note);
+        Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
+        View view = LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.marker_sale, null);
+        View view_marker = (View) view.findViewById(R.id.view_marker);
+        view_marker.setBackgroundResource(icon);
+        TextView textView = (TextView) view.findViewById(R.id.tv_note);
+        if (note == null || note.equals(""))
+        {
+            textView.setText("暂无说明");
+        } else
+        {
+            textView.setText(note);
+        }
+        textView.setTextColor(textcolor);
+        textView.setTextSize(12);
+        marker.setMarkerView(view);
+        Bundle bundle = new Bundle();
+        bundle.putString("uuid", uuid);
+        bundle.putString("note", note);
+        bundle.putString("type", type);
+        bundle.putParcelable("bean", obj);
+        marker.setTag(bundle);
+        return marker;
     }
-    textView.setTextColor(textcolor);
-    textView.setTextSize(12);
-    marker.setMarkerView(view);
-    Bundle bundle = new Bundle();
-    bundle.putString("uuid", uuid);
-    bundle.putString("note", note);
-    bundle.putString("type", type);
-    marker.setTag(bundle);
-    return marker;
-}
+
     private void InitSellOrder()
     {
         RequestParams params = new RequestParams();
@@ -2611,6 +2860,7 @@ private Marker addCustomMarker(Parcelable obj, String type, int icon, int textco
             }
         });
     }
+
     private void initSaleData()
     {
         list_Marker_allsale = new ArrayList<>();
@@ -2629,7 +2879,7 @@ private Marker addCustomMarker(Parcelable obj, String type, int icon, int textco
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<SellOrderDetail> list_SellOrderDetail=null;
+                List<SellOrderDetail> list_SellOrderDetail = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
@@ -2643,7 +2893,7 @@ private Marker addCustomMarker(Parcelable obj, String type, int icon, int textco
                                 SellOrderDetail sellorderdetail = list_SellOrderDetail.get(j);
                                 Polygon p = null;
                                 LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
-                                Marker marker = addCustomMarker(sellorderdetail,"salein", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "售中" + sellorderdetail.getplannumber());
+                                Marker marker = addCustomMarker(sellorderdetail, "salein", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "售中" + sellorderdetail.getplannumber());
 //                    marker.setVisible(false);
                                 list_Marker_allsale.add(marker);
                                 list_Marker_salein.add(marker);
@@ -2656,7 +2906,7 @@ private Marker addCustomMarker(Parcelable obj, String type, int icon, int textco
                                 SellOrderDetail sellorderdetail = list_SellOrderDetail.get(j);
                                 Polygon p = null;
                                 LatLng latlng = new LatLng(Double.valueOf(sellorderdetail.getPlanlat()), Double.valueOf(sellorderdetail.getplanlng()));
-                                Marker marker = addCustomMarker(sellorderdetail,"saleout", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "已售" + sellorderdetail.getactualnumber());
+                                Marker marker = addCustomMarker(sellorderdetail, "saleout", R.drawable.ic_salein, getResources().getColor(R.color.white), latlng, sellorderdetail.getUuid(), "已售" + sellorderdetail.getactualnumber());
 //                    marker.setVisible(false);
                                 list_Marker_allsale.add(marker);
                                 list_Marker_saleout.add(marker);
@@ -2684,6 +2934,7 @@ private Marker addCustomMarker(Parcelable obj, String type, int icon, int textco
             }
         });
     }
+
     private void initBreakoffData()
     {
         list_Objects_breakoff = new ArrayList<>();
@@ -2700,7 +2951,7 @@ private Marker addCustomMarker(Parcelable obj, String type, int icon, int textco
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<BreakOff> list_BreakOff=null;
+                List<BreakOff> list_BreakOff = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
@@ -2713,13 +2964,13 @@ private Marker addCustomMarker(Parcelable obj, String type, int icon, int textco
                             if (breakOff.getStatus().equals("1"))//该批次已断蕾情况
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
-                                Marker marker = addCustomMarker(breakOff,"breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), "批次" + breakOff.getBatchTime() + "共断蕾" + breakOff.getnumberofbreakoff() + "株");
+                                Marker marker = addCustomMarker(breakOff, "breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), "断" + breakOff.getnumberofbreakoff());
                                 marker.setVisible(false);
                                 list_Marker_breakoff.add(marker);
                                 Polygon p = null;
-                                List<CoordinatesBean> list_CoordinatesBean = SqliteDb.getPoints(NCZ_SaleMap.this, breakOff.getUuid());
+                                List<CoordinatesBean> list_CoordinatesBean = breakOff.getCoordinatesBeanList();
                                 int batchcolor = utils.getBatchColorByName(breakOff.getBatchColor());
-                                p = initBoundary(batchcolor, 10f, list_CoordinatesBean, 0, R.color.transparent);//注意10f，数值越大越在顶层
+                                p = initBoundary(batchcolor, 200f, list_CoordinatesBean, 0, R.color.transparent);//注意10f，数值越大越在顶层
                                 list_Objects_breakoff.add(p);
                                 tv_batchcolor.setBackgroundColor(getResources().getColor(utils.returnBatchColorByName(breakOff.getBatchColor())));
                             } else//该批次未断蕾情况

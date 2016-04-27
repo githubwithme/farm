@@ -2348,9 +2348,9 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         initParamAfterPaint();//初始化参数
         initParam();//初始化参数
         initBasicData();//初始化基础数据
-//        initShoppingCart();//初始化购物车清单
+        initShoppingCart();//初始化购物车清单
         initSaleData();//初始化销售数据
-//        initBreakoffData();//初始化断蕾数据
+        initBreakoffData();//初始化断蕾数据
         initMarkerClickListener();
         initMapCameraChangeListener();
         initMapClickListener();

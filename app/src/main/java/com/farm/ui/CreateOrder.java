@@ -173,7 +173,7 @@ public class CreateOrder extends Activity
         builder.append(", \"SellOrderDetailLists\": ");
         builder.append(JSON.toJSONString(list_detail));
         builder.append("} ");
-        addOrder(builder.toString());
+        addOrder(uuid,builder.toString());
 //        boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
 //        if (issuccess)
 //        {
@@ -304,9 +304,10 @@ public class CreateOrder extends Activity
 //        }
     }
 
-    private void addOrder(String data)
+    private void addOrder(String uuid,String data)
     {
         RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("action", "addOrder");
         params.setContentType("application/json");
         try
