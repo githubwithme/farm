@@ -44,6 +44,7 @@
                 android:layout_marginLeft="15dip"
                 android:gravity="center"
                 android:text="大额非主营"
+                android:visibility="gone"
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/size_sp_14"/>
             <TextView
@@ -53,7 +54,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="15dip"
                 android:gravity="center"
-                android:text="小额额非主营"
+                android:text="小额非主营"
+                android:visibility="gone"
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/size_sp_14"/>
         </LinearLayout>

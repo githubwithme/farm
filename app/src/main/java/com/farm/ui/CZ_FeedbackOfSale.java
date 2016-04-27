@@ -618,12 +618,12 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
     @Click
     void btn_batchofproduct()
     {
-        if (list_SellOrder.size() > 0)
+        if (list_SellOrder!=null && list_SellOrder.size() > 0)
         {
             showPop_batch();
         } else
         {
-            Toast.makeText(getActivity(), "暂无产品批次", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "暂无订单", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -1336,7 +1336,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
             {
                 customdialog_operatepolygon.dismiss();
                 list_Objects_divideline = new ArrayList<Polyline>();
-                tencentMap.setZoom(14);
+                tencentMap.setZoom(18);
                 initMapClickWhenPaint();
                 tencentMap.setOnMarkerClickListener(new TencentMap.OnMarkerClickListener()
                 {

@@ -277,7 +277,7 @@ public class AddGcd extends Activity implements TencentLocationListener
             AppContext appContext = (AppContext) AddGcd.this.getApplication();
             appContext.setLOCATION_X(String.valueOf(location_latLng.getLatitude()));
             appContext.setLOCATION_Y(String.valueOf(location_latLng.getLongitude()));
-            tv_location.setText("经度"+location_latLng.getLatitude()+"纬度"+location_latLng.getLongitude());
+            tv_location.setText("经度"+location_latLng.getLatitude()+"\n"+"纬度"+location_latLng.getLongitude());
         }
     }
 

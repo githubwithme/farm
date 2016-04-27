@@ -29,7 +29,8 @@ import com.farm.adapter.BatchColor_Adapter;
 import com.farm.adapter.BatchTime_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.BatchTimeBean;
+import com.farm.bean.BatchColor;
+import com.farm.bean.BatchOfProduct;
 import com.farm.bean.BreakOff;
 import com.farm.bean.CoordinatesBean;
 import com.farm.bean.CusPoint;
@@ -86,7 +87,8 @@ import java.util.List;
 @EFragment
 public class PG_ProductBatch extends Fragment implements TencentLocationListener, View.OnClickListener
 {
-    boolean isanimateToCenter=false;
+    List<BatchOfProduct> list_BatchOfProduct;
+    boolean isanimateToCenter = false;
     List<CoordinatesBean> list_coordinate_select = new ArrayList<CoordinatesBean>();
     List<CoordinatesBean> list_coordinate_notselect = new ArrayList<CoordinatesBean>();
     BreakOff breakOff_select = new BreakOff();
@@ -94,8 +96,8 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
     SellOrderDetail sellOrderDetail_new;
     TextView tv_batchcolor;
     TextView tv_batchtime;
-    List<String> list_BatchColor;
-    List<BatchTimeBean> list_BatchTimeBean;
+    List<BatchColor> list_BatchColor;
+    //    List<BatchTimeBean> list_BatchTimeBean;
     BatchTime_Adapter batchtime_adapter;
     BatchColor_Adapter batchcolor_adapter;
     CustomDialog_BatchTime customDialog_BatchTime;
@@ -636,13 +638,13 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                             if (breakOff.getStatus().equals("1"))
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
-                                Marker marker = addCustomMarker(breakOff, "breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), breakOff.getareaname() + breakOff.getcontractname() + "\n" + breakOff.getBreakofftime() + "断" + breakOff.getnumberofbreakoff() + "株");
+                                Marker marker = addCustomMarker(breakOff, "breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), "断" + breakOff.getnumberofbreakoff());
                                 list_Marker_breakoff.add(marker);
-                                p = initBoundary(batchcolor, 10f, list_coor,2, R.color.red);//红色
+                                p = initBoundary(batchcolor, 10f, list_coor, 2, R.color.red);//红色
                             } else
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
-                                Marker marker = addCustomMarker(breakOff, "notbreakoff", R.drawable.ic_breakoff_spare, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), breakOff.getareaname() + breakOff.getcontractname() + "\n" + "剩" + breakOff.getnumberofbreakoff() + "株");
+                                Marker marker = addCustomMarker(breakOff, "notbreakoff", R.drawable.ic_breakoff_spare, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), "剩" + breakOff.getnumberofbreakoff());
                                 list_Marker_breakoff.add(marker);
                                 p = initBoundary(batchcolor, 10f, list_coor, 2, R.color.red);//绿色
                             }
@@ -925,12 +927,12 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                                 List<CoordinatesBean> list_park = polygonBean.getCoordinatesBeanList();
                                 if (list_park != null && list_park.size() != 0)
                                 {
-                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_park, 2, R.color.bg_green);
+                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_park, 0, R.color.transparent);
                                 }
                                 if (!isanimateToCenter)
                                 {
                                     tencentMap.animateTo(latlng);
-                                    isanimateToCenter=true;
+                                    isanimateToCenter = true;
                                 }
                             } else if (polygonBean.getContractid().equals("-1"))
                             {
@@ -941,7 +943,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                                 List<CoordinatesBean> list_area = polygonBean.getCoordinatesBeanList();
                                 if (list_area != null && list_area.size() != 0)
                                 {
-                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_area, 2, R.color.bg_green);
+                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_area, 0, R.color.transparent);
                                 }
 
                             } else
@@ -953,8 +955,9 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                                 List<CoordinatesBean> list_contract = polygonBean.getCoordinatesBeanList();
                                 if (list_contract != null && list_contract.size() != 0)
                                 {
-                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 2, R.color.bg_green);
+                                    initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 0, R.color.transparent);
                                 }
+                                initBoundaryLine(100f,list_contract,6,getResources().getColor(R.color.red));
 
                             }
                         }
@@ -1230,7 +1233,8 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         lineOpt.addAll(list_AllLatLng);
         Polyline line = tencentMap.addPolyline(lineOpt);
         line.setColor(strokecolor);
-        line.setWidth(4f);
+        line.setWidth(strokesize);
+        line.setZIndex(z);
         Overlays.add(line);
     }
 
@@ -1566,17 +1570,17 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         tv_batchcolor = (TextView) dialog_layout.findViewById(R.id.tv_batchcolor);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
-        list_BatchTimeBean = utils.getBatchTime(getActivity(), polygon_needbreakoff.getcontractid(), "2016-04-10", 5);
-        list_BatchColor = SqliteDb.getBatchColor(getActivity(), polygon_needbreakoff.getcontractid());
-        tv_batchtime.setText(list_BatchTimeBean.get(0).getBatchtime());
-        tv_batchcolor.setText(list_BatchColor.get(0));
+//        list_BatchTimeBean = utils.getBatchTime(getActivity(), polygon_needbreakoff.getcontractid(), "2016-04-10", 5);
+//        list_BatchColor = SqliteDb.getBatchColor(getActivity(), polygon_needbreakoff.getcontractid());
+//        tv_batchtime.setText(list_BatchOfProduct.get(0).getBatchTime());
+//        tv_batchcolor.setText(list_BatchColor.get(0).getBatchColor());
         et_note.setText(breakoff.getnumberofbreakoff());
         tv_batchcolor.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                showDialog_batchcolor(tv_batchcolor);
+                getBatchColor(tv_batchcolor);
             }
         });
         tv_batchtime.setOnClickListener(new View.OnClickListener()
@@ -1584,7 +1588,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
             @Override
             public void onClick(View v)
             {
-                showDialog_batchtime(tv_batchtime);
+                getBatchTime(tv_batchtime);
             }
         });
         btn_sure.setOnClickListener(new View.OnClickListener()
@@ -1616,26 +1620,26 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         tv_batchcolor = (TextView) dialog_layout.findViewById(R.id.tv_batchcolor);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
-        list_BatchTimeBean = utils.getBatchTime(getActivity(), polygon_needbreakoff.getcontractid(), "2016-04-10", 5);
-        list_BatchColor = SqliteDb.getBatchColor(getActivity(), polygon_needbreakoff.getcontractid());
-        if (list_BatchTimeBean.size() == 0)
-        {
-            Toast.makeText(getActivity(), "批次时间获取失败！", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (list_BatchColor.size() == 0)
-        {
-            Toast.makeText(getActivity(), "批次颜色已经用完，请先在网页端添加批次颜色！", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        tv_batchtime.setText(list_BatchTimeBean.get(0).getBatchtime());
-        tv_batchcolor.setText(list_BatchColor.get(0));
+//        list_BatchTimeBean = utils.getBatchTime(getActivity(), polygon_needbreakoff.getcontractid(), "2016-04-10", 5);
+//        list_BatchColor = SqliteDb.getBatchColor(getActivity(), polygon_needbreakoff.getcontractid());
+//        if (list_BatchOfProduct.size() == 0)
+//        {
+//            Toast.makeText(getActivity(), "批次时间获取失败！", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        if (list_BatchColor.size() == 0)
+//        {
+//            Toast.makeText(getActivity(), "批次颜色已经用完，请先在网页端添加批次颜色！", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        tv_batchtime.setText(list_BatchOfProduct.get(0).getBatchTime());
+//        tv_batchcolor.setText(list_BatchColor.get(0).getBatchColor());
         tv_batchcolor.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                showDialog_batchcolor(tv_batchcolor);
+                getBatchColor(tv_batchcolor);
             }
         });
         tv_batchtime.setOnClickListener(new View.OnClickListener()
@@ -1643,7 +1647,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
             @Override
             public void onClick(View v)
             {
-                showDialog_batchtime(tv_batchtime);
+                getBatchTime(tv_batchtime);
             }
         });
         btn_sure.setOnClickListener(new View.OnClickListener()
@@ -1666,7 +1670,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         customDialog_addSaleInInfo.show();
     }
 
-    public void showDialog_batchtime(final TextView tv_batchtime)
+    public void showDialog_batchtime(final List<BatchOfProduct> list_BatchOfProduct, final TextView tv_batchtime)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_batchtime, null);
         customDialog_BatchTime = new CustomDialog_BatchTime(getActivity(), R.style.MyDialog, dialog_layout);
@@ -1688,7 +1692,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                 customDialog_BatchTime.dismiss();
             }
         });
-        batchtime_adapter = new BatchTime_Adapter(getActivity(), list_BatchTimeBean);
+        batchtime_adapter = new BatchTime_Adapter(getActivity(), list_BatchOfProduct);
         lv_department.setAdapter(batchtime_adapter);
         lv_department.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -1696,22 +1700,23 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 customDialog_BatchTime.dismiss();
-                BatchTimeBean batchtimebean = list_BatchTimeBean.get(position);
-                if (batchtimebean.getIsexist().equals("1"))
-                {
-                    Toast.makeText(getActivity(), "这个批次已存在！请选择其他批次", Toast.LENGTH_SHORT).show();
-                    return;
-                } else
-                {
-                    tv_batchtime.setText(batchtimebean.getBatchtime());
-                }
+                tv_batchtime.setText(list_BatchOfProduct.get(position).getBatchTime());
+//                BatchTimeBean batchtimebean = list_BatchTimeBean.get(position);
+//                if (batchtimebean.getIsexist().equals("1"))
+//                {
+//                    Toast.makeText(getActivity(), "这个批次已存在！请选择其他批次", Toast.LENGTH_SHORT).show();
+//                    return;
+//                } else
+//                {
+//                    tv_batchtime.setText(batchtimebean.getBatchtime());
+//                }
 
             }
         });
         customDialog_BatchTime.show();
     }
 
-    public void showDialog_batchcolor(final TextView tv_batchtime)
+    public void showDialog_batchcolor(final List<BatchColor> list_BatchColor, final TextView tv_batchtime)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_batchtime, null);
         customDialog_BatchColor = new CustomDialog_BatchColor(getActivity(), R.style.MyDialog, dialog_layout);
@@ -1741,7 +1746,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 customDialog_BatchColor.dismiss();
-                tv_batchcolor.setText(list_BatchColor.get(position));
+                tv_batchcolor.setText(list_BatchColor.get(position).getBatchColor());
             }
         });
         customDialog_BatchColor.show();
@@ -1933,8 +1938,8 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
 //                    Toast.makeText(getActivity(), "区域选择失败！", Toast.LENGTH_SHORT).show();
 //                }
 
-                List<CoordinatesBean> CoordinatesBeanLists=new ArrayList<>();
-                List<BreakOff> BreakOffList=new ArrayList<>();
+                List<CoordinatesBean> CoordinatesBeanLists = new ArrayList<>();
+                List<BreakOff> BreakOffList = new ArrayList<>();
                 BreakOffList.add(breakOff_select);
                 BreakOffList.add(breakOff_notselect);
                 CoordinatesBeanLists.addAll(list_coordinate_select);
@@ -2098,7 +2103,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         list_latlng_secondline = null;
     }
 
-    public void showDialog_deletetip_breakoff(final  BreakOff breakOff, final Marker marker)
+    public void showDialog_deletetip_breakoff(final BreakOff breakOff, final Marker marker)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_deletetip, null);
         customdialog_deletetip = new CustomDialog(getActivity(), R.style.MyDialog, dialog_layout);
@@ -2259,7 +2264,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
             {
                 customdialog_operatepolygon.dismiss();
                 list_Objects_divideline = new ArrayList<Polyline>();
-                tencentMap.setZoom(14);
+                tencentMap.setZoom(18);
                 initMapClickWhenPaint();
                 tencentMap.setOnMarkerClickListener(new TencentMap.OnMarkerClickListener()
                 {
@@ -2270,7 +2275,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                     }
                 });
                 btn_canclepaint.setVisibility(View.VISIBLE);
-                List<CoordinatesBean> list_coordinatesbean =breakoff.getCoordinatesBeanList();
+                List<CoordinatesBean> list_coordinatesbean = breakoff.getCoordinatesBeanList();
                 if (list_coordinatesbean != null && list_coordinatesbean.size() != 0)
                 {
                     showNeedPlanBoundary(list_coordinatesbean);
@@ -2400,7 +2405,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
 //                {
 //                    Toast.makeText(getActivity(), "修改失败！", Toast.LENGTH_SHORT).show();
 //                }
-                editPolygon(breakoff,et_note.getText().toString(),String.valueOf(number_difference));
+                editPolygon(breakoff, et_note.getText().toString(), String.valueOf(number_difference));
             }
         });
         btn_cancle.setOnClickListener(new View.OnClickListener()
@@ -2413,6 +2418,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         });
         customDialog_editSaleInInfo.show();
     }
+
     private void deletePolygon(final BreakOff breakOff)
     {
         RequestParams params = new RequestParams();
@@ -2428,12 +2434,12 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    String rows=result.getRows().get(0).toString();
+                    String rows = result.getRows().get(0).toString();
                     if (rows.equals("1"))
                     {
                         Toast.makeText(getActivity(), "删除成功！", Toast.LENGTH_SHORT).show();
                         reloadMap();
-                    }else 	if (rows.equals("0"))
+                    } else if (rows.equals("0"))
                     {
                         Toast.makeText(getActivity(), "该批次已经在出售，不能删除！", Toast.LENGTH_SHORT).show();
                     }
@@ -2453,7 +2459,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         });
     }
 
-    private void editPolygon(final BreakOff breakOff,String number_new,String number_difference)
+    private void editPolygon(final BreakOff breakOff, String number_new, String number_difference)
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
@@ -2463,7 +2469,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
         params.addQueryStringParameter("batchTime", breakOff.getBatchTime());
         params.addQueryStringParameter("year", breakOff.getYear());
         params.addQueryStringParameter("number_new", number_new);
-        params.addQueryStringParameter("number_difference",number_difference);
+        params.addQueryStringParameter("number_difference", number_difference);
         params.addQueryStringParameter("action", "editBreakOff");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -2475,12 +2481,12 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    String rows=result.getRows().get(0).toString();
+                    String rows = result.getRows().get(0).toString();
                     if (rows.equals("1"))
                     {
                         Toast.makeText(getActivity(), "修改成功！", Toast.LENGTH_SHORT).show();
                         reloadMap();
-                    }else 	if (rows.equals("0"))
+                    } else if (rows.equals("0"))
                     {
                         Toast.makeText(getActivity(), "该批次已经在出售，不能修改了！", Toast.LENGTH_SHORT).show();
                     }
@@ -2499,6 +2505,7 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
             }
         });
     }
+
     public void showDialog_editsaleininfo(final SellOrderDetail sellOrderDetail, final Marker marker)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editsaleininfo, null);
@@ -2642,5 +2649,84 @@ public class PG_ProductBatch extends Fragment implements TencentLocationListener
     public void onStatusUpdate(String s, int i, String s1)
     {
 
+    }
+
+    private void getBatchTime(final TextView tv_batchtime)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "getProductBatchList");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        list_BatchOfProduct = JSON.parseArray(result.getRows().toJSONString(), BatchOfProduct.class);
+                        showDialog_batchtime(list_BatchOfProduct, tv_batchtime);
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
+
+    private void getBatchColor(final TextView tv_batchcolor)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("contractid", polygon_needbreakoff.getcontractid());
+        params.addQueryStringParameter("action", "getBatchColor");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        list_BatchColor = JSON.parseArray(result.getRows().toJSONString(), BatchColor.class);
+                        showDialog_batchcolor(list_BatchColor, tv_batchcolor);
+                    } else
+                    {
+                        Toast.makeText(getActivity(), "查询不到批次颜色", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
     }
 }

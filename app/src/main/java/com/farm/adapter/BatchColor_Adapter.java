@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.farm.R;
+import com.farm.bean.BatchColor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +17,11 @@ import java.util.List;
 public class BatchColor_Adapter extends BaseAdapter
 {
     private Context context;// 运行上下文
-    private List<String> list_department;// 数据集合
+    private List<BatchColor> list_BatchColor;// 数据集合
     private LayoutInflater listContainer;// 视图容器
     ListItemView listItemView = null;
 
-    String batchcolor;
+    BatchColor batchcolor;
 
     static class ListItemView
     {
@@ -28,16 +29,16 @@ public class BatchColor_Adapter extends BaseAdapter
         public ImageView iv_selectet;
     }
 
-    public BatchColor_Adapter(Context context, List<String> data)
+    public BatchColor_Adapter(Context context, List<BatchColor> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
-        this.list_department = data;
+        this.list_BatchColor = data;
     }
 
     public int getCount()
     {
-        return list_department.size();
+        return list_BatchColor.size();
     }
 
     public Object getItem(int arg0)
@@ -54,7 +55,7 @@ public class BatchColor_Adapter extends BaseAdapter
 
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        batchcolor = list_department.get(position);
+        batchcolor = list_BatchColor.get(position);
         // 自定义视图
 
         if (lmap.get(position) == null)
@@ -74,8 +75,8 @@ public class BatchColor_Adapter extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
-        listItemView.tv_name.setText((list_department.get(position)));
-//        if (list_department.get(position).getIsexist().equals("1"))
+        listItemView.tv_name.setText((list_BatchColor.get(position)).getBatchColor());
+//        if (list_BatchColor.get(position).getIsexist().equals("1"))
 //        {
 //            listItemView.iv_selectet.setVisibility(View.VISIBLE);
 //            lmap.get(position).setBackgroundResource(R.color.light_gray);

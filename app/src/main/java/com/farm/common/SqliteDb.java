@@ -270,9 +270,9 @@ public class SqliteDb
             if (list != null)
             {
                 list.get(0).setnumberofbreakoff(String.valueOf(Integer.valueOf(list.get(0).getnumberofbreakoff()) + number_difference));
+                db.update(list.get(0), "numberofbreakoff");
             }
             db.update(breakOff_edit, "numberofbreakoff");
-            db.update(list.get(0), "numberofbreakoff");
         } catch (DbException e)
         {
             e.printStackTrace();
