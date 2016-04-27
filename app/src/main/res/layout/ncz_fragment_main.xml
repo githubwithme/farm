@@ -161,7 +161,7 @@
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dip"
+                    android:layout_height="45dip"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_weight="1"
@@ -173,7 +173,7 @@
                         android:gravity="center"
                         android:text="最近工作"
                         android:textColor="@color/textcolor_titlebar"
-                        android:textSize="@dimen/titlebar_textsize"/>
+                        android:textSize="@dimen/size_sp_14"/>
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tv_mq"
@@ -184,7 +184,7 @@
                         android:gravity="center"
                         android:text="苗情观测"
                         android:textColor="@color/textcolor_titlebar"
-                        android:textSize="@dimen/titlebar_textsize"/>
+                        android:textSize="@dimen/size_sp_14"/>
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tv_farmmap"
@@ -195,7 +195,7 @@
                         android:gravity="center"
                         android:text="农场实况"
                         android:textColor="@color/textcolor_titlebar"
-                        android:textSize="@dimen/titlebar_textsize"/>
+                        android:textSize="@dimen/size_sp_14"/>
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tv_all"
@@ -206,7 +206,7 @@
                         android:gravity="center"
                         android:text="全部"
                         android:textColor="@color/textcolor_titlebar"
-                        android:textSize="@dimen/titlebar_textsize"/>
+                        android:textSize="@dimen/size_sp_14"/>
                 </LinearLayout>
                 <FrameLayout
                     android:id="@+id/container_todayjob"

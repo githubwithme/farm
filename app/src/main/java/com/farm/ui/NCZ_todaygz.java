@@ -121,11 +121,11 @@ public class NCZ_todaygz extends Fragment
 
                         utils.setListViewHeight(expandableListView);
 
-    /*                    for (int i = 0; i < listNewData.size(); i++)
+                        for (int i = 0; i < listNewData.size(); i++)
                         {
                             expandableListView.expandGroup(i);//展开
 //                                  expandableListView.collapseGroup(i);//关闭
-                        }*/
+                        }
 
                     } else
                     {

@@ -128,7 +128,7 @@ public class NCZ_todaymq extends Fragment
         }
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("areaid", "10");
+//        params.addQueryStringParameter("areaid", "10");
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
@@ -136,8 +136,8 @@ public class NCZ_todaymq extends Fragment
         params.addQueryStringParameter("strWhere", "");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "getGCDList");
-//        params.addQueryStringParameter("action", "getGCDListByUid");
+//        params.addQueryStringParameter("action", "getGCDList");
+        params.addQueryStringParameter("action", "getGCDListByUid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -214,7 +214,11 @@ public class NCZ_todaymq extends Fragment
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                if (isAdded())
+                                {
+                                    NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+
+                                }
                             } else
                             {
                                 // NewDataToast.makeText(NCZ_GddList.this,
@@ -284,8 +288,11 @@ public class NCZ_todaymq extends Fragment
                 // main_head_progress.setVisibility(ProgressBar.GONE);
                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
                 {
-                    lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
-                    lv.setSelection(0);
+                    if (isAdded())
+                    {
+                        lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
+                        lv.setSelection(0);
+                    }
                 } else if (actiontype == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG)
                 {
                     lv.onRefreshComplete();

@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.farm.R;
 import com.farm.adapter.CustomFragmentPagerAdapter;
 import com.farm.app.AppConfig;
@@ -309,12 +308,14 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                                 goodslisttab.setgoodsProducer(list_goods.get(k).getgoodsProducer());
                                 goodslisttab.setgoodsSpec(list_goods.get(k).getgoodsSpec());
 //                                goodslisttab.setGoodsSum(jsonarray.get(k).toString());
-                                if (listsum.length!=0) {
+                                if (listsum.length!=0)
+                                {
                                     if (listsum[k].equals(""))
                                     {
                                         listsum[k] = "0";
                                         goodslisttab.setGoodsSum(listsum[k]);
-                                    }else {
+                                    }else
+                                    {
                                         goodslisttab.setGoodsSum(listsum[k]);
                                     }
 

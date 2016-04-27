@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -416,12 +417,7 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
     {
         if (TencentLocation.ERROR_OK == error) // 定位成功
         {
-            // 用于定位
             location_latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            //全局记录坐标
-            AppContext appContext = (AppContext) getActivity().getApplication();
-            appContext.setLOCATION_X(String.valueOf(location_latLng.getLatitude()));
-            appContext.setLOCATION_Y(String.valueOf(location_latLng.getLongitude()));
         }
 
     }
@@ -848,7 +844,7 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
                             {
                                 LocationBean locationbean = list_locationInfo.get(i);
                                 list_user.add(locationbean.getuserName());
-                                Marker marker = addCustomMarker(list_locationInfo.get(i), "normal", R.drawable.user, getResources().getColor(R.color.white), latLng, locationbean.getId(), locationbean.getRegtime().substring(5, locationbean.getRegtime().lastIndexOf(":")) + list_locationInfo.get(i).getuserName());
+                                Marker marker = addCustomMarker(list_locationInfo.get(i), "normal", R.drawable.user, getResources().getColor(R.color.red), latLng, locationbean.getId(), locationbean.getRegtime().substring(5, locationbean.getRegtime().lastIndexOf(":")) + list_locationInfo.get(i).getuserName());
                                 list_mark_userlocation.add(marker);
                                 Polygon polygon = map_polygon.get(list_locationInfo.get(i).getparkId());
                                 if (polygon != null)
@@ -856,9 +852,13 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
                                     if (!polygon.contains(latLng))
                                     {
                                         TextView textview = new TextView(getActivity());
-                                        textview.setPadding(20, 20, 20, 20);
-                                        textview.setBackgroundResource(R.drawable.round_orange);
-                                        textview.setText(list_locationInfo.get(i).getparkName() + "-" + list_locationInfo.get(i).getuserName() + "离岗了;");
+                                        textview.setTextColor(getResources().getColor(R.color.red));
+                                        textview.setTextSize(15);
+                                        textview.setPadding(0, 10, 10, 10);
+                                        textview.setGravity(Gravity.RIGHT);
+//                                        textview.setBackgroundResource(R.drawable.round_orange);
+//                                        textview.setText(list_locationInfo.get(i).getparkName() + "-" + list_locationInfo.get(i).getuserName() + "离岗了");
+                                        textview.setText( list_locationInfo.get(i).getuserName() + "离岗");
                                         textview.setTag(latLng);
                                         textview.setOnClickListener(new View.OnClickListener()
                                         {
