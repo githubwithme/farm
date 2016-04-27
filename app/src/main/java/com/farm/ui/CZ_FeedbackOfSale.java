@@ -262,7 +262,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
     {
         if (CurrentsellOrder != null)
         {
-            if (pw_orderdetail ==null || !pw_orderdetail.isShowing())
+            if (pw_orderdetail == null || !pw_orderdetail.isShowing())
             {
                 showPop_orderdetail();
             } else
@@ -625,13 +625,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
     @Click
     void btn_batchofproduct()
     {
-        if (list_SellOrder != null && list_SellOrder.size() > 0)
-        {
-            showPop_batch();
-        } else
-        {
-            Toast.makeText(getActivity(), "暂无订单", Toast.LENGTH_SHORT).show();
-        }
+        getSellOrder();
     }
 
     @Click
@@ -1289,6 +1283,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
             }
         });
     }
+
     private void initBoundaryLine(float z, List<CoordinatesBean> list_coordinates, int strokesize, int strokecolor)
     {
         List<LatLng> list_AllLatLng = new ArrayList<>();
@@ -1305,6 +1300,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
         line.setZIndex(z);
         Overlays.add(line);
     }
+
     private Polygon initBoundary(int fillcolor, float z, List<CoordinatesBean> list_coordinates, int strokesize, int strokecolor)
     {
         List<LatLng> list_AllLatLng = new ArrayList<>();
@@ -1421,7 +1417,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows()>0)
+                    if (result.getAffectedRows() > 0)
                     {
                         Toast.makeText(getActivity(), "修改成功！", Toast.LENGTH_SHORT).show();
                         reloadMap();
@@ -2392,7 +2388,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
                 int number_difference = Integer.valueOf(sellOrderDetail.getplannumber()) - Integer.valueOf(et_note.getText().toString());
                 sellOrderDetail.setactualnumber(et_note.getText().toString());
                 sellOrderDetail.setType("saleout");
-                feedbackSellOrderDetail(sellOrderDetail,String.valueOf(number_difference),et_note.getText().toString());
+                feedbackSellOrderDetail(sellOrderDetail, String.valueOf(number_difference), et_note.getText().toString());
 //                boolean issuccess = SqliteDb.editSellOrderDetail_feedbacksale(getActivity(), sellOrderDetail, number_difference);
 //                if (issuccess)
 //                {
@@ -2625,6 +2621,48 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
         });
     }
 
+    private void getSellOrder()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "getSellOrder");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        list_SellOrder = JSON.parseArray(result.getRows().toJSONString(), SellOrder.class);
+                        showPop_batch();
+                    } else
+                    {
+                        btn_batchofproduct.setText("暂无订单");
+                        Toast.makeText(getActivity(), "暂无订单喔", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
+
     private void initSaleData()
     {
         list_Marker_allsale = new ArrayList<>();
@@ -2728,7 +2766,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
                             if (breakOff.getStatus().equals("1"))//该批次已断蕾情况
                             {
                                 LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
-                                Marker marker = addCustomMarker(breakOff, "breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(),  "断" + breakOff.getnumberofbreakoff());
+                                Marker marker = addCustomMarker(breakOff, "breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), "断" + breakOff.getnumberofbreakoff());
                                 marker.setVisible(false);
                                 list_Marker_breakoff.add(marker);
                                 Polygon p = null;
@@ -2785,14 +2823,14 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
         return marker;
     }
 
-    private void feedbackSellOrderDetail(SellOrderDetail sellOrderdetail,String number_difference,String number_new)
+    private void feedbackSellOrderDetail(SellOrderDetail sellOrderdetail, String number_difference, String number_new)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", sellOrderdetail.getUuid());
         params.addQueryStringParameter("number_difference", number_difference);
         params.addQueryStringParameter("uid", sellOrderdetail.getuid());
         params.addQueryStringParameter("contractid", sellOrderdetail.getcontractid());
-        params.addQueryStringParameter("year",sellOrderdetail.getYear());
+        params.addQueryStringParameter("year", sellOrderdetail.getYear());
         params.addQueryStringParameter("batchTime", sellOrderdetail.getBatchTime());
         params.addQueryStringParameter("number_new", number_new);
         params.addQueryStringParameter("action", "feedbackSellOrderDetail");
@@ -2831,6 +2869,7 @@ public class CZ_FeedbackOfSale extends Fragment implements TencentLocationListen
             }
         });
     }
+
     private Marker addCustomMarker(Parcelable obj, String type, int icon, int textcolor, LatLng latLng, String uuid, String note)
     {
         Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));

@@ -817,11 +817,11 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 showDialog_Roadinfo();
             } else if (drawerType.equals("采线"))
             {
-                drawerType = "";
+//                drawerType = "";
                 showDialog_CXinfo();
             } else if (drawerType.equals("采面"))
             {
-                drawerType = "";
+//                drawerType = "";
                 tv_tip.setVisibility(View.VISIBLE);
                 tv_tip.setText("请在所画的区域内选取一个中心点");
                 tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
@@ -3553,9 +3553,8 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
                 lastlatLng_cx = location_latLng;
                 lineOpt.add(location_latLng);
                 Polyline line = tencentMap.addPolyline(lineOpt);
-                line.setGeodesic(true);
-                line.setColor(this.getResources().getColor(R.color.black));
-                line.setWidth(4f);
+                line.setColor(CZ_MakeMap_MakeLayer.this.getResources().getColor(R.color.black));
+                line.setWidth(6f);
                 Overlays.add(line);
                 listlatlng_cx.add(location_latLng);
             } else if (drawerType.equals("采面"))

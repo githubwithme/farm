@@ -626,13 +626,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
     @Click
     void btn_batchofproduct()
     {
-        if (list_SellOrder != null && list_SellOrder.size() > 0)
-        {
-            showPop_batch();
-        } else
-        {
-            Toast.makeText(NCZ_SaleMap.this, "暂无订单", Toast.LENGTH_SHORT).show();
-        }
+        getSellOrder();
     }
 
     @Click
@@ -1291,6 +1285,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
             }
         });
     }
+
     private void initBoundaryLine(float z, List<CoordinatesBean> list_coordinates, int strokesize, int strokecolor)
     {
         List<LatLng> list_AllLatLng = new ArrayList<>();
@@ -1307,6 +1302,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
         line.setZIndex(z);
         Overlays.add(line);
     }
+
     private Polygon initBoundary(int fillcolor, float z, List<CoordinatesBean> list_coordinates, int strokesize, int strokecolor)
     {
         List<LatLng> list_AllLatLng = new ArrayList<>();
@@ -2245,7 +2241,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
                 sellOrderDetail.setplannumber(et_note.getText().toString());
                 sellOrderDetail.setstatus("0");
                 sellOrderDetail.setisSoldOut("0");
-                editSellOrderDetail(sellOrderDetail,String.valueOf(number_difference),et_note.getText().toString());
+                editSellOrderDetail(sellOrderDetail, String.valueOf(number_difference), et_note.getText().toString());
 //                int number_difference = Integer.valueOf(sellOrderDetail.getplannumber()) - Integer.valueOf(et_note.getText().toString());
 //                sellOrderDetail.setplannumber(et_note.getText().toString());
 //                sellOrderDetail.setstatus("0");
@@ -2444,14 +2440,14 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
         });
     }
 
-    private void editSellOrderDetail(SellOrderDetail sellOrderdetail,String number_difference,String number_new)
+    private void editSellOrderDetail(SellOrderDetail sellOrderdetail, String number_difference, String number_new)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", sellOrderdetail.getUuid());
         params.addQueryStringParameter("number_difference", number_difference);
         params.addQueryStringParameter("uid", sellOrderdetail.getuid());
         params.addQueryStringParameter("contractid", sellOrderdetail.getcontractid());
-        params.addQueryStringParameter("year",sellOrderdetail.getYear());
+        params.addQueryStringParameter("year", sellOrderdetail.getYear());
         params.addQueryStringParameter("batchTime", sellOrderdetail.getBatchTime());
         params.addQueryStringParameter("number_new", number_new);
         params.addQueryStringParameter("action", "editSellOrderDetail");
@@ -2814,6 +2810,48 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
         return marker;
     }
 
+    private void getSellOrder()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "getSellOrder");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        list_SellOrder = JSON.parseArray(result.getRows().toJSONString(), SellOrder.class);
+                        showPop_batch();
+                    } else
+                    {
+                        btn_batchofproduct.setText("暂无订单");
+                        Toast.makeText(NCZ_SaleMap.this, "暂无订单喔", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_SaleMap.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_SaleMap.this, "error_connectServer");
+            }
+        });
+    }
+
     private void InitSellOrder()
     {
         RequestParams params = new RequestParams();
@@ -2971,6 +3009,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
                                 List<CoordinatesBean> list_CoordinatesBean = breakOff.getCoordinatesBeanList();
                                 int batchcolor = utils.getBatchColorByName(breakOff.getBatchColor());
                                 p = initBoundary(batchcolor, 200f, list_CoordinatesBean, 0, R.color.transparent);//注意10f，数值越大越在顶层
+                                p.setVisible(false);
                                 list_Objects_breakoff.add(p);
                                 tv_batchcolor.setBackgroundColor(getResources().getColor(utils.returnBatchColorByName(breakOff.getBatchColor())));
                             } else//该批次未断蕾情况
