@@ -296,6 +296,7 @@
                     android:id="@+id/btn_setting"
                     android:layout_width="70dip"
                     android:layout_height="30dip"
+                    android:visibility="gone"
                     android:layout_marginTop="10dip"
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"

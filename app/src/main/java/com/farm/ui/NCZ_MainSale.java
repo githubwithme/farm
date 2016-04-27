@@ -647,7 +647,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
     @Click
     void btn_batchofproduct()
     {
-        if (list_BatchOfProduct.size() > 0)
+        if (list_BatchOfProduct != null && list_BatchOfProduct.size() > 0)
         {
             showPop_batch();
         } else
@@ -830,20 +830,20 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                     if (result.getAffectedRows() != 0)
                     {
                         list_BreakOff = JSON.parseArray(result.getRows().toJSONString(), BreakOff.class);
-                        int count = 0;
+//                        int count = 0;
                         if (list_BreakOff != null && list_BreakOff.size() > 0)
                         {
-                            for (int n = 0; n < list_BreakOff.size(); n++)
-                            {
-                                count = count + Integer.valueOf(list_BreakOff.get(n).getnumberofbreakoff());
-                            }
+//                            for (int n = 0; n < list_BreakOff.size(); n++)
+//                            {
+//                                count = count + Integer.valueOf(list_BreakOff.get(n).getnumberofbreakoff());
+//                            }
                             for (int j = 0; j < list_BreakOff.size(); j++)
                             {
                                 BreakOff breakOff = list_BreakOff.get(j);
                                 if (breakOff.getStatus().equals("1"))//该批次已断蕾情况
                                 {
                                     LatLng latlng = new LatLng(Double.valueOf(breakOff.getLat()), Double.valueOf(breakOff.getLng()));
-                                    Marker marker = addCustomMarker(breakOff, "breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), "批次" + batchTime + "共断蕾" + String.valueOf(count) + "株");
+                                    Marker marker = addCustomMarker(breakOff, "breakoff", R.drawable.ic_breakoff, getResources().getColor(R.color.white), latlng, breakOff.getUuid(), "断" + breakOff.getnumberofbreakoff());
                                     marker.setVisible(false);
                                     list_Marker_breakoff.add(marker);
                                     Polygon p = null;
@@ -1250,6 +1250,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
             }
         });
     }
+
     private void getShoppingCart()
     {
         RequestParams params = new RequestParams();
@@ -1294,6 +1295,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
             }
         });
     }
+
     private void initShoppingCart()
     {
         RequestParams params = new RequestParams();
@@ -1865,7 +1867,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
             }
             list_latlng_needplanboundary.add(latlng);
         }
-        Polygon polygon = drawPolygon(100f, list_latlng_needplanboundary, R.color.black, 4, R.color.red);
+        Polygon polygon = drawPolygon(20f, list_latlng_needplanboundary, Color.argb(1000, 0, 0, 255), 0, R.color.transparent);
         Overlays.add(polygon);
 //保存边界线
         list_latlng_needplanline = new ArrayList<>();
@@ -1886,6 +1888,39 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         list_lintpoint.add(firstlatlng);
         list_latlng_needplanline.add(list_lintpoint);
     }
+//    private void showNeedPlanBoundary(List<CoordinatesBean> list_coordinates)
+//    {
+//        list_latlng_needplanboundary = new ArrayList<>();
+//        for (int i = 0; i < list_coordinates.size(); i++)
+//        {
+//            LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
+//            if (i == 0)
+//            {
+//                tencentMap.animateTo(latlng);
+//            }
+//            list_latlng_needplanboundary.add(latlng);
+//        }
+//        Polygon polygon = drawPolygon(100f, list_latlng_needplanboundary, R.color.black, 4, R.color.red);
+//        Overlays.add(polygon);
+////保存边界线
+//        list_latlng_needplanline = new ArrayList<>();
+//        LatLng prelatlng = new LatLng(Double.valueOf(list_coordinates.get(0).getLat()), Double.valueOf(list_coordinates.get(0).getLng()));
+//        for (int i = 1; i < list_coordinates.size(); i++)//从1开始
+//        {
+//            LatLng latlng = new LatLng(Double.valueOf(list_coordinates.get(i).getLat()), Double.valueOf(list_coordinates.get(i).getLng()));
+//            List<LatLng> list_lintpoint = new ArrayList<>();
+//            list_lintpoint.add(prelatlng);
+//            list_lintpoint.add(latlng);
+//            prelatlng = latlng;
+//            list_latlng_needplanline.add(list_lintpoint);
+//        }
+//        LatLng firstlatlng = new LatLng(Double.valueOf(list_coordinates.get(0).getLat()), Double.valueOf(list_coordinates.get(0).getLng()));
+//        LatLng lastlatlng = new LatLng(Double.valueOf(list_coordinates.get(list_coordinates.size() - 1).getLat()), Double.valueOf(list_coordinates.get(list_coordinates.size() - 1).getLng()));
+//        List<LatLng> list_lintpoint = new ArrayList<>();
+//        list_lintpoint.add(lastlatlng);
+//        list_lintpoint.add(firstlatlng);
+//        list_latlng_needplanline.add(list_lintpoint);
+//    }
 
     public void initMapLongPressWhenPaint()
     {
@@ -1899,7 +1934,6 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         });
 
     }
-
     public void initMapClickWhenPaint()
     {
         tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
@@ -2000,6 +2034,106 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
             }
         });
     }
+//    public void initMapClickWhenPaint()
+//    {
+//        tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()
+//        {
+//            @Override
+//            public void onMapClick(LatLng latLng)
+//            {
+//                PolylineOptions lineOpt = new PolylineOptions();
+//                lineOpt.add(lastselect_latlng);
+//                lineOpt.add(latLng);
+//                Polyline line = tencentMap.addPolyline(lineOpt);
+//                line.setColor(Color.argb(500, 255, 255, 255));
+//                line.setWidth(4f);
+//                Overlays.add(line);
+//                list_Objects_divideline.add(line);
+//
+//                if (lastselect_latlng != null)
+//                {
+//                    Point p1 = mProjection.toScreenLocation(lastselect_latlng);
+//                    Point p2 = mProjection.toScreenLocation(latLng);
+//                    CusPoint cuspoint1 = new CusPoint(p1.x, p1.y);
+//                    CusPoint cuspoint2 = new CusPoint(p2.x, p2.y);
+//
+//                    //判断交点数
+//                    int number_crosspoint = 0;
+//                    for (int i = 0; i < list_latlng_needplanline.size(); i++)
+//                    {
+//                        List<LatLng> list = list_latlng_needplanline.get(i);
+//                        LatLng latlng0 = list.get(0);
+//                        LatLng latlng1 = list.get(1);
+//                        Point p5 = mProjection.toScreenLocation(latlng0);
+//                        Point p6 = mProjection.toScreenLocation(latlng1);
+//                        CusPoint cuspoint5 = new CusPoint(p5.x, p5.y);
+//                        CusPoint cuspoint6 = new CusPoint(p6.x, p6.y);
+//                        CusPoint crosspoint = utils.getCrossPoint(cuspoint1, cuspoint2, cuspoint5, cuspoint6);
+//                        if (crosspoint != null)
+//                        {
+//                            number_crosspoint = number_crosspoint + 1;
+//                        }
+//                    }
+//                    //仅仅切割一条边界，开始划分区域
+//                    if (number_crosspoint == 1)
+//                    {
+//                        for (int i = 0; i < list_latlng_needplanline.size(); i++)
+//                        {
+//                            List<LatLng> list = list_latlng_needplanline.get(i);
+//                            LatLng latlng0 = list.get(0);
+//                            LatLng latlng1 = list.get(1);
+//                            Point p5 = mProjection.toScreenLocation(latlng0);
+//                            Point p6 = mProjection.toScreenLocation(latlng1);
+//                            CusPoint cuspoint5 = new CusPoint(p5.x, p5.y);
+//                            CusPoint cuspoint6 = new CusPoint(p6.x, p6.y);
+//                            CusPoint crosspoint = utils.getCrossPoint(cuspoint1, cuspoint2, cuspoint5, cuspoint6);
+//                            if (crosspoint != null)
+//                            {
+//                                Point cp = new Point();
+//                                int x = Integer.valueOf(String.valueOf(crosspoint.x).substring(0, String.valueOf(crosspoint.x).indexOf(".")));
+//                                int y = Integer.valueOf(String.valueOf(crosspoint.y).substring(0, String.valueOf(crosspoint.y).indexOf(".")));
+//                                cp.set(x, y);
+//                                LatLng latlng_crosspoint = mProjection.fromScreenLocation(cp);
+//                                if (list_latlng_firstline == null)
+//                                {
+//                                    list_latlng_firstline = list;
+//                                    pos_line1 = i;
+//                                    touchLatlng1 = latlng_crosspoint;
+//                                    isInner = true;
+//                                } else
+//                                {
+//                                    list_latlng_secondline = list;
+//                                    pos_line2 = i;
+//                                    touchLatlng2 = latlng_crosspoint;
+//                                    isInner = false;
+//                                    divideArea(pos_line1, pos_line2, list_latlng_firstline, list_latlng_secondline, touchLatlng1, touchLatlng2);
+//                                }
+//                                break;
+//                            }
+//                        }
+//                    } else if (number_crosspoint > 1)
+//                    {
+//                        Toast.makeText(getActivity(), "错误操作！请不要一次切割多条边界！", Toast.LENGTH_SHORT).show();
+//                        //撤销该次操作，并重置参数
+//                        tencentMap.removeOverlay(line);
+//                        list_Objects_divideline.remove(line);
+//                        Overlays.remove(line);
+//                        lastselect_latlng = list_latlng_pick.get(list_latlng_pick.size() - 1);
+//                        return;
+//                    } else
+//                    {
+//                    }
+//
+//                }
+//                lastselect_latlng = latLng;//放在后面
+//                if (isInner)//放在后面
+//                {
+//                    list_latlng_pick.add(latLng);
+//                }
+//
+//            }
+//        });
+//    }
 
     private void divideArea(int pos_line1, int pos_line2, List<LatLng> list_line1, List<LatLng> list_line2, LatLng touchLatlng1, LatLng touchLatlng2)
     {
@@ -2348,9 +2482,9 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         initParamAfterPaint();//初始化参数
         initParam();//初始化参数
         initBasicData();//初始化基础数据
-//        initShoppingCart();//初始化购物车清单
+        initShoppingCart();//初始化购物车清单
         initSaleData();//初始化销售数据
-//        initBreakoffData();//初始化断蕾数据
+        initBreakoffData();//初始化断蕾数据
         initMarkerClickListener();
         initMapCameraChangeListener();
         initMapClickListener();
@@ -3115,7 +3249,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows()>0)
+                    if (result.getAffectedRows() > 0)
                     {
                         Toast.makeText(getActivity(), "已添加到出售清单！", Toast.LENGTH_SHORT).show();
                         reloadMap();

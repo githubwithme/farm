@@ -32,13 +32,13 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <EditText
-                android:id="@+id/et_name"
+            <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dip"
-                android:hint="请输入"
+                android:text="无"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
 
@@ -62,14 +62,13 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <EditText
-                android:id="@+id/et_phone"
+            <TextView
+                android:id="@+id/tv_phone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dip"
-                android:hint="请输入"
-                android:inputType="phone"
+                android:text="无"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -103,13 +102,13 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <EditText
-                android:id="@+id/et_address"
+            <TextView
+                android:id="@+id/tv_address"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dip"
-                android:hint="请输入"
+                android:text="无"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
 
@@ -133,13 +132,13 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <EditText
-                android:id="@+id/et_email"
+            <TextView
+                android:id="@+id/tv_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dip"
-                android:hint="请输入"
+                android:text="无"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -169,14 +168,13 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <EditText
-                android:id="@+id/et_planprice"
+            <TextView
+                android:id="@+id/tv_planprice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dip"
-                android:inputType="numberDecimal"
-                android:hint="请输入"
+                android:text="无"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -198,12 +196,12 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <TextView
-                android:id="@+id/tv_actualprice"
+            <EditText
+                android:id="@+id/et_actualprice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:text="暂无反馈"
+                android:hint="请输入"
                 android:inputType="numberDecimal"
                 android:paddingLeft="5dip"
                 android:textColor="@color/gray"
@@ -237,14 +235,13 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <EditText
-                android:id="@+id/et_plannumber"
+            <TextView
+                android:id="@+id/tv_plannumber"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dip"
-                android:inputType="number"
-                android:hint="请输入"
+                android:text="无"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -267,12 +264,12 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <TextView
-                android:id="@+id/tv_actualnumber"
+            <EditText
+                android:id="@+id/et_actualnumber"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:text="暂无反馈"
+                android:hint="请输入"
                 android:inputType="number"
                 android:paddingLeft="5dip"
                 android:textColor="@color/gray"
@@ -305,14 +302,13 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <EditText
-                android:id="@+id/et_planweight"
+            <TextView
+                android:id="@+id/tv_planweight"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dip"
-                android:inputType="numberDecimal"
-                android:hint="请输入"
+                android:text="无"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -335,12 +331,12 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <TextView
-                android:id="@+id/tv_actualweight"
+            <EditText
+                android:id="@+id/et_actualweight"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:text="暂无反馈"
+                android:hint="请输入"
                 android:inputType="numberDecimal"
                 android:paddingLeft="5dip"
                 android:textColor="@color/gray"
@@ -373,14 +369,13 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <EditText
-                android:id="@+id/et_planallvalues"
+            <TextView
+                android:id="@+id/tv_planallvalues"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dip"
-                android:inputType="numberDecimal"
-                android:hint="请输入"
+                android:text="无"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -402,12 +397,12 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <TextView
-                android:id="@+id/tv_actualallvalues"
+            <EditText
+                android:id="@+id/et_actualallvalues"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:text="暂无反馈"
+                android:hint="请输入"
                 android:inputType="number"
                 android:paddingLeft="5dip"
                 android:textColor="@color/gray"
@@ -442,13 +437,13 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <EditText
-                android:id="@+id/et_note"
+            <TextView
+                android:id="@+id/tv_note"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dip"
-                android:hint="请输入"
+                android:text="无"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -470,12 +465,12 @@
                 android:textSize="@dimen/size_14"/>
 
 
-            <TextView
-                android:id="@+id/tv_feedbacknote"
+            <EditText
+                android:id="@+id/et_feedbacknote"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:text="暂无反馈"
+                android:hint="请输入"
                 android:paddingLeft="5dip"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
@@ -513,7 +508,7 @@
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="5dip"
-                android:text="暂无反馈"
+                android:text="无"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>

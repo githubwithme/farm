@@ -8,7 +8,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -30,11 +29,10 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.app.AppManager;
 import com.farm.bean.Apk;
+import com.farm.bean.BreakOff;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
-import com.farm.common.FileHelper;
 import com.farm.common.SqliteDb;
-import com.farm.common.UIHelper;
 import com.farm.common.utils;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.MyDialog;
@@ -79,8 +77,8 @@ public class IFragment extends Fragment
 	TextView tv_exist;
 	@ViewById
 	TextView tv_makemap;
-/*	@ViewById
-	TextView tv_resetMapData;*/
+	@ViewById
+	TextView tv_username;
 	@ViewById
 	CircleImageView circle_img;
 	@ViewById
@@ -103,22 +101,24 @@ public class IFragment extends Fragment
 //		Intent intent = new Intent(getActivity(), MapUtils_.class);
 //		startActivity(intent);
 	}
-/*	@Click
-	void tv_resetMapData()
-	{
-		commembertab commembertab = AppContext.getUserInfo(getActivity());
-		SqliteDb.resetmapdata(getActivity());
-        SqliteDb.initPark(getActivity());
-        SqliteDb.initArea(getActivity());
-        SqliteDb.initContract(getActivity());
-		Toast.makeText(getActivity(), "重置成功！", Toast.LENGTH_SHORT).show();
-	}*/
+//	@Click
+//	void tv_resetMapData()
+//	{
+//		startBreakoff();
+//		commembertab commembertab = AppContext.getUserInfo(getActivity());
+//		SqliteDb.resetmapdata(getActivity());
+//        SqliteDb.initPark(getActivity());
+//        SqliteDb.initArea(getActivity());
+//        SqliteDb.initContract(getActivity());
+//		Toast.makeText(getActivity(), "重置成功！", Toast.LENGTH_SHORT).show();
+//	}
 	@Click
 	void tv_startBreakoff()
 	{
-		commembertab commembertab = AppContext.getUserInfo(getActivity());
-        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
-		Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
+		startBreakoff();
+//		commembertab commembertab = AppContext.getUserInfo(getActivity());
+//        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
+//		Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
 	}
 	@Click
 	void tv_edituser()
@@ -197,8 +197,10 @@ public class IFragment extends Fragment
 	@AfterViews
 	void afterOncreate()
 	{
-//		getListData();
 		commembertab commembertab = AppContext.getUserInfo(getActivity());
+		tv_username.setText(commembertab.getuserlevelName()+":"+commembertab.getrealName());
+//		getListData();
+//		commembertab commembertab = AppContext.getUserInfo(getActivity());
 //		BitmapHelper.setImageViewBackground(getActivity(), circle_img,AppConfig.baseurl+ commembertab.getimgurl());
 //		BitmapHelper.setImageViewBackground(getActivity(), circle_img, AppConfig.baseurl + "/upload/201511/02/201511021602504091.jpg");
 	}
@@ -428,14 +430,17 @@ public class IFragment extends Fragment
 	{
 		String sss = path;
 		HttpUtils http = new HttpUtils();
-		http.download(path, target, true, true, new RequestCallBack<File>() {
+		http.download(path, target, true, true, new RequestCallBack<File>()
+		{
 			@Override
-			public void onStart() {
+			public void onStart()
+			{
 				super.onStart();
 			}
 
 			@Override
-			public void onLoading(long total, long current, boolean isUploading) {
+			public void onLoading(long total, long current, boolean isUploading)
+			{
 				super.onLoading(total, current, isUploading);
 				int jd = Integer.valueOf(utils.getRateoffloat(current, total));
 				mNotification.contentView.setTextViewText(R.id.content_view_text1, jd + "%");
@@ -446,17 +451,21 @@ public class IFragment extends Fragment
 			@Override
 			public void onFailure(HttpException error, String msg)
 			{
-				if (msg.equals("maybe the file has downloaded completely")) {
+				if (msg.equals("maybe the file has downloaded completely"))
+				{
 					Toast.makeText(getActivity(), "下载成功!", Toast.LENGTH_SHORT).show();
-				} else {
-					Toast.makeText(getActivity(), "更新失败!"+ error.getMessage(), Toast.LENGTH_SHORT).show();
+				} else
+				{
+					Toast.makeText(getActivity(), "更新失败!" + error.getMessage(), Toast.LENGTH_SHORT).show();
 				}
 			}
 
 			@Override
-			public void onSuccess(ResponseInfo<File> responseInfo) {
+			public void onSuccess(ResponseInfo<File> responseInfo)
+			{
 				File file = new File(target);
-				if (!file.exists()) {
+				if (!file.exists())
+				{
 				}
 				mNotification.contentView.setTextViewText(R.id.content_view_text1, "下载成功！请点击安装！");
 				mNotification.defaults = Notification.DEFAULT_SOUND;
@@ -492,5 +501,48 @@ public class IFragment extends Fragment
 		}
 //    startForeground(NOTIFICATIN_ID, mNotification);
 
+	}
+	public void startBreakoff()
+	{
+		commembertab commembertab = AppContext.getUserInfo(getActivity());
+		RequestParams params = new RequestParams();
+		params.addQueryStringParameter("uid", commembertab.getuId());
+		params.addQueryStringParameter("Year", utils.getYear());
+		params.addQueryStringParameter("Starttime", utils.getToday());
+		params.addQueryStringParameter("action", "startBreakOff");
+		HttpUtils http = new HttpUtils();
+		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+		{
+			@Override
+			public void onSuccess(ResponseInfo<String> responseInfo)
+			{
+				String a = responseInfo.result;
+				List<BreakOff> listNewData = null;
+				Result result = JSON.parseObject(responseInfo.result, Result.class);
+				if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+				{
+					String rows=result.getRows().get(0).toString();
+					if (rows.equals("1"))
+					{
+						Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
+					}else 	if (rows.equals("0"))
+					{
+						Toast.makeText(getActivity(), "今年已经开始断蕾了", Toast.LENGTH_SHORT).show();
+					}
+
+				} else
+				{
+					AppContext.makeToast(getActivity(), "error_connectDataBase");
+					return;
+				}
+
+			}
+
+			@Override
+			public void onFailure(HttpException error, String msg)
+			{
+				AppContext.makeToast(getActivity(), "error_connectServer");
+			}
+		});
 	}
 }
