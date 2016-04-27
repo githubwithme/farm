@@ -36,6 +36,61 @@ public class goodslisttab implements Parcelable
     public String ZS="";
     public String GX="";
 
+    //坚添加
+    public String isExchange="";
+    public String firs="";
+    public String sec="";
+    public String secNum="";
+    public String three="";
+    public String threeNum="";
+
+    public String getIsExchange() {
+        return isExchange;
+    }
+
+    public void setIsExchange(String isExchange) {
+        this.isExchange = isExchange;
+    }
+
+    public String getSec() {
+        return sec;
+    }
+
+    public void setSec(String sec) {
+        this.sec = sec;
+    }
+
+    public String getSecNum() {
+        return secNum;
+    }
+
+    public void setSecNum(String secNum) {
+        this.secNum = secNum;
+    }
+
+    public String getThree() {
+        return three;
+    }
+
+    public void setThree(String three) {
+        this.three = three;
+    }
+
+    public String getThreeNum() {
+        return threeNum;
+    }
+
+    public void setThreeNum(String threeNum) {
+        this.threeNum = threeNum;
+    }
+
+    public String getFirs() {
+        return firs;
+    }
+
+    public void setFirs(String firs) {
+        this.firs = firs;
+    }
 
     public String getGX()
     {
@@ -307,6 +362,12 @@ public class goodslisttab implements Parcelable
             p.setYL(source.readString());
             p.setZS(source.readString());
             p.setGX(source.readString());
+            p.setIsExchange(source.readString());
+            p.setFirs(source.readString());
+            p.setSec(source.readString());
+            p.setSecNum(source.readString());
+            p.setThree(source.readString());
+            p.setThreeNum(source.readString());
             return p;
         }
 
@@ -343,6 +404,12 @@ public class goodslisttab implements Parcelable
         p.writeString(YL);
         p.writeString(ZS);
         p.writeString(GX);
+        p.writeString(isExchange);
+        p.writeString(firs);
+        p.writeString(sec);
+        p.writeString(secNum);
+        p.writeString(three);
+        p.writeString(threeNum);
 
     }
 

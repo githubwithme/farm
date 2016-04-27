@@ -72,7 +72,8 @@ public class AddStd_Cmd_goodslistdapter extends BaseAdapter
                     BitmapHelper.setImageViewBackground(context, listItemView.typeicon, goodslisttab.getImgurl());
                 }
                 listItemView.typename.setText(goodslisttab.getgoodsName());
-                listItemView.tv_gg.setText("规格：" + goodslisttab.getgoodsSpec());
+//                listItemView.tv_gg.setText("规格：" + goodslisttab.getgoodsSpec());
+                listItemView.tv_gg.setText("规格：" +goodslisttab.getFirs()+ goodslisttab.getgoodsSpec());
             }
             listItemView.cb_fl.setTag(goodslisttab);
             listItemView.cb_fl.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
