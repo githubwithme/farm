@@ -27,7 +27,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * 图片左右滑动
- * 
+ *
  * @author hmj
  */
 @SuppressLint("NewApi")
@@ -80,7 +80,7 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
 		list_view = new ArrayList<View>();
 		list_dots = new ArrayList<View>();
 		LayoutInflater inflater = getActivity().getLayoutInflater();
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			View inflateView = null;
 			if (i == 0)
@@ -131,9 +131,9 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
 
 	/**
 	 * 换行切换任务
-	 * 
+	 *
 	 * @author Administrator
-	 * 
+	 *
 	 */
 	private class ScrollTask implements Runnable
 	{
@@ -151,7 +151,7 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
 
 	/**
 	 * 填充ViewPager页面的适配器
-	 * 
+	 *
 	 * @author hmj
 	 */
 	public class MyAdapter extends PagerAdapter
@@ -208,7 +208,7 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
 
 	/**
 	 * 当ViewPager中页面的状态发生改变时调用
-	 * 
+	 *
 	 * @author hmj
 	 */
 	public class PageChangeListener implements OnPageChangeListener

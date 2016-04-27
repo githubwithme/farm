@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_color"/>
+
+        <FrameLayout
+            android:id="@+id/fl_map"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
+
+            <com.tencent.tencentmap.mapsdk.map.MapView
+                android:id="@+id/mapview"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="30dip"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/background_view_rounded_single"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_more"
+                    android:layout_width="50dip"
+                    android:layout_height="35dip"
+                    android:background="@null"
+                    android:text="更多"
+                    android:textSize="14sp"
+                    android:visibility="gone"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color"/>
+
+                <Button
+                    android:id="@+id/btn_yq"
+                    android:layout_width="50dip"
+                    android:layout_height="35dip"
+                    android:background="@null"
+                    android:text="园区"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color"/>
+
+                <Button
+                    android:id="@+id/btn_people"
+                    android:layout_width="50dip"
+                    android:layout_height="35dip"
+                    android:background="@null"
+                    android:text="人员"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="10dip"
+                android:orientation="vertical"/>
+
+
+        </FrameLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
