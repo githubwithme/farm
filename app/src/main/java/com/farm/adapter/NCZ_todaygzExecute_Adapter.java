@@ -22,6 +22,7 @@ import com.farm.bean.jobtab;
 import com.farm.ui.Common_CommandDetail_Show_;
 import com.farm.ui.Common_JobDetail_;
 import com.farm.ui.Common_JobDetail_Assess_;
+import com.farm.ui.NCZ_Todayjob_Common_;
 import com.farm.ui.RecordList_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_ListView;
@@ -139,7 +140,8 @@ public class NCZ_todaygzExecute_Adapter extends BaseExpandableListAdapter
                 @Override
                 public void onClick(View v) {
 //                    Intent intent = new Intent(context, Common_JobDetail_.class);
-                    Intent intent = new Intent(context, Common_JobDetail_Assess_.class);
+//                    Intent intent = new Intent(context, Common_JobDetail_Assess_.class);
+                    Intent intent = new Intent(context, NCZ_Todayjob_Common_.class);
                     intent.putExtra("bean", jobtab1);//
                     context.startActivity(intent);
 

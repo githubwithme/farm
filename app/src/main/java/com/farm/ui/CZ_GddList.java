@@ -120,11 +120,11 @@ public class CZ_GddList extends Activity
             timethread.setSleep(false);
             timethread.start();
         }
-*/
+*/  if (timethread!=null){
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
-        timethread.start();
+        timethread.start();}
     }
 
     @Override
@@ -132,10 +132,10 @@ public class CZ_GddList extends Activity
     {
         super.onStop();
         ishidding = true;
- /*       if (timethread != null)
+        if (timethread != null)
         {
             timethread.setSleep(true);
-        }*/
+        }
 
     }
 

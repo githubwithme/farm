@@ -42,7 +42,7 @@ public class AppContext extends Application
     public final static String BROADCAST_SHOWDIALOG = "BROADCAST_SHOWDIALOG";
     public final static String TAG_NCZ_CMD = "TAG_NCZ_CMD";
     public final static int TIME_REFRESH = 10000;
-    public final static int TIME_GZ = 100000;
+    public final static int TIME_GZ = 60000;
 
     public final static int TIME_STOPWATCH = 1001;
     public final static int DISTANCEBETWEEN = 1002;

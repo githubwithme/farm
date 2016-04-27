@@ -64,8 +64,8 @@ import java.util.concurrent.CountDownLatch;
 @EFragment
 public class NCZ_EventHandle extends Fragment
 {
-    boolean ishidding=false;
-    TimeThread timethread;
+  /*  boolean ishidding=false;
+    TimeThread timethread;*/
     NCZ_EventHandleAdapter listadpater;
     Fragment mContent = new Fragment();
     private int listSumData;
@@ -136,7 +136,7 @@ public class NCZ_EventHandle extends Fragment
 //listview
         initAnimalListView();
     }
-    @Override
+/*    @Override
     public void onHiddenChanged(boolean hidden)
     {
         ishidding=hidden;
@@ -154,7 +154,7 @@ public class NCZ_EventHandle extends Fragment
                 timethread.setSleep(true);
             }
         }
-    }
+    }*/
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -433,10 +433,10 @@ public class NCZ_EventHandle extends Fragment
                     }
                 } else {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
-                    if (!ishidding  && timethread!=null)
+         /*           if (!ishidding  && timethread!=null)
                     {
                         timethread.setSleep(false);
-                    }
+                    }*/
                     return;
                 }
                 // 数据处理
@@ -540,24 +540,24 @@ public class NCZ_EventHandle extends Fragment
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
-                if (!ishidding  && timethread!=null)
+         /*       if (!ishidding  && timethread!=null)
                 {
                     timethread.setSleep(false);
-                }
+                }*/
             }
 
             @Override
             public void onFailure(HttpException error, String msg) {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
-                if (!ishidding  && timethread!=null)
+         /*       if (!ishidding  && timethread!=null)
                 {
                     timethread.setSleep(false);
-                }
+                }*/
             }
         });
     }
-    class TimeThread extends Thread
+/*    class TimeThread extends Thread
     {
         private boolean isSleep = true;
         private boolean stop = false;
@@ -603,5 +603,5 @@ public class NCZ_EventHandle extends Fragment
         timethread.setStop(true);
         timethread.interrupt();
         timethread = null;
-    }
+    }*/
 }

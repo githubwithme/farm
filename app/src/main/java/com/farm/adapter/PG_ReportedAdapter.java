@@ -15,6 +15,7 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.FJxx;
+import com.farm.bean.PlantGcd;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
@@ -97,6 +98,19 @@ public class PG_ReportedAdapter extends BaseAdapter {
             listItemView.tv_cmdname = (TextView) convertView.findViewById(R.id.tv_cmdname);
             listItemView.tv_clqk = (TextView) convertView.findViewById(R.id.tv_clqk);
 
+     /*       listItemView.iv_record.setId(position);
+            listItemView.iv_record.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ReportedBean reportedBean = listItems.get(v.getId());
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    AppContext.updateStatus(context, "1", reportedBean.getEventId(), "2", commembertab.getId());
+                    Intent intent = new Intent(context, RecordList_.class);
+                    intent.putExtra("type", "2");
+                    intent.putExtra("workid", listItems.get(v.getId()).getEventId());
+                    context.startActivity(intent);
+                }
+            });*/
             if (!fJxx.equals("")&& fJxx.size()>0)
             {
                 if(fJxx.get(0).getFJLX().equals("1")) {

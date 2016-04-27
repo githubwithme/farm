@@ -49,6 +49,7 @@ public class AudioRecorder implements RecordImp
 
 	public AudioRecorder()
 	{
+
 	}
 
 	@Override

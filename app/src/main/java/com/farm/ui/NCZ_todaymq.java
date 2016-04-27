@@ -32,6 +32,7 @@ import com.farm.bean.commembertab;
 import com.farm.common.DictionaryHelper;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
+import com.farm.common.utils;
 import com.farm.widget.NewDataToast;
 import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
@@ -126,6 +127,10 @@ public class NCZ_todaymq extends Fragment {
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
+        if (getActivity()==null)
+        {
+            return;
+        }
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("areaid", "10");
@@ -137,6 +142,7 @@ public class NCZ_todaymq extends Fragment {
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
         params.addQueryStringParameter("action", "getGCDList");
+//        params.addQueryStringParameter("action", "getGCDListByUid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -316,6 +322,7 @@ public class NCZ_todaymq extends Fragment {
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         frame_listview_news.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
         frame_listview_news.setAdapter(listAdapter);
+//        utils.setListViewHeight(frame_listview_news);
         frame_listview_news.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // 点击头部、底部栏无效

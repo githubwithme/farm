@@ -20,6 +20,7 @@ import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
+import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -88,6 +89,10 @@ NCZ_todaygzExecute_Adapter ncz_todaygzExecute_adapter;
 
     private void getBreakOffInfoOfContract()
     {
+        if(getActivity()==null)
+        {
+            return;
+        }
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userid", commembertab.getId());
@@ -116,6 +121,7 @@ NCZ_todaygzExecute_Adapter ncz_todaygzExecute_adapter;
                         ncz_todaygzExecute_adapter=new NCZ_todaygzExecute_Adapter(getActivity(),listNewData,expandableListView);
                         expandableListView.setAdapter(ncz_todaygzExecute_adapter);
 
+                        utils.setListViewHeight(expandableListView);
 
     /*                    for (int i = 0; i < listNewData.size(); i++)
                         {
