@@ -12,6 +12,7 @@ import com.farm.bean.CoordinatesBean;
 import com.farm.bean.DepartmentBean;
 import com.farm.bean.ExceptionInfo;
 import com.farm.bean.HaveReadRecord;
+import com.farm.bean.LogInfo;
 import com.farm.bean.PolygonBean;
 import com.farm.bean.SellOrder;
 import com.farm.bean.SellOrderDetail;
@@ -94,6 +95,17 @@ public class SqliteDb
     }
     //    }
 
+    public static void updateLogInfo(Context context, List<LogInfo> list)// 这个方式可以
+    {
+        DbUtils db = DbUtils.create(context);
+        try
+        {
+            db.deleteAll(list);
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     public static void updateCoordinatesOrder(Context context, CoordinatesBean coordinatesBean)// 这个方式可以
     {
@@ -744,6 +756,19 @@ public class SqliteDb
         try
         {
             list = db.findAll(Selector.from(ExceptionInfo.class));
+        } catch (DbException e)
+        {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public static <T> List<T> getLogInfo(Context context)
+    {
+        DbUtils db = DbUtils.create(context);
+        List<T> list = null;
+        try
+        {
+            list = db.findAll(Selector.from(LogInfo.class));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1738,7 +1763,7 @@ public class SqliteDb
         List<SellOrderDetail> list = null;
         try
         {
-            list = db.findAll(Selector.from(SellOrderDetail.class).where("contractid", "=", contractid).and("batchTime", "=", batchtime).and("year", "=",year).and("xxzt", "=", "0"));
+            list = db.findAll(Selector.from(SellOrderDetail.class).where("contractid", "=", contractid).and("batchTime", "=", batchtime).and("year", "=", year).and("xxzt", "=", "0"));
         } catch (DbException e)
         {
             e.printStackTrace();
