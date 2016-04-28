@@ -19,10 +19,13 @@ import com.farm.app.AppContext;
 import com.farm.app.AppManager;
 import com.farm.bean.ExceptionInfo;
 import com.farm.bean.HaveReadRecord;
+import com.farm.bean.LogInfo;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.FontManager;
+import com.farm.common.GetMobilePhoneInfo;
 import com.farm.common.SqliteDb;
+import com.farm.common.utils;
 import com.farm.widget.MyDialog;
 import com.farm.widget.MyDialog.CustomDialogListener;
 import com.lidroid.xutils.HttpUtils;
@@ -37,7 +40,9 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.apache.http.entity.StringEntity;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -202,6 +207,10 @@ public class NCZ_MainActivity extends BaseActivity
 				sendExceptionInfoToServer(list_exception.get(i));
 			}
 		}
+		//将日志信息提交
+		List<LogInfo> list_LogInfo = SqliteDb.getLogInfo(NCZ_MainActivity.this);
+		sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(NCZ_MainActivity.this).toString(),utils.getToday());
+
 
 		List<Integer> guideResourceId = new ArrayList<Integer>();
 		guideResourceId.add(R.drawable.yd666);
@@ -424,6 +433,51 @@ public class NCZ_MainActivity extends BaseActivity
 					if (result.getAffectedRows() != 0)
 					{
 						SqliteDb.deleteExceptionInfo(NCZ_MainActivity.this, exception.getExceptionid());
+					}
+				}
+			}
+
+			@Override
+			public void onFailure(HttpException error, String msg)
+			{
+				String a = error.getMessage();
+			}
+		});
+
+	}
+	private void sendLogInfoToServer(final List<LogInfo> list,String deviceuuid,String logday)
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append("{ \"LogInfoList\": ");
+		builder.append(JSON.toJSONString(list));
+		builder.append("} ");
+		RequestParams params = new RequestParams();
+		params.addQueryStringParameter("deviceuuid",deviceuuid);
+		params.addQueryStringParameter("logday",logday);
+		params.addQueryStringParameter("action", "addLogInfo");
+		params.setContentType("application/json");
+		try
+		{
+			params.setBodyEntity(new StringEntity(builder.toString(), "utf-8"));
+		} catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
+		HttpUtils http = new HttpUtils();
+		http.configTimeout(60000);
+		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+		{
+			@Override
+			public void onSuccess(ResponseInfo<String> responseInfo)
+			{
+				String a = responseInfo.result;
+				Result result = JSON.parseObject(responseInfo.result, Result.class);
+				if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+				{
+					String rows=result.getRows().get(0).toString();
+					if (rows.equals("1"))
+					{
+						SqliteDb.updateLogInfo(NCZ_MainActivity.this, list);
 					}
 				}
 			}

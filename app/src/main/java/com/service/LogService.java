@@ -13,6 +13,11 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
+import com.farm.bean.LogInfo;
+import com.farm.common.GetMobilePhoneInfo;
+import com.farm.common.SqliteDb;
+import com.farm.common.utils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,7 +49,7 @@ public class LogService extends Service
 
     private static final int MEMORY_LOG_FILE_MAX_SIZE = 10 * 1024 * 1024; // 内存中日志文件最大值，10M
     private static final int MEMORY_LOG_FILE_MONITOR_INTERVAL = 10 * 60 * 1000; // 内存中的日志文件大小监控时间间隔，10分钟
-    private static final int SDCARD_LOG_FILE_SAVE_DAYS = 7; // sd卡中日志文件的最多保存天数
+    private static final int SDCARD_LOG_FILE_SAVE_DAYS = 30; // sd卡中日志文件的最多保存天数
 
     private String LOG_PATH_MEMORY_DIR; // 日志文件在内存中的路径(日志文件在安装目录中的路径)
     private String LOG_PATH_SDCARD_DIR; // 日志文件在sdcard中的路径
@@ -746,6 +751,15 @@ public class LogService extends Service
                 writer.write("\n");
 
                 writer.flush();
+                String uuid=java.util.UUID.randomUUID().toString();
+                LogInfo logInfo=new LogInfo();
+                logInfo.setLogid(uuid);
+                logInfo.setDeviceuuid(GetMobilePhoneInfo.getDeviceUuid(LogService.this).toString());
+                logInfo.setLogInfo(myLogSdf.format(time) + " : " + msg);
+                logInfo.setIsUpload("0");
+                logInfo.setRegtime(utils.getTime());
+                logInfo.setLogday(utils.getToday());
+                SqliteDb.save(LogService.this,logInfo);
 
             } catch (IOException e)
             {
