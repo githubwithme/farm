@@ -198,11 +198,7 @@ public class IFragment extends Fragment
 	void afterOncreate()
 	{
 		commembertab commembertab = AppContext.getUserInfo(getActivity());
-		tv_username.setText(commembertab.getuserlevelName()+":"+commembertab.getrealName());
-//		getListData();
-//		commembertab commembertab = AppContext.getUserInfo(getActivity());
-//		BitmapHelper.setImageViewBackground(getActivity(), circle_img,AppConfig.baseurl+ commembertab.getimgurl());
-//		BitmapHelper.setImageViewBackground(getActivity(), circle_img, AppConfig.baseurl + "/upload/201511/02/201511021602504091.jpg");
+		tv_username.setText(commembertab.getparkName()+commembertab.getareaName()+"-"+commembertab.getuserlevelName()+":"+commembertab.getrealName());
 	}
 
 	@Override

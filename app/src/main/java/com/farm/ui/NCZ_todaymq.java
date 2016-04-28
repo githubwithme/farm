@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,16 +21,11 @@ import com.farm.R;
 import com.farm.adapter.NCZ_PlantGcdListAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.Dictionary;
 import com.farm.bean.PlantGcd;
 import com.farm.bean.Result;
-import com.farm.bean.Today_job;
-import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
-import com.farm.common.DictionaryHelper;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
-import com.farm.common.utils;
 import com.farm.widget.NewDataToast;
 import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
@@ -48,14 +41,14 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by user on 2016/4/25.
  */
 @EFragment
-public class NCZ_todaymq extends Fragment {
+public class NCZ_todaymq extends Fragment
+{
 
     TimeThread timethread;
     boolean ishidding = false;
@@ -83,12 +76,13 @@ public class NCZ_todaymq extends Fragment {
     {
         initAnimalListView();
     }
-    public void  setThreadStatus(boolean hidden)
+
+    public void setThreadStatus(boolean hidden)
     {
         ishidding = hidden;
         super.onHiddenChanged(hidden);//true
 
-        if (timethread!=null)
+        if (timethread != null)
         {
             if (hidden == true)
             {
@@ -103,9 +97,11 @@ public class NCZ_todaymq extends Fragment {
 
         }
     }
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.ncz_todaymq, container, false);
         timethread = new TimeThread();
         timethread.setSleep(false);
@@ -124,16 +120,15 @@ public class NCZ_todaymq extends Fragment {
     };
 
 
-
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-        if (getActivity()==null)
+        if (getActivity() == null)
         {
             return;
         }
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("areaid", "10");
+//        params.addQueryStringParameter("areaid", "10");
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
@@ -141,8 +136,8 @@ public class NCZ_todaymq extends Fragment {
         params.addQueryStringParameter("strWhere", "");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "getGCDList");
-//        params.addQueryStringParameter("action", "getGCDListByUid");
+//        params.addQueryStringParameter("action", "getGCDList");
+        params.addQueryStringParameter("action", "getGCDListByUid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -219,7 +214,11 @@ public class NCZ_todaymq extends Fragment {
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                if (isAdded())
+                                {
+                                    NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+
+                                }
                             } else
                             {
                                 // NewDataToast.makeText(NCZ_GddList.this,
@@ -289,8 +288,11 @@ public class NCZ_todaymq extends Fragment {
                 // main_head_progress.setVisibility(ProgressBar.GONE);
                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
                 {
-                    lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
-                    lv.setSelection(0);
+                    if (isAdded())
+                    {
+                        lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
+                        lv.setSelection(0);
+                    }
                 } else if (actiontype == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG)
                 {
                     lv.onRefreshComplete();
@@ -323,8 +325,10 @@ public class NCZ_todaymq extends Fragment {
         frame_listview_news.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
         frame_listview_news.setAdapter(listAdapter);
 //        utils.setListViewHeight(frame_listview_news);
-        frame_listview_news.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        frame_listview_news.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer) return;
 
@@ -351,8 +355,10 @@ public class NCZ_todaymq extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-        frame_listview_news.setOnScrollListener(new AbsListView.OnScrollListener() {
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
+        frame_listview_news.setOnScrollListener(new AbsListView.OnScrollListener()
+        {
+            public void onScrollStateChanged(AbsListView view, int scrollState)
+            {
                 frame_listview_news.onScrollStateChanged(view, scrollState);
 
                 // 数据为空--不用继续下面代码了
@@ -360,15 +366,18 @@ public class NCZ_todaymq extends Fragment {
 
                 // 判断是否滚动到底部
                 boolean scrollEnd = false;
-                try {
+                try
+                {
                     if (view.getPositionForView(list_footer) == view.getLastVisiblePosition())
                         scrollEnd = true;
-                } catch (Exception e) {
+                } catch (Exception e)
+                {
                     scrollEnd = false;
                 }
 
                 int lvDataState = StringUtils.toInt(frame_listview_news.getTag());
-                if (scrollEnd && lvDataState == UIHelper.LISTVIEW_DATA_MORE) {
+                if (scrollEnd && lvDataState == UIHelper.LISTVIEW_DATA_MORE)
+                {
                     frame_listview_news.setTag(UIHelper.LISTVIEW_DATA_LOADING);
                     list_foot_more.setText(R.string.load_ing);// 之前显示为"完成"加载
                     list_foot_progress.setVisibility(View.VISIBLE);
@@ -380,12 +389,15 @@ public class NCZ_todaymq extends Fragment {
                 }
             }
 
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+            {
                 frame_listview_news.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
-        frame_listview_news.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-            public void onRefresh() {
+        frame_listview_news.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener()
+        {
+            public void onRefresh()
+            {
                 // loadLvNewsData(curNewsCatalog, 0, lvNewsHandler,
                 // UIHelper.LISTVIEW_ACTION_REFRESH);
                 getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);

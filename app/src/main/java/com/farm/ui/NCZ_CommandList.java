@@ -64,7 +64,7 @@ import java.util.List;
 @EFragment
 public class NCZ_CommandList extends Fragment implements OnClickListener
 {
-    boolean ishidding=false;
+    boolean ishidding = false;
     Dictionary dictionary = new Dictionary();
     TimeThread timethread;
     SelectorFragment selectorUi;
@@ -114,7 +114,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
     @Override
     public void onHiddenChanged(boolean hidden)
     {
-        ishidding=hidden;
+        ishidding = hidden;
         super.onHiddenChanged(hidden);
         if (!hidden)
         {
@@ -261,7 +261,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
 //                    Toast.makeText(getActivity(),"error_connectDataBase",Toast.LENGTH_SHORT).show();
-                    if (!ishidding  && timethread!=null)
+                    if (!ishidding && timethread != null)
                     {
                         timethread.setSleep(false);
                     }
@@ -316,7 +316,11 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+                                if (isAdded())
+                                {
+                                    NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+
+                                }
                             } else
                             {
                                 // NewDataToast.makeText(getActivity(),
@@ -386,7 +390,8 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                 // main_head_progress.setVisibility(ProgressBar.GONE);
                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
                 {
-                    if (isAdded()) {
+                    if (isAdded())
+                    {
                         lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
                         lv.setSelection(0);
                     }
@@ -397,7 +402,7 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
-                if (!ishidding  && timethread!=null)
+                if (!ishidding && timethread != null)
                 {
                     timethread.setSleep(false);
                 }
@@ -407,9 +412,9 @@ public class NCZ_CommandList extends Fragment implements OnClickListener
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                Toast.makeText(getActivity(),"error_connectServer",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "error_connectServer", Toast.LENGTH_SHORT).show();
 //                AppContext.makeToast(getActivity(), "error_connectServer");
-                if (!ishidding  && timethread!=null)
+                if (!ishidding && timethread != null)
                 {
                     timethread.setSleep(false);
                 }

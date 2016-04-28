@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -30,22 +29,24 @@ import java.util.List;
  * @description :主界面
  */
 @EFragment
-public class NCZ_MainFragment extends Fragment {
+public class NCZ_MainFragment extends Fragment
+{
     Fragment mContent = new Fragment();
     Fragment mContent_todayjob = new Fragment();
     NCZ_YQPQ ncz_WorkList;
     NCZ_todaymq ncz_todaymq;
     NCZ_todaygz ncz_todaygz;
+    Map_Farm map_farm;
     @ViewById
     TextView tv_gz;
     @ViewById
     TextView tv_mq;
     @ViewById
+    TextView tv_farmmap;
+    @ViewById
     TextView tv_all;
     @ViewById
     PullToRefreshListView frame_listview_news;
-    @ViewById
-    ScrollView sl;
     @ViewById
     Button btn_zg;
     @ViewById
@@ -60,15 +61,16 @@ public class NCZ_MainFragment extends Fragment {
         ncz_WorkList.setThreadStatus(hidden);
         ncz_todaymq.setThreadStatus(hidden);
         ncz_todaygz.setThreadStatus(hidden);
+        map_farm.setThreadStatus(hidden);
     }
 
     @AfterViews
-    void afterOncreate() {
-        // tv_title.setTypeface(FontManager.getTypefaceByFontName(getActivity(),
-        // "wsyh.ttf"));
+    void afterOncreate()
+    {
         ncz_WorkList = new NCZ_YQPQ_();
         ncz_todaymq = new NCZ_todaymq_();
         ncz_todaygz = new NCZ_todaygz_();
+        map_farm=new Map_Farm_();
         tv_day.setText(utils.getTodayAndwWeek());
         tv_title.setText("首页");
         switchContent_todayjob(mContent_todayjob, ncz_todaygz);
@@ -99,31 +101,44 @@ public class NCZ_MainFragment extends Fragment {
     }
 
     @Click
-    void tv_all()
+    void tv_farmmap()
     {
         setBackground(2);
+        switchContent_todayjob(mContent_todayjob, map_farm);
+    }
+
+    @Click
+    void tv_all()
+    {
+        setBackground(3);
         switchContent_todayjob(mContent_todayjob, ncz_WorkList);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.ncz_fragment_main, container, false);
         return rootView;
     }
 
-    public void switchContent_todayjob(Fragment from, Fragment to) {
-        if (mContent_todayjob != to) {
+    public void switchContent_todayjob(Fragment from, Fragment to)
+    {
+        if (mContent_todayjob != to)
+        {
             mContent_todayjob = to;
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if (!to.isAdded()) { // 先判断是否被add过
+            if (!to.isAdded())
+            { // 先判断是否被add过
                 transaction.hide(from).add(R.id.container_todayjob, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else {
+            } else
+            {
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
         }
     }
 
-    private List<String> initURL() {
+    private List<String> initURL()
+    {
         List<String> list = new ArrayList<String>();
         list.add("http://pic4.nipic.com/20090827/3095621_083213047918_2.jpg");
         list.add("http://pica.nipic.com/2008-07-22/2008722162232801_2.jpg");
@@ -131,12 +146,14 @@ public class NCZ_MainFragment extends Fragment {
         return list;
     }
 
-    private void setMenu() {
+    private void setMenu()
+    {
         MenuScrollFragment menuScrollFragment = new MenuScrollFragment();
         getFragmentManager().beginTransaction().replace(R.id.menu_container, menuScrollFragment).commit();
     }
 
-    private void setImage(List<String> imglist) {
+    private void setImage(List<String> imglist)
+    {
         PictureScrollFragment pictureScrollFragment = new PictureScrollFragment();
         Bundle bundle = new Bundle();
         bundle.putStringArrayList("imgurl", (ArrayList<String>) imglist);
@@ -145,19 +162,24 @@ public class NCZ_MainFragment extends Fragment {
     }
 
 
-    private void setBackground(int pos) {
+    private void setBackground(int pos)
+    {
         tv_gz.setSelected(false);
         tv_mq.setSelected(false);
+        tv_farmmap.setSelected(false);
         tv_all.setSelected(false);
 
         tv_gz.setBackgroundResource(R.color.white);
         tv_mq.setBackgroundResource(R.color.white);
+        tv_farmmap.setBackgroundResource(R.color.white);
         tv_all.setBackgroundResource(R.color.white);
 
         tv_gz.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_mq.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_farmmap.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_all.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        switch (pos) {
+        switch (pos)
+        {
             case 0:
                 tv_gz.setSelected(false);
                 tv_gz.setTextColor(getResources().getColor(R.color.bg_blue));
@@ -169,6 +191,11 @@ public class NCZ_MainFragment extends Fragment {
                 tv_mq.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 2:
+                tv_farmmap.setSelected(false);
+                tv_farmmap.setTextColor(getResources().getColor(R.color.bg_blue));
+                tv_farmmap.setBackgroundResource(R.drawable.red_bottom);
+                break;
+            case 3:
                 tv_all.setSelected(false);
                 tv_all.setTextColor(getResources().getColor(R.color.bg_blue));
                 tv_all.setBackgroundResource(R.drawable.red_bottom);

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -17,9 +16,6 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.Today_job;
 import com.farm.bean.commembertab;
-import com.farm.bean.jobtab;
-import com.farm.common.StringUtils;
-import com.farm.common.UIHelper;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -32,9 +28,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -45,17 +39,18 @@ public class NCZ_todaygz extends Fragment
 {
     TimeThread timethread;
     boolean ishidding = false;
-NCZ_todaygzExecute_Adapter ncz_todaygzExecute_adapter;
+    NCZ_todaygzExecute_Adapter ncz_todaygzExecute_adapter;
     @ViewById
     ExpandableListView expandableListView;
 
     List<Today_job> listdate;
-    public void  setThreadStatus(boolean hidden)
+
+    public void setThreadStatus(boolean hidden)
     {
         ishidding = hidden;
         super.onHiddenChanged(hidden);//true
 
-        if (timethread!=null)
+        if (timethread != null)
         {
             if (hidden == true)
             {
@@ -70,12 +65,14 @@ NCZ_todaygzExecute_Adapter ncz_todaygzExecute_adapter;
 
         }
     }
+
     @AfterViews
     void afterOncreate()
     {
 
         getBreakOffInfoOfContract();
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -89,7 +86,7 @@ NCZ_todaygzExecute_Adapter ncz_todaygzExecute_adapter;
 
     private void getBreakOffInfoOfContract()
     {
-        if(getActivity()==null)
+        if (getActivity() == null)
         {
             return;
         }
@@ -114,20 +111,21 @@ NCZ_todaygzExecute_Adapter ncz_todaygzExecute_adapter;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
 
 
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Today_job.class);
-                        ncz_todaygzExecute_adapter=new NCZ_todaygzExecute_Adapter(getActivity(),listNewData,expandableListView);
+                        ncz_todaygzExecute_adapter = new NCZ_todaygzExecute_Adapter(getActivity(), listNewData, expandableListView);
                         expandableListView.setAdapter(ncz_todaygzExecute_adapter);
 
                         utils.setListViewHeight(expandableListView);
 
-    /*                    for (int i = 0; i < listNewData.size(); i++)
+                        for (int i = 0; i < listNewData.size(); i++)
                         {
                             expandableListView.expandGroup(i);//展开
 //                                  expandableListView.collapseGroup(i);//关闭
-                        }*/
+                        }
 
                     } else
                     {
@@ -153,7 +151,7 @@ NCZ_todaygzExecute_Adapter ncz_todaygzExecute_adapter;
                 {
                     timethread.setSleep(false);
                 }
-                    AppContext.makeToast(getActivity(), "error_connectServer");
+                AppContext.makeToast(getActivity(), "error_connectServer");
 
             }
         });
