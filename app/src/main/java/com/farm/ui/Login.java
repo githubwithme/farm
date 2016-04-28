@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -56,7 +57,7 @@ import java.util.List;
 @EActivity(R.layout.login)
 public class Login extends Activity
 {
-
+    public static final String TAG = "CrashHandler";
     @ViewById
     LinearLayout login;
     @ViewById
@@ -169,6 +170,7 @@ public class Login extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
+                Log.d(TAG, "登陆数据接收"+a);
                 List<commembertab> listData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表

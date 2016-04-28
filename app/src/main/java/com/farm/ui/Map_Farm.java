@@ -823,6 +823,10 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
+                if (getActivity()==null)
+                {
+                    return;
+                }
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表

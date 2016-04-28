@@ -360,6 +360,7 @@ public class IFragment extends Fragment
 		http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
 			@Override
 			public void onSuccess(ResponseInfo<String> responseInfo) {
+				String a = responseInfo.result;
 				List<Apk> listNewData = null;
 				Result result = JSON.parseObject(responseInfo.result, Result.class);
 				if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
