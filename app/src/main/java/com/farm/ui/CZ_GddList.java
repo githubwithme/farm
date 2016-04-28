@@ -57,7 +57,7 @@ public class CZ_GddList extends Activity
     boolean ishidding = false;
     Dictionary dictionary;
     TimeThread timethread;
-    SelectorFragment selectorUi;
+//    SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
     private CZ_PlantGcdListAdapter listAdapter;
     private int listSumData;
@@ -99,12 +99,12 @@ public class CZ_GddList extends Activity
         {
             btn_add.setVisibility(View.GONE);
         }
-        dictionary = DictionaryHelper.getDictionaryFromAssess(CZ_GddList.this, "PG_MQ");
+ /*       dictionary = DictionaryHelper.getDictionaryFromAssess(CZ_GddList.this, "PG_MQ");
         selectorUi = new SelectorFragment_();
         Bundle bundle = new Bundle();
         bundle.putSerializable("bean", dictionary);
         selectorUi.setArguments(bundle);
-        switchContent(mContent, selectorUi);
+        switchContent(mContent, selectorUi);*/
         initAnimalListView();
     }
 

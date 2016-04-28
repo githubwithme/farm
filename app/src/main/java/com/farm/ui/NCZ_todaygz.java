@@ -113,8 +113,6 @@ public class NCZ_todaygz extends Fragment
                 {
                     if (result.getAffectedRows() != 0)
                     {
-
-
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Today_job.class);
                         ncz_todaygzExecute_adapter = new NCZ_todaygzExecute_Adapter(getActivity(), listNewData, expandableListView);
                         expandableListView.setAdapter(ncz_todaygzExecute_adapter);

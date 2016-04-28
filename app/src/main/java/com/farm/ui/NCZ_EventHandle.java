@@ -89,6 +89,8 @@ public class NCZ_EventHandle extends Fragment
     @ViewById
     TextView handle;
     @ViewById
+    TextView tv_tfsj;
+    @ViewById
     View line;
 
     @ViewById
@@ -133,7 +135,7 @@ public class NCZ_EventHandle extends Fragment
     {
         //获取人员信息
         getlistdata();
-//listview
+        tv_tfsj.setText("突发事件19" + reportedBean.getEventId());
         initAnimalListView();
     }
 /*    @Override

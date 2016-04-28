@@ -367,11 +367,14 @@ public class NCZ_todaygzExecute_Adapter extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.ncz_todayjobperent, null);
         }
         TextView regisdate = (TextView) convertView.findViewById(R.id.regisdate);
+        TextView tv_gznum = (TextView) convertView.findViewById(R.id.tv_gznum);
 
         String dates=listData.get(groupPosition).getRegisdate().substring(0,listData.get(groupPosition).getRegisdate().length()-8);
 //        regisdate.setText(listData.get(groupPosition).getRegisdate());
         regisdate.setText(dates);
-
+//        tv_gznum.setText(listData.get(groupPosition).getJoblist().size());
+        String gznum=listData.get(groupPosition).getJoblist().size()+"";
+        tv_gznum.setText(gznum);
         return convertView;
     }
     @Override

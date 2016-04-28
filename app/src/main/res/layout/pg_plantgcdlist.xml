@@ -29,6 +29,7 @@
         </LinearLayout>
 
         <ImageButton
+            android:visibility="gone"
             android:id="@+id/btn_search"
             android:layout_width="40dip"
             android:layout_height="40dip"
