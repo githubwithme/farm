@@ -209,7 +209,11 @@ public class NCZ_MainActivity extends BaseActivity
 		}
 		//将日志信息提交
 		List<LogInfo> list_LogInfo = SqliteDb.getLogInfo(NCZ_MainActivity.this);
-		sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(NCZ_MainActivity.this).toString(),utils.getToday());
+		if (list_LogInfo != null)
+		{
+			sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(NCZ_MainActivity.this).toString(),utils.getToday());
+		}
+
 
 
 		List<Integer> guideResourceId = new ArrayList<Integer>();

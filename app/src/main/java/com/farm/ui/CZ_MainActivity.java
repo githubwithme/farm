@@ -162,7 +162,11 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         }
         //将日志信息提交
         List<LogInfo> list_LogInfo = SqliteDb.getLogInfo(CZ_MainActivity.this);
-        sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(CZ_MainActivity.this).toString(),utils.getToday());
+        if (list_LogInfo != null)
+        {
+            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(CZ_MainActivity.this).toString(),utils.getToday());
+        }
+
 
         switchContent(mContent, mainFragment);
         tv_home.setTextColor(getResources().getColor(R.color.red));

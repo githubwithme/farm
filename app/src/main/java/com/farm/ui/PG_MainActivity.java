@@ -198,7 +198,11 @@ PG_ListOfEvents pg_listOfEvents;
         }
         //将日志信息提交
         List<LogInfo> list_LogInfo = SqliteDb.getLogInfo(PG_MainActivity.this);
-        sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(PG_MainActivity.this).toString(),utils.getToday());
+        if (list_LogInfo != null)
+        {
+            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(PG_MainActivity.this).toString(),utils.getToday());
+        }
+
 
         switchContent(mContent, mainFragment);
         tv_home.setTextColor(getResources().getColor(R.color.red));
