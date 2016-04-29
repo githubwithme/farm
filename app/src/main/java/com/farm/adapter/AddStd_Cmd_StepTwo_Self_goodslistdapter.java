@@ -121,7 +121,15 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 String small_dw = goodsspc[1];
                 String large_dw = goodsspc[2];*/
                 listItemView.typename.setText(goodslisttab.getgoodsName());
-                listItemView.tv_gg.setText("规格：" +goodslisttab.getFirs() + "/" + large_dw);
+                if(!goodslisttab.getThree().equals(""))
+                {
+                    listItemView.tv_gg.setText("规格：" +goodslisttab.getThree() + goodslisttab.getgoodsSpec());
+                }else if(goodslisttab.getThree().equals("")&&!goodslisttab.getSec().equals(""))
+                {
+                    listItemView.tv_gg.setText("规格：" +goodslisttab.getSec() + goodslisttab.getgoodsSpec());
+                }else {
+                    listItemView.tv_gg.setText("规格：" + goodslisttab.getFirs() + goodslisttab.getgoodsSpec());
+                }
             }
             listItemView.cb_fl.setTag(R.id.tag_bean, goodslisttab);
             listItemView.cb_fl.setTag(R.id.tag_postion, position);
@@ -303,11 +311,21 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         large_dw = goodsspc[2];*/
 //        tv_tip_number.setText("剩余：" + goodssum + large_dw);
         tv_tip_number.setText("剩余：" + goodssum);
-//        tv_tip_gg.setText(number + small_dw + "/" + large_dw);
-//        tv_spec.setText(number + small_dw + "/" + large_dw);
+
 
         tv_spec.setText(list.get(currentpos).getFirs()+ "/" + large_dw);
         tv_goodsname.setText(list.get(currentpos).getgoodsName());
+        if(!list.get(currentpos).getThree().equals(""))
+        {
+            tv_spec.setText(list.get(currentpos).getThree() + list.get(currentpos).getgoodsSpec());
+        }else if(list.get(currentpos).getThree().equals("")&&!list.get(currentpos).getSec().equals(""))
+        {
+            tv_spec.setText( list.get(currentpos).getSec() + list.get(currentpos).getgoodsSpec());
+        }else {
+            tv_spec.setText( list.get(currentpos).getFirs() + list.get(currentpos).getgoodsSpec());
+        }
+
+
 //        if (small_dw.equals("ml"))
 //        if (large_dw.equals("mL")||large_dw.equals("L"))
         if (list.get(currentpos).getIsExchange().equals("True"))
@@ -317,7 +335,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
             tv_dw.setText("倍(兑水)");
         }else
         {
-            tv_dw.setText( "kg/株");
+            tv_dw.setText( "g/株");
         }
 
         btn_sure.setOnClickListener(new View.OnClickListener()
@@ -366,7 +384,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 }else
                 {
 //                    tv_flsl.setText(et_flsl.getText() + small_dw + "/株");
-                    tv_flsl.setText(et_flsl.getText() +"kg/株");
+                    tv_flsl.setText(et_flsl.getText() +"g/株");
                     tv_allnumber.setText(neednumber + large_dw);
                 }
 

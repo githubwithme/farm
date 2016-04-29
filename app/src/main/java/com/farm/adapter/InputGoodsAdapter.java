@@ -73,9 +73,9 @@ public class InputGoodsAdapter extends BaseAdapter
             listItemView.tv_fl.setText(list.get(arg0).getgoodsName());
 //            listItemView.tv_dw.setText(list.get(arg0).getgoodsSpec());
 
-            String[] goodsspc = list.get(arg0).getgoodsSpec().split("/");
+//            String[] goodsspc = list.get(arg0).getgoodsSpec().split("/");
 
-            String large_dw=list.get(arg0).getgoodsSpec().substring(1,list.get(arg0).getgoodsSpec().length());
+//            String large_dw=list.get(arg0).getgoodsSpec().substring(1,list.get(arg0).getgoodsSpec().length());
 //            String number = goodsspc[0];
 //            String small_dw = goodsspc[1];
 //            String large_dw = goodsspc[1];
@@ -88,12 +88,21 @@ public class InputGoodsAdapter extends BaseAdapter
             }else
             {
 //                listItemView.tv_dw.setText(small_dw+"/株");
-                listItemView.tv_dw.setText("kg/株");
+                listItemView.tv_dw.setText("g/株");
             }
 //            listItemView.tv_syl.setText( list.get(arg0).getGoodsSum()+large_dw);
-            listItemView.tv_syl.setText( list.get(arg0).getGoodsSum());
-//            listItemView.tv_spec.setText( number+small_dw+"/"+large_dw);
-            listItemView.tv_spec.setText(  list.get(arg0).getFirs()+"/"+large_dw);
+            listItemView.tv_syl.setText(list.get(arg0).getGoodsSum());
+
+            if (!list.get(arg0).getThree().equals(""))
+            {
+                listItemView.tv_spec.setText(  list.get(arg0).getThree()+list.get(arg0).getgoodsSpec());
+            }else if (list.get(arg0).getThree().equals("")&&!list.get(arg0).getSec().equals("")){
+                listItemView.tv_spec.setText(  list.get(arg0).getSec()+list.get(arg0).getgoodsSpec());
+            }else
+            {
+                listItemView.tv_spec.setText(  list.get(arg0).getFirs()+list.get(arg0).getgoodsSpec());
+            }
+
 
             lmap.put(arg0, convertView);
             convertView.setTag(listItemView);

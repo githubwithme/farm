@@ -73,7 +73,16 @@ public class AddStd_Cmd_goodslistdapter extends BaseAdapter
                 }
                 listItemView.typename.setText(goodslisttab.getgoodsName());
 //                listItemView.tv_gg.setText("规格：" + goodslisttab.getgoodsSpec());
-                listItemView.tv_gg.setText("规格：" +goodslisttab.getFirs()+ goodslisttab.getgoodsSpec());
+//                listItemView.tv_gg.setText("规格：" +goodslisttab.getFirs()+ goodslisttab.getgoodsSpec());
+                if(!goodslisttab.getThree().equals(""))
+                {
+                    listItemView.tv_gg.setText("规格：" +goodslisttab.getThree() + goodslisttab.getgoodsSpec());
+                }else if(goodslisttab.getThree().equals("")&&!goodslisttab.getSec().equals(""))
+                {
+                    listItemView.tv_gg.setText("规格：" +goodslisttab.getSec() + goodslisttab.getgoodsSpec());
+                }else {
+                    listItemView.tv_gg.setText("规格：" + goodslisttab.getFirs() + goodslisttab.getgoodsSpec());
+                }
             }
             listItemView.cb_fl.setTag(goodslisttab);
             listItemView.cb_fl.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()

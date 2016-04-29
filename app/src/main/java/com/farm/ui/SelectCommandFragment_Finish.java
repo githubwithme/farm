@@ -100,7 +100,7 @@ public class SelectCommandFragment_Finish extends Fragment implements OnClickLis
     {
         ishidding=hidden;
         super.onHiddenChanged(hidden);
-        if (!hidden)
+/*        if (!hidden)
         {
             if (timethread != null)
             {
@@ -112,6 +112,21 @@ public class SelectCommandFragment_Finish extends Fragment implements OnClickLis
             {
                 timethread.setSleep(true);
             }
+        }*/
+
+        if (timethread != null)
+        {
+            if (hidden == true)
+            {
+                timethread.setSleep(true);
+            } else
+            {
+                timethread = new TimeThread();
+                timethread.setStop(false);
+                timethread.setSleep(false);
+                timethread.start();
+            }
+
         }
     }
 
@@ -135,7 +150,7 @@ public class SelectCommandFragment_Finish extends Fragment implements OnClickLis
   /*      IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
         getActivity().registerReceiver(receiver_update, intentfilter_update);*/
         timethread = new TimeThread();
-        timethread.setStop(false);
+//        timethread.setStop(false);
         timethread.setSleep(false);
         timethread.start();
         return rootView;
@@ -202,6 +217,10 @@ public class SelectCommandFragment_Finish extends Fragment implements OnClickLis
                     }
                 } else
                 {
+                    if (!ishidding && timethread != null)
+                    {
+                        timethread.setSleep(false);
+                    }
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
                     return;
                 }
@@ -339,6 +358,10 @@ public class SelectCommandFragment_Finish extends Fragment implements OnClickLis
             @Override
             public void onFailure(HttpException error, String msg)
             {
+                if (!ishidding && timethread != null)
+                {
+                    timethread.setSleep(false);
+                }
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
             }
@@ -776,6 +799,7 @@ public class SelectCommandFragment_Finish extends Fragment implements OnClickLis
             {
                 if (isSleep)
                 {
+                    return;
                 } else
                 {
                     try
@@ -783,7 +807,7 @@ public class SelectCommandFragment_Finish extends Fragment implements OnClickLis
                         timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-                        timethread.setSleep(false);
+//                        timethread.setSleep(false);
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();
@@ -807,8 +831,15 @@ public class SelectCommandFragment_Finish extends Fragment implements OnClickLis
     public void onDestroyView()
     {
         super.onDestroyView();
-        timethread.setStop(true);
+     /*   timethread.setStop(true);
         timethread.interrupt();
-        timethread = null;
+        timethread = null;*/
+        if (timethread != null && timethread.isAlive())
+        {
+            timethread.setStop(true);
+            timethread.interrupt();
+            timethread = null;
+        }
+
     }
 }

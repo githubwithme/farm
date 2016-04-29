@@ -182,6 +182,8 @@ public class DayWeatherFragment extends Fragment
 		tv_tempL.setText(parkweathertab.gettempL() + "℃");
 		tv_weather.setText(parkweathertab.getweather());
 		tv_tempM.setText(parkweathertab.gettempM() + "℃");
+		if (getActivity()==null)
+			return;
 		if (!parkweathertab.getdimg().equals(""))
 		{
 			BitmapHelper.setImageViewBackground(getActivity(), img_weather, AppConfig.baseurl + parkweathertab.getdimg());

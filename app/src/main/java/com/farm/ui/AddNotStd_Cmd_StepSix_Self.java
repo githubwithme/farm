@@ -115,7 +115,7 @@ public class AddNotStd_Cmd_StepSix_Self extends Fragment
             }else
             {
 //                tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+small_dw+"/株"+ "  "+"共需："+list_goodslisttab.get(i).getGX()+large_dw+"\n";
-                tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+"kg/株"+ "  "+"共需："+list_goodslisttab.get(i).getGX()+"kg"+"\n";
+                tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+"g/株"+ "  "+"共需："+list_goodslisttab.get(i).getGX()+"g"+"\n";
             }
         }
         commandtab_single = com.farm.bean.commandtab_single.getInstance();
