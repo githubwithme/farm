@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="编辑区域信息"
+            android:text="保存区域信息"
             android:textColor="#000000"
             android:textSize="15sp"/>
     </LinearLayout>
@@ -29,32 +29,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dip"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="80dip"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="属于"
-                android:textSize="@dimen/size_sp_14"/>
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line_color"/>
-
-            <TextView
-                android:id="@+id/tv_belong"
-                android:textSize="16sp"
-                android:textColor="@color/bg_text"
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:hint="请选择该区域属于哪个承包区"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,29 +39,7 @@
                 android:layout_width="80dip"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="植株数量"
-                android:textSize="@dimen/size_sp_14"/>
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line_color"/>
-
-            <EditText
-                android:id="@+id/et_numberofplant"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dip"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="80dip"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="说明"
+                android:text="区域说明"
                 android:textSize="@dimen/size_sp_14"/>
 
             <View
@@ -122,10 +74,12 @@
             android:background="@null"
             android:text="取消"
             android:textSize="15sp"/>
+
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="@color/line_color"/>
+
         <Button
             android:id="@+id/btn_sure"
             android:layout_width="0dip"
