@@ -240,7 +240,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
 //                        Double  neednumber = acountnumber / Double.valueOf(number);    //冯
 //                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + small_dw + "/株" + "  " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n"; //冯
 //                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " +goodslisttab.getgoodsunit()+ small_dw + "/株" + "  " + "共需" + acountnumber + goodslisttab.getgoodsunit() + "\n";
-                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL()+ "kg/株" + "  " + "共需" +acountnumber+ "kg" + "\n";
+                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL()+ "g/株" + "  " + "共需" +acountnumber+ "g" + "\n";
 
                     }
 
