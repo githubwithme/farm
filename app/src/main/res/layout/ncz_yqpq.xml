@@ -1,52 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/lv_work"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#fff"
-            android:cacheColorHint="#00000000"
-            android:dividerHeight="0px"
-            android:fastScrollEnabled="true"
-            android:listSelector="#00000000"
-            android:scrollbars="none"
-            android:visibility="gone" />
+            android:layout_height="match_parent">
 
-        <com.farm.widget.PullToRefreshListView
-            android:id="@+id/frame_listview_news"
-            style="@style/widget_listview"
-            android:dividerHeight="0px" />
+            <ListView
+                android:id="@+id/lv_work"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff"
+                android:cacheColorHint="#00000000"
+                android:dividerHeight="0px"
+                android:fastScrollEnabled="true"
+                android:listSelector="#00000000"
+                android:scrollbars="none"
+                android:visibility="gone"/>
 
-        <LinearLayout
-            android:id="@+id/ll_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical" >
+            <com.farm.widget.PullToRefreshListView
+                android:id="@+id/frame_listview_news"
+                style="@style/widget_listview"
+                android:dividerHeight="0px"/>
 
-            <ImageView
-                android:id="@+id/iv_nowork"
+            <LinearLayout
+                android:id="@+id/ll_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@null"
-                android:src="@drawable/nowork" />
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dip"
-                android:text="还没添加任何园区哦!" />
-        </LinearLayout>
-    </FrameLayout>
+                <ImageView
+                    android:id="@+id/iv_nowork"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@null"
+                    android:src="@drawable/nowork"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dip"
+                    android:text="还没添加任何园区哦!"/>
+            </LinearLayout>
+        </FrameLayout>
+
+    </ScrollView>
+
 
 </LinearLayout>

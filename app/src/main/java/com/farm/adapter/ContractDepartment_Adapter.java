@@ -75,11 +75,11 @@ public class ContractDepartment_Adapter extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
-        if (!list_department.get(position).getContractid().equals(""))
-        {
-            listItemView.tv_name.setText((list_department.get(position).getName()));
-        }
-
+//        if (!list_department.get(position).getContractid().equals(""))
+//        {
+//            listItemView.tv_name.setText((list_department.get(position).getName()));
+//        }
+        listItemView.tv_name.setText((list_department.get(position).getName()));
         return convertView;
     }
 }

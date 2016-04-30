@@ -267,6 +267,7 @@
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
                     android:text="添加规划"
+                    android:visibility="gone"
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
 

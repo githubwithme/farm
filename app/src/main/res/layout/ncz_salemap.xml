@@ -251,12 +251,18 @@
                 android:background="@drawable/background_view_rounded_single"
                 android:orientation="vertical"
                 android:visibility="gone">
-
+                <CheckBox
+                    android:id="@+id/cb_block"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="区块标识"/>
                 <CheckBox
                     android:id="@+id/cb_park"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:text="园区标识"/>
 
                 <CheckBox
@@ -264,6 +270,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:text="片区标识"/>
 
                 <CheckBox
@@ -271,6 +278,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:text="承包区标识"/>
 
                 <CheckBox

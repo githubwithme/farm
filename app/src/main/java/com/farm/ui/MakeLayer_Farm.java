@@ -281,6 +281,8 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
     @ViewById
     Button btn_addorder;
     @ViewById
+    Button btn_canclepaint;
+    @ViewById
     Button btn_complete;
     @ViewById
     TextView tv_gk;
@@ -651,7 +653,11 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
         cb_zoom_gesture.setChecked(true);
         uiSettings.setZoomGesturesEnabled(true);
     }
-
+    @Click
+    void btn_canclepaint()
+    {
+        reloadMap();
+    }
     @Click
     void btn_addlayer()
     {
@@ -2600,6 +2606,13 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
                 customdialog_editpolygoninfor.dismiss();
             }
         });
+        for (int i = 0; i < list_department.size(); i++)
+        {
+            if (list_department.get(i).getContractid().equals(""))
+            {
+                list_department.remove(i);
+            }
+        }
         contractDepartMent_Adapter = new ContractDepartment_Adapter(MakeLayer_Farm.this, list_department);
         lv_department.setAdapter(contractDepartMent_Adapter);
         lv_department.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -3673,8 +3686,41 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_edit = (Button) dialog_layout.findViewById(R.id.btn_edit);
+        Button btn_dividearea = (Button) dialog_layout.findViewById(R.id.btn_dividearea);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
         Button btn_delete = (Button) dialog_layout.findViewById(R.id.btn_delete);
+        btn_dividearea.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customdialog_operatepolygon.dismiss();
+                if (polygonbean_selected.getContractid().equals(""))
+                {
+                    list_Objects_divideline = new ArrayList<Polyline>();
+                    tencentMap.setZoom(18);
+                    initMapClickWhenPaint();
+                    tencentMap.setOnMarkerClickListener(new TencentMap.OnMarkerClickListener()
+                    {
+                        @Override
+                        public boolean onMarkerClick(Marker marker)
+                        {
+                            return false;
+                        }
+                    });
+                    btn_canclepaint.setVisibility(View.VISIBLE);
+                    List<CoordinatesBean> list_coordinatesbean = polygonbean_selected.getCoordinatesBeanList();
+                    if (list_coordinatesbean != null && list_coordinatesbean.size() != 0)
+                    {
+                        showNeedPlanBoundary(list_coordinatesbean);
+                    }
+                }else
+                {
+                    Toast.makeText(MakeLayer_Farm.this, "该区块已经归类，不能再划分了", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
         btn_edit.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -6812,7 +6858,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
                             {
                                 marker = addCustomMarker(polygonBean, "farm_boundary", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, polygonBean.getUuid(), polygonBean.getparkName() + polygonBean.getareaName() + polygonBean.getContractname());
                             }
-                            marker.setVisible(false);
+//                            marker.setVisible(false);
                             list_Marker_block.add(marker);
                             List<CoordinatesBean> list_contract = polygonBean.getCoordinatesBeanList();
                             if (list_contract != null && list_contract.size() != 0)
