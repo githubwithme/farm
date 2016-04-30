@@ -43,6 +43,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -213,6 +214,9 @@ public class PG_EventReported extends Fragment
                                 it.remove();
                             }
                         }
+
+
+
 
                     } else {
                         listNewData = new ArrayList<ReportedBean>();

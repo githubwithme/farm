@@ -102,7 +102,7 @@ public class Common_MoreJob extends Activity
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("bean", dictionary);
 		selectorUi.setArguments(bundle);
-		switchContent(mContent, selectorUi);
+//		switchContent(mContent, selectorUi);
 		tv_title.setText("更多工作");
 		appContext = (AppContext) getApplication();
 		initAnimalListView();

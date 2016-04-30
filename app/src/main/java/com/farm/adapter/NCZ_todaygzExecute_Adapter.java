@@ -373,7 +373,7 @@ public class NCZ_todaygzExecute_Adapter extends BaseExpandableListAdapter
 //        regisdate.setText(listData.get(groupPosition).getRegisdate());
         regisdate.setText(dates);
 //        tv_gznum.setText(listData.get(groupPosition).getJoblist().size());
-        String gznum=listData.get(groupPosition).getJoblist().size()+"";
+        String gznum=listData.get(groupPosition).getJoblist().size()+"条";
         tv_gznum.setText(gznum);
         return convertView;
     }
