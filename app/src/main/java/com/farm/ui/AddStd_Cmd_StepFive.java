@@ -25,7 +25,9 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,6 +72,7 @@ public class AddStd_Cmd_StepFive extends Fragment
     @Click
     void tv_timelimit()
     {
+        tv_timelimit.setTextColor(getContext().getResources().getColor(R.color.bg_yellow));
         MyDatepicker myDatepicker = new MyDatepicker(getActivity(), tv_timelimit);
         myDatepicker.getDialog().show();
     }
@@ -84,6 +87,13 @@ public class AddStd_Cmd_StepFive extends Fragment
     EditText et_note;
     FragmentCallBack fragmentCallBack = null;
 
+
+/*    @Click
+    void et_note(){
+        et_note.setTextColor(getContext().getResources().getColor(R.color.bg_yellow));
+        et_note.setText("");
+
+    }*/
     @Click
     void btn_next()
     {
@@ -100,7 +110,23 @@ public class AddStd_Cmd_StepFive extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String str = formatter.format(curDate);
+        tv_timelimit.setText(str);
+        tv_timelimit.setTextColor(getContext().getResources().getColor(R.color.gray));
+        et_note.setText("无");
+        et_note.setTextColor(getContext().getResources().getColor(R.color.gray));
         tv_importance.setText(importance);
+
+        et_note.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                et_note.setTextColor(getContext().getResources().getColor(R.color.bg_yellow));
+                et_note.setText("");
+
+            }
+        });
     }
 
     @Override

@@ -91,7 +91,6 @@
                         android:hint="请开始时间"
                         android:paddingLeft="40dip"
                         android:paddingRight="10dip"
-                        android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>
                 </TableRow>
 

@@ -17,7 +17,7 @@
         <HorizontalScrollView
             android:id="@+id/cmd_tools_scrlllview"
             android:layout_width="fill_parent"
-            android:layout_height="50dip"
+            android:layout_height="wrap_content"
             android:layout_margin="5dip"
             android:fadingEdge="none"
             android:scrollbars="none">
@@ -25,7 +25,7 @@
             <LinearLayout
                 android:id="@+id/cmd_tools"
                 android:layout_width="fill_parent"
-                android:layout_height="50dip"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"/>

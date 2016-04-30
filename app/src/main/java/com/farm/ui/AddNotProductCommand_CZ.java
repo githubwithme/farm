@@ -86,7 +86,11 @@ public class AddNotProductCommand_CZ extends Activity implements OnClickListener
     {
         commandTabAdd();
     }
-
+@Click
+void btn_back()
+{
+    finish();
+}
     @Click
     void tv_importance()
     {

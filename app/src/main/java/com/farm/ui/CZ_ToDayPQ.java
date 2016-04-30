@@ -8,6 +8,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -67,7 +68,7 @@ public class CZ_ToDayPQ extends Activity
     @ViewById
     LinearLayout ll_tip;
     @ViewById
-    Button btn_back;
+    ImageButton btn_back;
 
     @Click
     void btn_back()

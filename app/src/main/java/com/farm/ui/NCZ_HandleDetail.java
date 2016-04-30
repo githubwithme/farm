@@ -134,7 +134,8 @@ public class NCZ_HandleDetail extends Activity
         imageView.setLayoutParams(lp);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.url + fj_SCFJ.getFJLJ());// ?
-        BitmapHelper.setImageView(NCZ_HandleDetail.this, imageView, AppConfig.baseurl + flview.getFJLJ());
+//        BitmapHelper.setImageView(NCZ_HandleDetail.this, imageView, AppConfig.baseurl + flview.getFJLJ());
+        BitmapHelper.setImageView(NCZ_HandleDetail.this, imageView, AppConfig.baseurl + flview.getLSTLJ());
 
         FJxx fj_SCFJ = new FJxx();
 //            fj_SCFJ.setFJBDLJ(FJBDLJ);
@@ -159,7 +160,8 @@ public class NCZ_HandleDetail extends Activity
                                 intent.setDataAndType(Uri.fromFile(file), "image");
                                 startActivity(intent);*/
                                 Intent intent = new Intent(NCZ_HandleDetail.this,DisplayImage_.class);
-                                intent.putExtra("url", AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
+//                                intent.putExtra("url", AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
+                                intent.putExtra("url", AppConfig.baseurl+list_picture.get(index_zp).getLSTLJ());
                                 startActivity(intent);
                                 break;
                             case R.id.btn_cancle:

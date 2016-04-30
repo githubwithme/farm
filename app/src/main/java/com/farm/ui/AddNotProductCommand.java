@@ -95,7 +95,11 @@ public class AddNotProductCommand extends Activity implements OnClickListener
     {
         commandTabAdd();
     }
-
+@Click
+void imgbtn_back()
+{
+    finish();
+}
     @Click
     void tv_importance()
     {

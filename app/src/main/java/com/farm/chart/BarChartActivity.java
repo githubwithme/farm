@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -45,6 +46,11 @@ public class BarChartActivity extends Activity
 	// overridePendingTransition(R.anim.move_left_in_activity,
 	// R.anim.move_right_out_activity);
 	// }
+	@Click
+	void btn_back()
+	{
+		finish();
+	}
 	@ViewById
 	ListView listView1;
 	@AfterViews

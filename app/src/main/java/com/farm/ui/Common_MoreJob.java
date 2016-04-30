@@ -43,6 +43,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -79,7 +80,11 @@ public class Common_MoreJob extends Activity
 	PullToRefreshListView frame_listview_news;
 	String workuserid;
 	Dictionary dictionary;
-
+	@Click
+	void btn_back()
+	{
+		finish();
+	}
 	@Override
 	public void onResume()
 	{

@@ -10,6 +10,14 @@
         android:layout_height="@dimen/titlebar_height"
         android:background="@color/bg_titlebar" >
 
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="30dip"
+            android:layout_height="@dimen/titlebar_height"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/back"/>
         <LinearLayout
             android:id="@+id/ll_tab"
             android:layout_width="wrap_content"
