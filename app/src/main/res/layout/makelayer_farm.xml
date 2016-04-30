@@ -267,6 +267,7 @@
                     android:background="@drawable/background_view_rounded_single"
                     android:gravity="center"
                     android:text="添加规划"
+                    android:visibility="gone"
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
 
@@ -395,10 +396,17 @@
                 android:visibility="gone">
 
                 <CheckBox
+                    android:id="@+id/cb_block"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="区块标识"/>
+                <CheckBox
                     android:id="@+id/cb_park"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:text="园区标识"/>
 
                 <CheckBox
@@ -406,6 +414,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:text="片区标识"/>
 
                 <CheckBox
@@ -413,6 +422,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:text="承包区标识"/>
 
                 <CheckBox
@@ -499,6 +509,18 @@
                 android:textSize="14sp"
                 android:visibility="gone"/>
 
+            <CheckBox
+                android:id="@+id/cb_lock"
+                android:layout_width="80dip"
+                android:layout_height="40dip"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="120dip"
+                android:layout_marginRight="10dip"
+                android:gravity="center"
+                android:text="锁屏"
+                android:textColor="@color/bg_text"
+                android:textSize="14sp"
+              />
             <Button
                 android:id="@+id/btn_saveCurrentLocation"
                 android:layout_width="80dip"

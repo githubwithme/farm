@@ -98,7 +98,7 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
     List<Marker> list_Marker_park;//园区标识对象
     List<Marker> list_Marker_area;//片区标识对象
     List<Marker> list_Marker_contract;//承包区标识对象
-
+    List<Marker> list_Marker_block;
     List<Marker> list_Marker_breakoff;
 
     List<Marker> list_Marker_allsale;
@@ -602,7 +602,8 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
     public void initBasicData()
     {
 //显示规划图
-        InitPlanMap();
+//        InitPlanMap();
+        InitArea();
 //显示点
         initGCDPolygon();
 //显示点
@@ -616,7 +617,66 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
 //显示面
         initMianPolygon();
     }
+    private void InitArea()
+    {
+        list_Marker_park = new ArrayList<>();
+        list_Marker_area = new ArrayList<>();
+        list_Marker_contract = new ArrayList<>();
+        list_Marker_block = new ArrayList<>();
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getAreaMapByUid");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<PolygonBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PolygonBean.class);
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            PolygonBean polygonBean = listNewData.get(i);
+                            LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
+                            Marker marker = null;
+                            if (polygonBean.getContractname().equals(""))
+                            {
+                                marker = addCustomMarker(polygonBean, "farm_boundary", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                            } else
+                            {
+                                marker = addCustomMarker(polygonBean, "farm_boundary", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, polygonBean.getUuid(), polygonBean.getparkName() + polygonBean.getareaName() + polygonBean.getContractname());
+                            }
+                            marker.setVisible(false);
+                            list_Marker_block.add(marker);
+                            List<CoordinatesBean> list_contract = polygonBean.getCoordinatesBeanList();
+                            if (list_contract != null && list_contract.size() != 0)
+                            {
+                                initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 2, R.color.bg_green);
+                            }
+                        }
+                    }
 
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
     private void InitPlanMap()
     {
         list_Marker_park = new ArrayList<>();

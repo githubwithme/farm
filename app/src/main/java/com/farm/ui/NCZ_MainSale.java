@@ -156,7 +156,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
     List<Marker> list_Marker_AreaChart;//图表标识
     List<Marker> list_Marker_ParkChart;//图表标识
     List<Marker> list_Marker_ContractChart;//图表标识
-
+    List<Marker> list_Marker_block;//承包区标识对象
     List<Polygon> list_Objects_breakoff;//多边形
 
     List<Polygon> list_Objects_mian;//多边形
@@ -223,6 +223,8 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
     View line_batch;
     @ViewById
     FrameLayout fl_map;
+    @ViewById
+    CheckBox cb_block;
     @ViewById
     CheckBox cb_park;
     @ViewById
@@ -292,7 +294,26 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         Intent intent = new Intent(getActivity(), NCZ_SaleMap_.class);
         getActivity().startActivity(intent);
     }
+    @CheckedChange
+    void cb_block()
+    {
+        if (cb_block.isSelected())
+        {
+            cb_block.setSelected(false);
+            for (int i = 0; i < list_Marker_block.size(); i++)
+            {
+                list_Marker_block.get(i).setVisible(false);
+            }
+        } else
+        {
+            cb_block.setSelected(true);
+            for (int i = 0; i < list_Marker_block.size(); i++)
+            {
+                list_Marker_block.get(i).setVisible(true);
+            }
+        }
 
+    }
     @CheckedChange
     void cb_park()
     {
@@ -748,6 +769,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         list_Marker_park = new ArrayList<>();
         list_Marker_area = new ArrayList<>();
         list_Marker_contract = new ArrayList<>();
+        list_Marker_block = new ArrayList<>();
     }
 
     public void initGCDPolygon()
@@ -1004,7 +1026,8 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
     public void initBasicData()
     {
 //显示规划图
-        InitPlanMap();
+//        InitPlanMap();
+        InitArea();
 //显示点
         getGcdList();
 //显示点
@@ -1017,6 +1040,66 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         initRoadPolygon();
 //显示面
         initMianPolygon();
+    }
+    private void InitArea()
+    {
+        list_Marker_park = new ArrayList<>();
+        list_Marker_area = new ArrayList<>();
+        list_Marker_contract = new ArrayList<>();
+        list_Marker_block = new ArrayList<>();
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getAreaMapByUid");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<PolygonBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PolygonBean.class);
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            PolygonBean polygonBean = listNewData.get(i);
+                            LatLng latlng = new LatLng(Double.valueOf(polygonBean.getLat()), Double.valueOf(polygonBean.getLng()));
+                            Marker marker = null;
+                            if (polygonBean.getContractname().equals(""))
+                            {
+                                marker = addCustomMarker(polygonBean, "farm_boundary", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, polygonBean.getUuid(), polygonBean.getNote());
+                            } else
+                            {
+                                marker = addCustomMarker(polygonBean, "farm_boundary", R.drawable.ic_flag_contract, getResources().getColor(R.color.white), latlng, polygonBean.getUuid(), polygonBean.getparkName() + polygonBean.getareaName() + polygonBean.getContractname());
+                            }
+                            marker.setVisible(false);
+                            list_Marker_block.add(marker);
+                            List<CoordinatesBean> list_contract = polygonBean.getCoordinatesBeanList();
+                            if (list_contract != null && list_contract.size() != 0)
+                            {
+                                initBoundary(Color.argb(150, 144, 144, 144), 0f, list_contract, 2, R.color.bg_green);
+                            }
+                        }
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
     }
 
     private void InitPlanMap()
