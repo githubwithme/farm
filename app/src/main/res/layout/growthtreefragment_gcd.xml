@@ -227,6 +227,7 @@
 
 
             <com.farm.widget.CircleImageView
+                android:visibility="gone"
                 android:id="@+id/circle_zl"
                 android:layout_width="35dip"
                 android:layout_height="35dip"
@@ -245,6 +246,36 @@
                 android:src="@drawable/ic_add_orange"
                 app:border_color="@color/transparent"
                 app:border_width="0px"/>
+
+            <FrameLayout
+
+                android:layout_marginTop="15dip"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_gravity="center_horizontal">
+
+                <com.farm.widget.CircleImageView
+                    android:id="@+id/add_plant"
+                    android:layout_width="35dip"
+                    android:layout_height="35dip"
+                    android:layout_gravity="center"
+                    android:src="@color/color_orange"
+                    app:border_color="@color/transparent"
+                    app:border_width="0px"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="添加植株"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_sp_14"/>
+            </FrameLayout>
+
+
+
+
         </LinearLayout>
 
         <LinearLayout

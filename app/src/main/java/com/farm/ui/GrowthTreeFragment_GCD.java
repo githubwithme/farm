@@ -42,6 +42,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,6 +101,19 @@ public class GrowthTreeFragment_GCD extends Fragment
     CircleImageView circle_gk;
     @ViewById
     CircleImageView circle_add;
+    @ViewById
+    CircleImageView add_plant;
+
+    @Click
+    void add_plant()
+    {
+//        Intent intent = new Intent(getActivity(), PG_PlantList_.class);
+        Intent intent = new Intent(getActivity(), AddPlant_.class);
+        intent.putExtra("gcdid",plantGcd.getId());
+        intent.putExtra("gcdName", plantGcd.getPlantgcdName());
+//        intent.putExtra("bean", plantGcd);
+        getActivity().startActivity(intent);
+    }
 
     @Click
     void circle_add()
@@ -140,7 +154,7 @@ public class GrowthTreeFragment_GCD extends Fragment
     }
 
 
-    @Click
+/*    @Click
     void ll_gk()
     {
         Intent intent = new Intent(getActivity(), PG_PlantList_.class);
@@ -148,7 +162,7 @@ public class GrowthTreeFragment_GCD extends Fragment
         intent.putExtra("gcdid", plantGcd.getId());
         intent.putExtra("gcdName", plantGcd.getPlantgcdName());
         startActivity(intent);
-    }
+    }*/
 
     @AfterViews
     void afterOncreate()
