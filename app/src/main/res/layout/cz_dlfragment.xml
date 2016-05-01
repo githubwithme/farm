@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/bg_titlebar">
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="断蕾情况"
+                android:textColor="@color/textcolor_titlebar"
+                android:textSize="@dimen/titlebar_textsize"/>
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+    <LinearLayout
+    android:id="@+id/cz_startdl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:visibility="gone"
+            android:layout_width="@dimen/width_colum"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
+            android:text="开始时间"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
+
+        <TextView
+            android:id="@+id/tv_timelimit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_colum"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="开始时间"
+            android:textSize="@dimen/size_14"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/startdl"
+        android:text="开始断蕾"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dip" />
+
+
+</LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <com.farm.widget.CustomExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:childDivider="@color/transparent"
+        android:dividerHeight="0dip"
+        android:groupIndicator="@null"/>
+    </ScrollView>
+</LinearLayout>

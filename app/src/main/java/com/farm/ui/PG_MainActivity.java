@@ -66,6 +66,7 @@ PG_ListOfEvents pg_listOfEvents;
 //    PG_BreakBud pg_breakBud;
     PG_ProductBatch pg_productBatch;
     PG_EveryDayAssessList pg_EveryDayAssessList;
+    PQ_DLFragment pq_dlFragment;
     IFragment iFragment;
     @ViewById
     ImageButton imgbtn_home;
@@ -130,7 +131,8 @@ PG_ListOfEvents pg_listOfEvents;
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
-        switchContent(mContent, pg_productBatch);
+//        switchContent(mContent, pg_productBatch);
+        switchContent(mContent, pq_dlFragment);
     }
     @Click
     void tl_event()
@@ -165,6 +167,7 @@ PG_ListOfEvents pg_listOfEvents;
         tl_me.setSelected(false);
         tl_event.setSelected(false);
         switchContent(mContent, pg_gddList);
+
     }
 
     @Click
@@ -223,6 +226,7 @@ PG_ListOfEvents pg_listOfEvents;
 //        productAndSale = new ProductSale_();
         pg_productBatch=new PG_ProductBatch_();
         pg_EveryDayAssessList = new PG_EveryDayAssessList_();
+        pq_dlFragment=new PQ_DLFragment_();
         iFragment = new IFragment_();
 
         TencentLocationRequest request = TencentLocationRequest.create();

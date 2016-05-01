@@ -67,5 +67,8 @@
     <item name="tag_parentview" type="id"></item>
     <item name="tag_bean" type="id"></item>
     <item name="tag_postion" type="id"></item>
+    <item name="tag_view" type="id"></item>
+    <item name="tag_contract" type="id"></item>
+    <item name="tag_text" type="id"></item>
     <string name="title_activity_observation_record">ObservationRecordActivity</string>
 </resources>

@@ -33,6 +33,16 @@ public class contractTab implements Parcelable // 与数据库不一致
     public String contractarea;
     public String amountforsale;
     public List<breakofftab> breakofftabList;
+    public List<BreakOff_New> BreakOffList;
+
+    public List<BreakOff_New> getBreakOffList() {
+        return BreakOffList;
+    }
+
+    public void setBreakOffList(List<BreakOff_New> breakOffList) {
+        BreakOffList = breakOffList;
+    }
+
 
 
     public void setNumOfPlant(String numOfPlant)
@@ -210,6 +220,7 @@ public class contractTab implements Parcelable // 与数据库不一致
             p.setContractarea(source.readString());
             p.setAmountforsale(source.readString());
             p.breakofftabList = source.readArrayList(breakofftab.class.getClassLoader());
+            p.BreakOffList = source.readArrayList(breakofftab.class.getClassLoader());
             return p;
         }
 
@@ -237,6 +248,7 @@ public class contractTab implements Parcelable // 与数据库不一致
         p.writeString(contractarea);
         p.writeString(amountforsale);
         p.writeList(breakofftabList);
+        p.writeList(BreakOffList);
     }
 
     @Override

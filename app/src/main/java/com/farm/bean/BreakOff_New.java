@@ -32,11 +32,11 @@ public class BreakOff_New implements Parcelable
 	public String areaid;
 	public String areaname;
 	public String contractid;
-	public String contractname;
+	public String contractname; //承包区名字
 	public String lat;
 	public String lng;
 	public String latlngsize ;
-	public String numberofbreakoff;
+	public String numberofbreakoff; //数量
 	public String regdate;
 	public String weight;
 	public String status;//断蕾情况：0未断蕾 1已经断蕾

@@ -161,6 +161,7 @@
         <activity android:name=".ui.PG_AddEvent_"/>
         <activity android:name=".ui.PG_EventDetail_"/>
         <activity android:name=".ui.PG_AddHandle_"/>
+        <activity android:name=".ui.PQ_DLbjFragment_"/>
         <!-- 共用UI -->
         <activity android:name=".chart.BarChartActivity_"/>
         <activity android:name=".ui.ObservationRecordActivity_"/>

@@ -18,16 +18,16 @@ import java.util.List;
  */
 public class NCZ_WZ_YClistAdapter extends BaseAdapter
 {
-    private Context context;// 运行上下文
-    private List<WZ_YCxx> listItems;// 数据集合
-    private LayoutInflater listContainer;
-    WZ_YCxx wz_yCxx;
-    public NCZ_WZ_YClistAdapter(Context context, List<WZ_YCxx> data)
-    {
-        this.context = context;
-        this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
-        this.listItems = data;
-    }
+        private Context context;// 运行上下文
+        private List<WZ_YCxx> listItems;// 数据集合
+        private LayoutInflater listContainer;
+        WZ_YCxx wz_yCxx;
+        public NCZ_WZ_YClistAdapter(Context context, List<WZ_YCxx> data)
+        {
+            this.context = context;
+            this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
+            this.listItems = data;
+        }
     static class ListItemView
     {
         public TextView indata;
