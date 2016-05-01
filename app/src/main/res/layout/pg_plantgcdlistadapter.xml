@@ -96,6 +96,7 @@
 
 
                         <Button
+                            android:visibility="gone"
                             android:id="@+id/btn_plantlist"
                             android:layout_width="45dip"
                             android:layout_height="25dip"
