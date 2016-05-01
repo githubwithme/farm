@@ -43,6 +43,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -79,7 +80,11 @@ public class Common_MoreJob extends Activity
 	PullToRefreshListView frame_listview_news;
 	String workuserid;
 	Dictionary dictionary;
-
+	@Click
+	void btn_back()
+	{
+		finish();
+	}
 	@Override
 	public void onResume()
 	{
@@ -102,7 +107,7 @@ public class Common_MoreJob extends Activity
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("bean", dictionary);
 		selectorUi.setArguments(bundle);
-		switchContent(mContent, selectorUi);
+//		switchContent(mContent, selectorUi);
 		tv_title.setText("更多工作");
 		appContext = (AppContext) getApplication();
 		initAnimalListView();

@@ -117,6 +117,7 @@ public class Common_JobDetail extends Activity
         {
             rl_jobname_tip.setVisibility(View.GONE);
         }
+
         String[] nongzi = jobtab.getnongziName().split(",");
         String[] yl = jobtab.getamount().split(";");
         String[] dw = jobtab.getAmountDW().split(",");
@@ -130,7 +131,7 @@ public class Common_JobDetail extends Activity
         tv_jobname.setText(jobtab.getstdJobTypeName() + "——" + jobtab.getstdJobName());
         tv_yl.setText(flyl);
         tv_note.setText(jobtab.getjobNote());
-
+        tv_qx.setText(jobtab.getregDate());
 
 
         if (jobtab.getassessScore().equals("-1"))

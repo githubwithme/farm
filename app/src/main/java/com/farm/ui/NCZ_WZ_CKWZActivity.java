@@ -32,6 +32,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -57,6 +58,12 @@ public class NCZ_WZ_CKWZActivity extends FragmentActivity
     TextView tv_title;
     @ViewById
     PullToRefreshListView wz_frame_listview;
+
+    @Click
+    void btn_back()
+    {
+        finish();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

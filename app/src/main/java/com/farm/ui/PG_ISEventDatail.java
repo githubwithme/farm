@@ -186,7 +186,8 @@ public class PG_ISEventDatail  extends Fragment
         imageView.setLayoutParams(lp);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.url + fj_SCFJ.getFJLJ());// ?
-        BitmapHelper.setImageView(getActivity(), imageView, AppConfig.baseurl + flview.getFJLJ());
+//        BitmapHelper.setImageView(getActivity(), imageView, AppConfig.baseurl + flview.getFJLJ());
+        BitmapHelper.setImageView(getActivity(), imageView, AppConfig.baseurl + flview.getLSTLJ());
 
         FJxx fj_SCFJ = new FJxx();
 //            fj_SCFJ.setFJBDLJ(FJBDLJ);
@@ -211,7 +212,8 @@ public class PG_ISEventDatail  extends Fragment
                                 intent.setDataAndType(Uri.fromFile(file), "image");
                                 startActivity(intent);*/
                                 Intent intent = new Intent(getActivity(),DisplayImage_.class);
-                                intent.putExtra("url", AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
+//                                intent.putExtra("url", AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
+                                intent.putExtra("url", AppConfig.baseurl+list_picture.get(index_zp).getLSTLJ());
                                 startActivity(intent);
                                 break;
                             case R.id.btn_cancle:

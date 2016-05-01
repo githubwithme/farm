@@ -135,7 +135,7 @@ public class NCZ_EventHandle extends Fragment
     {
         //获取人员信息
         getlistdata();
-        tv_tfsj.setText("突发事件19" + reportedBean.getEventId());
+        tv_tfsj.setText("突发事件" + reportedBean.getEventId());
         initAnimalListView();
     }
 /*    @Override

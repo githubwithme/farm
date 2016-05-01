@@ -226,10 +226,10 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
 				@Override
 				public void onClick(View v)
 				{
-					// Intent intent = new Intent(getActivity(),
-					// ShowPhotos_.class);
-					// intent.putExtra("url", imgurl.get(oldPosition));
-					// getActivity().startActivity(intent);
+					/* Intent intent = new Intent(getActivity(),
+					 ShowPhotos_.class);
+					 intent.putExtra("url", imgurl.get(oldPosition));
+					 getActivity().startActivity(intent);*/
 				}
 			});
 		}

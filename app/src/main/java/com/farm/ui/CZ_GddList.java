@@ -82,7 +82,11 @@ public class CZ_GddList extends Activity
     PullToRefreshListView frame_listview_news;
 
     String areaid;
-
+@Click
+void btn_back()
+{
+    finish();
+}
     @Click
     void btn_add()
     {

@@ -84,6 +84,11 @@ public class NCZ_GddList extends Activity
     areatab areatab;
 
     @Click
+    void btn_back()
+    {
+        finish();
+    }
+    @Click
     void btn_connect()
     {
 
