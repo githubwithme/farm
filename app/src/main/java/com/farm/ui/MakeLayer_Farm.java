@@ -5719,13 +5719,30 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
         ;//线、面
         btn_addmore.setClickable(true);
 
-
+        initParamAfterPaint();
         initMapData();
         initMarkOnclick();
         initMapOnclickListening();
         initMapCameraChangeListener();
     }
+    public void initParamAfterPaint()
+    {
+        btn_canclepaint.setVisibility(View.GONE);
 
+        isInner = false;
+        pos_line1 = 0;
+        pos_line2 = 0;
+        list_Objects_divideline = new ArrayList<>();
+        list_latlng_needplanboundary = new ArrayList<>();
+        list_latlng_needplanline = new ArrayList<>();
+        touchLatlng1 = null;
+        touchLatlng2 = null;
+
+        list_latlng_pick = new ArrayList<>();
+        lastselect_latlng = null;
+        list_latlng_firstline = null;
+        list_latlng_secondline = null;
+    }
     private void showThirdMarker()
     {
         if (list_Marker_third.size() > 0)
