@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.lidroid.xutils.db.annotation.Table;
 
+import java.util.List;
+
 /**
  * Description: areatab 实体类</p>
  * <p/>
@@ -24,7 +26,18 @@ public class BatchTime implements Parcelable // 与数据库不一致
     public String batchColor;
     public String batchTime;
     public String year;
+    public List<BreakOff_New> breakOff_newList;
 
+
+    public void setBreakOff_newList(List<BreakOff_New> breakOff_newList)
+    {
+        this.breakOff_newList = breakOff_newList;
+    }
+
+    public List<BreakOff_New> getBreakOff_newList()
+    {
+        return breakOff_newList;
+    }
 
     public void setBatchTime(String batchTime)
     {
@@ -125,6 +138,7 @@ public class BatchTime implements Parcelable // 与数据库不一致
             p.setBatchColor(source.readString());
             p.setBatchTime(source.readString());
             p.setYear(source.readString());
+            p.breakOff_newList = source.readArrayList(plantgrowthtab.class.getClassLoader());
 
             return p;
         }
@@ -146,6 +160,7 @@ public class BatchTime implements Parcelable // 与数据库不一致
         p.writeString(batchColor);
         p.writeString(batchTime);
         p.writeString(year);
+        p.writeList(breakOff_newList);
     }
 
     @Override
