@@ -26,8 +26,52 @@ public class BatchTime implements Parcelable // 与数据库不一致
     public String batchColor;
     public String batchTime;
     public String year;
+    public String numberofsaleout;
+    public String numberofselein;
+    public String numberofsalefor;
+    public String numberofnewsale;
     public List<BreakOff_New> breakOff_newList;
 
+
+    public void setNumberofnewsale(String numberofnewsale)
+    {
+        this.numberofnewsale = numberofnewsale;
+    }
+
+    public String getNumberofnewsale()
+    {
+        return numberofnewsale;
+    }
+
+    public void setNumberofsalefor(String numberofsalefor)
+    {
+        this.numberofsalefor = numberofsalefor;
+    }
+
+    public String getNumberofsalefor()
+    {
+        return numberofsalefor;
+    }
+
+    public void setNumberofselein(String numberofselein)
+    {
+        this.numberofselein = numberofselein;
+    }
+
+    public String getNumberofselein()
+    {
+        return numberofselein;
+    }
+
+    public void setNumberofsaleout(String numberofsaleout)
+    {
+        this.numberofsaleout = numberofsaleout;
+    }
+
+    public String getNumberofsaleout()
+    {
+        return numberofsaleout;
+    }
 
     public void setBreakOff_newList(List<BreakOff_New> breakOff_newList)
     {
@@ -138,6 +182,10 @@ public class BatchTime implements Parcelable // 与数据库不一致
             p.setBatchColor(source.readString());
             p.setBatchTime(source.readString());
             p.setYear(source.readString());
+            p.setNumberofsaleout(source.readString());
+            p.setNumberofselein(source.readString());
+            p.setNumberofsalefor(source.readString());
+            p.setNumberofnewsale(source.readString());
             p.breakOff_newList = source.readArrayList(plantgrowthtab.class.getClassLoader());
 
             return p;
@@ -160,7 +208,12 @@ public class BatchTime implements Parcelable // 与数据库不一致
         p.writeString(batchColor);
         p.writeString(batchTime);
         p.writeString(year);
+        p.writeString(numberofsaleout);
+        p.writeString(numberofselein);
+        p.writeString(numberofsalefor);
+        p.writeString(numberofnewsale);
         p.writeList(breakOff_newList);
+
     }
 
     @Override
