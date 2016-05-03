@@ -80,11 +80,11 @@ public void getBatchTimeOfAreaId(){
                     listNewData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                     pq_dlExecute_adapter=new PQ_DLExecute_Adapter(getActivity(), listNewData, expandableListView);
                     expandableListView.setAdapter(pq_dlExecute_adapter);
-           /*         for (int i = 0; i < listNewData.size(); i++)
+                   for (int i = 0; i < listNewData.size(); i++)
                     {
                         expandableListView.expandGroup(i);//展开
 //                                  expandableListView.collapseGroup(i);//关闭
-                    }*/
+                    }
 
                 } else
                 {

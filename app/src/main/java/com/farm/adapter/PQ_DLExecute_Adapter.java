@@ -29,8 +29,9 @@ import java.util.Map;
  */
 public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
 {
-    private List<Map<String, Object>> data_list;
-    private SimpleAdapter sim_adapter;
+    PQ_GV_Adapter pq_gv_adapter;
+//    private List<Map<String, Object>> data_list;
+//    private SimpleAdapter sim_adapter;
     TextView currentTextView;
     CustomDialog_ListView customDialog_listView;
     private int currentItem = 0;
@@ -40,8 +41,6 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
     private GoodsAdapter adapter;
     List<BatchTime> listData;
     ListView list;
-    String batchtime;
-    String batchcolor;
     public PQ_DLExecute_Adapter(Context context, List<BatchTime> listData, ExpandableListView mainlistview)
     {
         this.mainlistview = mainlistview;
@@ -54,12 +53,12 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        if (listData.get(groupPosition).getBreakOff_newList() == null)
+        if (listData.get(groupPosition).getBreakOffList() == null)
         {
             return null;
         }
-//        return listData.get(groupPosition).getBreakOff_newList().get(childPosition);
-        return listData.get(groupPosition).getBreakOff_newList();
+        return listData.get(groupPosition).getBreakOffList().get(childPosition);
+//        return   listData.get(groupPosition).getBreakOffList();
     }
 
     static class ListItemView
@@ -81,10 +80,12 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
     public View getChildView( int groupPosition,  int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<BreakOff_New> childData = listData.get(groupPosition).getBreakOff_newList();
-        final BreakOff_New breakOff_new = childData.get(childPosition);
-//        final String batchname=listData.get(groupPosition).getBatchName();
-//        final String indate=listData.get(groupPosition).getInDate();
+        List<BreakOff_New> childData = listData.get(groupPosition).getBreakOffList();
+        if (childData.size()>0)
+        {
+            int a=childData.size();
+        }
+//        final BreakOff_New breakOff_new = childData.get(childPosition);
         View v = null;
         if (lmap.get(groupPosition) != null)
         {
@@ -98,18 +99,6 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
             listItemView = new ListItemView();
             listItemView.gridView = (GridView) convertView.findViewById(R.id.gridView);
 
-            convertView.setTag(listItemView);
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-      /*              Intent intent = new Intent(context, NCZ_WZ_RKDetail_.class);
-                    intent.putExtra("wz_rKxx", wz_rKxx);
-                    intent.putExtra("batchname", batchname);
-                    intent.putExtra("indate", indate);
-                    context.startActivity(intent);*/
-
-                }
-            });
             map.put(childPosition, convertView);
             lmap.put(groupPosition, map);
             if (isLastChild)
@@ -120,24 +109,18 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
             //数据添加
 //            listItemView.goodsname.setText(wz_rKxx.getGoodsname());
 
-            data_list = new ArrayList<Map<String, Object>>();
-            for(int i=0;i<childData.size();i++){
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("name", childData.get(i).getareaname()+childData.get(i).getcontractname());
-                map.put("num", childData.get(i).getBatchColor()+childData.get(i).getnumberofbreakoff());
-                data_list.add(map);
-            }
 
-            String [] from ={"name","num"};
-            int [] to = {R.id.tv_area,R.id.tv_num};
-            sim_adapter=new SimpleAdapter(context,data_list,R.layout.dl_gridview_item,from,to);
-            listItemView.gridView.setAdapter(sim_adapter);
+
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
             listItemView = (ListItemView) convertView.getTag();
         }
         //数据添加  都可以数据加载，不过在上面比较好，这里是返回view
+        if (childData.size()>0) {
+            pq_gv_adapter = new PQ_GV_Adapter(context, childData);
+            listItemView.gridView.setAdapter(pq_gv_adapter);
+        }
         return convertView;
     }
 
@@ -167,7 +150,7 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getBreakOff_newList() == null)
+        if (listData.get(groupPosition).getBreakOffList() == null)
         {
             return 0;
         }

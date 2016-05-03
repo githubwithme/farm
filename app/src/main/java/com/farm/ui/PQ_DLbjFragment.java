@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.PQ_DLbjGV_Adapter;
+import com.farm.adapter.pq_dlbjGV_adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.BreakOff;
@@ -46,7 +46,7 @@ import com.farm.bean.commembertab;
 public class PQ_DLbjFragment extends Activity {
     List<contractTab> list_contractTab = null;
     commembertab commembertab;
-    PQ_DLbjGV_Adapter pq_dLbjGV_adapter;
+    pq_dlbjGV_adapter pq_dLbjGV_adapter;
     @ViewById
     TextView tv_title;
     @ViewById
@@ -142,7 +142,7 @@ public class PQ_DLbjFragment extends Activity {
                     if (result.getAffectedRows() != 0)
                     {
                         list_contractTab = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
-                        pq_dLbjGV_adapter = new PQ_DLbjGV_Adapter(PQ_DLbjFragment.this, list_contractTab,batchtime,batchcolor);
+                        pq_dLbjGV_adapter = new pq_dlbjGV_adapter(PQ_DLbjFragment.this, list_contractTab,batchtime,batchcolor);
                         gv_breakoff.setAdapter(pq_dLbjGV_adapter);
                     }
 

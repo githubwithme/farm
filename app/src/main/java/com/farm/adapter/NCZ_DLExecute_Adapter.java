@@ -28,6 +28,7 @@ import java.util.Map;
 public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 {
     private List<Map<String, Object>> data_list;
+    CZ_GV_Adapter cz_gv_adapter;
     private SimpleAdapter sim_adapter;
     TextView currentTextView;
     CustomDialog_ListView customDialog_listView;
@@ -48,12 +49,12 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        if (listData.get(groupPosition).getBreakOff_newList() == null)
+        if (listData.get(groupPosition).getBreakOffList() == null)
         {
             return null;
         }
-//        return listData.get(groupPosition).getBreakOff_newList().get(childPosition);
-        return listData.get(groupPosition).getBreakOff_newList();
+        return listData.get(groupPosition).getBreakOffList().get(childPosition);
+//        return listData.get(groupPosition).getBreakOffList();
     }
 
     static class ListItemView
@@ -75,8 +76,8 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
     public View getChildView( int groupPosition,  int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<BreakOff_New> childData = listData.get(groupPosition).getBreakOff_newList();
-        final BreakOff_New breakOff_new = childData.get(childPosition);
+        List<BreakOff_New> childData = listData.get(groupPosition).getBreakOffList();
+//        final BreakOff_New breakOff_new = childData.get(childPosition);
 //        final String batchname=listData.get(groupPosition).getBatchName();
 //        final String indate=listData.get(groupPosition).getInDate();
         View v = null;
@@ -113,8 +114,9 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 
             //数据添加
 //            listItemView.goodsname.setText(wz_rKxx.getGoodsname());
-
-            data_list = new ArrayList<Map<String, Object>>();
+            cz_gv_adapter=new CZ_GV_Adapter(context,childData);
+            listItemView.gridView.setAdapter(sim_adapter);
+         /*   data_list = new ArrayList<Map<String, Object>>();
             for(int i=0;i<childData.size();i++){
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("name", childData.get(i).getareaname()+childData.get(i).getcontractname());
@@ -125,7 +127,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
             String [] from ={"name","num"};
             int [] to = {R.id.tv_area,R.id.tv_num};
             sim_adapter=new SimpleAdapter(context,data_list,R.layout.dl_gridview_item,from,to);
-            listItemView.gridView.setAdapter(sim_adapter);
+            listItemView.gridView.setAdapter(sim_adapter);*/
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -161,7 +163,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getBreakOff_newList() == null)
+        if (listData.get(groupPosition).getBreakOffList() == null)
         {
             return 0;
         }
