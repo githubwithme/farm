@@ -67,6 +67,7 @@ public class GridViewAdapter_SellOrDetail_NCZ extends BaseAdapter
             convertView = View.inflate(context, R.layout.gridview_sellorderdetail_ncz, null);
             view = new Holder(convertView);
             view.cb_select.setTag(position);
+            view.cb_selectall.setTag(position);
             convertView.setTag(view);
         } else
         {
@@ -123,6 +124,7 @@ public class GridViewAdapter_SellOrDetail_NCZ extends BaseAdapter
             tv_name = (TextView) view.findViewById(R.id.tv_name);
             tv_number = (TextView) view.findViewById(R.id.tv_number);
             cb_select = (CheckBox) view.findViewById(R.id.cb_select);
+            cb_selectall = (CheckBox) view.findViewById(R.id.cb_selectall);
         }
     }
 

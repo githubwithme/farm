@@ -12,6 +12,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.parktab;
+import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -49,13 +50,26 @@ public class NCZ_FarmSale extends Activity
     @AfterViews
     void afterOncreate()
     {
-        getBatchTimeByUid();
+        getBatchTimeByUid_test();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        getActionBar().hide();
+    }
+
+    private void getBatchTimeByUid_test()
+    {
+        List<parktab> listNewData = FileHelper.getAssetsData(NCZ_FarmSale.this, "getBatchTimeByUid", parktab.class);
+        ncz_farmSale_adapter = new NCZ_FarmSale_Adapter(NCZ_FarmSale.this, listNewData, expandableListView);
+        expandableListView.setAdapter(ncz_farmSale_adapter);
+        utils.setListViewHeight(expandableListView);
+        for (int i = 0; i < listNewData.size(); i++)
+        {
+            expandableListView.expandGroup(i);//展开
+        }
     }
 
     private void getBatchTimeByUid()

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.bean.BatchTime;
 import com.farm.bean.parktab;
+import com.farm.ui.NCZ_SellOrderDetail_;
 import com.farm.widget.CustomDialog_ListView;
 
 import java.util.HashMap;

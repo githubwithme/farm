@@ -16,6 +16,7 @@ import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.commembertab;
+import com.farm.common.FileHelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -66,14 +67,21 @@ public class NCZ_SellOrderDetail extends Activity
     void afterOncreate()
     {
         tv_title.setText(batchTime.getBatchTime());
-        getSellOrderDetailByBatchtime();
+        getSellOrderDetailByBatchtime_temp();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        getActionBar().hide();
         batchTime = getIntent().getParcelableExtra("bean");
+    }
+    private void getSellOrderDetailByBatchtime_temp()
+    {
+        List<SellOrderDetail_New> listNewData = FileHelper.getAssetsData(NCZ_SellOrderDetail.this, "getSellOrderDetailByBatchtime", SellOrderDetail_New.class);
+        gridViewAdapter_sellOrDetail_ncz = new GridViewAdapter_SellOrDetail_NCZ(NCZ_SellOrderDetail.this, listNewData);
+        gv.setAdapter(gridViewAdapter_sellOrDetail_ncz);
     }
 
     private void getSellOrderDetailByBatchtime()
