@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dip">
+
+        <TextView
+            android:id="@+id/tv_batchtime"
+            android:layout_width="100dip"
+            android:layout_height="match_parent"
+            android:background="@color/bg_green"
+            android:gravity="center"
+            android:text="07-13至07-15"
+            android:textColor="@color/red"/>
+
+
+        <ProgressBar
+            android:id="@+id/pb_sale"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="60dip"
+            android:layout_toRightOf="@+id/tv_batchtime"
+            android:max="100"/>
+
+        <CheckBox
+            android:id="@+id/cb_select"
+            android:layout_width="40dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

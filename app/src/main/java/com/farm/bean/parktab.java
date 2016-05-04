@@ -64,9 +64,63 @@ public class parktab implements Parcelable
 	public String AreacommandCount;
 	public String commandVideoCount;
 	public String AreacommandVideoCount;
+	public String numberofsaleout;
+	public String numberofselein;
+	public String numberofsalefor;
+	public String numberofnewsale;
 	public List<areatab> areatabList;
+	public List<BatchTime> batchTimeList;
 
 
+	public void setBatchTimeList(List<BatchTime> batchTimeList)
+	{
+		this.batchTimeList = batchTimeList;
+	}
+
+	public List<BatchTime> getBatchTimeList()
+	{
+		return batchTimeList;
+	}
+
+	public void setNumberofnewsale(String numberofnewsale)
+	{
+		this.numberofnewsale = numberofnewsale;
+	}
+
+	public String getNumberofnewsale()
+	{
+		return numberofnewsale;
+	}
+
+	public void setNumberofsalefor(String numberofsalefor)
+	{
+		this.numberofsalefor = numberofsalefor;
+	}
+
+	public String getNumberofsalefor()
+	{
+		return numberofsalefor;
+	}
+
+	public void setNumberofselein(String numberofselein)
+	{
+		this.numberofselein = numberofselein;
+	}
+
+	public String getNumberofselein()
+	{
+		return numberofselein;
+	}
+
+	public void setNumberofsaleout(String numberofsaleout)
+	{
+		this.numberofsaleout = numberofsaleout;
+	}
+
+	public String getNumberofsaleout()
+	{
+		return numberofsaleout;
+	}
 	public void setPlantnumber(String plantnumber)
 	{
 		this.plantnumber = plantnumber;
@@ -541,7 +595,12 @@ public class parktab implements Parcelable
 			p.setAreacommandCount(source.readString());
 			p.setCommandVideoCount(source.readString());
 			p.setAreacommandVideoCount(source.readString());
+			p.setNumberofsaleout(source.readString());
+			p.setNumberofselein(source.readString());
+			p.setNumberofsalefor(source.readString());
+			p.setNumberofnewsale(source.readString());
 			p.areatabList = source.readArrayList(areatab.class.getClassLoader());
+			p.batchTimeList = source.readArrayList(areatab.class.getClassLoader());
 			return p;
 		}
 
@@ -592,7 +651,12 @@ public class parktab implements Parcelable
 		p.writeString(AreacommandCount);
 		p.writeString(commandVideoCount);
 		p.writeString(AreacommandVideoCount);
+		p.writeString(numberofsaleout);
+		p.writeString(numberofselein);
+		p.writeString(numberofsalefor);
+		p.writeString(numberofnewsale);
 		p.writeList(areatabList);
+		p.writeList(batchTimeList);
 	}
 
 	@Override
