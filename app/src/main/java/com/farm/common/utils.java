@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -572,7 +573,23 @@ public class utils
         //params.height最后得到整个ListView完整显示需要的高度
         listView.setLayoutParams(params);
     }
+    public static void setGridViewHeight(GridView gridView)
+    {
+        ListAdapter listAdapter = gridView.getAdapter();
+        int totalHeight = 0;
+        int count = listAdapter.getCount();
+        for (int i = 0; i < listAdapter.getCount(); i++)
+        {
+            View listItem = listAdapter.getView(i, null, gridView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
 
+        ViewGroup.LayoutParams params = gridView.getLayoutParams();
+        params.height = totalHeight + (gridView.getMeasuredHeight() * (listAdapter.getCount() - 1));
+        gridView.setLayoutParams(params);
+        gridView.requestLayout();
+    }
     public static void setListViewHeight(ListView listView)
     {
         ListAdapter listAdapter = listView.getAdapter();

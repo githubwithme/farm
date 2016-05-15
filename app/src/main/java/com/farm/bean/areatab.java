@@ -52,7 +52,18 @@ public class areatab implements Parcelable // 与数据库不一致
 	public String plantGrowVideoCount;
 	public String commandVideoCount;
 	public List<contractTab> contractTabList;
+	public List<SellOrderDetail_New> sellOrderDetail_NewList;
 
+
+	public void setSellOrderDetail_NewList(List<SellOrderDetail_New> sellOrderDetail_NewList)
+	{
+		this.sellOrderDetail_NewList = sellOrderDetail_NewList;
+	}
+
+	public List<SellOrderDetail_New> getSellOrderDetail_NewList()
+	{
+		return sellOrderDetail_NewList;
+	}
 
 	public void setContractTabList(List<contractTab> contractTabList)
 	{
@@ -409,6 +420,7 @@ public class areatab implements Parcelable // 与数据库不一致
 			p.setWorkuserid(source.readString());
 			p.setCommandCount(source.readString());
 			p.contractTabList = source.readArrayList(plantgrowthtab.class.getClassLoader());
+			p.sellOrderDetail_NewList = source.readArrayList(plantgrowthtab.class.getClassLoader());
 			return p;
 		}
 
@@ -450,6 +462,7 @@ public class areatab implements Parcelable // 与数据库不一致
 		p.writeString(workuserid);
 		p.writeString(commandCount);
 		p.writeList(contractTabList);
+		p.writeList(sellOrderDetail_NewList);
 	}
 
 	@Override

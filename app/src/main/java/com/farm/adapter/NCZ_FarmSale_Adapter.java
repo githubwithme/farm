@@ -6,16 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckBox;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.BatchTime;
 import com.farm.bean.parktab;
-import com.farm.ui.NCZ_SellOrderDetail_;
+import com.farm.ui.NCZ_FarmSale_BatchDetail_;
 import com.farm.widget.CustomDialog_ListView;
 
 import java.util.HashMap;
@@ -57,8 +56,7 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
     static class ListItemView
     {
         public TextView tv_batchtime;
-        public ProgressBar pb_sale;
-        public CheckBox cb_select;
+        public LinearLayout ll_batchtime;
 
     }
 
@@ -96,15 +94,14 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
 
             // 获取控件对象
             listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
-            listItemView.pb_sale = (ProgressBar) convertView.findViewById(R.id.pb_sale);
-            listItemView.cb_select = (CheckBox) convertView.findViewById(R.id.cb_select);
-            convertView.setTag(listItemView);
-            convertView.setOnClickListener(new View.OnClickListener()
+            listItemView.ll_batchtime = (LinearLayout) convertView.findViewById(R.id.ll_batchtime);
+            listItemView.ll_batchtime.setTag(listItemView);
+            listItemView.ll_batchtime.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    Intent intent = new Intent(context, NCZ_SellOrderDetail_.class);
+                    Intent intent = new Intent(context, NCZ_FarmSale_BatchDetail_.class);
                     intent.putExtra("bean", batchTime);
                     context.startActivity(intent);
                 }
@@ -116,11 +113,7 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
                 map = new HashMap<>();
             }
 
-            String numberofsaleout = batchTime.getNumberofsaleout();
-            String numberofselein = batchTime.getNumberofselein();
-            String numberofsalefor = batchTime.getNumberofsalefor();
-            String numberofnewsale = batchTime.getNumberofnewsale();
-            listItemView.tv_batchtime.setText(batchTime.getBatchTime() + "  " + batchTime.getBatchColor() + "  " + "已售:" + numberofsaleout + "售中:" + numberofselein + "拟售:" + numberofsalefor + "待售:" + numberofnewsale);
+            listItemView.tv_batchtime.setText(batchTime.getBatchTime());
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -186,11 +179,7 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
         }
         TextView tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
 
-        String numberofsaleout = listData.get(groupPosition).getNumberofsaleout();
-        String numberofselein = listData.get(groupPosition).getNumberofselein();
-        String numberofsalefor = listData.get(groupPosition).getNumberofsalefor();
-        String numberofnewsale = listData.get(groupPosition).getNumberofnewsale();
-        String name = listData.get(groupPosition).getparkName() + "已售:" + numberofsaleout + "售中:" + numberofselein + "拟售:" + numberofsalefor + "待售:" + numberofnewsale;
+        String name = listData.get(groupPosition).getparkName();
         tv_parkname.setText(name);
         return convertView;
     }
