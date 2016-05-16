@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -573,6 +574,7 @@ public class utils
         listView.setLayoutParams(params);
     }
 
+
     public static void setListViewHeight(ListView listView)
     {
         ListAdapter listAdapter = listView.getAdapter();
@@ -604,6 +606,20 @@ public class utils
         }
 
         return totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+    }
+    public static int getGridViewHeight(GridView listView)
+    {
+        ListAdapter listAdapter = listView.getAdapter();
+        int totalHeight = 0;
+        int count = listAdapter.getCount();
+        for (int i = 0; i < listAdapter.getCount()/3+1; i++)
+        {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        return totalHeight + (listView.getHeight() * (listAdapter.getCount()/3+1));
     }
     public static int CheckInPloy(Point[] pts, int n, Point pt) //pts为多边形的顶点数组，n为多边形顶点数，pt为将要被判断的点
     {

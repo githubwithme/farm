@@ -69,7 +69,7 @@ public class CommandDetail_Show_DetailFragment extends Fragment
         }
         String[] nongzi = commandtab.getnongziName().split(",");
         String[] shuliang = commandtab.getamount().split(";");
-        String[] danwei = commandtab.getAmountDW().split(",");
+        String[] danwei = commandtab.getAmountDW().split("[.]");
 //        String[] yl = commandtab.getamount().split(";");
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)

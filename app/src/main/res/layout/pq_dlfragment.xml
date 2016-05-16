@@ -29,7 +29,27 @@
 
 
 
+<Button
+    android:id="@+id/shuaxin"
+    android:layout_alignParentRight="true"
+    android:text="刷新"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@null"/>
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_dl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_centerInParent="true"
+            android:text="断蕾时候未到，请等待场长指令！"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:gravity="center"
+            android:textSize="20dip"
+            />
     </RelativeLayout>
 
     <ScrollView

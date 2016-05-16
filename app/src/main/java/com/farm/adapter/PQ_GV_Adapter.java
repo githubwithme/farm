@@ -61,7 +61,7 @@ public class PQ_GV_Adapter extends BaseAdapter
         ListItemView listItemView = null;
         if (lmap.get(i) == null) {
             // 获取list_item布局文件的视图
-            view = listContainer.inflate(R.layout.cz_gv_adapter, null);
+            view = listContainer.inflate(R.layout.pq_gv_adapter, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.name = (TextView) view.findViewById(R.id.name);

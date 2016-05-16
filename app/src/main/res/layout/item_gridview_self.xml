@@ -116,6 +116,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_flsl"
         android:layout_width="match_parent"
         android:layout_height="80dip"
@@ -123,7 +124,7 @@
         android:layout_marginRight="20dip"
         android:background="@drawable/background_view_rounded_single"
         android:orientation="vertical"
-        android:visibility="gone">
+       >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -184,6 +185,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_margin="5dip"

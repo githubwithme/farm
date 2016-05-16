@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,8 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
     contractTab contracttab;
     String batchtime;
     String batchcolor;
+    public Button btn_add;
+    public ProgressBar bp_upload;
     public pq_dlbjGV_adapter(Context context, List<contractTab> data, String batchtime, String batchcolor)
     {
         this.context = context;
@@ -59,6 +63,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
         public TextView name;
         public EditText num;
         public Button btn_save;
+        public ProgressBar pb_upload;
     }
 
     @Override
@@ -91,17 +96,34 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
             listItemView.name = (TextView) view.findViewById(R.id.name);
             listItemView.num = (EditText) view.findViewById(R.id.num);
             listItemView.btn_save = (Button) view.findViewById(R.id.btn_save);
+            listItemView.pb_upload = (ProgressBar) view.findViewById(R.id.pb_upload);
+
+//            view.setTag(R.id.tag_upload ,contracttab);
+
             listItemView.btn_save.setTag(R.id.tag_contract ,contracttab);
             listItemView.btn_save.setTag(R.id.tag_view, listItemView);
             listItemView.btn_save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+            /*
+                List<BreakOff_New> list_breakoff = contracttab.getBreakOffList();
+            if (list_breakoff != null && list_breakoff.size() > 0) {
+                        listItemView.num.setText(list_breakoff.get(0).getnumberofbreakoff());
+                    }*/
+
+                    btn_add= (Button) view;
                     ListItemView listItemView1 = (ListItemView) view.getTag(R.id.tag_view);
                     contractTab contracttab = (contractTab) view.getTag(R.id.tag_contract);
                     List<BreakOff_New> list_BreakOff_New = contracttab.getBreakOffList();
+
                     String number = listItemView1.num.getText().toString();
+                    listItemView1.btn_save.setVisibility(View.GONE);
+                    listItemView1.pb_upload.setVisibility(View.VISIBLE);
+                    bp_upload=listItemView1.pb_upload;//
                     if (number.equals("")) //没填写数据
                     {
+                        listItemView1.btn_save.setVisibility(View.VISIBLE);
+                        listItemView1.pb_upload.setVisibility(View.GONE);
                         Toast.makeText(context, "请先填写数量", Toast.LENGTH_SHORT).show();
                     } else if (list_BreakOff_New==null || list_BreakOff_New.size()==0)//新增数据
                     {
@@ -112,6 +134,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
                         breakoff.setareaid(contracttab.getAreaId());
                         breakoff.setYear(utils.getYear());
                         breakoff.setparkid(contracttab.getparkId());
+                        breakoff.setparkname(contracttab.getparkName());
                         breakoff.setareaname(contracttab.getareaName());
                         breakoff.setBatchColor(batchcolor);
                         breakoff.setBatchTime(batchtime);
@@ -126,7 +149,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
                         breakoff.setStatus("0");
                         breakoff.setWeight("0");
                         breakoff.setXxzt("0");
-
+                        list_BreakOff_New.add(breakoff);
 
 
                         SellOrderDetail_New sellorderdetail=new SellOrderDetail_New();
@@ -173,7 +196,9 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
                         saveBreakOffList(builder.toString());
                     } else //编辑数据
                     {
-                        updateBreakOff(list_BreakOff_New.get(0).getUuid(),number);
+
+                            updateBreakOff(list_BreakOff_New.get(0).getUuid(), number);
+
                     }
 
                 }
@@ -198,6 +223,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
 //            }
             List<BreakOff_New> list_breakoff = contracttab.getBreakOffList();
 //            listItemView.name.setText(contracttab.getareaName() + contracttab.getContractNum());
+
             listItemView.name.setText(contracttab.getContractNum());
             if (list_breakoff != null && list_breakoff.size() > 0) {
                 listItemView.num.setText(list_breakoff.get(0).getnumberofbreakoff());
@@ -216,6 +242,13 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
 
     private void saveBreakOffList( String data )
     {
+//        listItemView.pb_upload.setTag(R.id.tag_upload ,contracttab);
+//        view.setTag(R.id.tag_upload ,contracttab);
+//        ProgressBar pb_upload=getTag()
+/*View view= listContainer.inflate(R.layout.pq_dlbj_adapter, null);
+        ListItemView listItemView = null;
+        listItemView =view.getTag(R.id.tag_upload);*/
+        String x=data;
         RequestParams params = new RequestParams();
         params.setContentType("application/json");
         try
@@ -232,18 +265,25 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
+
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0) {
+                        btn_add.setVisibility(View.VISIBLE);
+                        bp_upload.setVisibility(View.GONE);
                         Toast.makeText(context, "保存成功", Toast.LENGTH_SHORT).show();
                     }else
                     {
+                        bp_upload.setVisibility(View.GONE);
+                        btn_add.setVisibility(View.VISIBLE);
                         Toast.makeText(context, "保存失败", Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
+                    bp_upload.setVisibility(View.GONE);
+                    btn_add.setVisibility(View.VISIBLE);
                     AppContext.makeToast(context, "error_connectDataBase");
                     Toast.makeText(context, "保存失败，请重试！", Toast.LENGTH_SHORT).show();
                     return;
@@ -260,6 +300,8 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
 
     private void updateBreakOff(String uuid,String number)
     {
+
+
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("numberofbreakoff", number);
@@ -274,15 +316,22 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0) {
-                        Toast.makeText(context, "保存成功", Toast.LENGTH_SHORT).show();
+                        bp_upload.setVisibility(View.GONE);
+                        btn_add.setVisibility(View.VISIBLE);
+                        Toast.makeText(context, "修改成功", Toast.LENGTH_SHORT).show();
+
                     }else
                     {
-                        Toast.makeText(context, "保存失败", Toast.LENGTH_SHORT).show();
+                        bp_upload.setVisibility(View.GONE);
+                        btn_add.setVisibility(View.VISIBLE);
+                        Toast.makeText(context, "修改失败", Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
+                    bp_upload.setVisibility(View.GONE);
+                    btn_add.setVisibility(View.VISIBLE);
                     AppContext.makeToast(context, "error_connectDataBase");
-                    Toast.makeText(context, "保存失败，请重试！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "修改失败，请重试！", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

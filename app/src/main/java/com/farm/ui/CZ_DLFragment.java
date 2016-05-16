@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -49,9 +50,12 @@ import java.util.List;
 @EFragment
 public class CZ_DLFragment extends Fragment
 {
+     commembertab commembertab;
     NCZ_DLExecute_Adapter ncz_dlExecute_adapter;
     MyDialog myDialog;
     Fragment mContent = new Fragment();
+    @ViewById
+    TextView tv_title;
    @ViewById
    LinearLayout cz_startdl;
     @ViewById
@@ -60,6 +64,8 @@ public class CZ_DLFragment extends Fragment
    TextView tv_timelimit;
     @ViewById
     ExpandableListView expandableListView;
+    @ViewById
+    RelativeLayout rl_view;
 
     @Click
     void startdl()
@@ -94,9 +100,17 @@ public class CZ_DLFragment extends Fragment
         MyDatepicker myDatepicker = new MyDatepicker(getActivity(), tv_timelimit);
         myDatepicker.getDialog().show();
     }
+    //刷新
+    @Click
+    void shuaxin()
+    {
+        getBatchTimeOfPark();
+    }
+
     @AfterViews
     void afteroncreate()
     {
+        tv_title.setText(commembertab.getparkName()+"断蕾情况"  );
         SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String str = formatter.format(curDate);
@@ -108,6 +122,7 @@ public class CZ_DLFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.cz_dlfragment, container, false);
+         commembertab = AppContext.getUserInfo(getActivity());
         return rootView;
     }
 
@@ -115,7 +130,7 @@ public class CZ_DLFragment extends Fragment
     public void getIsStartBreakOff()
     {
 
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
+         commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("parkid",commembertab.getparkId());
@@ -134,6 +149,7 @@ public class CZ_DLFragment extends Fragment
                 {
                     if (result.getAffectedRows() > 0)
                     {
+                        rl_view.setVisibility(View.GONE);
                         cz_startdl.setVisibility(View.GONE);
                         getBatchTimeOfPark();
 //                        getBatchTimeOfPark_temp();
@@ -149,6 +165,9 @@ public class CZ_DLFragment extends Fragment
 //                                  expandableListView.collapseGroup(i);//关闭
                         }*/
 
+                    }else
+                    {
+                        rl_view.setVisibility(View.GONE);
                     }
 
                 } else
@@ -251,6 +270,12 @@ public class CZ_DLFragment extends Fragment
                        listNewData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                        ncz_dlExecute_adapter=new NCZ_DLExecute_Adapter(getActivity(), listNewData, expandableListView);
                        expandableListView.setAdapter(ncz_dlExecute_adapter);
+                       utils.setListViewHeight(expandableListView);
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            expandableListView.expandGroup(i);//展开
+//                                  expandableListView.collapseGroup(i);//关闭
+                        }
                        cz_startdl.setVisibility(View.GONE);
 
                    } else

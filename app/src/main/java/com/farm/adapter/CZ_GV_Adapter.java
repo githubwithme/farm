@@ -36,6 +36,7 @@ public class CZ_GV_Adapter extends BaseAdapter {
     static class ListItemView {
         public TextView name;
         public TextView num;
+        public TextView areaname;
     }
 
     @Override
@@ -56,7 +57,8 @@ public class CZ_GV_Adapter extends BaseAdapter {
     HashMap<Integer, View> lmap = new HashMap<Integer, View>();
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int i, View view, ViewGroup viewGroup)
+    {
         breakOff_new = listItems.get(i);
         // 自定义视图
         ListItemView listItemView = null;
@@ -67,8 +69,10 @@ public class CZ_GV_Adapter extends BaseAdapter {
             // 获取控件对象
             listItemView.name = (TextView) view.findViewById(R.id.name);
             listItemView.num = (TextView) view.findViewById(R.id.num);
+            listItemView.areaname = (TextView) view.findViewById(R.id.areaname);
 
             listItemView.name.setText(breakOff_new.getareaname());
+            listItemView.areaname.setText(breakOff_new.getcontractname());
             listItemView.num.setText(breakOff_new.getnumberofbreakoff());
             lmap.put(i, view);
             view.setTag(listItemView);
@@ -82,6 +86,7 @@ public class CZ_GV_Adapter extends BaseAdapter {
 
         return view;
     }
+
 
 
 }

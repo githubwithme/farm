@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -26,6 +28,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -39,24 +42,36 @@ import java.util.List;
  */
 @EFragment
 public class PQ_DLFragment extends Fragment{
-
+    commembertab commembertab;
+    @ViewById
+    TextView tv_title;
     PQ_DLExecute_Adapter pq_dlExecute_adapter;
     @ViewById
     ExpandableListView expandableListView;
+    @ViewById
+    RelativeLayout rl_dl;
     @AfterViews
   void afterview()
   {
-  getBatchTimeOfAreaId();
+      tv_title.setText(commembertab.getareaName()+"断蕾情况");
+      getBatchTimeOfAreaId();
    }
+    @Click
+    void shuaxin()
+    {
+        getBatchTimeOfAreaId();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.pq_dlfragment, container, false);
+         commembertab = AppContext.getUserInfo(getActivity());
         return rootView;
     }
 
 public void getBatchTimeOfAreaId(){
-    commembertab commembertab = AppContext.getUserInfo(getActivity());
+//    commembertab commembertab = AppContext.getUserInfo(getActivity());
+     commembertab = AppContext.getUserInfo(getActivity());
     RequestParams params = new RequestParams();
     params.addQueryStringParameter("uid", commembertab.getuId());
     params.addQueryStringParameter("parkid",commembertab.getparkId());
@@ -76,10 +91,11 @@ public void getBatchTimeOfAreaId(){
             {
                 if (result.getAffectedRows() > 0)
                 {
-
+                    rl_dl.setVisibility(View.GONE);
                     listNewData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                     pq_dlExecute_adapter=new PQ_DLExecute_Adapter(getActivity(), listNewData, expandableListView);
                     expandableListView.setAdapter(pq_dlExecute_adapter);
+
                    for (int i = 0; i < listNewData.size(); i++)
                     {
                         expandableListView.expandGroup(i);//展开

@@ -123,7 +123,8 @@ public class NCZ_Evented extends Fragment
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer)
                     return;
-                Intent intent=new Intent(getActivity(),NCZ_EventLookList_.class);
+//                Intent intent=new Intent(getActivity(),NCZ_EventLookList_.class);
+                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
                 ReportedBean reportedBean=listData.get(position-1);
                 intent.putExtra("reportedBean",reportedBean);
                 startActivity(intent);

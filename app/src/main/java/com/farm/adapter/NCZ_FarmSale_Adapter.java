@@ -116,11 +116,11 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
                 map = new HashMap<>();
             }
 
-            String numberofsaleout = batchTime.getNumberofsaleout();
+       /*     String numberofsaleout = batchTime.getNumberofsaleout();
             String numberofselein = batchTime.getNumberofselein();
             String numberofsalefor = batchTime.getNumberofsalefor();
             String numberofnewsale = batchTime.getNumberofnewsale();
-            listItemView.tv_batchtime.setText(batchTime.getBatchTime() + "  " + batchTime.getBatchColor() + "  " + "已售:" + numberofsaleout + "售中:" + numberofselein + "拟售:" + numberofsalefor + "待售:" + numberofnewsale);
+            listItemView.tv_batchtime.setText(batchTime.getBatchTime() + "  " + batchTime.getBatchColor() + "  " + "已售:" + numberofsaleout + "售中:" + numberofselein + "拟售:" + numberofsalefor + "待售:" + numberofnewsale);*/
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);

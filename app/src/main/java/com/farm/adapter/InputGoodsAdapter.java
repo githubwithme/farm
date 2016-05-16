@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -64,6 +66,13 @@ public class InputGoodsAdapter extends BaseAdapter
             listItemView.tv_dw = (TextView) convertView.findViewById(R.id.tv_dw);
             listItemView.tv_syl = (TextView) convertView.findViewById(R.id.tv_syl);
             listItemView.tv_spec = (TextView) convertView.findViewById(R.id.tv_spec);
+
+            listItemView.rg_select = (RadioGroup) convertView.findViewById(R.id.rg_select);
+            listItemView.dw_duishui = (RadioButton) convertView.findViewById(R.id.dw_duishui);
+            listItemView.dw_gzhu = (RadioButton) convertView.findViewById(R.id.dw_gzhu);
+
+
+
             Bundle bundle = new Bundle();
             bundle.putString("pi", parkid);
             bundle.putString("pn", parkName);
@@ -71,24 +80,61 @@ public class InputGoodsAdapter extends BaseAdapter
             bundle.putString("an", areaName);
             listItemView.tv_fl.setTag(bundle);
             listItemView.tv_fl.setText(list.get(arg0).getgoodsName());
-//            listItemView.tv_dw.setText(list.get(arg0).getgoodsSpec());
 
-//            String[] goodsspc = list.get(arg0).getgoodsSpec().split("/");
+            listItemView.dw_duishui.setTag(R.id.tag_upload, listItemView);
+            listItemView.dw_duishui.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ListItemView listItemView1 = (ListItemView) view.getTag(R.id.tag_upload);
+                    String number = listItemView1.dw_duishui.getText().toString();
+                    listItemView1.tv_dw.setText(number);
+                }
+            });
 
-//            String large_dw=list.get(arg0).getgoodsSpec().substring(1,list.get(arg0).getgoodsSpec().length());
-//            String number = goodsspc[0];
-//            String small_dw = goodsspc[1];
-//            String large_dw = goodsspc[1];
-//            if (small_dw.equals("ml"))
-//            if (large_dw.equals("mL")||large_dw.equals("L"))
-//            if ( list.get(arg0).getIsExchange().equals("False"))
-            if ( list.get(arg0).getIsExchange().equals("True"))
+            listItemView.dw_gzhu.setTag(R.id.tag_danxuan, listItemView);
+            listItemView.dw_gzhu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ListItemView listItemView1 = (ListItemView) view.getTag(R.id.tag_danxuan);
+                    String number = listItemView1.dw_gzhu.getText().toString();
+                    listItemView1.tv_dw.setText(number);
+                }
+            });
+      /*      //方法三
+            listItemView.dw_duishui.setTag(R.id.tag_upload, listItemView);
+            listItemView.rg_select.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                     ListItemView listItemView1 = (ListItemView) radioGroup.getTag(R.id.tag_upload);
+                    if(listItemView1.dw_duishui.getId()==checkedId) {
+                        listItemView1.tv_dw.setText(listItemView1.dw_duishui.getText().toString());
+                    }
+                    if(listItemView1.dw_gzhu.getId()==checkedId) {
+                        listItemView1.tv_dw.setText(listItemView1.dw_gzhu.getText().toString());
+                    }
+                }
+            });*/
+
+
+
+
+            //原来的
+            if ( list.get(arg0).getIsExchange().equals("兑水"))
             {
+                listItemView.dw_duishui.setChecked(true);
+//                listItemView.dw_gzhu.setClickable(false);
+                listItemView.dw_gzhu.setVisibility(View.GONE);
                 listItemView.tv_dw.setText("倍(兑水)");
+            }else if( list.get(arg0).getIsExchange().equals("不兑水"))
+            {
+                listItemView.dw_gzhu.setChecked(true);
+//                listItemView.dw_duishui.setClickable(false);
+                listItemView.dw_duishui.setVisibility(View.GONE);
+                listItemView.tv_dw.setText("g/株");
             }else
             {
-//                listItemView.tv_dw.setText(small_dw+"/株");
-                listItemView.tv_dw.setText("g/株");
+                listItemView.dw_duishui.setChecked(true);
+                listItemView.tv_dw.setText("倍(兑水)");
             }
 //            listItemView.tv_syl.setText( list.get(arg0).getGoodsSum()+large_dw);
             listItemView.tv_syl.setText(list.get(arg0).getGoodsSum());
@@ -122,6 +168,10 @@ public class InputGoodsAdapter extends BaseAdapter
         TextView tv_dw;
         TextView tv_syl;
         TextView tv_spec;
+        RadioGroup rg_select;
+        RadioButton dw_duishui;
+        RadioButton dw_gzhu;
+
     }
 
     public List<goodslisttab> getGoosList()
@@ -130,6 +180,7 @@ public class InputGoodsAdapter extends BaseAdapter
         {
             ListItemView listItemView = (ListItemView) lmap.get(i).getTag();
             String aa=listItemView.et_number.getText().toString();
+            String bb=listItemView.tv_dw.getText().toString();
             if (listItemView.et_number.getText().toString().equals(""))
             {
                 return null;
@@ -137,6 +188,7 @@ public class InputGoodsAdapter extends BaseAdapter
             {
                 Bundle bundle = (Bundle) listItemView.tv_fl.getTag();
                 list.get(i).setYL(listItemView.et_number.getText().toString());
+                list.get(i).setDW(listItemView.tv_dw.getText().toString());
                 list.get(i).setParkId(bundle.get("pi").toString());
                 list.get(i).setParkName(bundle.get("pn").toString());
                 list.get(i).setAreaId(bundle.get("ai").toString());

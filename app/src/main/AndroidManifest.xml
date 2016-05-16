@@ -194,6 +194,7 @@
         <activity android:name=".ui.Common_MoreJob_"/>
         <activity android:name=".ui.Common_CommandFeedBack_"/>
         <activity android:name=".ui.Common_CommandDetail_"/>
+        <activity android:name=".ui.Event_Process_"/>
 
 
         <!-- 服务 -->

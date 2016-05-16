@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.bean.BatchTime;
 import com.farm.bean.BreakOff_New;
+import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
 
 import java.util.ArrayList;
@@ -27,9 +28,8 @@ import java.util.Map;
  */
 public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 {
-    private List<Map<String, Object>> data_list;
     CZ_GV_Adapter cz_gv_adapter;
-    private SimpleAdapter sim_adapter;
+//    private SimpleAdapter sim_adapter;
     TextView currentTextView;
     CustomDialog_ListView customDialog_listView;
     private int currentItem = 0;
@@ -53,8 +53,8 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
         {
             return null;
         }
-        return listData.get(groupPosition).getBreakOffList().get(childPosition);
-//        return listData.get(groupPosition).getBreakOffList();
+//        return listData.get(groupPosition).getBreakOffList().get(childPosition);
+        return listData.get(groupPosition).getBreakOffList();
     }
 
     static class ListItemView
@@ -81,11 +81,11 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 //        final String batchname=listData.get(groupPosition).getBatchName();
 //        final String indate=listData.get(groupPosition).getInDate();
         View v = null;
-        if (lmap.get(groupPosition) != null)
+  /*      if (lmap.get(groupPosition) != null)
         {
             HashMap<Integer, View> map1 = lmap.get(groupPosition);
             v = lmap.get(groupPosition).get(childPosition);
-        }
+        }*/
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -115,19 +115,9 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
             //数据添加
 //            listItemView.goodsname.setText(wz_rKxx.getGoodsname());
             cz_gv_adapter=new CZ_GV_Adapter(context,childData);
-            listItemView.gridView.setAdapter(sim_adapter);
-         /*   data_list = new ArrayList<Map<String, Object>>();
-            for(int i=0;i<childData.size();i++){
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("name", childData.get(i).getareaname()+childData.get(i).getcontractname());
-                map.put("num", childData.get(i).getBatchColor()+childData.get(i).getnumberofbreakoff());
-                data_list.add(map);
-            }
+            listItemView.gridView.setAdapter(cz_gv_adapter);
+//            utils.getGridViewHeight(listItemView.gridView);
 
-            String [] from ={"name","num"};
-            int [] to = {R.id.tv_area,R.id.tv_num};
-            sim_adapter=new SimpleAdapter(context,data_list,R.layout.dl_gridview_item,from,to);
-            listItemView.gridView.setAdapter(sim_adapter);*/
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);

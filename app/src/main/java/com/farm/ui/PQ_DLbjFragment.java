@@ -55,6 +55,12 @@ public class PQ_DLbjFragment extends Activity {
     Button btn_save;
     String batchtime;
     String batchcolor;
+
+    @Click
+    void imgbtn_back()
+    {
+        finish();
+    }
     //    @Click
 //    void Btn_save()
 //    {
@@ -111,6 +117,7 @@ public class PQ_DLbjFragment extends Activity {
 //    }
     @AfterViews
     void afterview() {
+
         tv_title.setText(batchtime+"-"+batchcolor);
         getContractList();
     }

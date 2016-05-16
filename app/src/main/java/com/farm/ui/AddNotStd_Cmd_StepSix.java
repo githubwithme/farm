@@ -104,7 +104,7 @@ public class AddNotStd_Cmd_StepSix extends Fragment
         }
         for (int i = 0; i < list_SelectCmdArea.size(); i++)
         {
-            tempareaId = tempareaId + list_SelectCmdArea.get(i).getParkId() + ":" + list_SelectCmdArea.get(i).getAreaId() + ":" + list_SelectCmdArea.get(i).getYL() + ",";
+            tempareaId = tempareaId + list_SelectCmdArea.get(i).getParkId() + ":" + list_SelectCmdArea.get(i).getAreaId() + ":" + list_SelectCmdArea.get(i).getYL().substring(0,list_SelectCmdArea.get(i).getYL().length()-1) +":"+list_SelectCmdArea.get(i).getDW().substring(0,list_SelectCmdArea.get(i).getDW().length()-1)+ ",";
             tempareaName = tempareaName + list_SelectCmdArea.get(i).getParkName() + ":" + list_SelectCmdArea.get(i).getAreaName() + ",";
             tempflyl = tempflyl + list_SelectCmdArea.get(i).getParkName() + "：" + list_SelectCmdArea.get(i).getAreaName() + "\n"+ list_SelectCmdArea.get(i).getgoodsNote() + "\n";
         }

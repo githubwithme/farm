@@ -41,7 +41,15 @@ public class goodslisttab_flsl implements Parcelable
     public String secNum="";
     public String three="";
     public String threeNum="";
+    public String DW="";
 
+    public String getDW() {
+        return DW;
+    }
+
+    public void setDW(String DW) {
+        this.DW = DW;
+    }
 
     public String getFirs() {
         return firs;
@@ -357,6 +365,7 @@ public class goodslisttab_flsl implements Parcelable
             p.setSecNum(source.readString());
             p.setThree(source.readString());
             p.setThreeNum(source.readString());
+            p.setDW(source.readString());
             return p;
         }
 
@@ -399,6 +408,7 @@ public class goodslisttab_flsl implements Parcelable
         p.writeString(secNum);
         p.writeString(three);
         p.writeString(threeNum);
+        p.writeString(DW);
     }
 
     @Override

@@ -97,13 +97,7 @@ public class NCZ_WZ_CKWZActivity extends FragmentActivity
 //                intent.putExtra("storehouseId",Wz_Storehouse);
 //                intent.putExtra("goods",wz_storehouse);
                 startActivity(intent);
-               /* commandtab commandtab = listData.get(position - 1);
-                if (commandtab == null) return;
-                commembertab commembertab = AppContext.getUserInfo(getActivity());
-                AppContext.updateStatus(getActivity(), "0", commandtab.getId(), "2", commembertab.getId());
-                Intent intent = new Intent(getActivity(), CommandDetail_Show_.class);
-                intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
-                startActivity(intent);*/
+
             }
         });
         wz_frame_listview.setOnScrollListener(new AbsListView.OnScrollListener() {

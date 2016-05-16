@@ -64,6 +64,7 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
     String tempareaId = "";
     String tempflyl = "";
     String tempareaName = "";
+    String danwei = "";
     List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
 
     @Click
@@ -93,6 +94,7 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
         tempareaId = "";
         tempareaName = "";
         tempflyl = "";
+        danwei = "";
         list_goodslisttab = SqliteDb.getSelectCmdArea(getActivity(), goodslisttab.class);
         for (int i = 0; i < list_goodslisttab.size(); i++)
         {
@@ -103,6 +105,7 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
         for (int i = 0; i < list_goodslisttab.size(); i++)
         {
             tempareaId = tempareaId +  list_goodslisttab.get(i).getYL() + ";";
+            danwei=danwei+ list_goodslisttab.get(i).getDW() + ".";
 //            tempareaName = tempareaName + list_goodslisttab.get(i).getParkName() + ":" + list_goodslisttab.get(i).getAreaName() + ",";
 
 //            tempareaId = tempareaId +  list_goodslisttab.get(i).getYL() + ",";
@@ -115,7 +118,8 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
             String large_dw=list_goodslisttab.get(i).getgoodsSpec().substring(1,list_goodslisttab.get(i).getgoodsSpec().length());
 //            if (small_dw.equals("mL"))
 //            if (large_dw.equals("mL")||large_dw.equals("L"))
-            if (list_goodslisttab.get(i).getIsExchange().equals("True"))
+//            if (list_goodslisttab.get(i).getIsExchange().equals("True"))
+            if (list_goodslisttab.get(i).getDW().equals("倍(兑水)"))
             {
                 tempflyl =tempflyl+list_goodslisttab.get(i).getgoodsName() +"  "+list_goodslisttab.get(i).getYL()+"倍(兑水)"+ "  "+"共需：待定"+"\n";
             }else
@@ -143,7 +147,7 @@ public class AddStd_Cmd_StepSix_Self extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("areaId",commembertab.getparkId()+":"+commembertab.getareaId()+":"+tempareaId.substring(0, tempareaId.length() - 1));
+        params.addQueryStringParameter("areaId",commembertab.getparkId()+":"+commembertab.getareaId()+":"+tempareaId.substring(0, tempareaId.length() - 1)+":"+danwei.substring(0,danwei.length()-1));
         params.addQueryStringParameter("areaName", commembertab.getparkName() + ":" + commembertab.getareaName());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("userName", commembertab.getrealName());

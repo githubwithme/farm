@@ -57,8 +57,8 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
         {
             return null;
         }
-        return listData.get(groupPosition).getBreakOffList().get(childPosition);
-//        return   listData.get(groupPosition).getBreakOffList();
+//        return listData.get(groupPosition).getBreakOffList().get(childPosition);
+        return   listData.get(groupPosition).getBreakOffList();
     }
 
     static class ListItemView
@@ -81,17 +81,13 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
     {
 
         List<BreakOff_New> childData = listData.get(groupPosition).getBreakOffList();
-        if (childData.size()>0)
-        {
-            int a=childData.size();
-        }
 //        final BreakOff_New breakOff_new = childData.get(childPosition);
         View v = null;
-        if (lmap.get(groupPosition) != null)
+/*        if (lmap.get(groupPosition) != null)
         {
             HashMap<Integer, View> map1 = lmap.get(groupPosition);
             v = lmap.get(groupPosition).get(childPosition);
-        }
+        }*/
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -108,8 +104,8 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
 
             //数据添加
 //            listItemView.goodsname.setText(wz_rKxx.getGoodsname());
-
-
+            pq_gv_adapter = new PQ_GV_Adapter(context, childData);
+            listItemView.gridView.setAdapter(pq_gv_adapter);
 
         } else
         {
@@ -117,10 +113,9 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         //数据添加  都可以数据加载，不过在上面比较好，这里是返回view
-        if (childData.size()>0) {
-            pq_gv_adapter = new PQ_GV_Adapter(context, childData);
-            listItemView.gridView.setAdapter(pq_gv_adapter);
-        }
+
+
+
         return convertView;
     }
 
