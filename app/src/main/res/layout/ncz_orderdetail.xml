@@ -19,14 +19,14 @@
             android:background="@drawable/back"/>
 
         <Button
-            android:id="@+id/btn_sure"
+            android:id="@+id/btn_edit"
             android:layout_width="60dip"
             android:layout_height="40dip"
             android:layout_marginRight="10dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/background_view_rounded_single"
-            android:text="出售"
+            android:text="编辑"
             android:textColor="@color/bg_text"
             android:textSize="16sp"/>
 
@@ -43,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="拟售订单"
+                android:text="订单详情"
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/titlebar_textsize"/>
         </LinearLayout>

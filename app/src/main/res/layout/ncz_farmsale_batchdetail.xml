@@ -66,18 +66,30 @@
                 android:dividerHeight="0dip"
                 android:groupIndicator="@null"/>
         </ScrollView>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="10dip"
+    android:layout_marginRight="5dip"
+    android:layout_marginLeft="10dip"
+    android:background="@drawable/background_view_rounded_single"
+    android:layout_height="40dip">
+    <Button
+        android:id="@+id/btn_newsale"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="加入拟售订单"
+        android:background="@null"
+        android:textColor="@color/bg_text"
+        android:textSize="@dimen/size_sp_18"/>
+    <ProgressBar
+        android:id="@+id/pb_upload"
+        android:layout_width="30dip"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_height="30dip"/>
+</FrameLayout>
 
-        <Button
-            android:id="@+id/btn_newsale"
-            android:layout_width="match_parent"
-            android:layout_height="40dip"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="10dip"
-            android:background="@drawable/background_view_rounded_single"
-            android:gravity="center"
-            android:text="添加到拟售清单"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_sp_18"/>
 
     </RelativeLayout>
 

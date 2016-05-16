@@ -29,7 +29,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import java.util.HashMap;
 import java.util.List;
 
-public class Adapter_SellOrderDetail extends BaseAdapter
+public class Adapter_NewSaleList extends BaseAdapter
 {
     private Activity context;// 运行上下文
     private List<SellOrderDetail_New> listItems;// 数据集合
@@ -38,16 +38,16 @@ public class Adapter_SellOrderDetail extends BaseAdapter
 
     static class ListItemView
     {
-        public Button btn_delete;
-        public TextView tv_batchtime;
         public TextView tv_number;
+        public TextView tv_batchtime;
         public TextView tv_area;
+        public Button btn_delete;
 
         public TextView tv_yq;
         public TextView tv_pq;
     }
 
-    public Adapter_SellOrderDetail(Activity context, List<SellOrderDetail_New> data)
+    public Adapter_NewSaleList(Activity context, List<SellOrderDetail_New> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -79,22 +79,26 @@ public class Adapter_SellOrderDetail extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.adapter_sellorderdetail, null);
+            convertView = listContainer.inflate(R.layout.adapter_newsalelist, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
+            listItemView.btn_delete = (Button) convertView.findViewById(R.id.btn_delete);
             listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
             listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
-            listItemView.btn_delete = (Button) convertView.findViewById(R.id.btn_delete);
             listItemView.btn_delete.setId(position);
             listItemView.btn_delete.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-//                    showDeleteTip(listItems.get(v.getId()).getId(), listItems.get(v.getId()).getStatusid());
+                    showDeleteTip(listItems.get(v.getId()).getUuid());
                 }
             });
+            // 设置文字和图片
+            listItemView.tv_number.setText("出售"+SellOrderDetail.getplannumber()+"株");
+            listItemView.tv_batchtime.setText("批次:"+SellOrderDetail.getBatchTime());
+            listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -103,22 +107,15 @@ public class Adapter_SellOrderDetail extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
-        // 设置文字和图片
-        listItemView.tv_number.setText("出售"+SellOrderDetail.getplannumber()+"株");
-        listItemView.tv_batchtime.setText("批次:"+SellOrderDetail.getBatchTime());
-        listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
+
         return convertView;
     }
 
-    private void deleteCmd(String cmdid, String statusID)
+    private void deleteCmd(String uuid)
     {
         commembertab commembertab = AppContext.getUserInfo(context);
         RequestParams params = new RequestParams();
-        // params.addQueryStringParameter("workuserid", workuserid);
-        params.addQueryStringParameter("statusID", statusID);
-        params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("username", commembertab.getrealName());
-        params.addQueryStringParameter("comID", cmdid);
+        params.addQueryStringParameter("comID", uuid);
         params.addQueryStringParameter("action", "delCommandByID");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -156,7 +153,7 @@ public class Adapter_SellOrderDetail extends BaseAdapter
 
     MyDialog myDialog;
 
-    private void showDeleteTip(final String cmdid, final String statusID)
+    private void showDeleteTip(final String uuid)
     {
         View dialog_layout = (LinearLayout) context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "确定删除吗?", "删除", "取消", new CustomDialogListener()
@@ -167,7 +164,7 @@ public class Adapter_SellOrderDetail extends BaseAdapter
                 switch (v.getId())
                 {
                     case R.id.btn_sure:
-                        deleteCmd(cmdid, statusID);
+                        deleteCmd(uuid);
                         break;
                     case R.id.btn_cancle:
                         myDialog.cancel();

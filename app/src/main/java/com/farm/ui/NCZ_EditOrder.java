@@ -17,6 +17,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
+import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
@@ -43,11 +44,10 @@ import java.util.List;
 /**
  * 1
  */
-@EActivity(R.layout.createorder)
-public class CreateOrder extends Activity
+@EActivity(R.layout.ncz_editorder)
+public class NCZ_EditOrder extends Activity
 {
-    String batchtime;
-    List<SellOrderDetail_New> list_SellOrderDetail;
+    SellOrder_New sellOrder;
     Adapter_SellOrderDetail adapter_sellOrderDetail;
     SellOrderDetail SellOrderDetail;
     @ViewById
@@ -81,42 +81,42 @@ public class CreateOrder extends Activity
     {
         if (et_name.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_email.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_address.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_phone.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_price.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_weight.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_number.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_values.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         String uuid = java.util.UUID.randomUUID().toString();
@@ -124,7 +124,7 @@ public class CreateOrder extends Activity
         sellOrder.setid("");
         sellOrder.setUid("60");
         sellOrder.setUuid(uuid);
-        sellOrder.setBatchTime(batchtime);
+        sellOrder.setBatchTime(sellOrder.getBatchTime());
         sellOrder.setSelltype("0");
         sellOrder.setStatus("0");
         sellOrder.setBuyers(et_name.getText().toString());
@@ -146,10 +146,10 @@ public class CreateOrder extends Activity
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
 
-        List<String>  list_detail=new ArrayList<>();
-        for (int i = 0; i < list_SellOrderDetail.size(); i++)
+        List<String> list_detail = new ArrayList<>();
+        for (int i = 0; i < sellOrder.getSellOrderDetailList().size(); i++)
         {
-            list_detail.add(list_SellOrderDetail.get(i).getUuid());
+            list_detail.add(sellOrder.getSellOrderDetailList().get(i).getUuid());
 //            SellOrderDetail sellOrderDetail = list_SellOrderDetail.get(i);
 //            sellOrderDetail.setsaleid(uuid);
 //            sellOrderDetail.setType("salein");
@@ -174,7 +174,7 @@ public class CreateOrder extends Activity
         builder.append(", \"SellOrderDetailLists\": ");
         builder.append(JSON.toJSONString(list_detail));
         builder.append("} ");
-        addOrder(uuid,builder.toString());
+        addOrder(uuid, builder.toString());
 //        boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
 //        if (issuccess)
 //        {
@@ -204,7 +204,7 @@ public class CreateOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
-        adapter_sellOrderDetail = new Adapter_SellOrderDetail(CreateOrder.this, list_SellOrderDetail);
+        adapter_sellOrderDetail = new Adapter_SellOrderDetail(NCZ_EditOrder.this, sellOrder.getSellOrderDetailList());
         lv.setAdapter(adapter_sellOrderDetail);
         utils.setListViewHeight(lv);
 //        getListData();
@@ -216,14 +216,13 @@ public class CreateOrder extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        list_SellOrderDetail = getIntent().getParcelableArrayListExtra("list");
-        batchtime = getIntent().getStringExtra("batchtime");
+        sellOrder = getIntent().getParcelableExtra("bean");
     }
 
 
     private void getListData()
     {
-        commembertab commembertab = AppContext.getUserInfo(CreateOrder.this);
+        commembertab commembertab = AppContext.getUserInfo(NCZ_EditOrder.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("comID", SellOrderDetail.getUuid());
         params.addQueryStringParameter("userid", commembertab.getId());
@@ -246,7 +245,7 @@ public class CreateOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_sellOrderDetail = new Adapter_SellOrderDetail(CreateOrder.this, listNewData);
+                        adapter_sellOrderDetail = new Adapter_SellOrderDetail(NCZ_EditOrder.this, listNewData);
                         lv.setAdapter(adapter_sellOrderDetail);
                         utils.setListViewHeight(lv);
                     } else
@@ -255,7 +254,7 @@ public class CreateOrder extends Activity
                     }
                 } else
                 {
-                    AppContext.makeToast(CreateOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_EditOrder.this, "error_connectDataBase");
                     return;
                 }
             }
@@ -305,7 +304,7 @@ public class CreateOrder extends Activity
 //        }
     }
 
-    private void addOrder(String uuid,String data)
+    private void addOrder(String uuid, String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
@@ -331,13 +330,13 @@ public class CreateOrder extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NCZ_EditOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
                         finish();
                     }
 
                 } else
                 {
-                    AppContext.makeToast(CreateOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_EditOrder.this, "error_connectDataBase");
                     return;
                 }
 
@@ -346,7 +345,7 @@ public class CreateOrder extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(CreateOrder.this, "error_connectServer");
+                AppContext.makeToast(NCZ_EditOrder.this, "error_connectServer");
             }
         });
     }
