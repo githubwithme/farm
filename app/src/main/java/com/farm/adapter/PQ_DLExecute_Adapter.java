@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -19,10 +18,8 @@ import com.farm.bean.BreakOff_New;
 import com.farm.ui.PQ_DLbjFragment_;
 import com.farm.widget.CustomDialog_ListView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by user on 2016/5/1.
@@ -30,7 +27,7 @@ import java.util.Map;
 public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
 {
     PQ_GV_Adapter pq_gv_adapter;
-//    private List<Map<String, Object>> data_list;
+    //    private List<Map<String, Object>> data_list;
 //    private SimpleAdapter sim_adapter;
     TextView currentTextView;
     CustomDialog_ListView customDialog_listView;
@@ -41,6 +38,7 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
     private GoodsAdapter adapter;
     List<BatchTime> listData;
     ListView list;
+
     public PQ_DLExecute_Adapter(Context context, List<BatchTime> listData, ExpandableListView mainlistview)
     {
         this.mainlistview = mainlistview;
@@ -58,26 +56,28 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
             return null;
         }
 //        return listData.get(groupPosition).getBreakOffList().get(childPosition);
-        return   listData.get(groupPosition).getBreakOffList();
+        return listData.get(groupPosition).getBreakOffList();
     }
 
     static class ListItemView
     {
         public GridView gridView;
     }
+
     //得到子item的ID
     @Override
     public long getChildId(int groupPosition, int childPosition)
     {
         return childPosition;
     }
+
     HashMap<Integer, HashMap<Integer, View>> lmap = new HashMap<Integer, HashMap<Integer, View>>();
     HashMap<Integer, View> map = new HashMap<>();
     ListItemView listItemView = null;
 
     //设置子item的组件
     @Override
-    public View getChildView( int groupPosition,  int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
         List<BreakOff_New> childData = listData.get(groupPosition).getBreakOffList();
@@ -115,7 +115,6 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
         //数据添加  都可以数据加载，不过在上面比较好，这里是返回view
 
 
-
         return convertView;
     }
 
@@ -135,6 +134,7 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
 //        mainlistview  WZ_RKExecute_Adapter
 
     }
+
     public void onGroupCollapsed(int groupPosition)
     {
         super.onGroupCollapsed(groupPosition);
@@ -152,6 +152,7 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
 //        return listData.get(groupPosition).getWzcrkxx().size();
         return 1;
     }
+
     //获取当前父item的数据
     @Override
     public Object getGroup(int groupPosition)
@@ -164,6 +165,7 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
     {
         return listData.size();
     }
+
     @Override
     public long getGroupId(int groupPosition)
     {
@@ -175,7 +177,7 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
     {
-        BatchTime batchTime=listData.get(groupPosition);
+        BatchTime batchTime = listData.get(groupPosition);
         if (convertView == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -185,18 +187,21 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
         Button btn_bianjie = (Button) convertView.findViewById(R.id.btn_bianjie);
         tv_park.setText(listData.get(groupPosition).getBatchTime() + "-" + listData.get(groupPosition).getBatchColor());
         btn_bianjie.setTag(R.id.tag_text, batchTime);
-        btn_bianjie.setOnClickListener(new View.OnClickListener() {
+        btn_bianjie.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                BatchTime batchTimes=(BatchTime) view.getTag(R.id.tag_text);
-                Intent intent=new Intent(context,PQ_DLbjFragment_.class);
-                intent.putExtra("batchtime",batchTimes.getBatchTime());
-                intent.putExtra("batchcolor",batchTimes.getBatchColor());
+            public void onClick(View view)
+            {
+                BatchTime batchTimes = (BatchTime) view.getTag(R.id.tag_text);
+                Intent intent = new Intent(context, PQ_DLbjFragment_.class);
+                intent.putExtra("batchtime", batchTimes.getBatchTime());
+                intent.putExtra("batchcolor", batchTimes.getBatchColor());
                 context.startActivity(intent);
             }
         });
         return convertView;
     }
+
     @Override
     public boolean hasStableIds()
     {

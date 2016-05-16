@@ -56,7 +56,6 @@
     <!-- 多媒体 -->
     <item name="tag_latlng" type="id"></item>
     <item name="tag_uuid" type="id"></item>
-    <item name="tag_view" type="id"></item>
     <item name="tag_fi" type="id"></item>
     <item name="tag_fn" type="id"></item>
     <item name="tag_si" type="id"></item>

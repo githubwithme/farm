@@ -294,6 +294,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         Intent intent = new Intent(getActivity(), NCZ_SaleMap_.class);
         getActivity().startActivity(intent);
     }
+
     @CheckedChange
     void cb_block()
     {
@@ -314,6 +315,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         }
 
     }
+
     @CheckedChange
     void cb_park()
     {
@@ -1041,6 +1043,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
 //显示面
         initMianPolygon();
     }
+
     private void InitArea()
     {
         list_Marker_park = new ArrayList<>();
@@ -2017,6 +2020,7 @@ public class NCZ_MainSale extends Fragment implements TencentLocationListener, V
         });
 
     }
+
     public void initMapClickWhenPaint()
     {
         tencentMap.setOnMapClickListener(new TencentMap.OnMapClickListener()

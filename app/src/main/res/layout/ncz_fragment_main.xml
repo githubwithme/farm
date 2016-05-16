@@ -186,7 +186,6 @@
                         android:textColor="@color/textcolor_titlebar"
                         android:textSize="@dimen/size_sp_14"/>
                     <TextView
-                        android:visibility="gone"
                         android:layout_weight="1"
                         android:id="@+id/tv_farmmap"
                         android:layout_width="60dip"

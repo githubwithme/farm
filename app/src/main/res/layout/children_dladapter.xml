@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
- <com.farm.widget.CustomGridview
-    android:id="@+id/gridView"
-    android:numColumns="auto_fit"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:columnWidth="90dip"
-    android:verticalSpacing="10dip"
-    android:horizontalSpacing="10dip"
-    ></com.farm.widget.CustomGridview>
+    <com.farm.widget.CustomGridview
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:columnWidth="90dip"
+        android:horizontalSpacing="10dip"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dip"
+        />
 
 </LinearLayout>

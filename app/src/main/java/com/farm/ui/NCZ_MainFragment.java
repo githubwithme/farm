@@ -61,7 +61,7 @@ public class NCZ_MainFragment extends Fragment
         ncz_WorkList.setThreadStatus(hidden);
         ncz_todaymq.setThreadStatus(hidden);
         ncz_todaygz.setThreadStatus(hidden);
-//        map_farm.setThreadStatus(hidden);
+        map_farm.setThreadStatus(hidden);
     }
 
     @AfterViews
@@ -70,7 +70,7 @@ public class NCZ_MainFragment extends Fragment
         ncz_WorkList = new NCZ_YQPQ_();
         ncz_todaymq = new NCZ_todaymq_();
         ncz_todaygz = new NCZ_todaygz_();
-        map_farm=new Map_Farm_();
+        map_farm = new Map_Farm_();
         tv_day.setText(utils.getTodayAndwWeek());
         tv_title.setText("首页");
         switchContent_todayjob(mContent_todayjob, ncz_todaygz);
@@ -100,17 +100,17 @@ public class NCZ_MainFragment extends Fragment
         switchContent_todayjob(mContent_todayjob, ncz_todaymq);
     }
 
-/*    @Click
+    @Click
     void tv_farmmap()
     {
         setBackground(2);
         switchContent_todayjob(mContent_todayjob, map_farm);
-    }*/
+    }
 
     @Click
     void tv_all()
     {
-        setBackground(2);
+        setBackground(3);
         switchContent_todayjob(mContent_todayjob, ncz_WorkList);
     }
 
@@ -190,12 +190,12 @@ public class NCZ_MainFragment extends Fragment
                 tv_mq.setTextColor(getResources().getColor(R.color.bg_blue));
                 tv_mq.setBackgroundResource(R.drawable.red_bottom);
                 break;
-        /*    case 2:
+          case 2:
                 tv_farmmap.setSelected(false);
                 tv_farmmap.setTextColor(getResources().getColor(R.color.bg_blue));
                 tv_farmmap.setBackgroundResource(R.drawable.red_bottom);
-                break;*/
-            case 2:
+                break;
+            case 3:
                 tv_all.setSelected(false);
                 tv_all.setTextColor(getResources().getColor(R.color.bg_blue));
                 tv_all.setBackgroundResource(R.drawable.red_bottom);
