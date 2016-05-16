@@ -36,6 +36,7 @@ public class goodslisttab implements Parcelable
     public String ZS="";
     public String GX="";
 
+
     //坚添加
     public String isExchange="";
     public String firs="";
@@ -43,6 +44,15 @@ public class goodslisttab implements Parcelable
     public String secNum="";
     public String three="";
     public String threeNum="";
+    public String DW="";
+
+    public String getDW() {
+        return DW;
+    }
+
+    public void setDW(String DW) {
+        this.DW = DW;
+    }
 
     public String getIsExchange() {
         return isExchange;
@@ -368,6 +378,7 @@ public class goodslisttab implements Parcelable
             p.setSecNum(source.readString());
             p.setThree(source.readString());
             p.setThreeNum(source.readString());
+            p.setDW(source.readString());
             return p;
         }
 
@@ -410,6 +421,7 @@ public class goodslisttab implements Parcelable
         p.writeString(secNum);
         p.writeString(three);
         p.writeString(threeNum);
+        p.writeString(DW);
 
     }
 

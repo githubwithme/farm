@@ -163,13 +163,12 @@ public class Area_Cmd_Adapter extends BaseAdapter
         inputGoodsAdapter = new InputGoodsAdapter(context, list, pi, pn, secondItemid.get(currentPostion), secondItemName.get(currentPostion));
         lv.setAdapter(inputGoodsAdapter);
 
-        btn_sure.setOnClickListener(new View.OnClickListener()
-        {
+        btn_sure.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 String goodsYL = "";
                 String goodsnote = "";
+                String goodsdw = "";
 //                String danwei = "";
 //                String shuliang = "";
                 goodslisttab_flsl goodslisttab_flsl = new goodslisttab_flsl();
@@ -192,14 +191,12 @@ public class Area_Cmd_Adapter extends BaseAdapter
 //                }
 
 
-                if (list_goodslisttab == null)
-                {
+                if (list_goodslisttab == null) {
                     Toast.makeText(context, "请填写肥料数量", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                for (int i = 0; i < list_goodslisttab.size(); i++)
-                {
+                for (int i = 0; i < list_goodslisttab.size(); i++) {
                     goodslisttab goodslisttab = list_goodslisttab.get(i);
                     goodslisttab_flsl.setId(goodslisttab.getParkId() + ":" + goodslisttab.getAreaId() + ":" + goodslisttab.getId());
                     goodslisttab_flsl.setParkId(goodslisttab.getParkId());
@@ -218,11 +215,15 @@ public class Area_Cmd_Adapter extends BaseAdapter
                     goodslisttab_flsl.setThree(goodslisttab.getThree());
                     goodslisttab_flsl.setThreeNum(goodslisttab.getThreeNum());
 
+                    goodsdw = goodsdw + goodslisttab.getDW() + ".";
+                    goodsdw.substring(0, goodsdw.length() - 1);
+                    goodslisttab_flsl.setDW(goodsdw);
+
                     goodsYL = goodsYL + goodslisttab.getYL() + ";";
                     goodsYL.substring(0, goodsYL.length() - 1);
                     goodslisttab_flsl.setYL(goodsYL);
 
-                    String large_dw=goodslisttab.getgoodsSpec().substring(1,goodslisttab.getgoodsSpec().length());
+                    String large_dw = goodslisttab.getgoodsSpec().substring(1, goodslisttab.getgoodsSpec().length());
               /*      String[] goodsspc = goodslisttab.getgoodsSpec().split("/");
                     String number = goodsspc[0];
                     String small_dw = goodsspc[1];
@@ -230,20 +231,27 @@ public class Area_Cmd_Adapter extends BaseAdapter
 //                    if (small_dw.equals("ml"))
 //                    if (goodslisttab.getgoodsunit().equals("mL")||goodslisttab.getgoodsunit().equals("L"))
 //                    if (goodslisttab.getIsExchange().equals("False"))
-                    if (goodslisttab.getIsExchange().equals("True"))
-                    {
-                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + "倍(兑水)" +  "\n";
 
-                    }else
-                    {
+                    //之前判断
+/*                    if (goodslisttab.getIsExchange().equals("兑水")) {
+                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + "倍(兑水)" + "\n";
+                    } else {
                         Double acountnumber = Double.valueOf(list_goodslisttab.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
 //                        Double  neednumber = acountnumber / Double.valueOf(number);    //冯
 //                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + small_dw + "/株" + "  " + "共需" + neednumber + goodslisttab.getgoodsunit() + "\n"; //冯
 //                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " +goodslisttab.getgoodsunit()+ small_dw + "/株" + "  " + "共需" + acountnumber + goodslisttab.getgoodsunit() + "\n";
-                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL()+ "g/株" + "  " + "共需" +acountnumber+ "g" + "\n";
+                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "g/株" + "  " + "共需" + acountnumber + "g" + "\n";
+
+                    }*/
+
+                    //多个选择
+                    if (goodslisttab.getDW().equals("倍(兑水)")) {
+                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "   " + "倍(兑水)" + "\n";
+                    } else {
+                        Double acountnumber = Double.valueOf(list_goodslisttab.get(i).getYL()) * Integer.valueOf(thirdItemName.get(currentPostion));
+                        goodsnote = goodsnote + goodslisttab.getgoodsName() + "：" + goodslisttab.getYL() + "g/株" + "  " + "共需" + acountnumber + "g" + "\n";
 
                     }
-
                     goodslisttab_flsl.setgoodsNote(goodsnote);
                 }
                 SqliteDb.save(context, goodslisttab_flsl);

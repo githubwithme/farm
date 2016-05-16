@@ -168,6 +168,7 @@
         <activity android:name=".ui.PG_AddEvent_"/>
         <activity android:name=".ui.PG_EventDetail_"/>
         <activity android:name=".ui.PG_AddHandle_"/>
+        <activity android:name=".ui.PQ_DLbjFragment_"/>
         <!-- 共用UI -->
         <activity android:name=".chart.BarChartActivity_"/>
         <activity android:name=".ui.ObservationRecordActivity_"/>
@@ -198,6 +199,7 @@
         <activity android:name=".ui.Common_MoreJob_"/>
         <activity android:name=".ui.Common_CommandFeedBack_"/>
         <activity android:name=".ui.Common_CommandDetail_"/>
+        <activity android:name=".ui.Event_Process_"/>
 
 
         <!-- 服务 -->

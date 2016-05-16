@@ -27,15 +27,23 @@ public class ReportedBean  implements Parcelable
     public String state ;
     public String X="0";
     public String Y="0";
-
+    public String remark2;
     public String thumbImageUrl;//缩略图
     public String solveId;
     public String solveName;
     public String result;
     public String IsUpload;
     public String imageUrl;     //原图
+
     public List<FJxx> fjxx;
 
+    public String getRemark2() {
+        return remark2;
+    }
+
+    public void setRemark2(String remark2) {
+        this.remark2 = remark2;
+    }
 
     public List<FJxx> getFjxx() {
         return fjxx;
@@ -192,12 +200,14 @@ public class ReportedBean  implements Parcelable
             p.setState(source.readString());
             p.setX(source.readString());
             p.setY(source.readString());
+            p.setRemark2(source.readString());
             p.setThumbImageUrl(source.readString());
             p.setSolveId(source.readString());
             p.setSolveName(source.readString());
             p.setResult(source.readString());
             p.setIsUpload(source.readString());
             p.setImageUrl(source.readString());
+
 
             p.fjxx = source.readArrayList(plantgrowthtab.class.getClassLoader());
       /*      p.imgUrl = source.readArrayList(List.class.getClassLoader());
@@ -225,12 +235,14 @@ public class ReportedBean  implements Parcelable
         p.writeString(state );
         p.writeString(X);
         p.writeString(Y);
+        p.writeString(remark2);
         p.writeString(thumbImageUrl);
         p.writeString(solveId);
         p.writeString(solveName);
         p.writeString(result);
         p.writeString(IsUpload);
         p.writeString(imageUrl);
+
         p.writeList(fjxx);
     /*    p.writeList(imgUrl);
         p.writeList(thumbImageUrl);*/

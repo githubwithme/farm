@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.NCZ_EventHandleAdapter;
 import com.farm.adapter.PG_EventProcessedAdapter;
+import com.farm.adapter.PG_ReportedAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.HandleBean;
@@ -40,6 +41,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,13 +52,14 @@ import java.util.List;
 public class PG_EventProcessed extends Fragment
 {
     commembertab commembertab;
-    PG_EventProcessedAdapter listadpater;
+//    PG_EventProcessedAdapter listadpater;
+PG_ReportedAdapter listadpater;
     android.support.v4.app.Fragment mContent = new android.support.v4.app.Fragment();
     private int listSumData;
     private View list_footer;//5
     private TextView list_foot_more;//5
     private ProgressBar list_foot_progress;//5
-    private List<HandleBean> listData = new ArrayList<HandleBean>();
+    private List<ReportedBean> listData = new ArrayList<ReportedBean>();
     private AppContext appContext;
 
     @ViewById
@@ -65,9 +68,8 @@ public class PG_EventProcessed extends Fragment
     @AfterViews
     void afteroncreate()
     {
-//listview
-        initAnimalListView();
-//        wz_frame_listview.invalidateViews();
+
+            initAnimalListView();
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -77,8 +79,9 @@ public class PG_EventProcessed extends Fragment
     }
 
 
-    private void initAnimalListView() {
-        listadpater=new PG_EventProcessedAdapter(getActivity(), listData);
+    private void initAnimalListView()
+    {
+        listadpater=new PG_ReportedAdapter(getActivity(), listData);
         list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
@@ -89,12 +92,29 @@ public class PG_EventProcessed extends Fragment
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer)
                     return;
-
-                HandleBean handleBean = listData.get((position - 1));
-//                Intent intent = new Intent(getActivity(), PG_AddHandle_.class);
-                Intent intent = new Intent(getActivity(), PG_HandleFragment_.class);
-                intent.putExtra("handleBean", handleBean);
+                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
+                ReportedBean reportedBean=listData.get(position-1);
+                intent.putExtra("reportedBean",reportedBean);
                 startActivity(intent);
+
+
+     /*           if (reportedBean.getImageUrl() != null) {
+                    System.out.println(reportedBean.getImageUrl());
+                    Log.v("ssss", reportedBean.getImageUrl());
+                    String[] imgurl = reportedBean.getImageUrl().split("[@]");
+                    for (int i = 0; i < imgurl.length; i++) {
+                        System.out.println(imgurl[i]);
+                        Log.v("ssss", imgurl[i]);
+                    }
+                }*/
+               /* WZ_Pcxx wz_pcxx=listData.get(position-1);
+                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
+                intent.putExtra("storehouseId",wz_pcxx.getStorehouseId());
+                intent.putExtra("goodsId", goods.getGoodsId());
+                intent.putExtra("localName",wz_pcxx.getParkName()+"-"+wz_pcxx.getStorehouseName());
+                intent.putExtra("goodsName",goods.getGoodsName());
+
+                startActivity(intent);*/
 
             }
         });
@@ -152,35 +172,39 @@ public class PG_EventProcessed extends Fragment
             getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
     };
-
-    private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX) {
-
+    private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
+    {
 
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getEventHandleByEventId");
+        params.addQueryStringParameter("remark2", commembertab.getId());
+        params.addQueryStringParameter("action", "getEventListByUID");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
-                List<HandleBean> listNewData = null;
+                List<ReportedBean> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
+
                     if (result.getAffectedRows() != 0) {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), HandleBean.class);
-                        Iterator<HandleBean> it = listNewData.iterator();
+
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
+                        Iterator<ReportedBean> it = listNewData.iterator();
                         while (it.hasNext())
                         {
-                            String value = it.next().getSolveId();
-                            if (!value.equals(commembertab.getId()))
+                            String value = it.next().getReportorId();
+                            if (value.equals(commembertab.getId()))
                             {
                                 it.remove();
                             }
                         }
+//                        if (commembertab.getId().equals(listNewData))
+
                     } else {
-                        listNewData = new ArrayList<HandleBean>();
+                        listNewData = new ArrayList<ReportedBean>();
                     }
                 } else {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
@@ -201,10 +225,10 @@ public class PG_EventProcessed extends Fragment
                                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
                                     if (listData.size() > 0)// 页面切换时，若之前列表中已有数据，则往上面添加，并判断去除重复
                                     {
-                                        for (HandleBean Wz_Storehouse1 : listNewData) {
+                                        for (ReportedBean Wz_Storehouse1 : listNewData) {
                                             boolean b = false;
-                                            for (HandleBean Wz_Storehouse2 : listData) {
-                                                if (Wz_Storehouse1.getSolveId().equals(Wz_Storehouse2.getSolveId())) {
+                                            for (ReportedBean Wz_Storehouse2 : listData) {
+                                                if (Wz_Storehouse1.getEventId().equals(Wz_Storehouse2.getEventId())) {
                                                     b = true;
                                                     break;
                                                 }
@@ -238,10 +262,10 @@ public class PG_EventProcessed extends Fragment
                             case UIHelper.LISTVIEW_DATATYPE_NEWS:
                                 listSumData += size;
                                 if (listNewData.size() > 0) {
-                                    for (HandleBean Wz_Storehouse1 : listNewData) {
+                                    for (ReportedBean Wz_Storehouse1 : listNewData) {
                                         boolean b = false;
-                                        for (HandleBean Wz_Storehouse2 : listData) {
-                                            if (Wz_Storehouse1.getSolveId().equals(Wz_Storehouse2.getSolveId())) {
+                                        for (ReportedBean Wz_Storehouse2 : listData) {
+                                            if (Wz_Storehouse1.getEventId().equals(Wz_Storehouse2.getEventId())) {
                                                 b = true;
                                                 break;
                                             }
@@ -282,7 +306,7 @@ public class PG_EventProcessed extends Fragment
                 progressBar.setVisibility(ProgressBar.GONE);
                 // main_head_progress.setVisibility(ProgressBar.GONE);
                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
-                    lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new java.util.Date().toLocaleString());
+                    lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
                     lv.setSelection(0);
                 } else if (actiontype == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG) {
                     lv.onRefreshComplete();

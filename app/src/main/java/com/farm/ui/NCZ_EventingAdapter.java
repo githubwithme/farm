@@ -1,4 +1,4 @@
-package com.farm.adapter;
+package com.farm.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,24 +15,22 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.FJxx;
-import com.farm.bean.PlantGcd;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
-import com.farm.ui.Event_Process_;
-import com.farm.ui.RecordList_;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by user on 2016/4/11.
+ * Created by user on 2016/5/10.
  */
 @SuppressLint("NewApi")
-public class PG_ReportedAdapter extends BaseAdapter {
+public class NCZ_EventingAdapter extends BaseAdapter
+{
     private Context context;// 运行上下文
-    private List<ReportedBean> listItems;// 数据集合
+    private List<com.farm.bean.ReportedBean> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
     List<FJxx> fJxx;
     ReportedBean ReportedBean;
@@ -51,7 +49,7 @@ public class PG_ReportedAdapter extends BaseAdapter {
         public TextView tv_new;
     }
 
-    public PG_ReportedAdapter(Context context, List<ReportedBean> data)
+    public NCZ_EventingAdapter(Context context, List<ReportedBean> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -78,7 +76,6 @@ public class PG_ReportedAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent)
     {
         ReportedBean = listItems.get(position);
-        fJxx=new ArrayList<FJxx>();
         fJxx=ReportedBean.getFjxx();
         // 自定义视图
         ListItemView listItemView = null;
@@ -99,6 +96,7 @@ public class PG_ReportedAdapter extends BaseAdapter {
             listItemView.tv_cmdname = (TextView) convertView.findViewById(R.id.tv_cmdname);
             listItemView.tv_clqk = (TextView) convertView.findViewById(R.id.tv_clqk);
 
+
             listItemView.iv_record.setId(position);
             listItemView.iv_record.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -110,13 +108,6 @@ public class PG_ReportedAdapter extends BaseAdapter {
                     context.startActivity(intent);
                 }
             });
-
-            if (!fJxx.equals("")&& fJxx.size()>0)
-            {
-
-                    BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(0).getLSTLJ());
-
-            }
 
             // 设置控件集到convertView
             lmap.put(position, convertView);
@@ -134,7 +125,7 @@ public class PG_ReportedAdapter extends BaseAdapter {
             listItemView.tv_clqk.setText("未处理");
         }else if(ReportedBean.getState().equals("1"))
         {
-            listItemView.tv_clqk.setText("待处理");
+            listItemView.tv_clqk.setText("处理中");
         }else
         {
             listItemView.tv_clqk.setText("已处理");
@@ -142,8 +133,17 @@ public class PG_ReportedAdapter extends BaseAdapter {
 
         listItemView.tv_cmdname.setText(ReportedBean.getEventType());
         listItemView.tv_qx.setText(ReportedBean.getReporTime());
+        listItemView.circle_img.setTag(R.id.tag_picture, fJxx);
 
-//
+        List<FJxx> fjlist= (List<FJxx>) listItemView.circle_img.getTag(R.id.tag_picture);
+        if (!fjlist.equals("")&& fJxx.size()>0)
+        {
+            if(fjlist.get(0).getFJLX().equals("1")) {
+
+                BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fjlist.get(0).getLSTLJ());
+            }
+        }
+
         return convertView;
     }
 }

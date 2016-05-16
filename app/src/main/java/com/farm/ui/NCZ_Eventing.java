@@ -51,7 +51,8 @@ public class NCZ_Eventing extends Fragment
 {
 
     commembertab commembertab;
-    PG_ReportedAdapter listadpater;
+//    PG_ReportedAdapter listadpater;
+    NCZ_EventingAdapter listadpater;
     private AppContext appContext;
     android.support.v4.app.Fragment mContent = new android.support.v4.app.Fragment();
     private int listSumData;
@@ -84,7 +85,7 @@ public class NCZ_Eventing extends Fragment
     }
 
     private void initAnimalListView() {
-        listadpater=new PG_ReportedAdapter(getActivity(), listData);
+        listadpater=new NCZ_EventingAdapter(getActivity(), listData);
         list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
@@ -95,7 +96,8 @@ public class NCZ_Eventing extends Fragment
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer)
                     return;
-                Intent intent=new Intent(getActivity(),NCZ_EventLookList_.class);
+//                Intent intent=new Intent(getActivity(),NCZ_EventLookList_.class);
+                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
                 ReportedBean reportedBean=listData.get(position-1);
                 intent.putExtra("reportedBean",reportedBean);
                 startActivity(intent);

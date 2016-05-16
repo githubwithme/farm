@@ -108,12 +108,13 @@ public class Command_ExecuteArea_Adapter extends BaseAdapter
         listItemView.tv_area.setText(commandtab.getparkName() + "  " + commandtab.getareaName());
 
         String[] nongzi = commandtab.getnongziName().split(",");
-        String[] daiwei = commandtab.getAmountDW().split(",");
+        String[] daiwei = commandtab.getAmountDW().split("[.]");
         String[] shuliang = commandtab.getamount().split(";");
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)
         {
             flyl = flyl + nongzi[i] + ":"+shuliang[i]+daiwei[i]+";";
+//            flyl = flyl + nongzi[i] + ":"+shuliang[i]+";";
         }
         listItemView.tv_name.setText(flyl);
 //        listItemView.tv_name.setText(commandtab.getnongziName());

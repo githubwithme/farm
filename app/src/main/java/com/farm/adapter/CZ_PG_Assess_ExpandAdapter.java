@@ -94,6 +94,7 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
         String key = firstItemName.get(groupPosition);
         List<String> childData = secondItemName.get(groupPosition);
         String info = childData.get(childPosition);
+        List<String> thirdData= ThirdItemName.get(groupPosition).get(childPosition);
         View v = null;
         if (lmap.get(groupPosition) != null)
         {
@@ -123,13 +124,14 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
 
             listItemView.tv_tip.setText(info);
             listItemView.tv.setText("请选择" + info);
+//            listItemView.tv.setText(thirdData.get(0));
             listItemView.tv.setTag(R.id.tag_fi, firstItemName.get(groupPosition));
             listItemView.tv.setTag(R.id.tag_fn, key);
             listItemView.tv.setTag(R.id.tag_si, secondItemName.get(groupPosition).get(childPosition));
             listItemView.tv.setTag(R.id.tag_sn, info);
-            listItemView.tv.setTag(R.id.tag_ti, ThirdItemId.get(groupPosition).get(childPosition));
-            listItemView.tv.setTag(R.id.tag_tn, ThirdItemName.get(groupPosition).get(childPosition));
-            listItemView.tv.setTag(R.id.tag_val, ThirdItemValues.get(groupPosition).get(childPosition));
+            listItemView.tv.setTag(R.id.tag_ti, ThirdItemId.get(groupPosition).get(childPosition));//2
+            listItemView.tv.setTag(R.id.tag_tn, ThirdItemName.get(groupPosition).get(childPosition));//1
+            listItemView.tv.setTag(R.id.tag_val, ThirdItemValues.get(groupPosition).get(childPosition));//3
             listItemView.tv.setOnClickListener(new View.OnClickListener()
             {
                 @Override

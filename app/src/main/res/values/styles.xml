@@ -44,6 +44,16 @@
         <item name="android:fadingEdge">none</item>
         <item name="android:scrollingCache">false</item>
     </style>
+    <style name="xxss_listview">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:listSelector">@color/white</item>
+        <item name="android:divider">@color/white</item>
+        <item name="android:dividerHeight">5.0dip</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:scrollingCache">false</item>
+    </style>
     <style name="wz_listview">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
