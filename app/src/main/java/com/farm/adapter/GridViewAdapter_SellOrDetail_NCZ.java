@@ -66,28 +66,12 @@ public class GridViewAdapter_SellOrDetail_NCZ extends BaseAdapter
         {
             convertView = View.inflate(context, R.layout.gridview_sellorderdetail_ncz, null);
             view = new Holder(convertView);
-            view.cb_select.setTag(position);
             view.cb_selectall.setTag(position);
             convertView.setTag(view);
         } else
         {
             view = (Holder) convertView.getTag();
         }
-        view.cb_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                if (isChecked)
-                {
-                    int pos = (int) buttonView.getTag();
-                    showDialog_editBreakoffinfo(list.get(pos), (CheckBox) buttonView);
-                } else
-                {
-                    buttonView.setTag(null);
-                }
-            }
-        });
         view.cb_selectall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
@@ -116,14 +100,12 @@ public class GridViewAdapter_SellOrDetail_NCZ extends BaseAdapter
     {
         private TextView tv_number;
         private TextView tv_name;
-        private CheckBox cb_select;
         private CheckBox cb_selectall;
 
         public Holder(View view)
         {
             tv_name = (TextView) view.findViewById(R.id.tv_name);
             tv_number = (TextView) view.findViewById(R.id.tv_number);
-            cb_select = (CheckBox) view.findViewById(R.id.cb_select);
             cb_selectall = (CheckBox) view.findViewById(R.id.cb_selectall);
         }
     }

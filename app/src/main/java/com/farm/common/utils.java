@@ -573,8 +573,23 @@ public class utils
         //params.height最后得到整个ListView完整显示需要的高度
         listView.setLayoutParams(params);
     }
+    public static void setGridViewHeight(GridView gridView)
+    {
+        ListAdapter listAdapter = gridView.getAdapter();
+        int totalHeight = 0;
+        int count = listAdapter.getCount();
+        for (int i = 0; i < listAdapter.getCount(); i++)
+        {
+            View listItem = listAdapter.getView(i, null, gridView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
 
-
+        ViewGroup.LayoutParams params = gridView.getLayoutParams();
+        params.height = totalHeight + (gridView.getMeasuredHeight() * (listAdapter.getCount() - 1));
+        gridView.setLayoutParams(params);
+        gridView.requestLayout();
+    }
     public static void setListViewHeight(ListView listView)
     {
         ListAdapter listAdapter = listView.getAdapter();
@@ -606,20 +621,6 @@ public class utils
         }
 
         return totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-    }
-    public static int getGridViewHeight(GridView listView)
-    {
-        ListAdapter listAdapter = listView.getAdapter();
-        int totalHeight = 0;
-        int count = listAdapter.getCount();
-        for (int i = 0; i < listAdapter.getCount()/3+1; i++)
-        {
-            View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        return totalHeight + (listView.getHeight() * (listAdapter.getCount()/3+1));
     }
     public static int CheckInPloy(Point[] pts, int n, Point pt) //pts为多边形的顶点数组，n为多边形顶点数，pt为将要被判断的点
     {

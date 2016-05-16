@@ -2,7 +2,6 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,15 +50,6 @@ public class NCZ_SellOrderDetail extends Activity
         for (int i = 0; i < count; i++)
         {
             LinearLayout linearlayout = (LinearLayout) gv.getChildAt(i);
-            CheckBox cb_select = (CheckBox) linearlayout.findViewById(R.id.cb_select);
-            CheckBox cb_selectall = (CheckBox) linearlayout.findViewById(R.id.cb_selectall);
-            if (cb_selectall.isChecked())
-            {
-
-            } else
-            {
-
-            }
         }
     }
 
