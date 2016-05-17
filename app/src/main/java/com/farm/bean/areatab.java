@@ -51,10 +51,53 @@ public class areatab implements Parcelable // 与数据库不一致
 	public String jobVideoCount;
 	public String plantGrowVideoCount;
 	public String commandVideoCount;
+	public String numberofsaleout;
+	public String numberofselein;
+	public String numberofsalefor;
+	public String numberofnewsale;
 	public List<contractTab> contractTabList;
 	public List<SellOrderDetail_New> sellOrderDetail_NewList;
 
 
+	public void setNumberofnewsale(String numberofnewsale)
+	{
+		this.numberofnewsale = numberofnewsale;
+	}
+
+	public String getNumberofnewsale()
+	{
+		return numberofnewsale;
+	}
+
+	public void setNumberofsalefor(String numberofsalefor)
+	{
+		this.numberofsalefor = numberofsalefor;
+	}
+
+	public String getNumberofsalefor()
+	{
+		return numberofsalefor;
+	}
+
+	public void setNumberofselein(String numberofselein)
+	{
+		this.numberofselein = numberofselein;
+	}
+
+	public String getNumberofselein()
+	{
+		return numberofselein;
+	}
+
+	public void setNumberofsaleout(String numberofsaleout)
+	{
+		this.numberofsaleout = numberofsaleout;
+	}
+
+	public String getNumberofsaleout()
+	{
+		return numberofsaleout;
+	}
 	public void setSellOrderDetail_NewList(List<SellOrderDetail_New> sellOrderDetail_NewList)
 	{
 		this.sellOrderDetail_NewList = sellOrderDetail_NewList;
@@ -419,6 +462,10 @@ public class areatab implements Parcelable // 与数据库不一致
 			p.setImgurl(source.readString());
 			p.setWorkuserid(source.readString());
 			p.setCommandCount(source.readString());
+			p.setNumberofsaleout(source.readString());
+			p.setNumberofselein(source.readString());
+			p.setNumberofsalefor(source.readString());
+			p.setNumberofnewsale(source.readString());
 			p.contractTabList = source.readArrayList(plantgrowthtab.class.getClassLoader());
 			p.sellOrderDetail_NewList = source.readArrayList(plantgrowthtab.class.getClassLoader());
 			return p;
@@ -461,6 +508,10 @@ public class areatab implements Parcelable // 与数据库不一致
 		p.writeString(imgurl);
 		p.writeString(workuserid);
 		p.writeString(commandCount);
+		p.writeString(numberofsaleout);
+		p.writeString(numberofselein);
+		p.writeString(numberofsalefor);
+		p.writeString(numberofnewsale);
 		p.writeList(contractTabList);
 		p.writeList(sellOrderDetail_NewList);
 	}

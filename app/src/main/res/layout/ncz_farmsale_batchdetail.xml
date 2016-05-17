@@ -9,6 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@+id/pb_upload"
+            android:layout_width="45dip"
+            android:layout_height="45dip"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
         <RelativeLayout
             android:id="@+id/rl_titlebar"
             android:layout_width="match_parent"
@@ -49,46 +56,61 @@
             android:layout_below="@+id/line"
             android:layout_marginBottom="40dip"
             android:layout_marginLeft="10dip"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
             android:layout_marginRight="10dip"
             android:layout_marginTop="10dip"
             android:background="@color/white"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:orientation="vertical">
 
             <com.farm.widget.CustomExpandableListView
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
                 android:childDivider="@color/transparent"
                 android:dividerHeight="0dip"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:groupIndicator="@null"/>
         </ScrollView>
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_alignParentBottom="true"
-    android:layout_marginBottom="10dip"
-    android:layout_marginRight="5dip"
-    android:layout_marginLeft="10dip"
-    android:background="@drawable/background_view_rounded_single"
-    android:layout_height="40dip">
-    <Button
-        android:id="@+id/btn_newsale"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="加入拟售订单"
-        android:background="@null"
-        android:textColor="@color/bg_text"
-        android:textSize="@dimen/size_sp_18"/>
-    <ProgressBar
-        android:id="@+id/pb_upload"
-        android:layout_width="30dip"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:layout_height="30dip"/>
-</FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="5dip"
+            android:background="@drawable/shape_round_border_red"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_newsale"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="加入待发布订单"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_18"/>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/red"/>
+
+            <Button
+                android:id="@+id/btn_createorder"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="发布订单"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_18"/>
+
+
+        </LinearLayout>
 
 
     </RelativeLayout>

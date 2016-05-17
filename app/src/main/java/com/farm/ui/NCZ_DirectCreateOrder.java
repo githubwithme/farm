@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -14,9 +15,9 @@ import com.farm.adapter.Adapter_SellOrderDetail;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.SellOrder;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
+import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
@@ -34,6 +35,7 @@ import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -43,10 +45,11 @@ import java.util.List;
 /**
  * 1
  */
-@EActivity(R.layout.createorder)
-public class CreateOrder extends Activity
+@EActivity(R.layout.ncz_createorder)
+public class NCZ_DirectCreateOrder extends Activity
 {
-    String batchtime;
+    List<HashMap<String, String>> uuids;
+    String batchtime = "";
     List<SellOrderDetail_New> list_SellOrderDetail;
     Adapter_SellOrderDetail adapter_sellOrderDetail;
     SellOrderDetail SellOrderDetail;
@@ -74,53 +77,92 @@ public class CreateOrder extends Activity
     EditText et_email;
     @ViewById
     EditText et_note;
-
+    @ViewById
+    TextView tv_allnumber;
 
     @Click
     void btn_sure()
     {
         if (et_name.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_DirectCreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_email.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_DirectCreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_address.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_DirectCreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_phone.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_DirectCreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_price.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_DirectCreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_weight.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_DirectCreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_number.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_DirectCreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_values.getText().toString().equals(""))
         {
-            Toast.makeText(CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_DirectCreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        String batchtime = "";
+        String producer = "";
+        List<String> list_batchtime = new ArrayList<>();
+        List<String> list_producer = new ArrayList<>();
+        for (int i = 0; i < list_SellOrderDetail.size(); i++)
+        {
+            if (i == 0)
+            {
+                list_batchtime.add(list_SellOrderDetail.get(0).getBatchTime());
+                batchtime = batchtime + list_SellOrderDetail.get(0).getBatchTime() + ";";
+            }
+            if (i == 0)
+            {
+                list_producer.add(list_SellOrderDetail.get(0).getparkname());
+                producer = producer + list_SellOrderDetail.get(0).getparkname() + ";";
+            }
+            for (int j = 0; j < list_batchtime.size(); j++)
+            {
+                if (!list_SellOrderDetail.get(i).getBatchTime().equals(list_batchtime.get(j)))
+                {
+                    list_batchtime.add(list_SellOrderDetail.get(i).getBatchTime());
+                    batchtime = batchtime + list_SellOrderDetail.get(i).getBatchTime() + ";";
+                    break;
+                }
+            }
+            for (int j = 0; j < list_producer.size(); j++)
+            {
+                if (!list_SellOrderDetail.get(i).getparkname().equals(list_producer.get(j)))
+                {
+                    list_producer.add(list_SellOrderDetail.get(i).getparkname());
+                    producer = producer + list_SellOrderDetail.get(i).getparkname() + ";";
+                    break;
+                }
+            }
+
+        }
+
         String uuid = java.util.UUID.randomUUID().toString();
-        SellOrder sellOrder = new SellOrder();
+        SellOrder_New sellOrder = new SellOrder_New();
         sellOrder.setid("");
         sellOrder.setUid("60");
         sellOrder.setUuid(uuid);
@@ -145,11 +187,13 @@ public class CreateOrder extends Activity
         sellOrder.setYear(utils.getYear());
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
+        sellOrder.setProducer(producer);
 
-        List<String> list_detail = new ArrayList<>();
-        for (int i = 0; i < list_SellOrderDetail.size(); i++)
-        {
-            list_detail.add(list_SellOrderDetail.get(i).getUuid());
+
+//        List<String> list_detail = new ArrayList<>();
+//        for (int i = 0; i < list_SellOrderDetail.size(); i++)
+//        {
+//            list_detail.add(list_SellOrderDetail.get(i).getUuid());
 //            SellOrderDetail sellOrderDetail = list_SellOrderDetail.get(i);
 //            sellOrderDetail.setsaleid(uuid);
 //            sellOrderDetail.setType("salein");
@@ -164,15 +208,17 @@ public class CreateOrder extends Activity
 //                Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
 //                finish();
 //            }
-        }
+//        }
 
-        List<SellOrder> SellOrderList = new ArrayList<>();
+        List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrderList\": ");
         builder.append(JSON.toJSONString(SellOrderList));
         builder.append(", \"SellOrderDetailLists\": ");
-        builder.append(JSON.toJSONString(list_detail));
+        builder.append(JSON.toJSONString(list_SellOrderDetail));
+        builder.append(", \"uuids\": ");
+        builder.append(JSON.toJSONString(uuids));
         builder.append("} ");
         addOrder(uuid, builder.toString());
 //        boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
@@ -204,7 +250,8 @@ public class CreateOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
-        adapter_sellOrderDetail = new Adapter_SellOrderDetail(CreateOrder.this, list_SellOrderDetail);
+        tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
+        adapter_sellOrderDetail = new Adapter_SellOrderDetail(NCZ_DirectCreateOrder.this, list_SellOrderDetail);
         lv.setAdapter(adapter_sellOrderDetail);
         utils.setListViewHeight(lv);
 //        getListData();
@@ -217,13 +264,25 @@ public class CreateOrder extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         list_SellOrderDetail = getIntent().getParcelableArrayListExtra("list");
-        batchtime = getIntent().getStringExtra("batchtime");
+        Bundle bundle = getIntent().getExtras();
+        ArrayList arraylist = bundle.getParcelableArrayList("list_uuid");
+        uuids = (List<HashMap<String, String>>) arraylist.get(0);
+        uuids = (List<HashMap<String, String>>) arraylist.get(0);
     }
 
+    public int countAllNumber()
+    {
+        int allnumber = 0;
+        for (int i = 0; i < list_SellOrderDetail.size(); i++)
+        {
+            allnumber = allnumber + Integer.valueOf(list_SellOrderDetail.get(i).getplannumber());
+        }
+        return allnumber;
+    }
 
     private void getListData()
     {
-        commembertab commembertab = AppContext.getUserInfo(CreateOrder.this);
+        commembertab commembertab = AppContext.getUserInfo(NCZ_DirectCreateOrder.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("comID", SellOrderDetail.getUuid());
         params.addQueryStringParameter("userid", commembertab.getId());
@@ -246,7 +305,7 @@ public class CreateOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_sellOrderDetail = new Adapter_SellOrderDetail(CreateOrder.this, listNewData);
+                        adapter_sellOrderDetail = new Adapter_SellOrderDetail(NCZ_DirectCreateOrder.this, listNewData);
                         lv.setAdapter(adapter_sellOrderDetail);
                         utils.setListViewHeight(lv);
                     } else
@@ -255,7 +314,7 @@ public class CreateOrder extends Activity
                     }
                 } else
                 {
-                    AppContext.makeToast(CreateOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_DirectCreateOrder.this, "error_connectDataBase");
                     return;
                 }
             }
@@ -309,7 +368,7 @@ public class CreateOrder extends Activity
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
-        params.addQueryStringParameter("action", "addOrder");
+        params.addQueryStringParameter("action", "directCreateOrder");
         params.setContentType("application/json");
         try
         {
@@ -331,13 +390,13 @@ public class CreateOrder extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NCZ_DirectCreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
                         finish();
                     }
 
                 } else
                 {
-                    AppContext.makeToast(CreateOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_DirectCreateOrder.this, "error_connectDataBase");
                     return;
                 }
 
@@ -346,7 +405,7 @@ public class CreateOrder extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(CreateOrder.this, "error_connectServer");
+                AppContext.makeToast(NCZ_DirectCreateOrder.this, "error_connectServer");
             }
         });
     }

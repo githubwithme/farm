@@ -235,6 +235,8 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         TencentLocationManager locationManager = TencentLocationManager.getInstance(PG_MainActivity.this);
         locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84
         error = locationManager.requestLocationUpdates(request, this);
+
+//        SqliteDb.InitDbutils(PG_MainActivity.this);
     }
 
     public void switchContent(Fragment from, Fragment to)

@@ -31,41 +31,44 @@
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_sp_18"/>
 
-<RelativeLayout
-    android:id="@+id/rl_newsale"
-    android:layout_width="60dip"
-    android:layout_alignParentRight="true"
-    android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/rl_newsale"
+                android:layout_width="70dip"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true">
 
-    <Button
-        android:id="@+id/btn_newsalelist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:text="拟售订单"
-        android:textColor="@color/bg_text"
-        android:textSize="@dimen/size_sp_14"/>
-    <TextView
-        android:id="@+id/tv_numberofnewsale"
-        android:layout_width="20dip"
-        android:layout_height="20dip"
-        android:visibility="gone"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:background="@drawable/zyx"
-        android:text="0"/>
-</RelativeLayout>
+                <Button
+                    android:id="@+id/btn_newsalelist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="待发布订单"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_sp_14"/>
+
+                <TextView
+                    android:id="@+id/tv_numberofnewsale"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/zyx"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
             <Button
                 android:id="@+id/btn_orders"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dip"
+                android:layout_toLeftOf="@+id/rl_newsale"
                 android:background="@null"
                 android:gravity="center"
-        android:layout_toLeftOf="@+id/rl_newsale"
                 android:text="订单管理"
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_sp_14"/>

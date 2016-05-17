@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_SellOrderDetail;
+import com.farm.adapter.Adapter_EditSellOrderDetail;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -44,11 +44,11 @@ import java.util.List;
 /**
  * 1
  */
-@EActivity(R.layout.ncz_editorder)
+@EActivity(R.layout.cz_editorder)
 public class CZ_EditOrder extends Activity
 {
     SellOrder_New sellOrder;
-    Adapter_SellOrderDetail adapter_sellOrderDetail;
+    Adapter_EditSellOrderDetail adapter_editSellOrderDetail;
     SellOrderDetail SellOrderDetail;
     @ViewById
     LinearLayout ll_flyl;
@@ -204,8 +204,8 @@ public class CZ_EditOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
-        adapter_sellOrderDetail = new Adapter_SellOrderDetail(CZ_EditOrder.this, sellOrder.getSellOrderDetailList());
-        lv.setAdapter(adapter_sellOrderDetail);
+        adapter_editSellOrderDetail = new Adapter_EditSellOrderDetail(CZ_EditOrder.this, sellOrder.getSellOrderDetailList());
+        lv.setAdapter(adapter_editSellOrderDetail);
         utils.setListViewHeight(lv);
 //        getListData();
 //        showData();
@@ -245,8 +245,8 @@ public class CZ_EditOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_sellOrderDetail = new Adapter_SellOrderDetail(CZ_EditOrder.this, listNewData);
-                        lv.setAdapter(adapter_sellOrderDetail);
+                        adapter_editSellOrderDetail = new Adapter_EditSellOrderDetail(CZ_EditOrder.this, listNewData);
+                        lv.setAdapter(adapter_editSellOrderDetail);
                         utils.setListViewHeight(lv);
                     } else
                     {

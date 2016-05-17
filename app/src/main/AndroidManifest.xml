@@ -61,6 +61,8 @@
         <activity android:name=".ui.NCZ_FarmSale_"/>
         <activity android:name=".ui.CZ_EditOrder_"/>
         <activity android:name=".ui.CZ_OrderDetail_"/>
+        <activity android:name=".ui.NCZ_DirectCreateOrder_"/>
+        <activity android:name=".ui.NCZ_CreateOrder_"/>
         <activity android:name=".ui.NCZ_EditOrder_"/>
         <activity android:name=".ui.NCZ_OrderDetail_"/>
         <activity android:name=".ui.NCZ_OrderManager_"/>

@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.adapter.NCZ_OrderAdapter;
+import com.farm.adapter.CZ_OrderAdapter;
 import com.farm.app.AppContext;
 import com.farm.bean.SelectRecords;
 import com.farm.bean.SellOrder_New;
@@ -32,7 +32,7 @@ import java.util.List;
 @EFragment
 public class CZ_NeedFeedbackOrder extends Fragment
 {
-    private NCZ_OrderAdapter listAdapter;
+    private CZ_OrderAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     private AppContext appContext;
@@ -77,7 +77,7 @@ public class CZ_NeedFeedbackOrder extends Fragment
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_OrderAdapter(getActivity(), listData);
+            listAdapter = new CZ_OrderAdapter(getActivity(), listData);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {

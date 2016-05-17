@@ -19,14 +19,14 @@
             android:background="@drawable/back"/>
 
         <Button
-            android:id="@+id/btn_sure"
+            android:id="@+id/btn_edit"
             android:layout_width="60dip"
             android:layout_height="40dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
             android:background="@drawable/background_view_rounded_single"
-            android:text="出售"
+            android:text="编辑"
             android:textColor="@color/bg_text"
             android:textSize="16sp"/>
 
@@ -43,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="拟售订单"
+                android:text="订单详情"
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/titlebar_textsize"/>
         </LinearLayout>
@@ -93,17 +93,17 @@
                             android:layout_height="match_parent"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*采购商"
+                            android:text="采购商"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
-                        <EditText
-                            android:id="@+id/et_name"
+                        <TextView
+                            android:id="@+id/tv_name"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入采购商名称"
+                            android:hint="暂无"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
@@ -129,18 +129,18 @@
                             android:layout_weight="1"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*单价"
+                            android:text="初定单价(元)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
-                        <EditText
-                            android:id="@+id/et_price"
+                        <TextView
+                            android:id="@+id/tv_planprice"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:hint="单价"
+                            android:gravity="center"
+                            android:hint="暂无"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -153,18 +153,18 @@
                             android:layout_weight="1"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*总价(元)"
+                            android:text="实际单价(元)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
                         <EditText
-                            android:id="@+id/et_values"
+                            android:id="@+id/tv_actualprice"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:hint="总价"
+                            android:gravity="center"
+                            android:hint="暂无"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -188,18 +188,18 @@
                             android:layout_weight="1"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*数量(株)"
+                            android:text="初定总价(元)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
-                        <EditText
-                            android:id="@+id/et_number"
+                        <TextView
+                            android:id="@+id/tv_plansumvalues"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:hint="数量"
+                            android:gravity="center"
+                            android:hint="暂无"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -212,18 +212,136 @@
                             android:layout_weight="1"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*重量(斤)"
+                            android:text="实际总价(元)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
                         <EditText
-                            android:id="@+id/et_weight"
+                            android:id="@+id/tv_actualsumvalues"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:hint="重量"
+                            android:gravity="center"
+                            android:hint="暂无"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="60dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="初定数量(株)"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <TextView
+                            android:id="@+id/tv_plannumber"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="暂无"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dip"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="实际数量(斤)"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <EditText
+                            android:id="@+id/tv_actualnumber"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="暂无"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="60dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="初定重量(斤)"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <TextView
+                            android:id="@+id/tv_planweight"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="暂无"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dip"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="实际重量(斤)"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <EditText
+                            android:id="@+id/tv_actualweight"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="暂无"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -247,17 +365,17 @@
                             android:layout_height="match_parent"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*采购商电话"
+                            android:text="采购商电话"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
-                        <EditText
-                            android:id="@+id/et_phone"
+                        <TextView
+                            android:id="@+id/tv_phone"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入采购商电话"
+                            android:hint="暂无"
                             android:inputType="phone"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -280,17 +398,17 @@
                             android:layout_height="match_parent"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*采购商地址"
+                            android:text="采购商地址"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
-                        <EditText
-                            android:id="@+id/et_address"
+                        <TextView
+                            android:id="@+id/tv_address"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入采购商地址"
+                            android:hint="暂无"
                             android:inputType="phone"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -313,17 +431,17 @@
                             android:layout_height="match_parent"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*采购商邮箱"
+                            android:text="采购商邮箱"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
-                        <EditText
-                            android:id="@+id/et_email"
+                        <TextView
+                            android:id="@+id/tv_email"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入采购商的邮箱地址"
+                            android:hint="暂无"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
@@ -349,12 +467,12 @@
                             android:textSize="@dimen/size_14"/>
 
 
-                        <EditText
-                            android:id="@+id/et_note"
+                        <TextView
+                            android:id="@+id/tv_note"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入订单备注"
+                            android:hint="暂无"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
@@ -363,35 +481,16 @@
 
             </LinearLayout>
 
-            <RelativeLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="45dip"
                 android:layout_marginLeft="10dip"
-                android:background="@color/white"
-                android:layout_marginRight="10dip">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="left|center_vertical"
-                    android:paddingLeft="10dip"
-                    android:text="销售明细条目"
-                    android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_sp_16"/>
-
-                <TextView
-                    android:id="@+id/tv_allnumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:gravity="left|center_vertical"
-                    android:paddingRight="10dip"
-                    android:text="150000"
-                    android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_sp_16"/>
-
-            </RelativeLayout>
-
+                android:layout_marginRight="10dip"
+                android:background="@drawable/round_gray"
+                android:gravity="left|center_vertical"
+                android:text="销售明细条目"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_16"/>
 
             <ListView
                 android:id="@+id/lv"

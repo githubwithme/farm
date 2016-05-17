@@ -59,7 +59,7 @@ public class NCZ_FarmSale extends Activity
             Toast.makeText(this, "暂无清单", Toast.LENGTH_SHORT).show();
         } else
         {
-            Intent intent = new Intent(NCZ_FarmSale.this, CreateOrder_.class);
+            Intent intent = new Intent(NCZ_FarmSale.this, NCZ_CreateOrder_.class);
             intent.putExtra("batchtime", "");
             intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list_newsale);
             startActivity(intent);
@@ -79,6 +79,7 @@ public class NCZ_FarmSale extends Activity
     @AfterViews
     void afterOncreate()
     {
+//        getBatchTimeByUid();
         getBatchTimeByUid_test();
         getNewSaleList_test();
     }
@@ -108,7 +109,7 @@ public class NCZ_FarmSale extends Activity
         if (list_newsale != null)
         {
             tv_numberofnewsale.setVisibility(View.VISIBLE);
-            tv_numberofnewsale.setText(String.valueOf(list_newsale.size()));
+            tv_numberofnewsale.setText("1");
         }
 
     }
@@ -118,6 +119,7 @@ public class NCZ_FarmSale extends Activity
         commembertab commembertab = AppContext.getUserInfo(NCZ_FarmSale.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("action", "getBatchTimeByUid");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

@@ -32,6 +32,10 @@ public class contractTab implements Parcelable // 与数据库不一致
     public String gainnumber;
     public String contractarea;
     public String amountforsale;
+    public String numberofsaleout;
+    public String numberofselein;
+    public String numberofsalefor;
+    public String numberofnewsale;
     public List<breakofftab> breakofftabList;
     public List<BreakOff_New> BreakOffList;
 
@@ -43,7 +47,45 @@ public class contractTab implements Parcelable // 与数据库不一致
         BreakOffList = breakOffList;
     }
 
+    public void setNumberofnewsale(String numberofnewsale)
+    {
+        this.numberofnewsale = numberofnewsale;
+    }
 
+    public String getNumberofnewsale()
+    {
+        return numberofnewsale;
+    }
+
+    public void setNumberofsalefor(String numberofsalefor)
+    {
+        this.numberofsalefor = numberofsalefor;
+    }
+
+    public String getNumberofsalefor()
+    {
+        return numberofsalefor;
+    }
+
+    public void setNumberofselein(String numberofselein)
+    {
+        this.numberofselein = numberofselein;
+    }
+
+    public String getNumberofselein()
+    {
+        return numberofselein;
+    }
+
+    public void setNumberofsaleout(String numberofsaleout)
+    {
+        this.numberofsaleout = numberofsaleout;
+    }
+
+    public String getNumberofsaleout()
+    {
+        return numberofsaleout;
+    }
 
     public void setNumOfPlant(String numOfPlant)
     {
@@ -219,6 +261,10 @@ public class contractTab implements Parcelable // 与数据库不一致
             p.setGainnumber(source.readString());
             p.setContractarea(source.readString());
             p.setAmountforsale(source.readString());
+            p.setNumberofsaleout(source.readString());
+            p.setNumberofselein(source.readString());
+            p.setNumberofsalefor(source.readString());
+            p.setNumberofnewsale(source.readString());
             p.breakofftabList = source.readArrayList(breakofftab.class.getClassLoader());
             p.BreakOffList = source.readArrayList(breakofftab.class.getClassLoader());
             return p;
@@ -247,6 +293,10 @@ public class contractTab implements Parcelable // 与数据库不一致
         p.writeString(gainnumber);
         p.writeString(contractarea);
         p.writeString(amountforsale);
+        p.writeString(numberofsaleout);
+        p.writeString(numberofselein);
+        p.writeString(numberofsalefor);
+        p.writeString(numberofnewsale);
         p.writeList(breakofftabList);
         p.writeList(BreakOffList);
     }

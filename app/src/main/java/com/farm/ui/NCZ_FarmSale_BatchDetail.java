@@ -1,7 +1,9 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -38,7 +40,9 @@ import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by user on 2016/4/25.
@@ -46,6 +50,8 @@ import java.util.List;
 @EActivity(R.layout.ncz_farmsale_batchdetail)
 public class NCZ_FarmSale_BatchDetail extends Activity
 {
+    List<Map<String, String>> uuids;
+    List<SellOrderDetail_New> list_sell;
     BatchTime batchTime;
     NCZ_BatchDetail_Adapter ncz_batchDetail_adapter;
     @ViewById
@@ -56,11 +62,53 @@ public class NCZ_FarmSale_BatchDetail extends Activity
     ProgressBar pb_upload;
 
     @Click
+    void btn_createorder()
+    {
+        setData();
+        Intent intent = new Intent(NCZ_FarmSale_BatchDetail.this, NCZ_DirectCreateOrder_.class);
+        intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list_sell);
+        Bundle bundle = new Bundle();
+        ArrayList arrayList = new ArrayList();
+        arrayList.add(uuids);
+        bundle.putParcelableArrayList("list_uuid", arrayList);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Click
     void btn_newsale()
     {
         pb_upload.setVisibility(View.VISIBLE);
-        List<SellOrderDetail_New> list_sell = new ArrayList<>();
-        List<String> uuids = new ArrayList<>();
+        setData();
+
+//        StringBuilder builder = new StringBuilder();
+//        builder.append("{\"SellOrderDetailList\": ");
+//        builder.append(JSON.toJSONString(list_sell));
+//        builder.append(", \"uuids\": ");
+//        builder.append(JSON.toJSONString(uuids));
+//        builder.append("} ");
+//        addNewSale(builder.toString());
+
+    }
+
+    @AfterViews
+    void afterOncreate()
+    {
+        getBatchTimeByUid_test();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();
+        batchTime = getIntent().getParcelableExtra("bean");
+    }
+
+    public void setData()
+    {
+        list_sell = new ArrayList<>();
+        uuids = new ArrayList<>();
         int grountCount = ncz_batchDetail_adapter.getGroupCount();
         for (int i = 0; i < grountCount; i++)
         {
@@ -79,8 +127,13 @@ public class NCZ_FarmSale_BatchDetail extends Activity
                     {
                         Bundle bundle = (Bundle) cb_selectall.getTag(R.id.tag_view);
                         SellOrderDetail_New sellorderdetail = bundle.getParcelable("bean");
-                        String number = btn_number.getText().toString();
-                        uuids.add(sellorderdetail.getUuid());
+                        String number_sale = btn_number.getText().toString();
+                        String number_left = sellorderdetail.getplannumber();
+                        String number_difference = String.valueOf(Integer.valueOf(number_left) - Integer.valueOf(number_sale));
+                        HashMap hashMap = new HashMap();
+                        hashMap.put("uuid", sellorderdetail.getUuid());
+                        hashMap.put("number_difference", number_difference);
+                        uuids.add(hashMap);
 
                         String uuid = java.util.UUID.randomUUID().toString();
                         SellOrderDetail_New sellorderdetail_newsale = new SellOrderDetail_New();
@@ -105,7 +158,7 @@ public class NCZ_FarmSale_BatchDetail extends Activity
                         sellorderdetail_newsale.setplanlng("");
                         sellorderdetail_newsale.setplanlatlngsize("");
                         sellorderdetail_newsale.setplannote("");
-                        sellorderdetail_newsale.setplannumber(number);
+                        sellorderdetail_newsale.setplannumber(number_sale);
                         sellorderdetail_newsale.setplanprice("");
                         sellorderdetail_newsale.setplanweight("");
                         sellorderdetail_newsale.setreg(utils.getTime());
@@ -116,67 +169,46 @@ public class NCZ_FarmSale_BatchDetail extends Activity
                         sellorderdetail_newsale.setYear(utils.getYear());
                         list_sell.add(sellorderdetail);
 
-
-                        String uuid_left = java.util.UUID.randomUUID().toString();
-                        SellOrderDetail_New sellorderdetail_left = new SellOrderDetail_New();
-                        sellorderdetail_left.setuid(sellorderdetail.getuid());
-                        sellorderdetail_left.setUuid(uuid_left);
-                        sellorderdetail_left.setactuallat("");
-                        sellorderdetail_left.setactuallatlngsize("");
-                        sellorderdetail_left.setactuallng("");
-                        sellorderdetail_left.setactualnote("");
-                        sellorderdetail_left.setactualnumber("");
-                        sellorderdetail_left.setactualprice("");
-                        sellorderdetail_left.setactualweight("");
-                        sellorderdetail_left.setareaid(sellorderdetail.getareaid());
-                        sellorderdetail_left.setareaname(sellorderdetail.getareaname());
-                        sellorderdetail_left.setBatchTime(sellorderdetail.getBatchTime());
-                        sellorderdetail_left.setcontractid(sellorderdetail.getcontractid());
-                        sellorderdetail_left.setcontractname(sellorderdetail.getcontractname());
-                        sellorderdetail_left.setisSoldOut("0");
-                        sellorderdetail_left.setparkid(sellorderdetail.getparkid());
-                        sellorderdetail_left.setparkname(sellorderdetail.getparkname());
-                        sellorderdetail_left.setPlanlat("");
-                        sellorderdetail_left.setplanlng("");
-                        sellorderdetail_left.setplanlatlngsize("");
-                        sellorderdetail_left.setplannote("");
-                        sellorderdetail_left.setplannumber(number);
-                        sellorderdetail_left.setplanprice("");
-                        sellorderdetail_left.setplanweight("");
-                        sellorderdetail_left.setreg(utils.getTime());
-                        sellorderdetail_left.setstatus("0");
-                        sellorderdetail_left.setType("salefor");
-                        sellorderdetail_left.setsaleid("");
-                        sellorderdetail_left.setXxzt("0");
-                        sellorderdetail_left.setYear(utils.getYear());
-                        list_sell.add(sellorderdetail_left);
+                        if (!number_left.equals(number_sale))
+                        {
+                            String uuid_left = java.util.UUID.randomUUID().toString();
+                            SellOrderDetail_New sellorderdetail_left = new SellOrderDetail_New();
+                            sellorderdetail_left.setuid(sellorderdetail.getuid());
+                            sellorderdetail_left.setUuid(uuid_left);
+                            sellorderdetail_left.setactuallat("");
+                            sellorderdetail_left.setactuallatlngsize("");
+                            sellorderdetail_left.setactuallng("");
+                            sellorderdetail_left.setactualnote("");
+                            sellorderdetail_left.setactualnumber("");
+                            sellorderdetail_left.setactualprice("");
+                            sellorderdetail_left.setactualweight("");
+                            sellorderdetail_left.setareaid(sellorderdetail.getareaid());
+                            sellorderdetail_left.setareaname(sellorderdetail.getareaname());
+                            sellorderdetail_left.setBatchTime(sellorderdetail.getBatchTime());
+                            sellorderdetail_left.setcontractid(sellorderdetail.getcontractid());
+                            sellorderdetail_left.setcontractname(sellorderdetail.getcontractname());
+                            sellorderdetail_left.setisSoldOut("0");
+                            sellorderdetail_left.setparkid(sellorderdetail.getparkid());
+                            sellorderdetail_left.setparkname(sellorderdetail.getparkname());
+                            sellorderdetail_left.setPlanlat("");
+                            sellorderdetail_left.setplanlng("");
+                            sellorderdetail_left.setplanlatlngsize("");
+                            sellorderdetail_left.setplannote("");
+                            sellorderdetail_left.setplannumber(number_difference);
+                            sellorderdetail_left.setplanprice("");
+                            sellorderdetail_left.setplanweight("");
+                            sellorderdetail_left.setreg(utils.getTime());
+                            sellorderdetail_left.setstatus("0");
+                            sellorderdetail_left.setType("salefor");
+                            sellorderdetail_left.setsaleid("");
+                            sellorderdetail_left.setXxzt("0");
+                            sellorderdetail_left.setYear(utils.getYear());
+                            list_sell.add(sellorderdetail_left);
+                        }
                     }
                 }
             }
         }
-
-//        StringBuilder builder = new StringBuilder();
-//        builder.append("{\"SellOrderDetailList\": ");
-//        builder.append(JSON.toJSONString(list_sell));
-//        builder.append(", \"uuids\": ");
-//        builder.append(JSON.toJSONString(uuids));
-//        builder.append("} ");
-//        addNewSale(builder.toString());
-
-    }
-
-    @AfterViews
-    void afterOncreate()
-    {
-        getBatchTimeByUid_test();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        getActionBar().hide();
-        batchTime = getIntent().getParcelableExtra("bean");
     }
 
     private void getBatchTimeByUid_test()

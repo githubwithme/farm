@@ -28,7 +28,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import java.util.HashMap;
 import java.util.List;
 
-public class Adapter_SellOrderDetail extends BaseAdapter
+public class Adapter_EditSellOrderDetail extends BaseAdapter
 {
     private Activity context;// 运行上下文
     private List<SellOrderDetail_New> listItems;// 数据集合
@@ -45,7 +45,7 @@ public class Adapter_SellOrderDetail extends BaseAdapter
         public TextView tv_pq;
     }
 
-    public Adapter_SellOrderDetail(Activity context, List<SellOrderDetail_New> data)
+    public Adapter_EditSellOrderDetail(Activity context, List<SellOrderDetail_New> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -77,7 +77,7 @@ public class Adapter_SellOrderDetail extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.adapter_sellorderdetail, null);
+            convertView = listContainer.inflate(R.layout.adapter_editsellorderdetail, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
