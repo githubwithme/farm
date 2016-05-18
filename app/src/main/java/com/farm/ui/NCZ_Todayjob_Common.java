@@ -118,7 +118,6 @@ public class NCZ_Todayjob_Common extends Activity {
         jobtab = getIntent().getParcelableExtra("bean");
 
     }
-
     private void showData(jobtab jobtab)
     {
         if (jobtab.getstdJobType().equals("-1"))
@@ -132,11 +131,15 @@ public class NCZ_Todayjob_Common extends Activity {
         }
         String[] nongzi = jobtab.getnongziName().split(",");
         String[] yl = jobtab.getamount().split(";");
-        String[] amountdw = jobtab.getAmountDW().split(",");
+//        String[] dw = jobtab.getAmountDW().split("[.]");
+//        String [] ds=jobtab.getAmountDW().split("[.]");
         String flyl = "";
+//        for (int i = 0; i < nongzi.length; i++)
         for (int i = 0; i < nongzi.length; i++)
         {
-            flyl = flyl + nongzi[i] + "：" + yl[i] +amountdw[i] + "\n";
+//            flyl = flyl +dw[i]+ "\n";
+            flyl = flyl + nongzi[i] + "：" + yl[i]  + "\n";
+//            flyl = flyl + nongzi[i] + "：" + yl[i] +dw[i] + "\n";
 //            flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
         }
         tv_qx.setText(jobtab.getregDate().substring(0, jobtab.getregDate().lastIndexOf(" ")));

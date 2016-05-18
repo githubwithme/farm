@@ -1,37 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:descendantFocusability="blocksDescendants"
-              android:orientation="vertical">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/groupExpand"
         android:layout_width="match_parent"
-        android:layout_height="50dip"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="10dip"
-        android:layout_marginTop="10dip"
-        android:background="@drawable/background_view_rounded_single">
-
+        android:layout_height="50dip">
         <TextView
-            android:id="@+id/tv_park"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dip"
+            android:textSize="15dip"
+            android:id="@+id/tv_park"
+            android:gravity="center"
             android:text="片区"
-            android:textSize="@dimen/size_sp_16"/>
-
-        <Button
-            android:id="@+id/btn_bianjie"
             android:layout_width="wrap_content"
-            android:layout_height="50dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:textSize="@dimen/size_sp_16"
+            android:layout_height="match_parent" />
+        <Button
+            android:text="编辑"
+            android:layout_marginLeft="10dip"
+            android:id="@+id/btn_bianjie"
+            android:textSize="15dip"
             android:background="@null"
-            android:text="编辑"/>
-    </RelativeLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="50dip" />
+    </LinearLayout>
 
 </LinearLayout>

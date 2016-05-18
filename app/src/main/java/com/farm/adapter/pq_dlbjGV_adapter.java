@@ -1,12 +1,15 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +18,7 @@ import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.BreakOff;
 import com.farm.bean.BreakOff_New;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
@@ -36,8 +40,7 @@ import java.util.List;
 /**
  * Created by user on 2016/5/1.
  */
-public class pq_dlbjGV_adapter extends BaseAdapter
-{
+public class pq_dlbjGV_adapter extends BaseAdapter {
     private Context context;// 运行上下文
     private List<contractTab> listItems;// 数据集合
     private LayoutInflater listContainer;
@@ -46,19 +49,17 @@ public class pq_dlbjGV_adapter extends BaseAdapter
     String batchcolor;
     public Button btn_add;
     public ProgressBar bp_upload;
-
     public pq_dlbjGV_adapter(Context context, List<contractTab> data, String batchtime, String batchcolor)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.listItems = data;
-        this.batchtime = batchtime;
-        this.batchcolor = batchcolor;
+        this.batchtime=batchtime;
+        this.batchcolor=batchcolor;
 
     }
 
-    static class ListItemView
-    {
+    static class ListItemView {
         public TextView name;
         public EditText num;
         public Button btn_save;
@@ -66,33 +67,28 @@ public class pq_dlbjGV_adapter extends BaseAdapter
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return listItems.size();
     }
 
     @Override
-    public Object getItem(int i)
-    {
+    public Object getItem(int i) {
         return null;
     }
 
     @Override
-    public long getItemId(int i)
-    {
+    public long getItemId(int i) {
         return 0;
     }
 
     HashMap<Integer, View> lmap = new HashMap<Integer, View>();
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup)
-    {
+    public View getView(int i, View view, ViewGroup viewGroup) {
         contracttab = listItems.get(i);
         // 自定义视图
         ListItemView listItemView = null;
-        if (lmap.get(i) == null)
-        {
+        if (lmap.get(i) == null) {
             // 获取list_item布局文件的视图
             view = listContainer.inflate(R.layout.pq_dlbj_adapter, null);
             listItemView = new ListItemView();
@@ -104,20 +100,18 @@ public class pq_dlbjGV_adapter extends BaseAdapter
 
 //            view.setTag(R.id.tag_upload ,contracttab);
 
-            listItemView.btn_save.setTag(R.id.tag_contract, contracttab);
+            listItemView.btn_save.setTag(R.id.tag_contract ,contracttab);
             listItemView.btn_save.setTag(R.id.tag_view, listItemView);
-            listItemView.btn_save.setOnClickListener(new View.OnClickListener()
-            {
+            listItemView.btn_save.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view)
-                {
+                public void onClick(View view) {
             /*
                 List<BreakOff_New> list_breakoff = contracttab.getBreakOffList();
             if (list_breakoff != null && list_breakoff.size() > 0) {
                         listItemView.num.setText(list_breakoff.get(0).getnumberofbreakoff());
                     }*/
 
-                    btn_add = (Button) view;
+                    btn_add= (Button) view;
                     ListItemView listItemView1 = (ListItemView) view.getTag(R.id.tag_view);
                     contractTab contracttab = (contractTab) view.getTag(R.id.tag_contract);
                     List<BreakOff_New> list_BreakOff_New = contracttab.getBreakOffList();
@@ -125,16 +119,16 @@ public class pq_dlbjGV_adapter extends BaseAdapter
                     String number = listItemView1.num.getText().toString();
                     listItemView1.btn_save.setVisibility(View.GONE);
                     listItemView1.pb_upload.setVisibility(View.VISIBLE);
-                    bp_upload = listItemView1.pb_upload;//
+                    bp_upload=listItemView1.pb_upload;//
                     if (number.equals("")) //没填写数据
                     {
                         listItemView1.btn_save.setVisibility(View.VISIBLE);
                         listItemView1.pb_upload.setVisibility(View.GONE);
                         Toast.makeText(context, "请先填写数量", Toast.LENGTH_SHORT).show();
-                    } else if (list_BreakOff_New == null || list_BreakOff_New.size() == 0)//新增数据
+                    } else if (list_BreakOff_New==null || list_BreakOff_New.size()==0)//新增数据
                     {
-                        String uuid = java.util.UUID.randomUUID().toString();
-                        BreakOff_New breakoff = new BreakOff_New();
+                        String uuid=java.util.UUID.randomUUID().toString();
+                        BreakOff_New breakoff=new BreakOff_New();
                         breakoff.setUuid(uuid);
                         breakoff.setuid(contracttab.getuId());
                         breakoff.setareaid(contracttab.getAreaId());
@@ -158,7 +152,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter
                         list_BreakOff_New.add(breakoff);
 
 
-                        SellOrderDetail_New sellorderdetail = new SellOrderDetail_New();
+                        SellOrderDetail_New sellorderdetail=new SellOrderDetail_New();
                         sellorderdetail.setYear(utils.getYear());
                         sellorderdetail.setXxzt("0");
                         sellorderdetail.setactuallat("");
@@ -203,7 +197,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter
                     } else //编辑数据
                     {
 
-                        updateBreakOff(list_BreakOff_New.get(0).getUuid(), number);
+                            updateBreakOff(list_BreakOff_New.get(0).getUuid(),list_BreakOff_New.get(0).getnumberofbreakoff(), number);
 
                     }
 
@@ -231,15 +225,13 @@ public class pq_dlbjGV_adapter extends BaseAdapter
 //            listItemView.name.setText(contracttab.getareaName() + contracttab.getContractNum());
 
             listItemView.name.setText(contracttab.getContractNum());
-            if (list_breakoff != null && list_breakoff.size() > 0)
-            {
+            if (list_breakoff != null && list_breakoff.size() > 0) {
                 listItemView.num.setText(list_breakoff.get(0).getnumberofbreakoff());
             }
 
             lmap.put(i, view);
             view.setTag(listItemView);
-        } else
-        {
+        } else {
             view = lmap.get(i);
             listItemView = (ListItemView) view.getTag();
         }
@@ -248,7 +240,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter
         return view;
     }
 
-    private void saveBreakOffList(String data)
+    private void saveBreakOffList( String data )
     {
 //        listItemView.pb_upload.setTag(R.id.tag_upload ,contracttab);
 //        view.setTag(R.id.tag_upload ,contracttab);
@@ -256,7 +248,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter
 /*View view= listContainer.inflate(R.layout.pq_dlbj_adapter, null);
         ListItemView listItemView = null;
         listItemView =view.getTag(R.id.tag_upload);*/
-        String x = data;
+        String x=data;
         RequestParams params = new RequestParams();
         params.setContentType("application/json");
         try
@@ -268,8 +260,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter
         }
         params.addQueryStringParameter("action", "saveBreakOff");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
@@ -279,20 +270,18 @@ public class pq_dlbjGV_adapter extends BaseAdapter
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+                    if (result.getAffectedRows() != 0) {
                         btn_add.setVisibility(View.VISIBLE);
                         bp_upload.setVisibility(View.GONE);
                         Toast.makeText(context, "保存成功", Toast.LENGTH_SHORT).show();
-                    } else
+                    }else
                     {
                         bp_upload.setVisibility(View.GONE);
                         btn_add.setVisibility(View.VISIBLE);
                         Toast.makeText(context, "保存失败", Toast.LENGTH_SHORT).show();
                     }
 
-                } else
-                {
+                } else {
                     bp_upload.setVisibility(View.GONE);
                     btn_add.setVisibility(View.VISIBLE);
                     AppContext.makeToast(context, "error_connectDataBase");
@@ -303,47 +292,42 @@ public class pq_dlbjGV_adapter extends BaseAdapter
             }
 
             @Override
-            public void onFailure(HttpException error, String msg)
-            {
+            public void onFailure(HttpException error, String msg) {
                 AppContext.makeToast(context, "error_connectServer");
             }
         });
     }
 
-    private void updateBreakOff(String uuid, String number)
+    private void updateBreakOff(String uuid,String number_difference,String number)
     {
-
 
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("numberofbreakoff", number);
+        params.addQueryStringParameter("number_difference",number_difference);
         params.addQueryStringParameter("action", "updateBreakOff");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
 
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
+            public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+                    if (result.getAffectedRows() != 0) {
                         bp_upload.setVisibility(View.GONE);
                         btn_add.setVisibility(View.VISIBLE);
                         Toast.makeText(context, "修改成功", Toast.LENGTH_SHORT).show();
 
-                    } else
+                    }else
                     {
                         bp_upload.setVisibility(View.GONE);
                         btn_add.setVisibility(View.VISIBLE);
-                        Toast.makeText(context, "该批次已经在出售，不能修改！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "修改失败", Toast.LENGTH_SHORT).show();
                     }
 
-                } else
-                {
+                } else {
                     bp_upload.setVisibility(View.GONE);
                     btn_add.setVisibility(View.VISIBLE);
                     AppContext.makeToast(context, "error_connectDataBase");
@@ -354,8 +338,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter
             }
 
             @Override
-            public void onFailure(HttpException error, String msg)
-            {
+            public void onFailure(HttpException error, String msg) {
                 AppContext.makeToast(context, "error_connectServer");
             }
         });

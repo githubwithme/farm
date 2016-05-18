@@ -293,6 +293,7 @@ static int p;
                 if (result.getResultCode() != 0)// -1出错；0结果集数量为0；结果列表
                 {
                     Toast.makeText(Event_Process.this, "保存成功！", Toast.LENGTH_SHORT).show();
+                    getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
                 } else {
                     AppContext.makeToast(Event_Process.this, "error_connectDataBase");
                 }
@@ -380,7 +381,7 @@ static int p;
                     if (result.getAffectedRows() != 0) {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), HandleBean.class);
                         et_content.setText("");
-//                        getListData(UIHelper.LISTVIEW_ACTION_SCROLL, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                        getListData(UIHelper.LISTVIEW_ACTION_SCROLL, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
 //                        Toast.makeText(Event_Process.this, "保存成功！", Toast.LENGTH_SHORT).show();
 
                     } else {
@@ -662,7 +663,7 @@ static int p;
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3) {
-                tv_title.setText(listpeople.get(postion).getUserlevelName() + "---" + listpeople.get(postion).getRealName());
+//                tv_title.setText(listpeople.get(postion).getUserlevelName() + "---" + listpeople.get(postion).getRealName());
                 id = listpeople.get(postion).getId();
                 name = listpeople.get(postion).getRealName();
                 pw_tab.dismiss();
@@ -694,11 +695,17 @@ static int p;
 
     private void queding() {
         commembertab commembertab = AppContext.getUserInfo(Event_Process.this);
-        if (reportedBean.getRemark2().equals("")) {
-            solove = id;
-        } else {
-            solove = reportedBean.getRemark2() + "," + id;
+        if (solove==null) {
+            if (reportedBean.getRemark2().equals("")) {
+                solove = id;
+            } else {
+                solove = reportedBean.getRemark2() + "," + id;
+            }
+        }else
+        {
+            solove+=","+id;
         }
+
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "eventRecordEd");
         params.addQueryStringParameter("remark2", solove);
@@ -712,13 +719,7 @@ static int p;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (solove.equals(""))
-                    {
-                        solove=id;
-                    }else
-                    {
-                        solove+=","+id;
-                    }
+
 //                    Toast.makeText(Event_Process.this, "保存成功！", Toast.LENGTH_SHORT).show();
                 } else {
                     AppContext.makeToast(Event_Process.this, "error_connectDataBase");

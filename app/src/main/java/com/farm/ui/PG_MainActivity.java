@@ -58,9 +58,10 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     Fragment mContent = new Fragment();
     PG_MainFragment mainFragment;
     PG_GddList pg_gddList;
-    //    PG_EventList pg_eventList;
-    PG_ListOfEvents pg_listOfEvents;
-    //    ProductSale productAndSale;
+//    PG_EventList pg_eventList;
+PG_ListOfEvents pg_listOfEvents;
+    PG_CKList pg_ckList;
+//    ProductSale productAndSale;
 //    ProductAndSale productAndSale;
 //    PG_BreakOff pg_breakOff;
 //    PG_BreakBud pg_breakBud;
@@ -78,6 +79,8 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     ImageButton imgbtn_me;
     @ViewById
     ImageButton imgbtn_event;
+    @ViewById
+    ImageButton imgbtn_ck;
 
     @ViewById
     TextView tv_home;
@@ -89,6 +92,8 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     TextView tv_event;
     @ViewById
     TextView tv_dl;
+    @ViewById
+    TextView tv_ck;
 
     @ViewById
     TableLayout tl_home;
@@ -100,6 +105,8 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     TableLayout tl_event;
     @ViewById
     TableLayout tl_dl;
+    @ViewById
+    TableLayout tl_ck;
 
     @Click
     void tl_home()
@@ -109,15 +116,16 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_ck.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_home.setSelected(true);
         tl_dl.setSelected(false);
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
+        tl_ck.setSelected(false);
         switchContent(mContent, mainFragment);
     }
-
     @Click
     void tl_dl()
     {
@@ -126,19 +134,21 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_ck.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_dl.setSelected(true);
         tl_home.setSelected(false);
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
+        tl_ck.setSelected(false);
 //        switchContent(mContent, pg_productBatch);
         switchContent(mContent, pq_dlFragment);
     }
-
     @Click
     void tl_event()
     {
+        tv_ck.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
@@ -150,6 +160,7 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(true);
+        tl_ck.setSelected(false);
 //        switchContent(mContent, pg_eventList);
         switchContent(mContent, pg_listOfEvents);
     }
@@ -157,12 +168,14 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     @Click
     void tl_plant()
     {
+        tv_ck.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_plant.setTextColor(getResources().getColor(R.color.bg_blue));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
+        tl_ck.setSelected(false);
         tl_home.setSelected(false);
         tl_dl.setSelected(false);
         tl_plant.setSelected(true);
@@ -175,18 +188,38 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     @Click
     void tl_me()
     {
+        tv_ck.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.bg_blue));
         tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
+        tl_ck.setSelected(false);
         tl_home.setSelected(false);
         tl_plant.setSelected(false);
         tl_dl.setSelected(false);
         tl_me.setSelected(true);
         tl_event.setSelected(false);
         switchContent(mContent, iFragment);
+    }
+    @Click
+    void tl_ck()
+    {
+        tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_ck.setTextColor(getResources().getColor(R.color.bg_blue));
+        tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
+
+        tl_me.setSelected(false);
+        tl_home.setSelected(false);
+        tl_plant.setSelected(false);
+        tl_dl.setSelected(false);
+        tv_ck.setSelected(true);
+        tl_event.setSelected(false);
+        switchContent(mContent, pg_ckList);
     }
 
     @AfterViews
@@ -199,13 +232,13 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
             for (int i = 0; i < list_exception.size(); i++)
             {
                 sendExceptionInfoToServer(list_exception.get(i));
-            }
+           }
         }
         //将日志信息提交
         List<LogInfo> list_LogInfo = SqliteDb.getLogInfo(PG_MainActivity.this);
         if (list_LogInfo != null)
         {
-            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(PG_MainActivity.this).toString(), utils.getToday());
+            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(PG_MainActivity.this).toString(),utils.getToday());
         }
 
 
@@ -219,24 +252,23 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        commembertab = AppContext.getUserInfo(PG_MainActivity.this);
+         commembertab=AppContext.getUserInfo(PG_MainActivity.this);
         AppManager.getAppManager().addActivity(this);
         mainFragment = new PG_MainFragment_();
         pg_gddList = new PG_GddList_();
 //        pg_eventList = new PG_EventList_();
-        pg_listOfEvents = new PG_ListOfEvents_();
+        pg_listOfEvents=new PG_ListOfEvents_();
 //        productAndSale = new ProductSale_();
-        pg_productBatch = new PG_ProductBatch_();
+        pg_productBatch=new PG_ProductBatch_();
         pg_EveryDayAssessList = new PG_EveryDayAssessList_();
-        pq_dlFragment = new PQ_DLFragment_();
+        pq_dlFragment=new PQ_DLFragment_();
         iFragment = new IFragment_();
+        pg_ckList=new PG_CKList_();
 
         TencentLocationRequest request = TencentLocationRequest.create();
         TencentLocationManager locationManager = TencentLocationManager.getInstance(PG_MainActivity.this);
         locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84
         error = locationManager.requestLocationUpdates(request, this);
-
-//        SqliteDb.InitDbutils(PG_MainActivity.this);
     }
 
     public void switchContent(Fragment from, Fragment to)
@@ -324,19 +356,18 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     {
 
     }
-
     private void MarkLocation(TencentLocation location)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "AddLocationInfo");
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("username", commembertab.getrealName());
-        params.addQueryStringParameter("parkid", commembertab.getparkId());
-        params.addQueryStringParameter("parkname", commembertab.getparkName());
-        params.addQueryStringParameter("areaid", commembertab.getareaId());
-        params.addQueryStringParameter("areaname", commembertab.getareaName());
-        params.addQueryStringParameter("lat", String.valueOf(location.getLatitude()));
+        params.addQueryStringParameter("uid",commembertab.getuId() );
+        params.addQueryStringParameter("userid",commembertab.getId() );
+        params.addQueryStringParameter("username",commembertab.getrealName() );
+        params.addQueryStringParameter("parkid",commembertab.getparkId() );
+        params.addQueryStringParameter("parkname",commembertab.getparkName() );
+        params.addQueryStringParameter("areaid",commembertab.getareaId() );
+        params.addQueryStringParameter("areaname",commembertab.getareaName() );
+        params.addQueryStringParameter("lat",String.valueOf(location.getLatitude()) );
         params.addQueryStringParameter("lng", String.valueOf(location.getLongitude()));
         params.addQueryStringParameter("time", utils.getTime());
         HttpUtils http = new HttpUtils();
@@ -364,7 +395,6 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
             }
         });
     }
-
     private void sendExceptionInfoToServer(final ExceptionInfo exception)
     {
         RequestParams params = new RequestParams();
@@ -398,16 +428,15 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         });
 
     }
-
-    private void sendLogInfoToServer(final List<LogInfo> list, String deviceuuid, String logday)
+    private void sendLogInfoToServer(final List<LogInfo> list,String deviceuuid,String logday)
     {
         StringBuilder builder = new StringBuilder();
         builder.append("{ \"LogInfoList\": ");
         builder.append(JSON.toJSONString(list));
         builder.append("} ");
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("deviceuuid", deviceuuid);
-        params.addQueryStringParameter("logday", logday);
+        params.addQueryStringParameter("deviceuuid",deviceuuid);
+        params.addQueryStringParameter("logday",logday);
         params.addQueryStringParameter("action", "addLogInfo");
         params.setContentType("application/json");
         try
@@ -428,10 +457,10 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    String rows = result.getRows().get(0).toString();
+                    String rows=result.getRows().get(0).toString();
                     if (rows.equals("1"))
                     {
-                        SqliteDb.updateLogInfo(PG_MainActivity.this, list);
+                        SqliteDb.updateLogInfo(PG_MainActivity.this,list);
                     }
                 }
             }
