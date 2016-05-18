@@ -14,7 +14,7 @@
         android:layout_marginLeft="30dip"
         android:layout_marginRight="30dip"
         android:layout_marginTop="10dip"
-        android:background="@color/bg_green"
+        android:background="@drawable/background_view_rounded_single"
         android:orientation="horizontal">
 
 
@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="07-13至07-15"
-            android:textColor="@color/white"/>
+            android:textColor="@color/bg_text"/>
 
         <TextView
             android:id="@+id/tv_number"
@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="待售350000"
-            android:textColor="@color/white"/>
+            android:textColor="@color/bg_text"/>
 
     </LinearLayout>
 

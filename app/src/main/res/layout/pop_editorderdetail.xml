@@ -37,8 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="5dip"
                 android:hint="请输入"
+                android:paddingLeft="5dip"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
 
@@ -67,9 +67,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="5dip"
                 android:hint="请输入"
                 android:inputType="phone"
+                android:paddingLeft="5dip"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -108,8 +108,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="5dip"
                 android:hint="请输入"
+                android:paddingLeft="5dip"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
 
@@ -138,8 +138,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="5dip"
                 android:hint="请输入"
+                android:paddingLeft="5dip"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -174,9 +174,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="5dip"
-                android:inputType="numberDecimal"
                 android:hint="请输入"
+                android:inputType="numberDecimal"
+                android:paddingLeft="5dip"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -203,9 +203,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:text="暂无反馈"
                 android:inputType="numberDecimal"
                 android:paddingLeft="5dip"
+                android:text="暂无反馈"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -242,9 +242,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="5dip"
-                android:inputType="number"
                 android:hint="请输入"
+                android:inputType="number"
+                android:paddingLeft="5dip"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -272,9 +272,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:text="暂无反馈"
                 android:inputType="number"
                 android:paddingLeft="5dip"
+                android:text="暂无反馈"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -310,9 +310,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="5dip"
-                android:inputType="numberDecimal"
                 android:hint="请输入"
+                android:inputType="numberDecimal"
+                android:paddingLeft="5dip"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -340,9 +340,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:text="暂无反馈"
                 android:inputType="numberDecimal"
                 android:paddingLeft="5dip"
+                android:text="暂无反馈"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -378,9 +378,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="5dip"
-                android:inputType="numberDecimal"
                 android:hint="请输入"
+                android:inputType="numberDecimal"
+                android:paddingLeft="5dip"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -407,9 +407,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:text="暂无反馈"
                 android:inputType="number"
                 android:paddingLeft="5dip"
+                android:text="暂无反馈"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -447,8 +447,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="5dip"
                 android:hint="请输入"
+                android:paddingLeft="5dip"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
@@ -475,8 +475,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
-                android:text="暂无反馈"
                 android:paddingLeft="5dip"
+                android:text="暂无反馈"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>

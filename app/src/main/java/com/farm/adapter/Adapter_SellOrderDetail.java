@@ -14,7 +14,7 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.SellOrderDetail;
+import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.commembertab;
 import com.farm.widget.MyDialog;
 import com.farm.widget.MyDialog.CustomDialogListener;
@@ -31,12 +31,13 @@ import java.util.List;
 public class Adapter_SellOrderDetail extends BaseAdapter
 {
     private Activity context;// 运行上下文
-    private List<SellOrderDetail> listItems;// 数据集合
+    private List<SellOrderDetail_New> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
-    SellOrderDetail SellOrderDetail;
+    SellOrderDetail_New SellOrderDetail;
 
     static class ListItemView
     {
+        public TextView tv_batchtime;
         public TextView tv_number;
         public TextView tv_area;
 
@@ -44,7 +45,7 @@ public class Adapter_SellOrderDetail extends BaseAdapter
         public TextView tv_pq;
     }
 
-    public Adapter_SellOrderDetail(Activity context, List<SellOrderDetail> data)
+    public Adapter_SellOrderDetail(Activity context, List<SellOrderDetail_New> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -81,15 +82,7 @@ public class Adapter_SellOrderDetail extends BaseAdapter
             // 获取控件对象
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
             listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
-//            listItemView.btn_delete.setId(position);
-//            listItemView.btn_delete.setOnClickListener(new OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    showDeleteTip(listItems.get(v.getId()).getId(), listItems.get(v.getId()).getStatusid());
-//                }
-//            });
+            listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -100,6 +93,7 @@ public class Adapter_SellOrderDetail extends BaseAdapter
         }
         // 设置文字和图片
         listItemView.tv_number.setText("出售"+SellOrderDetail.getplannumber()+"株");
+        listItemView.tv_batchtime.setText("批次:"+SellOrderDetail.getBatchTime());
         listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
         return convertView;
     }

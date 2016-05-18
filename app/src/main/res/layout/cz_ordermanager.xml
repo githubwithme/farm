@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@color/white">
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="0dip"
+            android:layout_height="0dip"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/tv_needfeedback"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dip"
+            android:layout_toLeftOf="@+id/line"
+            android:gravity="center"
+            android:text="待反馈订单"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_sp_16"/>
+
+        <TextView
+            android:id="@+id/tv_allorder"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_toRightOf="@+id/line"
+            android:gravity="center"
+            android:text="全部订单"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_sp_16"/>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

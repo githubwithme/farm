@@ -80,7 +80,7 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
 		list_view = new ArrayList<View>();
 		list_dots = new ArrayList<View>();
 		LayoutInflater inflater = getActivity().getLayoutInflater();
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			View inflateView = null;
 			if (i == 0)

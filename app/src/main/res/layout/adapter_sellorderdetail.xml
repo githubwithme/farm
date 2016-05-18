@@ -8,12 +8,12 @@
               android:descendantFocusability="blocksDescendants"
               android:orientation="horizontal">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dip"
-        android:orientation="horizontal">
+        android:layout_height="60dip">
 
         <FrameLayout
+            android:id="@+id/fl"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -40,8 +40,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="20dip"
+            android:layout_marginRight="30dip"
+            android:layout_toRightOf="@+id/fl"
             android:orientation="vertical">
 
 
@@ -55,10 +57,19 @@
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_sp_14"/>
 
+            <TextView
+                android:id="@+id/tv_batchtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="left|center_vertical"
+                android:text="交易500株"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_14"/>
+
 
         </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

@@ -264,6 +264,8 @@ public class NCZ_MainActivity extends BaseActivity
 //		timethread.setStop(false);
 //		timethread.setSleep(false);
 //		timethread.start();
+
+//		SqliteDb.InitDbutils(NCZ_MainActivity.this);
 	}
 
 	public void switchContent(Fragment from, Fragment to)

@@ -16,6 +16,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder;
 import com.farm.bean.SellOrderDetail;
+import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
@@ -46,7 +47,7 @@ import java.util.List;
 public class CreateOrder extends Activity
 {
     String batchtime;
-    List<SellOrderDetail> list_SellOrderDetail;
+    List<SellOrderDetail_New> list_SellOrderDetail;
     Adapter_SellOrderDetail adapter_sellOrderDetail;
     SellOrderDetail SellOrderDetail;
     @ViewById
@@ -145,7 +146,7 @@ public class CreateOrder extends Activity
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
 
-        List<String>  list_detail=new ArrayList<>();
+        List<String> list_detail = new ArrayList<>();
         for (int i = 0; i < list_SellOrderDetail.size(); i++)
         {
             list_detail.add(list_SellOrderDetail.get(i).getUuid());
@@ -173,7 +174,7 @@ public class CreateOrder extends Activity
         builder.append(", \"SellOrderDetailLists\": ");
         builder.append(JSON.toJSONString(list_detail));
         builder.append("} ");
-        addOrder(uuid,builder.toString());
+        addOrder(uuid, builder.toString());
 //        boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
 //        if (issuccess)
 //        {
@@ -238,19 +239,19 @@ public class CreateOrder extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<SellOrderDetail> listNewData = null;
+                List<SellOrderDetail_New> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
                         adapter_sellOrderDetail = new Adapter_SellOrderDetail(CreateOrder.this, listNewData);
                         lv.setAdapter(adapter_sellOrderDetail);
                         utils.setListViewHeight(lv);
                     } else
                     {
-                        listNewData = new ArrayList<SellOrderDetail>();
+                        listNewData = new ArrayList<SellOrderDetail_New>();
                     }
                 } else
                 {
@@ -304,7 +305,7 @@ public class CreateOrder extends Activity
 //        }
     }
 
-    private void addOrder(String uuid,String data)
+    private void addOrder(String uuid, String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);

@@ -56,6 +56,7 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
     static class ListItemView
     {
         public TextView tv_batchtime;
+        public TextView tv_number;
         public LinearLayout ll_batchtime;
 
     }
@@ -94,6 +95,7 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
 
             // 获取控件对象
             listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
+            listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
             listItemView.ll_batchtime = (LinearLayout) convertView.findViewById(R.id.ll_batchtime);
             listItemView.ll_batchtime.setTag(listItemView);
             listItemView.ll_batchtime.setOnClickListener(new View.OnClickListener()
@@ -113,6 +115,7 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
                 map = new HashMap<>();
             }
 
+//            listItemView.tv_number.setText(batchTime.get());
             listItemView.tv_batchtime.setText(batchTime.getBatchTime());
         } else
         {

@@ -3,12 +3,9 @@ package com.farm.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
@@ -282,67 +279,21 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
                 convertView = View.inflate(context, R.layout.gridview_sellorderdetail_ncz, null);
                 view = new Holder(convertView);
                 view.cb_selectall.setTag(R.id.tag_postion, position);
-                view.et_number.setTag(position);
-                if (view.et_number != null)
+                view.tv_areaname.setText(list.get(position).getcontractname());
+                view.btn_number.setText(list.get(position).getplannumber());
+                view.tv_number.setText("剩" + list.get(position).getplannumber() + "株");
+                view.btn_number.setOnClickListener(new View.OnClickListener()
                 {
-                    view.et_number.setOnTouchListener(new View.OnTouchListener()
+                    @Override
+                    public void onClick(View v)
                     {
-                        public boolean onTouch(View v, MotionEvent event)
-                        {
-                            view.et_number.setInputType(InputType.TYPE_CLASS_NUMBER); //关闭软键盘
-                            return false;
-                        }
-                    });
-                    view.et_number.setInputType(InputType.TYPE_CLASS_NUMBER);//输入类型
-                    view.et_number.setFocusableInTouchMode(true);
-                    view.et_number.setFocusable(true);
-                    view.et_number.requestFocus();
-                    view.et_number.setOnClickListener(new View.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(View v)
-                        {
-                            int pos = (int) v.getTag();
-                            Toast.makeText(context, "dd", Toast.LENGTH_SHORT).show();
-                            view.et_number.setFocusableInTouchMode(true);
-                            view.et_number.requestFocus();
-                            InputMethodManager inputManager = (InputMethodManager) view.et_number.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                            inputManager.showSoftInput(view.et_number, 0);
-                        }
-                    });
-                }
+                        showDialog_editBreakoffinfo(list.get(position), (Button) v);
+                    }
+                });
                 convertView.setTag(view);
             } else
             {
                 view = (Holder) convertView.getTag();
-                if (view.et_number != null)
-                {
-                    view.et_number.setOnTouchListener(new View.OnTouchListener()
-                    {
-                        public boolean onTouch(View v, MotionEvent event)
-                        {
-                            view.et_number.setInputType(InputType.TYPE_CLASS_NUMBER); //关闭软键盘
-                            return false;
-                        }
-                    });
-                    view.et_number.setInputType(InputType.TYPE_CLASS_NUMBER);//输入类型
-                    view.et_number.setFocusableInTouchMode(true);
-                    view.et_number.setFocusable(true);
-                    view.et_number.requestFocus();
-                    view.et_number.setOnClickListener(new View.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(View v)
-                        {
-                            int pos = (int) v.getTag();
-                            Toast.makeText(context, "dd", Toast.LENGTH_SHORT).show();
-                            view.et_number.setFocusableInTouchMode(true);
-                            view.et_number.requestFocus();
-                            InputMethodManager inputManager = (InputMethodManager) view.et_number.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                            inputManager.showSoftInput(view.et_number, 0);
-                        }
-                    });
-                }
             }
             view.cb_selectall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             {
@@ -353,9 +304,7 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
                     {
                         int pos = (int) buttonView.getTag(R.id.tag_postion);
                         Bundle bundle = new Bundle();
-                        bundle.putParcelable("salefor", null);
-                        bundle.putParcelable("newsale", null);
-                        bundle.putString("uuid", list.get(pos).getUuid());
+                        bundle.putParcelable("bean", list.get(pos));
                         buttonView.setTag(R.id.tag_view, bundle);
                     } else
                     {
@@ -363,15 +312,13 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
                     }
                 }
             });
-            view.tv_areaname.setText(list.get(position).getcontractname());
-            view.et_number.setText(list.get(position).getplannumber());
-            view.tv_number.setText("剩" + list.get(position).getplannumber() + "株");
+
             return convertView;
         }
 
         private class Holder
         {
-            private EditText et_number;
+            private Button btn_number;
             private TextView tv_areaname;
             private TextView tv_number;
             private CheckBox cb_selectall;
@@ -379,15 +326,15 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
             public Holder(View view)
             {
                 tv_areaname = (TextView) view.findViewById(R.id.tv_areaname);
-                et_number = (EditText) view.findViewById(R.id.et_number);
+                btn_number = (Button) view.findViewById(R.id.btn_number);
                 tv_number = (TextView) view.findViewById(R.id.tv_number);
                 cb_selectall = (CheckBox) view.findViewById(R.id.cb_selectall);
             }
         }
 
-        public void showDialog_editBreakoffinfo(final SellOrderDetail_New sellorderdetail, final CheckBox cb_select)
+        public void showDialog_editBreakoffinfo(final SellOrderDetail_New sellorderdetail, final Button button)
         {
-            final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editsale, null);
+            final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editcontractsale, null);
             customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
             et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
             et_number.setText(sellorderdetail.getplannumber());
@@ -398,84 +345,15 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    customDialog_editSaleInInfo.dismiss();
                     int leftnumber = Integer.valueOf(sellorderdetail.getplannumber()) - Integer.valueOf(et_number.getText().toString());
                     if (leftnumber < 0)
                     {
-
+                        Toast.makeText(context, "剩余量不足", Toast.LENGTH_SHORT).show();
                     } else
                     {
-                        String uuid = java.util.UUID.randomUUID().toString();
-                        SellOrderDetail_New sellorderdetail_newsale = new SellOrderDetail_New();
-                        sellorderdetail_newsale.setuid(sellorderdetail.getuid());
-                        sellorderdetail_newsale.setUuid(uuid);
-                        sellorderdetail_newsale.setactuallat("");
-                        sellorderdetail_newsale.setactuallatlngsize("");
-                        sellorderdetail_newsale.setactuallng("");
-                        sellorderdetail_newsale.setactualnote("");
-                        sellorderdetail_newsale.setactualnumber("");
-                        sellorderdetail_newsale.setactualprice("");
-                        sellorderdetail_newsale.setactualweight("");
-                        sellorderdetail_newsale.setareaid(sellorderdetail.getareaid());
-                        sellorderdetail_newsale.setareaname(sellorderdetail.getareaname());
-                        sellorderdetail_newsale.setBatchTime(sellorderdetail.getBatchTime());
-                        sellorderdetail_newsale.setcontractid(sellorderdetail.getcontractid());
-                        sellorderdetail_newsale.setcontractname(sellorderdetail.getcontractname());
-                        sellorderdetail_newsale.setisSoldOut("0");
-                        sellorderdetail_newsale.setparkid(sellorderdetail.getparkid());
-                        sellorderdetail_newsale.setparkname(sellorderdetail.getparkname());
-                        sellorderdetail_newsale.setPlanlat("");
-                        sellorderdetail_newsale.setplanlng("");
-                        sellorderdetail_newsale.setplanlatlngsize("");
-                        sellorderdetail_newsale.setplannote("");
-                        sellorderdetail_newsale.setplannumber(et_number.getText().toString());
-                        sellorderdetail_newsale.setplanprice("");
-                        sellorderdetail_newsale.setplanweight("");
-                        sellorderdetail_newsale.setreg(utils.getTime());
-                        sellorderdetail_newsale.setstatus("0");
-                        sellorderdetail_newsale.setType("newsale");
-                        sellorderdetail_newsale.setsaleid("");
-                        sellorderdetail_newsale.setXxzt("0");
-                        sellorderdetail_newsale.setYear(utils.getYear());
+                        customDialog_editSaleInInfo.dismiss();
+                        button.setText(et_number.getText().toString());
 
-                        String uuid_left = java.util.UUID.randomUUID().toString();
-                        SellOrderDetail_New sellorderdetail_left = new SellOrderDetail_New();
-                        sellorderdetail_left.setuid(sellorderdetail.getuid());
-                        sellorderdetail_left.setUuid(uuid_left);
-                        sellorderdetail_left.setactuallat("");
-                        sellorderdetail_left.setactuallatlngsize("");
-                        sellorderdetail_left.setactuallng("");
-                        sellorderdetail_left.setactualnote("");
-                        sellorderdetail_left.setactualnumber("");
-                        sellorderdetail_left.setactualprice("");
-                        sellorderdetail_left.setactualweight("");
-                        sellorderdetail_left.setareaid(sellorderdetail.getareaid());
-                        sellorderdetail_left.setareaname(sellorderdetail.getareaname());
-                        sellorderdetail_left.setBatchTime(sellorderdetail.getBatchTime());
-                        sellorderdetail_left.setcontractid(sellorderdetail.getcontractid());
-                        sellorderdetail_left.setcontractname(sellorderdetail.getcontractname());
-                        sellorderdetail_left.setisSoldOut("0");
-                        sellorderdetail_left.setparkid(sellorderdetail.getparkid());
-                        sellorderdetail_left.setparkname(sellorderdetail.getparkname());
-                        sellorderdetail_left.setPlanlat("");
-                        sellorderdetail_left.setplanlng("");
-                        sellorderdetail_left.setplanlatlngsize("");
-                        sellorderdetail_left.setplannote("");
-                        sellorderdetail_left.setplannumber(et_number.getText().toString());
-                        sellorderdetail_left.setplanprice("");
-                        sellorderdetail_left.setplanweight("");
-                        sellorderdetail_left.setreg(utils.getTime());
-                        sellorderdetail_left.setstatus("0");
-                        sellorderdetail_left.setType("salefor");
-                        sellorderdetail_left.setsaleid("");
-                        sellorderdetail_left.setXxzt("0");
-                        sellorderdetail_left.setYear(utils.getYear());
-
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelable("salefor", sellorderdetail_left);
-                        bundle.putParcelable("newsale", sellorderdetail_newsale);
-                        bundle.putString("uuid", sellorderdetail.getUuid());
-                        cb_select.setTag(bundle);
                     }
 
                 }

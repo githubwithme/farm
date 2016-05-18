@@ -278,6 +278,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
         }
 
     }
+
     @CheckedChange
     void cb_block()
     {
@@ -298,6 +299,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
         }
 
     }
+
     @CheckedChange
     void cb_park()
     {
@@ -843,6 +845,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 //显示面
         initMianPolygon();
     }
+
     private void InitArea()
     {
         list_Marker_park = new ArrayList<>();
@@ -903,6 +906,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
             }
         });
     }
+
     private void InitPlanMap()
     {
         list_Marker_park = new ArrayList<>();

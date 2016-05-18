@@ -33,6 +33,21 @@ import java.util.List;
 
 public class SqliteDb
 {
+    static SQLiteDatabase sqLiteDatabase = null;
+
+
+    static DbUtils db = null;
+
+    public static void InitDbutils(Context context)
+    {
+        CustomDbUpgradeListener customDbUpgradeListener = new CustomDbUpgradeListener();
+        if (db == null)
+        {
+            db = DbUtils.create(context, "JHWG", 11, customDbUpgradeListener);
+            sqLiteDatabase = db.getDatabase();
+        }
+    }
+
     public static List<parktab> getBreakOffListByParkID(Context context)
     {
         List<parktab> list_park = FileHelper.getAssetsData(context, "parktab", parktab.class);
@@ -253,6 +268,7 @@ public class SqliteDb
         }
         return true;
     }
+
     public static <T> boolean editSellOrderDetail_feedbacksale(Context context, SellOrderDetail sellorderdetail, int number_difference)
     {
         DbUtils db = DbUtils.create(context);
@@ -263,7 +279,7 @@ public class SqliteDb
             {
                 list.get(0).setplannumber(String.valueOf(Integer.valueOf(list.get(0).getplannumber()) + number_difference));
             }
-            db.update(sellorderdetail, "actualnumber","type");
+            db.update(sellorderdetail, "actualnumber", "type");
             db.update(list.get(0), "plannumber");
         } catch (DbException e)
         {
@@ -718,6 +734,7 @@ public class SqliteDb
         }
         return list;
     }
+
     public static <T> List<T> resetmapdata(Context context)
     {
         DbUtils db = DbUtils.create(context);
@@ -749,6 +766,7 @@ public class SqliteDb
         }
         return list;
     }
+
     public static <T> List<T> getExceptionInfo(Context context)
     {
         DbUtils db = DbUtils.create(context);
@@ -762,6 +780,7 @@ public class SqliteDb
         }
         return list;
     }
+
     public static <T> List<T> getLogInfo(Context context)
     {
         DbUtils db = DbUtils.create(context);
@@ -1098,6 +1117,7 @@ public class SqliteDb
 
         return list;
     }
+
     public static List<PolygonBean> getMoreLayer_point(Context context, String uid)
     {
         DbUtils db = DbUtils.create(context);
@@ -1178,7 +1198,7 @@ public class SqliteDb
         List<BreakOff> list = null;
         try
         {
-            list = db.findAll(Selector.from(BreakOff.class).where("uid", "=", uid).and("batchTime", "=", batchTime).and("xxzt", "=", "0").and("status", "=", "0").and("Year", "=",utils.getYear()).and("contractid", "=", contractid));
+            list = db.findAll(Selector.from(BreakOff.class).where("uid", "=", uid).and("batchTime", "=", batchTime).and("xxzt", "=", "0").and("status", "=", "0").and("Year", "=", utils.getYear()).and("contractid", "=", contractid));
         } catch (DbException e)
         {
             e.printStackTrace();
@@ -1200,13 +1220,13 @@ public class SqliteDb
         return list;
     }
 
-    public static List<BatchOfProduct> getBatchOfProductByuid(Context context, String uid,String year)
+    public static List<BatchOfProduct> getBatchOfProductByuid(Context context, String uid, String year)
     {
         DbUtils db = DbUtils.create(context);
         List<BatchOfProduct> list = null;
         try
         {
-            list = db.findAll(Selector.from(BatchOfProduct.class).where("uid", "=", uid).and("year","=",year));
+            list = db.findAll(Selector.from(BatchOfProduct.class).where("uid", "=", uid).and("year", "=", year));
             if (list == null)
             {
                 list = new ArrayList<>();
@@ -1757,7 +1777,7 @@ public class SqliteDb
         return polygonBean;
     }
 
-    public static List<SellOrderDetail> getSaleLayer_contract(Context context, String contractid, String batchtime,String year)
+    public static List<SellOrderDetail> getSaleLayer_contract(Context context, String contractid, String batchtime, String year)
     {
         DbUtils db = DbUtils.create(context);
         List<SellOrderDetail> list = null;
@@ -1786,6 +1806,7 @@ public class SqliteDb
 
         return list;
     }
+
     public static List<SellOrderDetail> getSaleLayerBySaleId(Context context, String saleid)
     {
         DbUtils db = DbUtils.create(context);
@@ -1816,7 +1837,7 @@ public class SqliteDb
         return list;
     }
 
-    public static List<BreakOff> getBreakOffInfoByParkId(Context context, String parkid, String batchTime,String Year)
+    public static List<BreakOff> getBreakOffInfoByParkId(Context context, String parkid, String batchTime, String Year)
     {
         DbUtils db = DbUtils.create(context);
         List<BreakOff> list = null;
@@ -2052,9 +2073,6 @@ public class SqliteDb
 
         return list;
     }
-
-
-
 
 
     public static List<contractTab> getBreakOffListByAreaID(Context context)
@@ -2568,7 +2586,7 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.update(c, "status","batchTime","batchColor","Year");
+            db.update(c, "status", "batchTime", "batchColor", "Year");
         } catch (DbException e)
         {
             return false;
@@ -2601,6 +2619,7 @@ public class SqliteDb
         }
         return true;
     }
+
     public static boolean deleteExceptionInfo(Context context, String exceptionid)
     {
         DbUtils db = DbUtils.create(context);
@@ -2619,7 +2638,7 @@ public class SqliteDb
         DbUtils db = DbUtils.create(context);
         try
         {
-            db.update(c, "status","batchColor","batchTime","Year");
+            db.update(c, "status", "batchColor", "batchTime", "Year");
         } catch (DbException e)
         {
             return false;

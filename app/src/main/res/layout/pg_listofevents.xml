@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_white">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_white"
+              android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="@dimen/titlebar_height">
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/white">
 
         <ImageButton
-            android:visibility="gone"
             android:id="@+id/imgbtn_back"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/titlebar_height"
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/back"
+            android:visibility="gone"/>
 
 
         <TextView
@@ -31,9 +33,6 @@
             android:textSize="@dimen/titlebar_textsize"/>
 
 
-
-
-
     </RelativeLayout>
 
     <View
@@ -43,44 +42,46 @@
         android:layout_below="@id/rl_titlebar"
         android:background="@color/line_color"/>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/titlebar_height"
-    android:gravity="center">
-    <TextView
-        android:id="@+id/tv_reported"
-        android:layout_width="60dip"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dip"
-        android:gravity="center"
-        android:text="已上报"
-        android:textColor="@color/textcolor_titlebar"
-        android:textSize="@dimen/titlebar_textsize"/>
-    <TextView
-        android:id="@+id/tv_processed"
-        android:layout_width="60dip"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dip"
-        android:gravity="center"
-        android:text="待处理"
-        android:textColor="@color/textcolor_titlebar"
-        android:textSize="@dimen/titlebar_textsize"/>
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_reported"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="已上报"
+            android:textColor="@color/textcolor_titlebar"
+            android:textSize="@dimen/titlebar_textsize"/>
+
+        <TextView
+            android:id="@+id/tv_processed"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="待处理"
+            android:textColor="@color/textcolor_titlebar"
+            android:textSize="@dimen/titlebar_textsize"/>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
         android:layout_below="@+id/rl_titlebar"
         android:background="@color/line_color"/>
+
     <FrameLayout
         android:id="@+id/fl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/line"
         android:divider="@null"/>
-
 
 
 </LinearLayout>

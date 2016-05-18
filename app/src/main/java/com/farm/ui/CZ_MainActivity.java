@@ -57,7 +57,8 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
     MyDialog myDialog;
     Fragment mContent = new Fragment();
     CZ_MainFragment mainFragment;
-    CZ_FeedbackOfSale cz_feedbackOfSale;
+    //    CZ_FeedbackOfSale cz_feedbackOfSale;
+    CZ_OrderManager cz_orderManager;
     IFragment iFragment;
     PG_ListOfEvents pg_listOfEvents;
     CZ_DLFragment cz_dlFragment;
@@ -93,6 +94,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
     TableLayout tl_event;
     @ViewById
     TableLayout tl_dl;
+
     @Click
     void tl_home()
     {
@@ -123,7 +125,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         tl_home.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
-        switchContent(mContent, cz_feedbackOfSale);
+        switchContent(mContent, cz_orderManager);
     }
 
     @Click
@@ -142,6 +144,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         tl_event.setSelected(false);
         switchContent(mContent, iFragment);
     }
+
     @Click
     void tl_event()
     {
@@ -176,6 +179,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         tl_me.setSelected(false);
         switchContent(mContent, cz_dlFragment);
     }
+
     @AfterViews
     void afterOncreate()
     {
@@ -192,7 +196,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         List<LogInfo> list_LogInfo = SqliteDb.getLogInfo(CZ_MainActivity.this);
         if (list_LogInfo != null)
         {
-            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(CZ_MainActivity.this).toString(),utils.getToday());
+            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(CZ_MainActivity.this).toString(), utils.getToday());
         }
 
 
@@ -209,10 +213,10 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         AppManager.getAppManager().addActivity(this);
         mainFragment = new CZ_MainFragment_();
         iFragment = new IFragment_();
-        cz_feedbackOfSale = new CZ_FeedbackOfSale_();
-        pg_listOfEvents=new PG_ListOfEvents_();
+        cz_orderManager = new CZ_OrderManager_();
+        pg_listOfEvents = new PG_ListOfEvents_();
 
-        cz_dlFragment=new CZ_DLFragment_();
+        cz_dlFragment = new CZ_DLFragment_();
 
         commembertab = AppContext.getUserInfo(CZ_MainActivity.this);
 
@@ -220,6 +224,8 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         TencentLocationManager locationManager = TencentLocationManager.getInstance(CZ_MainActivity.this);
         locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84
         error = locationManager.requestLocationUpdates(request, this);
+
+//        SqliteDb.InitDbutils(CZ_MainActivity.this);
     }
 
     public void switchContent(Fragment from, Fragment to)
@@ -380,15 +386,16 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         });
 
     }
-    private void sendLogInfoToServer(final List<LogInfo> list,String deviceuuid,String logday)
+
+    private void sendLogInfoToServer(final List<LogInfo> list, String deviceuuid, String logday)
     {
         StringBuilder builder = new StringBuilder();
         builder.append("{ \"LogInfoList\": ");
         builder.append(JSON.toJSONString(list));
         builder.append("} ");
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("deviceuuid",deviceuuid);
-        params.addQueryStringParameter("logday",logday);
+        params.addQueryStringParameter("deviceuuid", deviceuuid);
+        params.addQueryStringParameter("logday", logday);
         params.addQueryStringParameter("action", "addLogInfo");
         params.setContentType("application/json");
         try
@@ -409,7 +416,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    String rows=result.getRows().get(0).toString();
+                    String rows = result.getRows().get(0).toString();
                     if (rows.equals("1"))
                     {
                         SqliteDb.updateLogInfo(CZ_MainActivity.this, list);
