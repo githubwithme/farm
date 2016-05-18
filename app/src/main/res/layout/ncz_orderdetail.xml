@@ -124,22 +124,57 @@
 
 
                         <TextView
-                            android:layout_width="0dip"
+                            android:layout_width="100dip"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="初定单价(元)"
+                            android:text="单价"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
                         <TextView
                             android:id="@+id/tv_planprice"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:hint="暂无"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="60dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="初定重量(斤)"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <TextView
+                            android:id="@+id/tv_planweight"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
                             android:hint="暂无"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
@@ -153,17 +188,17 @@
                             android:layout_weight="1"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="实际单价(元)"
+                            android:text="实际重量(斤)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
                         <TextView
-                            android:id="@+id/tv_actualprice"
+                            android:id="@+id/tv_actualweight"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="right|center_vertical"
                             android:hint="暂无"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
@@ -198,7 +233,7 @@
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="right|center_vertical"
                             android:hint="暂无"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
@@ -222,7 +257,7 @@
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="right|center_vertical"
                             android:hint="暂无"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
@@ -247,17 +282,17 @@
                             android:layout_weight="1"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="初定数量(株)"
+                            android:text="定金(元)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
                         <TextView
-                            android:id="@+id/tv_plannumber"
+                            android:id="@+id/tv_deposit"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="right|center_vertical"
                             android:hint="暂无"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
@@ -271,17 +306,17 @@
                             android:layout_weight="1"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="实际数量(斤)"
+                            android:text="尾款(元)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
                         <TextView
-                            android:id="@+id/tv_actualnumber"
+                            android:id="@+id/tv_finalpayment"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="right|center_vertical"
                             android:hint="暂无"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
@@ -289,64 +324,6 @@
                             android:textSize="@dimen/size_14"/>
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="@color/line_color"/>
-
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="60dip"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="left|center_vertical"
-                            android:paddingLeft="10dip"
-                            android:text="初定重量(斤)"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-
-
-                        <TextView
-                            android:id="@+id/tv_planweight"
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:hint="暂无"
-                            android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-
-                        <TextView
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dip"
-                            android:layout_weight="1"
-                            android:gravity="left|center_vertical"
-                            android:paddingLeft="10dip"
-                            android:text="实际重量(斤)"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-
-
-                        <TextView
-                            android:id="@+id/tv_actualweight"
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:hint="暂无"
-                            android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -487,7 +464,7 @@
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:background="@drawable/round_gray"
-                android:gravity="left|center_vertical"
+                android:gravity="center"
                 android:text="销售明细条目"
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_sp_16"/>

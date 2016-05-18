@@ -6,11 +6,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_SellOrderDetail;
+import com.farm.adapter.Adapter_EditSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -48,7 +49,7 @@ import java.util.List;
 public class NCZ_EditOrder extends Activity
 {
     SellOrder_New sellOrder;
-    Adapter_SellOrderDetail adapter_sellOrderDetail;
+    Adapter_EditSellOrderDetail_NCZ adapter_editSellOrderDetail_ncz;
     SellOrderDetail SellOrderDetail;
     @ViewById
     LinearLayout ll_flyl;
@@ -74,6 +75,8 @@ public class NCZ_EditOrder extends Activity
     EditText et_email;
     @ViewById
     EditText et_note;
+    @ViewById
+    TextView tv_allnumber;
 
 
     @Click
@@ -204,8 +207,9 @@ public class NCZ_EditOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
-        adapter_sellOrderDetail = new Adapter_SellOrderDetail(NCZ_EditOrder.this, sellOrder.getSellOrderDetailList());
-        lv.setAdapter(adapter_sellOrderDetail);
+        tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
+        adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(NCZ_EditOrder.this, sellOrder.getSellOrderDetailList());
+        lv.setAdapter(adapter_editSellOrderDetail_ncz);
         utils.setListViewHeight(lv);
 //        getListData();
 //        showData();
@@ -219,6 +223,16 @@ public class NCZ_EditOrder extends Activity
         sellOrder = getIntent().getParcelableExtra("bean");
     }
 
+    public int countAllNumber()
+    {
+        List<SellOrderDetail_New> list = sellOrder.getSellOrderDetailList();
+        int allnumber = 0;
+        for (int i = 0; i < list.size(); i++)
+        {
+            allnumber = allnumber + Integer.valueOf(list.get(i).getplannumber());
+        }
+        return allnumber;
+    }
 
     private void getListData()
     {
@@ -245,8 +259,8 @@ public class NCZ_EditOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_sellOrderDetail = new Adapter_SellOrderDetail(NCZ_EditOrder.this, listNewData);
-                        lv.setAdapter(adapter_sellOrderDetail);
+                        adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(NCZ_EditOrder.this, listNewData);
+                        lv.setAdapter(adapter_editSellOrderDetail_ncz);
                         utils.setListViewHeight(lv);
                     } else
                     {

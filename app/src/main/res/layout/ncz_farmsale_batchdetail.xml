@@ -9,12 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/pb_upload"
-            android:layout_width="45dip"
-            android:layout_height="45dip"
-            android:layout_centerInParent="true"
-            android:visibility="gone"/>
 
         <RelativeLayout
             android:id="@+id/rl_titlebar"
@@ -68,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:childDivider="@color/transparent"
+                android:divider="@color/transparent"
                 android:dividerHeight="0dip"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
@@ -112,6 +107,18 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/pb_upload"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="45dip"
+                android:layout_height="45dip"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
 
     </RelativeLayout>
 

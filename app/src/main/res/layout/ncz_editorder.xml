@@ -22,9 +22,9 @@
             android:id="@+id/btn_sure"
             android:layout_width="60dip"
             android:layout_height="40dip"
-            android:layout_marginRight="10dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
             android:background="@drawable/background_view_rounded_single"
             android:text="确定"
             android:textColor="@color/bg_text"
@@ -75,8 +75,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusableInTouchMode="true"
                     android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="vertical">
 
 
@@ -124,8 +124,7 @@
 
 
                         <TextView
-                            android:layout_width="0dip"
-                            android:layout_weight="1"
+                            android:layout_width="100dip"
                             android:layout_height="match_parent"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
@@ -136,8 +135,7 @@
 
                         <EditText
                             android:id="@+id/et_price"
-                            android:layout_width="0dip"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
                             android:hint="单价"
@@ -145,25 +143,37 @@
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="60dip"
+                        android:orientation="horizontal">
+
                         <TextView
-                            android:layout_width="0dip"
-                            android:layout_weight="1"
+                            android:layout_width="100dip"
                             android:layout_height="match_parent"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:layout_marginLeft="10dip"
-                            android:text="*总价(元)"
+                            android:text="*重量(斤)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
                         <EditText
-                            android:id="@+id/et_values"
-                            android:layout_width="0dip"
-                            android:layout_weight="1"
+                            android:id="@+id/et_weight"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="总价"
+                            android:hint="重量"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -180,62 +190,32 @@
                         android:layout_height="60dip"
                         android:orientation="horizontal">
 
-
                         <TextView
-                            android:layout_width="0dip"
-                            android:layout_weight="1"
+                            android:layout_width="100dip"
                             android:layout_height="match_parent"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*数量(株)"
+                            android:text="*总价(元)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
                         <EditText
-                            android:id="@+id/et_number"
-                            android:layout_width="0dip"
-                            android:layout_weight="1"
+                            android:id="@+id/et_values"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="数量"
-                            android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-
-                        <TextView
-                            android:layout_height="match_parent"
-                            android:layout_width="0dip"
-                            android:layout_weight="1"
-                            android:gravity="left|center_vertical"
-                            android:paddingLeft="10dip"
-                            android:layout_marginLeft="10dip"
-                            android:text="*重量(斤)"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-
-
-                        <EditText
-                            android:id="@+id/et_weight"
-                            android:layout_width="0dip"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:gravity="right|center_vertical"
-                            android:hint="重量"
+                            android:hint="总价"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:background="@color/line_color"/>
-
-
-
-
 
                     <LinearLayout
                         android:layout_width="fill_parent"
@@ -264,6 +244,7 @@
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
@@ -363,16 +344,34 @@
 
             </LinearLayout>
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dip"
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
-                android:background="@color/white"
-                android:gravity="left|center_vertical"
-                android:text="销售明细条目"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_16"/>
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dip"
+                    android:text="销售明细条目"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_sp_16"/>
+
+                <TextView
+                    android:id="@+id/tv_allnumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="left|center_vertical"
+                    android:paddingRight="10dip"
+                    android:text="150000"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_sp_16"/>
+
+            </RelativeLayout>
 
             <ListView
                 android:id="@+id/lv"

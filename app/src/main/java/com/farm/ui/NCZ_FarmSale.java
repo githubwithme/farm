@@ -80,6 +80,7 @@ public class NCZ_FarmSale extends Activity
     void afterOncreate()
     {
 //        getBatchTimeByUid();
+//        iSExistNewSale();
         getBatchTimeByUid_test();
         getNewSaleList_test();
     }
@@ -166,12 +167,13 @@ public class NCZ_FarmSale extends Activity
         });
     }
 
-    private void getNewSaleList()
+    private void iSExistNewSale()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_FarmSale.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getBatchTimeByUid");//jobGetList1
+        params.addQueryStringParameter("year", commembertab.getuId());
+        params.addQueryStringParameter("action", "iSExistNewSale");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -184,9 +186,8 @@ public class NCZ_FarmSale extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        list_newsale = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
                         tv_numberofnewsale.setVisibility(View.VISIBLE);
-                        tv_numberofnewsale.setText(list_newsale.size());
+                        tv_numberofnewsale.setText("1");
                     }
 
                 } else

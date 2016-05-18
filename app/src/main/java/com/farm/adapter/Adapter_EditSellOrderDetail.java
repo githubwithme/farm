@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +39,8 @@ public class Adapter_EditSellOrderDetail extends BaseAdapter
     static class ListItemView
     {
         public TextView tv_batchtime;
-        public TextView tv_number;
+        public EditText et_actualnumber;
+        public EditText et_actualweight;
         public TextView tv_area;
 
         public TextView tv_yq;
@@ -80,7 +82,8 @@ public class Adapter_EditSellOrderDetail extends BaseAdapter
             convertView = listContainer.inflate(R.layout.adapter_editsellorderdetail, null);
             listItemView = new ListItemView();
             // 获取控件对象
-            listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
+            listItemView.et_actualnumber = (EditText) convertView.findViewById(R.id.et_actualnumber);
+            listItemView.et_actualweight = (EditText) convertView.findViewById(R.id.et_actualweight);
             listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
             listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
             // 设置控件集到convertView
@@ -92,8 +95,9 @@ public class Adapter_EditSellOrderDetail extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
-        listItemView.tv_number.setText("出售"+SellOrderDetail.getplannumber()+"株");
-        listItemView.tv_batchtime.setText("批次:"+SellOrderDetail.getBatchTime());
+        listItemView.et_actualnumber.setText(SellOrderDetail.getactualnumber());
+        listItemView.et_actualweight.setText(SellOrderDetail.getactualweight());
+        listItemView.tv_batchtime.setText("批次:" + SellOrderDetail.getBatchTime());
         listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
         return convertView;
     }

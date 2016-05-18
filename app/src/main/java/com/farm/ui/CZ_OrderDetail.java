@@ -81,7 +81,7 @@ public class CZ_OrderDetail extends Activity
     void btn_edit()
     {
         Intent intent = new Intent(CZ_OrderDetail.this, CZ_EditOrder_.class);
-        intent.putExtra("bean",sellOrder);
+        intent.putExtra("bean", sellOrder);
         startActivity(intent);
     }
 
@@ -188,7 +188,7 @@ public class CZ_OrderDetail extends Activity
 //        }
     }
 
-    private void addOrder(String uuid,String data)
+    private void addOrder(String uuid, String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
