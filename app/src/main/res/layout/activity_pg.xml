@@ -50,7 +50,38 @@
                 android:textColor="@color/menu_textcolor"
                 android:textSize="@dimen/home_menu_textsize" />
         </TableLayout>
+        <TableLayout
+            android:id="@+id/tl_ck"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1.5" >
+
+                <ImageButton
+                    android:id="@+id/imgbtn_ck"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/selector_message"
+                    android:clickable="false"
+                    android:contentDescription="" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_ck"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="出库"
+                android:textColor="@color/menu_textcolor"
+                android:textSize="@dimen/home_menu_textsize" />
+        </TableLayout>
         <TableLayout
             android:id="@+id/tl_plant"
             android:layout_width="0dip"

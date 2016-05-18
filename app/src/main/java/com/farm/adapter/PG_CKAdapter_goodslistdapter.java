@@ -1,9 +1,12 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -11,6 +14,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -18,11 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
+import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
 import com.farm.common.BitmapHelper;
@@ -35,20 +40,29 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
+/**
+ * Created by user on 2016/5/18.
+ */
+public class PG_CKAdapter_goodslistdapter extends BaseAdapter
 {
+    String name;
+    List<Wz_Storehouse> listpeople = new ArrayList<Wz_Storehouse>();
+    PG_CKlistAdapter pg_cKlistAdapter;
+    PopupWindow pw_tab;
+    View pv_tab;
     int currentpos;
-/*    String number;
-    String small_dw;
-    String large_dw;*/
+    /*    String number;
+        String small_dw;
+        String large_dw;*/
     String large_dw;
     String iiduishui;
     String gx;
-    commembertab commembertab;
-    goodslisttab currentgoods;
+    com.farm.bean.commembertab commembertab;
+    com.farm.bean.goodslisttab currentgoods;
     boolean isrecovery = false;
     View currentparentview;
     TextView tv_tip_gg;
@@ -56,9 +70,10 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
     TextView tv_spec;
     TextView tv_tip_number;
     TextView tv_goodsname;
+    TextView storehouse;
     Button btn_sure;
-    RadioGroup rg_select;
-    RadioButton dw_duishui,dw_gzhu;
+    View tv_line;
+
     EditText et_flsl;
     CustomDialog_FLSL customDialog_flsl;
     HashMap<Integer, View> lmap = new HashMap<Integer, View>();
@@ -67,13 +82,20 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
     private Context context;
     ImageView currentiv_tip = null;
     String plants;
+    String x;
+    String y;
+    String id;
 
-    public AddStd_Cmd_StepTwo_Self_goodslistdapter(Context context, ImageView currentiv_tip, List<goodslisttab> list)
+    public PG_CKAdapter_goodslistdapter(Context context, ImageView currentiv_tip, List<goodslisttab> list,String x,String y,String id)
     {
         commembertab = AppContext.getUserInfo(context);
         this.list = list;
         this.currentiv_tip = currentiv_tip;
         this.context = context;
+        this.x=x;
+        this.y=y;
+        this.id=id;
+
     }
 
     @Override
@@ -118,13 +140,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 {
                     BitmapHelper.setImageViewBackground(context, listItemView.typeicon, goodslisttab.getImgurl());
                 }
-                String large_dw = goodslisttab.getgoodsSpec().substring(1, goodslisttab.getgoodsSpec().length());
 
-
-             /*   String[] goodsspc = goodslisttab.getgoodsSpec().split("/");
-                String number = goodsspc[0];
-                String small_dw = goodsspc[1];
-                String large_dw = goodsspc[2];*/
                 listItemView.typename.setText(goodslisttab.getgoodsName());
                 if(!goodslisttab.getThree().equals(""))
                 {
@@ -185,34 +201,12 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                     Double acountnumber=0d;
                     isrecovery = true;
 
-                    String large_dw = list_goodslisttab.get(i).getgoodsSpec().substring(1, list_goodslisttab.get(i).getgoodsSpec().length());
 
-                  /*  String[] goodsspc = list_goodslisttab.get(i).getgoodsSpec().split("/");
-                    String number = goodsspc[0];
-                    String small_dw = goodsspc[1];
-                    String large_dw = goodsspc[2];*/
+
                     listItemView.cb_fl.setChecked(true);
                     listItemView.ll_flsl.setVisibility(View.VISIBLE);
-//                    listItemView.tv_flsl.setText(list_goodslisttab.get(i).getYL() + small_dw + "/株");
                     listItemView.tv_flsl.setText(list_goodslisttab.get(i).getYL() + list_goodslisttab.get(i).getDW());
 
-//                    listItemView.tv_allnumber.setText(list_goodslisttab.get(i).getGX() + large_dw);
-
-//                    listItemView.tv_allnumber.setText(list_goodslisttab.get(i).getGX() + "");
-                 /*   if (large_dw.equals("mL")||large_dw.equals("L"))
-                    {
-                        currentgoods.setGX("待定");
-                    }else
-                    {
-                        if (!et_flsl.getText().toString().equals(""))
-                        {
-                            acountnumber = Double.valueOf(et_flsl.getText().toString()) * Integer.valueOf(plants);//株数
-//                     neednumber = acountnumber / Double.valueOf(number);
-//                    currentgoods.setGX(neednumber.toString());
-                            currentgoods.setGX(acountnumber.toString());
-                        }
-
-                    }*/
                     isrecovery = false;
                     if (currentiv_tip != null)
                     {
@@ -297,7 +291,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
 
     public void showDialog_flsl(final String zzs,String goodssum)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_flsl_self, null);
+        final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_pg_ck, null);
         customDialog_flsl = new CustomDialog_FLSL(context, R.style.MyDialog, dialog_layout);
         tv_dw = (TextView) dialog_layout.findViewById(R.id.tv_dw);
         tv_tip_number = (TextView) dialog_layout.findViewById(R.id.tv_tip_number);
@@ -307,19 +301,12 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         tv_goodsname = (TextView) dialog_layout.findViewById(R.id.tv_goodsname);
         et_flsl = (EditText) dialog_layout.findViewById(R.id.et_flsl);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
-        rg_select = (RadioGroup) dialog_layout.findViewById(R.id.rg_select);
-        dw_duishui = (RadioButton) dialog_layout.findViewById(R.id.dw_duishui);
-        dw_gzhu = (RadioButton) dialog_layout.findViewById(R.id.dw_gzhu);
-
+        storehouse = (TextView) dialog_layout.findViewById(R.id.storehouse);
+        tv_line= (View) dialog_layout.findViewById(R.id.tv_line);
 
 
         large_dw= list.get(currentpos).getgoodsSpec().substring(1, list.get(currentpos).getgoodsSpec().length());
-//        iiduishui=list.get(currentpos).getIsExchange();
-      /*  String[] goodsspc = list.get(currentpos).getgoodsSpec().split("/");
-        number = goodsspc[0];
-        small_dw = goodsspc[1];
-        large_dw = goodsspc[2];*/
-//        tv_tip_number.setText("剩余：" + goodssum + large_dw);
+
         tv_tip_number.setText("剩余：" + goodssum);
 
 
@@ -336,64 +323,36 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         }
 
 
-//        if (small_dw.equals("ml"))
-//        if (large_dw.equals("mL")||large_dw.equals("L"))
-  /*      if (list.get(currentpos).getIsExchange().equals("True"))
 
-        {
-
-            tv_dw.setText("倍(兑水)");
-        }else
-        {
-            tv_dw.setText( "g/株");
-        }*/
         //原来的
-        if (list.get(currentpos).getIsExchange().equals("兑水"))
+        if (!list.get(currentpos).getThree().equals(""))
         {
-           dw_duishui.setChecked(true);
-          dw_gzhu.setVisibility(View.GONE);
-          tv_dw.setText("倍(兑水)");
-            iiduishui="倍(兑水)";
-        }else if( list.get(currentpos).getIsExchange().equals("不兑水"))
+
+            tv_dw.setText(list.get(currentpos).getThree());
+
+        }else if(!list.get(currentpos).getSec().equals("") &&list.get(currentpos).getThree().equals(""))
         {
-            dw_gzhu.setChecked(true);
-            dw_duishui.setVisibility(View.GONE);
-            tv_dw.setText("g/株");
-            iiduishui="g/株";
+            tv_dw.setText(list.get(currentpos).getSec());
         }else
         {
-           dw_duishui.setChecked(true);
-           tv_dw.setText("倍(兑水)");
-            iiduishui="倍(兑水)";
+            tv_dw.setText(list.get(currentpos).getFirs());
         }
-
-       dw_duishui.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               String number = dw_duishui.getText().toString();
-               tv_dw.setText(number);
-               iiduishui=number;
-           }
-       });
-
-    dw_gzhu.setOnClickListener(new View.OnClickListener() {
+        getlistdata();
+        storehouse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String number = dw_gzhu.getText().toString();
-                tv_dw.setText(number);
-                iiduishui=number;
+                if (listpeople.size()>0) {
+                    showPop_title();
+                }
             }
         });
+
         btn_sure.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                if(et_flsl.getText().equals(""))
-                {
-                    Toast.makeText(context, "请填写数据！", Toast.LENGTH_SHORT).show();
-                }
                 Double acountnumber=0d;
                 Double neednumber = 0d;
                 currentgoods.setParkId(commembertab.getparkId());
@@ -402,33 +361,11 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 currentgoods.setAreaName(commembertab.getareaName());
                 currentgoods.setYL(et_flsl.getText().toString());
                 currentgoods.setDW(tv_dw.getText().toString());
-//                if (small_dw.equals("ml"))
-//                if (large_dw.equals("mL")||large_dw.equals("L"))
-
-                if(tv_dw.getText().toString().equals("倍(兑水)"))
-              {
-                  currentgoods.setGX("待定");
-              }else {
-                  acountnumber = Double.valueOf(et_flsl.getText().toString()) * Integer.valueOf(zzs);//株数
-                  currentgoods.setGX(acountnumber.toString());
-              }
+                currentgoods.setGX(x);
+                currentgoods.setZS(y);
 
 
 
-    /*            //数量
-                if (list.get(currentpos).getIsExchange().equals("兑水"))
-                {
-                    currentgoods.setGX("待定");
-                }else
-                {
-                    if (!et_flsl.getText().toString().equals(""))
-                    {
-                        acountnumber = Double.valueOf(et_flsl.getText().toString()) * Integer.valueOf(zzs);//株数
-//                     neednumber = acountnumber / Double.valueOf(number);
-//                    currentgoods.setGX(neednumber.toString());
-                        currentgoods.setGX(acountnumber.toString());
-                    }
-                }*/
                 SqliteDb.save(context, currentgoods);
 
                 LinearLayout ll_flsl = (LinearLayout) currentparentview.findViewById(R.id.ll_flsl);
@@ -438,21 +375,8 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 TextView tv_allnumber = (TextView) currentparentview.findViewById(R.id.tv_allnumber);
                 TextView tv_zzs = (TextView) currentparentview.findViewById(R.id.tv_zzs);
 
-//                if (small_dw.equals("ml"))
-//                    if (large_dw.equals("mL")||large_dw.equals("L"))
-//                    if (iiduishui.equals("倍(兑水)"))
-                    if (iiduishui.equals("倍(兑水)"))
-                {
-                    tv_flsl.setText(et_flsl.getText() +"倍(兑水)");
-                    tv_allnumber.setText("待定");
-                }else
-                {
-//                    tv_flsl.setText(et_flsl.getText() + small_dw + "/株");
-                    tv_flsl.setText(et_flsl.getText() +"g/株");
-                    tv_allnumber.setText(neednumber + "g/株");
-                }
 
-                tv_zzs.setText(zzs+"株");
+                tv_flsl.setText(et_flsl.getText()+tv_dw.getText().toString());
                 customDialog_flsl.dismiss();
 
             }
@@ -460,4 +384,86 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
         customDialog_flsl.show();
     }
 
+
+    public void showPop_title() {//LAYOUT_INFLATER_SERVICE
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        pv_tab = layoutInflater.inflate(R.layout.popup_yq, null);// 外层
+        pv_tab.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing())) {
+                    pw_tab.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        pv_tab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (pw_tab.isShowing()) {
+                    pw_tab.dismiss();
+                }
+                return false;
+            }
+        });
+        pw_tab = new PopupWindow(pv_tab, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        pw_tab.showAsDropDown(tv_line, 0, 0);
+        pw_tab.setOutsideTouchable(true);
+
+
+        ListView listview = (ListView) pv_tab.findViewById(R.id.lv_yq);
+        pg_cKlistAdapter = new PG_CKlistAdapter(context, listpeople);
+        listview.setAdapter(pg_cKlistAdapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3) {
+                id = listpeople.get(postion).getStorehouseId();
+                name = listpeople.get(postion).getStorehouseName();
+                currentgoods.setgoodsNote(listpeople.get(postion).getStorehouseId());
+                pw_tab.dismiss();
+                storehouse.setText(listpeople.get(postion).getStorehouseName());
+
+            }
+        });
+    }
+
+    private void getlistdata() {
+        commembertab commembertab = AppContext.getUserInfo(context);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getGoodsByUid");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                String a = responseInfo.result;
+                List<Wz_Storehouse> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0) {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
+                        listpeople.addAll(listNewData);
+
+                    } else {
+                        listNewData = new ArrayList<Wz_Storehouse>();
+                    }
+                } else {
+                    AppContext.makeToast(context, "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg) {
+                String a = error.getMessage();
+                AppContext.makeToast(context, "error_connectServer");
+
+            }
+        });
+
+    }
 }

@@ -60,6 +60,7 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     PG_GddList pg_gddList;
 //    PG_EventList pg_eventList;
 PG_ListOfEvents pg_listOfEvents;
+    PG_CKList pg_ckList;
 //    ProductSale productAndSale;
 //    ProductAndSale productAndSale;
 //    PG_BreakOff pg_breakOff;
@@ -78,6 +79,8 @@ PG_ListOfEvents pg_listOfEvents;
     ImageButton imgbtn_me;
     @ViewById
     ImageButton imgbtn_event;
+    @ViewById
+    ImageButton imgbtn_ck;
 
     @ViewById
     TextView tv_home;
@@ -89,6 +92,8 @@ PG_ListOfEvents pg_listOfEvents;
     TextView tv_event;
     @ViewById
     TextView tv_dl;
+    @ViewById
+    TextView tv_ck;
 
     @ViewById
     TableLayout tl_home;
@@ -100,6 +105,8 @@ PG_ListOfEvents pg_listOfEvents;
     TableLayout tl_event;
     @ViewById
     TableLayout tl_dl;
+    @ViewById
+    TableLayout tl_ck;
 
     @Click
     void tl_home()
@@ -109,12 +116,14 @@ PG_ListOfEvents pg_listOfEvents;
         tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_ck.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_home.setSelected(true);
         tl_dl.setSelected(false);
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
+        tl_ck.setSelected(false);
         switchContent(mContent, mainFragment);
     }
     @Click
@@ -125,18 +134,21 @@ PG_ListOfEvents pg_listOfEvents;
         tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_ck.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_dl.setSelected(true);
         tl_home.setSelected(false);
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
+        tl_ck.setSelected(false);
 //        switchContent(mContent, pg_productBatch);
         switchContent(mContent, pq_dlFragment);
     }
     @Click
     void tl_event()
     {
+        tv_ck.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
@@ -148,6 +160,7 @@ PG_ListOfEvents pg_listOfEvents;
         tl_plant.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(true);
+        tl_ck.setSelected(false);
 //        switchContent(mContent, pg_eventList);
         switchContent(mContent, pg_listOfEvents);
     }
@@ -155,12 +168,14 @@ PG_ListOfEvents pg_listOfEvents;
     @Click
     void tl_plant()
     {
+        tv_ck.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_plant.setTextColor(getResources().getColor(R.color.bg_blue));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
+        tl_ck.setSelected(false);
         tl_home.setSelected(false);
         tl_dl.setSelected(false);
         tl_plant.setSelected(true);
@@ -173,18 +188,38 @@ PG_ListOfEvents pg_listOfEvents;
     @Click
     void tl_me()
     {
+        tv_ck.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.bg_blue));
         tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
+        tl_ck.setSelected(false);
         tl_home.setSelected(false);
         tl_plant.setSelected(false);
         tl_dl.setSelected(false);
         tl_me.setSelected(true);
         tl_event.setSelected(false);
         switchContent(mContent, iFragment);
+    }
+    @Click
+    void tl_ck()
+    {
+        tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_dl.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_plant.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_ck.setTextColor(getResources().getColor(R.color.bg_blue));
+        tv_event.setTextColor(getResources().getColor(R.color.menu_textcolor));
+
+        tl_me.setSelected(false);
+        tl_home.setSelected(false);
+        tl_plant.setSelected(false);
+        tl_dl.setSelected(false);
+        tv_ck.setSelected(true);
+        tl_event.setSelected(false);
+        switchContent(mContent, pg_ckList);
     }
 
     @AfterViews
@@ -228,6 +263,7 @@ PG_ListOfEvents pg_listOfEvents;
         pg_EveryDayAssessList = new PG_EveryDayAssessList_();
         pq_dlFragment=new PQ_DLFragment_();
         iFragment = new IFragment_();
+        pg_ckList=new PG_CKList_();
 
         TencentLocationRequest request = TencentLocationRequest.create();
         TencentLocationManager locationManager = TencentLocationManager.getInstance(PG_MainActivity.this);

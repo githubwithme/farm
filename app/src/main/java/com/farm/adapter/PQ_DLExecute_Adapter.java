@@ -9,6 +9,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -173,7 +174,7 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
 
     //设置父item组件
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
+    public View getGroupView(final int groupPosition,final boolean isExpanded, View convertView, ViewGroup parent)
     {
         BatchTime batchTime=listData.get(groupPosition);
         if (convertView == null)
@@ -183,15 +184,27 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
         }
         TextView tv_park = (TextView) convertView.findViewById(R.id.tv_park);
         Button btn_bianjie = (Button) convertView.findViewById(R.id.btn_bianjie);
-        tv_park.setText(listData.get(groupPosition).getBatchTime() + "-" + listData.get(groupPosition).getBatchColor());
+        LinearLayout groupExpand = (LinearLayout) convertView.findViewById(R.id.groupExpand);
+        tv_park.setText(listData.get(groupPosition).getBatchTime() + "   " + listData.get(groupPosition).getBatchColor());
+
+        groupExpand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isExpanded) {
+                    mainlistview.collapseGroup(groupPosition);
+                } else {
+                    mainlistview.expandGroup(groupPosition);
+                }
+            }
+        });
         btn_bianjie.setTag(R.id.tag_text, batchTime);
         btn_bianjie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BatchTime batchTimes=(BatchTime) view.getTag(R.id.tag_text);
-                Intent intent=new Intent(context,PQ_DLbjFragment_.class);
-                intent.putExtra("batchtime",batchTimes.getBatchTime());
-                intent.putExtra("batchcolor",batchTimes.getBatchColor());
+                BatchTime batchTimes = (BatchTime) view.getTag(R.id.tag_text);
+                Intent intent = new Intent(context, PQ_DLbjFragment_.class);
+                intent.putExtra("batchtime", batchTimes.getBatchTime());
+                intent.putExtra("batchcolor", batchTimes.getBatchColor());
                 context.startActivity(intent);
             }
         });

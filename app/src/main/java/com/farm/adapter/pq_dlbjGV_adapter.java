@@ -197,7 +197,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
                     } else //编辑数据
                     {
 
-                            updateBreakOff(list_BreakOff_New.get(0).getUuid(), number);
+                            updateBreakOff(list_BreakOff_New.get(0).getUuid(),list_BreakOff_New.get(0).getnumberofbreakoff(), number);
 
                     }
 
@@ -298,13 +298,13 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
         });
     }
 
-    private void updateBreakOff(String uuid,String number)
+    private void updateBreakOff(String uuid,String number_difference,String number)
     {
-
 
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("numberofbreakoff", number);
+        params.addQueryStringParameter("number_difference",number_difference);
         params.addQueryStringParameter("action", "updateBreakOff");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
