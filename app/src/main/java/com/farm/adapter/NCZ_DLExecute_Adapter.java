@@ -2,6 +2,7 @@ package com.farm.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -192,6 +193,20 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 
 
         tv_park.setText(listData.get(groupPosition).getBatchTime()+"-"+listData.get(groupPosition).getBatchColor());
+        if (listData.get(groupPosition).getBatchColor().equals("红色")) {
+//            view.setBackgroundColor(Color.parseColor("#365663"));
+//            rl_color.setBackground(R.color.red);
+            tv_park.setBackgroundColor(Color.parseColor("#ff4444"));
+        } else if (listData.get(groupPosition).getBatchColor().equals("蓝色")) {
+
+            tv_park.setBackgroundColor(Color.parseColor("#add8e6"));
+        } else if (listData.get(groupPosition).getBatchColor().equals("绿色")) {
+
+            tv_park.setBackgroundColor(Color.parseColor("#90ee90"));
+        } else {
+
+            tv_park.setBackgroundColor(Color.parseColor("#d8bfd8"));
+        }
         return convertView;
     }
     @Override

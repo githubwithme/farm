@@ -1,7 +1,10 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -18,6 +22,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.AddStd_cmd_StepTwo_self_Adapter;
 import com.farm.adapter.PG_CKAdapter;
@@ -34,6 +40,9 @@ import com.farm.bean.goodslisttab;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.DictionaryHelper;
 import com.farm.common.SqliteDb;
+import com.farm.common.UIHelper;
+import com.farm.common.utils;
+import com.farm.widget.CustomDialog_ListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -92,13 +101,17 @@ public class PG_CK extends Activity {
     Button btn_next;
     @ViewById
     TextView tv_shuju;
-    String aa="";
+    @ViewById
+    ImageView iv_dowm_tab;
+    String aa = "";
     List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
+    CustomDialog_ListView customDialog_listView;
+
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
+    protected void onResume() {
+        super.onResume();
+/*        list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
         if (list_goodslisttab.size()>0)
         {
             for (int i=0;i<list_goodslisttab.size();i++)
@@ -107,18 +120,49 @@ public class PG_CK extends Activity {
                         "-"+list_goodslisttab.get(i).getYL()+list_goodslisttab.get(i).getDW()+"-"+list_goodslisttab.get(i).getgoodsNote()+"\n";
             }
         }
-        tv_shuju.setText(aa);
+
+        tv_shuju.setText(aa);*/
     }
 
     @Click
+    void tv_shuju() {
+        list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < list_goodslisttab.size(); i++)
+        {
+            list.add(list_goodslisttab.get(i).getgoodsName()+"-"+list_goodslisttab.get(i).getYL()+list_goodslisttab.get(i).getDW());
+        }
+        showDialog_workday(list);
+    }
+    public void showDialog_workday(List<String> list)
+    {
+        View dialog_layout = (RelativeLayout) PG_CK.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(PG_CK.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+              /*  zzsl = bundle.getString("name");
+                tv_type.setText(zzsl);*/
+            }
+        });
+        customDialog_listView.show();
+    }
+    @Click
     void btn_next() {
-
+        SqliteDb.deleteAllSelectCmdArea(PG_CK.this, goodslisttab.class);//删除
     }
 
     @Click
     void tv_head() {
         //list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
 //        SqliteDb.deleteAllSelectCmdArea(PG_CK.this, goodslisttab.class);//删除
+
+
+//        iv_dowm_tab.setBackground(getResources().getDrawable(R.drawable.ic_up));
+        // iv_dowm_tab.setBackground(getResources().getDrawable(R.drawable.ic_down));
+//        iv_dowm_tab.setImageResource(R.drawable.ic_down);
+        iv_dowm_tab.setImageResource(R.drawable.ic_up);
         showPop_title();
     }
 
@@ -127,6 +171,7 @@ public class PG_CK extends Activity {
         SqliteDb.deleteAllSelectCmdArea(PG_CK.this, goodslisttab.class);//删除
         getlistdata();
         getCommandlist();
+
     }
 
     @Override
@@ -134,8 +179,28 @@ public class PG_CK extends Activity {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(PG_CK.this);
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_PG_DATA);
+        PG_CK.this.registerReceiver(receiver_update, intentfilter_update);
     }
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
+      /*      if (list_goodslisttab.size()>0)
+            {
+                for (int i=0;i<list_goodslisttab.size();i++)
+                {
+                    aa+=list_goodslisttab.get(i).getGX()+"-"+list_goodslisttab.get(i).getZS()+"-"+list_goodslisttab.get(i).getId()+list_goodslisttab.get(i).getgoodsName()+
+                            "-"+list_goodslisttab.get(i).getYL()+list_goodslisttab.get(i).getDW()+"-"+list_goodslisttab.get(i).getgoodsNote()+"\n";
+                }
+            }*/
 
+            tv_shuju.setText("已经选择了"+list_goodslisttab.size()+"种物资");
+        }
+    };
     private void getCommandlist() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -156,7 +221,7 @@ public class PG_CK extends Activity {
                         if (lsitNewData != null) {
                             dic = lsitNewData.get(0);
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic);
-                            pg_ckAdapter = new PG_CKAdapter(PG_CK.this, dictionary_wheel, mainlistview, list_goods, tv_head, fragmentCallBack,id);
+                            pg_ckAdapter = new PG_CKAdapter(PG_CK.this, dictionary_wheel, mainlistview, list_goods, tv_head, fragmentCallBack, id);
                             mainlistview.setAdapter(pg_ckAdapter);
                             mainlistview.expandGroup(0);
                         }
@@ -192,6 +257,7 @@ public class PG_CK extends Activity {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing())) {
                     pw_tab.dismiss();
+                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
                     return true;
                 }
                 return false;
@@ -202,6 +268,7 @@ public class PG_CK extends Activity {
             public boolean onTouch(View v, MotionEvent event) {
                 if (pw_tab.isShowing()) {
                     pw_tab.dismiss();
+                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
                 }
                 return false;
             }
@@ -220,6 +287,7 @@ public class PG_CK extends Activity {
                 id = listpeople.get(postion).getStorehouseId();
                 name = listpeople.get(postion).getStorehouseName();
                 pw_tab.dismiss();
+                iv_dowm_tab.setImageResource(R.drawable.ic_down);
                 tv_head.setText(listpeople.get(postion).getStorehouseName());
 
             }

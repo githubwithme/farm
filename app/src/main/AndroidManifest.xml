@@ -149,6 +149,8 @@
         <activity android:name=".ui.NCZ_EventHandleDetail_"/>
         <activity android:name=".ui.NCZ_todaymyDetail_"/>
         <activity android:name=".ui.NCZ_Todayjob_Common_"/>
+        <activity android:name=".ui.NCZ_Statistics_"/>
+        <activity android:name=".ui.NCZ_StatisticsDetail_"/>
 
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>

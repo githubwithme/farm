@@ -2,6 +2,7 @@ package com.farm.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -186,7 +187,20 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
         Button btn_bianjie = (Button) convertView.findViewById(R.id.btn_bianjie);
         LinearLayout groupExpand = (LinearLayout) convertView.findViewById(R.id.groupExpand);
         tv_park.setText(listData.get(groupPosition).getBatchTime() + "   " + listData.get(groupPosition).getBatchColor());
+        if (listData.get(groupPosition).getBatchColor().equals("红色")) {
+//            view.setBackgroundColor(Color.parseColor("#365663"));
+//            rl_color.setBackground(R.color.red);
+            groupExpand.setBackgroundColor(Color.parseColor("#ff4444"));
+        } else if (listData.get(groupPosition).getBatchColor().equals("蓝色")) {
 
+            groupExpand.setBackgroundColor(Color.parseColor("#add8e6"));
+        } else if (listData.get(groupPosition).getBatchColor().equals("绿色")) {
+
+            groupExpand.setBackgroundColor(Color.parseColor("#90ee90"));
+        } else {
+
+            groupExpand.setBackgroundColor(Color.parseColor("#d8bfd8"));
+        }
         groupExpand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

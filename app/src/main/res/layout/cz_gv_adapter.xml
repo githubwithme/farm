@@ -17,7 +17,7 @@
             <TextView
                 android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="40dip"
+                android:layout_height="30dip"
                 android:gravity="center"
                 android:text="名字" />
             <View
@@ -27,7 +27,7 @@
             <TextView
                 android:id="@+id/areaname"
                 android:layout_width="match_parent"
-                android:layout_height="40dip"
+                android:layout_height="30dip"
                 android:gravity="center"
                 android:text="片区名字" />
             <View
@@ -37,7 +37,7 @@
             <TextView
                 android:id="@+id/num"
                 android:layout_width="match_parent"
-                android:layout_height="40dip"
+                android:layout_height="30dip"
                 android:gravity="center"
                 android:hint="wu" />
             <View

@@ -75,7 +75,7 @@ import java.util.concurrent.CountDownLatch;
 @EActivity(R.layout.event_process)
 public class Event_Process extends FragmentActivity {
 static int p;
-    String solove;
+    String solove="";
     MyDialog myDialog;
     private String id;
     private String name;
@@ -155,6 +155,7 @@ static int p;
             tv_bianjie.setVisibility(View.GONE);
             tv_delete.setVisibility(View.GONE);
         }
+        solove = reportedBean.getRemark2();
         initAnimalListView();
         getlistdata();
 
@@ -695,8 +696,18 @@ static int p;
 
     private void queding() {
         commembertab commembertab = AppContext.getUserInfo(Event_Process.this);
-        if (solove==null) {
-            if (reportedBean.getRemark2().equals("")) {
+
+         if(!solove.equals(""))
+         {
+             solove+=","+id;
+         }else
+         {
+                 solove = id;
+
+         }
+
+ /*       if (solove==null) {
+            if (reportedBean.getRemark2().equals("")||reportedBean.getRemark2()==null) {
                 solove = id;
             } else {
                 solove = reportedBean.getRemark2() + "," + id;
@@ -704,7 +715,7 @@ static int p;
         }else
         {
             solove+=","+id;
-        }
+        }*/
 
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "eventRecordEd");

@@ -30,13 +30,13 @@
 
 
 
-<ImageButton
+<TextView
     android:layout_centerVertical="true"
     android:layout_marginRight="10dip"
-    android:background="@drawable/refresh"
     android:id="@+id/shuaxin"
-    android:layout_width="40dip"
-    android:layout_height="40dip"
+    android:layout_width="50dip"
+    android:layout_height="match_parent"
+    android:gravity="center"
     android:text="刷新"
     android:textSize="20dip"
     android:layout_alignParentRight="true"/>

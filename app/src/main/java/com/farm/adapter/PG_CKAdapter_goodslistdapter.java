@@ -1,6 +1,7 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -55,9 +56,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
     PopupWindow pw_tab;
     View pv_tab;
     int currentpos;
-    /*    String number;
-        String small_dw;
-        String large_dw;*/
+
     String large_dw;
     String iiduishui;
     String gx;
@@ -174,6 +173,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                     {
                         if (!isrecovery)
                         {
+
                             SqliteDb.deleteGoods(context, goodslisttab.class, currentgoods.getId());
                         }
                         currentiv_tip.setVisibility(View.GONE);
@@ -364,7 +364,9 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                 currentgoods.setGX(x);
                 currentgoods.setZS(y);
 
-
+                Intent intent = new Intent();
+                intent.setAction(AppContext.BROADCAST_PG_DATA);
+               context.sendBroadcast(intent);
 
                 SqliteDb.save(context, currentgoods);
 

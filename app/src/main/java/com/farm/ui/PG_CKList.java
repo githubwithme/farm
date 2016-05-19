@@ -43,7 +43,7 @@ public class PG_CKList extends Fragment
     @AfterViews
     void afssss()
     {
-        tv_title.setText("版本");
+
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {

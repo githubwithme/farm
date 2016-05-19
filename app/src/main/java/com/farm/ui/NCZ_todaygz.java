@@ -117,6 +117,7 @@ public class NCZ_todaygz extends Fragment
                         ncz_todaygzExecute_adapter = new NCZ_todaygzExecute_Adapter(getActivity(), listNewData, expandableListView);
                         expandableListView.setAdapter(ncz_todaygzExecute_adapter);
                         utils.setListViewHeight(expandableListView);
+//                        String aa=listNewData.get(0).getJoblist().get(0).getamount();
                         for (int i = 0; i < listNewData.size(); i++)
                         {
                             expandableListView.expandGroup(i);//展开

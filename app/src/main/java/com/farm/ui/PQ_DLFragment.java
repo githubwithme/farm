@@ -53,7 +53,7 @@ public class PQ_DLFragment extends Fragment{
     @AfterViews
   void afterview()
   {
-      tv_title.setText(commembertab.getareaName()+"断蕾情况");
+      tv_title.setText(utils.getYear()+commembertab.getareaName()+"断蕾情况");
       getBatchTimeOfAreaId();
    }
     @Click

@@ -46,14 +46,29 @@
             android:layout_centerInParent="true" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_head"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dip"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="请选择肥料"
-        android:textSize="20dip" />
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="请选择肥料"
+            android:textSize="20dip" />
+        <ImageView
+            android:id="@+id/iv_dowm_tab"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/downward"
+            android:contentDescription="" />
+    </LinearLayout>
+
+
 
     <View
         android:id="@+id/line"
@@ -67,8 +82,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="15dp"
-        android:text="数据确认"
+        android:layout_margin="10dp"
+        android:text="物资确认"
         android:textSize="20dip" />
 
     <View

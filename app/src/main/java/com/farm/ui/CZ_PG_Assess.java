@@ -481,8 +481,8 @@ public class CZ_PG_Assess extends Activity
         commembertab commembertab = AppContext.getUserInfo(CZ_PG_Assess.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("comid", jobtab.getstdJobId());
-        params.addQueryStringParameter("comid", "13");
+        params.addQueryStringParameter("comid", jobtab.getstdJobId());
+//        params.addQueryStringParameter("comid", "13");
         params.addQueryStringParameter("action", "getcommandPFBZ");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

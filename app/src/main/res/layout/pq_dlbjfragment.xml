@@ -6,6 +6,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/rl_color"
         android:layout_width="match_parent"
         android:background="@color/white"
         android:layout_height="wrap_content">
@@ -49,9 +50,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="15dip"
-        android:columnWidth="90dip"
+        android:columnWidth="75dip"
         android:horizontalSpacing="10dip"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="10dip"/>
+        android:numColumns="4"
+        android:verticalSpacing="5dip"/>
 
 </LinearLayout>

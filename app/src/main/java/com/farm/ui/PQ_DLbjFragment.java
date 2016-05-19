@@ -1,12 +1,14 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,12 +57,14 @@ public class PQ_DLbjFragment extends Activity {
     Button btn_save;
     String batchtime;
     String batchcolor;
+    @ViewById
+    RelativeLayout rl_color;
 
     @Click
-    void imgbtn_back()
-    {
+    void imgbtn_back() {
         finish();
     }
+
     //    @Click
 //    void Btn_save()
 //    {
@@ -117,8 +121,9 @@ public class PQ_DLbjFragment extends Activity {
 //    }
     @AfterViews
     void afterview() {
-
-        tv_title.setText(batchtime+"-"+batchcolor);
+        setBackground(batchcolor);
+        tv_title.setText(batchtime );
+//        tv_title.setText(batchtime + "-" + batchcolor);
         getContractList();
     }
 
@@ -127,15 +132,15 @@ public class PQ_DLbjFragment extends Activity {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(PQ_DLbjFragment.this);
-        batchtime=getIntent().getStringExtra("batchtime");
-        batchcolor=getIntent().getStringExtra("batchcolor");
+        batchtime = getIntent().getStringExtra("batchtime");
+        batchcolor = getIntent().getStringExtra("batchcolor");
     }
 
     public void getContractList() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("areaid", commembertab.getareaId());
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("batchTime",batchtime);
+        params.addQueryStringParameter("batchTime", batchtime);
         params.addQueryStringParameter("action", "getAllBreakOffByAreaId");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
@@ -146,10 +151,9 @@ public class PQ_DLbjFragment extends Activity {
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+                    if (result.getAffectedRows() != 0) {
                         list_contractTab = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
-                        pq_dLbjGV_adapter = new pq_dlbjGV_adapter(PQ_DLbjFragment.this, list_contractTab,batchtime,batchcolor);
+                        pq_dLbjGV_adapter = new pq_dlbjGV_adapter(PQ_DLbjFragment.this, list_contractTab, batchtime, batchcolor);
                         gv_breakoff.setAdapter(pq_dLbjGV_adapter);
                     }
 
@@ -167,7 +171,8 @@ public class PQ_DLbjFragment extends Activity {
         });
 //       getBreakOffList();
     }
-//    public void getBreakOffList()
+
+    //    public void getBreakOffList()
 //{
 //    RequestParams params = new RequestParams();
 //    params.addQueryStringParameter("areaid",commembertab.getareaId() );
@@ -207,6 +212,45 @@ public class PQ_DLbjFragment extends Activity {
 //        }
 //    });
 //}
+    private void setBackground(String pos) {
 
+
+        if (pos.equals("红色")) {
+//            view.setBackgroundColor(Color.parseColor("#365663"));
+//            rl_color.setBackground(R.color.red);
+            rl_color.setBackgroundColor(Color.parseColor("#ff4444"));
+        } else if (pos.equals("蓝色")) {
+
+            rl_color.setBackgroundColor(Color.parseColor("#add8e6"));
+        } else if (pos.equals("绿色")) {
+
+            rl_color.setBackgroundColor(Color.parseColor("#90ee90"));
+        } else {
+
+            rl_color.setBackgroundColor(Color.parseColor("#d8bfd8"));
+        }
+/*    tv_reported.setSelected(false);
+    tv_processed.setSelected(false);
+
+    tv_reported.setBackgroundResource(R.color.white);
+    tv_processed.setBackgroundResource(R.color.white);
+
+    tv_reported.setTextColor(getResources().getColor(R.color.menu_textcolor));
+    tv_processed.setTextColor(getResources().getColor(R.color.menu_textcolor));
+    switch (pos)
+    {
+        case 0:
+            tv_reported.setSelected(false);
+            tv_reported.setTextColor(getResources().getColor(R.color.bg_blue));
+            tv_reported.setBackgroundResource(R.drawable.red_bottom);
+            break;
+        case 1:
+            tv_processed.setSelected(false);
+            tv_processed.setTextColor(getResources().getColor(R.color.bg_blue));
+            tv_processed.setBackgroundResource(R.drawable.red_bottom);
+            break;
+    }*/
+
+    }
 
 }

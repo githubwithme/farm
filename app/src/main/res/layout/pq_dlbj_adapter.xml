@@ -13,7 +13,7 @@
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
-            android:layout_height="50dip"
+            android:layout_height="40dip"
             android:gravity="center"
             android:text="名字"
             android:textColor="@color/bg_text"
@@ -22,16 +22,16 @@
         <EditText
             android:id="@+id/num"
             android:layout_width="match_parent"
-            android:layout_height="50dip"
+            android:layout_height="40dip"
             android:layout_below="@+id/name"
             android:gravity="center"
-            android:hint="请输入断蕾数"
+            android:hint="断蕾数"
             android:inputType="number"/>
 
         <Button
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
-            android:layout_height="50dip"
+            android:layout_height="40dip"
             android:layout_below="@+id/num"
             android:background="@drawable/background_view_rounded_single"
             android:gravity="center"
