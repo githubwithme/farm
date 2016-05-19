@@ -2,23 +2,24 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_EditSellOrderDetail;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.SellOrder;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
-import com.farm.bean.SellOrder_New;
-import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -34,7 +35,7 @@ import org.androidannotations.annotations.ViewById;
 import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -47,9 +48,9 @@ import java.util.List;
 @EActivity(R.layout.cz_editorder)
 public class CZ_EditOrder extends Activity
 {
-    SellOrder_New sellOrder;
     Adapter_EditSellOrderDetail adapter_editSellOrderDetail;
     SellOrderDetail SellOrderDetail;
+    List<SellOrderDetail_New> list_orderDetail;
     @ViewById
     LinearLayout ll_flyl;
     @ViewById
@@ -119,96 +120,20 @@ public class CZ_EditOrder extends Activity
             Toast.makeText(CZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        String uuid = java.util.UUID.randomUUID().toString();
-        SellOrder sellOrder = new SellOrder();
-        sellOrder.setid("");
-        sellOrder.setUid("60");
-        sellOrder.setUuid(uuid);
-        sellOrder.setBatchTime(sellOrder.getBatchTime());
-        sellOrder.setSelltype("0");
-        sellOrder.setStatus("0");
-        sellOrder.setBuyers(et_name.getText().toString());
-        sellOrder.setAddress(et_address.getText().toString());
-        sellOrder.setEmail(et_email.getText().toString());
-        sellOrder.setPhone(et_phone.getText().toString());
-        sellOrder.setPrice(et_price.getText().toString());
-        sellOrder.setNumber(et_number.getText().toString());
-        sellOrder.setWeight(et_weight.getText().toString());
-        sellOrder.setSumvalues(et_values.getText().toString());
-        sellOrder.setActualprice("");
-        sellOrder.setActualweight("");
-        sellOrder.setActualnumber("");
-        sellOrder.setActualsumvalues("");
-        sellOrder.setDeposit("0");
-        sellOrder.setReg(utils.getTime());
-        sellOrder.setSaletime(utils.getTime());
-        sellOrder.setYear(utils.getYear());
-        sellOrder.setNote(et_note.getText().toString());
-        sellOrder.setXxzt("0");
 
-        List<String> list_detail = new ArrayList<>();
-        for (int i = 0; i < sellOrder.getSellOrderDetailList().size(); i++)
-        {
-            list_detail.add(sellOrder.getSellOrderDetailList().get(i).getUuid());
-//            SellOrderDetail sellOrderDetail = list_SellOrderDetail.get(i);
-//            sellOrderDetail.setsaleid(uuid);
-//            sellOrderDetail.setType("salein");
-//            boolean issucc = SqliteDb.save(CreateOrder.this, sellOrderDetail);
-//            if (!issucc)
-//            {
-//                Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
-//                break;
-//            }
-//            if (i == list_SellOrderDetail.size() - 1)
-//            {
-//                Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
-//                finish();
-//            }
-        }
-
-        List<SellOrder> SellOrderList = new ArrayList<>();
-        SellOrderList.add(sellOrder);
         StringBuilder builder = new StringBuilder();
-        builder.append("{\"SellOrderList\": ");
-        builder.append(JSON.toJSONString(SellOrderList));
-        builder.append(", \"SellOrderDetailLists\": ");
-        builder.append(JSON.toJSONString(list_detail));
+        builder.append("{\"listdata\": ");
+        builder.append(JSON.toJSONString(list_orderDetail));
         builder.append("} ");
-        addOrder(uuid, builder.toString());
-//        boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
-//        if (issuccess)
-//        {
-//            for (int i = 0; i < list_SellOrderDetail.size(); i++)
-//            {
-//                SellOrderDetail sellOrderDetail=list_SellOrderDetail.get(i);
-//                sellOrderDetail.setsaleid(uuid);
-//                sellOrderDetail.setType("salein");
-//                boolean issucc = SqliteDb.save(CreateOrder.this, sellOrderDetail);
-//                if (!issucc)
-//                {
-//                    Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
-//                    break;
-//                }
-//                if (i == list_SellOrderDetail.size() - 1)
-//                {
-//                    Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
-//                    finish();
-//                }
-//            }
-//        } else
-//        {
-//            Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
-//        }
+        feedBackOrderDetail(builder.toString());
     }
 
     @AfterViews
     void afterOncreate()
     {
-        adapter_editSellOrderDetail = new Adapter_EditSellOrderDetail(CZ_EditOrder.this, sellOrder.getSellOrderDetailList());
+        adapter_editSellOrderDetail = new Adapter_EditSellOrderDetail(CZ_EditOrder.this);
         lv.setAdapter(adapter_editSellOrderDetail);
         utils.setListViewHeight(lv);
-//        getListData();
-//        showData();
     }
 
     @Override
@@ -216,98 +141,13 @@ public class CZ_EditOrder extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        sellOrder = getIntent().getParcelableExtra("bean");
+        list_orderDetail = getIntent().getParcelableArrayListExtra("list");
     }
 
 
-    private void getListData()
-    {
-        commembertab commembertab = AppContext.getUserInfo(CZ_EditOrder.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("comID", SellOrderDetail.getUuid());
-        params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("page_size", "10");
-        params.addQueryStringParameter("page_index", "10");
-        params.addQueryStringParameter("action", "commandGetListBycomID");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<SellOrderDetail_New> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_editSellOrderDetail = new Adapter_EditSellOrderDetail(CZ_EditOrder.this, listNewData);
-                        lv.setAdapter(adapter_editSellOrderDetail);
-                        utils.setListViewHeight(lv);
-                    } else
-                    {
-                        listNewData = new ArrayList<SellOrderDetail_New>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(CZ_EditOrder.this, "error_connectDataBase");
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s)
-            {
-
-            }
-        });
-    }
-
-    private void showData()
-    {
-//        String[] nongzi = SellOrderDetail.getnongziName().split(",");
-//        String flyl = "";
-//        for (int i = 0; i < nongzi.length; i++)
-//        {
-//            flyl = flyl + nongzi[i] + "  ;  ";
-//        }
-//        tv_note.setText(SellOrderDetail.getcommNote());
-//        tv_yl.setText(flyl);
-//        tv_zyts.setText(SellOrderDetail.getcommDays() + "天");
-//        tv_qx.setText(SellOrderDetail.getcommComDate());
-//        if (SellOrderDetail.getstdJobType().equals("-1"))
-//        {
-//            ll_flyl.setVisibility(View.GONE);
-//            if (SellOrderDetail.getcommNote().equals(""))
-//            {
-//                tv_cmdname.setText("暂无说明");
-//            } else
-//            {
-//                tv_cmdname.setText(SellOrderDetail.getcommNote());
-//            }
-//        } else if (SellOrderDetail.getstdJobType().equals("0"))
-//        {
-//            if (SellOrderDetail.getcommNote().equals(""))
-//            {
-//                tv_cmdname.setText("暂无说明");
-//            } else
-//            {
-//                tv_cmdname.setText(SellOrderDetail.getcommNote());
-//            }
-//        } else
-//        {
-//            tv_cmdname.setText(SellOrderDetail.getstdJobTypeName() + "——" + SellOrderDetail.getstdJobName());
-//        }
-    }
-
-    private void addOrder(String uuid, String data)
+    private void feedBackOrderDetail(String data)
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("action", "addOrder");
         params.setContentType("application/json");
         try
@@ -348,5 +188,79 @@ public class CZ_EditOrder extends Activity
                 AppContext.makeToast(CZ_EditOrder.this, "error_connectServer");
             }
         });
+    }
+
+    public class Adapter_EditSellOrderDetail extends BaseAdapter
+    {
+        private Activity context;// 运行上下文
+        private LayoutInflater listContainer;// 视图容器
+        SellOrderDetail_New SellOrderDetail;
+
+        class ListItemView
+        {
+            public TextView tv_batchtime;
+            public EditText et_actualnumber;
+            public EditText et_actualweight;
+            public TextView tv_area;
+
+            public TextView tv_yq;
+            public TextView tv_pq;
+        }
+
+        public Adapter_EditSellOrderDetail(Activity context)
+        {
+            this.context = context;
+            this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
+        }
+
+        public int getCount()
+        {
+            return list_orderDetail.size();
+        }
+
+        public Object getItem(int arg0)
+        {
+            return null;
+        }
+
+        public long getItemId(int arg0)
+        {
+            return 0;
+        }
+
+        HashMap<Integer, View> lmap = new HashMap<Integer, View>();
+
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            SellOrderDetail = list_orderDetail.get(position);
+            // 自定义视图
+            ListItemView listItemView = null;
+            if (lmap.get(position) == null)
+            {
+                // 获取list_item布局文件的视图
+                convertView = listContainer.inflate(R.layout.adapter_editsellorderdetail, null);
+                listItemView = new ListItemView();
+                // 获取控件对象
+                listItemView.et_actualnumber = (EditText) convertView.findViewById(R.id.et_actualnumber);
+                listItemView.et_actualweight = (EditText) convertView.findViewById(R.id.et_actualweight);
+                listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
+                listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
+                // 设置控件集到convertView
+                lmap.put(position, convertView);
+                convertView.setTag(listItemView);
+            } else
+            {
+                convertView = lmap.get(position);
+                listItemView = (ListItemView) convertView.getTag();
+            }
+            // 设置文字和图片
+            listItemView.et_actualnumber.setText(SellOrderDetail.getactualnumber());
+            listItemView.et_actualweight.setText(SellOrderDetail.getactualweight());
+            listItemView.tv_batchtime.setText("批次:" + SellOrderDetail.getBatchTime());
+            listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
+            return convertView;
+        }
+
+
     }
 }

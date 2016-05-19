@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_SellOrderDetail;
+import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -51,7 +51,7 @@ public class NCZ_DirectCreateOrder extends Activity
     List<HashMap<String, String>> uuids;
     String batchtime = "";
     List<SellOrderDetail_New> list_SellOrderDetail;
-    Adapter_SellOrderDetail adapter_sellOrderDetail;
+    Adapter_CreateSellOrderDetail_NCZ adapter_sellOrderDetail;
     SellOrderDetail SellOrderDetail;
     @ViewById
     LinearLayout ll_flyl;
@@ -69,8 +69,6 @@ public class NCZ_DirectCreateOrder extends Activity
     EditText et_price;
     @ViewById
     EditText et_weight;
-    @ViewById
-    EditText et_number;
     @ViewById
     EditText et_phone;
     @ViewById
@@ -109,11 +107,6 @@ public class NCZ_DirectCreateOrder extends Activity
             return;
         }
         if (et_weight.getText().toString().equals(""))
-        {
-            Toast.makeText(NCZ_DirectCreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (et_number.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_DirectCreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
@@ -174,7 +167,7 @@ public class NCZ_DirectCreateOrder extends Activity
         sellOrder.setEmail(et_email.getText().toString());
         sellOrder.setPhone(et_phone.getText().toString());
         sellOrder.setPrice(et_price.getText().toString());
-        sellOrder.setNumber(et_number.getText().toString());
+        sellOrder.setNumber(String.valueOf(countAllNumber()));
         sellOrder.setWeight(et_weight.getText().toString());
         sellOrder.setSumvalues(et_values.getText().toString());
         sellOrder.setActualprice("");
@@ -251,7 +244,7 @@ public class NCZ_DirectCreateOrder extends Activity
     void afterOncreate()
     {
         tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
-        adapter_sellOrderDetail = new Adapter_SellOrderDetail(NCZ_DirectCreateOrder.this, list_SellOrderDetail);
+        adapter_sellOrderDetail = new Adapter_CreateSellOrderDetail_NCZ(NCZ_DirectCreateOrder.this, list_SellOrderDetail);
         lv.setAdapter(adapter_sellOrderDetail);
         utils.setListViewHeight(lv);
 //        getListData();
@@ -305,7 +298,7 @@ public class NCZ_DirectCreateOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_sellOrderDetail = new Adapter_SellOrderDetail(NCZ_DirectCreateOrder.this, listNewData);
+                        adapter_sellOrderDetail = new Adapter_CreateSellOrderDetail_NCZ(NCZ_DirectCreateOrder.this, listNewData);
                         lv.setAdapter(adapter_sellOrderDetail);
                         utils.setListViewHeight(lv);
                     } else

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,8 +18,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.commembertab;
-import com.farm.widget.MyDialog;
-import com.farm.widget.MyDialog.CustomDialogListener;
+import com.farm.widget.CustomDialog_EditOrderDetail;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -29,25 +29,25 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import java.util.HashMap;
 import java.util.List;
 
-public class Adapter_EditSellOrderDetail extends BaseAdapter
+public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
 {
     private Activity context;// 运行上下文
     private List<SellOrderDetail_New> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
     SellOrderDetail_New SellOrderDetail;
+    CustomDialog_EditOrderDetail customDialog_editOrderDetaill;
+    EditText et_number;
 
     static class ListItemView
     {
-        public TextView tv_batchtime;
-        public EditText et_actualnumber;
-        public EditText et_actualweight;
         public TextView tv_area;
+        public Button btn_plannumber;
 
         public TextView tv_yq;
         public TextView tv_pq;
     }
 
-    public Adapter_EditSellOrderDetail(Activity context, List<SellOrderDetail_New> data)
+    public Adapter_EditSellOrderDetail_NCZ(Activity context, List<SellOrderDetail_New> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -79,13 +79,21 @@ public class Adapter_EditSellOrderDetail extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.adapter_editsellorderdetail, null);
+            convertView = listContainer.inflate(R.layout.adapter_editsellorderdetail_ncz, null);
             listItemView = new ListItemView();
             // 获取控件对象
-            listItemView.et_actualnumber = (EditText) convertView.findViewById(R.id.et_actualnumber);
-            listItemView.et_actualweight = (EditText) convertView.findViewById(R.id.et_actualweight);
             listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
-            listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
+            listItemView.btn_plannumber = (Button) convertView.findViewById(R.id.btn_plannumber);
+            listItemView.btn_plannumber.setTag(position);
+            listItemView.btn_plannumber.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    int pos = (int) v.getTag();
+                    showDialog_editNumber(listItems.get(pos));
+                }
+            });
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -95,23 +103,24 @@ public class Adapter_EditSellOrderDetail extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
-        listItemView.et_actualnumber.setText(SellOrderDetail.getactualnumber());
-        listItemView.et_actualweight.setText(SellOrderDetail.getactualweight());
-        listItemView.tv_batchtime.setText("批次:" + SellOrderDetail.getBatchTime());
+        listItemView.btn_plannumber.setText(SellOrderDetail.getplannumber());
         listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
         return convertView;
     }
 
-    private void deleteCmd(String cmdid, String statusID)
+
+    private void editPolygon(final SellOrderDetail_New sellOrderDetail, String number_new, String number_difference)
     {
         commembertab commembertab = AppContext.getUserInfo(context);
         RequestParams params = new RequestParams();
-        // params.addQueryStringParameter("workuserid", workuserid);
-        params.addQueryStringParameter("statusID", statusID);
-        params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("username", commembertab.getrealName());
-        params.addQueryStringParameter("comID", cmdid);
-        params.addQueryStringParameter("action", "delCommandByID");
+        params.addQueryStringParameter("uid", sellOrderDetail.getuid());
+        params.addQueryStringParameter("contractid", sellOrderDetail.getcontractid());
+        params.addQueryStringParameter("year", sellOrderDetail.getYear());
+        params.addQueryStringParameter("uuid", sellOrderDetail.getUuid());
+        params.addQueryStringParameter("batchTime", sellOrderDetail.getBatchTime());
+        params.addQueryStringParameter("number_difference", number_difference);
+        params.addQueryStringParameter("number_new", number_new);
+        params.addQueryStringParameter("action", "editSellOrderDetail");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -122,18 +131,18 @@ public class Adapter_EditSellOrderDetail extends BaseAdapter
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
+                    String rows = result.getRows().get(0).toString();
+                    if (rows.equals("1"))
                     {
-                        Toast.makeText(context, "删除成功！", Toast.LENGTH_SHORT).show();
-                        myDialog.cancel();
-                    } else
+                        Toast.makeText(context, "修改成功！", Toast.LENGTH_SHORT).show();
+                    } else if (rows.equals("0"))
                     {
-                        Toast.makeText(context, "删除失败！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "修改失败！", Toast.LENGTH_SHORT).show();
                     }
+
                 } else
                 {
-                    AppContext.makeToast(context, "error_connectDataBase");
-                    return;
+                    Toast.makeText(context, "修改失败！", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -146,27 +155,32 @@ public class Adapter_EditSellOrderDetail extends BaseAdapter
         });
     }
 
-    MyDialog myDialog;
 
-    private void showDeleteTip(final String cmdid, final String statusID)
+    private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new)
     {
-        View dialog_layout = (LinearLayout) context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "确定删除吗?", "删除", "取消", new CustomDialogListener()
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editorderdetail, null);
+        customDialog_editOrderDetaill = new CustomDialog_EditOrderDetail(context, R.style.MyDialog, dialog_layout);
+        et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
+        Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+        Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        btn_sure.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void OnClick(View v)
+            public void onClick(View v)
             {
-                switch (v.getId())
-                {
-                    case R.id.btn_sure:
-                        deleteCmd(cmdid, statusID);
-                        break;
-                    case R.id.btn_cancle:
-                        myDialog.cancel();
-                        break;
-                }
+                customDialog_editOrderDetaill.dismiss();
+                int number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_number.getText().toString());
+                editPolygon(sellOrderDetail_new, et_number.getText().toString(), String.valueOf(number_difference));
             }
         });
-        myDialog.show();
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customDialog_editOrderDetaill.dismiss();
+            }
+        });
+        customDialog_editOrderDetaill.show();
     }
 }

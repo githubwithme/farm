@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +29,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import java.util.HashMap;
 import java.util.List;
 
-public class Adapter_EditSellOrderDetail extends BaseAdapter
+public class Adapter_CreateSellOrderDetail_NCZ extends BaseAdapter
 {
     private Activity context;// 运行上下文
     private List<SellOrderDetail_New> listItems;// 数据集合
@@ -38,16 +38,14 @@ public class Adapter_EditSellOrderDetail extends BaseAdapter
 
     static class ListItemView
     {
-        public TextView tv_batchtime;
-        public EditText et_actualnumber;
-        public EditText et_actualweight;
         public TextView tv_area;
+        public Button btn_plannumber;
 
         public TextView tv_yq;
         public TextView tv_pq;
     }
 
-    public Adapter_EditSellOrderDetail(Activity context, List<SellOrderDetail_New> data)
+    public Adapter_CreateSellOrderDetail_NCZ(Activity context, List<SellOrderDetail_New> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -79,13 +77,11 @@ public class Adapter_EditSellOrderDetail extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.adapter_editsellorderdetail, null);
+            convertView = listContainer.inflate(R.layout.adapter_editsellorderdetail_ncz, null);
             listItemView = new ListItemView();
             // 获取控件对象
-            listItemView.et_actualnumber = (EditText) convertView.findViewById(R.id.et_actualnumber);
-            listItemView.et_actualweight = (EditText) convertView.findViewById(R.id.et_actualweight);
             listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
-            listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
+            listItemView.btn_plannumber = (Button) convertView.findViewById(R.id.btn_plannumber);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -95,9 +91,7 @@ public class Adapter_EditSellOrderDetail extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
-        listItemView.et_actualnumber.setText(SellOrderDetail.getactualnumber());
-        listItemView.et_actualweight.setText(SellOrderDetail.getactualweight());
-        listItemView.tv_batchtime.setText("批次:" + SellOrderDetail.getBatchTime());
+        listItemView.btn_plannumber.setText(SellOrderDetail.getplannumber());
         listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
         return convertView;
     }

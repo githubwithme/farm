@@ -3,6 +3,7 @@ package com.farm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -81,7 +82,7 @@ public class CZ_OrderDetail extends Activity
     void btn_edit()
     {
         Intent intent = new Intent(CZ_OrderDetail.this, CZ_EditOrder_.class);
-        intent.putExtra("bean",sellOrder);
+        intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) sellOrder.getSellOrderDetailList());
         startActivity(intent);
     }
 
@@ -188,7 +189,7 @@ public class CZ_OrderDetail extends Activity
 //        }
     }
 
-    private void addOrder(String uuid,String data)
+    private void addOrder(String uuid, String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);

@@ -51,35 +51,22 @@
 
 
             <TextView
-                android:id="@+id/tv_plannumber"
-                android:layout_width="0dip"
+                android:layout_width="100dip"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:paddingLeft="10dip"
-                android:text="拟售50000"
+                android:text="拟售/株"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_sp_14"/>
 
-            <TextView
-                android:id="@+id/tv_actualnumber"
-                android:layout_width="0dip"
+            <Button
+                android:id="@+id/btn_plannumber"
+                android:layout_width="40dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingLeft="10dip"
-                android:text="实售500株"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/size_sp_14"/>
-
-            <TextView
-                android:id="@+id/tv_actualweight"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:paddingLeft="10dip"
-                android:text="实重500株"
+                android:text="100000"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_sp_14"/>
 

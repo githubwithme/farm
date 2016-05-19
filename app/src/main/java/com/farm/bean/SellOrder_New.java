@@ -11,9 +11,9 @@ import java.util.List;
 
 /**
  * Description: areatab 实体类</p>
- * <p>
+ * <p/>
  * Copyright: Copyright (c) 2015
- * <p>
+ * <p/>
  * Company: 广州海川信息科技有限公司
  *
  * @version 1.0
@@ -37,10 +37,10 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String number;
     public String weight;
     public String sumvalues;
-    public String actualprice="";
-    public String actualweight="";
-    public String actualnumber="";
-    public String actualsumvalues="";
+    public String actualprice = "";
+    public String actualweight = "";
+    public String actualnumber = "";
+    public String actualsumvalues = "";
     public String reg;
     public String saletime;
     public String year;
@@ -325,7 +325,6 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     }
 
 
-
     public String getid()
     {
         return id;
@@ -335,10 +334,6 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     {
         this.id = id;
     }
-
-
-
-
 
 
     public boolean equals(Object o)

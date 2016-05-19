@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -17,7 +17,6 @@ import com.farm.R;
 import com.farm.adapter.NCZ_BatchDetail_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.areatab;
@@ -50,16 +49,17 @@ import java.util.Map;
 @EActivity(R.layout.ncz_farmsale_batchdetail)
 public class NCZ_FarmSale_BatchDetail extends Activity
 {
+    String parkid;
+    String batchTime;
     List<Map<String, String>> uuids;
     List<SellOrderDetail_New> list_sell;
-    BatchTime batchTime;
     NCZ_BatchDetail_Adapter ncz_batchDetail_adapter;
     @ViewById
     ExpandableListView expandableListView;
     @ViewById
     Button btn_newsale;
     @ViewById
-    ProgressBar pb_upload;
+    RelativeLayout pb_upload;
 
     @Click
     void btn_createorder()
@@ -70,6 +70,7 @@ public class NCZ_FarmSale_BatchDetail extends Activity
         Bundle bundle = new Bundle();
         ArrayList arrayList = new ArrayList();
         arrayList.add(uuids);
+        String aa=JSON.toJSONString(uuids);
         bundle.putParcelableArrayList("list_uuid", arrayList);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -80,7 +81,6 @@ public class NCZ_FarmSale_BatchDetail extends Activity
     {
         pb_upload.setVisibility(View.VISIBLE);
         setData();
-
 //        StringBuilder builder = new StringBuilder();
 //        builder.append("{\"SellOrderDetailList\": ");
 //        builder.append(JSON.toJSONString(list_sell));
@@ -95,6 +95,7 @@ public class NCZ_FarmSale_BatchDetail extends Activity
     void afterOncreate()
     {
         getBatchTimeByUid_test();
+//        getSaleDataOfArea();
     }
 
     @Override
@@ -102,7 +103,8 @@ public class NCZ_FarmSale_BatchDetail extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        batchTime = getIntent().getParcelableExtra("bean");
+        parkid = getIntent().getStringExtra("parkid");
+        batchTime = getIntent().getStringExtra("batchTime");
     }
 
     public void setData()
@@ -318,6 +320,57 @@ public class NCZ_FarmSale_BatchDetail extends Activity
             {
                 pb_upload.setVisibility(View.GONE);
                 AppContext.makeToast(NCZ_FarmSale_BatchDetail.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void getSaleDataOfArea()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("parkid", parkid);
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("batchTime", batchTime);
+        params.addQueryStringParameter("action", "getSaleDataOfArea");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<areatab> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), areatab.class);
+                        ncz_batchDetail_adapter = new NCZ_BatchDetail_Adapter(NCZ_FarmSale_BatchDetail.this, listNewData, expandableListView);
+                        expandableListView.setAdapter(ncz_batchDetail_adapter);
+                        utils.setListViewHeight(expandableListView);
+//        for (int i = 0; i < listNewData.size(); i++)
+//        {
+//            expandableListView.expandGroup(i);//展开
+//        }
+
+                    } else
+                    {
+                        listNewData = new ArrayList<areatab>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_FarmSale_BatchDetail.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_FarmSale_BatchDetail.this, "error_connectServer");
+
             }
         });
     }
