@@ -11,7 +11,7 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:layout_marginTop="10dip"
-        android:background="@drawable/background_view_rounded_single"
+        android:background="@drawable/round_gray"
         android:orientation="vertical">
 
         <LinearLayout
@@ -46,14 +46,41 @@
 
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/ll_saleinfo"
             android:layout_width="match_parent"
             android:layout_height="15dip"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="10dip"
-            android:text="已售10000  售中10000  拟售10000"
-            android:textColor="@color/gray"
-            android:textSize="12sp"/>
+            android:layout_marginBottom="5dip"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/tv_saleinfo"
+                android:layout_width="220dip"
+                android:layout_height="15dip"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dip"
+                android:text="已售10000  售中10000  拟售10000"
+                android:textColor="@color/gray"
+                android:textSize="12sp"/>
+
+            <ProgressBar
+                android:id="@+id/pb"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="100dip"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dip"
+                android:max="100"/>
+
+            <TextView
+                android:id="@+id/tv_pb"
+                android:layout_width="wrap_content"
+                android:layout_height="15dip"
+                android:gravity="center"
+                android:text="70%"
+                android:textColor="@color/gray"
+                android:textSize="12sp"/>
+        </LinearLayout>
     </LinearLayout>
 
 

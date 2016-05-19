@@ -16,6 +16,7 @@ import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -192,6 +193,10 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
         }
         TextView tv_areaname = (TextView) convertView.findViewById(R.id.tv_areaname);
         TextView tv_number = (TextView) convertView.findViewById(R.id.tv_number);
+        LinearLayout ll_saleinfo = (LinearLayout) convertView.findViewById(R.id.ll_saleinfo);
+        TextView tv_saleinfo = (TextView) convertView.findViewById(R.id.tv_saleinfo);
+        ProgressBar pb = (ProgressBar) convertView.findViewById(R.id.pb);
+        TextView tv_pb = (TextView) convertView.findViewById(R.id.tv_pb);
 
         int numberofsaleout = 0;
         int numberofselein = 0;
@@ -218,6 +223,8 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
         tv_areaname.setText(listData.get(groupPosition).getareaName());
 //        tv_number.setText(number);
         tv_number.setText("共剩" + numberofsalefor + "株");
+        pb.setProgress(70);
+        tv_pb.setText("65%");
         return convertView;
     }
 
@@ -278,6 +285,8 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
             {
                 convertView = View.inflate(context, R.layout.gridview_sellorderdetail_ncz, null);
                 view = new Holder(convertView);
+                view.pb.setProgress(70);
+                view.tv_pb.setText("65%");
                 view.cb_selectall.setTag(R.id.tag_postion, position);
                 view.tv_areaname.setText(list.get(position).getcontractname());
                 view.btn_number.setText(list.get(position).getplannumber());
@@ -322,6 +331,10 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
             private TextView tv_areaname;
             private TextView tv_number;
             private CheckBox cb_selectall;
+            private LinearLayout ll_saleinfo;
+            private TextView tv_saleinfo;
+            private ProgressBar pb;
+            private TextView tv_pb;
 
             public Holder(View view)
             {
@@ -329,6 +342,10 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
                 btn_number = (Button) view.findViewById(R.id.btn_number);
                 tv_number = (TextView) view.findViewById(R.id.tv_number);
                 cb_selectall = (CheckBox) view.findViewById(R.id.cb_selectall);
+                ll_saleinfo = (LinearLayout) view.findViewById(R.id.ll_saleinfo);
+                tv_saleinfo = (TextView) view.findViewById(R.id.tv_saleinfo);
+                pb = (ProgressBar) view.findViewById(R.id.pb);
+                tv_pb = (TextView) view.findViewById(R.id.tv_pb);
             }
         }
 

@@ -15,7 +15,6 @@ import com.farm.adapter.Adapter_EditSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.SellOrder;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
@@ -122,86 +121,8 @@ public class NCZ_EditOrder extends Activity
             Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        String uuid = java.util.UUID.randomUUID().toString();
-        SellOrder sellOrder = new SellOrder();
-        sellOrder.setid("");
-        sellOrder.setUid("60");
-        sellOrder.setUuid(uuid);
-        sellOrder.setBatchTime(sellOrder.getBatchTime());
-        sellOrder.setSelltype("0");
-        sellOrder.setStatus("0");
-        sellOrder.setBuyers(et_name.getText().toString());
-        sellOrder.setAddress(et_address.getText().toString());
-        sellOrder.setEmail(et_email.getText().toString());
-        sellOrder.setPhone(et_phone.getText().toString());
-        sellOrder.setPrice(et_price.getText().toString());
-        sellOrder.setNumber(et_number.getText().toString());
-        sellOrder.setWeight(et_weight.getText().toString());
-        sellOrder.setSumvalues(et_values.getText().toString());
-        sellOrder.setActualprice("");
-        sellOrder.setActualweight("");
-        sellOrder.setActualnumber("");
-        sellOrder.setActualsumvalues("");
-        sellOrder.setDeposit("0");
-        sellOrder.setReg(utils.getTime());
-        sellOrder.setSaletime(utils.getTime());
-        sellOrder.setYear(utils.getYear());
-        sellOrder.setNote(et_note.getText().toString());
-        sellOrder.setXxzt("0");
+        editOrder(sellOrder.getUuid(), et_name.getText().toString(), et_address.getText().toString(), et_email.getText().toString(), et_phone.getText().toString(), et_price.getText().toString(), et_weight.getText().toString(), et_values.getText().toString(), et_note.getText().toString());
 
-        List<String> list_detail = new ArrayList<>();
-        for (int i = 0; i < sellOrder.getSellOrderDetailList().size(); i++)
-        {
-            list_detail.add(sellOrder.getSellOrderDetailList().get(i).getUuid());
-//            SellOrderDetail sellOrderDetail = list_SellOrderDetail.get(i);
-//            sellOrderDetail.setsaleid(uuid);
-//            sellOrderDetail.setType("salein");
-//            boolean issucc = SqliteDb.save(CreateOrder.this, sellOrderDetail);
-//            if (!issucc)
-//            {
-//                Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
-//                break;
-//            }
-//            if (i == list_SellOrderDetail.size() - 1)
-//            {
-//                Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
-//                finish();
-//            }
-        }
-
-        List<SellOrder> SellOrderList = new ArrayList<>();
-        SellOrderList.add(sellOrder);
-        StringBuilder builder = new StringBuilder();
-        builder.append("{\"SellOrderList\": ");
-        builder.append(JSON.toJSONString(SellOrderList));
-        builder.append(", \"SellOrderDetailLists\": ");
-        builder.append(JSON.toJSONString(list_detail));
-        builder.append("} ");
-        addOrder(uuid, builder.toString());
-//        boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
-//        if (issuccess)
-//        {
-//            for (int i = 0; i < list_SellOrderDetail.size(); i++)
-//            {
-//                SellOrderDetail sellOrderDetail=list_SellOrderDetail.get(i);
-//                sellOrderDetail.setsaleid(uuid);
-//                sellOrderDetail.setType("salein");
-//                boolean issucc = SqliteDb.save(CreateOrder.this, sellOrderDetail);
-//                if (!issucc)
-//                {
-//                    Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
-//                    break;
-//                }
-//                if (i == list_SellOrderDetail.size() - 1)
-//                {
-//                    Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
-//                    finish();
-//                }
-//            }
-//        } else
-//        {
-//            Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
-//        }
     }
 
     @AfterViews
@@ -212,7 +133,7 @@ public class NCZ_EditOrder extends Activity
         lv.setAdapter(adapter_editSellOrderDetail_ncz);
         utils.setListViewHeight(lv);
 //        getListData();
-//        showData();
+        showData();
     }
 
     @Override
@@ -283,39 +204,18 @@ public class NCZ_EditOrder extends Activity
 
     private void showData()
     {
-//        String[] nongzi = SellOrderDetail.getnongziName().split(",");
-//        String flyl = "";
-//        for (int i = 0; i < nongzi.length; i++)
-//        {
-//            flyl = flyl + nongzi[i] + "  ;  ";
-//        }
-//        tv_note.setText(SellOrderDetail.getcommNote());
-//        tv_yl.setText(flyl);
-//        tv_zyts.setText(SellOrderDetail.getcommDays() + "天");
-//        tv_qx.setText(SellOrderDetail.getcommComDate());
-//        if (SellOrderDetail.getstdJobType().equals("-1"))
-//        {
-//            ll_flyl.setVisibility(View.GONE);
-//            if (SellOrderDetail.getcommNote().equals(""))
-//            {
-//                tv_cmdname.setText("暂无说明");
-//            } else
-//            {
-//                tv_cmdname.setText(SellOrderDetail.getcommNote());
-//            }
-//        } else if (SellOrderDetail.getstdJobType().equals("0"))
-//        {
-//            if (SellOrderDetail.getcommNote().equals(""))
-//            {
-//                tv_cmdname.setText("暂无说明");
-//            } else
-//            {
-//                tv_cmdname.setText(SellOrderDetail.getcommNote());
-//            }
-//        } else
-//        {
-//            tv_cmdname.setText(SellOrderDetail.getstdJobTypeName() + "——" + SellOrderDetail.getstdJobName());
-//        }
+        et_name.setText(sellOrder.getBuyers());
+        et_price.setText(sellOrder.getPrice());
+//        tv_planweight.setText(sellOrder.getWeight());
+//        tv_actualweight.setText(sellOrder.getBuyers());
+//        tv_plansumvalues.setText(sellOrder.getBuyers());
+//        tv_actualsumvalues.setText(sellOrder.getBuyers());
+//        et_deposit.setText(sellOrder.getDeposit());
+//        et_finalpayment.setText(sellOrder.getFinalpayment());
+        et_phone.setText(sellOrder.getPhone());
+        et_address.setText(sellOrder.getAddress());
+        et_email.setText(sellOrder.getEmail());
+        et_note.setText(sellOrder.getNote());
     }
 
     private void addOrder(String uuid, String data)
@@ -352,6 +252,53 @@ public class NCZ_EditOrder extends Activity
                 {
                     AppContext.makeToast(NCZ_EditOrder.this, "error_connectDataBase");
                     return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_EditOrder.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void editOrder(String uuid, String buyers, String address, String email, String phone, String price, String weight, String sumvalues, String note)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uuid", uuid);
+        params.addQueryStringParameter("buyers", buyers);
+        params.addQueryStringParameter("address", address);
+        params.addQueryStringParameter("email", email);
+        params.addQueryStringParameter("phone", phone);
+        params.addQueryStringParameter("price", price);
+        params.addQueryStringParameter("weight", weight);
+        params.addQueryStringParameter("sumvalues", sumvalues);
+        params.addQueryStringParameter("note", note);
+        params.addQueryStringParameter("action", "editOrder");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    String rows = result.getRows().get(0).toString();
+                    if (rows.equals("1"))
+                    {
+                        Toast.makeText(NCZ_EditOrder.this, "修改成功！", Toast.LENGTH_SHORT).show();
+                    } else if (rows.equals("0"))
+                    {
+                        Toast.makeText(NCZ_EditOrder.this, "修改失败！", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else
+                {
+                    Toast.makeText(NCZ_EditOrder.this, "修改失败！", Toast.LENGTH_SHORT).show();
                 }
 
             }

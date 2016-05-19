@@ -52,17 +52,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone"
         android:layout_margin="15dp"
         android:text="请选择指令"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:visibility="gone"/>
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:background="@color/line_color"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_zw"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:layout_margin="10dip"
+        android:background="@drawable/shape_round_border_red">
+
+        <TextView
+            android:id="@+id/tv_zw"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="芒果"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/downward"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -70,11 +97,26 @@
         android:layout_margin="10dip"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:id="@+id/pb_cmd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+
         <HorizontalScrollView
             android:id="@+id/cmd_tools_scrlllview"
             android:layout_width="fill_parent"
             android:layout_height="60dip"
-            android:layout_margin="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="20dip"
             android:fadingEdge="none"
             android:scrollbars="none">
 

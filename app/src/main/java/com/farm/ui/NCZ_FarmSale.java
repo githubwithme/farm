@@ -59,8 +59,7 @@ public class NCZ_FarmSale extends Activity
             Toast.makeText(this, "暂无清单", Toast.LENGTH_SHORT).show();
         } else
         {
-            Intent intent = new Intent(NCZ_FarmSale.this, NCZ_CreateOrder_.class);
-            intent.putExtra("batchtime", "");
+            Intent intent = new Intent(NCZ_FarmSale.this, NCZ_NewSaleList_.class);
             intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list_newsale);
             startActivity(intent);
         }
@@ -79,9 +78,9 @@ public class NCZ_FarmSale extends Activity
     @AfterViews
     void afterOncreate()
     {
-//        getBatchTimeByUid();
+        getBatchTimeByUid();
 //        iSExistNewSale();
-        getBatchTimeByUid_test();
+//        getBatchTimeByUid_test();
         getNewSaleList_test();
     }
 

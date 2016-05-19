@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -58,30 +58,38 @@ public class NCZ_OrderDetail extends Activity
     @ViewById
     Button btn_edit;
     @ViewById
-    EditText et_values;
+    TextView tv_plansumvalues;
     @ViewById
-    EditText et_name;
+    TextView tv_actualsumvalues;
     @ViewById
-    EditText et_address;
+    TextView tv_name;
     @ViewById
-    EditText et_price;
+    TextView tv_address;
     @ViewById
-    EditText et_weight;
+    TextView tv_planprice;
     @ViewById
-    EditText et_number;
+    TextView tv_actualweight;
     @ViewById
-    EditText et_phone;
+    TextView tv_planweight;
     @ViewById
-    EditText et_email;
+    TextView tv_number;
     @ViewById
-    EditText et_note;
+    TextView tv_phone;
+    @ViewById
+    TextView tv_email;
+    @ViewById
+    TextView tv_note;
+    @ViewById
+    TextView tv_deposit;
+    @ViewById
+    TextView tv_finalpayment;
 
 
     @Click
     void btn_edit()
     {
         Intent intent = new Intent(NCZ_OrderDetail.this, NCZ_EditOrder_.class);
-        intent.putExtra("bean",sellOrder);
+        intent.putExtra("bean", sellOrder);
         startActivity(intent);
     }
 
@@ -92,7 +100,7 @@ public class NCZ_OrderDetail extends Activity
         lv.setAdapter(adapter_sellOrderDetail);
         utils.setListViewHeight(lv);
 //        getListData();
-//        showData();
+        showData();
     }
 
     @Override
@@ -153,42 +161,21 @@ public class NCZ_OrderDetail extends Activity
 
     private void showData()
     {
-//        String[] nongzi = SellOrderDetail.getnongziName().split(",");
-//        String flyl = "";
-//        for (int i = 0; i < nongzi.length; i++)
-//        {
-//            flyl = flyl + nongzi[i] + "  ;  ";
-//        }
-//        tv_note.setText(SellOrderDetail.getcommNote());
-//        tv_yl.setText(flyl);
-//        tv_zyts.setText(SellOrderDetail.getcommDays() + "天");
-//        tv_qx.setText(SellOrderDetail.getcommComDate());
-//        if (SellOrderDetail.getstdJobType().equals("-1"))
-//        {
-//            ll_flyl.setVisibility(View.GONE);
-//            if (SellOrderDetail.getcommNote().equals(""))
-//            {
-//                tv_cmdname.setText("暂无说明");
-//            } else
-//            {
-//                tv_cmdname.setText(SellOrderDetail.getcommNote());
-//            }
-//        } else if (SellOrderDetail.getstdJobType().equals("0"))
-//        {
-//            if (SellOrderDetail.getcommNote().equals(""))
-//            {
-//                tv_cmdname.setText("暂无说明");
-//            } else
-//            {
-//                tv_cmdname.setText(SellOrderDetail.getcommNote());
-//            }
-//        } else
-//        {
-//            tv_cmdname.setText(SellOrderDetail.getstdJobTypeName() + "——" + SellOrderDetail.getstdJobName());
-//        }
+        tv_name.setText(sellOrder.getBuyers());
+        tv_planprice.setText(sellOrder.getPrice());
+//        tv_planweight.setText(sellOrder.getWeight());
+//        tv_actualweight.setText(sellOrder.getBuyers());
+//        tv_plansumvalues.setText(sellOrder.getBuyers());
+//        tv_actualsumvalues.setText(sellOrder.getBuyers());
+        tv_deposit.setText(sellOrder.getDeposit());
+        tv_finalpayment.setText(sellOrder.getFinalpayment());
+        tv_phone.setText(sellOrder.getPhone());
+        tv_address.setText(sellOrder.getAddress());
+        tv_email.setText(sellOrder.getEmail());
+        tv_note.setText(sellOrder.getNote());
     }
 
-    private void addOrder(String uuid,String data)
+    private void addOrder(String uuid, String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);

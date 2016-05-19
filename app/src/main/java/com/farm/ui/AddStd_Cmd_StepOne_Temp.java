@@ -7,18 +7,25 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextPaint;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.Attendance_Park_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
@@ -35,9 +42,11 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +55,8 @@ import java.util.List;
 @EFragment
 public class AddStd_Cmd_StepOne_Temp extends Fragment
 {
+    PopupWindow pw_command;
+    View pv_command;
     commembertab commembertab;
     String[] fn;
     Dictionary_wheel dictionary_wheel;
@@ -74,17 +85,32 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
     @ViewById
     RelativeLayout rl_pb;
     @ViewById
+    RelativeLayout pb_cmd;
+    @ViewById
     LinearLayout ll_tip;
+    @ViewById
+    RelativeLayout rl_zw;
     @ViewById
     ProgressBar pb;
     @ViewById
     TextView tv_tip;
+    @ViewById
+    TextView tv_zw;
+    @ViewById
+    View line;
+
+    @Click
+    void rl_zw()
+    {
+        getZW();
+    }
 
     @AfterViews
     void afterOncreate()
     {
         inflater = LayoutInflater.from(getActivity());
-        getCommandlist();
+//        getCommandlist();
+        getZW_first();
     }
 
 
@@ -110,6 +136,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
      */
     private void showToolsView(String[] data)
     {
+        cmd_tools.removeAllViews();
         list = data;
         tvList = new TextView[list.length];
         views = new View[list.length];
@@ -250,10 +277,31 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
         cmd_tools_scrlllview.smoothScrollTo(0, x);
     }
 
-    private void getCommandlist()
+    private void getZW()
+    {
+        List<String> list = new ArrayList<>();
+        list.add("香蕉");
+        list.add("芒果");
+        list.add("柑橘");
+        showPop_user(list);
+    }
+
+    private void getZW_first()
+    {
+        rl_pb.setVisibility(View.VISIBLE);
+        List<String> list = new ArrayList<>();
+        list.add("香蕉");
+        list.add("芒果");
+        list.add("柑橘");
+        rl_pb.setVisibility(View.GONE);
+        getCommandlist(list.get(0));
+    }
+
+    private void getCommandlist(String zw)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("zw", "");
         params.addQueryStringParameter("name", "Zuoye");
         params.addQueryStringParameter("action", "getDict");
         HttpUtils http = new HttpUtils();
@@ -270,7 +318,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        rl_pb.setVisibility(View.GONE);
+                        pb_cmd.setVisibility(View.GONE);
                         String aa = result.getRows().toJSONString();
                         lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
                         if (lsitNewData != null)
@@ -306,6 +354,66 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
                 pb.setVisibility(View.GONE);
             }
         });
+    }
+
+    public void showPop_user(final List<String> list)
+    {
+        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+        pv_command = layoutInflater.inflate(R.layout.pop_attendance, null);// 外层
+        pv_command.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
+                {
+                    pw_command.dismiss();
+                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    getActivity().getWindow().setAttributes(lp);
+                    return true;
+                }
+                return false;
+            }
+        });
+        pv_command.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_command.isShowing())
+                {
+                    pw_command.dismiss();
+                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    getActivity().getWindow().setAttributes(lp);
+                }
+                return false;
+            }
+        });
+        pw_command = new PopupWindow(pv_command, LinearLayout.LayoutParams.MATCH_PARENT, 600, true);
+        pw_command.showAsDropDown(line, 0, 0);
+        pw_command.setOutsideTouchable(true);
+        ListView lv = (ListView) pv_command.findViewById(R.id.lv);
+        Attendance_Park_Adapter attendance_park_adapter = new Attendance_Park_Adapter(getActivity(), list);
+        lv.setAdapter(attendance_park_adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                pb_cmd.setVisibility(View.VISIBLE);
+                tv_zw.setText(list.get(position));
+                getCommandlist(list.get(position));
+                pw_command.dismiss();
+                WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                lp.alpha = 1f;
+                getActivity().getWindow().setAttributes(lp);
+            }
+        });
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = 0.7f;
+        getActivity().getWindow().setAttributes(lp);
     }
 
 

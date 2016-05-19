@@ -5,25 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.app.AppConfig;
-import com.farm.app.AppContext;
-import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
-import com.farm.bean.commembertab;
-import com.farm.widget.MyDialog;
-import com.farm.widget.MyDialog.CustomDialogListener;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -101,71 +86,5 @@ public class Adapter_SellOrderDetail extends BaseAdapter
         return convertView;
     }
 
-    private void deleteCmd(String cmdid, String statusID)
-    {
-        commembertab commembertab = AppContext.getUserInfo(context);
-        RequestParams params = new RequestParams();
-        // params.addQueryStringParameter("workuserid", workuserid);
-        params.addQueryStringParameter("statusID", statusID);
-        params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("username", commembertab.getrealName());
-        params.addQueryStringParameter("comID", cmdid);
-        params.addQueryStringParameter("action", "delCommandByID");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        Toast.makeText(context, "删除成功！", Toast.LENGTH_SHORT).show();
-                        myDialog.cancel();
-                    } else
-                    {
-                        Toast.makeText(context, "删除失败！", Toast.LENGTH_SHORT).show();
-                    }
-                } else
-                {
-                    AppContext.makeToast(context, "error_connectDataBase");
-                    return;
-                }
 
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(context, "error_connectServer");
-            }
-        });
-    }
-
-    MyDialog myDialog;
-
-    private void showDeleteTip(final String cmdid, final String statusID)
-    {
-        View dialog_layout = (LinearLayout) context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "确定删除吗?", "删除", "取消", new CustomDialogListener()
-        {
-            @Override
-            public void OnClick(View v)
-            {
-                switch (v.getId())
-                {
-                    case R.id.btn_sure:
-                        deleteCmd(cmdid, statusID);
-                        break;
-                    case R.id.btn_cancle:
-                        myDialog.cancel();
-                        break;
-                }
-            }
-        });
-        myDialog.show();
-    }
 }

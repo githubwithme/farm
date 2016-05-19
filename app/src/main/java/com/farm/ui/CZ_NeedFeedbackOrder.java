@@ -13,13 +13,24 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.CZ_OrderAdapter;
+import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.Result;
 import com.farm.bean.SelectRecords;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.SqliteDb;
+import com.farm.common.utils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -93,7 +104,62 @@ public class CZ_NeedFeedbackOrder extends Fragment
 
     }
 
+    private void getAllOrders()
+    {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("parkname", commembertab.getparkName());
+        params.addQueryStringParameter("type", "1");
+        params.addQueryStringParameter("action", "GetSpecifyOrderByCZ");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+                        listAdapter = new CZ_OrderAdapter(getActivity(), listData);
+                        lv.setAdapter(listAdapter);
+                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                        {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                            {
+                                Intent intent = new Intent(getActivity(), CZ_OrderDetail_.class);
+                                intent.putExtra("bean", listData.get(position));
+                                getActivity().startActivity(intent);
+                            }
+                        });
 
+                    } else
+                    {
+                        listData = new ArrayList<SellOrder_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+
+            }
+        });
+    }
     @Override
     public void onDestroyView()
     {
