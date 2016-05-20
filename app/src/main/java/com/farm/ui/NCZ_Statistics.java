@@ -56,6 +56,7 @@ void btn_back()
                 String  aa = list.get(i);
 
                 Intent intent = new Intent(NCZ_Statistics.this, NCZ_StatisticsDetail_.class);
+                intent.putExtra("static", i);
                 intent.putExtra("statistics", aa);
                 startActivity(intent);
             }

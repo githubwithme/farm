@@ -223,7 +223,7 @@ public class CZ_PG_Assess extends Activity
         int childCount = cz_pg_assess_expandAdapter.getAllChildCout();
         if (list_view.size() != childCount)
         {
-            Toast.makeText(CZ_PG_Assess.this, "请选填全部评分标准", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CZ_PG_Assess.this, "请填写全部评分标准", Toast.LENGTH_SHORT).show();
             return;
         }
         for (int i = 0; i < list_view.size(); i++)

@@ -57,6 +57,7 @@ public class NCZ_MainActivity extends BaseActivity
 //	NCZ_EventList ncz_eventList;
 	NCZ_EventofList ncz_eventofList;
 	NCZ_CommandList ncz_CommandList;
+	NCZ_CommandOfList ncz_commandOfList;
 	// NCZ_SaleFragment ncz_SaleFragment;
 	// SaleList saleList;
 	ProductBatchList productBatchList;
@@ -139,7 +140,8 @@ public class NCZ_MainActivity extends BaseActivity
 		tl_product.setSelected(true);
 		tl_sale.setSelected(false);
 		tl_money.setSelected(false);
-		switchContent(mContent, ncz_CommandList);
+//		switchContent(mContent, ncz_CommandList);
+		switchContent(mContent, ncz_commandOfList);
 	}
 
 	@Click
@@ -250,8 +252,10 @@ public class NCZ_MainActivity extends BaseActivity
 		mainFragment = new NCZ_MainFragment_();
 		productBatchList = new ProductBatchList_();
 
-		ncz_CommandList = new NCZ_CommandList_();
-		ncz_CommandList.setArguments(bundle);
+//		ncz_CommandList = new NCZ_CommandList_();
+//		ncz_CommandList.setArguments(bundle);
+		ncz_commandOfList=new NCZ_CommandOfList_();
+//		ncz_commandOfList.setArguments(bundle);
 
 //		ncz_eventList = new NCZ_EventList_();
 //		ncz_eventList.setArguments(bundle);

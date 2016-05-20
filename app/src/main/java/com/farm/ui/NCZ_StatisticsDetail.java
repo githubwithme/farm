@@ -14,13 +14,20 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.bean.parkweathertab;
 import com.farm.chart.BarChartActivity;
+import com.farm.chart.BarChartItem;
 import com.farm.chart.ChartItem;
 import com.farm.chart.LineChartItem;
+import com.farm.chart.PieChartItem;
 import com.farm.common.FileHelper;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import org.androidannotations.annotations.AfterViews;
@@ -42,7 +49,8 @@ public class NCZ_StatisticsDetail extends Activity {
     List<parkweathertab> listNewData = null;
     @ViewById
     TextView tv_title;
-
+    String aa;
+    String zhuangtai;
     @Click
     void btn_back() {
         finish();
@@ -52,28 +60,69 @@ public class NCZ_StatisticsDetail extends Activity {
     void afterview() {
 
         listNewData= FileHelper.getAssetsData(NCZ_StatisticsDetail.this, "getDayWeatherAllHour", parkweathertab.class);
-        NCZ_StatisticsDetail.this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        NCZ_StatisticsDetail.this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         tv_title.setText(aa);
+        String x=aa;
+        String y=zhuangtai;
         init();
     }
 
-    String aa;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         aa = getIntent().getStringExtra("statistics");
+        zhuangtai = getIntent().getStringExtra("static");//0
 
     }
     public void init()
     {
 
         ArrayList<ChartItem> list = new ArrayList<ChartItem>();
-        list.add(new LineChartItem(R.layout.list_item_linechart_plant,generateDataLine_plant(1), NCZ_StatisticsDetail.this.getApplicationContext()));
+        if (aa.equals("植株统计")) {
+            list.add(new LineChartItem(R.layout.list_item_linechart_plant, generateDataLine_plant(1), NCZ_StatisticsDetail.this.getApplicationContext()));
+        }else if (aa.equals("事件统计"))
+        {
+            list.add(new BarChartItem(R.layout.list_item_barchart_event,generateDataBar_event(1), NCZ_StatisticsDetail.this.getApplicationContext()));
+        }else{
+            list.add(new PieChartItem(generateDataPie(1), NCZ_StatisticsDetail.this.getApplicationContext()));
+        }
+
         ChartDataAdapter cda = new ChartDataAdapter(NCZ_StatisticsDetail.this.getApplicationContext(), list);
         listView1.setAdapter(cda);
 
+    }
+    private PieData generateDataPie(int cnt)
+    {
+
+        ArrayList<Entry> entries = new ArrayList<Entry>();
+
+        for (int i = 0; i < 4; i++)
+        {
+            entries.add(new Entry(Float.valueOf(listNewData.get(i).gettempM()), i));
+        }
+
+        PieDataSet d = new PieDataSet(entries, "库存");
+
+        // space between slices
+        d.setSliceSpace(2f);
+        d.setColors(ColorTemplate.VORDIPLOM_COLORS);
+
+        PieData cd = new PieData(getQuarters(), d);
+        return cd;
+    }
+    private ArrayList<String> getQuarters()
+    {
+
+        ArrayList<String> q = new ArrayList<String>();
+        q.add("使用出库");
+        q.add("物资采购");
+        q.add("物资转库");
+        q.add("物资报废");
+
+        return q;
     }
     private LineData generateDataLine_plant(int cnt)
     {
@@ -110,6 +159,46 @@ public class NCZ_StatisticsDetail extends Activity {
         sets.add(d2);
 
         LineData cd = new LineData(getMonths(), sets);
+        return cd;
+    }
+
+    private BarData generateDataBar_event(int cnt)
+    {
+
+        ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
+
+        for (int i = 0; i < listNewData.size(); i++)
+        {
+            entries.add(new BarEntry(Float.valueOf(listNewData.get(i).gettempM()), i));
+        }
+
+        BarDataSet d1 = new BarDataSet(entries, "已处理事件 " );
+        d1.setBarSpacePercent(20f);
+        d1.setColor(Color.rgb(255, 0, 255));
+        d1.setHighLightAlpha(255);
+        d1.setStackLabels(new String[1]);
+        d1.setValueTextSize(12);
+
+        BarDataSet d2 = new BarDataSet(entries, "待处理事件" );
+        d2.setBarSpacePercent(20f);
+        d2.setColor(Color.rgb(0, 255, 255));
+        d2.setHighLightAlpha(255);
+        d2.setStackLabels(new String[1]);
+        d2.setValueTextSize(12);
+
+        BarDataSet d3 = new BarDataSet(entries, "处理中事件" );
+        d3.setBarSpacePercent(20f);
+        d3.setColor(Color.rgb(255, 255, 0));
+        d3.setHighLightAlpha(255);
+        d3.setStackLabels(new String[1]);
+        d3.setValueTextSize(12);
+
+
+        ArrayList<BarDataSet> sets = new ArrayList<BarDataSet>();
+        sets.add(d1);
+        sets.add(d2);
+        sets.add(d3);
+        BarData cd = new BarData(getMonths(), sets);
         return cd;
     }
 

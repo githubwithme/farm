@@ -155,6 +155,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
                         SellOrderDetail_New sellorderdetail=new SellOrderDetail_New();
                         sellorderdetail.setYear(utils.getYear());
                         sellorderdetail.setXxzt("0");
+                        sellorderdetail.setuid(contracttab.getuId());
                         sellorderdetail.setactuallat("");
                         sellorderdetail.setactuallatlngsize("");
                         sellorderdetail.setactuallng("");

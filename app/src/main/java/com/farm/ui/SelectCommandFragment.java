@@ -113,6 +113,10 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
             for (int i = 0; i < listItems_selected.size(); i++)
             {
                 jobTabAdd(listItems_selected.get(i));
+                if (listItems_selected.get(i).getcommStatus().equals("0"))
+                {
+                    commandSetStatus(listItems_selected.get(i));
+                }
             }
         } else
         {
@@ -908,7 +912,55 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
             }
         });
     }
+    private void commandSetStatus( commandtab commandtab)
+    {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("userName", commembertab.getrealName());
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "commandSetStatus");
 
+        params.addQueryStringParameter("statusid", commandtab.getStatusid());
+        params.addQueryStringParameter("commStatus", "1");
+        params.addQueryStringParameter("feedbackNote", "");
+        params.addQueryStringParameter("feedbackDate", "");
+        params.addQueryStringParameter("confirmDate", utils.getToday());
+        params.addQueryStringParameter("finishDate", "");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<jobtab> listData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                    if (listData == null)
+                    {
+                        AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    } else
+                    {
+
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String arg1)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
     class TimeThread extends Thread
     {
         private boolean isSleep = true;

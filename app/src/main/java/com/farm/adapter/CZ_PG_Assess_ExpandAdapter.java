@@ -125,6 +125,9 @@ public class CZ_PG_Assess_ExpandAdapter extends BaseExpandableListAdapter
             listItemView.tv_tip.setText(info);
             listItemView.tv.setText("请选择" + info);
 //            listItemView.tv.setText(thirdData.get(0));
+//            Bundle bundle =new Bundle();
+//            listItemView.tv.setTag(bundle);
+//            list_view.add(listItemView.tv);
             listItemView.tv.setTag(R.id.tag_fi, firstItemName.get(groupPosition));
             listItemView.tv.setTag(R.id.tag_fn, key);
             listItemView.tv.setTag(R.id.tag_si, secondItemName.get(groupPosition).get(childPosition));
