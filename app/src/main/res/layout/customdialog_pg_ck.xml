@@ -83,46 +83,54 @@
             <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"
-                android:layout_height="0px"
+                android:layout_height="10px"
                 android:layout_centerInParent="true"/>
 
 
-            <EditText
-                android:id="@+id/et_flsl"
-                android:layout_width="130dip"
-                android:layout_height="@dimen/size_40"
-                android:layout_above="@id/line"
-                android:layout_marginLeft="100dip"
-                android:layout_marginBottom="15dip"
-                android:background="@drawable/background_view_rounded_single"
+            <LinearLayout
                 android:gravity="center"
-                android:hint="请输入肥料数量"
-                android:inputType="numberDecimal"
-                android:textColorHint="@color/gray"
-                android:textSize="@dimen/size_sp_16"/>
+                android:layout_above="@id/line"
+                android:id="@+id/ll_bottem"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="40dip">
+                <EditText
+                    android:layout_centerInParent="true"
+                    android:id="@+id/et_flsl"
+                    android:layout_width="130dip"
+                    android:layout_height="@dimen/size_40"
+
+                    android:background="@drawable/background_view_rounded_single"
+                    android:gravity="center"
+                    android:hint="请输入肥料数量"
+                    android:inputType="numberDecimal"
+                    android:textColorHint="@color/bg_text"
+                    android:textSize="@dimen/size_sp_16"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/tv_dw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dip"
+                    android:layout_above="@id/line"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dip"
+                    android:layout_toRightOf="@id/et_flsl"
+                    android:text="/株"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_sp_16"/>
+            </LinearLayout>
 
             <TextView
-                android:gravity="center"
-                android:layout_marginBottom="15dip"
-                android:id="@+id/tv_dw"
-                android:layout_width="wrap_content"
-                android:layout_height="40dip"
-                android:layout_above="@id/line"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dip"
-                android:layout_toRightOf="@id/et_flsl"
-                android:text="/株"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/size_sp_16"/>
-            <TextView
+                android:layout_centerInParent="true"
                 android:id="@+id/storehouse"
                 android:textSize="15dip"
                 android:layout_marginLeft="150dip"
                 android:gravity="center"
-                android:layout_above="@+id/et_flsl"
+                android:layout_above="@+id/ll_bottem"
                 android:text="选择批次"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="40dip" />
 
             <Button
                 android:id="@+id/btn_sure"

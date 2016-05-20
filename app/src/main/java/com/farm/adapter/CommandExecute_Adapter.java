@@ -78,7 +78,8 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
         {
             return null;
         }
-        return listData.get(groupPosition).getJobList().get(childPosition);
+//        return listData.get(groupPosition).getJobList().get(childPosition);
+        return listData.get(groupPosition).getJobList();
     }
 
     //得到子item的ID
@@ -151,7 +152,8 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
 
     //设置子item的组件
     @Override
-    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+//    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+    public View getChildView( int groupPosition,  int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
         List<jobtab> childData = listData.get(groupPosition).getJobList();

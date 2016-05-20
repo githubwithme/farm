@@ -420,21 +420,24 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3) {
-                id = listpeople.get(postion).getStorehouseId();
-                name = listpeople.get(postion).getStorehouseName();
-                currentgoods.setgoodsNote(listpeople.get(postion).getStorehouseId());
+                id = listpeople.get(postion).getBatchNumber();
+                name = listpeople.get(postion).getBatchName();
+                currentgoods.setgoodsNote(listpeople.get(postion).getBatchNumber());
+                storehouse.setText(listpeople.get(postion).getBatchName()+"-"+listpeople.get(postion).getQuantity());
                 pw_tab.dismiss();
-                storehouse.setText(listpeople.get(postion).getStorehouseName());
+
 
             }
         });
     }
-
+//
     private void getlistdata() {
         commembertab commembertab = AppContext.getUserInfo(context);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getGoodsByUid");
+        params.addQueryStringParameter("goodsId",goodslisttab.getId());
+        params.addQueryStringParameter("storehouseId",id);
+        params.addQueryStringParameter("action", "getPCSLByWzIdCKId");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override

@@ -28,6 +28,7 @@ import com.farm.R;
 import com.farm.adapter.AddStd_cmd_StepTwo_self_Adapter;
 import com.farm.adapter.PG_CKAdapter;
 import com.farm.adapter.PG_CKlistAdapter;
+import com.farm.adapter.PG_CKofListAdapter;
 import com.farm.adapter.PeopleAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
@@ -71,7 +72,8 @@ public class PG_CK extends Activity {
     View pv_tab;
     @ViewById
     View line;
-    PG_CKlistAdapter pg_cKlistAdapter;
+//    PG_CKlistAdapter pg_cKlistAdapter;
+    PG_CKofListAdapter pg_cKlistAdapter;
     List<Wz_Storehouse> listpeople = new ArrayList<Wz_Storehouse>();
     //    AddStd_cmd_StepTwo_self_Adapter addStd_cmd_stepTwo_self_adapter;
     PG_CKAdapter pg_ckAdapter;
@@ -279,7 +281,7 @@ public class PG_CK extends Activity {
 
 
         ListView listview = (ListView) pv_tab.findViewById(R.id.lv_yq);
-        pg_cKlistAdapter = new PG_CKlistAdapter(PG_CK.this, listpeople);
+        pg_cKlistAdapter = new PG_CKofListAdapter(PG_CK.this, listpeople);
         listview.setAdapter(pg_cKlistAdapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

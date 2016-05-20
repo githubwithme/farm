@@ -8,18 +8,15 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.PeopelList;
 import com.farm.bean.Wz_Storehouse;
 
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by user on 2016/5/18.
+ * Created by user on 2016/5/20.
  */
-public class PG_CKlistAdapter extends BaseAdapter
-{
-
+public class PG_CKofListAdapter extends BaseAdapter {
     private Context context;
     private List<Wz_Storehouse> listItems;
     private LayoutInflater listContainer;
@@ -30,7 +27,7 @@ public class PG_CKlistAdapter extends BaseAdapter
         public TextView tv_yq;
     }
 
-    public PG_CKlistAdapter(Context context, List<Wz_Storehouse> data)
+    public PG_CKofListAdapter(Context context, List<Wz_Storehouse> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context);
@@ -55,7 +52,7 @@ public class PG_CKlistAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
-        listItemView.tv_yq.setText(wz_storehouse.getBatchName()+"-"+wz_storehouse.getQuantity());
+        listItemView.tv_yq.setText(wz_storehouse.getStorehouseName());
         return convertView;
     }
 
