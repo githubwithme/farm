@@ -299,7 +299,6 @@ public class NCZ_CreateOrder extends Activity
         {
             public TextView tv_area;
             public Button btn_plannumber;
-
             public TextView tv_yq;
             public TextView tv_pq;
         }

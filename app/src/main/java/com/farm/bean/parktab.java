@@ -64,12 +64,53 @@ public class parktab implements Parcelable
 	public String AreacommandCount;
 	public String commandVideoCount;
 	public String AreacommandVideoCount;
-	public String numberofsaleout;
-	public String numberofselein;
-	public String numberofsalefor;
-	public String numberofnewsale;
+	public String allsaleout;
+	public String allsalein;
+	public String allsalefor;
+	public String allnewsale;
 	public List<areatab> areatabList;
 	public List<BatchTime> batchTimeList;
+
+
+	public void setAllsaleout(String allsaleout)
+	{
+		this.allsaleout = allsaleout;
+	}
+
+	public String getAllsaleout()
+	{
+		return allsaleout;
+	}
+
+	public void setAllsalein(String allsalein)
+	{
+		this.allsalein = allsalein;
+	}
+
+	public String getAllsalein()
+	{
+		return allsalein;
+	}
+
+	public void setAllsalefor(String allsalefor)
+	{
+		this.allsalefor = allsalefor;
+	}
+
+	public String getAllsalefor()
+	{
+		return allsalefor;
+	}
+
+	public void setAllnewsale(String allnewsale)
+	{
+		this.allnewsale = allnewsale;
+	}
+
+	public String getAllnewsale()
+	{
+		return allnewsale;
+	}
 
 
 	public void setBatchTimeList(List<BatchTime> batchTimeList)
@@ -82,45 +123,7 @@ public class parktab implements Parcelable
 		return batchTimeList;
 	}
 
-	public void setNumberofnewsale(String numberofnewsale)
-	{
-		this.numberofnewsale = numberofnewsale;
-	}
 
-	public String getNumberofnewsale()
-	{
-		return numberofnewsale;
-	}
-
-	public void setNumberofsalefor(String numberofsalefor)
-	{
-		this.numberofsalefor = numberofsalefor;
-	}
-
-	public String getNumberofsalefor()
-	{
-		return numberofsalefor;
-	}
-
-	public void setNumberofselein(String numberofselein)
-	{
-		this.numberofselein = numberofselein;
-	}
-
-	public String getNumberofselein()
-	{
-		return numberofselein;
-	}
-
-	public void setNumberofsaleout(String numberofsaleout)
-	{
-		this.numberofsaleout = numberofsaleout;
-	}
-
-	public String getNumberofsaleout()
-	{
-		return numberofsaleout;
-	}
 	public void setPlantnumber(String plantnumber)
 	{
 		this.plantnumber = plantnumber;
@@ -595,10 +598,10 @@ public class parktab implements Parcelable
 			p.setAreacommandCount(source.readString());
 			p.setCommandVideoCount(source.readString());
 			p.setAreacommandVideoCount(source.readString());
-			p.setNumberofsaleout(source.readString());
-			p.setNumberofselein(source.readString());
-			p.setNumberofsalefor(source.readString());
-			p.setNumberofnewsale(source.readString());
+			p.setAllsaleout(source.readString());
+			p.setAllsalein(source.readString());
+			p.setAllsalefor(source.readString());
+			p.setAllnewsale(source.readString());
 			p.areatabList = source.readArrayList(areatab.class.getClassLoader());
 			p.batchTimeList = source.readArrayList(areatab.class.getClassLoader());
 			return p;
@@ -651,10 +654,10 @@ public class parktab implements Parcelable
 		p.writeString(AreacommandCount);
 		p.writeString(commandVideoCount);
 		p.writeString(AreacommandVideoCount);
-		p.writeString(numberofsaleout);
-		p.writeString(numberofselein);
-		p.writeString(numberofsalefor);
-		p.writeString(numberofnewsale);
+		p.writeString(allsaleout);
+		p.writeString(allsalein);
+		p.writeString(allsalefor);
+		p.writeString(allnewsale);
 		p.writeList(areatabList);
 		p.writeList(batchTimeList);
 	}

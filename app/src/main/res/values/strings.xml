@@ -68,6 +68,8 @@
     <item name="tag_bean" type="id"></item>
     <item name="tag_postion" type="id"></item>
     <item name="tag_view" type="id"></item>
+    <item name="tag_tv_number" type="id"></item>
+    <item name="tag_tv_weight" type="id"></item>
     <item name="tag_contract" type="id"></item>
     <item name="tag_text" type="id"></item>
     <item name="tag_upload" type="id"></item>

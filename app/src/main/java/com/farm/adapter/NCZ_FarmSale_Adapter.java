@@ -107,14 +107,16 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
             View view = (View) convertView.findViewById(R.id.view);
             listItemView.ll_batchtime = (RelativeLayout) convertView.findViewById(R.id.ll_batchtime);
-            listItemView.ll_batchtime.setTag(listItemView);
+            listItemView.ll_batchtime.setTag(batchTime);
             listItemView.ll_batchtime.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
+                    BatchTime batchTime = (BatchTime) v.getTag();
                     Intent intent = new Intent(context, NCZ_FarmSale_BatchDetail_.class);
-                    intent.putExtra("bean", batchTime);
+                    intent.putExtra("parkid", batchTime.getParkId());
+                    intent.putExtra("batchTime", batchTime.getBatchTime());
                     context.startActivity(intent);
                 }
             });
@@ -142,11 +144,21 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
             {
                 map = new HashMap<>();
             }
-            listItemView.pb.setProgress(70);
-            listItemView.tv_pb.setText("65%");
-            listItemView.tv_number.setText("待售" + batchTime.getNumberofsalefor());
+            int percent = 0;
+            int allnumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein() + Integer.valueOf(batchTime.getAllnewsale()) + Integer.valueOf(batchTime.getAllsalefor()));
+            if (allnumber != 0)
+            {
+                percent =( Integer.valueOf(batchTime.getAllsalefor()) / allnumber)*100;
+            }
+            listItemView.pb.setProgress(percent);
+            listItemView.tv_pb.setText("待售" + percent + "%");
+
+
+            listItemView.tv_number.setText("待售" + batchTime.getAllsalefor());
             listItemView.tv_batchtime.setText(batchTime.getBatchTime());
-            listItemView.tv_saleinfo.setText("已售" + batchTime.getNumberofsaleout() + "    售中" + batchTime.getNumberofselein() + "    拟售" + batchTime.getNumberofnewsale());
+            listItemView.tv_saleinfo.setText("已售" + batchTime.getAllsaleout() + "    售中" + batchTime.getAllsalein() + "    拟售" + batchTime.getAllnewsale());
+
+
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -210,6 +222,7 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.ncz_batchtime_parent, null);
         }
         TextView tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
+        TextView tv_number = (TextView) convertView.findViewById(R.id.tv_number);
         LinearLayout ll_saleinfo = (LinearLayout) convertView.findViewById(R.id.ll_saleinfo);
         TextView tv_saleinfo = (TextView) convertView.findViewById(R.id.tv_saleinfo);
         TextView tv_pb = (TextView) convertView.findViewById(R.id.tv_pb);
@@ -230,14 +243,21 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
                 {
                     ll_saleinfo.setVisibility(View.VISIBLE);
                 }
-
             }
         });
-        pb.setProgress(70);
-        tv_pb.setText("70%");
+        int percent = 0;
         parktab parktab = listData.get(groupPosition);
+        int allnumber = (Integer.valueOf(parktab.getAllsaleout()) + Integer.valueOf(parktab.getAllsalein()) + Integer.valueOf(parktab.getAllnewsale()) + Integer.valueOf(parktab.getAllsalefor()));
+        if (allnumber != 0)
+        {
+            percent = (Integer.valueOf(parktab.getAllsalefor()) / allnumber)*100;
+        }
+        pb.setProgress(percent);
+        tv_pb.setText("待售" + percent + "%");
+
         tv_parkname.setText(parktab.getparkName());
-        tv_saleinfo.setText("已售" + parktab.getNumberofsaleout() + "    售中" + parktab.getNumberofselein() + "    拟售" + parktab.getNumberofnewsale());
+        tv_number.setText("待售" + parktab.getAllsalefor());
+        tv_saleinfo.setText("已售" + parktab.getAllsaleout() + "    售中" + parktab.getAllsalein() + "    拟售" + parktab.getAllnewsale());
         return convertView;
     }
 

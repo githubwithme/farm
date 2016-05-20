@@ -1,7 +1,6 @@
 package com.farm.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,15 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farm.R;
-import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.areatab;
 import com.farm.bean.contractTab;
 import com.farm.common.utils;
-import com.farm.ui.NCZ_FarmSale_BatchDetail_;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_ListView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,11 +56,11 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        if (listData.get(groupPosition).getSellOrderDetail_NewList() == null)
+        if (listData.get(groupPosition).getContractTabList() == null)
         {
             return null;
         }
-        return listData.get(groupPosition).getSellOrderDetail_NewList().get(childPosition);
+        return listData.get(groupPosition).getContractTabList().get(childPosition);
     }
 
     static class ListItemView
@@ -90,8 +86,8 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<SellOrderDetail_New> childData = listData.get(groupPosition).getSellOrderDetail_NewList();
-        final SellOrderDetail_New sellOrderDetail_new = childData.get(childPosition);
+        List<contractTab> childData = listData.get(groupPosition).getContractTabList();
+        final contractTab contractTab = childData.get(childPosition);
 
         View v = null;
         if (lmap.get(groupPosition) != null)
@@ -107,17 +103,17 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
 
             // 获取控件对象
             listItemView.gv = (GridView) convertView.findViewById(R.id.gv);
-            convertView.setTag(listItemView);
-            convertView.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent intent = new Intent(context, NCZ_FarmSale_BatchDetail_.class);
-                    intent.putExtra("bean", sellOrderDetail_new);
-                    context.startActivity(intent);
-                }
-            });
+//            convertView.setTag(listItemView);
+//            convertView.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    Intent intent = new Intent(context, NCZ_FarmSale_BatchDetail_.class);
+//                    intent.putExtra("bean", contractTab);
+//                    context.startActivity(intent);
+//                }
+//            });
             map.put(childPosition, convertView);
             lmap.put(groupPosition, map);
             if (isLastChild)
@@ -156,7 +152,7 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getSellOrderDetail_NewList() == null)
+        if (listData.get(groupPosition).getContractTabList() == null)
         {
             return 0;
         }
@@ -198,33 +194,18 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
         ProgressBar pb = (ProgressBar) convertView.findViewById(R.id.pb);
         TextView tv_pb = (TextView) convertView.findViewById(R.id.tv_pb);
 
-        int numberofsaleout = 0;
-        int numberofselein = 0;
-        int numberofsalefor = 0;
-        int numberofnewsale = 0;
-        List<SellOrderDetail_New> list = listData.get(groupPosition).getSellOrderDetail_NewList();
-        for (int i = 0; i < list.size(); i++)
-        {
-            if (list.get(i).getType().equals("saleout"))
-            {
-                numberofsaleout = numberofsaleout + Integer.valueOf(list.get(i).getplannumber());
-            } else if (list.get(i).getType().equals("salein"))
-            {
-                numberofselein = numberofselein + Integer.valueOf(list.get(i).getplannumber());
-            } else if (list.get(i).getType().equals("salefor"))
-            {
-                numberofsalefor = numberofsalefor + Integer.valueOf(list.get(i).getplannumber());
-            } else if (list.get(i).getType().equals("newsale"))
-            {
-                numberofnewsale = numberofnewsale + Integer.valueOf(list.get(i).getplannumber());
-            }
-        }
-        String number = "" + "已售:" + numberofsaleout + "售中:" + numberofselein + "拟售:" + numberofnewsale + "待售:" + numberofsalefor;
+        areatab areatab = listData.get(groupPosition);
         tv_areaname.setText(listData.get(groupPosition).getareaName());
-//        tv_number.setText(number);
-        tv_number.setText("共剩" + numberofsalefor + "株");
-        pb.setProgress(70);
-        tv_pb.setText("65%");
+        tv_number.setText("共剩" + areatab.getAllsalefor() + "株");
+        tv_saleinfo.setText("已售:" + areatab.getAllsaleout() + "    售中:" + areatab.getAllsalein() + "    拟售:" + areatab.getAllnewsale() + "    待售:" + areatab.getAllsalefor());
+        int percent = 0;
+        int allnumber = Integer.valueOf(areatab.getAllsaleout()) + Integer.valueOf(areatab.getAllsalein()) + Integer.valueOf(areatab.getAllnewsale()) + Integer.valueOf(areatab.getAllsalefor());
+        if (allnumber != 0)
+        {
+            percent = (Integer.valueOf(areatab.getAllsalefor()) / allnumber)*100;
+        }
+        pb.setProgress(percent);
+        tv_pb.setText("待售" + percent + "%");
         return convertView;
     }
 
@@ -243,17 +224,13 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
 
     public class GridViewAdapter_SellOrDetail_NCZ extends BaseAdapter
     {
-        List<SellOrderDetail_New> list;
-        List<String> list_uuid_update = new ArrayList<>();
-        List<SellOrderDetail_New> list_newsale = new ArrayList<>();
-        List<String> list_uuid_delete = new ArrayList<>();
+        List<contractTab> list;
         EditText et_number;
         CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
-        private contractTab contracttab;
         private Context context;
         Holder view;
 
-        public GridViewAdapter_SellOrDetail_NCZ(Context context, List<SellOrderDetail_New> list)
+        public GridViewAdapter_SellOrDetail_NCZ(Context context, List<contractTab> list)
         {
             this.list = list;
             this.context = context;
@@ -285,12 +262,19 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
             {
                 convertView = View.inflate(context, R.layout.gridview_sellorderdetail_ncz, null);
                 view = new Holder(convertView);
-                view.pb.setProgress(70);
-                view.tv_pb.setText("65%");
+                contractTab contractTab = list.get(position);
+                int percent = 0;
+                int allnumber = Integer.valueOf(contractTab.getAllsaleout()) + Integer.valueOf(contractTab.getAllsalein()) + Integer.valueOf(contractTab.getAllnewsale()) + Integer.valueOf(contractTab.getAllsalefor());
+                if (allnumber != 0)
+                {
+                    percent = (Integer.valueOf(contractTab.getAllsalefor()) / allnumber)*100;
+                }
+                view.pb.setProgress(percent);
+                view.tv_pb.setText("待售" + percent + "%");
                 view.cb_selectall.setTag(R.id.tag_postion, position);
-                view.tv_areaname.setText(list.get(position).getcontractname());
-                view.btn_number.setText(list.get(position).getplannumber());
-                view.tv_number.setText("剩" + list.get(position).getplannumber() + "株");
+                view.tv_areaname.setText(list.get(position).getContractNum());
+                view.btn_number.setText(list.get(position).getAllsalefor());
+                view.tv_number.setText("剩" + list.get(position).getAllsalefor() + "株");
                 view.btn_number.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
@@ -349,12 +333,12 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
             }
         }
 
-        public void showDialog_editBreakoffinfo(final SellOrderDetail_New sellorderdetail, final Button button)
+        public void showDialog_editBreakoffinfo(final contractTab contractTab, final Button button)
         {
             final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editcontractsale, null);
             customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
             et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
-            et_number.setText(sellorderdetail.getplannumber());
+            et_number.setText(contractTab.getAllsalefor());
             Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
             Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
             btn_sure.setOnClickListener(new View.OnClickListener()
@@ -362,7 +346,7 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    int leftnumber = Integer.valueOf(sellorderdetail.getplannumber()) - Integer.valueOf(et_number.getText().toString());
+                    int leftnumber = Integer.valueOf(contractTab.getAllsalefor()) - Integer.valueOf(et_number.getText().toString());
                     if (leftnumber < 0)
                     {
                         Toast.makeText(context, "剩余量不足", Toast.LENGTH_SHORT).show();

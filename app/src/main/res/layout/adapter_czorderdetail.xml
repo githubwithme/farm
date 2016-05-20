@@ -51,44 +51,35 @@
 
 
             <TextView
+                android:id="@+id/tv_plannumber"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingLeft="10dip"
-                android:text="实售株数"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/size_sp_14"/>
-
-            <EditText
-                android:id="@+id/et_actualnumber"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:paddingLeft="10dip"
-                android:text="500"
+                android:text="拟售50000"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_sp_14"/>
 
             <TextView
+                android:id="@+id/tv_actualnumber"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingLeft="10dip"
-                android:text="实重/斤"
+                android:text="实售500株"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_sp_14"/>
 
-            <EditText
-                android:id="@+id/et_actualweight"
+            <TextView
+                android:id="@+id/tv_actualweight"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingLeft="10dip"
-                android:text="500"
+                android:text="实重500株"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_sp_14"/>
 
@@ -102,5 +93,6 @@
 
         </LinearLayout>
     </LinearLayout>
+
 
 </LinearLayout>

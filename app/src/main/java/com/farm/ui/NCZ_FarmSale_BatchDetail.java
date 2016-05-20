@@ -21,6 +21,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
+import com.farm.bean.contractTab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomGridview;
@@ -70,7 +71,7 @@ public class NCZ_FarmSale_BatchDetail extends Activity
         Bundle bundle = new Bundle();
         ArrayList arrayList = new ArrayList();
         arrayList.add(uuids);
-        String aa=JSON.toJSONString(uuids);
+        String aa = JSON.toJSONString(uuids);
         bundle.putParcelableArrayList("list_uuid", arrayList);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -81,21 +82,20 @@ public class NCZ_FarmSale_BatchDetail extends Activity
     {
         pb_upload.setVisibility(View.VISIBLE);
         setData();
-//        StringBuilder builder = new StringBuilder();
-//        builder.append("{\"SellOrderDetailList\": ");
-//        builder.append(JSON.toJSONString(list_sell));
-//        builder.append(", \"uuids\": ");
-//        builder.append(JSON.toJSONString(uuids));
-//        builder.append("} ");
-//        addNewSale(builder.toString());
-
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"SellOrderDetailList\": ");
+        builder.append(JSON.toJSONString(list_sell));
+        builder.append(", \"uuids\": ");
+        builder.append(JSON.toJSONString(uuids));
+        builder.append("} ");
+        addNewSale(builder.toString());
     }
 
     @AfterViews
     void afterOncreate()
     {
-        getBatchTimeByUid_test();
-//        getSaleDataOfArea();
+//        getBatchTimeByUid_test();
+        getSaleDataOfArea();
     }
 
     @Override
@@ -128,18 +128,20 @@ public class NCZ_FarmSale_BatchDetail extends Activity
                     if (cb_selectall.isChecked())
                     {
                         Bundle bundle = (Bundle) cb_selectall.getTag(R.id.tag_view);
-                        SellOrderDetail_New sellorderdetail = bundle.getParcelable("bean");
-                        String number_sale = btn_number.getText().toString();
-                        String number_left = sellorderdetail.getplannumber();
-                        String number_difference = String.valueOf(Integer.valueOf(number_left) - Integer.valueOf(number_sale));
+                        contractTab contractTab = bundle.getParcelable("bean");
+                        String number_newsale = btn_number.getText().toString();
+                        String number_salefor = contractTab.getAllsalefor();
+                        String number_left = String.valueOf(Integer.valueOf(number_salefor) - Integer.valueOf(number_newsale));
                         HashMap hashMap = new HashMap();
-                        hashMap.put("uuid", sellorderdetail.getUuid());
-                        hashMap.put("number_difference", number_difference);
+                        hashMap.put("contractid", contractTab.getid());
+                        hashMap.put("year", utils.getYear());
+                        hashMap.put("batchTime", batchTime);
+                        hashMap.put("number_left", number_left);
                         uuids.add(hashMap);
 
                         String uuid = java.util.UUID.randomUUID().toString();
                         SellOrderDetail_New sellorderdetail_newsale = new SellOrderDetail_New();
-                        sellorderdetail_newsale.setuid(sellorderdetail.getuid());
+                        sellorderdetail_newsale.setuid(contractTab.getuId());
                         sellorderdetail_newsale.setUuid(uuid);
                         sellorderdetail_newsale.setactuallat("");
                         sellorderdetail_newsale.setactuallatlngsize("");
@@ -148,19 +150,19 @@ public class NCZ_FarmSale_BatchDetail extends Activity
                         sellorderdetail_newsale.setactualnumber("");
                         sellorderdetail_newsale.setactualprice("");
                         sellorderdetail_newsale.setactualweight("");
-                        sellorderdetail_newsale.setareaid(sellorderdetail.getareaid());
-                        sellorderdetail_newsale.setareaname(sellorderdetail.getareaname());
-                        sellorderdetail_newsale.setBatchTime(sellorderdetail.getBatchTime());
-                        sellorderdetail_newsale.setcontractid(sellorderdetail.getcontractid());
-                        sellorderdetail_newsale.setcontractname(sellorderdetail.getcontractname());
+                        sellorderdetail_newsale.setareaid(contractTab.getAreaId());
+                        sellorderdetail_newsale.setareaname(contractTab.getareaName());
+                        sellorderdetail_newsale.setBatchTime(batchTime);
+                        sellorderdetail_newsale.setcontractid(contractTab.getid());
+                        sellorderdetail_newsale.setcontractname(contractTab.getContractNum());
                         sellorderdetail_newsale.setisSoldOut("0");
-                        sellorderdetail_newsale.setparkid(sellorderdetail.getparkid());
-                        sellorderdetail_newsale.setparkname(sellorderdetail.getparkname());
+                        sellorderdetail_newsale.setparkid(contractTab.getparkId());
+                        sellorderdetail_newsale.setparkname(contractTab.getparkName());
                         sellorderdetail_newsale.setPlanlat("");
                         sellorderdetail_newsale.setplanlng("");
                         sellorderdetail_newsale.setplanlatlngsize("");
                         sellorderdetail_newsale.setplannote("");
-                        sellorderdetail_newsale.setplannumber(number_sale);
+                        sellorderdetail_newsale.setplannumber(number_newsale);
                         sellorderdetail_newsale.setplanprice("");
                         sellorderdetail_newsale.setplanweight("");
                         sellorderdetail_newsale.setreg(utils.getTime());
@@ -169,44 +171,7 @@ public class NCZ_FarmSale_BatchDetail extends Activity
                         sellorderdetail_newsale.setsaleid("");
                         sellorderdetail_newsale.setXxzt("0");
                         sellorderdetail_newsale.setYear(utils.getYear());
-                        list_sell.add(sellorderdetail);
-
-                        if (!number_left.equals(number_sale))
-                        {
-                            String uuid_left = java.util.UUID.randomUUID().toString();
-                            SellOrderDetail_New sellorderdetail_left = new SellOrderDetail_New();
-                            sellorderdetail_left.setuid(sellorderdetail.getuid());
-                            sellorderdetail_left.setUuid(uuid_left);
-                            sellorderdetail_left.setactuallat("");
-                            sellorderdetail_left.setactuallatlngsize("");
-                            sellorderdetail_left.setactuallng("");
-                            sellorderdetail_left.setactualnote("");
-                            sellorderdetail_left.setactualnumber("");
-                            sellorderdetail_left.setactualprice("");
-                            sellorderdetail_left.setactualweight("");
-                            sellorderdetail_left.setareaid(sellorderdetail.getareaid());
-                            sellorderdetail_left.setareaname(sellorderdetail.getareaname());
-                            sellorderdetail_left.setBatchTime(sellorderdetail.getBatchTime());
-                            sellorderdetail_left.setcontractid(sellorderdetail.getcontractid());
-                            sellorderdetail_left.setcontractname(sellorderdetail.getcontractname());
-                            sellorderdetail_left.setisSoldOut("0");
-                            sellorderdetail_left.setparkid(sellorderdetail.getparkid());
-                            sellorderdetail_left.setparkname(sellorderdetail.getparkname());
-                            sellorderdetail_left.setPlanlat("");
-                            sellorderdetail_left.setplanlng("");
-                            sellorderdetail_left.setplanlatlngsize("");
-                            sellorderdetail_left.setplannote("");
-                            sellorderdetail_left.setplannumber(number_difference);
-                            sellorderdetail_left.setplanprice("");
-                            sellorderdetail_left.setplanweight("");
-                            sellorderdetail_left.setreg(utils.getTime());
-                            sellorderdetail_left.setstatus("0");
-                            sellorderdetail_left.setType("salefor");
-                            sellorderdetail_left.setsaleid("");
-                            sellorderdetail_left.setXxzt("0");
-                            sellorderdetail_left.setYear(utils.getYear());
-                            list_sell.add(sellorderdetail_left);
-                        }
+                        list_sell.add(sellorderdetail_newsale);
                     }
                 }
             }
@@ -291,7 +256,6 @@ public class NCZ_FarmSale_BatchDetail extends Activity
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
-
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
@@ -305,7 +269,6 @@ public class NCZ_FarmSale_BatchDetail extends Activity
                         Toast.makeText(NCZ_FarmSale_BatchDetail.this, "保存成功", Toast.LENGTH_SHORT).show();
                         finish();
                     }
-
                 } else
                 {
                     pb_upload.setVisibility(View.GONE);
@@ -348,10 +311,10 @@ public class NCZ_FarmSale_BatchDetail extends Activity
                         ncz_batchDetail_adapter = new NCZ_BatchDetail_Adapter(NCZ_FarmSale_BatchDetail.this, listNewData, expandableListView);
                         expandableListView.setAdapter(ncz_batchDetail_adapter);
                         utils.setListViewHeight(expandableListView);
-//        for (int i = 0; i < listNewData.size(); i++)
-//        {
-//            expandableListView.expandGroup(i);//展开
-//        }
+//                        for (int i = 0; i < listNewData.size(); i++)
+//                        {
+//                            expandableListView.expandGroup(i);//展开
+//                        }
 
                     } else
                     {
@@ -370,7 +333,6 @@ public class NCZ_FarmSale_BatchDetail extends Activity
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(NCZ_FarmSale_BatchDetail.this, "error_connectServer");
-
             }
         });
     }
