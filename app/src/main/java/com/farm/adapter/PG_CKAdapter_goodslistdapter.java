@@ -249,6 +249,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
 //        params.addQueryStringParameter("parkId", commembertab.getparkId());
         params.addQueryStringParameter("parkId", commembertab.getparkId());
         params.addQueryStringParameter("areaId", commembertab.getareaId());
+        params.addQueryStringParameter("storehouseId", id);
 //        params.addQueryStringParameter("action", "getGoodsSum");
         params.addQueryStringParameter("action", "getGoodsSumAndPlants");
         HttpUtils http = new HttpUtils();
@@ -322,7 +323,6 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         }else {
             tv_spec.setText( list.get(currentpos).getFirs() + list.get(currentpos).getgoodsunit());
         }
-
 
 
         //原来的

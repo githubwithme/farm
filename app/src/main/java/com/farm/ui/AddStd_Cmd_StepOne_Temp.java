@@ -57,6 +57,7 @@ import java.util.List;
 public class AddStd_Cmd_StepOne_Temp extends Fragment {
     String zyid;
     String zyname;
+    static String zynames;
     PopupWindow pw_command;
     View pv_command;
     commembertab commembertab;
@@ -221,6 +222,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment {
             bundle.putString("FI", dictionary_wheel.getFirstItemID()[index]);
             bundle.putStringArray("SI", dictionary_wheel.getSecondItemID().get(dictionary_wheel.getFirstItemID()[index]));
             bundle.putStringArray("SN", dictionary_wheel.getSecondItemName().get(fn[index]));
+            bundle.putString("ZY", zynames);
             fragment.setArguments(bundle);
             list_fragment.add(fragment);
             return fragment;
@@ -288,6 +290,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment {
     }
 
     private void getCommandlist(String zwid,String zwname) {
+        zynames=zwname;
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("productid", zwid);
@@ -425,6 +428,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment {
                         zyname = listNewData.get(0).getProductName();
                         listdata.addAll(listNewData);
                         tv_zw.setText(zyname);
+                        zynames=listNewData.get(0).getProductName();
                         getCommandlist(zyid,zyname);
                     } else {
                         listNewData = new ArrayList<AllType>();

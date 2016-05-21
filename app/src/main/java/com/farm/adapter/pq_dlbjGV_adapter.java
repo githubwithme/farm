@@ -117,6 +117,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
                     List<BreakOff_New> list_BreakOff_New = contracttab.getBreakOffList();
 
                     String number = listItemView1.num.getText().toString();
+                    listItemView1.num.setTextColor(context.getResources().getColor(R.color.bg_yellow));
                     listItemView1.btn_save.setVisibility(View.GONE);
                     listItemView1.pb_upload.setVisibility(View.VISIBLE);
                     bp_upload=listItemView1.pb_upload;//
