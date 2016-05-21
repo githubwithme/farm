@@ -45,6 +45,7 @@ public class AddStd_cmd_steponestemp_GridViewAdapter extends BaseAdapter
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
+
         if (convertView == null)
         {
             convertView = View.inflate(context, R.layout.addstd_cmd_steponestemp_item, null);

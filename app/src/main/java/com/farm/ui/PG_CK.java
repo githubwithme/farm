@@ -34,6 +34,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
+import com.farm.bean.PG_CKBean;
 import com.farm.bean.Result;
 import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
@@ -55,7 +56,9 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.apache.http.entity.StringEntity;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,8 +110,9 @@ public class PG_CK extends Activity {
     ImageView iv_dowm_tab;
     String aa = "";
     List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
+    List<PG_CKBean> list_PG_CKBeanlist = new ArrayList<PG_CKBean>();
     CustomDialog_ListView customDialog_listView;
-
+    PG_CKBean pg_ckBean;
 
     @Override
     protected void onResume() {
@@ -152,7 +156,30 @@ public class PG_CK extends Activity {
     }
     @Click
     void btn_next() {
-        SqliteDb.deleteAllSelectCmdArea(PG_CK.this, goodslisttab.class);//删除
+        list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
+
+         List<PG_CKBean> data=new ArrayList<PG_CKBean>();
+         for (int i=0;i<list_goodslisttab.size();i++)
+         {
+             pg_ckBean.setId(list_goodslisttab.get(i).getId());
+             pg_ckBean.setWzFirst(list_goodslisttab.get(i).getGX());
+             pg_ckBean.setWzSecond(list_goodslisttab.get(i).getZS());
+             pg_ckBean.setGoodsId(list_goodslisttab.get(i).getId());
+             pg_ckBean.setStorehouseId(id);
+             pg_ckBean.setBatchNumber(list_goodslisttab.get(i).getgoodsNote());
+             pg_ckBean.setGoodsSum(list_goodslisttab.get(i).getYL());
+             pg_ckBean.setGoodsDw(list_goodslisttab.get(i).getDW());
+
+             data.add(pg_ckBean);
+         }
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"breakoff\": [");
+        builder.append(JSON.toJSONString(data));
+        builder.append("]");
+        builder.append("} ");
+
+          saveData(builder.toString());
+//        SqliteDb.deleteAllSelectCmdArea(PG_CK.this, goodslisttab.class);//删除
     }
 
     @Click
@@ -164,7 +191,7 @@ public class PG_CK extends Activity {
 //        iv_dowm_tab.setBackground(getResources().getDrawable(R.drawable.ic_up));
         // iv_dowm_tab.setBackground(getResources().getDrawable(R.drawable.ic_down));
 //        iv_dowm_tab.setImageResource(R.drawable.ic_down);
-        iv_dowm_tab.setImageResource(R.drawable.ic_up);
+//        iv_dowm_tab.setImageResource(R.drawable.ic_up);
         showPop_title();
     }
 
@@ -172,7 +199,7 @@ public class PG_CK extends Activity {
     void afssss() {
         SqliteDb.deleteAllSelectCmdArea(PG_CK.this, goodslisttab.class);//删除
         getlistdata();
-        getCommandlist();
+
 
     }
 
@@ -191,15 +218,15 @@ public class PG_CK extends Activity {
         public void onReceive(Context context, Intent intent)
         {
             list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
-      /*      if (list_goodslisttab.size()>0)
+            if (list_goodslisttab.size()>0)
             {
                 for (int i=0;i<list_goodslisttab.size();i++)
                 {
                     aa+=list_goodslisttab.get(i).getGX()+"-"+list_goodslisttab.get(i).getZS()+"-"+list_goodslisttab.get(i).getId()+list_goodslisttab.get(i).getgoodsName()+
                             "-"+list_goodslisttab.get(i).getYL()+list_goodslisttab.get(i).getDW()+"-"+list_goodslisttab.get(i).getgoodsNote()+"\n";
                 }
-            }*/
-
+            }
+//            tv_shuju.setText("a");
             tv_shuju.setText("已经选择了"+list_goodslisttab.size()+"种物资");
         }
     };
@@ -259,7 +286,7 @@ public class PG_CK extends Activity {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing())) {
                     pw_tab.dismiss();
-                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
+//                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
                     return true;
                 }
                 return false;
@@ -270,7 +297,7 @@ public class PG_CK extends Activity {
             public boolean onTouch(View v, MotionEvent event) {
                 if (pw_tab.isShowing()) {
                     pw_tab.dismiss();
-                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
+//                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
                 }
                 return false;
             }
@@ -286,11 +313,11 @@ public class PG_CK extends Activity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3) {
-                id = listpeople.get(postion).getStorehouseId();
-                name = listpeople.get(postion).getStorehouseName();
+                id = listpeople.get(postion).getId();
+                name = listpeople.get(postion).getStoreName();
                 pw_tab.dismiss();
-                iv_dowm_tab.setImageResource(R.drawable.ic_down);
-                tv_head.setText(listpeople.get(postion).getStorehouseName());
+//                iv_dowm_tab.setImageResource(R.drawable.ic_down);
+                tv_head.setText(listpeople.get(postion).getStoreName());
 
             }
         });
@@ -300,7 +327,9 @@ public class PG_CK extends Activity {
         commembertab commembertab = AppContext.getUserInfo(PG_CK.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getGoodsByUid");
+        params.addQueryStringParameter("parkId", commembertab.getparkId());
+        String x=commembertab.getparkId();
+        params.addQueryStringParameter("action", "getstorehousesByParkId");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
@@ -313,12 +342,57 @@ public class PG_CK extends Activity {
                     if (result.getAffectedRows() != 0) {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
                         tv_head.setText(listNewData.get(0).getStorehouseName());
-                        id = listNewData.get(0).getStorehouseId();
-                        name = listNewData.get(0).getStorehouseName();
+                        id = listNewData.get(0).getId();
+                        name = listNewData.get(0).getStoreName();
                         listpeople.addAll(listNewData);
-
+                        tv_head.setText(name);
+                        getCommandlist();
                     } else {
                         listNewData = new ArrayList<Wz_Storehouse>();
+                    }
+                } else {
+                    AppContext.makeToast(PG_CK.this, "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg) {
+                String a = error.getMessage();
+                AppContext.makeToast(PG_CK.this, "error_connectServer");
+
+            }
+        });
+
+    }
+    private void saveData(String data) {
+        String x=data;
+        RequestParams params = new RequestParams();
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        params.addQueryStringParameter("action", "saveBreakOff");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                String a = responseInfo.result;
+                List<PG_CKBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0) {
+
+                        SqliteDb.deleteAllSelectCmdArea(PG_CK.this, goodslisttab.class);
+                    } else {
+                        listNewData = new ArrayList<PG_CKBean>();
                     }
                 } else {
                     AppContext.makeToast(PG_CK.this, "error_connectDataBase");

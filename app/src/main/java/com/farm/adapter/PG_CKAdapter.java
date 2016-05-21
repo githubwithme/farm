@@ -304,7 +304,9 @@ public class PG_CKAdapter extends BaseExpandableListAdapter
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("wz1", currentParentId);
         params.addQueryStringParameter("wz2", currentChildId);
-        params.addQueryStringParameter("action", "getGoodsList");
+        params.addQueryStringParameter("storehouseId", id);
+//        params.addQueryStringParameter("action", "getGoodsList");
+        params.addQueryStringParameter("action", "getGoodsListBystorehouses");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

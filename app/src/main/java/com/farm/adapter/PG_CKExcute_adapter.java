@@ -14,6 +14,7 @@ import com.farm.R;
 import com.farm.bean.WZ_CRk;
 import com.farm.bean.WZ_RKxx;
 import com.farm.ui.NCZ_WZ_RKDetail_;
+import com.farm.ui.PG_WZ_CKDetail_;
 import com.farm.widget.CustomDialog_ListView;
 import com.swipelistview.SwipeLayout;
 
@@ -105,7 +106,8 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
                 public void onClick(View v) {
                     //添加
 //                    jobtab jobtab = (com.farm.bean.jobtab) v.getTag(R.id.tag_bean);
-                    Intent intent = new Intent(context, NCZ_WZ_RKDetail_.class);
+//                    Intent intent = new Intent(context, NCZ_WZ_RKDetail_.class);
+                    Intent intent = new Intent(context, PG_WZ_CKDetail_.class);
 
                     intent.putExtra("wz_rKxx", wz_rKxx);
                     intent.putExtra("batchname", batchname);

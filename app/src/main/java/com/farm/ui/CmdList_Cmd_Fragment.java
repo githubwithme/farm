@@ -27,6 +27,7 @@ public class CmdList_Cmd_Fragment extends Fragment
     private Type type;
     private String typename;
     private String FI;
+    private String ZY;
     String[] SI;
     String[] sn;
 
@@ -35,10 +36,13 @@ public class CmdList_Cmd_Fragment extends Fragment
     {
         View view = inflater.inflate(R.layout.cmdlist_cmd_fragment, null);
         gridView = (GridView) view.findViewById(R.id.listView);
+//        gridView.setAdapter(null);
+
         typename = getArguments().getString("FN");
         FI = getArguments().getString("FI");
         sn = getArguments().getStringArray("SN");
         SI = getArguments().getStringArray("SI");
+        ZY = getArguments().getString("ZY");
 
 
         adapter = new AddStd_cmd_steponestemp_GridViewAdapter(getActivity(), sn);
@@ -52,7 +56,7 @@ public class CmdList_Cmd_Fragment extends Fragment
                 commandtab_single.setstdJobType(FI);
                 commandtab_single.setstdJobTypeName(typename);
                 commandtab_single.setstdJobId(SI[pos]);
-                commandtab_single.setstdJobName(sn[pos]);
+                commandtab_single.setstdJobName(sn[pos]+"("+ZY+")");
 
 
                 SqliteDb.deleteAllSelectCmdArea(getActivity(), goodslisttab.class);

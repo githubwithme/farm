@@ -28,6 +28,7 @@ import com.farm.R;
 import com.farm.adapter.Attendance_Park_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.AllType;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
@@ -53,8 +54,10 @@ import java.util.List;
  * Created by ${hmj} on 2015/12/15.
  */
 @EFragment
-public class AddStd_Cmd_StepOne_Temp extends Fragment
-{
+public class AddStd_Cmd_StepOne_Temp extends Fragment {
+    String zyid;
+    String zyname;
+    static String zynames;
     PopupWindow pw_command;
     View pv_command;
     commembertab commembertab;
@@ -71,6 +74,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
     private LayoutInflater inflater;
     private int currentItem = 0;
     private ShopAdapter shopAdapter;
+    List<AllType> listdata = new ArrayList<AllType>();
 
     @ViewById
     ImageView iv_dowm_tab;
@@ -100,30 +104,27 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
     View line;
 
     @Click
-    void rl_zw()
-    {
+    void rl_zw() {
         getZW();
     }
 
     @AfterViews
-    void afterOncreate()
-    {
+    void afterOncreate() {
         inflater = LayoutInflater.from(getActivity());
-//        getCommandlist();
-        getZW_first();
+//        getCommandlist(zyid);
+        getlistdata();
+//        getZW_first();
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.add_std__cmd__step_one_temp, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
         return rootView;
     }
 
-    public void setTopType(String st)
-    {
+    public void setTopType(String st) {
         toptype.setText(st);
         toptype.setTextColor(0xFFFF5D5E);
 //        toptype.setTextSize(getActivity().getResources().getDimension(R.dimen.size_sp_9));
@@ -134,15 +135,13 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
     /**
      * 动态生成显示items中的textview
      */
-    private void showToolsView(String[] data)
-    {
+    private void showToolsView(String[] data) {
         cmd_tools.removeAllViews();
         list = data;
         tvList = new TextView[list.length];
         views = new View[list.length];
 
-        for (int i = 0; i < list.length; i++)
-        {
+        for (int i = 0; i < list.length; i++) {
             View view = inflater.inflate(R.layout.item_addstd_cmdlist, null);
             view.setId(i);
             view.setOnClickListener(toolsItemListener);
@@ -158,11 +157,9 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
         changeTextColor(0);
     }
 
-    private View.OnClickListener toolsItemListener = new View.OnClickListener()
-    {
+    private View.OnClickListener toolsItemListener = new View.OnClickListener() {
         @Override
-        public void onClick(View v)
-        {
+        public void onClick(View v) {
             cmd_pager.setCurrentItem(v.getId());
         }
     };
@@ -171,25 +168,22 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
      * initPager<br/>
      * 初始化ViewPager控件相关内容
      */
-    private void initPager()
-    {
+    private void initPager() {
         shopAdapter = new ShopAdapter(getActivity().getSupportFragmentManager());
         cmd_pager.setAdapter(shopAdapter);
         cmd_pager.setOnPageChangeListener(onPageChangeListener);
+        shopAdapter.notifyDataSetChanged();
     }
 
     /**
      * OnPageChangeListener<br/>
      * 监听ViewPager选项卡变化事的事件
      */
-    private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener()
-    {
+    private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
-        public void onPageSelected(int arg0)
-        {
+        public void onPageSelected(int arg0) {
             if (cmd_pager.getCurrentItem() != arg0) cmd_pager.setCurrentItem(arg0);
-            if (currentItem != arg0)
-            {
+            if (currentItem != arg0) {
                 changeTextColor(arg0);
                 changeTextLocation(arg0);
             }
@@ -197,13 +191,12 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
         }
 
         @Override
-        public void onPageScrollStateChanged(int arg0)
-        {
+        public void onPageScrollStateChanged(int arg0) {
         }
 
+
         @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2)
-        {
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
         }
     };
 
@@ -212,16 +205,16 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
      *
      * @author Administrator
      */
-    private class ShopAdapter extends FragmentPagerAdapter
-    {
-        public ShopAdapter(FragmentManager fm)
-        {
+    private class ShopAdapter extends FragmentPagerAdapter {
+        List<Fragment> list_fragment = new ArrayList<>();
+
+        public ShopAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
-        public Fragment getItem(int index)
-        {
+        public Fragment getItem(int index) {
+
             Fragment fragment = new CmdList_Cmd_Fragment();
             Bundle bundle = new Bundle();
             bundle.putInt("index", index);
@@ -229,13 +222,18 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
             bundle.putString("FI", dictionary_wheel.getFirstItemID()[index]);
             bundle.putStringArray("SI", dictionary_wheel.getSecondItemID().get(dictionary_wheel.getFirstItemID()[index]));
             bundle.putStringArray("SN", dictionary_wheel.getSecondItemName().get(fn[index]));
+            bundle.putString("ZY", zynames);
             fragment.setArguments(bundle);
+            list_fragment.add(fragment);
             return fragment;
         }
 
+        public List<Fragment> getFragment() {
+            return list_fragment;
+        }
+
         @Override
-        public int getCount()
-        {
+        public int getCount() {
             return list.length;
         }
     }
@@ -245,12 +243,9 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
      *
      * @param id
      */
-    private void changeTextColor(int id)
-    {
-        for (int i = 0; i < tvList.length; i++)
-        {
-            if (i != id)
-            {
+    private void changeTextColor(int id) {
+        for (int i = 0; i < tvList.length; i++) {
+            if (i != id) {
 //                tvList[i].setBackgroundColor(0x00000000);
                 tvList[i].setTextColor(0xFF000000);
                 TextPaint tp = tvList[i].getPaint();
@@ -271,74 +266,72 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
      *
      * @param clickPosition
      */
-    private void changeTextLocation(int clickPosition)
-    {
+    private void changeTextLocation(int clickPosition) {
         int x = (views[clickPosition].getTop());
         cmd_tools_scrlllview.smoothScrollTo(0, x);
     }
 
-    private void getZW()
-    {
+    private void getZW() {
         List<String> list = new ArrayList<>();
-        list.add("香蕉");
-        list.add("芒果");
-        list.add("柑橘");
+        for (int i = 0; i < listdata.size(); i++) {
+            list.add(listdata.get(i).getProductName());
+        }
         showPop_user(list);
     }
 
-    private void getZW_first()
-    {
+    private void getZW_first() {
         rl_pb.setVisibility(View.VISIBLE);
         List<String> list = new ArrayList<>();
         list.add("香蕉");
         list.add("芒果");
         list.add("柑橘");
         rl_pb.setVisibility(View.GONE);
-        getCommandlist(list.get(0));
+//        getCommandlist(list.get(0));
     }
 
-    private void getCommandlist(String zw)
-    {
+    private void getCommandlist(String zwid,String zwname) {
+        zynames=zwname;
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("zw", "");
+        params.addQueryStringParameter("productid", zwid);
         params.addQueryStringParameter("name", "Zuoye");
         params.addQueryStringParameter("action", "getDict");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
 
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
+            public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
                 List<Dictionary> lsitNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
+                if (result.getResultCode() == 1) {
+                    if (result.getAffectedRows() != 0) {
                         pb_cmd.setVisibility(View.GONE);
                         String aa = result.getRows().toJSONString();
                         lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
-                        if (lsitNewData != null)
-                        {
+                        if (lsitNewData != null) {
                             dic_area = lsitNewData.get(0);
                             dic_area.setBELONG("片区执行");
+
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic_area);
                             fn = dictionary_wheel.getFirstItemName();
                             showToolsView(fn);
-                            initPager();
+//                            cmd_pager.setAdapter(null);
+                            if (shopAdapter == null) {
+                                initPager();
+                            } else {
+                                getActivity().getSupportFragmentManager().getFragments().clear();
+                                initPager();
+                            }
+
                         }
 
-                    } else
-                    {
+                    } else {
                         ll_tip.setVisibility(View.VISIBLE);
                         tv_tip.setText("暂无数据！");
                         pb.setVisibility(View.GONE);
                     }
-                } else
-                {
+                } else {
                     ll_tip.setVisibility(View.VISIBLE);
                     tv_tip.setText("数据加载异常！");
                     pb.setVisibility(View.GONE);
@@ -347,8 +340,7 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
             }
 
             @Override
-            public void onFailure(HttpException error, String msg)
-            {
+            public void onFailure(HttpException error, String msg) {
                 ll_tip.setVisibility(View.VISIBLE);
                 tv_tip.setText("网络连接异常！");
                 pb.setVisibility(View.GONE);
@@ -356,17 +348,13 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
         });
     }
 
-    public void showPop_user(final List<String> list)
-    {
+    public void showPop_user(final List<String> list) {
         LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_attendance, null);// 外层
-        pv_command.setOnKeyListener(new View.OnKeyListener()
-        {
+        pv_command.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
-                {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing())) {
                     pw_command.dismiss();
                     WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
                     lp.alpha = 1f;
@@ -376,13 +364,10 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
                 return false;
             }
         });
-        pv_command.setOnTouchListener(new View.OnTouchListener()
-        {
+        pv_command.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_command.isShowing())
-                {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (pw_command.isShowing()) {
                     pw_command.dismiss();
                     WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
                     lp.alpha = 1f;
@@ -397,14 +382,14 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
         ListView lv = (ListView) pv_command.findViewById(R.id.lv);
         Attendance_Park_Adapter attendance_park_adapter = new Attendance_Park_Adapter(getActivity(), list);
         lv.setAdapter(attendance_park_adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 pb_cmd.setVisibility(View.VISIBLE);
                 tv_zw.setText(list.get(position));
-                getCommandlist(list.get(position));
+                getCommandlist(listdata.get(position).getId(),listdata.get(position).getProductName());
+                zyid = listdata.get(position).getId();
+                zyname = listdata.get(position).getProductName();
                 pw_command.dismiss();
                 WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
                 lp.alpha = 1f;
@@ -418,9 +403,51 @@ public class AddStd_Cmd_StepOne_Temp extends Fragment
 
 
     @Override
-    public void onAttach(Activity activity)
-    {
+    public void onAttach(Activity activity) {
         super.onAttach(activity);
         fragmentCallBack = (FragmentCallBack) activity;
+    }
+
+    private void getlistdata() {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getProduct");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                String a = responseInfo.result;
+                List<AllType> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0) {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), AllType.class);
+                        zyid = listNewData.get(0).getId();
+                        zyname = listNewData.get(0).getProductName();
+                        listdata.addAll(listNewData);
+                        tv_zw.setText(zyname);
+                        zynames=listNewData.get(0).getProductName();
+                        getCommandlist(zyid,zyname);
+                    } else {
+                        listNewData = new ArrayList<AllType>();
+                    }
+                } else {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg) {
+                String a = error.getMessage();
+                AppContext.makeToast(getActivity(), "error_connectServer");
+
+            }
+        });
+
     }
 }
