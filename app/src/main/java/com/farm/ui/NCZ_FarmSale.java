@@ -79,9 +79,9 @@ public class NCZ_FarmSale extends Activity
     void afterOncreate()
     {
         getBatchTimeByUid();
-//        iSExistNewSale();
+        iSExistNewSale();
 //        getBatchTimeByUid_test();
-        getNewSaleList_test();
+//        getNewSaleList_test();
     }
 
     @Override

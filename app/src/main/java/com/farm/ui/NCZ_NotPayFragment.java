@@ -19,11 +19,9 @@ import com.farm.adapter.NCZ_OrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.SelectRecords;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
-import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -69,9 +67,8 @@ public class NCZ_NotPayFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
-        SqliteDb.deleteAllRecordtemp(getActivity(), SelectRecords.class, "NCZ_CMD");
-        getNewSaleList_test();
-        //        getAllOrders();
+//        getNewSaleList_test();
+        getAllOrders();
     }
 
 

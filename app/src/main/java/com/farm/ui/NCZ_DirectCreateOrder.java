@@ -18,7 +18,6 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
-import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -182,26 +181,10 @@ public class NCZ_DirectCreateOrder extends Activity
         sellOrder.setXxzt("0");
         sellOrder.setProducer(producer);
 
-
-//        List<String> list_detail = new ArrayList<>();
-//        for (int i = 0; i < list_SellOrderDetail.size(); i++)
-//        {
-//            list_detail.add(list_SellOrderDetail.get(i).getUuid());
-//            SellOrderDetail sellOrderDetail = list_SellOrderDetail.get(i);
-//            sellOrderDetail.setsaleid(uuid);
-//            sellOrderDetail.setType("salein");
-//            boolean issucc = SqliteDb.save(CreateOrder.this, sellOrderDetail);
-//            if (!issucc)
-//            {
-//                Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
-//                break;
-//            }
-//            if (i == list_SellOrderDetail.size() - 1)
-//            {
-//                Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
-//                finish();
-//            }
-//        }
+        for (int i = 0; i < list_SellOrderDetail.size(); i++)
+        {
+            list_SellOrderDetail.get(i).setsaleid(uuid);
+        }
 
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
@@ -214,30 +197,6 @@ public class NCZ_DirectCreateOrder extends Activity
         builder.append(JSON.toJSONString(uuids));
         builder.append("} ");
         addOrder(uuid, builder.toString());
-//        boolean issuccess = SqliteDb.save(CreateOrder.this, sellOrder);
-//        if (issuccess)
-//        {
-//            for (int i = 0; i < list_SellOrderDetail.size(); i++)
-//            {
-//                SellOrderDetail sellOrderDetail=list_SellOrderDetail.get(i);
-//                sellOrderDetail.setsaleid(uuid);
-//                sellOrderDetail.setType("salein");
-//                boolean issucc = SqliteDb.save(CreateOrder.this, sellOrderDetail);
-//                if (!issucc)
-//                {
-//                    Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
-//                    break;
-//                }
-//                if (i == list_SellOrderDetail.size() - 1)
-//                {
-//                    Toast.makeText(CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
-//                    finish();
-//                }
-//            }
-//        } else
-//        {
-//            Toast.makeText(CreateOrder.this, "订单创建失败！", Toast.LENGTH_SHORT).show();
-//        }
     }
 
     @AfterViews
@@ -247,8 +206,6 @@ public class NCZ_DirectCreateOrder extends Activity
         adapter_sellOrderDetail = new Adapter_CreateSellOrderDetail_NCZ(NCZ_DirectCreateOrder.this, list_SellOrderDetail);
         lv.setAdapter(adapter_sellOrderDetail);
         utils.setListViewHeight(lv);
-//        getListData();
-//        showData();
     }
 
     @Override
@@ -259,7 +216,6 @@ public class NCZ_DirectCreateOrder extends Activity
         list_SellOrderDetail = getIntent().getParcelableArrayListExtra("list");
         Bundle bundle = getIntent().getExtras();
         ArrayList arraylist = bundle.getParcelableArrayList("list_uuid");
-        uuids = (List<HashMap<String, String>>) arraylist.get(0);
         uuids = (List<HashMap<String, String>>) arraylist.get(0);
     }
 
@@ -273,89 +229,6 @@ public class NCZ_DirectCreateOrder extends Activity
         return allnumber;
     }
 
-    private void getListData()
-    {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_DirectCreateOrder.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("comID", SellOrderDetail.getUuid());
-        params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("page_size", "10");
-        params.addQueryStringParameter("page_index", "10");
-        params.addQueryStringParameter("action", "commandGetListBycomID");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<SellOrderDetail_New> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_sellOrderDetail = new Adapter_CreateSellOrderDetail_NCZ(NCZ_DirectCreateOrder.this, listNewData);
-                        lv.setAdapter(adapter_sellOrderDetail);
-                        utils.setListViewHeight(lv);
-                    } else
-                    {
-                        listNewData = new ArrayList<SellOrderDetail_New>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(NCZ_DirectCreateOrder.this, "error_connectDataBase");
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s)
-            {
-
-            }
-        });
-    }
-
-    private void showData()
-    {
-//        String[] nongzi = SellOrderDetail.getnongziName().split(",");
-//        String flyl = "";
-//        for (int i = 0; i < nongzi.length; i++)
-//        {
-//            flyl = flyl + nongzi[i] + "  ;  ";
-//        }
-//        tv_note.setText(SellOrderDetail.getcommNote());
-//        tv_yl.setText(flyl);
-//        tv_zyts.setText(SellOrderDetail.getcommDays() + "天");
-//        tv_qx.setText(SellOrderDetail.getcommComDate());
-//        if (SellOrderDetail.getstdJobType().equals("-1"))
-//        {
-//            ll_flyl.setVisibility(View.GONE);
-//            if (SellOrderDetail.getcommNote().equals(""))
-//            {
-//                tv_cmdname.setText("暂无说明");
-//            } else
-//            {
-//                tv_cmdname.setText(SellOrderDetail.getcommNote());
-//            }
-//        } else if (SellOrderDetail.getstdJobType().equals("0"))
-//        {
-//            if (SellOrderDetail.getcommNote().equals(""))
-//            {
-//                tv_cmdname.setText("暂无说明");
-//            } else
-//            {
-//                tv_cmdname.setText(SellOrderDetail.getcommNote());
-//            }
-//        } else
-//        {
-//            tv_cmdname.setText(SellOrderDetail.getstdJobTypeName() + "——" + SellOrderDetail.getstdJobName());
-//        }
-    }
 
     private void addOrder(String uuid, String data)
     {

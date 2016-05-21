@@ -136,7 +136,7 @@ public class NCZ_FarmSale_BatchDetail extends Activity
                         hashMap.put("contractid", contractTab.getid());
                         hashMap.put("year", utils.getYear());
                         hashMap.put("batchTime", batchTime);
-                        hashMap.put("number_left", number_left);
+                        hashMap.put("number_difference", number_left);
                         uuids.add(hashMap);
 
                         String uuid = java.util.UUID.randomUUID().toString();
@@ -236,7 +236,6 @@ public class NCZ_FarmSale_BatchDetail extends Activity
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(NCZ_FarmSale_BatchDetail.this, "error_connectServer");
-
             }
         });
     }

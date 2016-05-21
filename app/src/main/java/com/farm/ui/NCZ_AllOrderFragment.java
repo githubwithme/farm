@@ -67,8 +67,8 @@ public class NCZ_AllOrderFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
-        getNewSaleList_test();
-//        getAllOrders();
+//        getNewSaleList_test();
+        getAllOrders();
     }
 
 

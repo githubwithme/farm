@@ -298,7 +298,7 @@ public class NCZ_CreateOrder extends Activity
         class ListItemView
         {
             public TextView tv_area;
-            public Button btn_plannumber;
+            public TextView tv_plannumber;
             public TextView tv_yq;
             public TextView tv_pq;
         }
@@ -339,8 +339,8 @@ public class NCZ_CreateOrder extends Activity
                 listItemView = new ListItemView();
                 // 获取控件对象
                 listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
-                listItemView.btn_plannumber = (Button) convertView.findViewById(R.id.btn_plannumber);
-                listItemView.btn_plannumber.setTag(position);
+                listItemView.tv_plannumber = (TextView) convertView.findViewById(R.id.tv_plannumber);
+//                listItemView.btn_plannumber.setTag(position);
 //                listItemView.btn_plannumber.setOnClickListener(new View.OnClickListener()
 //                {
 //                    @Override
@@ -359,7 +359,7 @@ public class NCZ_CreateOrder extends Activity
                 listItemView = (ListItemView) convertView.getTag();
             }
             // 设置文字和图片
-            listItemView.btn_plannumber.setText(SellOrderDetail.getplannumber());
+            listItemView.tv_plannumber.setText(SellOrderDetail.getplannumber());
             listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
             return convertView;
         }

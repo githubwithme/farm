@@ -66,8 +66,8 @@ public class NCZ_NewSaleList extends Activity
     @AfterViews
     void afterOncreate()
     {
-//        getNewSaleList();
-        getNewSaleList_test();
+        getNewSaleList();
+//        getNewSaleList_test();
     }
 
     @Override

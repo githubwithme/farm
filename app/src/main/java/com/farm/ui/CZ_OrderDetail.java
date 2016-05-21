@@ -96,8 +96,8 @@ public class CZ_OrderDetail extends Activity
     @AfterViews
     void afterOncreate()
     {
-        countAllWeight(list_orderdetail);
-        countAllNumber(list_orderdetail);
+//        countAllWeight(list_orderdetail);
+//        countAllNumber(list_orderdetail);
         adapter_sellOrderDetail = new Adapter_SellOrderDetail(CZ_OrderDetail.this);
         lv.setAdapter(adapter_sellOrderDetail);
         utils.setListViewHeight(lv);

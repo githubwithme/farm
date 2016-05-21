@@ -19,11 +19,9 @@ import com.farm.adapter.CZ_OrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.SelectRecords;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
-import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -69,8 +67,9 @@ public class CZ_AllOrderFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
-        SqliteDb.deleteAllRecordtemp(getActivity(), SelectRecords.class, "NCZ_CMD");
-        getNewSaleList_test();
+//        SqliteDb.deleteAllRecordtemp(getActivity(), SelectRecords.class, "NCZ_CMD");
+//        getNewSaleList_test();
+        getAllOrders();
     }
 
 
@@ -133,7 +132,7 @@ public class CZ_AllOrderFragment extends Fragment
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
-                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                                Intent intent = new Intent(getActivity(), CZ_OrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }
