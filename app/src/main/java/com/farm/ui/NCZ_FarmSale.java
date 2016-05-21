@@ -161,7 +161,6 @@ public class NCZ_FarmSale extends Activity
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(NCZ_FarmSale.this, "error_connectServer");
-
             }
         });
     }

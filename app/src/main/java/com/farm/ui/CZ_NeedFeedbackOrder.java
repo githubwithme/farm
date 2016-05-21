@@ -156,10 +156,10 @@ public class CZ_NeedFeedbackOrder extends Fragment
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(getActivity(), "error_connectServer");
-
             }
         });
     }
+
     @Override
     public void onDestroyView()
     {

@@ -80,47 +80,7 @@ public class CZ_EditOrder extends Activity
     @Click
     void btn_sure()
     {
-        if (et_name.getText().toString().equals(""))
-        {
-            Toast.makeText(CZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (et_email.getText().toString().equals(""))
-        {
-            Toast.makeText(CZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (et_address.getText().toString().equals(""))
-        {
-            Toast.makeText(CZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (et_phone.getText().toString().equals(""))
-        {
-            Toast.makeText(CZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (et_price.getText().toString().equals(""))
-        {
-            Toast.makeText(CZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (et_weight.getText().toString().equals(""))
-        {
-            Toast.makeText(CZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (et_number.getText().toString().equals(""))
-        {
-            Toast.makeText(CZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (et_values.getText().toString().equals(""))
-        {
-            Toast.makeText(CZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
+        setData();
         StringBuilder builder = new StringBuilder();
         builder.append("{\"listdata\": ");
         builder.append(JSON.toJSONString(list_orderDetail));
@@ -144,11 +104,37 @@ public class CZ_EditOrder extends Activity
         list_orderDetail = getIntent().getParcelableArrayListExtra("list");
     }
 
+    public void setData()
+    {
+        int grountCount = adapter_editSellOrderDetail.getCount();
+        for (int i = 0; i < grountCount; i++)
+        {
+            LinearLayout linearlayout = (LinearLayout) adapter_editSellOrderDetail.getView(i, null, null);
+            EditText et_actualnumber = (EditText) linearlayout.findViewById(R.id.et_actualnumber);
+            EditText et_actualweight = (EditText) linearlayout.findViewById(R.id.et_actualweight);
+            SellOrderDetail_New orderdetail = (SellOrderDetail_New) et_actualnumber.getTag();
+
+            if (et_actualnumber.getText().equals(""))
+            {
+
+            } else
+            {
+
+            }
+
+            if (et_actualweight.getText().equals(""))
+            {
+
+            } else
+            {
+            }
+        }
+    }
 
     private void feedBackOrderDetail(String data)
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("action", "addOrder");
+        params.addQueryStringParameter("action", "feedbackOrderDetail");
         params.setContentType("application/json");
         try
         {
@@ -245,6 +231,8 @@ public class CZ_EditOrder extends Activity
                 listItemView.et_actualweight = (EditText) convertView.findViewById(R.id.et_actualweight);
                 listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
                 listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
+                listItemView.et_actualnumber.setTag(SellOrderDetail);
+                listItemView.et_actualweight.setTag(SellOrderDetail);
                 // 设置控件集到convertView
                 lmap.put(position, convertView);
                 convertView.setTag(listItemView);

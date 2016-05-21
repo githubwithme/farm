@@ -22,7 +22,6 @@
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="15dip"
-                android:text="乐丰园区"
                 android:textColor="@color/bg_text"
                 android:textSize="16sp"/>
 
@@ -43,7 +42,6 @@
                 android:layout_marginRight="20dip"
                 android:layout_toLeftOf="@+id/view"
                 android:gravity="right|center_vertical"
-                android:text="待售350000"
                 android:textColor="@color/red"
                 android:textSize="16sp"/>
         </RelativeLayout>
@@ -62,7 +60,7 @@
                 android:layout_height="15dip"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="10dip"
-                android:text="已售10000  售中10000  拟售10000"
+                android:text=""
                 android:textColor="@color/gray"
                 android:textSize="12sp"/>
 
@@ -79,7 +77,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="15dip"
                 android:gravity="center"
-                android:text="70%"
                 android:textColor="@color/gray"
                 android:textSize="12sp"/>
         </LinearLayout>

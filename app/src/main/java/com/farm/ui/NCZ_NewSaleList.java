@@ -22,6 +22,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.commembertab;
+import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditOrderDetail;
 import com.farm.widget.MyDialog;
@@ -65,7 +66,8 @@ public class NCZ_NewSaleList extends Activity
     @AfterViews
     void afterOncreate()
     {
-        getNewSaleList();
+//        getNewSaleList();
+        getNewSaleList_test();
     }
 
     @Override
@@ -73,6 +75,14 @@ public class NCZ_NewSaleList extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+    }
+
+    private void getNewSaleList_test()
+    {
+        list_SellOrderDetail = FileHelper.getAssetsData(NCZ_NewSaleList.this, "getNewSaleList", SellOrderDetail_New.class);
+        Adapter_NewSaleList adapter_sellOrderDetail = new Adapter_NewSaleList(NCZ_NewSaleList.this, list_SellOrderDetail);
+        lv.setAdapter(adapter_sellOrderDetail);
+        utils.setListViewHeight(lv);
     }
 
     private void getNewSaleList()
@@ -116,7 +126,6 @@ public class NCZ_NewSaleList extends Activity
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(NCZ_NewSaleList.this, "error_connectServer");
-
             }
         });
     }
@@ -187,7 +196,7 @@ public class NCZ_NewSaleList extends Activity
                     public void onClick(View v)
                     {
                         int pos = (int) v.getTag();
-                        showDeleteTip(listItems.get(pos).getUuid());
+                        showDeleteTip(listItems.get(pos));
                     }
                 });
                 listItemView.tv_number.setTag(position);
@@ -197,7 +206,7 @@ public class NCZ_NewSaleList extends Activity
                     public void onClick(View v)
                     {
                         int pos = (int) v.getTag();
-                        showDialog_editNumber(listItems.get(pos));
+                        showDialog_editNumber(listItems.get(pos), (TextView) v);
                     }
                 });
                 // 设置文字和图片
@@ -262,12 +271,16 @@ public class NCZ_NewSaleList extends Activity
             });
         }
 
-        private void deleteOrderDetail(String uuid)
+        private void deleteOrderDetail(String number_difference, String uuid, String uid, String contractid, String year, String batchTime)
         {
-            commembertab commembertab = AppContext.getUserInfo(context);
             RequestParams params = new RequestParams();
-            params.addQueryStringParameter("comID", uuid);
-            params.addQueryStringParameter("action", "delCommandByID");
+            params.addQueryStringParameter("number_difference", number_difference);
+            params.addQueryStringParameter("uuid", uuid);
+            params.addQueryStringParameter("uid", uid);
+            params.addQueryStringParameter("contractid", contractid);
+            params.addQueryStringParameter("year", year);
+            params.addQueryStringParameter("batchTime", batchTime);
+            params.addQueryStringParameter("action", "deleteOrderDetail");
             HttpUtils http = new HttpUtils();
             http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
             {
@@ -304,7 +317,7 @@ public class NCZ_NewSaleList extends Activity
 
         MyDialog myDialog;
 
-        private void showDeleteTip(final String uuid)
+        private void showDeleteTip(final SellOrderDetail_New sellOrderDetail_new)
         {
             View dialog_layout = (LinearLayout) context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
             myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
@@ -315,7 +328,7 @@ public class NCZ_NewSaleList extends Activity
                     switch (v.getId())
                     {
                         case R.id.btn_sure:
-                            deleteOrderDetail(uuid);
+                            deleteOrderDetail(sellOrderDetail_new.getplannumber(), sellOrderDetail_new.getUuid(), sellOrderDetail_new.getuid(), sellOrderDetail_new.getcontractid(), sellOrderDetail_new.getYear(), sellOrderDetail_new.getBatchTime());
                             break;
                         case R.id.btn_cancle:
                             myDialog.cancel();
@@ -326,7 +339,7 @@ public class NCZ_NewSaleList extends Activity
             myDialog.show();
         }
 
-        private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new)
+        private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new, final TextView textView)
         {
             final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editorderdetail, null);
             customDialog_editOrderDetaill = new CustomDialog_EditOrderDetail(context, R.style.MyDialog, dialog_layout);
@@ -339,6 +352,7 @@ public class NCZ_NewSaleList extends Activity
                 public void onClick(View v)
                 {
                     customDialog_editOrderDetaill.dismiss();
+                    textView.setText(et_number.getText().toString());
                     int number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_number.getText().toString());
                     editNumber(sellOrderDetail_new, et_number.getText().toString(), String.valueOf(number_difference));
                 }

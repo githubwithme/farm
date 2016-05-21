@@ -32,10 +32,10 @@ public class contractTab implements Parcelable // 与数据库不一致
     public String gainnumber;
     public String contractarea;
     public String amountforsale;
-    public String numberofsaleout;
-    public String numberofselein;
-    public String numberofsalefor;
-    public String numberofnewsale;
+    public String allsaleout;
+    public String allsalein;
+    public String allsalefor;
+    public String allnewsale;
     public List<breakofftab> breakofftabList;
     public List<BreakOff_New> BreakOffList;
 
@@ -47,44 +47,44 @@ public class contractTab implements Parcelable // 与数据库不一致
         BreakOffList = breakOffList;
     }
 
-    public void setNumberofnewsale(String numberofnewsale)
+    public void setAllsaleout(String allsaleout)
     {
-        this.numberofnewsale = numberofnewsale;
+        this.allsaleout = allsaleout;
     }
 
-    public String getNumberofnewsale()
+    public String getAllsaleout()
     {
-        return numberofnewsale;
+        return allsaleout;
     }
 
-    public void setNumberofsalefor(String numberofsalefor)
+    public void setAllsalein(String allsalein)
     {
-        this.numberofsalefor = numberofsalefor;
+        this.allsalein = allsalein;
     }
 
-    public String getNumberofsalefor()
+    public String getAllsalein()
     {
-        return numberofsalefor;
+        return allsalein;
     }
 
-    public void setNumberofselein(String numberofselein)
+    public void setAllsalefor(String allsalefor)
     {
-        this.numberofselein = numberofselein;
+        this.allsalefor = allsalefor;
     }
 
-    public String getNumberofselein()
+    public String getAllsalefor()
     {
-        return numberofselein;
+        return allsalefor;
     }
 
-    public void setNumberofsaleout(String numberofsaleout)
+    public void setAllnewsale(String allnewsale)
     {
-        this.numberofsaleout = numberofsaleout;
+        this.allnewsale = allnewsale;
     }
 
-    public String getNumberofsaleout()
+    public String getAllnewsale()
     {
-        return numberofsaleout;
+        return allnewsale;
     }
 
     public void setNumOfPlant(String numOfPlant)
@@ -261,10 +261,10 @@ public class contractTab implements Parcelable // 与数据库不一致
             p.setGainnumber(source.readString());
             p.setContractarea(source.readString());
             p.setAmountforsale(source.readString());
-            p.setNumberofsaleout(source.readString());
-            p.setNumberofselein(source.readString());
-            p.setNumberofsalefor(source.readString());
-            p.setNumberofnewsale(source.readString());
+            p.setAllsaleout(source.readString());
+            p.setAllsalein(source.readString());
+            p.setAllsalefor(source.readString());
+            p.setAllnewsale(source.readString());
             p.breakofftabList = source.readArrayList(breakofftab.class.getClassLoader());
             p.BreakOffList = source.readArrayList(breakofftab.class.getClassLoader());
             return p;
@@ -293,10 +293,10 @@ public class contractTab implements Parcelable // 与数据库不一致
         p.writeString(gainnumber);
         p.writeString(contractarea);
         p.writeString(amountforsale);
-        p.writeString(numberofsaleout);
-        p.writeString(numberofselein);
-        p.writeString(numberofsalefor);
-        p.writeString(numberofnewsale);
+        p.writeString(allsaleout);
+        p.writeString(allsalein);
+        p.writeString(allsalefor);
+        p.writeString(allnewsale);
         p.writeList(breakofftabList);
         p.writeList(BreakOffList);
     }
