@@ -52,7 +52,7 @@ public class PG_CKofListAdapter extends BaseAdapter {
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
-        listItemView.tv_yq.setText(wz_storehouse.getStorehouseName());
+        listItemView.tv_yq.setText(wz_storehouse.getStoreName());
         return convertView;
     }
 

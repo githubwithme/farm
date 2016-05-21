@@ -50,7 +50,8 @@ import java.util.List;
  */
 public class PG_CKAdapter_goodslistdapter extends BaseAdapter
 {
-    String name;
+    String batchNumber;
+    String batchName;
     List<Wz_Storehouse> listpeople = new ArrayList<Wz_Storehouse>();
     PG_CKlistAdapter pg_cKlistAdapter;
     PopupWindow pw_tab;
@@ -305,21 +306,21 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         tv_line= (View) dialog_layout.findViewById(R.id.tv_line);
 
 
-        large_dw= list.get(currentpos).getgoodsSpec().substring(1, list.get(currentpos).getgoodsSpec().length());
+//        large_dw= list.get(currentpos).getgoodsSpec().substring(1, list.get(currentpos).getgoodsSpec().length());
 
         tv_tip_number.setText("剩余：" + goodssum);
 
 
-        tv_spec.setText(list.get(currentpos).getFirs()+ "/" + large_dw);
+//        tv_spec.setText(list.get(currentpos).getFirs()+ "/" + list.get(currentpos).getgoodsunit());
         tv_goodsname.setText(list.get(currentpos).getgoodsName());
         if(!list.get(currentpos).getThree().equals(""))
         {
-            tv_spec.setText(list.get(currentpos).getThree() + list.get(currentpos).getgoodsSpec());
+            tv_spec.setText(list.get(currentpos).getThree() + list.get(currentpos).getgoodsunit());
         }else if(list.get(currentpos).getThree().equals("")&&!list.get(currentpos).getSec().equals(""))
         {
-            tv_spec.setText( list.get(currentpos).getSec() + list.get(currentpos).getgoodsSpec());
+            tv_spec.setText( list.get(currentpos).getSec() + list.get(currentpos).getgoodsunit());
         }else {
-            tv_spec.setText( list.get(currentpos).getFirs() + list.get(currentpos).getgoodsSpec());
+            tv_spec.setText( list.get(currentpos).getFirs() + list.get(currentpos).getgoodsunit());
         }
 
 
@@ -363,6 +364,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                 currentgoods.setDW(tv_dw.getText().toString());
                 currentgoods.setGX(x);
                 currentgoods.setZS(y);
+                currentgoods.setgoodsNote(batchNumber);
 
                 Intent intent = new Intent();
                 intent.setAction(AppContext.BROADCAST_PG_DATA);
@@ -420,8 +422,8 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3) {
-                id = listpeople.get(postion).getBatchNumber();
-                name = listpeople.get(postion).getBatchName();
+                batchNumber = listpeople.get(postion).getBatchNumber();
+                batchName = listpeople.get(postion).getBatchName();
                 currentgoods.setgoodsNote(listpeople.get(postion).getBatchNumber());
                 storehouse.setText(listpeople.get(postion).getBatchName()+"-"+listpeople.get(postion).getQuantity());
                 pw_tab.dismiss();
@@ -449,6 +451,9 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                 {
                     if (result.getAffectedRows() != 0) {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
+                        batchNumber = listNewData.get(0).getBatchNumber();
+                        batchName = listNewData.get(0).getBatchName();
+                        storehouse.setText(listNewData.get(0).getBatchName()+"-"+listNewData.get(0).getQuantity());
                         listpeople.addAll(listNewData);
 
                     } else {

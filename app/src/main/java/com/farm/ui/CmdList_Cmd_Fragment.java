@@ -35,6 +35,8 @@ public class CmdList_Cmd_Fragment extends Fragment
     {
         View view = inflater.inflate(R.layout.cmdlist_cmd_fragment, null);
         gridView = (GridView) view.findViewById(R.id.listView);
+//        gridView.setAdapter(null);
+
         typename = getArguments().getString("FN");
         FI = getArguments().getString("FI");
         sn = getArguments().getStringArray("SN");

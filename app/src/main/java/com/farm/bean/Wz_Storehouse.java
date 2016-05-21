@@ -11,11 +11,14 @@ import com.lidroid.xutils.db.annotation.Table;
 @Table(name = "Wz_Storehouse")
 public class Wz_Storehouse implements Parcelable
 {
+
+    public String Id;
     //仓库
     public String parkId;
     public String parkName;
     public String storehouseId ;
     public String storehouseName;
+    public String storeName;
     //仓库物资
     public String goodsId;
     public String goodsName;
@@ -31,6 +34,22 @@ public class Wz_Storehouse implements Parcelable
 
     public String avePrice;
     public String stockValue;
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
 
     public String getBatchName() {
         return batchName;
@@ -151,10 +170,12 @@ public class Wz_Storehouse implements Parcelable
         {
             // 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错
             Wz_Storehouse p = new Wz_Storehouse();
+            p.setId(source.readString());
             p.setParkId(source.readString());
             p.setParkName(source.readString());
             p.setStorehouseId(source.readString());
             p.setStorehouseName(source.readString());
+            p.setStoreName(source.readString());
             p.setGoodsId(source.readString());
             p.setGoodsName(source.readString());
 
@@ -185,10 +206,12 @@ public class Wz_Storehouse implements Parcelable
     public void writeToParcel(Parcel p, int arg1)
     {
 
+        p.writeString(Id);
         p.writeString(parkId);
         p.writeString(parkName);
         p.writeString(storehouseId);
         p.writeString(storehouseName);
+        p.writeString(storeName);
 
         p.writeString(goodsId);
         p.writeString(goodsName);
