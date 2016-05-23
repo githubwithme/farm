@@ -35,7 +35,7 @@ public class CZ_OrderManager extends Fragment
     void tv_allorder()
     {
         setBackground(1);
-        switchContent(mContent, cz_needFeedbackOrder);
+        switchContent(mContent,cz_allOrderFragment );
     }
 
 
@@ -43,7 +43,7 @@ public class CZ_OrderManager extends Fragment
     void tv_needfeedback()
     {
         setBackground(0);
-        switchContent(mContent, cz_allOrderFragment);
+        switchContent(mContent, cz_needFeedbackOrder);
     }
 
     @AfterViews

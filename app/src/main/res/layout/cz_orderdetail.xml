@@ -392,14 +392,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dip"
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
+                android:background="@drawable/round_gray"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dip"
-                    android:background="@drawable/round_gray"
                     android:gravity="center"
                     android:text="销售明细条目"
                     android:textColor="@color/bg_text"
@@ -420,9 +421,8 @@
                             android:layout_width="0dip"
                             android:layout_height="45dip"
                             android:layout_weight="1"
-                            android:background="@drawable/round_gray"
                             android:gravity="center"
-                            android:text="实售株数"
+                            android:text="实售"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_sp_16"/>
 
@@ -431,11 +431,10 @@
                             android:layout_width="0dip"
                             android:layout_height="45dip"
                             android:layout_weight="1"
-                            android:background="@drawable/round_gray"
                             android:gravity="center"
-                            android:text="500"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_sp_16"/>
+                            android:text=""
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/size_sp_18"/>
 
                         <TextView
                             android:layout_width="0dip"
@@ -443,7 +442,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/round_gray"
                             android:gravity="center"
-                            android:text="实重(斤)"
+                            android:text="实重"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_sp_16"/>
 
@@ -452,26 +451,17 @@
                             android:layout_width="0dip"
                             android:layout_height="45dip"
                             android:layout_weight="1"
-                            android:background="@drawable/round_gray"
                             android:gravity="center"
-                            android:text="5500"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_sp_16"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dip"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                            android:text=""
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/size_sp_18"/>
 
                         <TextView
                             android:layout_width="0dip"
                             android:layout_height="45dip"
                             android:layout_weight="1"
-                            android:background="@drawable/round_gray"
                             android:gravity="center"
-                            android:text="实际总价(元)"
+                            android:text="实际总价"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_sp_16"/>
 
@@ -480,13 +470,10 @@
                             android:layout_width="0dip"
                             android:layout_height="45dip"
                             android:layout_weight="1"
-                            android:background="@drawable/round_gray"
                             android:gravity="center"
-                            android:text="55500"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_sp_16"/>
-
-
+                            android:text=""
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/size_sp_18"/>
                     </LinearLayout>
 
 

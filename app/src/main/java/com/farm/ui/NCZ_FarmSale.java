@@ -3,7 +3,6 @@ package com.farm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -16,7 +15,6 @@ import com.farm.adapter.NCZ_FarmSale_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.commembertab;
 import com.farm.bean.parktab;
 import com.farm.common.FileHelper;
@@ -42,7 +40,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_farmsale)
 public class NCZ_FarmSale extends Activity
 {
-    List<SellOrderDetail_New> list_newsale = null;
+    //    List<SellOrderDetail_New> list_newsale = null;
     NCZ_FarmSale_Adapter ncz_farmSale_adapter;
     @ViewById
     ExpandableListView expandableListView;
@@ -54,14 +52,13 @@ public class NCZ_FarmSale extends Activity
     @Click
     void btn_newsalelist()
     {
-        if (list_newsale == null)
-        {
-            Toast.makeText(this, "暂无清单", Toast.LENGTH_SHORT).show();
-        } else
+        if (tv_numberofnewsale.getText().equals("1"))
         {
             Intent intent = new Intent(NCZ_FarmSale.this, NCZ_NewSaleList_.class);
-            intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list_newsale);
             startActivity(intent);
+        } else
+        {
+            Toast.makeText(this, "暂无清单", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -103,16 +100,16 @@ public class NCZ_FarmSale extends Activity
         }
     }
 
-    private void getNewSaleList_test()
-    {
-        list_newsale = FileHelper.getAssetsData(NCZ_FarmSale.this, "getNewSaleList", SellOrderDetail_New.class);
-        if (list_newsale != null)
-        {
-            tv_numberofnewsale.setVisibility(View.VISIBLE);
-            tv_numberofnewsale.setText("1");
-        }
-
-    }
+//    private void getNewSaleList_test()
+//    {
+//        list_newsale = FileHelper.getAssetsData(NCZ_FarmSale.this, "getNewSaleList", SellOrderDetail_New.class);
+//        if (list_newsale != null)
+//        {
+//            tv_numberofnewsale.setVisibility(View.VISIBLE);
+//            tv_numberofnewsale.setText("1");
+//        }
+//
+//    }
 
     private void getBatchTimeByUid()
     {

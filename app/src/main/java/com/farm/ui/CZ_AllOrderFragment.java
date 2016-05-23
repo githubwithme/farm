@@ -57,6 +57,15 @@ public class CZ_AllOrderFragment extends Fragment
     @ViewById
     ListView lv;
 
+    @Override
+    public void onHiddenChanged(boolean hidden)
+    {
+        super.onHiddenChanged(hidden);
+        if (hidden != true)
+        {
+            getAllOrders();
+        }
+    }
 
     @Override
     public void onResume()
@@ -78,9 +87,20 @@ public class CZ_AllOrderFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
+//        IntentFilter intentfilter = new IntentFilter(AppContext.BROADCAST_UPDATEORDER);
+//        getActivity().registerReceiver(receiver, intentfilter);
         return rootView;
     }
 
+//    BroadcastReceiver receiver = new BroadcastReceiver()// 从扩展页面返回信息
+//    {
+//        @SuppressWarnings("deprecation")
+//        @Override
+//        public void onReceive(Context context, Intent intent)
+//        {
+//            getAllOrders();
+//        }
+//    };
 
     private void getNewSaleList_test()
     {
