@@ -55,7 +55,8 @@ public class PG_CKlistAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
-        listItemView.tv_yq.setText(wz_storehouse.getBatchName()+"-"+wz_storehouse.getQuantity());
+        //"批次号:" +
+        listItemView.tv_yq.setText(wz_storehouse.getBatchName()+"--"+wz_storehouse.getQuantity());
         return convertView;
     }
 

@@ -81,7 +81,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
     private goodslisttab goodslisttab;
     private Context context;
     ImageView currentiv_tip = null;
-    String plants;
+    String sum;
     String x;
     String y;
     String id;
@@ -247,11 +247,10 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("goodsId", goodslisttab.getId());
 //        params.addQueryStringParameter("parkId", commembertab.getparkId());
-        params.addQueryStringParameter("parkId", commembertab.getparkId());
-        params.addQueryStringParameter("areaId", commembertab.getareaId());
+//        params.addQueryStringParameter("areaId", commembertab.getareaId());
         params.addQueryStringParameter("storehouseId", id);
-//        params.addQueryStringParameter("action", "getGoodsSum");
-        params.addQueryStringParameter("action", "getGoodsSumAndPlants");
+        params.addQueryStringParameter("action", "getSumBygoodsIdStoreId");
+//        params.addQueryStringParameter("action", "getGoodsSumAndPlants");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -264,13 +263,28 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        String parkId = result.getRows().getJSONObject(0).getString("parkId");
-                        String parkName = result.getRows().getJSONObject(0).getString("parkName");
-                        String areaPlants = result.getRows().getJSONObject(0).getString("areaPlants");
-                        String jsonarray = result.getRows().getJSONObject(0).getString("goodsSum");
-                        plants=areaPlants;
+                        String firsNum = result.getRows().getJSONObject(0).getString("firsNum");
+                        String secNum = result.getRows().getJSONObject(0).getString("secNum");
+                        String threeNum = result.getRows().getJSONObject(0).getString("threeNum");
+                        String firs = result.getRows().getJSONObject(0).getString("firs");
+                        String sec = result.getRows().getJSONObject(0).getString("sec");
+                        String three = result.getRows().getJSONObject(0).getString("three");
+
+
+                        if(!three.equals(""))
+                        {
+                            sum=threeNum+three;
+                        }else if(three.equals("")&&!sec.equals(""))
+                        {
+                            sum=secNum+sec;
+                        }else {
+                            sum=firsNum+firs;
+                        }
+//                        String jsonarray = result.getRows().getJSONObject(0).getString("goodsSum");
+
+
 //                        JSONArray jsonarray = result.getRows().getJSONObject(0).getJSONArray("goodsSum");
-                        showDialog_flsl(areaPlants,jsonarray.toString());
+                        showDialog_flsl("0",sum);
 
                     } else
                     {
@@ -316,12 +330,12 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         tv_goodsname.setText(list.get(currentpos).getgoodsName());
         if(!list.get(currentpos).getThree().equals(""))
         {
-            tv_spec.setText(list.get(currentpos).getThree() + list.get(currentpos).getgoodsunit());
+            tv_spec.setText(list.get(currentpos).getThree() + "/" + list.get(currentpos).getgoodsunit());
         }else if(list.get(currentpos).getThree().equals("")&&!list.get(currentpos).getSec().equals(""))
         {
-            tv_spec.setText( list.get(currentpos).getSec() + list.get(currentpos).getgoodsunit());
+            tv_spec.setText( list.get(currentpos).getSec() + "/" + list.get(currentpos).getgoodsunit());
         }else {
-            tv_spec.setText( list.get(currentpos).getFirs() + list.get(currentpos).getgoodsunit());
+            tv_spec.setText( list.get(currentpos).getFirs() +  "/" +list.get(currentpos).getgoodsunit());
         }
 
 
@@ -343,17 +357,19 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
             @Override
             public void onClick(View view) {
 
-                if (listpeople.size()>0) {
+                if (listpeople.size() > 0) {
                     showPop_title();
                 }
             }
         });
-
+        btn_sure.setTag(R.id.tag_danwei,list.get(currentpos));
         btn_sure.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+
+                goodslisttab goodslisttab= (com.farm.bean.goodslisttab) v.getTag(R.id.tag_danwei);
                 Double acountnumber=0d;
                 Double neednumber = 0d;
                 currentgoods.setParkId(commembertab.getparkId());
@@ -365,6 +381,13 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                 currentgoods.setGX(x);
                 currentgoods.setZS(y);
                 currentgoods.setgoodsNote(batchNumber);
+
+                currentgoods.setFirs(goodslisttab.getFirs());
+                currentgoods.setSec(goodslisttab.getSec());
+                currentgoods.setSecNum(goodslisttab.getSecNum());
+                currentgoods.setThree(goodslisttab.getThree());
+                currentgoods.setThreeNum(goodslisttab.getThreeNum());
+
 
                 Intent intent = new Intent();
                 intent.setAction(AppContext.BROADCAST_PG_DATA);
@@ -425,7 +448,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                 batchNumber = listpeople.get(postion).getBatchNumber();
                 batchName = listpeople.get(postion).getBatchName();
                 currentgoods.setgoodsNote(listpeople.get(postion).getBatchNumber());
-                storehouse.setText(listpeople.get(postion).getBatchName()+"-"+listpeople.get(postion).getQuantity());
+                storehouse.setText("批次号:" + listpeople.get(postion).getBatchName() + "--" + listpeople.get(postion).getQuantity());
                 pw_tab.dismiss();
 
 
@@ -440,6 +463,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         params.addQueryStringParameter("goodsId",goodslisttab.getId());
         params.addQueryStringParameter("storehouseId",id);
         params.addQueryStringParameter("action", "getPCSLByWzIdCKId");
+//        params.addQueryStringParameter("action", "getSumBygoodsIdStoreId1");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
@@ -453,7 +477,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
                         batchNumber = listNewData.get(0).getBatchNumber();
                         batchName = listNewData.get(0).getBatchName();
-                        storehouse.setText(listNewData.get(0).getBatchName()+"-"+listNewData.get(0).getQuantity());
+                        storehouse.setText("批次号:" +listNewData.get(0).getBatchName()+"-"+listNewData.get(0).getQuantity());
                         listpeople.addAll(listNewData);
 
                     } else {

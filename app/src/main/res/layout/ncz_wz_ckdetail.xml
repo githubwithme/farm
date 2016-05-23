@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="入库详细列表"
+            android:text="出库详细列表"
             android:textColor="@color/textcolor_titlebar"
             android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>

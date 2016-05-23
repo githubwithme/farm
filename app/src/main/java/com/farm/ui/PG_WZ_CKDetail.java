@@ -3,8 +3,10 @@ package com.farm.ui;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -23,16 +25,13 @@ public class PG_WZ_CKDetail extends FragmentActivity
 {
 
     private WZ_RKxx wz_rKxx;
-    private String batchname;
+    private String inType;
     private String indate;
-
     @ViewById
-    LinearLayout ll_left;
+    RelativeLayout ll_add;
+
     @ViewById
     TextView goodsname;
-    @ViewById
-    TextView tv_title;
-
     @ViewById
     TextView parkName;
     @ViewById
@@ -42,19 +41,13 @@ public class PG_WZ_CKDetail extends FragmentActivity
     @ViewById
     TextView inDate;
     @ViewById
-    TextView exeDate;
+    TextView outType;
     @ViewById
-    TextView inType;
+    EditText quantity;
     @ViewById
-    TextView quantity;
-    @ViewById
-    TextView price;
-    @ViewById
-    TextView inGoodsvalue;
+    TextView outGoodsvalue;
     @ViewById
     TextView note;
-
-
     @ViewById
     ImageButton imgbtn_back;
 
@@ -64,20 +57,18 @@ public class PG_WZ_CKDetail extends FragmentActivity
     }
 
     @AfterViews
-    void aftercreate() {
-        ll_left.setVisibility(View.VISIBLE);
+    void afteroncreate() {
+        quantity.setFocusable(false);
         goodsname.setText(wz_rKxx.getGoodsname());
-//        tv_title.setText(batchname);
         parkName.setText(wz_rKxx.getParkName());
         storehouseName.setText(wz_rKxx.getStorehouseName());
-        batchName.setText(batchname);
+        outType.setText(inType);
+
+        String indates = indate.substring(0, indate.length() - 8);
         inDate.setText(indate);
-        String expdate=wz_rKxx.getExpDate().substring(0,wz_rKxx.getExpDate().length()-8);
-        exeDate.setText(expdate);
-        inType.setText(wz_rKxx.getInType());
+        batchName.setText(wz_rKxx.getBatchName());
         quantity.setText(wz_rKxx.getQuantity());
-        price.setText(wz_rKxx.getPrice());
-        inGoodsvalue.setText(wz_rKxx.getInGoodsvalue() + "元");
+        outGoodsvalue.setText(wz_rKxx.getOutGoodsvalue() + "元");
         if (wz_rKxx.getNote().equals("")) {
             note.setText("无");
         } else {
@@ -86,14 +77,14 @@ public class PG_WZ_CKDetail extends FragmentActivity
 
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         wz_rKxx = getIntent().getParcelableExtra("wz_rKxx");
-        batchname = getIntent().getStringExtra("batchname");
+        inType = getIntent().getStringExtra("inType");
         indate = getIntent().getStringExtra("indate");
-
     }
 
 }

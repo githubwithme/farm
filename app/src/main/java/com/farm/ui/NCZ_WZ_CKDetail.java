@@ -55,7 +55,7 @@ public class NCZ_WZ_CKDetail extends FragmentActivity {
         outType.setText(inType);
 
         String indates = indate.substring(0, indate.length() - 8);
-        inDate.setText(indates);
+        inDate.setText(indate);
         batchName.setText(wz_rKxx.getBatchName());
         quantity.setText(wz_rKxx.getQuantity());
         outGoodsvalue.setText(wz_rKxx.getOutGoodsvalue() + "元");

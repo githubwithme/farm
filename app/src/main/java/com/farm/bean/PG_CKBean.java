@@ -14,40 +14,71 @@ import com.lidroid.xutils.db.annotation.Table;
 public class PG_CKBean implements Parcelable {
     @Id
     @NoAutoIncrement
-    public String id="";
+/*    id
+            uid
+    goodsInfoId        总表id
+    goodsInInfoRKId    出库哪个批次id
+    goodsTypeId     一级id
+    userDefTypeId   二级id
+    goodsId       物资id
+    storehouseId   仓库id
+    firs      一级单位
+    firsNum   一级数量
+    sec       二级单位
+    secNum    二级数量
+    three     三级单位
+    threeNum  三级数量
+    goodsOutNote   备注
+    isConfirm   是否确认*/
     public String uid="";
-    public String wzFirst="";
-    public String wzSecond="";
+    public String goodsInInfoRKId="";
+    public String goodsTypeId="";
+    public String userDefTypeId="";
     public String goodsId="";
-    public String storehouseId ="";
-    public String goodsName="";
-    public String goodsSum="";
-    public String batchNumber="";
-    public String goodsDw="";
+    public String storehouseId="";
+    public String firs="";
+    public String firsNum ="";
+    public String sec="";
+    public String secNum="";
+    public String three="";
+    public String goodsOutNote="";
+    public String threeNum="";
 
 
-    public String getStorehouseId() {
-        return storehouseId;
+
+
+    public String getGoodsInInfoRKId() {
+        return goodsInInfoRKId;
     }
 
-    public void setStorehouseId(String storehouseId) {
-        this.storehouseId = storehouseId;
+    public void setGoodsInInfoRKId(String goodsInInfoRKId) {
+        this.goodsInInfoRKId = goodsInInfoRKId;
     }
 
-    public String getGoodsDw() {
-        return goodsDw;
+
+
+    public String getUid() {
+        return uid;
     }
 
-    public void setGoodsDw(String goodsDw) {
-        this.goodsDw = goodsDw;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getBatchNumber() {
-        return batchNumber;
+    public String getFirs() {
+        return firs;
     }
 
-    public void setBatchNumber(String batchNumber) {
-        this.batchNumber = batchNumber;
+    public void setFirs(String firs) {
+        this.firs = firs;
+    }
+
+    public String getFirsNum() {
+        return firsNum;
+    }
+
+    public void setFirsNum(String firsNum) {
+        this.firsNum = firsNum;
     }
 
     public String getGoodsId() {
@@ -58,52 +89,70 @@ public class PG_CKBean implements Parcelable {
         this.goodsId = goodsId;
     }
 
-    public String getGoodsName() {
-        return goodsName;
+    public String getGoodsOutNote() {
+        return goodsOutNote;
     }
 
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
+    public void setGoodsOutNote(String goodsOutNote) {
+        this.goodsOutNote = goodsOutNote;
     }
 
-    public String getGoodsSum() {
-        return goodsSum;
+    public String getGoodsTypeId() {
+        return goodsTypeId;
     }
 
-    public void setGoodsSum(String goodsSum) {
-        this.goodsSum = goodsSum;
+    public void setGoodsTypeId(String goodsTypeId) {
+        this.goodsTypeId = goodsTypeId;
     }
 
-    public String getId() {
-        return id;
+
+
+    public String getSec() {
+        return sec;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setSec(String sec) {
+        this.sec = sec;
     }
 
-    public String getUid() {
-        return uid;
+    public String getSecNum() {
+        return secNum;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setSecNum(String secNum) {
+        this.secNum = secNum;
     }
 
-    public String getWzFirst() {
-        return wzFirst;
+    public String getStorehouseId() {
+        return storehouseId;
     }
 
-    public void setWzFirst(String wzFirst) {
-        this.wzFirst = wzFirst;
+    public void setStorehouseId(String storehouseId) {
+        this.storehouseId = storehouseId;
     }
 
-    public String getWzSecond() {
-        return wzSecond;
+    public String getThree() {
+        return three;
     }
 
-    public void setWzSecond(String wzSecond) {
-        this.wzSecond = wzSecond;
+    public void setThree(String three) {
+        this.three = three;
+    }
+
+    public String getThreeNum() {
+        return threeNum;
+    }
+
+    public void setThreeNum(String threeNum) {
+        this.threeNum = threeNum;
+    }
+
+    public String getUserDefTypeId() {
+        return userDefTypeId;
+    }
+
+    public void setUserDefTypeId(String userDefTypeId) {
+        this.userDefTypeId = userDefTypeId;
     }
 
     public static final Creator<PG_CKBean> CREATOR = new Creator()
@@ -112,16 +161,19 @@ public class PG_CKBean implements Parcelable {
         public PG_CKBean createFromParcel(Parcel source)
         {
             PG_CKBean p = new PG_CKBean();
-            p.setId(source.readString());
             p.setUid(source.readString());
-            p.setWzFirst(source.readString());
-            p.setWzSecond(source.readString());
+            p.setGoodsInInfoRKId(source.readString());
+            p.setGoodsTypeId(source.readString());
+            p.setUserDefTypeId(source.readString());
             p.setGoodsId(source.readString());
             p.setStorehouseId(source.readString());
-            p.setGoodsName(source.readString());
-            p.setGoodsSum(source.readString());
-            p.setBatchNumber(source.readString());
-            p.setGoodsDw(source.readString());
+            p.setFirs(source.readString());
+            p.setFirsNum(source.readString());
+            p.setSec(source.readString());
+            p.setSecNum(source.readString());
+            p.setThree(source.readString());
+            p.setThreeNum(source.readString());
+            p.setGoodsOutNote(source.readString());
 
 
             return p;
@@ -139,17 +191,19 @@ public class PG_CKBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel p, int arg1)
     {
-        p.writeString(id);
         p.writeString(uid);
-        p.writeString(wzFirst);
-        p.writeString(wzSecond);
+        p.writeString(goodsInInfoRKId);
+        p.writeString(goodsTypeId);
+        p.writeString(userDefTypeId);
         p.writeString(goodsId);
         p.writeString(storehouseId);
-        p.writeString(goodsName);
-        p.writeString(goodsSum);
-        p.writeString(batchNumber);
-        p.writeString(goodsDw);
-
+        p.writeString(firs);
+        p.writeString(firsNum);
+        p.writeString(sec);
+        p.writeString(secNum);
+        p.writeString(three);
+        p.writeString(threeNum);
+        p.writeString(goodsOutNote);
 
     }
 

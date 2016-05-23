@@ -82,7 +82,7 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
 
         List<WZ_RKxx> childData = listData.get(groupPosition).getWzcrkxx();
         final WZ_RKxx wz_rKxx = childData.get(childPosition);
-        final String batchname=listData.get(groupPosition).getBatchName();
+        final String inType=listData.get(groupPosition).getInType();
         final String indate=listData.get(groupPosition).getInDate();
         View v = null;
         if (lmap.get(groupPosition) != null)
@@ -100,17 +100,14 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
             listItemView.quantity = (TextView) convertView.findViewById(R.id.quantity);
             listItemView.inGoodsvalue = (TextView) convertView.findViewById(R.id.inGoodsvalue);
             convertView.setTag(listItemView);
-//            convertView.setTag(R.id.tag_bean, jobtab);
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //添加
-//                    jobtab jobtab = (com.farm.bean.jobtab) v.getTag(R.id.tag_bean);
-//                    Intent intent = new Intent(context, NCZ_WZ_RKDetail_.class);
+//                    Intent intent = new Intent(context, NCZ_WZ_CKDetail_.class);
                     Intent intent = new Intent(context, PG_WZ_CKDetail_.class);
 
                     intent.putExtra("wz_rKxx", wz_rKxx);
-                    intent.putExtra("batchname", batchname);
+                    intent.putExtra("inType", inType);
                     intent.putExtra("indate", indate);
                     context.startActivity(intent);
 
@@ -127,7 +124,7 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
             listItemView.goodsname.setText(wz_rKxx.getGoodsname());
             listItemView.local.setText(wz_rKxx.getParkName() + "-" + wz_rKxx.getStorehouseName());
             listItemView.quantity.setText("数量:"+wz_rKxx.getQuantity());
-            listItemView.inGoodsvalue.setText("总值:"+wz_rKxx.getInGoodsvalue() + "元");
+            listItemView.inGoodsvalue.setText("总值:"+wz_rKxx.getOutGoodsvalue() + "元");
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -202,9 +199,10 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
         TextView loadingFee = (TextView) convertView.findViewById(R.id.loadingFee);
         TextView shippingFee = (TextView) convertView.findViewById(R.id.shippingFee);
         TextView inGoodsValue = (TextView) convertView.findViewById(R.id.inGoodsValue);
-
+//        String indata=listData.get(groupPosition).getInDate().substring(0,listData.get(groupPosition).getInDate().length()-8);
         inDate.setText(listData.get(groupPosition).getInDate());
-        batchName.setText("批次号:"+listData.get(groupPosition).getBatchName());
+//        inDate.setText(indata);
+        batchName.setText(listData.get(groupPosition).getInType());
         loadingFee.setText("装卸费:"+listData.get(groupPosition).getLoadingFee()+"元");
         shippingFee.setText("运费:" + listData.get(groupPosition).getShippingFee() + "元");
         inGoodsValue.setText(listData.get(groupPosition).getInGoodsValue() + "元");

@@ -94,7 +94,7 @@ public class PG_CKList extends Fragment
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("goodsName",goodsName);
-        params.addQueryStringParameter("action", "getGoodsInByUid");
+        params.addQueryStringParameter("action", "getGoodsOutByUid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
