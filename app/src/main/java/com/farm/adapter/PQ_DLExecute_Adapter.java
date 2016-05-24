@@ -197,9 +197,11 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
         } else if (listData.get(groupPosition).getBatchColor().equals("绿色")) {
 
             groupExpand.setBackgroundColor(Color.parseColor("#90ee90"));
-        } else {
+        } else if (listData.get(groupPosition).getBatchColor().equals("紫色")){
 
             groupExpand.setBackgroundColor(Color.parseColor("#d8bfd8"));
+        }else{
+            groupExpand.setBackgroundColor(Color.parseColor("#ffff00"));
         }
         groupExpand.setOnClickListener(new View.OnClickListener() {
             @Override

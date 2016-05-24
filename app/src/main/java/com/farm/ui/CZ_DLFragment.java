@@ -70,7 +70,7 @@ public class CZ_DLFragment extends Fragment
     @Click
     void startdl()
     {
-        cz_startdl.setVisibility(View.GONE);
+//        cz_startdl.setVisibility(View.GONE);
         View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "断蕾", "是否选择"+tv_timelimit.getText().toString()+"这个时间为开始断蕾时间？", "确认", "取消", new MyDialog.CustomDialogListener()
         {
@@ -80,7 +80,7 @@ public class CZ_DLFragment extends Fragment
                 switch (v.getId())
                 {
                     case R.id.btn_sure:
-                        cz_startdl.setVisibility(View.GONE);
+//                        cz_startdl.setVisibility(View.GONE);
                         getcreateBatchTime();
                         myDialog.dismiss();
                         break;
@@ -104,7 +104,8 @@ public class CZ_DLFragment extends Fragment
     @Click
     void shuaxin()
     {
-        getBatchTimeOfPark();
+        getIsStartBreakOff();
+//        getBatchTimeOfPark();
     }
 
     @AfterViews
@@ -211,6 +212,7 @@ public class CZ_DLFragment extends Fragment
                {
                    if (result.getAffectedRows() > 0)
                    {
+
                        cz_startdl.setVisibility(View.GONE);
                        getBatchTimeOfPark();
 

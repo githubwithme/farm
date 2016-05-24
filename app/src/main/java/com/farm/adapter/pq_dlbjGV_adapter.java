@@ -198,9 +198,9 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
                         saveBreakOffList(builder.toString());
                     } else //编辑数据
                     {
-
-                            updateBreakOff(list_BreakOff_New.get(0).getUuid(),list_BreakOff_New.get(0).getnumberofbreakoff(), number);
-
+                        String difference=list_BreakOff_New.get(0).getnumberofbreakoff();
+                        updateBreakOff(list_BreakOff_New.get(0).getUuid(),difference, number);
+                        list_BreakOff_New.get(0).setnumberofbreakoff(number);
                     }
 
                 }

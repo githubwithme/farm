@@ -76,7 +76,7 @@
             android:gravity="left|center_vertical"
             android:text="开始时间"
             android:textColor="@color/gray"
-            android:textSize="@dimen/size_14"/>
+            android:textSize="@dimen/size_20"/>
 
         <TextView
             android:id="@+id/tv_timelimit"
@@ -85,7 +85,7 @@
             android:background="@null"
             android:gravity="center"
             android:hint="开始时间"
-            android:textSize="@dimen/size_14"/>
+            android:textSize="@dimen/size_20"/>
     </LinearLayout>
     <TextView
         android:id="@+id/startdl"

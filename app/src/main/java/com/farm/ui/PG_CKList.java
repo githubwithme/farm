@@ -75,6 +75,12 @@ public class PG_CKList extends Fragment
         getBreakOffInfoOfContract();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getBreakOffInfoOfContract();
+    }
+
     @AfterViews
     void afssss()
     {
@@ -93,8 +99,9 @@ public class PG_CKList extends Fragment
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("goodsName",goodsName);
-        params.addQueryStringParameter("action", "getGoodsInByUid");
+        params.addQueryStringParameter("userId", commembertab.getId());
+//        params.addQueryStringParameter("goodsName",goodsName);
+        params.addQueryStringParameter("action", "getGoodsOutByPG");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

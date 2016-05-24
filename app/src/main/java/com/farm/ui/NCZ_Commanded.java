@@ -87,6 +87,7 @@ public class NCZ_Commanded extends Fragment implements View.OnClickListener
     View line;
     @ViewById
     Button btn_more;
+
     @ViewById
     PullToRefreshListView frame_listview_news;
 
@@ -105,7 +106,7 @@ public class NCZ_Commanded extends Fragment implements View.OnClickListener
     @AfterViews
     void afterOncreate()
     {
-//        btn_add.setVisibility(View.GONE);
+        btn_add.setVisibility(View.GONE);
         SqliteDb.deleteAllRecordtemp(getActivity(), SelectRecords.class, "NCZ_CMD");
         getArealist();
         initAnimalListView();

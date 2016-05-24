@@ -45,6 +45,15 @@ public class goodslisttab implements Parcelable
     public String three="";
     public String threeNum="";
     public String DW="";
+    public String GoodsStatistical="";
+
+    public String getGoodsStatistical() {
+        return GoodsStatistical;
+    }
+
+    public void setGoodsStatistical(String goodsStatistical) {
+        GoodsStatistical = goodsStatistical;
+    }
 
     public String getDW() {
         return DW;
@@ -379,6 +388,7 @@ public class goodslisttab implements Parcelable
             p.setThree(source.readString());
             p.setThreeNum(source.readString());
             p.setDW(source.readString());
+            p.setGoodsStatistical(source.readString());
             return p;
         }
 
@@ -422,6 +432,7 @@ public class goodslisttab implements Parcelable
         p.writeString(three);
         p.writeString(threeNum);
         p.writeString(DW);
+        p.writeString(GoodsStatistical);
 
     }
 
