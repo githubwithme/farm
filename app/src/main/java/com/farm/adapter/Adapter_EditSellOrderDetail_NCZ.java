@@ -19,6 +19,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.commembertab;
 import com.farm.widget.CustomDialog_EditOrderDetail;
+import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -31,6 +32,7 @@ import java.util.List;
 
 public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
 {
+    MyDialog myDialog;
     private Activity context;// 运行上下文
     private List<SellOrderDetail_New> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
@@ -43,6 +45,7 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
         public TextView tv_area;
         public TextView tv_plannumber;
         public Button btn_editorderdetail;
+        public Button btn_deleteorderdetail;
 
         public TextView tv_yq;
         public TextView tv_pq;
@@ -86,6 +89,7 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
             listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
             listItemView.tv_plannumber = (TextView) convertView.findViewById(R.id.tv_plannumber);
             listItemView.btn_editorderdetail = (Button) convertView.findViewById(R.id.btn_editorderdetail);
+            listItemView.btn_deleteorderdetail = (Button) convertView.findViewById(R.id.btn_deleteorderdetail);
             listItemView.btn_editorderdetail.setTag(position);
             listItemView.btn_editorderdetail.setOnClickListener(new View.OnClickListener()
             {
@@ -94,6 +98,16 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
                 {
                     int pos = (int) v.getTag();
                     showDialog_editNumber(listItems.get(pos), (TextView) v);
+                }
+            });
+            listItemView.btn_deleteorderdetail.setTag(position);
+            listItemView.btn_deleteorderdetail.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    int pos = (int) v.getTag();
+                    showDeleteTip(listItems.get(pos));
                 }
             });
             // 设置控件集到convertView
@@ -156,7 +170,8 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
             }
         });
     }
-//
+
+    //
 //    private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new)
 //    {
 //        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editorderdetail, null);
@@ -184,6 +199,71 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
 //        });
 //        customDialog_editOrderDetaill.show();
 //    }
+    private void showDeleteTip(final SellOrderDetail_New sellOrderDetail_new)
+    {
+        View dialog_layout = (LinearLayout) context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        deleteOrderDetail(sellOrderDetail_new.getplannumber(), sellOrderDetail_new.getUuid(), sellOrderDetail_new.getuid(), sellOrderDetail_new.getcontractid(), sellOrderDetail_new.getYear(), sellOrderDetail_new.getBatchTime());
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.cancel();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
+
+    private void deleteOrderDetail(String number_difference, String uuid, String uid, String contractid, String year, String batchTime)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("number_difference", number_difference);
+        params.addQueryStringParameter("uuid", uuid);
+        params.addQueryStringParameter("uid", uid);
+        params.addQueryStringParameter("contractid", contractid);
+        params.addQueryStringParameter("year", year);
+        params.addQueryStringParameter("batchTime", batchTime);
+        params.addQueryStringParameter("action", "deleteOrderDetail");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(context, "删除成功！", Toast.LENGTH_SHORT).show();
+                        myDialog.cancel();
+                    } else
+                    {
+                        Toast.makeText(context, "删除失败！", Toast.LENGTH_SHORT).show();
+                    }
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
 
     private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new, final TextView textView)
     {

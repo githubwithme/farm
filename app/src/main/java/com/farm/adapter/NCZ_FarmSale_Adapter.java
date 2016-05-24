@@ -10,7 +10,6 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -65,7 +64,7 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
         public TextView tv_allnumber;
         public TextView tv_batchtime;
         public TextView tv_number;
-        public RelativeLayout ll_batchtime;
+        public LinearLayout ll_batchtime;
 
     }
 
@@ -110,7 +109,7 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
             listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
             View view = (View) convertView.findViewById(R.id.view);
-            listItemView.ll_batchtime = (RelativeLayout) convertView.findViewById(R.id.ll_batchtime);
+            listItemView.ll_batchtime = (LinearLayout) convertView.findViewById(R.id.ll_batchtime);
             listItemView.ll_batchtime.setTag(batchTime);
             listItemView.ll_batchtime.setOnClickListener(new View.OnClickListener()
             {
@@ -154,7 +153,7 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
 
             float percent = 0;
             float allnumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein()) + Integer.valueOf(batchTime.getAllnewsale()) + Integer.valueOf(batchTime.getAllsalefor());
-            float salenumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein() + Integer.valueOf(batchTime.getAllnewsale()));
+            float salenumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein()) + Integer.valueOf(batchTime.getAllnewsale());
             if (allnumber != 0)
             {
                 percent = (salenumber / allnumber) * 100;

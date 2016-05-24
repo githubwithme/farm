@@ -2,21 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:descendantFocusability="blocksDescendants"
               android:orientation="vertical">
 
 
     <LinearLayout
+        android:id="@+id/ll_batchtime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dip"
         android:layout_marginRight="15dip"
         android:layout_marginTop="10dip"
         android:background="@drawable/background_view_rounded_single"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/ll_batchtime"
             android:layout_width="match_parent"
             android:layout_height="40dip">
 

@@ -279,7 +279,7 @@ public class AppException implements UncaughtExceptionHandler
 //        StringBuilder result=new StringBuilder();
 //        result.append("##应用程序发生错误##"+ utils.getTime()+"***\n"+"网络状态:"+GetMobilePhoneInfo.getCurrentNetType(mContext)+"***\n"+"手机型号:"+GetMobilePhoneInfo.getModel()+"***\n"+"手机系统版本:"+GetMobilePhoneInfo.getAndroidVersion()+"***\n"+"SDK版本:"+GetMobilePhoneInfo.getAndroidSDKVersion()+"***\n"+"CPU信息:"+GetMobilePhoneInfo.getCpuInfo()[0]+"***\n"+"总内存:"+GetMobilePhoneInfo.getMemory(mContext)[0]+"可用内存:"+GetMobilePhoneInfo.getMemory(mContext)[1]+"***\n");
 //        resul//t.append(String.valueOf(info));
-        String result = "######应用程序发生错误:" +utils.getTime() + "***\n" + "网络状态:" + GetMobilePhoneInfo.getCurrentNetType(mContext) + "***\n" + "手机型号:" + GetMobilePhoneInfo.getModel() + "***\n" + "手机系统版本:" + GetMobilePhoneInfo.getAndroidVersion() + "***\n" + "SDK版本:" + GetMobilePhoneInfo.getAndroidSDKVersion() + "***\n" + "CPU信息:" + GetMobilePhoneInfo.getCpuInfo()[0] + "***\n" + "总内存:" + GetMobilePhoneInfo.getMemory(mContext)[0] + "可用内存:" + GetMobilePhoneInfo.getMemory(mContext)[1] + "***\n" + String.valueOf(info);
+        String result = "######应用程序发生错误:" + utils.getTime() + "***\n" + "网络状态:" + GetMobilePhoneInfo.getCurrentNetType(mContext) + "***\n" + "手机型号:" + GetMobilePhoneInfo.getModel() + "***\n" + "手机系统版本:" + GetMobilePhoneInfo.getAndroidVersion() + "***\n" + "SDK版本:" + GetMobilePhoneInfo.getAndroidSDKVersion() + "***\n" + "CPU信息:" + GetMobilePhoneInfo.getCpuInfo()[0] + "***\n" + "总内存:" + GetMobilePhoneInfo.getMemory(mContext)[0] + "可用内存:" + GetMobilePhoneInfo.getMemory(mContext)[1] + "***\n" + String.valueOf(info);
         printWriter.close();
         mDeviceCrashInfo.put(STACK_TRACE, result.toString());
         try
@@ -334,14 +334,14 @@ public class AppException implements UncaughtExceptionHandler
 
     private void saveExceptionInfoInSqlite(Context ctx, String info)
     {
-        String userid="10000";
-        String username="未知姓名";
-        String exceptionid=java.util.UUID.randomUUID().toString();
+        String userid = "10000";
+        String username = "未知姓名";
+        String exceptionid = java.util.UUID.randomUUID().toString();
         commembertab commembertab = AppContext.getUserInfo(mContext);
         if (commembertab != null)
         {
-            userid=commembertab.getId();
-            username=commembertab.getrealName();
+            userid = commembertab.getId();
+            username = commembertab.getrealName();
         }
         ExceptionInfo exceptionInfo = new ExceptionInfo();
         exceptionInfo.setId("");

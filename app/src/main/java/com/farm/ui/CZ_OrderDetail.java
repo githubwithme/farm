@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,7 @@ import java.util.List;
 @EActivity(R.layout.cz_orderdetail)
 public class CZ_OrderDetail extends Activity
 {
+    String broadcast;
     TextView textview_number;
     TextView textview_weight;
     String batchtime;
@@ -117,6 +119,7 @@ public class CZ_OrderDetail extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder = getIntent().getParcelableExtra("bean");
+        broadcast = getIntent().getStringExtra("broadcast");
         list_orderdetail = sellOrder.getSellOrderDetailList();
     }
 
@@ -321,11 +324,18 @@ public class CZ_OrderDetail extends Activity
                     customDialog_editOrderDetaill.dismiss();
                     textview_number.setText("实售" + et_actualnumber.getText().toString() + "株");
                     textview_weight.setText("实重" + et_actualweight.getText().toString() + "斤");
+                    int number_difference = 0;
+                    if ( sellOrderDetail_new.getactualnumber().equals(""))
+                    {
+                        number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_actualnumber.getText().toString());
+                    } else
+                    {
+                        number_difference = Integer.valueOf(sellOrderDetail_new.getactualnumber()) - Integer.valueOf(et_actualnumber.getText().toString());
+                    }
                     list_orderdetail.get(pos).setactualnumber(et_actualnumber.getText().toString());
                     list_orderdetail.get(pos).setactualweight(et_actualweight.getText().toString());
                     countAllWeight(list_orderdetail);
                     countAllNumber(list_orderdetail);
-                    int number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_actualnumber.getText().toString());
                     editNumber(sellOrderDetail_new, et_actualnumber.getText().toString(), et_actualweight.getText().toString(), String.valueOf(number_difference));
                 }
             });
@@ -365,6 +375,9 @@ public class CZ_OrderDetail extends Activity
                         if (result.getAffectedRows() == 1)
                         {
                             Toast.makeText(context, "修改成功！", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            intent.setAction(broadcast);
+                            sendBroadcast(intent);
                         } else
                         {
                             Toast.makeText(context, "修改失败！", Toast.LENGTH_SHORT).show();

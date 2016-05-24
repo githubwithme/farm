@@ -2,6 +2,7 @@ package com.farm.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.SellOrder_New;
+import com.farm.ui.NCZ_EditOrder_;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
 @SuppressLint("NewApi")
 public class NCZ_OrderAdapter extends BaseAdapter
 {
+    String broadcast;
     private Context context;// 运行上下文
     private List<SellOrder_New> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
@@ -32,13 +35,15 @@ public class NCZ_OrderAdapter extends BaseAdapter
         public TextView tv_from;
         public TextView tv_batchtime;
         public Button btn_cancleorder;
+        public Button btn_editorder;
     }
 
-    public NCZ_OrderAdapter(Context context, List<SellOrder_New> data)
+    public NCZ_OrderAdapter(Context context, List<SellOrder_New> data,String broadcast)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.listItems = data;
+        this.broadcast = broadcast;
     }
 
     public int getCount()
@@ -76,6 +81,7 @@ public class NCZ_OrderAdapter extends BaseAdapter
             listItemView.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
             listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
+            listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -113,6 +119,21 @@ public class NCZ_OrderAdapter extends BaseAdapter
                 public void onClick(View v)
                 {
 
+                }
+            });
+            listItemView.btn_editorder.setTag(R.id.tag_postion, position);
+            listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
+            listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    int pos = (int) v.getTag(R.id.tag_postion);
+                    SellOrder_New sellOrder = (SellOrder_New) v.getTag(R.id.tag_bean);
+                    Intent intent = new Intent(context, NCZ_EditOrder_.class);
+                    intent.putExtra("bean", sellOrder);
+                    intent.putExtra("broadcast", broadcast);
+                    context.startActivity(intent);
                 }
             });
         } else

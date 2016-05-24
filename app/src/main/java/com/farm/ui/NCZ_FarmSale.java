@@ -1,7 +1,10 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -49,16 +52,22 @@ public class NCZ_FarmSale extends Activity
     @ViewById
     Button btn_orders;
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+    }
+
     @Click
     void btn_newsalelist()
     {
-        if (tv_numberofnewsale.getText().equals("1"))
+        if (tv_numberofnewsale.isShown())
         {
             Intent intent = new Intent(NCZ_FarmSale.this, NCZ_NewSaleList_.class);
             startActivity(intent);
         } else
         {
-            Toast.makeText(this, "暂无清单", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "暂无待发布订单", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -86,7 +95,20 @@ public class NCZ_FarmSale extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATESELLORDER);
+        registerReceiver(receiver_update, intentfilter_update);
     }
+
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getBatchTimeByUid();
+            iSExistNewSale();
+        }
+    };
 
     private void getBatchTimeByUid_test()
     {
@@ -167,7 +189,7 @@ public class NCZ_FarmSale extends Activity
         commembertab commembertab = AppContext.getUserInfo(NCZ_FarmSale.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("year", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("action", "iSExistNewSale");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -183,6 +205,9 @@ public class NCZ_FarmSale extends Activity
                     {
                         tv_numberofnewsale.setVisibility(View.VISIBLE);
                         tv_numberofnewsale.setText("1");
+                    } else
+                    {
+                        tv_numberofnewsale.setVisibility(View.GONE);
                     }
 
                 } else

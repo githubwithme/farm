@@ -2,7 +2,10 @@ package com.farm.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,9 +81,21 @@ public class CZ_NeedFeedbackOrder extends Fragment
     {
         View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEALLORDER_CZ);
+        getActivity().registerReceiver(receiver, intentfilter_update);
+
         return rootView;
     }
 
+    BroadcastReceiver receiver = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getAllOrders();
+        }
+    };
 
     private void getNewSaleList_test()
     {
@@ -134,6 +149,7 @@ public class CZ_NeedFeedbackOrder extends Fragment
                             {
                                 Intent intent = new Intent(getActivity(), CZ_OrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
+                                intent.putExtra("broadcast", AppContext.BROADCAST_UPDATEALLORDER_CZ);
                                 getActivity().startActivity(intent);
                             }
                         });

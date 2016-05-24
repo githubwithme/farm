@@ -1,9 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +26,6 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.entity.StringEntity;
@@ -56,8 +53,6 @@ public class NCZ_OrderDetail extends Activity
     @ViewById
     ListView lv;
     @ViewById
-    Button btn_edit;
-    @ViewById
     TextView tv_plansumvalues;
     @ViewById
     TextView tv_actualsumvalues;
@@ -84,14 +79,6 @@ public class NCZ_OrderDetail extends Activity
     @ViewById
     TextView tv_finalpayment;
 
-
-    @Click
-    void btn_edit()
-    {
-        Intent intent = new Intent(NCZ_OrderDetail.this, NCZ_EditOrder_.class);
-        intent.putExtra("bean", sellOrder);
-        startActivity(intent);
-    }
 
     @AfterViews
     void afterOncreate()

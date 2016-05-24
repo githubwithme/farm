@@ -34,9 +34,17 @@ public class AppContext extends Application
     public final static String BROADCAST_OPENDL = "OPENDL";
     public final static String BROADCAST_UPDATEBREAKOFFINFO = "UPDATEBREAKOFFINFO";
     public final static String BROADCAST_UPDATEPLANT = "UPDATEPLANT";
+    public final static String BROADCAST_UPDATEAllORDER= "BROADCAST_UPDATEAllORDER";
+    public final static String BROADCAST_UPDATENEWSALELIST= "BROADCAST_UPDATENEWSALELIST";
+    public final static String BROADCAST_UPDATESELLORDER= "BROADCAST_UPDATESELLORDER";
+    public final static String BROADCAST_FINISH= "BROADCAST_FINISH";
+    public final static String BROADCAST_UPDATENOTPAYORDER= "BROADCAST_UPDATENOTPAYORDER";
+    public final static String BROADCAST_UPDATEDEALINGORDER= "BROADCAST_UPDATEDEALINGORDER";
     //	public final static String BROADCAST_UPDATECMD_SELECT = "UPDATECMD_SELECT";
     public final static String BROADCAST_UPDATEPCMD_SORT = "UPDATEPCMD_SORT";
     public final static String BROADCAST_UPDATEORDER = "BROADCAST_UPDATEORDER";
+    public final static String BROADCAST_UPDATEALLORDER_CZ = "BROADCAST_UPDATEALLORDER_CZ";
+    public final static String BROADCAST_UPDATENEEDFEEDBACKORDER_CZ = "BROADCAST_UPDATENEEDFEEDBACKORDER_CZ";
     public final static String BROADCAST_ADDWORK = "ADDWORK";
     public final static String BROADCAST_SELECTOR = "SELECTOR";
     public final static String BROADCAST_REFRESHRECORD = "REFRESHRECORD";

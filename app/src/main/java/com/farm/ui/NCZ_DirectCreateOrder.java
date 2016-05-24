@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -184,6 +185,7 @@ public class NCZ_DirectCreateOrder extends Activity
         for (int i = 0; i < list_SellOrderDetail.size(); i++)
         {
             list_SellOrderDetail.get(i).setsaleid(uuid);
+            list_SellOrderDetail.get(i).setType("salein");
         }
 
         List<SellOrder_New> SellOrderList = new ArrayList<>();
@@ -257,6 +259,13 @@ public class NCZ_DirectCreateOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         Toast.makeText(NCZ_DirectCreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent();
+                        intent1.setAction(AppContext.BROADCAST_FINISH);
+                        sendBroadcast(intent1);
+
+                        Intent intent2 = new Intent();
+                        intent2.setAction(AppContext.BROADCAST_UPDATESELLORDER);
+                        sendBroadcast(intent2);
                         finish();
                     }
 

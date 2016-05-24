@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,6 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
-import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditOrderDetail;
 import com.lidroid.xutils.HttpUtils;
@@ -192,59 +192,12 @@ public class NCZ_CreateOrder extends Activity
         return allnumber;
     }
 
-    private void getListData()
-    {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_CreateOrder.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("comID", SellOrderDetail.getUuid());
-        params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("page_size", "10");
-        params.addQueryStringParameter("page_index", "10");
-        params.addQueryStringParameter("action", "commandGetListBycomID");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<SellOrderDetail_New> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_sellOrderDetail = new Adapter_EditSellOrderDetail_NCZ(NCZ_CreateOrder.this, listNewData);
-                        lv.setAdapter(adapter_sellOrderDetail);
-                        utils.setListViewHeight(lv);
-                    } else
-                    {
-                        listNewData = new ArrayList<SellOrderDetail_New>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(NCZ_CreateOrder.this, "error_connectDataBase");
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s)
-            {
-
-            }
-        });
-    }
-
 
     private void addOrder(String uuid, String data)
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uuid", uuid);
-        params.addQueryStringParameter("action", "addOrder");
+        params.addQueryStringParameter("saleid", uuid);
+        params.addQueryStringParameter("action", "createOrder");
         params.setContentType("application/json");
         try
         {
@@ -267,6 +220,13 @@ public class NCZ_CreateOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         Toast.makeText(NCZ_CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent();
+                        intent1.setAction(AppContext.BROADCAST_UPDATESELLORDER);
+                        sendBroadcast(intent1);
+
+                        Intent intent2 = new Intent();
+                        intent2.setAction(AppContext.BROADCAST_UPDATENEWSALELIST);
+                        sendBroadcast(intent2);
                         finish();
                     }
 
@@ -335,7 +295,7 @@ public class NCZ_CreateOrder extends Activity
             if (lmap.get(position) == null)
             {
                 // 获取list_item布局文件的视图
-                convertView = listContainer.inflate(R.layout.adapter_editsellorderdetail_ncz, null);
+                convertView = listContainer.inflate(R.layout.adapter_createorder_ncz, null);
                 listItemView = new ListItemView();
                 // 获取控件对象
                 listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
