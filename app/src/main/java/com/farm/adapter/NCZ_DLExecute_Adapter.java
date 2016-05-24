@@ -203,9 +203,10 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
         } else if (listData.get(groupPosition).getBatchColor().equals("绿色")) {
 
             tv_park.setBackgroundColor(Color.parseColor("#90ee90"));
-        } else {
-
+        } else if (listData.get(groupPosition).getBatchColor().equals("紫色")){
             tv_park.setBackgroundColor(Color.parseColor("#d8bfd8"));
+        }else {
+            tv_park.setBackgroundColor(Color.parseColor("#ffff00"));
         }
         return convertView;
     }

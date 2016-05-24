@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.farm.R;
+import com.farm.bean.PG_CKDWbean;
 import com.farm.bean.PeopelList;
 import com.farm.bean.Wz_Storehouse;
 
@@ -21,16 +22,16 @@ public class PG_CKlistAdapter extends BaseAdapter
 {
 
     private Context context;
-    private List<Wz_Storehouse> listItems;
+    private List<PG_CKDWbean> listItems;
     private LayoutInflater listContainer;
-    Wz_Storehouse wz_storehouse;
+    PG_CKDWbean pg_ckdWbean;
 
     class ListItemView
     {
         public TextView tv_yq;
     }
 
-    public PG_CKlistAdapter(Context context, List<Wz_Storehouse> data)
+    public PG_CKlistAdapter(Context context, List<PG_CKDWbean> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context);
@@ -41,7 +42,8 @@ public class PG_CKlistAdapter extends BaseAdapter
 
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        wz_storehouse = listItems.get(position);
+        pg_ckdWbean = listItems.get(position);
+        int num=position+1;
         ListItemView listItemView = null;
         if (lmap.get(position) == null)
         {
@@ -55,8 +57,18 @@ public class PG_CKlistAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
+        if(!pg_ckdWbean.getThree().equals(""))
+        {
+            listItemView.tv_yq.setText("第"+num+"批次:" + pg_ckdWbean.getThreeNum() + pg_ckdWbean.getThree());
+        }else if(pg_ckdWbean.getThree().equals("")&&!pg_ckdWbean.getSec().equals(""))
+        {
+            listItemView.tv_yq.setText("第"+num+"批次:" + pg_ckdWbean.getSecNum() + pg_ckdWbean.getSec());
+        }else {
+            listItemView.tv_yq.setText("第"+num+"批次:"+pg_ckdWbean.getFirsNum()+pg_ckdWbean.getFirs());
+        }
+
         //"批次号:" +
-        listItemView.tv_yq.setText(wz_storehouse.getBatchName()+"--"+wz_storehouse.getQuantity());
+//        listItemView.tv_yq.setText(wz_storehouse.getBatchName()+"--"+wz_storehouse.getQuantity());
         return convertView;
     }
 

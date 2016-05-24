@@ -15,6 +15,13 @@
             android:contentDescription=""
             android:src="@drawable/back" />
 
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btn_records"
+            android:layout_toRightOf="@+id/imgbtn_back"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@drawable/add_voice_pressed"/>
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"

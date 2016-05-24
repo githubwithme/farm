@@ -28,6 +28,7 @@
             android:textColor="@color/textcolor_titlebar"
             android:textSize="@dimen/titlebar_textsize" />
         <LinearLayout
+            android:id="@+id/ll_pgck"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true">
@@ -268,7 +269,7 @@
             android:layout_weight="1"
             android:gravity="center|left"
             android:inputType="numberDecimal"
-            android:text="出库类型"
+            android:text="是否确认"
             android:textColor="@color/bg_text"
             android:textSize="@dimen/size_14" />
 
@@ -340,89 +341,10 @@
         android:layout_height="1px"
         android:background="@color/bg_main" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dip"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:inputType="numberDecimal"
-            android:text="总价"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
-
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/line_color" />
 
 
-        <TextView
-            android:id="@+id/outGoodsvalue"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center|right"
-            android:inputType="numberDecimal"
-            android:text="叶数"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
 
 
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/bg_main" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dip"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:inputType="numberDecimal"
-            android:text="备注"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
-
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/line_color" />
-
-
-        <TextView
-            android:id="@+id/note"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center|right"
-            android:inputType="numberDecimal"
-            android:text="叶数"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
-
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/bg_main" />
 
     <RelativeLayout
         android:visibility="gone"

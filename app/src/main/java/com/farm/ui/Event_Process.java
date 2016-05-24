@@ -112,7 +112,8 @@ static int p;
     Button tv_bianjie;
     @ViewById
     Button tv_delete;
-
+    @ViewById
+    Button btn_records;
     @Click
     void imgbtn_back() {
         finish();
@@ -123,6 +124,12 @@ static int p;
         showPop_title();
     }
 
+    @Click
+    void btn_records(){
+   /*     Intent intent = new Intent(Event_Process.this, HomeFragmentActivity.class);
+        intent.putExtra("type", "dhisss");
+        startActivity(intent);*/
+    }
     @Click
     void tv_delete() {
         View dialog_layout = (LinearLayout) Event_Process.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
@@ -185,8 +192,32 @@ static int p;
         reportedBean = getIntent().getParcelableExtra("event");
         IntentFilter imageIntentFilter = new IntentFilter(MediaChooser.IMAGE_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
         Event_Process.this.registerReceiver(imageBroadcastReceiver, imageIntentFilter);
-    }
 
+      /*  IntentFilter luyinIntentFilter = new IntentFilter(MediaChooser.LUYIN_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
+        Event_Process.this.registerReceiver(luyinBroadcastReceiver, luyinIntentFilter);*/
+    }
+/*    BroadcastReceiver luyinBroadcastReceiver = new BroadcastReceiver()// 植物（0为整体照，1为花照，2为果照，3为叶照）；动物（0为整体照，1为脚印照，2为粪便照）
+    {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            List<String> list = intent.getStringArrayListExtra("list");
+            for (int i = 0; i < list.size(); i++) {
+                String FJBDLJ = list.get(i);
+                ImageView imageView = new ImageView(Event_Process.this);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                BitmapHelper.setImageView(Event_Process.this, imageView, FJBDLJ);
+                imageView.setTag(FJBDLJ);
+
+                FJxx fj_SCFJ = new FJxx();
+                fj_SCFJ.setFJBDLJ(FJBDLJ);
+                fj_SCFJ.setFJLX("3");
+
+                list_picture.add(fj_SCFJ);
+                list_allfj.add(fj_SCFJ);
+                saveData(fj_SCFJ);
+            }
+        }
+    };*/
     BroadcastReceiver imageBroadcastReceiver = new BroadcastReceiver()// 植物（0为整体照，1为花照，2为果照，3为叶照）；动物（0为整体照，1为脚印照，2为粪便照）
     {
         @Override
@@ -206,14 +237,7 @@ static int p;
                 list_picture.add(fj_SCFJ);
                 list_allfj.add(fj_SCFJ);
                 saveData(fj_SCFJ);
-
             }
-    /*      for(int j=0;j<list.size();j++)
-          {
-
-              saveData();
-          }*/
-
         }
     };
 

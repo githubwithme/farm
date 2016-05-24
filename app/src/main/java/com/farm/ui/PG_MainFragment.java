@@ -86,6 +86,7 @@ public class PG_MainFragment extends Fragment
 	{
 		View rootView = inflater.inflate(R.layout.pg_fragment_main, container, false);
 		commembertab commembertab = AppContext.getUserInfo(getActivity());
+		String aa=commembertab.getId();
 		dayWeatherFragment = new DayWeatherFragment_();
 		common_TodayJob = new Common_TodayJob_();
 		Bundle bundle = new Bundle();

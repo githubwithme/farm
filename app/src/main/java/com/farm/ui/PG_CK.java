@@ -368,6 +368,7 @@ public class PG_CK extends Activity {
                 pw_tab.dismiss();
 //                iv_dowm_tab.setImageResource(R.drawable.ic_down);
                 tv_head.setText(listpeople.get(postion).getStoreName());
+                getCommandlist();
 
             }
         });

@@ -31,6 +31,16 @@ public class CustomDbUpgradeListener implements DbUtils.DbUpgradeListener
                     sqLiteDatabase.execSQL(sql);
                 }
             }
+            tableexist = dbUtils.tableIsExist(goodslisttab.class);
+            if (tableexist)
+            {
+                columnexist = SqliteDb.checkColumnExist1(sqLiteDatabase, "goodslisttab", "GoodsStatistical");
+                if (!columnexist)
+                {
+                    String sql = "alter table  goodslisttab  add column GoodsStatistical NVARCHAR(20)";
+                    sqLiteDatabase.execSQL(sql);
+                }
+            }
             tableexist = dbUtils.tableIsExist(goodslisttab_flsl.class);
             if (tableexist)
             {
