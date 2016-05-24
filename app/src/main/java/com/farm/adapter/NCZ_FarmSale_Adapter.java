@@ -58,9 +58,11 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
     static class ListItemView
     {
         public TextView tv_saleinfo;
+        public LinearLayout ll_allsele;
         public LinearLayout ll_saleinfo;
         public ProgressBar pb;
         public TextView tv_pb;
+        public TextView tv_allnumber;
         public TextView tv_batchtime;
         public TextView tv_number;
         public RelativeLayout ll_batchtime;
@@ -100,9 +102,11 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
 
             // 获取控件对象
             listItemView.ll_saleinfo = (LinearLayout) convertView.findViewById(R.id.ll_saleinfo);
+            listItemView.ll_allsele = (LinearLayout) convertView.findViewById(R.id.ll_allsele);
             listItemView.pb = (ProgressBar) convertView.findViewById(R.id.pb);
             listItemView.tv_pb = (TextView) convertView.findViewById(R.id.tv_pb);
             listItemView.tv_saleinfo = (TextView) convertView.findViewById(R.id.tv_saleinfo);
+            listItemView.tv_allnumber = (TextView) convertView.findViewById(R.id.tv_allnumber);
             listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
             View view = (View) convertView.findViewById(R.id.view);
@@ -128,12 +132,15 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
                 {
                     View ll = (View) v.getTag();
                     LinearLayout ll_saleinfo = (LinearLayout) ll.findViewById(R.id.ll_saleinfo);
+                    LinearLayout ll_allsele = (LinearLayout) ll.findViewById(R.id.ll_allsele);
                     if (ll_saleinfo.isShown())
                     {
                         ll_saleinfo.setVisibility(View.GONE);
+                        ll_allsele.setVisibility(View.GONE);
                     } else
                     {
                         ll_saleinfo.setVisibility(View.VISIBLE);
+                        ll_allsele.setVisibility(View.VISIBLE);
                     }
 
                 }
@@ -144,20 +151,33 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
             {
                 map = new HashMap<>();
             }
-            int percent = 0;
-            int allnumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein() + Integer.valueOf(batchTime.getAllnewsale()) + Integer.valueOf(batchTime.getAllsalefor()));
+
+            float percent = 0;
+            float allnumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein()) + Integer.valueOf(batchTime.getAllnewsale()) + Integer.valueOf(batchTime.getAllsalefor());
+            float salenumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein() + Integer.valueOf(batchTime.getAllnewsale()));
             if (allnumber != 0)
             {
-                percent =( Integer.valueOf(batchTime.getAllsalefor()) / allnumber)*100;
+                percent = (salenumber / allnumber) * 100;
             }
-            listItemView.pb.setProgress(percent);
-            listItemView.tv_pb.setText("待售" + percent + "%");
-
-
-            listItemView.tv_number.setText("待售" + batchTime.getAllsalefor());
+            listItemView.pb.setProgress(Math.round(percent));
+            listItemView.tv_pb.setText("共售" + percent + "%");
+            listItemView.tv_allnumber.setText("总产量" + allnumber);
             listItemView.tv_batchtime.setText(batchTime.getBatchTime());
             listItemView.tv_saleinfo.setText("已售" + batchTime.getAllsaleout() + "    售中" + batchTime.getAllsalein() + "    拟售" + batchTime.getAllnewsale());
+            if (batchTime.getAllsalefor().equals("0"))
+            {
+                if (salenumber != 0)
+                {
+                    listItemView.tv_number.setText("已售完");
+                } else
+                {
+                    listItemView.tv_number.setText("产量未上报");
+                }
 
+            } else
+            {
+                listItemView.tv_number.setText("待售" + batchTime.getAllsalefor());
+            }
 
         } else
         {
@@ -224,7 +244,9 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
         TextView tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
         TextView tv_number = (TextView) convertView.findViewById(R.id.tv_number);
         LinearLayout ll_saleinfo = (LinearLayout) convertView.findViewById(R.id.ll_saleinfo);
+        LinearLayout ll_allsele = (LinearLayout) convertView.findViewById(R.id.ll_allsele);
         TextView tv_saleinfo = (TextView) convertView.findViewById(R.id.tv_saleinfo);
+        TextView tv_allnumber = (TextView) convertView.findViewById(R.id.tv_allnumber);
         TextView tv_pb = (TextView) convertView.findViewById(R.id.tv_pb);
         ProgressBar pb = (ProgressBar) convertView.findViewById(R.id.pb);
         View view = (View) convertView.findViewById(R.id.view);
@@ -236,28 +258,45 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
             {
                 View ll = (View) v.getTag();
                 LinearLayout ll_saleinfo = (LinearLayout) ll.findViewById(R.id.ll_saleinfo);
+                LinearLayout ll_allsele = (LinearLayout) ll.findViewById(R.id.ll_allsele);
                 if (ll_saleinfo.isShown())
                 {
                     ll_saleinfo.setVisibility(View.GONE);
+                    ll_allsele.setVisibility(View.GONE);
                 } else
                 {
                     ll_saleinfo.setVisibility(View.VISIBLE);
+                    ll_allsele.setVisibility(View.VISIBLE);
                 }
             }
         });
-        int percent = 0;
         parktab parktab = listData.get(groupPosition);
-        int allnumber = (Integer.valueOf(parktab.getAllsaleout()) + Integer.valueOf(parktab.getAllsalein()) + Integer.valueOf(parktab.getAllnewsale()) + Integer.valueOf(parktab.getAllsalefor()));
+        float percent = 0;
+        float allnumber = Integer.valueOf(parktab.getAllsaleout()) + Integer.valueOf(parktab.getAllsalein()) + Integer.valueOf(parktab.getAllnewsale()) + Integer.valueOf(parktab.getAllsalefor());
+        float salenumber = Integer.valueOf(parktab.getAllsaleout()) + Integer.valueOf(parktab.getAllsalein()) + Integer.valueOf(parktab.getAllnewsale());
         if (allnumber != 0)
         {
-            percent = (Integer.valueOf(parktab.getAllsalefor()) / allnumber)*100;
+            percent = (salenumber / allnumber) * 100;
         }
-        pb.setProgress(percent);
-        tv_pb.setText("待售" + percent + "%");
+        pb.setProgress(Math.round(percent));
+        tv_pb.setText("共售" + percent + "%");
 
         tv_parkname.setText(parktab.getparkName());
-        tv_number.setText("待售" + parktab.getAllsalefor());
+        tv_allnumber.setText("总产量" + allnumber);
         tv_saleinfo.setText("已售" + parktab.getAllsaleout() + "    售中" + parktab.getAllsalein() + "    拟售" + parktab.getAllnewsale());
+        if (parktab.getAllsalefor().equals("0"))
+        {
+            if (salenumber != 0)
+            {
+                tv_number.setText("已售完");
+            } else
+            {
+                tv_number.setText("产量未上报");
+            }
+        } else
+        {
+            tv_number.setText("待售" + parktab.getAllsalefor());
+        }
         return convertView;
     }
 

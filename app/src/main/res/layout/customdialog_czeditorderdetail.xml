@@ -27,8 +27,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:hint=""
+            android:inputType="numberDecimal"
             android:paddingLeft="10dip"
-            android:text="500"
             android:textColor="@color/gray"
             android:textSize="@dimen/size_sp_14"/>
 
@@ -48,8 +49,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:hint=""
+            android:inputType="numberDecimal"
             android:paddingLeft="10dip"
-            android:text="500"
             android:textColor="@color/gray"
             android:textSize="@dimen/size_sp_14"/>
 

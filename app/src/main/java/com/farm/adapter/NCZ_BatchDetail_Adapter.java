@@ -16,6 +16,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -188,6 +189,7 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.ncz_batchdetail_parent, null);
         }
         TextView tv_areaname = (TextView) convertView.findViewById(R.id.tv_areaname);
+        TextView tv_allnumber = (TextView) convertView.findViewById(R.id.tv_allnumber);
         TextView tv_number = (TextView) convertView.findViewById(R.id.tv_number);
         LinearLayout ll_saleinfo = (LinearLayout) convertView.findViewById(R.id.ll_saleinfo);
         TextView tv_saleinfo = (TextView) convertView.findViewById(R.id.tv_saleinfo);
@@ -196,16 +198,30 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
 
         areatab areatab = listData.get(groupPosition);
         tv_areaname.setText(listData.get(groupPosition).getareaName());
-        tv_number.setText("共剩" + areatab.getAllsalefor() + "株");
-        tv_saleinfo.setText("已售:" + areatab.getAllsaleout() + "    售中:" + areatab.getAllsalein() + "    拟售:" + areatab.getAllnewsale() + "    待售:" + areatab.getAllsalefor());
-        int percent = 0;
-        int allnumber = Integer.valueOf(areatab.getAllsaleout()) + Integer.valueOf(areatab.getAllsalein()) + Integer.valueOf(areatab.getAllnewsale()) + Integer.valueOf(areatab.getAllsalefor());
+        float percent = 0;
+        float allnumber = Integer.valueOf(areatab.getAllsaleout()) + Integer.valueOf(areatab.getAllsalein()) + Integer.valueOf(areatab.getAllnewsale()) + Integer.valueOf(areatab.getAllsalefor());
+        float salenumber = Integer.valueOf(areatab.getAllsaleout()) + Integer.valueOf(areatab.getAllsalein()) + Integer.valueOf(areatab.getAllnewsale());
         if (allnumber != 0)
         {
-            percent = (Integer.valueOf(areatab.getAllsalefor()) / allnumber)*100;
+            percent = (salenumber / allnumber) * 100;
         }
-        pb.setProgress(percent);
-        tv_pb.setText("待售" + percent + "%");
+        pb.setProgress(Math.round(percent));
+        tv_pb.setText("共售" + percent + "%");
+        tv_allnumber.setText("总产量" + allnumber);
+        tv_saleinfo.setText("已售" + areatab.getAllsaleout() + "    售中" + areatab.getAllsalein() + "    拟售" + areatab.getAllnewsale());
+        if (areatab.getAllsalefor().equals("0"))
+        {
+            if (salenumber != 0)
+            {
+                tv_number.setText("已售完");
+            } else
+            {
+                tv_number.setText("产量未上报");
+            }
+        } else
+        {
+            tv_number.setText("待售" + areatab.getAllsalefor() + "株");
+        }
         return convertView;
     }
 
@@ -263,18 +279,35 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
                 convertView = View.inflate(context, R.layout.gridview_sellorderdetail_ncz, null);
                 view = new Holder(convertView);
                 contractTab contractTab = list.get(position);
-                int percent = 0;
-                int allnumber = Integer.valueOf(contractTab.getAllsaleout()) + Integer.valueOf(contractTab.getAllsalein()) + Integer.valueOf(contractTab.getAllnewsale()) + Integer.valueOf(contractTab.getAllsalefor());
+                float percent = 0;
+                float allnumber = Integer.valueOf(contractTab.getAllsaleout()) + Integer.valueOf(contractTab.getAllsalein()) + Integer.valueOf(contractTab.getAllnewsale()) + Integer.valueOf(contractTab.getAllsalefor());
+                float salenumber = Integer.valueOf(contractTab.getAllsaleout()) + Integer.valueOf(contractTab.getAllsalein()) + Integer.valueOf(contractTab.getAllnewsale());
                 if (allnumber != 0)
                 {
-                    percent = (Integer.valueOf(contractTab.getAllsalefor()) / allnumber)*100;
+                    percent = (salenumber / allnumber) * 100;
                 }
-                view.pb.setProgress(percent);
-                view.tv_pb.setText("待售" + percent + "%");
+                view.pb.setProgress(Math.round(percent));
+                view.tv_pb.setText("共售" + percent + "%");
                 view.cb_selectall.setTag(R.id.tag_postion, position);
                 view.tv_areaname.setText(list.get(position).getContractNum());
+                view.tv_saleinfo.setText("总产量" + allnumber);
                 view.btn_number.setText(list.get(position).getAllsalefor());
-                view.tv_number.setText("剩" + list.get(position).getAllsalefor() + "株");
+                if (contractTab.getAllsalefor().equals("0"))
+                {
+                    if (salenumber != 0)
+                    {
+                        view.tv_number.setText("已售完");
+                        view.rl_select.setVisibility(View.GONE);
+                    } else
+                    {
+                        view.tv_number.setText("产量未上报");
+                        view.rl_select.setVisibility(View.GONE);
+                    }
+                } else
+                {
+                    view.tv_number.setText("待售" + list.get(position).getAllsalefor() + "株");
+                }
+
                 view.btn_number.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
@@ -313,10 +346,11 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
         {
             private Button btn_number;
             private TextView tv_areaname;
+            private TextView tv_saleinfo;
             private TextView tv_number;
             private CheckBox cb_selectall;
+            private RelativeLayout rl_select;
             private LinearLayout ll_saleinfo;
-            private TextView tv_saleinfo;
             private ProgressBar pb;
             private TextView tv_pb;
 
@@ -330,6 +364,7 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
                 tv_saleinfo = (TextView) view.findViewById(R.id.tv_saleinfo);
                 pb = (ProgressBar) view.findViewById(R.id.pb);
                 tv_pb = (TextView) view.findViewById(R.id.tv_pb);
+                rl_select = (RelativeLayout) view.findViewById(R.id.rl_select);
             }
         }
 

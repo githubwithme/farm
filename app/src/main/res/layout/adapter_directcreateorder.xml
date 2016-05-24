@@ -22,30 +22,20 @@
                 android:id="@+id/tv_area"
                 android:layout_width="wrap_content"
                 android:layout_height="30dip"
-                android:layout_centerVertical="true"
+                android:layout_margin="5dip"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="10dip"
                 android:text="乐丰园区"
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_sp_16"/>
 
-            <Button
-                android:id="@+id/btn_editorderdetail"
-                android:layout_width="wrap_content"
-                android:layout_height="40dip"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="编辑"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_14"/>
 
             <TextView
                 android:id="@+id/tv_batchtime"
                 android:layout_width="wrap_content"
                 android:layout_height="30dip"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/btn_editorderdetail"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dip"
                 android:gravity="center"
                 android:text="05-15至04-20"
                 android:textColor="@color/gray"

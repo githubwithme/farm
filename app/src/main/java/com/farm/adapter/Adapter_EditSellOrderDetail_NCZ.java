@@ -41,7 +41,8 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
     static class ListItemView
     {
         public TextView tv_area;
-        public Button btn_plannumber;
+        public TextView tv_plannumber;
+        public Button btn_editorderdetail;
 
         public TextView tv_yq;
         public TextView tv_pq;
@@ -83,15 +84,16 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
-            listItemView.btn_plannumber = (Button) convertView.findViewById(R.id.btn_plannumber);
-            listItemView.btn_plannumber.setTag(position);
-            listItemView.btn_plannumber.setOnClickListener(new View.OnClickListener()
+            listItemView.tv_plannumber = (TextView) convertView.findViewById(R.id.tv_plannumber);
+            listItemView.btn_editorderdetail = (Button) convertView.findViewById(R.id.btn_editorderdetail);
+            listItemView.btn_editorderdetail.setTag(position);
+            listItemView.btn_editorderdetail.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
                     int pos = (int) v.getTag();
-                    showDialog_editNumber(listItems.get(pos));
+                    showDialog_editNumber(listItems.get(pos), (TextView) v);
                 }
             });
             // 设置控件集到convertView
@@ -103,13 +105,13 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
-        listItemView.btn_plannumber.setText(SellOrderDetail.getplannumber());
+        listItemView.tv_plannumber.setText(SellOrderDetail.getplannumber());
         listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
         return convertView;
     }
 
 
-    private void editPolygon(final SellOrderDetail_New sellOrderDetail, String number_new, String number_difference)
+    private void editNumber(final SellOrderDetail_New sellOrderDetail, String number_new, String number_difference)
     {
         commembertab commembertab = AppContext.getUserInfo(context);
         RequestParams params = new RequestParams();
@@ -154,9 +156,36 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
             }
         });
     }
+//
+//    private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new)
+//    {
+//        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editorderdetail, null);
+//        customDialog_editOrderDetaill = new CustomDialog_EditOrderDetail(context, R.style.MyDialog, dialog_layout);
+//        et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
+//        Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+//        Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+//        btn_sure.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                customDialog_editOrderDetaill.dismiss();
+//                int number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_number.getText().toString());
+//                editNumber(sellOrderDetail_new, et_number.getText().toString(), String.valueOf(number_difference));
+//            }
+//        });
+//        btn_cancle.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                customDialog_editOrderDetaill.dismiss();
+//            }
+//        });
+//        customDialog_editOrderDetaill.show();
+//    }
 
-
-    private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new)
+    private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new, final TextView textView)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editorderdetail, null);
         customDialog_editOrderDetaill = new CustomDialog_EditOrderDetail(context, R.style.MyDialog, dialog_layout);
@@ -169,8 +198,9 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
             public void onClick(View v)
             {
                 customDialog_editOrderDetaill.dismiss();
+                textView.setText(et_number.getText().toString());
                 int number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_number.getText().toString());
-                editPolygon(sellOrderDetail_new, et_number.getText().toString(), String.valueOf(number_difference));
+                editNumber(sellOrderDetail_new, et_number.getText().toString(), String.valueOf(number_difference));
             }
         });
         btn_cancle.setOnClickListener(new View.OnClickListener()

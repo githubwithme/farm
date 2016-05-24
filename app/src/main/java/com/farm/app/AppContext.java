@@ -36,6 +36,7 @@ public class AppContext extends Application
     public final static String BROADCAST_UPDATEPLANT = "UPDATEPLANT";
     //	public final static String BROADCAST_UPDATECMD_SELECT = "UPDATECMD_SELECT";
     public final static String BROADCAST_UPDATEPCMD_SORT = "UPDATEPCMD_SORT";
+    public final static String BROADCAST_UPDATEORDER = "BROADCAST_UPDATEORDER";
     public final static String BROADCAST_ADDWORK = "ADDWORK";
     public final static String BROADCAST_SELECTOR = "SELECTOR";
     public final static String BROADCAST_REFRESHRECORD = "REFRESHRECORD";
@@ -169,7 +170,7 @@ public class AppContext extends Application
         return customFont;
     }
 
-    public static void  updateStatus(Context context, String comLX, String jobID, String comID, String workuserid)
+    public static void updateStatus(Context context, String comLX, String jobID, String comID, String workuserid)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("workuserid", workuserid);

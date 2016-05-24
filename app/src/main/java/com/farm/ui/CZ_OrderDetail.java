@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,7 +21,6 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
-import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditOrderDetail;
 import com.lidroid.xutils.HttpUtils;
@@ -36,7 +36,6 @@ import org.androidannotations.annotations.ViewById;
 import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,6 +49,8 @@ import java.util.List;
 @EActivity(R.layout.cz_orderdetail)
 public class CZ_OrderDetail extends Activity
 {
+    TextView textview_number;
+    TextView textview_weight;
     String batchtime;
     SellOrder_New sellOrder;
     Adapter_SellOrderDetail adapter_sellOrderDetail;
@@ -66,11 +67,17 @@ public class CZ_OrderDetail extends Activity
     @ViewById
     TextView tv_address;
     @ViewById
+    TextView tv_planprice;
+    @ViewById
     TextView tv_price;
     @ViewById
     TextView tv_planweight;
     @ViewById
+    TextView tv_deposit;
+    @ViewById
     TextView tv_number;
+    @ViewById
+    TextView tv_finalpayment;
     @ViewById
     TextView tv_actualweight;
     @ViewById
@@ -101,8 +108,7 @@ public class CZ_OrderDetail extends Activity
         adapter_sellOrderDetail = new Adapter_SellOrderDetail(CZ_OrderDetail.this);
         lv.setAdapter(adapter_sellOrderDetail);
         utils.setListViewHeight(lv);
-//        getListData();
-//        showData();
+        showData();
     }
 
     @Override
@@ -120,13 +126,13 @@ public class CZ_OrderDetail extends Activity
         int count_number = 0;
         for (int i = 0; i < list.size(); i++)
         {
-            if (list.get(i).getactualnumber() != null)
+            if (list.get(i).getactualnumber() != null && !list.get(i).getactualnumber().equals(""))
             {
                 count_number = count_number + Integer.valueOf(list.get(i).getactualnumber());
             }
 
         }
-        tv_actualnumber.setText(String.valueOf(count_number));
+        tv_actualnumber.setText(String.valueOf(count_number) + "株");
         return count_number;
     }
 
@@ -135,99 +141,32 @@ public class CZ_OrderDetail extends Activity
         int count_weight = 0;
         for (int i = 0; i < list.size(); i++)
         {
-            if (list.get(i).getactualweight() != null)
+            if (list.get(i).getactualweight() != null && !list.get(i).getactualweight().equals(""))
             {
                 count_weight = count_weight + Integer.valueOf(list.get(i).getactualweight());
             }
 
         }
-        tv_actualsumvalues.setText("实际总额" + count_weight * Float.valueOf(sellOrder.getPrice()) + "元");
-        tv_actualweight.setText("实际重量" + String.valueOf(count_weight) + "斤");
+        tv_actualsumvalues.setText(count_weight * Float.valueOf(sellOrder.getPrice()) + "元");
+        tv_actualweight.setText(String.valueOf(count_weight) + "斤");
         return count_weight;
     }
 
-    private void getListData()
-    {
-        commembertab commembertab = AppContext.getUserInfo(CZ_OrderDetail.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("comID", SellOrderDetail.getUuid());
-        params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("page_size", "10");
-        params.addQueryStringParameter("page_index", "10");
-        params.addQueryStringParameter("action", "commandGetListBycomID");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<SellOrderDetail_New> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_sellOrderDetail = new Adapter_SellOrderDetail(CZ_OrderDetail.this);
-                        lv.setAdapter(adapter_sellOrderDetail);
-                        utils.setListViewHeight(lv);
-                    } else
-                    {
-                        listNewData = new ArrayList<SellOrderDetail_New>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(CZ_OrderDetail.this, "error_connectDataBase");
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s)
-            {
-
-            }
-        });
-    }
 
     private void showData()
     {
-//        String[] nongzi = SellOrderDetail.getnongziName().split(",");
-//        String flyl = "";
-//        for (int i = 0; i < nongzi.length; i++)
-//        {
-//            flyl = flyl + nongzi[i] + "  ;  ";
-//        }
-//        tv_note.setText(SellOrderDetail.getcommNote());
-//        tv_yl.setText(flyl);
-//        tv_zyts.setText(SellOrderDetail.getcommDays() + "天");
-//        tv_qx.setText(SellOrderDetail.getcommComDate());
-//        if (SellOrderDetail.getstdJobType().equals("-1"))
-//        {
-//            ll_flyl.setVisibility(View.GONE);
-//            if (SellOrderDetail.getcommNote().equals(""))
-//            {
-//                tv_cmdname.setText("暂无说明");
-//            } else
-//            {
-//                tv_cmdname.setText(SellOrderDetail.getcommNote());
-//            }
-//        } else if (SellOrderDetail.getstdJobType().equals("0"))
-//        {
-//            if (SellOrderDetail.getcommNote().equals(""))
-//            {
-//                tv_cmdname.setText("暂无说明");
-//            } else
-//            {
-//                tv_cmdname.setText(SellOrderDetail.getcommNote());
-//            }
-//        } else
-//        {
-//            tv_cmdname.setText(SellOrderDetail.getstdJobTypeName() + "——" + SellOrderDetail.getstdJobName());
-//        }
+        tv_name.setText(sellOrder.getBuyers());
+        tv_planprice.setText(sellOrder.getPrice());
+//        tv_planweight.setText(sellOrder.getWeight());
+//        tv_actualweight.setText(sellOrder.getBuyers());
+//        tv_plansumvalues.setText(sellOrder.getBuyers());
+//        tv_actualsumvalues.setText(sellOrder.getBuyers());
+        tv_deposit.setText(sellOrder.getDeposit());
+        tv_finalpayment.setText(sellOrder.getFinalpayment());
+        tv_phone.setText(sellOrder.getPhone());
+        tv_address.setText(sellOrder.getAddress());
+        tv_email.setText(sellOrder.getEmail());
+        tv_note.setText(sellOrder.getNote());
     }
 
     private void addOrder(String uuid, String data)
@@ -282,8 +221,8 @@ public class CZ_OrderDetail extends Activity
         private LayoutInflater listContainer;// 视图容器
         SellOrderDetail_New SellOrderDetail;
         CustomDialog_EditOrderDetail customDialog_editOrderDetaill;
-        TextView tv_actualnumber;
-        TextView tv_actualweight;
+        EditText et_actualnumber;
+        EditText et_actualweight;
 
         class ListItemView
         {
@@ -345,9 +284,9 @@ public class CZ_OrderDetail extends Activity
                     public void onClick(View v)
                     {
                         int pos = (int) v.getTag(R.id.tag_postion);
-                        TextView tv_number = (TextView) v.getTag(R.id.tag_tv_number);
-                        TextView tv_weight = (TextView) v.getTag(R.id.tag_tv_weight);
-                        showDialog_editNumber(pos, list_orderdetail.get(pos), tv_number, tv_weight);
+                        textview_number = (TextView) v.getTag(R.id.tag_tv_number);
+                        textview_weight = (TextView) v.getTag(R.id.tag_tv_weight);
+                        showDialog_editNumber(pos, list_orderdetail.get(pos));
                     }
                 });
                 // 设置控件集到convertView
@@ -366,12 +305,12 @@ public class CZ_OrderDetail extends Activity
             return convertView;
         }
 
-        private void showDialog_editNumber(final int pos, final SellOrderDetail_New sellOrderDetail_new, final TextView tv_number, final TextView tv_weight)
+        private void showDialog_editNumber(final int pos, final SellOrderDetail_New sellOrderDetail_new)
         {
             final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_czeditorderdetail, null);
             customDialog_editOrderDetaill = new CustomDialog_EditOrderDetail(context, R.style.MyDialog, dialog_layout);
-            tv_actualnumber = (TextView) dialog_layout.findViewById(R.id.tv_actualnumber);
-            tv_actualweight = (TextView) dialog_layout.findViewById(R.id.tv_actualweight);
+            et_actualnumber = (EditText) dialog_layout.findViewById(R.id.et_actualnumber);
+            et_actualweight = (EditText) dialog_layout.findViewById(R.id.et_actualweight);
             Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
             Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
             btn_sure.setOnClickListener(new View.OnClickListener()
@@ -380,14 +319,14 @@ public class CZ_OrderDetail extends Activity
                 public void onClick(View v)
                 {
                     customDialog_editOrderDetaill.dismiss();
-                    tv_number.setText(tv_actualnumber.getText().toString());
-                    tv_weight.setText(tv_actualweight.getText().toString());
-                    list_orderdetail.get(pos).setactualnumber("实售" + tv_actualnumber.getText().toString() + "株");
-                    list_orderdetail.get(pos).setactualweight("实重" + tv_actualweight.getText().toString() + "斤");
+                    textview_number.setText("实售" + et_actualnumber.getText().toString() + "株");
+                    textview_weight.setText("实重" + et_actualweight.getText().toString() + "斤");
+                    list_orderdetail.get(pos).setactualnumber(et_actualnumber.getText().toString());
+                    list_orderdetail.get(pos).setactualweight(et_actualweight.getText().toString());
                     countAllWeight(list_orderdetail);
                     countAllNumber(list_orderdetail);
-//                    int number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(tv_number.getText().toString());
-//                    editNumber(sellOrderDetail_new, tv_number.getText().toString(), String.valueOf(number_difference));
+                    int number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_actualnumber.getText().toString());
+                    editNumber(sellOrderDetail_new, et_actualnumber.getText().toString(), et_actualweight.getText().toString(), String.valueOf(number_difference));
                 }
             });
             btn_cancle.setOnClickListener(new View.OnClickListener()
@@ -401,7 +340,7 @@ public class CZ_OrderDetail extends Activity
             customDialog_editOrderDetaill.show();
         }
 
-        private void editNumber(final SellOrderDetail_New sellOrderDetail, String number_new, String number_difference)
+        private void editNumber(final SellOrderDetail_New sellOrderDetail, String number_new, String weight, String number_difference)
         {
             RequestParams params = new RequestParams();
             params.addQueryStringParameter("uid", sellOrderDetail.getuid());
@@ -410,6 +349,7 @@ public class CZ_OrderDetail extends Activity
             params.addQueryStringParameter("uuid", sellOrderDetail.getUuid());
             params.addQueryStringParameter("batchTime", sellOrderDetail.getBatchTime());
             params.addQueryStringParameter("number_difference", number_difference);
+            params.addQueryStringParameter("weight", weight);
             params.addQueryStringParameter("number_new", number_new);
             params.addQueryStringParameter("action", "feedbackOrderDetail");
             HttpUtils http = new HttpUtils();
@@ -422,11 +362,10 @@ public class CZ_OrderDetail extends Activity
                     Result result = JSON.parseObject(responseInfo.result, Result.class);
                     if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                     {
-                        String rows = result.getRows().get(0).toString();
-                        if (rows.equals("1"))
+                        if (result.getAffectedRows() == 1)
                         {
                             Toast.makeText(context, "修改成功！", Toast.LENGTH_SHORT).show();
-                        } else if (rows.equals("0"))
+                        } else
                         {
                             Toast.makeText(context, "修改失败！", Toast.LENGTH_SHORT).show();
                         }

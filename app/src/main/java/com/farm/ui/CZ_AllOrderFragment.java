@@ -19,11 +19,9 @@ import com.farm.adapter.CZ_OrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.SelectRecords;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
-import com.farm.common.SqliteDb;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -59,6 +57,15 @@ public class CZ_AllOrderFragment extends Fragment
     @ViewById
     ListView lv;
 
+    @Override
+    public void onHiddenChanged(boolean hidden)
+    {
+        super.onHiddenChanged(hidden);
+        if (hidden != true)
+        {
+            getAllOrders();
+        }
+    }
 
     @Override
     public void onResume()
@@ -69,8 +76,9 @@ public class CZ_AllOrderFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
-        SqliteDb.deleteAllRecordtemp(getActivity(), SelectRecords.class, "NCZ_CMD");
-        getNewSaleList_test();
+//        SqliteDb.deleteAllRecordtemp(getActivity(), SelectRecords.class, "NCZ_CMD");
+//        getNewSaleList_test();
+        getAllOrders();
     }
 
 
@@ -79,9 +87,20 @@ public class CZ_AllOrderFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
+//        IntentFilter intentfilter = new IntentFilter(AppContext.BROADCAST_UPDATEORDER);
+//        getActivity().registerReceiver(receiver, intentfilter);
         return rootView;
     }
 
+//    BroadcastReceiver receiver = new BroadcastReceiver()// 从扩展页面返回信息
+//    {
+//        @SuppressWarnings("deprecation")
+//        @Override
+//        public void onReceive(Context context, Intent intent)
+//        {
+//            getAllOrders();
+//        }
+//    };
 
     private void getNewSaleList_test()
     {
@@ -133,7 +152,7 @@ public class CZ_AllOrderFragment extends Fragment
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
-                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                                Intent intent = new Intent(getActivity(), CZ_OrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }
