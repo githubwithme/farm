@@ -141,12 +141,13 @@ public class InputGoodsAdapter extends BaseAdapter
 
             if (!list.get(arg0).getThree().equals(""))
             {
-                listItemView.tv_spec.setText(  list.get(arg0).getThree()+list.get(arg0).getgoodsSpec());
+//                listItemView.tv_spec.setText(  list.get(arg0).getThree()+list.get(arg0).getgoodsSpec());
+                listItemView.tv_spec.setText(list.get(arg0).getGoodsStatistical()+list.get(arg0).getgoodsunit()+"/"+  list.get(arg0).getThree());
             }else if (list.get(arg0).getThree().equals("")&&!list.get(arg0).getSec().equals("")){
-                listItemView.tv_spec.setText(  list.get(arg0).getSec()+list.get(arg0).getgoodsSpec());
+                listItemView.tv_spec.setText(list.get(arg0).getGoodsStatistical()+list.get(arg0).getgoodsunit()+"/"+  list.get(arg0).getSec());
             }else
             {
-                listItemView.tv_spec.setText(  list.get(arg0).getFirs()+list.get(arg0).getgoodsSpec());
+                listItemView.tv_spec.setText(list.get(arg0).getGoodsStatistical()+list.get(arg0).getgoodsunit()+"/"+  list.get(arg0).getFirs());
             }
 
 

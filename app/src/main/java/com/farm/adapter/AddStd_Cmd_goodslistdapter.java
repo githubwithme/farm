@@ -72,16 +72,15 @@ public class AddStd_Cmd_goodslistdapter extends BaseAdapter
                     BitmapHelper.setImageViewBackground(context, listItemView.typeicon, goodslisttab.getImgurl());
                 }
                 listItemView.typename.setText(goodslisttab.getgoodsName());
-//                listItemView.tv_gg.setText("规格：" + goodslisttab.getgoodsSpec());
-//                listItemView.tv_gg.setText("规格：" +goodslisttab.getFirs()+ goodslisttab.getgoodsSpec());
                 if(!goodslisttab.getThree().equals(""))
                 {
-                    listItemView.tv_gg.setText("规格：" +goodslisttab.getThree() + goodslisttab.getgoodsSpec());
+//                    listItemView.tv_gg.setText("规格：" +goodslisttab.getThree() + goodslisttab.getgoodsSpec());
+                    listItemView.tv_gg.setText("规格：" +goodslisttab.getGoodsStatistical()+goodslisttab.getgoodsunit()+"/"+goodslisttab.getThree() );
                 }else if(goodslisttab.getThree().equals("")&&!goodslisttab.getSec().equals(""))
                 {
-                    listItemView.tv_gg.setText("规格：" +goodslisttab.getSec() + goodslisttab.getgoodsSpec());
+                    listItemView.tv_gg.setText("规格：" +goodslisttab.getGoodsStatistical()+goodslisttab.getgoodsunit()+"/"+goodslisttab.getSec() );
                 }else {
-                    listItemView.tv_gg.setText("规格：" + goodslisttab.getFirs() + goodslisttab.getgoodsSpec());
+                    listItemView.tv_gg.setText("规格：" +goodslisttab.getGoodsStatistical()+goodslisttab.getgoodsunit()+"/"+goodslisttab.getFirs() );
                 }
             }
             listItemView.cb_fl.setTag(goodslisttab);

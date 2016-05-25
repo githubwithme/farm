@@ -26,7 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.customview.AudioRecorder;
 import com.customview.RecordButton;
+import com.customview.RecordsButton;
 import com.farm.R;
 import com.farm.adapter.Event_ProcessAdapter;
 import com.farm.adapter.NCZ_EventHandleAdapter;
@@ -113,7 +115,7 @@ static int p;
     @ViewById
     Button tv_delete;
     @ViewById
-    Button btn_records;
+    RecordsButton btn_records;
     @Click
     void imgbtn_back() {
         finish();
@@ -124,12 +126,8 @@ static int p;
         showPop_title();
     }
 
-    @Click
-    void btn_records(){
-   /*     Intent intent = new Intent(Event_Process.this, HomeFragmentActivity.class);
-        intent.putExtra("type", "dhisss");
-        startActivity(intent);*/
-    }
+    AudioRecorder audioRecorder;
+
     @Click
     void tv_delete() {
         View dialog_layout = (LinearLayout) Event_Process.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
@@ -165,7 +163,8 @@ static int p;
         solove = reportedBean.getRemark2();
         initAnimalListView();
         getlistdata();
-
+        btn_records.setEventId(reportedBean.getEventId());
+        btn_records.setAudioRecord(new AudioRecorder());
     }
 
     @Click
@@ -186,6 +185,12 @@ static int p;
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
@@ -193,31 +198,11 @@ static int p;
         IntentFilter imageIntentFilter = new IntentFilter(MediaChooser.IMAGE_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
         Event_Process.this.registerReceiver(imageBroadcastReceiver, imageIntentFilter);
 
-      /*  IntentFilter luyinIntentFilter = new IntentFilter(MediaChooser.LUYIN_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
-        Event_Process.this.registerReceiver(luyinBroadcastReceiver, luyinIntentFilter);*/
+
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_Record);
+        Event_Process.this.registerReceiver(receiver_update, intentfilter_update);
     }
-/*    BroadcastReceiver luyinBroadcastReceiver = new BroadcastReceiver()// 植物（0为整体照，1为花照，2为果照，3为叶照）；动物（0为整体照，1为脚印照，2为粪便照）
-    {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            List<String> list = intent.getStringArrayListExtra("list");
-            for (int i = 0; i < list.size(); i++) {
-                String FJBDLJ = list.get(i);
-                ImageView imageView = new ImageView(Event_Process.this);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                BitmapHelper.setImageView(Event_Process.this, imageView, FJBDLJ);
-                imageView.setTag(FJBDLJ);
 
-                FJxx fj_SCFJ = new FJxx();
-                fj_SCFJ.setFJBDLJ(FJBDLJ);
-                fj_SCFJ.setFJLX("3");
-
-                list_picture.add(fj_SCFJ);
-                list_allfj.add(fj_SCFJ);
-                saveData(fj_SCFJ);
-            }
-        }
-    };*/
     BroadcastReceiver imageBroadcastReceiver = new BroadcastReceiver()// 植物（0为整体照，1为花照，2为果照，3为叶照）；动物（0为整体照，1为脚印照，2为粪便照）
     {
         @Override
@@ -318,7 +303,7 @@ static int p;
                 if (result.getResultCode() != 0)// -1出错；0结果集数量为0；结果列表
                 {
                     Toast.makeText(Event_Process.this, "保存成功！", Toast.LENGTH_SHORT).show();
-                    getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                    getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
                 } else {
                     AppContext.makeToast(Event_Process.this, "error_connectDataBase");
                 }
@@ -406,7 +391,7 @@ static int p;
                     if (result.getAffectedRows() != 0) {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), HandleBean.class);
                         et_content.setText("");
-                        getListData(UIHelper.LISTVIEW_ACTION_SCROLL, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                        getListData(UIHelper.LISTVIEW_ACTION_SCROLL, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
 //                        Toast.makeText(Event_Process.this, "保存成功！", Toast.LENGTH_SHORT).show();
 
                     } else {
@@ -434,11 +419,12 @@ static int p;
         @SuppressWarnings("deprecation")
         @Override
         public void onReceive(Context context, Intent intent) {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+//            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
         }
     };
 
-    private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX) {
+    private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE,  int PAGEINDEX) {
 
         commembertab commembertab = AppContext.getUserInfo(Event_Process.this);
         RequestParams params = new RequestParams();
@@ -539,6 +525,8 @@ static int p;
                         break;
                 }
                 // 刷新列表
+                int xx=size;
+                int yy=PAGESIZE;
                 if (size >= 0) {
                     if (size < PAGESIZE) {
                         lv.setTag(UIHelper.LISTVIEW_DATA_FULL);
@@ -588,6 +576,7 @@ static int p;
     }
 
     private void initAnimalListView() {
+
         commembertab commembertab = AppContext.getUserInfo(Event_Process.this);
 //        listadpater=new NCZ_EventHandleAdapter(Event_Process.this, listData);
         listadpater = new Event_ProcessAdapter(Event_Process.this, listData);
@@ -631,8 +620,8 @@ static int p;
                     list_foot_more.setText(R.string.load_ing);// 之前显示为"完成"加载
                     list_foot_progress.setVisibility(View.VISIBLE);
                     // 当前pageIndex
-                    int pageIndex = listSumData / AppContext.PAGE_SIZE;// 总数里面包含几个PAGE_SIZE
-                    getListData(UIHelper.LISTVIEW_ACTION_SCROLL, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, pageIndex);
+                    int pageIndex = listSumData / AppContext.PAGE_SIZE_RECORD;// 总数里面包含几个PAGE_SIZE
+                    getListData(UIHelper.LISTVIEW_ACTION_SCROLL, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, pageIndex);
                     // loadLvNewsData(curNewsCatalog, pageIndex, lvNewsHandler,
                     // UIHelper.LISTVIEW_ACTION_SCROLL);
                 }
@@ -646,12 +635,12 @@ static int p;
             public void onRefresh() {
                 // loadLvNewsData(curNewsCatalog, 0, lvNewsHandler,
                 // UIHelper.LISTVIEW_ACTION_REFRESH);
-                getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
             }
         });
         // 加载资讯数据
         if (listData.isEmpty()) {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
         }
     }
 

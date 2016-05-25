@@ -307,8 +307,11 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                                 goodslisttab.setgoodsNote(list_goods.get(k).getgoodsNote());
                                 goodslisttab.setgoodsProducer(list_goods.get(k).getgoodsProducer());
                                 goodslisttab.setgoodsSpec(list_goods.get(k).getgoodsSpec());
+                                goodslisttab.setgoodsunit(list_goods.get(k).getgoodsunit());
+                                goodslisttab.setGoodsStatistical(list_goods.get(k).getGoodsStatistical());
 //                                goodslisttab.setGoodsSum(jsonarray.get(k).toString());
-                                if (listsum.length!=0)
+                                goodslisttab.setGoodsSum(listsum[k]);
+              /*                  if (listsum.length!=0)
                                 {
                                     if (listsum[k].equals(""))
                                     {
@@ -319,7 +322,7 @@ public class AddStd_Cmd_StepThree_Temp extends Fragment
                                         goodslisttab.setGoodsSum(listsum[k]);
                                     }
 
-                                }
+                                }*/
                                 goodslisttab.setgoodsTypeID(list_goods.get(k).getgoodsTypeID());
                                 goodslisttab.setgoodsunit(list_goods.get(k).getgoodsunit());
                                 goodslisttab.setId(list_goods.get(k).getId());

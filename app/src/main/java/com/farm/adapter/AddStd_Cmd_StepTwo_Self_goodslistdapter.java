@@ -128,12 +128,13 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
                 listItemView.typename.setText(goodslisttab.getgoodsName());
                 if(!goodslisttab.getThree().equals(""))
                 {
-                    listItemView.tv_gg.setText("规格：" +goodslisttab.getThree() + goodslisttab.getgoodsSpec());
+//                    listItemView.tv_gg.setText("规格：" +goodslisttab.getThree() + goodslisttab.getgoodsSpec());
+                    listItemView.tv_gg.setText("规格：" +goodslisttab.getGoodsStatistical()+goodslisttab.getgoodsunit()+"/"+goodslisttab.getThree() );
                 }else if(goodslisttab.getThree().equals("")&&!goodslisttab.getSec().equals(""))
                 {
-                    listItemView.tv_gg.setText("规格：" +goodslisttab.getSec() + goodslisttab.getgoodsSpec());
+                    listItemView.tv_gg.setText("规格：" +goodslisttab.getGoodsStatistical()+goodslisttab.getgoodsunit()+"/"+goodslisttab.getSec() );
                 }else {
-                    listItemView.tv_gg.setText("规格：" + goodslisttab.getFirs() + goodslisttab.getgoodsSpec());
+                    listItemView.tv_gg.setText("规格：" +goodslisttab.getGoodsStatistical()+goodslisttab.getgoodsunit()+"/"+goodslisttab.getFirs() );
                 }
             }
             listItemView.cb_fl.setTag(R.id.tag_bean, goodslisttab);
@@ -325,14 +326,17 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
 
         tv_spec.setText(list.get(currentpos).getFirs()+ "/" + large_dw);
         tv_goodsname.setText(list.get(currentpos).getgoodsName());
+
         if(!list.get(currentpos).getThree().equals(""))
         {
-            tv_spec.setText(list.get(currentpos).getThree() + list.get(currentpos).getgoodsSpec());
+
+//            tv_spec.setText(list.get(currentpos).getThree() + list.get(currentpos).getgoodsSpec());
+            tv_spec.setText(list.get(currentpos).getGoodsStatistical()+list.get(currentpos).getgoodsunit()+"/"+list.get(currentpos).getThree());
         }else if(list.get(currentpos).getThree().equals("")&&!list.get(currentpos).getSec().equals(""))
         {
-            tv_spec.setText( list.get(currentpos).getSec() + list.get(currentpos).getgoodsSpec());
+            tv_spec.setText(list.get(currentpos).getGoodsStatistical()+list.get(currentpos).getgoodsunit()+"/"+list.get(currentpos).getSec());
         }else {
-            tv_spec.setText( list.get(currentpos).getFirs() + list.get(currentpos).getgoodsSpec());
+            tv_spec.setText(list.get(currentpos).getGoodsStatistical()+list.get(currentpos).getgoodsunit()+"/"+list.get(currentpos).getFirs());
         }
 
 

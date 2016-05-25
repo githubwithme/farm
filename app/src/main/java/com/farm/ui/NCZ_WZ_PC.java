@@ -126,8 +126,8 @@ void after()
                     list_foot_more.setText(R.string.load_ing);// 之前显示为"完成"加载
                     list_foot_progress.setVisibility(View.VISIBLE);
                     // 当前pageIndex
-                    int pageIndex = listSumData / AppContext.PAGE_SIZE;// 总数里面包含几个PAGE_SIZE
-                    getListData(UIHelper.LISTVIEW_ACTION_SCROLL, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, pageIndex);
+                    int pageIndex = listSumData / AppContext.PAGE_SIZE_RECORD;// 总数里面包含几个PAGE_SIZE_RECORD
+                    getListData(UIHelper.LISTVIEW_ACTION_SCROLL, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, pageIndex);
                     // loadLvNewsData(curNewsCatalog, pageIndex, lvNewsHandler,
                     // UIHelper.LISTVIEW_ACTION_SCROLL);
                 }
@@ -141,12 +141,12 @@ void after()
             public void onRefresh() {
                 // loadLvNewsData(curNewsCatalog, 0, lvNewsHandler,
                 // UIHelper.LISTVIEW_ACTION_REFRESH);
-                getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
             }
         });
         // 加载资讯数据
         if (listData.isEmpty()) {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
         }
     }
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
@@ -154,7 +154,7 @@ void after()
         @SuppressWarnings("deprecation")
         @Override
         public void onReceive(Context context, Intent intent) {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
         }
     };
 

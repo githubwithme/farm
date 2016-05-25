@@ -85,17 +85,8 @@
                     android:text="植保"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14"/>
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
                 <TextView
+                    android:layout_below="@+id/typename"
                     android:id="@+id/tv_gg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -104,9 +95,10 @@
                     android:text="规格"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/size_12"/>
-
-
             </RelativeLayout>
+
+
+
         </LinearLayout>
         <CheckBox
             android:id="@+id/cb_fl"
