@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,7 @@ import java.util.List;
 @EActivity(R.layout.cz_orderdetail)
 public class CZ_OrderDetail extends Activity
 {
+    String broadcast;
     TextView textview_number;
     TextView textview_weight;
     String batchtime;
@@ -103,8 +105,6 @@ public class CZ_OrderDetail extends Activity
     @AfterViews
     void afterOncreate()
     {
-        countAllWeight(list_orderdetail);
-        countAllNumber(list_orderdetail);
         adapter_sellOrderDetail = new Adapter_SellOrderDetail(CZ_OrderDetail.this);
         lv.setAdapter(adapter_sellOrderDetail);
         utils.setListViewHeight(lv);
@@ -117,6 +117,7 @@ public class CZ_OrderDetail extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder = getIntent().getParcelableExtra("bean");
+        broadcast = getIntent().getStringExtra("broadcast");
         list_orderdetail = sellOrder.getSellOrderDetailList();
     }
 
@@ -155,18 +156,24 @@ public class CZ_OrderDetail extends Activity
 
     private void showData()
     {
+        countAllWeight(list_orderdetail);
+        countAllNumber(list_orderdetail);
         tv_name.setText(sellOrder.getBuyers());
         tv_planprice.setText(sellOrder.getPrice());
-//        tv_planweight.setText(sellOrder.getWeight());
-//        tv_actualweight.setText(sellOrder.getBuyers());
-//        tv_plansumvalues.setText(sellOrder.getBuyers());
-//        tv_actualsumvalues.setText(sellOrder.getBuyers());
+        tv_planweight.setText(sellOrder.getWeight());
+        tv_plansumvalues.setText(sellOrder.getBuyers());
         tv_deposit.setText(sellOrder.getDeposit());
-        tv_finalpayment.setText(sellOrder.getFinalpayment());
         tv_phone.setText(sellOrder.getPhone());
         tv_address.setText(sellOrder.getAddress());
         tv_email.setText(sellOrder.getEmail());
         tv_note.setText(sellOrder.getNote());
+        if (sellOrder.getFinalpayment().equals(""))
+        {
+            tv_finalpayment.setText("0");
+        } else
+        {
+            tv_finalpayment.setText(sellOrder.getFinalpayment());
+        }
     }
 
     private void addOrder(String uuid, String data)
@@ -298,9 +305,21 @@ public class CZ_OrderDetail extends Activity
                 listItemView = (ListItemView) convertView.getTag();
             }
             // 设置文字和图片
+            if (SellOrderDetail.getactualnumber().equals(""))
+            {
+                listItemView.tv_actualnumber.setText("实售0株");
+            } else
+            {
+                listItemView.tv_actualnumber.setText("实售" + SellOrderDetail.getactualnumber() + "株");
+            }
+            if (SellOrderDetail.getactualweight().equals(""))
+            {
+                listItemView.tv_actualweight.setText("实重0斤");
+            } else
+            {
+                listItemView.tv_actualweight.setText("实重" + SellOrderDetail.getactualweight() + "斤");
+            }
             listItemView.tv_plannumber.setText("拟售" + SellOrderDetail.getplannumber() + "株");
-            listItemView.tv_actualnumber.setText("实售" + SellOrderDetail.getactualnumber() + "株");
-            listItemView.tv_actualweight.setText("实重" + SellOrderDetail.getactualweight() + "斤");
             listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
             return convertView;
         }
@@ -321,11 +340,18 @@ public class CZ_OrderDetail extends Activity
                     customDialog_editOrderDetaill.dismiss();
                     textview_number.setText("实售" + et_actualnumber.getText().toString() + "株");
                     textview_weight.setText("实重" + et_actualweight.getText().toString() + "斤");
+                    int number_difference = 0;
+                    if (sellOrderDetail_new.getactualnumber().equals(""))
+                    {
+                        number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_actualnumber.getText().toString());
+                    } else
+                    {
+                        number_difference = Integer.valueOf(sellOrderDetail_new.getactualnumber()) - Integer.valueOf(et_actualnumber.getText().toString());
+                    }
                     list_orderdetail.get(pos).setactualnumber(et_actualnumber.getText().toString());
                     list_orderdetail.get(pos).setactualweight(et_actualweight.getText().toString());
                     countAllWeight(list_orderdetail);
                     countAllNumber(list_orderdetail);
-                    int number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_actualnumber.getText().toString());
                     editNumber(sellOrderDetail_new, et_actualnumber.getText().toString(), et_actualweight.getText().toString(), String.valueOf(number_difference));
                 }
             });
@@ -365,6 +391,9 @@ public class CZ_OrderDetail extends Activity
                         if (result.getAffectedRows() == 1)
                         {
                             Toast.makeText(context, "修改成功！", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            intent.setAction(broadcast);
+                            sendBroadcast(intent);
                         } else
                         {
                             Toast.makeText(context, "修改失败！", Toast.LENGTH_SHORT).show();

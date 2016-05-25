@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:descendantFocusability="blocksDescendants"
               android:orientation="vertical">
 
 
     <LinearLayout
+        android:id="@+id/ll_batchtime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dip"
@@ -16,7 +16,6 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/ll_batchtime"
             android:layout_width="match_parent"
             android:layout_height="40dip">
 
@@ -39,7 +38,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dip"
-                android:background="@drawable/performance_calendar"/>
+                android:background="@drawable/performance_calendar"
+                android:clickable="true"/>
 
             <TextView
                 android:id="@+id/tv_number"

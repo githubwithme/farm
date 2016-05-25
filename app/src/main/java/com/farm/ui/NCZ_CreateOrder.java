@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,6 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
-import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditOrderDetail;
 import com.lidroid.xutils.HttpUtils;
@@ -52,6 +52,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_createorder)
 public class NCZ_CreateOrder extends Activity
 {
+    List<String> list_batchtime=new ArrayList<>();
     String batchtime;
     List<SellOrderDetail_New> list_SellOrderDetail;
     Adapter_EditSellOrderDetail_NCZ adapter_sellOrderDetail;
@@ -119,6 +120,44 @@ public class NCZ_CreateOrder extends Activity
             Toast.makeText(NCZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
+        List<String> list_uuid= new ArrayList<>();
+        String batchtime = "";
+        String producer = "";
+        List<String> list_batchtime = new ArrayList<>();
+        List<String> list_producer = new ArrayList<>();
+        for (int i = 0; i < list_SellOrderDetail.size(); i++)
+        {
+            list_uuid.add(list_SellOrderDetail.get(i).getUuid());
+            if (i == 0)
+            {
+                list_batchtime.add(list_SellOrderDetail.get(0).getBatchTime());
+                batchtime = batchtime + list_SellOrderDetail.get(0).getBatchTime() + ";";
+            }
+            if (i == 0)
+            {
+                list_producer.add(list_SellOrderDetail.get(0).getparkname());
+                producer = producer + list_SellOrderDetail.get(0).getparkname() + ";";
+            }
+            for (int j = 0; j < list_batchtime.size(); j++)
+            {
+                if (!list_SellOrderDetail.get(i).getBatchTime().equals(list_batchtime.get(j)))
+                {
+                    list_batchtime.add(list_SellOrderDetail.get(i).getBatchTime());
+                    batchtime = batchtime + list_SellOrderDetail.get(i).getBatchTime() + ";";
+                    break;
+                }
+            }
+            for (int j = 0; j < list_producer.size(); j++)
+            {
+                if (!list_SellOrderDetail.get(i).getparkname().equals(list_producer.get(j)))
+                {
+                    list_producer.add(list_SellOrderDetail.get(i).getparkname());
+                    producer = producer + list_SellOrderDetail.get(i).getparkname() + ";";
+                    break;
+                }
+            }
+
+        }
         String uuid = java.util.UUID.randomUUID().toString();
         SellOrder_New sellOrder = new SellOrder_New();
         sellOrder.setid("");
@@ -145,14 +184,10 @@ public class NCZ_CreateOrder extends Activity
         sellOrder.setYear(utils.getYear());
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
-        sellOrder.setProducer("");
+        sellOrder.setProducer(producer);
 
 
-        List<String> list_detail = new ArrayList<>();
-        for (int i = 0; i < list_SellOrderDetail.size(); i++)
-        {
-            list_detail.add(list_SellOrderDetail.get(i).getUuid());
-        }
+
 
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
@@ -160,7 +195,7 @@ public class NCZ_CreateOrder extends Activity
         builder.append("{\"SellOrderList\": ");
         builder.append(JSON.toJSONString(SellOrderList));
         builder.append(", \"SellOrderDetailLists\": ");
-        builder.append(JSON.toJSONString(list_detail));
+        builder.append(JSON.toJSONString(list_uuid));
         builder.append("} ");
         addOrder(uuid, builder.toString());
     }
@@ -192,59 +227,12 @@ public class NCZ_CreateOrder extends Activity
         return allnumber;
     }
 
-    private void getListData()
-    {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_CreateOrder.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("comID", SellOrderDetail.getUuid());
-        params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("page_size", "10");
-        params.addQueryStringParameter("page_index", "10");
-        params.addQueryStringParameter("action", "commandGetListBycomID");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<SellOrderDetail_New> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_sellOrderDetail = new Adapter_EditSellOrderDetail_NCZ(NCZ_CreateOrder.this, listNewData);
-                        lv.setAdapter(adapter_sellOrderDetail);
-                        utils.setListViewHeight(lv);
-                    } else
-                    {
-                        listNewData = new ArrayList<SellOrderDetail_New>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(NCZ_CreateOrder.this, "error_connectDataBase");
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s)
-            {
-
-            }
-        });
-    }
-
 
     private void addOrder(String uuid, String data)
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uuid", uuid);
-        params.addQueryStringParameter("action", "addOrder");
+        params.addQueryStringParameter("saleid", uuid);
+        params.addQueryStringParameter("action", "createOrder");
         params.setContentType("application/json");
         try
         {
@@ -267,6 +255,13 @@ public class NCZ_CreateOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         Toast.makeText(NCZ_CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent();
+                        intent1.setAction(AppContext.BROADCAST_UPDATESELLORDER);
+                        sendBroadcast(intent1);
+
+                        Intent intent2 = new Intent();
+                        intent2.setAction(AppContext.BROADCAST_UPDATENEWSALELIST);
+                        sendBroadcast(intent2);
                         finish();
                     }
 
@@ -335,7 +330,7 @@ public class NCZ_CreateOrder extends Activity
             if (lmap.get(position) == null)
             {
                 // 获取list_item布局文件的视图
-                convertView = listContainer.inflate(R.layout.adapter_editsellorderdetail_ncz, null);
+                convertView = listContainer.inflate(R.layout.adapter_createorder_ncz, null);
                 listItemView = new ListItemView();
                 // 获取控件对象
                 listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);

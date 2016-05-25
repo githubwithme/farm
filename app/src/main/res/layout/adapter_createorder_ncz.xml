@@ -62,7 +62,7 @@
                 android:textSize="@dimen/size_sp_14"/>
 
             <TextView
-                android:id="@+id/tv_number"
+                android:id="@+id/tv_plannumber"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dip"
@@ -70,29 +70,6 @@
                 android:gravity="center"
                 android:text=""
                 android:textColor="@color/gray"
-                android:textSize="@dimen/size_sp_14"/>
-
-            <Button
-                android:id="@+id/btn_editorderdetail"
-                android:layout_width="wrap_content"
-                android:layout_height="40dip"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="编辑"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_14"/>
-
-            <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="40dip"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dip"
-                android:layout_toLeftOf="@+id/btn_editorderdetail"
-                android:gravity="center"
-                android:text="删除"
-                android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_sp_14"/>
 
 

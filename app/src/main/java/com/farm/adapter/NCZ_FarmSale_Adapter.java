@@ -1,7 +1,6 @@
 package com.farm.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +9,11 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.BatchTime;
 import com.farm.bean.parktab;
-import com.farm.ui.NCZ_FarmSale_BatchDetail_;
 import com.farm.widget.CustomDialog_ListView;
 
 import java.util.HashMap;
@@ -65,7 +62,7 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
         public TextView tv_allnumber;
         public TextView tv_batchtime;
         public TextView tv_number;
-        public RelativeLayout ll_batchtime;
+        public LinearLayout ll_batchtime;
 
     }
 
@@ -110,20 +107,20 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
             listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
             View view = (View) convertView.findViewById(R.id.view);
-            listItemView.ll_batchtime = (RelativeLayout) convertView.findViewById(R.id.ll_batchtime);
-            listItemView.ll_batchtime.setTag(batchTime);
-            listItemView.ll_batchtime.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    BatchTime batchTime = (BatchTime) v.getTag();
-                    Intent intent = new Intent(context, NCZ_FarmSale_BatchDetail_.class);
-                    intent.putExtra("parkid", batchTime.getParkId());
-                    intent.putExtra("batchTime", batchTime.getBatchTime());
-                    context.startActivity(intent);
-                }
-            });
+            listItemView.ll_batchtime = (LinearLayout) convertView.findViewById(R.id.ll_batchtime);
+//            listItemView.ll_batchtime.setTag(batchTime);
+//            listItemView.ll_batchtime.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    BatchTime batchTime = (BatchTime) v.getTag();
+//                    Intent intent = new Intent(context, NCZ_FarmSale_BatchDetail_.class);
+//                    intent.putExtra("parkid", batchTime.getParkId());
+//                    intent.putExtra("batchTime", batchTime.getBatchTime());
+//                    context.startActivity(intent);
+//                }
+//            });
             view.setTag(convertView);
             view.setOnClickListener(new View.OnClickListener()
             {
@@ -152,14 +149,22 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
                 map = new HashMap<>();
             }
 
-            float percent = 0;
+            int percent = 0;
             float allnumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein()) + Integer.valueOf(batchTime.getAllnewsale()) + Integer.valueOf(batchTime.getAllsalefor());
-            float salenumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein() + Integer.valueOf(batchTime.getAllnewsale()));
+            float salenumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein()) + Integer.valueOf(batchTime.getAllnewsale());
             if (allnumber != 0)
             {
-                percent = (salenumber / allnumber) * 100;
+                percent = (int) ((salenumber / allnumber) * 100);
             }
-            listItemView.pb.setProgress(Math.round(percent));
+//            String p = String.valueOf(percent);
+//            if (p.contains("."))
+//            {
+//                p = p.substring(0, p.lastIndexOf("."));
+//            } else
+//            {
+//
+//            }
+            listItemView.pb.setProgress(percent);
             listItemView.tv_pb.setText("共售" + percent + "%");
             listItemView.tv_allnumber.setText("总产量" + allnumber);
             listItemView.tv_batchtime.setText(batchTime.getBatchTime());
@@ -271,14 +276,14 @@ public class NCZ_FarmSale_Adapter extends BaseExpandableListAdapter
             }
         });
         parktab parktab = listData.get(groupPosition);
-        float percent = 0;
+        int percent = 0;
         float allnumber = Integer.valueOf(parktab.getAllsaleout()) + Integer.valueOf(parktab.getAllsalein()) + Integer.valueOf(parktab.getAllnewsale()) + Integer.valueOf(parktab.getAllsalefor());
         float salenumber = Integer.valueOf(parktab.getAllsaleout()) + Integer.valueOf(parktab.getAllsalein()) + Integer.valueOf(parktab.getAllnewsale());
         if (allnumber != 0)
         {
-            percent = (salenumber / allnumber) * 100;
+            percent = (int) ((salenumber / allnumber) * 100);
         }
-        pb.setProgress(Math.round(percent));
+        pb.setProgress(percent);
         tv_pb.setText("共售" + percent + "%");
 
         tv_parkname.setText(parktab.getparkName());

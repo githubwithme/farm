@@ -10,8 +10,8 @@
         android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="50dip"
@@ -76,8 +76,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/ll_tj"
+        android:id="@+id/ll_cw"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:layout_weight="1"

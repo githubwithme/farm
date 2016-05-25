@@ -2,7 +2,10 @@ package com.farm.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,16 +80,27 @@ public class NCZ_AllOrderFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
+        getActivity().registerReceiver(receiver_update, intentfilter_update);
         return rootView;
     }
 
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getAllOrders();
+        }
+    };
 
     private void getNewSaleList_test()
     {
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_OrderAdapter(getActivity(), listData);
+            listAdapter = new NCZ_OrderAdapter(getActivity(), listData,AppContext.BROADCAST_UPDATEAllORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -123,7 +137,7 @@ public class NCZ_AllOrderFragment extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        listAdapter = new NCZ_OrderAdapter(getActivity(), listData);
+                        listAdapter = new NCZ_OrderAdapter(getActivity(), listData,AppContext.BROADCAST_UPDATEAllORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {

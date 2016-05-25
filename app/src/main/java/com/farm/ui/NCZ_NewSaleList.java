@@ -1,7 +1,10 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -48,6 +51,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_newsalelist)
 public class NCZ_NewSaleList extends Activity
 {
+    Adapter_NewSaleList adapter_sellOrderDetail;
     List<SellOrderDetail_New> list_SellOrderDetail;
     @ViewById
     Button btn_createorder;
@@ -57,10 +61,17 @@ public class NCZ_NewSaleList extends Activity
     @Click
     void btn_createorder()
     {
-        Intent intent = new Intent(NCZ_NewSaleList.this, NCZ_CreateOrder_.class);
-        intent.putExtra("batchtime", "2016-05-11");
-        intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list_SellOrderDetail);
-        startActivity(intent);
+        if (list_SellOrderDetail != null && list_SellOrderDetail.size() > 0)
+        {
+            Intent intent = new Intent(NCZ_NewSaleList.this, NCZ_CreateOrder_.class);
+            intent.putExtra("batchtime", "2016-05-11");
+            intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list_SellOrderDetail);
+            startActivity(intent);
+        } else
+        {
+            Toast.makeText(this, "拟售清单为空，请先填加要出售的产品！", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @AfterViews
@@ -75,12 +86,24 @@ public class NCZ_NewSaleList extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENEWSALELIST);
+        registerReceiver(receiver_update, intentfilter_update);
     }
+
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            NCZ_NewSaleList.this.finish();
+        }
+    };
 
     private void getNewSaleList_test()
     {
         list_SellOrderDetail = FileHelper.getAssetsData(NCZ_NewSaleList.this, "getNewSaleList", SellOrderDetail_New.class);
-        Adapter_NewSaleList adapter_sellOrderDetail = new Adapter_NewSaleList(NCZ_NewSaleList.this, list_SellOrderDetail);
+        adapter_sellOrderDetail = new Adapter_NewSaleList(NCZ_NewSaleList.this, list_SellOrderDetail);
         lv.setAdapter(adapter_sellOrderDetail);
         utils.setListViewHeight(lv);
     }
@@ -105,7 +128,7 @@ public class NCZ_NewSaleList extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         list_SellOrderDetail = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        Adapter_NewSaleList adapter_sellOrderDetail = new Adapter_NewSaleList(NCZ_NewSaleList.this, list_SellOrderDetail);
+                        adapter_sellOrderDetail = new Adapter_NewSaleList(NCZ_NewSaleList.this, list_SellOrderDetail);
                         lv.setAdapter(adapter_sellOrderDetail);
                         utils.setListViewHeight(lv);
 
@@ -144,6 +167,7 @@ public class NCZ_NewSaleList extends Activity
             public TextView tv_number;
             public TextView tv_batchtime;
             public TextView tv_area;
+            public Button btn_editorderdetail;
             public Button btn_delete;
 
             public TextView tv_yq;
@@ -186,6 +210,7 @@ public class NCZ_NewSaleList extends Activity
                 listItemView = new ListItemView();
                 // 获取控件对象
                 listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
+                listItemView.btn_editorderdetail = (Button) convertView.findViewById(R.id.btn_editorderdetail);
                 listItemView.btn_delete = (Button) convertView.findViewById(R.id.btn_delete);
                 listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
                 listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
@@ -199,14 +224,14 @@ public class NCZ_NewSaleList extends Activity
                         showDeleteTip(listItems.get(pos));
                     }
                 });
-                listItemView.tv_number.setTag(position);
-                listItemView.tv_number.setOnClickListener(new View.OnClickListener()
+                listItemView.btn_editorderdetail.setTag(position);
+                listItemView.btn_editorderdetail.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v)
                     {
                         int pos = (int) v.getTag();
-                        showDialog_editNumber(listItems.get(pos), (TextView) v);
+                        showDialog_editNumber(listItems.get(pos));
                     }
                 });
                 // 设置文字和图片
@@ -225,9 +250,8 @@ public class NCZ_NewSaleList extends Activity
             return convertView;
         }
 
-        private void editNumber(final SellOrderDetail_New sellOrderDetail, String number_new, String number_difference)
+        private void editNumber(final SellOrderDetail_New sellOrderDetail, final String number_new, String number_difference)
         {
-            commembertab commembertab = AppContext.getUserInfo(context);
             RequestParams params = new RequestParams();
             params.addQueryStringParameter("uid", sellOrderDetail.getuid());
             params.addQueryStringParameter("contractid", sellOrderDetail.getcontractid());
@@ -236,7 +260,7 @@ public class NCZ_NewSaleList extends Activity
             params.addQueryStringParameter("batchTime", sellOrderDetail.getBatchTime());
             params.addQueryStringParameter("number_difference", number_difference);
             params.addQueryStringParameter("number_new", number_new);
-            params.addQueryStringParameter("action", "editSellOrderDetail");
+            params.addQueryStringParameter("action", "editOrderDetail");
             HttpUtils http = new HttpUtils();
             http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
             {
@@ -247,13 +271,16 @@ public class NCZ_NewSaleList extends Activity
                     Result result = JSON.parseObject(responseInfo.result, Result.class);
                     if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                     {
-                        String rows = result.getRows().get(0).toString();
-                        if (rows.equals("1"))
+                        if (result.getAffectedRows() == 1)
                         {
                             Toast.makeText(context, "修改成功！", Toast.LENGTH_SHORT).show();
-                        } else if (rows.equals("0"))
+                            Intent intent = new Intent();
+                            intent.setAction(AppContext.BROADCAST_UPDATESELLORDER);
+                            sendBroadcast(intent);
+                            getNewSaleList();
+                        } else
                         {
-                            Toast.makeText(context, "修改失败！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "该承包区该批次剩余株数不足", Toast.LENGTH_SHORT).show();
                         }
 
                     } else
@@ -294,6 +321,10 @@ public class NCZ_NewSaleList extends Activity
                         if (result.getAffectedRows() != 0)
                         {
                             Toast.makeText(context, "删除成功！", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            intent.setAction(AppContext.BROADCAST_UPDATESELLORDER);
+                            sendBroadcast(intent);
+                            getNewSaleList();
                             myDialog.cancel();
                         } else
                         {
@@ -339,7 +370,7 @@ public class NCZ_NewSaleList extends Activity
             myDialog.show();
         }
 
-        private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new, final TextView textView)
+        private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new)
         {
             final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editorderdetail, null);
             customDialog_editOrderDetaill = new CustomDialog_EditOrderDetail(context, R.style.MyDialog, dialog_layout);
@@ -352,7 +383,6 @@ public class NCZ_NewSaleList extends Activity
                 public void onClick(View v)
                 {
                     customDialog_editOrderDetaill.dismiss();
-                    textView.setText(et_number.getText().toString());
                     int number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_number.getText().toString());
                     editNumber(sellOrderDetail_new, et_number.getText().toString(), String.valueOf(number_difference));
                 }

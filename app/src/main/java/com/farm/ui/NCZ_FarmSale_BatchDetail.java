@@ -1,7 +1,10 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -105,7 +108,19 @@ public class NCZ_FarmSale_BatchDetail extends Activity
         getActionBar().hide();
         parkid = getIntent().getStringExtra("parkid");
         batchTime = getIntent().getStringExtra("batchTime");
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_FINISH);
+        registerReceiver(receiver_update, intentfilter_update);
     }
+
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            finish();
+        }
+    };
 
     public void setData()
     {
@@ -266,6 +281,9 @@ public class NCZ_FarmSale_BatchDetail extends Activity
                     {
                         pb_upload.setVisibility(View.GONE);
                         Toast.makeText(NCZ_FarmSale_BatchDetail.this, "保存成功", Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent();
+                        intent2.setAction(AppContext.BROADCAST_UPDATESELLORDER);
+                        sendBroadcast(intent2);
                         finish();
                     }
                 } else
