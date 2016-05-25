@@ -235,6 +235,9 @@
             android:process="system"
         </service>
         <!-- 其他UI -->
+        <activity android:name=".chart.FinanceAnalysis_"/>
+        <activity android:name=".chart.SaleAnalysis_"/>
+        <activity android:name=".chart.GoodsAnalysis_"/>
         <activity android:name=".ui.GuanYu_"/>
         <activity android:name=".ui.Helper_"/>
         <activity android:name=".ui.YiJianFanKui_"/>
