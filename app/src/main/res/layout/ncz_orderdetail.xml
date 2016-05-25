@@ -173,42 +173,6 @@
                         <TextView
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="10dip"
-                            android:layout_weight="1"
-                            android:gravity="left|center_vertical"
-                            android:paddingLeft="10dip"
-                            android:text="实际重量(斤)"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-
-
-                        <TextView
-                            android:id="@+id/tv_actualweight"
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
-                            android:text="暂无"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/size_14"/>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="@color/line_color"/>
-
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="60dip"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
@@ -228,31 +192,8 @@
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
-
-                        <TextView
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dip"
-                            android:layout_weight="1"
-                            android:gravity="left|center_vertical"
-                            android:paddingLeft="10dip"
-                            android:text="实际总价(元)"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-
-
-                        <TextView
-                            android:id="@+id/tv_actualsumvalues"
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
-                            android:text="暂无"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/size_14"/>
                     </LinearLayout>
+
 
                     <View
                         android:layout_width="match_parent"
@@ -446,16 +387,96 @@
 
             </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dip"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dip"
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:background="@drawable/round_gray"
-                android:gravity="center"
-                android:text="销售明细条目"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_16"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:gravity="center"
+                    android:text="销售明细条目"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_sp_16"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dip"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dip"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="45dip"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="实售"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_sp_16"/>
+
+                        <TextView
+                            android:id="@+id/tv_actualnumber"
+                            android:layout_width="0dip"
+                            android:layout_height="45dip"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/size_sp_18"/>
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="45dip"
+                            android:layout_weight="1"
+                            android:background="@drawable/round_gray"
+                            android:gravity="center"
+                            android:text="实重"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_sp_16"/>
+
+                        <TextView
+                            android:id="@+id/tv_actualweight"
+                            android:layout_width="0dip"
+                            android:layout_height="45dip"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/size_sp_18"/>
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="45dip"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="实际总价"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_sp_16"/>
+
+                        <TextView
+                            android:id="@+id/tv_actualsumvalues"
+                            android:layout_width="0dip"
+                            android:layout_height="45dip"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/size_sp_18"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
 
             <ListView
                 android:id="@+id/lv"

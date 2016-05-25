@@ -79,9 +79,21 @@ public class Adapter_SellOrderDetail extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
+        if (SellOrderDetail.getactualnumber().equals(""))
+        {
+            listItemView.tv_actualnumber.setText("实售0株");
+        } else
+        {
+            listItemView.tv_actualnumber.setText("实售" + SellOrderDetail.getactualnumber() + "株");
+        }
+        if (SellOrderDetail.getactualweight().equals(""))
+        {
+            listItemView.tv_actualweight.setText("实重0斤");
+        } else
+        {
+            listItemView.tv_actualweight.setText("实重" + SellOrderDetail.getactualweight() + "斤");
+        }
         listItemView.tv_plannumber.setText("拟售" + SellOrderDetail.getplannumber() + "株");
-        listItemView.tv_actualnumber.setText("实售" + SellOrderDetail.getactualnumber() + "株");
-        listItemView.tv_actualweight.setText("实重" + SellOrderDetail.getactualweight() + "斤");
         listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
         return convertView;
     }

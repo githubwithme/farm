@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back"/>
+
+        <TextView
+            android:id="@+id/tv_largecost"
+            android:layout_width="80dip"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="大额费用"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_sp_16"/>
+
+        <TextView
+            android:id="@+id/tv_specialcost"
+            android:layout_width="80dip"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dip"
+            android:layout_toLeftOf="@+id/tv_largecost"
+            android:gravity="center"
+            android:text="专项费用"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_sp_16"/>
+
+        <TextView
+            android:id="@+id/tv_smallcost"
+            android:layout_width="80dip"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dip"
+            android:layout_toRightOf="@+id/tv_largecost"
+            android:gravity="center"
+            android:text="小额费用"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_sp_16"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

@@ -105,8 +105,6 @@ public class CZ_OrderDetail extends Activity
     @AfterViews
     void afterOncreate()
     {
-        countAllWeight(list_orderdetail);
-        countAllNumber(list_orderdetail);
         adapter_sellOrderDetail = new Adapter_SellOrderDetail(CZ_OrderDetail.this);
         lv.setAdapter(adapter_sellOrderDetail);
         utils.setListViewHeight(lv);
@@ -158,18 +156,24 @@ public class CZ_OrderDetail extends Activity
 
     private void showData()
     {
+        countAllWeight(list_orderdetail);
+        countAllNumber(list_orderdetail);
         tv_name.setText(sellOrder.getBuyers());
         tv_planprice.setText(sellOrder.getPrice());
-//        tv_planweight.setText(sellOrder.getWeight());
-//        tv_actualweight.setText(sellOrder.getBuyers());
-//        tv_plansumvalues.setText(sellOrder.getBuyers());
-//        tv_actualsumvalues.setText(sellOrder.getBuyers());
+        tv_planweight.setText(sellOrder.getWeight());
+        tv_plansumvalues.setText(sellOrder.getBuyers());
         tv_deposit.setText(sellOrder.getDeposit());
-        tv_finalpayment.setText(sellOrder.getFinalpayment());
         tv_phone.setText(sellOrder.getPhone());
         tv_address.setText(sellOrder.getAddress());
         tv_email.setText(sellOrder.getEmail());
         tv_note.setText(sellOrder.getNote());
+        if (sellOrder.getFinalpayment().equals(""))
+        {
+            tv_finalpayment.setText("0");
+        } else
+        {
+            tv_finalpayment.setText(sellOrder.getFinalpayment());
+        }
     }
 
     private void addOrder(String uuid, String data)
@@ -301,9 +305,21 @@ public class CZ_OrderDetail extends Activity
                 listItemView = (ListItemView) convertView.getTag();
             }
             // 设置文字和图片
+            if (SellOrderDetail.getactualnumber().equals(""))
+            {
+                listItemView.tv_actualnumber.setText("实售0株");
+            } else
+            {
+                listItemView.tv_actualnumber.setText("实售" + SellOrderDetail.getactualnumber() + "株");
+            }
+            if (SellOrderDetail.getactualweight().equals(""))
+            {
+                listItemView.tv_actualweight.setText("实重0斤");
+            } else
+            {
+                listItemView.tv_actualweight.setText("实重" + SellOrderDetail.getactualweight() + "斤");
+            }
             listItemView.tv_plannumber.setText("拟售" + SellOrderDetail.getplannumber() + "株");
-            listItemView.tv_actualnumber.setText("实售" + SellOrderDetail.getactualnumber() + "株");
-            listItemView.tv_actualweight.setText("实重" + SellOrderDetail.getactualweight() + "斤");
             listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
             return convertView;
         }
@@ -325,7 +341,7 @@ public class CZ_OrderDetail extends Activity
                     textview_number.setText("实售" + et_actualnumber.getText().toString() + "株");
                     textview_weight.setText("实重" + et_actualweight.getText().toString() + "斤");
                     int number_difference = 0;
-                    if ( sellOrderDetail_new.getactualnumber().equals(""))
+                    if (sellOrderDetail_new.getactualnumber().equals(""))
                     {
                         number_difference = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_actualnumber.getText().toString());
                     } else

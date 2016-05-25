@@ -16,7 +16,6 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
-import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -31,7 +30,6 @@ import org.androidannotations.annotations.ViewById;
 import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +42,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_orderdetail)
 public class NCZ_OrderDetail extends Activity
 {
+    List<SellOrderDetail_New> list_orderdetail;
     String batchtime;
     SellOrder_New sellOrder;
     Adapter_SellOrderDetail adapter_sellOrderDetail;
@@ -78,12 +77,14 @@ public class NCZ_OrderDetail extends Activity
     TextView tv_deposit;
     @ViewById
     TextView tv_finalpayment;
+    @ViewById
+    TextView tv_actualnumber;
 
 
     @AfterViews
     void afterOncreate()
     {
-        adapter_sellOrderDetail = new Adapter_SellOrderDetail(NCZ_OrderDetail.this, sellOrder.getSellOrderDetailList());
+        adapter_sellOrderDetail = new Adapter_SellOrderDetail(NCZ_OrderDetail.this, list_orderdetail);
         lv.setAdapter(adapter_sellOrderDetail);
         utils.setListViewHeight(lv);
 //        getListData();
@@ -96,70 +97,61 @@ public class NCZ_OrderDetail extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder = getIntent().getParcelableExtra("bean");
+        list_orderdetail = sellOrder.getSellOrderDetailList();
     }
 
 
-    private void getListData()
+    public int countAllNumber(List<SellOrderDetail_New> list)
     {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_OrderDetail.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("comID", SellOrderDetail.getUuid());
-        params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("page_size", "10");
-        params.addQueryStringParameter("page_index", "10");
-        params.addQueryStringParameter("action", "commandGetListBycomID");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        int count_number = 0;
+        for (int i = 0; i < list.size(); i++)
         {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
+            if (list.get(i).getactualnumber() != null && !list.get(i).getactualnumber().equals(""))
             {
-                String a = responseInfo.result;
-                List<SellOrderDetail_New> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_sellOrderDetail = new Adapter_SellOrderDetail(NCZ_OrderDetail.this, listNewData);
-                        lv.setAdapter(adapter_sellOrderDetail);
-                        utils.setListViewHeight(lv);
-                    } else
-                    {
-                        listNewData = new ArrayList<SellOrderDetail_New>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(NCZ_OrderDetail.this, "error_connectDataBase");
-                    return;
-                }
+                count_number = count_number + Integer.valueOf(list.get(i).getactualnumber());
             }
 
-            @Override
-            public void onFailure(HttpException e, String s)
-            {
+        }
+        tv_actualnumber.setText(String.valueOf(count_number) + "株");
+        return count_number;
+    }
 
+    public int countAllWeight(List<SellOrderDetail_New> list)
+    {
+        int count_weight = 0;
+        for (int i = 0; i < list.size(); i++)
+        {
+            if (list.get(i).getactualweight() != null && !list.get(i).getactualweight().equals(""))
+            {
+                count_weight = count_weight + Integer.valueOf(list.get(i).getactualweight());
             }
-        });
+
+        }
+        tv_actualsumvalues.setText(count_weight * Float.valueOf(sellOrder.getPrice()) + "元");
+        tv_actualweight.setText(String.valueOf(count_weight) + "斤");
+        return count_weight;
     }
 
     private void showData()
     {
+        countAllWeight(list_orderdetail);
+        countAllNumber(list_orderdetail);
         tv_name.setText(sellOrder.getBuyers());
         tv_planprice.setText(sellOrder.getPrice());
-//        tv_planweight.setText(sellOrder.getWeight());
-//        tv_actualweight.setText(sellOrder.getBuyers());
-//        tv_plansumvalues.setText(sellOrder.getBuyers());
-//        tv_actualsumvalues.setText(sellOrder.getBuyers());
+        tv_planweight.setText(sellOrder.getWeight());
+        tv_plansumvalues.setText(sellOrder.getBuyers());
         tv_deposit.setText(sellOrder.getDeposit());
-        tv_finalpayment.setText(sellOrder.getFinalpayment());
         tv_phone.setText(sellOrder.getPhone());
         tv_address.setText(sellOrder.getAddress());
         tv_email.setText(sellOrder.getEmail());
         tv_note.setText(sellOrder.getNote());
+        if (sellOrder.getFinalpayment().equals(""))
+        {
+            tv_finalpayment.setText("0");
+        } else
+        {
+            tv_finalpayment.setText(sellOrder.getFinalpayment());
+        }
     }
 
     private void addOrder(String uuid, String data)

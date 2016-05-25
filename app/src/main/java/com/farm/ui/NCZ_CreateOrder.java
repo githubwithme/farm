@@ -52,6 +52,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_createorder)
 public class NCZ_CreateOrder extends Activity
 {
+    List<String> list_batchtime=new ArrayList<>();
     String batchtime;
     List<SellOrderDetail_New> list_SellOrderDetail;
     Adapter_EditSellOrderDetail_NCZ adapter_sellOrderDetail;
@@ -119,6 +120,44 @@ public class NCZ_CreateOrder extends Activity
             Toast.makeText(NCZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
+        List<String> list_uuid= new ArrayList<>();
+        String batchtime = "";
+        String producer = "";
+        List<String> list_batchtime = new ArrayList<>();
+        List<String> list_producer = new ArrayList<>();
+        for (int i = 0; i < list_SellOrderDetail.size(); i++)
+        {
+            list_uuid.add(list_SellOrderDetail.get(i).getUuid());
+            if (i == 0)
+            {
+                list_batchtime.add(list_SellOrderDetail.get(0).getBatchTime());
+                batchtime = batchtime + list_SellOrderDetail.get(0).getBatchTime() + ";";
+            }
+            if (i == 0)
+            {
+                list_producer.add(list_SellOrderDetail.get(0).getparkname());
+                producer = producer + list_SellOrderDetail.get(0).getparkname() + ";";
+            }
+            for (int j = 0; j < list_batchtime.size(); j++)
+            {
+                if (!list_SellOrderDetail.get(i).getBatchTime().equals(list_batchtime.get(j)))
+                {
+                    list_batchtime.add(list_SellOrderDetail.get(i).getBatchTime());
+                    batchtime = batchtime + list_SellOrderDetail.get(i).getBatchTime() + ";";
+                    break;
+                }
+            }
+            for (int j = 0; j < list_producer.size(); j++)
+            {
+                if (!list_SellOrderDetail.get(i).getparkname().equals(list_producer.get(j)))
+                {
+                    list_producer.add(list_SellOrderDetail.get(i).getparkname());
+                    producer = producer + list_SellOrderDetail.get(i).getparkname() + ";";
+                    break;
+                }
+            }
+
+        }
         String uuid = java.util.UUID.randomUUID().toString();
         SellOrder_New sellOrder = new SellOrder_New();
         sellOrder.setid("");
@@ -145,14 +184,10 @@ public class NCZ_CreateOrder extends Activity
         sellOrder.setYear(utils.getYear());
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
-        sellOrder.setProducer("");
+        sellOrder.setProducer(producer);
 
 
-        List<String> list_detail = new ArrayList<>();
-        for (int i = 0; i < list_SellOrderDetail.size(); i++)
-        {
-            list_detail.add(list_SellOrderDetail.get(i).getUuid());
-        }
+
 
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
@@ -160,7 +195,7 @@ public class NCZ_CreateOrder extends Activity
         builder.append("{\"SellOrderList\": ");
         builder.append(JSON.toJSONString(SellOrderList));
         builder.append(", \"SellOrderDetailLists\": ");
-        builder.append(JSON.toJSONString(list_detail));
+        builder.append(JSON.toJSONString(list_uuid));
         builder.append("} ");
         addOrder(uuid, builder.toString());
     }

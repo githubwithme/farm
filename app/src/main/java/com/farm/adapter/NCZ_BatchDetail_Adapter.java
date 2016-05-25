@@ -198,14 +198,14 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
 
         areatab areatab = listData.get(groupPosition);
         tv_areaname.setText(listData.get(groupPosition).getareaName());
-        float percent = 0;
+        int percent = 0;
         float allnumber = Integer.valueOf(areatab.getAllsaleout()) + Integer.valueOf(areatab.getAllsalein()) + Integer.valueOf(areatab.getAllnewsale()) + Integer.valueOf(areatab.getAllsalefor());
         float salenumber = Integer.valueOf(areatab.getAllsaleout()) + Integer.valueOf(areatab.getAllsalein()) + Integer.valueOf(areatab.getAllnewsale());
         if (allnumber != 0)
         {
-            percent = (salenumber / allnumber) * 100;
+            percent = (int) ((salenumber / allnumber) * 100);
         }
-        pb.setProgress(Math.round(percent));
+        pb.setProgress(percent);
         tv_pb.setText("共售" + percent + "%");
         tv_allnumber.setText("总产量" + allnumber);
         tv_saleinfo.setText("已售" + areatab.getAllsaleout() + "    售中" + areatab.getAllsalein() + "    拟售" + areatab.getAllnewsale());
@@ -279,14 +279,14 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
                 convertView = View.inflate(context, R.layout.gridview_sellorderdetail_ncz, null);
                 view = new Holder(convertView);
                 contractTab contractTab = list.get(position);
-                float percent = 0;
+                int percent = 0;
                 float allnumber = Integer.valueOf(contractTab.getAllsaleout()) + Integer.valueOf(contractTab.getAllsalein()) + Integer.valueOf(contractTab.getAllnewsale()) + Integer.valueOf(contractTab.getAllsalefor());
                 float salenumber = Integer.valueOf(contractTab.getAllsaleout()) + Integer.valueOf(contractTab.getAllsalein()) + Integer.valueOf(contractTab.getAllnewsale());
                 if (allnumber != 0)
                 {
-                    percent = (salenumber / allnumber) * 100;
+                    percent = (int) ((salenumber / allnumber) * 100);
                 }
-                view.pb.setProgress(Math.round(percent));
+                view.pb.setProgress(percent);
                 view.tv_pb.setText("共售" + percent + "%");
                 view.cb_selectall.setTag(R.id.tag_postion, position);
                 view.tv_areaname.setText(list.get(position).getContractNum());
@@ -408,50 +408,6 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
             customDialog_editSaleInInfo.show();
         }
 
-//    private void createNewSale(final SellOrderDetail_New sellorderdetail, String number_new)
-//    {
-//        commembertab commembertab = AppContext.getUserInfo(getActivity());
-//        RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("uuid", breakOff.getUuid());
-//        params.addQueryStringParameter("contractid", breakOff.getcontractid());
-//        params.addQueryStringParameter("batchTime", breakOff.getBatchTime());
-//        params.addQueryStringParameter("year", breakOff.getYear());
-//        params.addQueryStringParameter("number_new", number_new);
-//        params.addQueryStringParameter("number_difference", number_difference);
-//        params.addQueryStringParameter("action", "editBreakOff");
-//        HttpUtils http = new HttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-//        {
-//            @Override
-//            public void onSuccess(ResponseInfo<String> responseInfo)
-//            {
-//                String a = responseInfo.result;
-//                Result result = JSON.parseObject(responseInfo.result, Result.class);
-//                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-//                {
-//                    String rows = result.getRows().get(0).toString();
-//                    if (rows.equals("1"))
-//                    {
-//                        Toast.makeText(getActivity(), "修改成功！", Toast.LENGTH_SHORT).show();
-//                    } else if (rows.equals("0"))
-//                    {
-//                        Toast.makeText(getActivity(), "该批次已经在出售，不能修改了！", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                } else
-//                {
-//                    Toast.makeText(getActivity(), "修改失败！", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(HttpException error, String msg)
-//            {
-//                AppContext.makeToast(getActivity(), "error_connectServer");
-//            }
-//        });
-//    }
+
     }
 }

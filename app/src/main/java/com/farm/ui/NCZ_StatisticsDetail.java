@@ -6,20 +6,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.parkweathertab;
-import com.farm.chart.BarChartActivity;
 import com.farm.chart.BarChartItem;
 import com.farm.chart.ChartItem;
 import com.farm.chart.LineChartItem;
 import com.farm.chart.PieChartItem;
 import com.farm.common.FileHelper;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -42,7 +39,8 @@ import java.util.List;
  * Created by user on 2016/5/19.
  */
 @EActivity(R.layout.ncz_statisticsdetail)
-public class NCZ_StatisticsDetail extends Activity {
+public class NCZ_StatisticsDetail extends Activity
+{
 
     @ViewById
     ListView listView1;
@@ -51,42 +49,48 @@ public class NCZ_StatisticsDetail extends Activity {
     TextView tv_title;
     String aa;
     String zhuangtai;
+
     @Click
-    void btn_back() {
+    void btn_back()
+    {
         finish();
     }
 
     @AfterViews
-    void afterview() {
+    void afterview()
+    {
 
-        listNewData= FileHelper.getAssetsData(NCZ_StatisticsDetail.this, "getDayWeatherAllHour", parkweathertab.class);
+        listNewData = FileHelper.getAssetsData(NCZ_StatisticsDetail.this, "getDayWeatherAllHour", parkweathertab.class);
 //        NCZ_StatisticsDetail.this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         tv_title.setText(aa);
-        String x=aa;
-        String y=zhuangtai;
+        String x = aa;
+        String y = zhuangtai;
         init();
     }
 
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         aa = getIntent().getStringExtra("statistics");
         zhuangtai = getIntent().getStringExtra("static");//0
 
     }
+
     public void init()
     {
 
         ArrayList<ChartItem> list = new ArrayList<ChartItem>();
-        if (aa.equals("植株统计")) {
-            list.add(new LineChartItem(R.layout.list_item_linechart_plant, generateDataLine_plant(1), NCZ_StatisticsDetail.this.getApplicationContext()));
-        }else if (aa.equals("事件统计"))
+        if (aa.equals("植株统计"))
         {
-            list.add(new BarChartItem(R.layout.list_item_barchart_event,generateDataBar_event(1), NCZ_StatisticsDetail.this.getApplicationContext()));
-        }else{
+            list.add(new LineChartItem(R.layout.list_item_linechart_plant, generateDataLine_plant(1), NCZ_StatisticsDetail.this.getApplicationContext()));
+        } else if (aa.equals("事件统计"))
+        {
+            list.add(new BarChartItem(R.layout.list_item_barchart_event, generateDataBar_event(1), NCZ_StatisticsDetail.this.getApplicationContext()));
+        } else
+        {
             list.add(new PieChartItem(generateDataPie(1), NCZ_StatisticsDetail.this.getApplicationContext()));
         }
 
@@ -94,6 +98,7 @@ public class NCZ_StatisticsDetail extends Activity {
         listView1.setAdapter(cda);
 
     }
+
     private PieData generateDataPie(int cnt)
     {
 
@@ -113,6 +118,7 @@ public class NCZ_StatisticsDetail extends Activity {
         PieData cd = new PieData(getQuarters(), d);
         return cd;
     }
+
     private ArrayList<String> getQuarters()
     {
 
@@ -124,6 +130,7 @@ public class NCZ_StatisticsDetail extends Activity {
 
         return q;
     }
+
     private LineData generateDataLine_plant(int cnt)
     {
         ArrayList<Entry> e1 = new ArrayList<Entry>();
@@ -131,7 +138,7 @@ public class NCZ_StatisticsDetail extends Activity {
         {
             e1.add(new Entry(Float.valueOf(listNewData.get(i).gettempM()), i));
         }
-        LineDataSet d1 = new LineDataSet(e1, "正常植株" );
+        LineDataSet d1 = new LineDataSet(e1, "正常植株");
         d1.setLineWidth(5f);
         d1.setCircleSize(3.5f);
         d1.setHighLightColor(Color.rgb(244, 117, 117));
@@ -143,7 +150,7 @@ public class NCZ_StatisticsDetail extends Activity {
         {
             e2.add(new Entry(Float.valueOf(listNewData.get(i).gettempH()), i));
         }
-        LineDataSet d2 = new LineDataSet(e2, "异常植株" );
+        LineDataSet d2 = new LineDataSet(e2, "异常植株");
         d2.setLineWidth(5f);
         d2.setCircleSize(3.5f);
         d2.setHighLightColor(Color.rgb(244, 117, 117));
@@ -151,7 +158,6 @@ public class NCZ_StatisticsDetail extends Activity {
         d2.setCircleColor(ColorTemplate.VORDIPLOM_COLORS[0]);
         d2.setDrawValues(false);
         d2.setValueTextSize(20f);
-
 
 
         ArrayList<LineDataSet> sets = new ArrayList<LineDataSet>();
@@ -172,21 +178,21 @@ public class NCZ_StatisticsDetail extends Activity {
             entries.add(new BarEntry(Float.valueOf(listNewData.get(i).gettempM()), i));
         }
 
-        BarDataSet d1 = new BarDataSet(entries, "已处理事件 " );
+        BarDataSet d1 = new BarDataSet(entries, "已处理事件 ");
         d1.setBarSpacePercent(20f);
         d1.setColor(Color.rgb(255, 0, 255));
         d1.setHighLightAlpha(255);
         d1.setStackLabels(new String[1]);
         d1.setValueTextSize(12);
 
-        BarDataSet d2 = new BarDataSet(entries, "待处理事件" );
+        BarDataSet d2 = new BarDataSet(entries, "待处理事件");
         d2.setBarSpacePercent(20f);
         d2.setColor(Color.rgb(0, 255, 255));
         d2.setHighLightAlpha(255);
         d2.setStackLabels(new String[1]);
         d2.setValueTextSize(12);
 
-        BarDataSet d3 = new BarDataSet(entries, "处理中事件" );
+        BarDataSet d3 = new BarDataSet(entries, "处理中事件");
         d3.setBarSpacePercent(20f);
         d3.setColor(Color.rgb(255, 255, 0));
         d3.setHighLightAlpha(255);

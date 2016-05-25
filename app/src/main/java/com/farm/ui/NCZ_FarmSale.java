@@ -17,6 +17,7 @@ import com.farm.R;
 import com.farm.adapter.NCZ_FarmSale_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.parktab;
@@ -43,6 +44,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_farmsale)
 public class NCZ_FarmSale extends Activity
 {
+    List<parktab> listNewData = null;
     //    List<SellOrderDetail_New> list_newsale = null;
     NCZ_FarmSale_Adapter ncz_farmSale_adapter;
     @ViewById
@@ -112,7 +114,7 @@ public class NCZ_FarmSale extends Activity
 
     private void getBatchTimeByUid_test()
     {
-        List<parktab> listNewData = FileHelper.getAssetsData(NCZ_FarmSale.this, "getBatchTimeByUid", parktab.class);
+        listNewData = FileHelper.getAssetsData(NCZ_FarmSale.this, "getBatchTimeByUid", parktab.class);
         ncz_farmSale_adapter = new NCZ_FarmSale_Adapter(NCZ_FarmSale.this, listNewData, expandableListView);
         expandableListView.setAdapter(ncz_farmSale_adapter);
         utils.setListViewHeight(expandableListView);
@@ -147,7 +149,7 @@ public class NCZ_FarmSale extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<parktab> listNewData = null;
+
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
@@ -156,6 +158,21 @@ public class NCZ_FarmSale extends Activity
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
                         ncz_farmSale_adapter = new NCZ_FarmSale_Adapter(NCZ_FarmSale.this, listNewData, expandableListView);
                         expandableListView.setAdapter(ncz_farmSale_adapter);
+                        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
+                        {
+
+                            @Override
+                            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
+                            {
+                                parktab parktab = listNewData.get(groupPosition);
+                                BatchTime batchTime = parktab.getBatchTimeList().get(childPosition);
+                                Intent intent = new Intent(NCZ_FarmSale.this, NCZ_FarmSale_BatchDetail_.class);
+                                intent.putExtra("parkid", parktab.getid());
+                                intent.putExtra("batchTime", batchTime.getBatchTime());
+                                NCZ_FarmSale.this.startActivity(intent);
+                                return true;
+                            }
+                        });
                         utils.setListViewHeight(expandableListView);
                         for (int i = 0; i < listNewData.size(); i++)
                         {

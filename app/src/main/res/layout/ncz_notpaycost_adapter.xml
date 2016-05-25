@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="10dip"
+              android:background="@color/white"
+              android:descendantFocusability="blocksDescendants"
+              android:minHeight="100dip"
+              android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:layout_weight="4"
+        android:background="@drawable/background_view_rounded_single"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_cmdname_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="费用类型"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_16"/>
+
+            <TextView
+                android:id="@+id/tv_buyer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@id/tv_cmdname_tip"
+                android:gravity="left|center_vertical"
+                android:text="物资采购"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_16"/>
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:minWidth="60dip"
+                android:text="50000元"
+                android:textColor="@color/red"
+                android:textSize="@dimen/size_sp_14"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip">
+
+
+            <TextView
+                android:id="@+id/tv_batchtimetip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="时间:"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/size_sp_14"/>
+
+            <TextView
+                android:id="@+id/tv_batchtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dip"
+                android:layout_toRightOf="@+id/tv_batchtimetip"
+                android:gravity="left"
+                android:text="05-15"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/size_sp_14"/>
+
+            <Button
+                android:id="@+id/btn_cancleorder"
+                android:layout_width="50dip"
+                android:layout_height="25dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/red"
+                android:text="取消"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_sp_12"/>
+
+            <Button
+                android:id="@+id/btn_editorder"
+                android:layout_width="40dip"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dip"
+                android:layout_toLeftOf="@+id/btn_cancleorder"
+                android:background="@color/red"
+                android:text="编辑"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_sp_12"/>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

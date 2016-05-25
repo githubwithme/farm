@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar" >
+        android:background="@color/bg_titlebar">
 
         <ImageButton
             android:id="@+id/btn_account"
@@ -19,7 +19,7 @@
             android:background="@null"
             android:contentDescription=""
             android:src="@drawable/back"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <com.segmentedradio.SegmentedRadioGroup
             android:id="@+id/segment_text"
@@ -29,43 +29,43 @@
             android:layout_centerVertical="true"
             android:checkedButton="@+id/button_one"
             android:orientation="horizontal"
-            android:visibility="gone" >
+            android:visibility="gone">
 
             <RadioButton
                 android:id="@id/button_one"
-                android:button="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:button="@null"
                 android:gravity="center"
                 android:minHeight="33dip"
                 android:minWidth="70dip"
                 android:text="专项"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/radio_colors" />
+                android:textColor="@color/radio_colors"/>
 
             <RadioButton
                 android:id="@+id/button_two"
-                android:button="@null"
-                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:button="@null"
+                android:gravity="center"
                 android:minHeight="33dip"
                 android:minWidth="70dip"
                 android:text="大额"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/radio_colors" />
+                android:textColor="@color/radio_colors"/>
 
             <RadioButton
                 android:id="@+id/button_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:button="@null"
                 android:gravity="center"
                 android:minHeight="33dip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:minWidth="70dip"
                 android:text="小额"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/radio_colors" />
+                android:textColor="@color/radio_colors"/>
         </com.segmentedradio.SegmentedRadioGroup>
 
         <LinearLayout
@@ -73,13 +73,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <FrameLayout
                 android:layout_width="50dip"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_gravity="center_vertical" >
+                android:layout_gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/tv_zx"
@@ -90,14 +90,14 @@
                     android:gravity="center"
                     android:text="专项"
                     android:textColor="@color/textcolor_titlebar"
-                    android:textSize="@dimen/titlebar_textsize" />
+                    android:textSize="@dimen/titlebar_textsize"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="3dip"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="3dip"
-                    android:background="@color/red" />
+                    android:background="@color/red"/>
             </FrameLayout>
 
             <TextView
@@ -110,7 +110,7 @@
                 android:gravity="center"
                 android:text="小额"
                 android:textColor="@color/textcolor_titlebar"
-                android:textSize="@dimen/titlebar_textsize" />
+                android:textSize="@dimen/titlebar_textsize"/>
 
             <TextView
                 android:id="@+id/tv_de"
@@ -122,7 +122,7 @@
                 android:gravity="center"
                 android:text="大额"
                 android:textColor="@color/textcolor_titlebar"
-                android:textSize="@dimen/titlebar_textsize" />
+                android:textSize="@dimen/titlebar_textsize"/>
 
             <ImageView
                 android:id="@+id/iv_dowm_tab"
@@ -132,7 +132,7 @@
                 android:layout_marginLeft="10dip"
                 android:background="@drawable/downward"
                 android:contentDescription=""
-                android:visibility="gone" />
+                android:visibility="gone"/>
         </LinearLayout>
 
         <ImageButton
@@ -143,7 +143,8 @@
             android:layout_centerVertical="true"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/search" />
+            android:src="@drawable/search"
+            android:visibility="gone"/>
 
         <ImageButton
             android:layout_width="40dip"
@@ -153,51 +154,34 @@
             android:background="@null"
             android:contentDescription=""
             android:src="@drawable/ic_plus"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
 
     <FrameLayout
         android:id="@+id/top_container_cost"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="120dip"
-        android:layout_margin="5dip"
-        android:background="@drawable/bg_cmd_add"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dip"
-            android:gravity="center"
-            android:text="小额"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/titlebar_textsize" />
-    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <com.farm.widget.PullToRefreshListView
             android:id="@+id/frame_listview_news"
             style="@style/widget_listview"
             android:divider="#00000000"
-            android:dividerHeight="0px" />
+            android:dividerHeight="0px"/>
 
         <ImageButton
             android:id="@+id/btn_add"
@@ -206,7 +190,7 @@
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="15dip"
             android:layout_marginRight="15dip"
-            android:background="@drawable/ic_add_red" />
+            android:background="@drawable/ic_add_red"/>
     </FrameLayout>
 
 </LinearLayout>

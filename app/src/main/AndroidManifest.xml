@@ -58,6 +58,11 @@
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.NCZ_SellOrderDetail_"/>
+        <activity android:name=".ui.NCZ_Finance_"/>
+        <activity android:name=".ui.SpecialCostFragment_"/>
+        <activity android:name=".ui.SmallCostFragment_"/>
+        <activity android:name=".ui.LargeCostFragment_"/>
+        <activity android:name=".ui.NCZ_CostModule_"/>
         <activity android:name=".ui.NCZ_FarmSale_"/>
         <activity android:name=".ui.CZ_EditOrder_"/>
         <activity android:name=".ui.CZ_OrderDetail_"/>
