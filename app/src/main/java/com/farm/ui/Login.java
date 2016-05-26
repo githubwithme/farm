@@ -186,12 +186,12 @@ public class Login extends Activity
                             String level = listData.get(0).getnlevel().toString();
                             if (level.equals("0"))// 农场主
                             {
-                                Intent intent = new Intent(Login.this, NCZ_MainActivity_.class);
+                                Intent intent = new Intent(Login.this, NCZ_MainActivity_New_.class);
                                 startActivity(intent);
                                 finish();
                             } else if (level.equals("-1"))// 技术部门主管
                             {
-                                Intent intent = new Intent(Login.this, NCZ_MainActivity_.class);
+                                Intent intent = new Intent(Login.this, NCZ_MainActivity_New.class);
                                 startActivity(intent);
                                 finish();
                             } else if (level.equals("1"))// 场长

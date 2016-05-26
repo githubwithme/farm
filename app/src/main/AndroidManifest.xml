@@ -57,7 +57,13 @@
         <activity
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".ui.NCZ_MainActivity_New_"/>
+        <activity android:name=".ui.NCZ_MQActivity_"/>
+        <activity android:name=".ui.NCZ_GZActivity_"/>
+        <activity android:name=".ui.SearchAllInformation_"/>
+        <activity android:name=".ui.NCZ_SJActivity_"/>
         <activity android:name=".ui.NCZ_SellOrderDetail_"/>
+        <activity android:name=".ui.NCZ_CommandListActivity_"/>
         <activity android:name=".ui.NCZ_Finance_"/>
         <activity android:name=".ui.SpecialCostFragment_"/>
         <activity android:name=".ui.SmallCostFragment_"/>

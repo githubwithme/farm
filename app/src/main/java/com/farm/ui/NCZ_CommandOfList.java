@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -21,7 +20,8 @@ import org.androidannotations.annotations.ViewById;
  * Created by user on 2016/5/19.
  */
 @EFragment
-public class NCZ_CommandOfList extends Fragment {
+public class NCZ_CommandOfList extends Fragment
+{
     com.farm.bean.commembertab commembertab;
     Fragment mContent = new Fragment();
     //    PG_EventReported pg_eventReported;
@@ -35,26 +35,30 @@ public class NCZ_CommandOfList extends Fragment {
     String workuserid;
 
     @Click
-    void commanding() {
+    void commanding()
+    {
         setBackground(0);
         switchContent(mContent, ncz_commanding);
     }
 
     @Click
-    void commanded() {
+    void commanded()
+    {
         setBackground(1);
         switchContent(mContent, ncz_commanded);
     }
 
     @AfterViews
-    void afterOncreate() {
+    void afterOncreate()
+    {
         setBackground(0);
         switchContent(mContent, ncz_commanding);
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.commadoflist, container, false);
 //        pg_eventReported = new PG_EventReported_();
 //        pg_eventProcessed = new PG_EventProcessed_();
@@ -68,7 +72,8 @@ public class NCZ_CommandOfList extends Fragment {
         return rootView;
     }
 
-    private void setBackground(int pos) {
+    private void setBackground(int pos)
+    {
         commanding.setSelected(false);
         commanded.setSelected(false);
 
@@ -77,7 +82,8 @@ public class NCZ_CommandOfList extends Fragment {
 
         commanding.setTextColor(getResources().getColor(R.color.menu_textcolor));
         commanded.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        switch (pos) {
+        switch (pos)
+        {
             case 0:
                 commanding.setSelected(false);
                 commanding.setTextColor(getResources().getColor(R.color.bg_blue));
@@ -92,13 +98,17 @@ public class NCZ_CommandOfList extends Fragment {
 
     }
 
-    public void switchContent(Fragment from, Fragment to) {
-        if (mContent != to) {
+    public void switchContent(Fragment from, Fragment to)
+    {
+        if (mContent != to)
+        {
             mContent = to;
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if (!to.isAdded()) { // 先判断是否被add过
+            if (!to.isAdded())
+            { // 先判断是否被add过
                 transaction.hide(from).add(R.id.wt_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else {
+            } else
+            {
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
         }
