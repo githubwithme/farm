@@ -115,6 +115,8 @@ public class NCZ_PlantGcdListAdapter extends BaseAdapter
 				@Override
 				public void onClick(View v)
 				{
+				/*	commembertab commembertab = AppContext.getUserInfo(context);
+					AppContext.updateStatus(context, "1", jobtab1.getId(), "1", commembertab.getId());*/
 					PlantGcd plantGcd = listItems.get(v.getId());
 					commembertab commembertab = AppContext.getUserInfo(context);
 					AppContext.updateStatus(context, "1", plantGcd.getId(), "3", commembertab.getId());

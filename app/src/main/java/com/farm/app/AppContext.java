@@ -52,6 +52,7 @@ public class AppContext extends Application
     public final static String TAG_NCZ_CMD = "TAG_NCZ_CMD";
     public final static String BROADCAST_PG_DATA = "PG_DATA";
     public final static String BROADCAST_Record = "EVENT_RECORD";
+    public final static String BROADCAST_PG_REFASH = "PG_REASH";
     public final static int TIME_REFRESH = 60000;
     public final static int TIME_GZ = 60000;
 
@@ -182,10 +183,10 @@ public class AppContext extends Application
     public static void updateStatus(Context context, String comLX, String jobID, String comID, String workuserid)
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", workuserid);
-        params.addQueryStringParameter("comID", comID);
-        params.addQueryStringParameter("jobID", jobID);
-        params.addQueryStringParameter("comLX", comLX);
+        params.addQueryStringParameter("workuserid", workuserid);//userid
+        params.addQueryStringParameter("comID", comID);//2
+        params.addQueryStringParameter("jobID", jobID);//
+        params.addQueryStringParameter("comLX", comLX);//0
         params.addQueryStringParameter("action", "updateView");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

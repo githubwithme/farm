@@ -130,7 +130,6 @@ public class CZ_DLFragment extends Fragment
 
     public void getIsStartBreakOff()
     {
-
          commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());

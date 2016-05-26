@@ -45,6 +45,7 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
     LinearLayout ll_cw;
     LinearLayout ll_tj;
     LinearLayout ll_bwl;
+    LinearLayout ll_dl;
     int currentItem;
     Handler handler = new Handler()
     {
@@ -102,9 +103,12 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
                 ll_zg = (LinearLayout) inflateView.findViewById(R.id.ll_zg);
                 ll_tj = (LinearLayout) inflateView.findViewById(R.id.ll_tj);
                 ll_bwl = (LinearLayout) inflateView.findViewById(R.id.ll_bwl);
+                ll_dl = (LinearLayout) inflateView.findViewById(R.id.ll_dl);
+
                 ll_tj.setOnClickListener(this);
                 ll_zg.setOnClickListener(this);
                 ll_bwl.setOnClickListener(this);
+                ll_dl.setOnClickListener(this);
             }
             list_view.add(inflateView);
             View view = inflater.inflate(R.layout.dotview, null);
@@ -273,6 +277,10 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
                 break;
             case R.id.ll_bwl:
                 intent = new Intent(getActivity(), DaoGangList_.class);
+                getActivity().startActivity(intent);
+                break;
+            case R.id.ll_dl:
+                intent = new Intent(getActivity(), NCZ_DLdatail_.class);
                 getActivity().startActivity(intent);
                 break;
             case R.id.ll_tj:

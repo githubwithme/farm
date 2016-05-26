@@ -170,9 +170,13 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
+
+
                     currentparentview = (View) buttonView.getTag(R.id.tag_parentview);
                     currentgoods = (goodslisttab) buttonView.getTag(R.id.tag_bean);
                     currentpos = (Integer) buttonView.getTag(R.id.tag_postion);
+
+                    getlistdata(currentgoods.getId());
                     if (isChecked && !isrecovery)
                     {
                         if (currentiv_tip != null)
@@ -375,7 +379,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         {
             tv_dw.setText(list.get(currentpos).getFirs());
         }
-        getlistdata();
+
         storehouse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -501,11 +505,11 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         });
     }
 //
-    private void getlistdata() {
+    private void getlistdata(String goodsId) {
         commembertab commembertab = AppContext.getUserInfo(context);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("goodsId",goodslisttab.getId());
+        params.addQueryStringParameter("goodsId",goodsId);
         params.addQueryStringParameter("storehouseId",id);
 //        params.addQueryStringParameter("action", "getPCSLByWzIdCKId");
         params.addQueryStringParameter("action", "getSumBygoodsIdStoreId1");
@@ -537,7 +541,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                             storehouse.setText("第1批次:" +listNewData.get(0).getFirsNum()+listNewData.get(0).getFirs());
                             number=Integer.parseInt(listNewData.get(0).getFirsNum());
                         }
-
+                        listpeople=new  ArrayList<PG_CKDWbean>();
 
                         listpeople.addAll(listNewData);
 

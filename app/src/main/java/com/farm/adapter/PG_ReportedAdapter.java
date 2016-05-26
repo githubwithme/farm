@@ -110,10 +110,9 @@ public class PG_ReportedAdapter extends BaseAdapter {
                     context.startActivity(intent);
                 }
             });
-
+//            listItemView.circle_img.setTag(R.id.tag_eventlisttp,fJxx);
             if (!fJxx.equals("")&& fJxx.size()>0)
             {
-
                     BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(0).getLSTLJ());
 
             }

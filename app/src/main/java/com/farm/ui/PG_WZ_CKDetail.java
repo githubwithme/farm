@@ -1,5 +1,6 @@
 package com.farm.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -185,7 +186,9 @@ public class PG_WZ_CKDetail extends FragmentActivity {
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0) {
-
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.BROADCAST_PG_REFASH);
+                        PG_WZ_CKDetail.this.sendBroadcast(intent);
                         Toast.makeText(PG_WZ_CKDetail.this, "删除成功！", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -220,7 +223,9 @@ public class PG_WZ_CKDetail extends FragmentActivity {
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0) {
-
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.BROADCAST_PG_REFASH);
+                        PG_WZ_CKDetail.this.sendBroadcast(intent);
                         Toast.makeText(PG_WZ_CKDetail.this, "保存成功！", Toast.LENGTH_SHORT).show();
                         finish();
                     }

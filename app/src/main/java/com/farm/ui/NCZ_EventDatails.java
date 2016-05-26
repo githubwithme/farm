@@ -8,7 +8,10 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,14 +22,13 @@ import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.ViewGroup.LayoutParams;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.FJ_SCFJ;
 import com.farm.bean.FJxx;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
@@ -50,7 +52,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.sql.Date;
@@ -61,11 +62,10 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Created by user on 2016/4/11.
+ * Created by user on 2016/5/26.
  */
 @EActivity(R.layout.pg_evendetail)
-public class PG_EventDetail extends Activity {
-
+public class NCZ_EventDatails extends Activity{
     String[] imgurls;
     MyDialog myDialog;
     CountDownLatch latch;
@@ -82,7 +82,7 @@ public class PG_EventDetail extends Activity {
     List<FJxx> list_picture = new ArrayList<FJxx>();
     List<FJxx> list_video = new ArrayList<FJxx>();
     List<FJxx> list_allfj = new ArrayList<FJxx>();
-    commembertab commembertab;
+    com.farm.bean.commembertab commembertab;
     CustomDialog_ListView customDialog_listView;
     FragmentCallBack_AddPlantObservation fragmentCallBack = null;
     String zzsl = "";
@@ -107,10 +107,10 @@ public class PG_EventDetail extends Activity {
     TableRow tablie2;
     @ViewById
     TableRow tablie1;
-@ViewById
-View view_line1;
     @ViewById
-View view_line2;
+    View view_line1;
+    @ViewById
+    View view_line2;
     @ViewById
     ProgressBar add_upload;
     @Click
@@ -154,7 +154,7 @@ View view_line2;
 
 //        delete();
         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "事件删除", "是否确认删除?", "确认", "取消", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "事件删除", "是否确认删除?", "确认", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -178,7 +178,7 @@ View view_line2;
     @Click
     void imgbtn_addpicture()
     {
-        Intent intent = new Intent(PG_EventDetail.this, HomeFragmentActivity.class);
+        Intent intent = new Intent(NCZ_EventDatails.this, HomeFragmentActivity.class);
         intent.putExtra("type", "picture");
         startActivity(intent);
     }
@@ -186,7 +186,7 @@ View view_line2;
     @Click
     void imgbtn_addvideo()
     {
-        Intent intent = new Intent(PG_EventDetail.this, HomeFragmentActivity.class);
+        Intent intent = new Intent(NCZ_EventDatails.this, HomeFragmentActivity.class);
         intent.putExtra("type", "video");
         startActivity(intent);
     }
@@ -194,11 +194,13 @@ View view_line2;
 
     @AfterViews
     void aftercreate() {
-        if(!reportedBean.getState().equals("0")||commembertab.getnlevel().equals("0"))
+/*        if(!reportedBean.getState().equals("0")||commembertab.getnlevel().equals("0"))
         {
             tv_bianjie.setVisibility(View.GONE);
             tv_delete.setVisibility(View.GONE);
-        }
+        }*/
+        tv_bianjie.setVisibility(View.GONE);
+        tv_delete.setVisibility(View.GONE);
         tv_type.setEnabled(false);
         et_sjms.setEnabled(false);
 
@@ -213,21 +215,21 @@ View view_line2;
 
         if(!reportedBean.getFjxx().equals(""))
         {
-           for(int i=0;i<reportedBean.getFjxx().size();i++)
-           {
-               if (reportedBean.getFjxx().get(i).getFJLX().equals("1")) {
-                   addServerPicture(reportedBean.getFjxx().get(i));
-               }
-               if (reportedBean.getFjxx().get(i).getFJLX().equals("2")) {
-                   ProgressBar progressBar = new ProgressBar(PG_EventDetail.this, null, android.R.attr.progressBarStyleHorizontal);
-                   LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(400, LayoutParams.MATCH_PARENT, 0);
-                   lp.setMargins(25, 4, 0, 4);
-                   progressBar.setLayoutParams(lp);
-                   ll_video.addView(progressBar);// BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.baseurl +flview.getFJLJ());
-                   downloadVideo(reportedBean.getFjxx().get(i), AppConfig.baseurl + reportedBean.getFjxx().get(i).getFJLJ(), AppConfig.DOWNLOADPATH_VIDEO + reportedBean.getFjxx().get(i).getFJMC(), progressBar);
-               }
-               rl_match.setVisibility(View.GONE);
-           }
+            for(int i=0;i<reportedBean.getFjxx().size();i++)
+            {
+                if (reportedBean.getFjxx().get(i).getFJLX().equals("1")) {
+                    addServerPicture(reportedBean.getFjxx().get(i));
+                }
+                if (reportedBean.getFjxx().get(i).getFJLX().equals("2")) {
+                    ProgressBar progressBar = new ProgressBar(NCZ_EventDatails.this, null, android.R.attr.progressBarStyleHorizontal);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(400, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                    lp.setMargins(25, 4, 0, 4);
+                    progressBar.setLayoutParams(lp);
+                    ll_video.addView(progressBar);// BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.baseurl +flview.getFJLJ());
+                    downloadVideo(reportedBean.getFjxx().get(i), AppConfig.baseurl + reportedBean.getFjxx().get(i).getFJLJ(), AppConfig.DOWNLOADPATH_VIDEO + reportedBean.getFjxx().get(i).getFJMC(), progressBar);
+                }
+                rl_match.setVisibility(View.GONE);
+            }
 
         }else
         {
@@ -238,7 +240,7 @@ View view_line2;
     @Click
     void tv_type() {
 
-        JSONObject jsonObject = utils.parseJsonFile(PG_EventDetail.this, "dictionary.json");
+        JSONObject jsonObject = utils.parseJsonFile(NCZ_EventDatails.this, "dictionary.json");
         JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("Happen"));
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < jsonArray.size(); i++) {
@@ -250,7 +252,7 @@ View view_line2;
     @Click
     void btn_save() {
         if (tv_type.getText().toString().equals("") || et_sjms.getText().toString().equals("")) {
-            Toast.makeText(PG_EventDetail.this, "请先填选相关信息！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_EventDatails.this, "请先填选相关信息！", Toast.LENGTH_SHORT).show();
 
         } else {
             btn_save.setVisibility(View.GONE);
@@ -276,8 +278,8 @@ View view_line2;
 
 
     public void showDialog_workday(List<String> list) {
-        View dialog_layout = (RelativeLayout) PG_EventDetail.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(PG_EventDetail.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener() {
+        View dialog_layout = (RelativeLayout) NCZ_EventDatails.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener() {
             @Override
             public void OnClick(Bundle bundle) {
                 zzsl = bundle.getString("name");
@@ -313,7 +315,7 @@ View view_line2;
                 {
                     listData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
                     if (listData == null) {
-                        AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
+                        AppContext.makeToast(NCZ_EventDatails.this, "error_connectDataBase");
                     } else {
                         if (list_allfj.size() > 0 ) {
                             latch = new CountDownLatch(list_allfj.size() );
@@ -323,15 +325,15 @@ View view_line2;
                             }
 
                         } else {
-                            Toast.makeText(PG_EventDetail.this, "保存成功！", Toast.LENGTH_SHORT).show();
-                            PG_EventDetail.this.finish();
+                            Toast.makeText(NCZ_EventDatails.this, "保存成功！", Toast.LENGTH_SHORT).show();
+                            NCZ_EventDatails.this.finish();
                         }
 
                     }
 
                 } else {
                     btn_save.setVisibility(View.VISIBLE);
-                    AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_EventDatails.this, "error_connectDataBase");
                     return;
                 }
             }
@@ -339,7 +341,7 @@ View view_line2;
             @Override
             public void onFailure(HttpException error, String arg1) {
                 String a = error.getMessage();
-                AppContext.makeToast(PG_EventDetail.this, "error_connectServer");
+                AppContext.makeToast(NCZ_EventDatails.this, "error_connectServer");
             }
         });
     }
@@ -359,7 +361,7 @@ View view_line2;
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
 
-                    PG_EventDetail.this.finish();
+                    NCZ_EventDatails.this.finish();
                /*     listData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
                     if (listData == null) {
                         AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
@@ -369,7 +371,7 @@ View view_line2;
                     }
 */
                 } else {
-                    AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_EventDatails.this, "error_connectDataBase");
                     return;
                 }
             }
@@ -377,7 +379,7 @@ View view_line2;
             @Override
             public void onFailure(HttpException error, String arg1) {
                 String a = error.getMessage();
-                AppContext.makeToast(PG_EventDetail.this, "error_connectServer");
+                AppContext.makeToast(NCZ_EventDatails.this, "error_connectServer");
             }
         });
     }
@@ -385,30 +387,30 @@ View view_line2;
 
     private void addServerPicture(FJxx flview) {
 
-            ImageView imageView = new ImageView(PG_EventDetail.this);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, LayoutParams.MATCH_PARENT, 0);
-            lp.setMargins(25, 4, 0, 4);
-            imageView.setLayoutParams(lp);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        ImageView imageView = new ImageView(NCZ_EventDatails.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+        lp.setMargins(25, 4, 0, 4);
+        imageView.setLayoutParams(lp);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.url + fj_SCFJ.getFJLJ());// ?
-            BitmapHelper.setImageView(PG_EventDetail.this, imageView, AppConfig.baseurl +flview.getFJLJ());
+        BitmapHelper.setImageView(NCZ_EventDatails.this, imageView, AppConfig.baseurl +flview.getFJLJ());
 
 //            FJ_SCFJ fj_SCFJ = new FJ_SCFJ();
 //            fj_SCFJ.setFJBDLJ(FJBDLJ);
 //            fj_SCFJ.setFJLX("1");
-            ll_picture.addView(imageView);
+        ll_picture.addView(imageView);
 //            list_picture.add(fj_SCFJ);
-            list_picture.add(flview);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final int index_zp = ll_picture.indexOfChild(v);
-                    View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                    myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
-                        @Override
-                        public void OnClick(View v) {
-                            switch (v.getId()) {
-                                case R.id.btn_sure:
+        list_picture.add(flview);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int index_zp = ll_picture.indexOfChild(v);
+                View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
+                    @Override
+                    public void OnClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.btn_sure:
                           /*      Intent intent = new Intent(PG_EventDetail.this, ShowPhoto_.class);
                                 intent.putExtra("url", list_picture.get(index_zp).getFJLJ());
                                 startActivity(intent);*/
@@ -417,26 +419,26 @@ View view_line2;
 //                                    intent.setDataAndType(Uri.fromFile(file), "image");
 //                                    startActivity(intent);
 
-                                    Intent intent = new Intent(PG_EventDetail.this,DisplayImage_.class);
-                                    intent.putExtra("url",AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
-                                    startActivity(intent);
-                                    break;
-                                case R.id.btn_cancle:
+                                Intent intent = new Intent(NCZ_EventDatails.this,DisplayImage_.class);
+                                intent.putExtra("url",AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
+                                startActivity(intent);
+                                break;
+                            case R.id.btn_cancle:
 //                                    if (list_picture.get(index_zp).getFJID().equals("")) {
-                                        deleteFJ(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
+                                deleteFJ(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
 //                                    }else {
 //                                        ll_picture.removeViewAt(index_zp);
 //                                        list_picture.remove(index_zp);
 //                                    }
-                                    myDialog.dismiss();
-                                    break;
-                            }
+                                myDialog.dismiss();
+                                break;
                         }
-                    });
-                    myDialog.show();
-                }
-            });
-        }
+                    }
+                });
+                myDialog.show();
+            }
+        });
+    }
     public void deleteFJ(String FJID,final List<FJxx> list_pic, final LinearLayout ll_pic, final int index_zp) {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "UpLoadDeleteFJ");
@@ -454,7 +456,7 @@ View view_line2;
 
                     ll_pic.removeViewAt(index_zp);
                     list_pic.remove(index_zp);
-                    Toast.makeText(PG_EventDetail.this, "删除成功！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NCZ_EventDatails.this, "删除成功！", Toast.LENGTH_SHORT).show();
                /*     listData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
                     if (listData == null) {
                         AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
@@ -464,7 +466,7 @@ View view_line2;
                     }
 */
                 } else {
-                    Toast.makeText(PG_EventDetail.this, "删除失败！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NCZ_EventDatails.this, "删除失败！", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -472,7 +474,7 @@ View view_line2;
             @Override
             public void onFailure(HttpException error, String arg1) {
                 String a = error.getMessage();
-                AppContext.makeToast(PG_EventDetail.this, "error_connectServer");
+                AppContext.makeToast(NCZ_EventDatails.this, "error_connectServer");
             }
         });
     }
@@ -500,8 +502,8 @@ View view_line2;
                 if (msg.equals("maybe the file has downloaded completely"))
                 {
                     ll_video.removeView(progressBar);
-                    ImageView imageView = new ImageView(PG_EventDetail.this);
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(400, LayoutParams.MATCH_PARENT, 0); // ,
+                    ImageView imageView = new ImageView(NCZ_EventDatails.this);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(400, ViewGroup.LayoutParams.MATCH_PARENT, 0); // ,
                     // 1是可选写的
                     lp.setMargins(25, 4, 0, 4);
                     imageView.setLayoutParams(lp);// 显示图片的大小
@@ -523,7 +525,7 @@ View view_line2;
                         {
                             final int index_zp = ll_video.indexOfChild(v);
                             View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                            myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
+                            myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
                             {
                                 @Override
                                 public void OnClick(View v)
@@ -550,7 +552,7 @@ View view_line2;
                     });
                 } else
                 {
-                    Toast.makeText(PG_EventDetail.this, "下载失败！找不到文件!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NCZ_EventDatails.this, "下载失败！找不到文件!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -559,10 +561,10 @@ View view_line2;
             {
                 // progressBar.setVisibility(View.INVISIBLE);
                 ll_video.removeView(progressBar);
-                Toast.makeText(PG_EventDetail.this, "下载成功！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NCZ_EventDatails.this, "下载成功！", Toast.LENGTH_SHORT).show();
 
-                ImageView imageView = new ImageView(PG_EventDetail.this);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, LayoutParams.MATCH_PARENT, 0);
+                ImageView imageView = new ImageView(NCZ_EventDatails.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
                 lp.setMargins(25, 4, 0, 4);
                 imageView.setLayoutParams(lp);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -583,7 +585,7 @@ View view_line2;
                     {
                         final int index_zp = ll_video.indexOfChild(v);
                         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                        myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
+                        myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
                         {
                             @Override
                             public void OnClick(View v)
@@ -621,12 +623,12 @@ View view_line2;
             for (int i = 0; i < list.size(); i++)
             {
                 String FJBDLJ = list.get(i);
-                ImageView imageView = new ImageView(PG_EventDetail.this);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, LayoutParams.MATCH_PARENT, 0);
+                ImageView imageView = new ImageView(NCZ_EventDatails.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
                 lp.setMargins(25, 4, 0, 4);
                 imageView.setLayoutParams(lp);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                BitmapHelper.setImageView(PG_EventDetail.this, imageView, FJBDLJ);
+                BitmapHelper.setImageView(NCZ_EventDatails.this, imageView, FJBDLJ);
                 imageView.setTag(FJBDLJ);
 
                 FJxx fj_SCFJ = new FJxx();
@@ -644,7 +646,7 @@ View view_line2;
                     {
                         final int index_zp = ll_picture.indexOfChild(v);
                         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                        myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener()
+                        myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener()
                         {
                             @Override
                             public void OnClick(View v)
@@ -680,8 +682,8 @@ View view_line2;
             for (int i = 0; i < list.size(); i++)
             {
                 String FJBDLJ = list.get(i);
-                ImageView imageView = new ImageView(PG_EventDetail.this);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, LayoutParams.MATCH_PARENT, 0);
+                ImageView imageView = new ImageView(NCZ_EventDatails.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(180, ViewGroup.LayoutParams.MATCH_PARENT, 0);
                 lp.setMargins(25, 4, 0, 4);
                 imageView.setLayoutParams(lp);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -703,7 +705,7 @@ View view_line2;
                     {
                         final int index_zp = ll_video.indexOfChild(v);
                         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                        myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
+                        myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
                         {
                             @Override
                             public void OnClick(View v)
@@ -762,11 +764,11 @@ View view_line2;
                         showProgress();
                     } else
                     {
-                        AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
+                        AppContext.makeToast(NCZ_EventDatails.this, "error_connectDataBase");
                     }
                 } else
                 {
-                    AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_EventDatails.this, "error_connectDataBase");
                     return;
                 }
 
@@ -776,7 +778,7 @@ View view_line2;
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(PG_EventDetail.this, "error_connectServer");
+                AppContext.makeToast(NCZ_EventDatails.this, "error_connectServer");
             }
         });
     }
@@ -789,8 +791,8 @@ View view_line2;
         Long l = latch.getCount();
         if (l.intValue() == 0) // 全部线程是否已经结束
         {
-            Toast.makeText(PG_EventDetail.this, "保存成功！", Toast.LENGTH_SHORT).show();
-            PG_EventDetail.this.finish();
+            Toast.makeText(NCZ_EventDatails.this, "保存成功！", Toast.LENGTH_SHORT).show();
+            NCZ_EventDatails.this.finish();
         }
     }
 }

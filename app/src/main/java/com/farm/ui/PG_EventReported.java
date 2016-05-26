@@ -84,6 +84,11 @@ public class PG_EventReported extends Fragment
         getActivity().startActivity(intent);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.pg_eventreported, container, false);
