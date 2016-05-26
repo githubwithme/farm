@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dip" >
+        android:layout_margin="10dip">
 
         <LinearLayout
             android:id="@+id/rl_left"
@@ -16,14 +17,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:orientation="horizontal"
-            android:visibility="gone" >
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="60dip"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dip"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <com.farm.widget.CircleImageView
                     android:id="@+id/iv_img_left"
@@ -50,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dip"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_time_left"
@@ -69,7 +70,7 @@
                     android:layout_height="40dip"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dip"
-                    android:background="@drawable/bg_msgbox_receive_press"
+                    android:background="@drawable/bg_white"
                     android:scaleType="center"
                     tools:ignore="ContentDescription" />
 
@@ -96,19 +97,19 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/rl_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:orientation="horizontal"
-            android:visibility="gone" >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                 android:gravity="right"
                 android:layout_marginRight="10dip"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_time_right"
@@ -120,23 +121,34 @@
                     android:text="10-15 13:30"
                     android:textColor="@color/gray" />
 
-                <ImageView
-                    android:id="@+id/iv_record_right"
-                    android:layout_width="100dip"
-                    android:layout_height="40dip"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/bg_msgbox_send_normal"
-                    android:scaleType="center"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/tv_txt_right"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_msgbox_send_normal"
-                    android:maxWidth="180dip"
-                    android:text="等你放假时间和设计合理的计划是大家佛山大佛的季后赛的理解和佛教我饿哦就疯狂点击活动活动见佛点击付费 "
-                    android:visibility="gone" />
+                    android:gravity="right">
+
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/iv_record_right"
+                        android:layout_width="100dip"
+                        android:layout_height="40dip"
+                        android:background="@drawable/bg_white"
+                        android:scaleType="center"
+                        tools:ignore="ContentDescription"
+                       />
+
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/tv_txt_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_msgbox_send_normal"
+                        android:maxWidth="180dip"
+                        android:text="等你"
+                        />
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <ProgressBar
@@ -155,7 +167,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dip"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <com.farm.widget.CircleImageView
                     android:id="@+id/iv_img_right"

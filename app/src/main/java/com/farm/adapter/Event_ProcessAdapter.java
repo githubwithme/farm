@@ -2,6 +2,8 @@ package com.farm.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,7 +119,7 @@ public class Event_ProcessAdapter extends BaseAdapter {
         commembertab commembertab = AppContext.getUserInfo(context);
         if (handleBean.getSolveId().equals(commembertab.getId())) {
             listItemView.rl_right.setVisibility(View.VISIBLE);
-            listItemView.tv_time_right.setText(handleBean.getRegistime().substring(0, handleBean.getRegistime().length() - 8));
+            listItemView.tv_time_right.setText(handleBean.getRegistime());
             listItemView.tv_name_right.setText(handleBean.getSolveName());
             String aa = handleBean.getResult();
             if (!handleBean.getResult().equals("")) {//如果有文字
@@ -136,11 +138,15 @@ public class Event_ProcessAdapter extends BaseAdapter {
                         listItemView.iv_record_right.setLayoutParams(new LinearLayout.LayoutParams(400, 400));
                         BitmapHelper.setImageView(context, listItemView.iv_record_right, AppConfig.baseurl + fJxx.get(0).getLSTLJ());
                     } else {
-                        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) listItemView.iv_record_right.getLayoutParams();
+                        //record_cancel
+                    /*    LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) listItemView.iv_record_right.getLayoutParams();
                         lp.width = 150;
                         lp.height = LinearLayout.LayoutParams.WRAP_CONTENT;
                         listItemView.iv_record_right.setLayoutParams(lp);
-
+*/
+                        listItemView.iv_record_right.setLayoutParams(new LinearLayout.LayoutParams(180, 170));
+                        Bitmap rawBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.chatto_voice_right);
+                        listItemView.iv_record_right.setImageBitmap(rawBitmap);
 
                     }
                 }
@@ -167,7 +173,7 @@ public class Event_ProcessAdapter extends BaseAdapter {
         } else {
             listItemView.rl_left.setVisibility(View.VISIBLE);
 
-            listItemView.tv_time_left.setText(handleBean.getRegistime().substring(0, handleBean.getRegistime().length() - 8));
+            listItemView.tv_time_left.setText(handleBean.getRegistime());
             listItemView.tv_name_left.setText(handleBean.getSolveName());
             if (!handleBean.getResult().equals("")) {
                 listItemView.iv_record_left.setVisibility(View.GONE);
@@ -179,9 +185,19 @@ public class Event_ProcessAdapter extends BaseAdapter {
                 if (!fJxx.equals("") && fJxx.size() > 0) {
                     listItemView.iv_record_left.setTag(R.id.tag_leftpicture, fJxx.get(0));
                     if (fJxx.get(0).getFJLX().equals("1")) {
-                        listItemView.iv_record_left.setLayoutParams(new LinearLayout.LayoutParams(400, 400));
+                        listItemView.iv_record_left.setLayoutParams(new LinearLayout.LayoutParams(380, 370));
                         BitmapHelper.setImageView(context, listItemView.iv_record_left, AppConfig.baseurl + fJxx.get(0).getLSTLJ());
                     } else {
+             /*           LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) listItemView.iv_record_left.getLayoutParams();
+                        lp.width = 200;
+                        lp.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                        ImageView imageView = new ImageView(context);
+                        imageView.setLayoutParams(lp);
+                        imageView.setImageResource(R.drawable.ic_launcher);
+                        listItemView.iv_record_left.setLayoutParams(lp);*/
+                        listItemView.iv_record_left.setLayoutParams(new LinearLayout.LayoutParams(180, 170));
+                         Bitmap rawBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.chatto_voice_left);
+                        listItemView.iv_record_left.setImageBitmap(rawBitmap);
 
                     }
                 }
@@ -191,10 +207,13 @@ public class Event_ProcessAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View view) {
                         FJxx fjxxa = (FJxx) view.getTag(R.id.tag_leftpicture);
-                        Intent intent = new Intent(context, DisplayImage_.class);
-//                        intent.putExtra("url", AppConfig.baseurl +fJxx.get(0).getLSTLJ());
-                        intent.putExtra("url", AppConfig.baseurl + fjxxa.getLSTLJ());
-                        context.startActivity(intent);
+                        if (fjxxa.getFJLX().equals("1")) {
+                            Intent intent = new Intent(context, DisplayImage_.class);
+                            intent.putExtra("url", AppConfig.baseurl + fjxxa.getLSTLJ());
+                            context.startActivity(intent);
+                        } else {
+                            downloadLuYin(AppConfig.baseurl + fjxxa.getFJLJ(), AppConfig.audiopath + fjxxa.getLSTLJ());
+                        }
                     }
                 });
             }
