@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * Created by user on 2016/4/27.
  */
-@EActivity(R.layout.common_jobdetail_assess)
+@EActivity(R.layout.ncz_todayjoy_commom)
 public class NCZ_Todayjob_Common extends Activity {
     com.farm.bean.jobtab jobtab;
     CZ_PG_JobDetail_ExpandAdapter cz_pg_assess_expandAdapter;

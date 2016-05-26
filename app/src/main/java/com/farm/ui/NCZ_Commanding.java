@@ -213,7 +213,9 @@ public class NCZ_Commanding extends Fragment implements View.OnClickListener
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
         params.addQueryStringParameter("orderby", orderby);
+//        params.addQueryStringParameter("strWhere", "");
         params.addQueryStringParameter("strWhere", "zt:1");
+//        params.addQueryStringParameter("strWhere", "zt:0");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
         params.addQueryStringParameter("action", "commandGetListByNCZ");

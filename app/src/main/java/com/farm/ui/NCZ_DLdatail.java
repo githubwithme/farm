@@ -123,6 +123,7 @@ void aftercreat()
 
                     }else
                     {
+                        cz_startdl.setVisibility(View.VISIBLE);
                         rl_view.setVisibility(View.GONE);
                     }
 
