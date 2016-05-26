@@ -139,8 +139,8 @@ public class NCZ_StatisticsDetail extends Activity
             e1.add(new Entry(Float.valueOf(listNewData.get(i).gettempM()), i));
         }
         LineDataSet d1 = new LineDataSet(e1, "正常植株");
-        d1.setLineWidth(5f);
-        d1.setCircleSize(3.5f);
+        d1.setLineWidth(1.8f);
+        d1.setCircleSize(3.6f);
         d1.setHighLightColor(Color.rgb(244, 117, 117));
         d1.setDrawValues(false);
         d1.setValueTextSize(20f);
@@ -185,25 +185,25 @@ public class NCZ_StatisticsDetail extends Activity
         d1.setStackLabels(new String[1]);
         d1.setValueTextSize(12);
 
-        BarDataSet d2 = new BarDataSet(entries, "待处理事件");
-        d2.setBarSpacePercent(20f);
-        d2.setColor(Color.rgb(0, 255, 255));
-        d2.setHighLightAlpha(255);
-        d2.setStackLabels(new String[1]);
-        d2.setValueTextSize(12);
-
-        BarDataSet d3 = new BarDataSet(entries, "处理中事件");
-        d3.setBarSpacePercent(20f);
-        d3.setColor(Color.rgb(255, 255, 0));
-        d3.setHighLightAlpha(255);
-        d3.setStackLabels(new String[1]);
-        d3.setValueTextSize(12);
+//        BarDataSet d2 = new BarDataSet(entries, "待处理事件");
+//        d2.setBarSpacePercent(20f);
+//        d2.setColor(Color.rgb(0, 255, 255));
+//        d2.setHighLightAlpha(255);
+//        d2.setStackLabels(new String[1]);
+//        d2.setValueTextSize(12);
+//
+//        BarDataSet d3 = new BarDataSet(entries, "处理中事件");
+//        d3.setBarSpacePercent(20f);
+//        d3.setColor(Color.rgb(255, 255, 0));
+//        d3.setHighLightAlpha(255);
+//        d3.setStackLabels(new String[1]);
+//        d3.setValueTextSize(12);
 
 
         ArrayList<BarDataSet> sets = new ArrayList<BarDataSet>();
         sets.add(d1);
-        sets.add(d2);
-        sets.add(d3);
+//        sets.add(d2);
+//        sets.add(d3);
         BarData cd = new BarData(getMonths(), sets);
         return cd;
     }

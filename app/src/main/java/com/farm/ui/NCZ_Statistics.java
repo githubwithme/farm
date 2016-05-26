@@ -11,7 +11,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.NCZ_Statistics_Adapter;
-import com.farm.adapter.PQ_GV_Adapter;
+import com.farm.chart.FinanceAnalysis_;
+import com.farm.chart.GoodsAnalysis_;
+import com.farm.chart.SaleAnalysis_;
 import com.farm.common.utils;
 
 import org.androidannotations.annotations.AfterViews;
@@ -28,15 +30,17 @@ import java.util.List;
 @EActivity(R.layout.ncz_statistics)
 public class NCZ_Statistics extends Activity
 {
-    NCZ_Statistics_Adapter  ncz_statistics_adapter;
+    NCZ_Statistics_Adapter ncz_statistics_adapter;
 
     @ViewById
     GridView gridView;
-@Click
-void btn_back()
-{
-    finish();
-}
+
+    @Click
+    void btn_back()
+    {
+        finish();
+    }
+
     @AfterViews
     void oncreateview()
     {
@@ -50,21 +54,33 @@ void btn_back()
         ncz_statistics_adapter = new NCZ_Statistics_Adapter(NCZ_Statistics.this, list);
         gridView.setAdapter(ncz_statistics_adapter);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String  aa = list.get(i);
-
-                Intent intent = new Intent(NCZ_Statistics.this, NCZ_StatisticsDetail_.class);
-                intent.putExtra("static", i);
-                intent.putExtra("statistics", aa);
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                Intent intent = null;
+                if (i == 0)
+                {
+                    intent = new Intent(NCZ_Statistics.this, GoodsAnalysis_.class);//物资分析
+                } else if (i == 1)
+                {
+                    intent = new Intent(NCZ_Statistics.this, SaleAnalysis_.class);//销售分析
+                } else if (i == 2)
+                {
+                    intent = new Intent(NCZ_Statistics.this, FinanceAnalysis_.class);//财务分析
+                } else if (i == 3)
+                {
+                    intent = new Intent(NCZ_Statistics.this, GoodsAnalysis_.class);
+                }
                 startActivity(intent);
             }
         });
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
     }
