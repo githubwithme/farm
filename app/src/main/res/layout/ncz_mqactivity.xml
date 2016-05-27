@@ -14,9 +14,18 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dip"
-            android:layout_toRightOf="@+id/logo"
             android:gravity="center"
             android:text="苗情"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="农场观测点"
             android:textColor="@color/bg_text"
             android:textSize="16sp"/>
 

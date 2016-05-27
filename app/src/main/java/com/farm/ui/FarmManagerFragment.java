@@ -122,7 +122,8 @@ public class FarmManagerFragment extends Fragment
     @Click
     void ll_tj()
     {
-        Intent intent = new Intent(getActivity(), NCZ_Statistics_.class);
+//        Intent intent = new Intent(getActivity(), NCZ_Statistics_.class);
+        Intent intent = new Intent(getActivity(), NCZ_AnalysisModule_.class);
         getActivity().startActivity(intent);
     }
 

@@ -252,9 +252,9 @@ public class Common_TodayJobAdapter extends BaseAdapter
 //        }
         listItemView.tv_time.setText(jobtab.getregDate().substring(0, jobtab.getregDate().lastIndexOf(":")));
         listItemView.tv_jobtime.setText(jobtab.getregDate().substring(5, jobtab.getregDate().lastIndexOf(":")));
-        if (jobtab.getaudioJobExecPath().equals("-1"))
+        if (jobtab.getaudioJobExecPath().equals(""))
         {
-            listItemView.tv_score.setText("暂无");
+            listItemView.tv_score.setVisibility(View.GONE);
         } else
         {
             listItemView.tv_score.setTextColor(context.getResources().getColor(R.color.red));
