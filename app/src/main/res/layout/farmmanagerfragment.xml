@@ -16,14 +16,14 @@
             android:layout_marginLeft="10dip"
             android:layout_toRightOf="@+id/logo"
             android:gravity="center"
-            android:text="农场易"
+            android:text="农场管理"
             android:textColor="@color/bg_text"
             android:textSize="16sp"/>
 
         <Button
             android:id="@+id/btn_add"
-            android:layout_width="25dip"
-            android:layout_height="25dip"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
@@ -34,8 +34,8 @@
 
         <Button
             android:id="@+id/btn_search"
-            android:layout_width="25dip"
-            android:layout_height="25dip"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dip"
             android:layout_toLeftOf="@+id/btn_add"
@@ -43,6 +43,14 @@
             android:gravity="center"
             android:textColor="@color/bg_text"
             android:textSize="16sp"/>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/line_color"/>
     </RelativeLayout>
 
     <View
@@ -204,11 +212,35 @@
             android:background="@color/line_color"/>
 
         <LinearLayout
-            android:id="@+id/ll_sp"
+            android:id="@+id/ll_dl"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="50dip"
+                android:layout_height="45dip"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/quick_set_create_cw"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dip"
+                android:gravity="center"
+                android:text="断蕾"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_14"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_sp"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="50dip"
@@ -238,33 +270,6 @@
         android:layout_marginTop="10dip"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_cw"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="50dip"
-                android:layout_height="45dip"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/quick_set_create_opportunity"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dip"
-                android:gravity="center"
-                android:text="财务"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/line_color"/>
 
         <LinearLayout
             android:id="@+id/ll_xs"
@@ -295,7 +300,7 @@
             android:background="@color/line_color"/>
 
         <LinearLayout
-            android:id="@+id/ll_dl"
+            android:id="@+id/ll_cw"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -305,24 +310,22 @@
                 android:layout_width="50dip"
                 android:layout_height="45dip"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/quick_set_create_cw"/>
+                android:background="@drawable/quick_set_create_opportunity"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dip"
                 android:gravity="center"
-                android:text="断蕾"
+                android:text="财务"
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dip"
-        android:layout_marginTop="10dip"
-        android:orientation="horizontal">
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
 
         <LinearLayout
             android:id="@+id/ll_tj"
@@ -347,6 +350,16 @@
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dip"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal">
+
+
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
@@ -364,7 +377,8 @@
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color"/>
+            android:background="@color/line_color"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="0dip"

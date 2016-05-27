@@ -3,10 +3,10 @@ package com.farm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -45,12 +45,9 @@ public class SearchAllInformation extends Activity
     EditText et_search;
     @ViewById
     ListView lv;
+    @ViewById
+    LinearLayout ll_tip;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-    }
 
     @Click
     void btn_search()
@@ -79,19 +76,20 @@ public class SearchAllInformation extends Activity
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState, persistentState);
+        super.onCreate(savedInstanceState);
         getActionBar().hide();
     }
+
 
     private void getDynamicData(String keyword)
     {
         commembertab commembertab = AppContext.getUserInfo(SearchAllInformation.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("keyword", keyword);
-        params.addQueryStringParameter("action", "SearchAllInformation");
+        params.addQueryStringParameter("keyworld", keyword);
+        params.addQueryStringParameter("action", "getCommandJobPlantByUid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -104,6 +102,7 @@ public class SearchAllInformation extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
+                        ll_tip.setVisibility(View.GONE);
                         listData = JSON.parseArray(result.getRows().toJSONString(), SearchEntity.class);
                         adapter_search = new Adapter_Search(SearchAllInformation.this, listData);
                         lv.setAdapter(adapter_search);

@@ -8,11 +8,31 @@ package com.farm.bean;
  */
 public class DynamicEntity
 {
+    String uuid;
     String title;
     String note;
     String date;
     String type;
 
+    public void setType(String type)
+    {
+        this.type = type;
+    }
+
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setUuid(String uuid)
+    {
+        this.uuid = uuid;
+    }
+
+    public String getUuid()
+    {
+        return uuid;
+    }
 
     public String getNote()
     {
@@ -34,15 +54,6 @@ public class DynamicEntity
         this.title = title;
     }
 
-    public String getType()
-    {
-        return type;
-    }
-
-    public void setType(String type)
-    {
-        this.type = type;
-    }
 
     public void setDate(String date)
     {

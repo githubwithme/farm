@@ -89,7 +89,7 @@ public class GoodsAnalysis extends Activity
         {
             entries.add(new BarEntry(Float.valueOf(listNewData.get(i).getNumber()), i));
         }
-        BarDataSet d1 = new BarDataSet(entries, "物资 ");
+        BarDataSet d1 = new BarDataSet(entries, "物资/kg");
         d1.setBarSpacePercent(20f);
         d1.setColor(Color.rgb(255, 0, 255));
         d1.setHighLightAlpha(255);

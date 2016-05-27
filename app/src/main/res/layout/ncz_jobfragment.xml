@@ -8,8 +8,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dip">
+        android:layout_height="@dimen/titlebar_height">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:text="工作"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
 
         <View
             android:id="@+id/view"
@@ -25,7 +33,7 @@
             android:gravity="center"
             android:text="进行中"
             android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tv_jobcomplete"
@@ -36,7 +44,7 @@
             android:gravity="center"
             android:text="已完成"
             android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize"/>
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <View

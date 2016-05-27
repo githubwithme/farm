@@ -52,7 +52,6 @@ public class NCZ_CompleteJobFragment extends Fragment
 {
     commembertab commembertab;
     List<SelectRecords> list_SelectRecords;
-    //	SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
     private Common_TodayJobAdapter listAdapter;
     private int listSumData;
@@ -61,78 +60,36 @@ public class NCZ_CompleteJobFragment extends Fragment
     private View list_footer;
     private TextView list_foot_more;
     private ProgressBar list_foot_progress;
-    // List<String> type_Data = new ArrayList<String>();
-    // List<View> type_laout = new ArrayList<View>();
     PopupWindow popupWindow_tab;
     View popupWindowView_tab;
     @ViewById
     View line;
     @ViewById
     PullToRefreshListView frame_listview_news;
-    //    String workuserid;
     Dictionary dictionary;
-    String workuserid;
 
     @Override
     public void onResume()
     {
         super.onResume();
-//        if (listData.isEmpty())
-//        {
-//            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-//
-//        } else
-//        {
-//            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-//        }
     }
 
     @AfterViews
     void afterOncreate()
     {
-//		selectorUi = new SelectorFragment_();
-//        dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "PG_MOREJOB");
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("bean", dictionary);
-//		selectorUi.setArguments(bundle);
-//		switchContent(mContent, selectorUi);
-//		tv_title.setText("更多工作");
         appContext = (AppContext) getActivity().getApplication();
-//        initAnimalListView();
+        initAnimalListView();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.common_morejob, container, false);
+        View rootView = inflater.inflate(R.layout.ncz_completejobfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
-/*        IntentFilter intentfilter_updateselect = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        getActivity().registerReceiver(receiver_updateselect, intentfilter_updateselect);*/
- /*       IntentFilter intentfilter_updatesort = new IntentFilter(AppContext.BROADCAST_UPDATEPCMD_SORT);
-        getActivity().registerReceiver(receiver_updatesort, intentfilter_updatesort);*/
         commembertab = AppContext.getUserInfo(getActivity());
-        workuserid = commembertab.getId();
         return rootView;
     }
 
-/*    BroadcastReceiver receiver_updatesort = new BroadcastReceiver()// 从扩展页面返回信息
-    {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-        }
-    };*/
-/*    BroadcastReceiver receiver_updateselect = new BroadcastReceiver()// 从扩展页面返回信息
-    {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-        }
-    };*/
 
     public void switchContent(Fragment from, Fragment to)
     {
@@ -152,19 +109,15 @@ public class NCZ_CompleteJobFragment extends Fragment
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-//		String strWher = DictionaryHelper.getStrWhere_morejob(getActivity(), dictionary.getBELONG());
-//		String orderby = selectorUi.getOrderby();
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", workuserid);
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("orderby", "");
-        params.addQueryStringParameter("strWhere", "pf:1");
+        params.addQueryStringParameter("username", commembertab.getrealName());
+        params.addQueryStringParameter("type", "1");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "jobGetListMore");
+        params.addQueryStringParameter("action", "GetSpecialJobList");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

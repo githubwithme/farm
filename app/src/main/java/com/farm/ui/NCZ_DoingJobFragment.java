@@ -33,7 +33,6 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -62,29 +61,20 @@ public class NCZ_DoingJobFragment extends Fragment
     LinearLayout ll_tip;
     Fragment mContent = new Fragment();
 
-    String workuserid;
 
-    @Click
-    void btn_more()
-    {
-        Intent intent = new Intent(getActivity(), Common_MoreJob_.class);
-        intent.putExtra("workuserid", workuserid);
-        startActivity(intent);
-    }
+
 
     @AfterViews
     void afteroncreate()
     {
-//        tv_title.setText(areatab.getRealName() + "今日工作情况");
-//        initAnimalListView();
+        initAnimalListView();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.cz_pq_todayjobfragment, container, false);
+        View rootView = inflater.inflate(R.layout.ncz_doingjobfragment, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
-        workuserid = commembertab.getId();
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
@@ -117,15 +107,13 @@ public class NCZ_DoingJobFragment extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", workuserid);
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getrealName());
-        params.addQueryStringParameter("orderby", "regDate desc");
-        params.addQueryStringParameter("strWhere", "");
+        params.addQueryStringParameter("type", "0");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "jobGetListByUid");
+        params.addQueryStringParameter("action", "GetSpecialJobList");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

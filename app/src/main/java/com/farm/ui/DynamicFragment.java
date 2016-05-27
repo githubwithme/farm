@@ -18,8 +18,10 @@ import android.widget.PopupWindow;
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.Adapter_Dynamic;
+import com.farm.adapter.Adapter_DynamicFragment;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.DynamicBean;
 import com.farm.bean.DynamicEntity;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
@@ -51,7 +53,8 @@ public class DynamicFragment extends Fragment
     PopupWindow pw_command;
     View pv_command;
     Adapter_Dynamic adapter_dynamic;
-    List<DynamicEntity> listData;
+    List<DynamicBean> listData;
+    List<DynamicEntity> list_DynamicEntity;
     @ViewById
     Button btn_add;
     @ViewById
@@ -60,6 +63,8 @@ public class DynamicFragment extends Fragment
     Button btn_search;
     @ViewById
     ListView lv;
+    @ViewById
+    View view;
 
     @Click
     void btn_add()
@@ -110,10 +115,13 @@ public class DynamicFragment extends Fragment
     @AfterViews
     void afterOncrete()
     {
-        getDynamicData();
-        timethread = new TimeThread();
-        timethread.setSleep(false);
-        timethread.start();
+        getDynamicData_temp();
+//        getDynamicData();
+//        getNewSaleList_test();
+//        getDynamicData();
+//        timethread = new TimeThread();
+//        timethread.setSleep(false);
+//        timethread.start();
 //        getNewSaleList_test();
     }
 
@@ -127,7 +135,7 @@ public class DynamicFragment extends Fragment
 
     private void getNewSaleList_test()
     {
-        listData = FileHelper.getAssetsData(getActivity(), "getDynamicEntity", DynamicEntity.class);
+        listData = FileHelper.getAssetsData(getActivity(), "GetDynamicData", DynamicBean.class);
         if (listData != null)
         {
             adapter_dynamic = new Adapter_Dynamic(getActivity(), listData);
@@ -144,7 +152,7 @@ public class DynamicFragment extends Fragment
                         intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
                     } else if (type.equals("GZ"))
                     {
-                        intent = new Intent(getActivity(), NCZ_GZActivity_.class);
+                        intent = new Intent(getActivity(), NCZ_JobActivity_.class);
                     } else if (type.equals("MQ"))
                     {
                         intent = new Intent(getActivity(), NCZ_MQActivity_.class);
@@ -182,6 +190,94 @@ public class DynamicFragment extends Fragment
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
+        params.addQueryStringParameter("action", "GetDynamicData");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String aa = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listData = JSON.parseArray(result.getRows().toJSONString(), DynamicBean.class);
+                        adapter_dynamic = new Adapter_Dynamic(getActivity(), listData);
+                        lv.setAdapter(adapter_dynamic);
+                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                        {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                            {
+                                Intent intent = null;
+                                String type = listData.get(position).getType();
+                                if (type.equals("ZL"))
+                                {
+                                    intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+                                } else if (type.equals("GZ"))
+                                {
+                                    intent = new Intent(getActivity(), NCZ_JobActivity_.class);
+                                } else if (type.equals("MQ"))
+                                {
+                                    intent = new Intent(getActivity(), NCZ_MQActivity_.class);
+                                } else if (type.equals("XS"))
+                                {
+                                    intent = new Intent(getActivity(), NCZ_FarmSale_.class);
+                                } else if (type.equals("KC"))
+                                {
+                                    intent = new Intent(getActivity(), Ncz_wz_ll_.class);
+                                } else if (type.equals("SP"))
+                                {
+                                    intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+                                } else if (type.equals("SJ"))
+                                {
+                                    intent = new Intent(getActivity(), NCZ_SJActivity_.class);
+                                } else if (type.equals("DL"))
+                                {
+                                    intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+                                }
+                                getActivity().startActivity(intent);
+                            }
+                        });
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+//                    if (!ishidding && timethread != null)
+//                    {
+//                        timethread.setSleep(false);
+//                    }
+                    return;
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+//                if (!ishidding && timethread != null)
+//                {
+//                    timethread.setSleep(false);
+//                }
+            }
+        });
+    }
+
+    private void getDynamicData_temp()
+    {
+        if (getActivity() == null)
+        {
+            return;
+        }
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("username", commembertab.getuserName());
         params.addQueryStringParameter("action", "parkGetList");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -196,7 +292,7 @@ public class DynamicFragment extends Fragment
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listData = new ArrayList<DynamicEntity>();
+                        list_DynamicEntity = new ArrayList<DynamicEntity>();
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
                         int zl = 0;
                         int gz = 0;
@@ -215,7 +311,7 @@ public class DynamicFragment extends Fragment
                             dynamicentity.setNote("查看");
                             dynamicentity.setTitle("指令");
                             dynamicentity.setType("ZL");
-                            listData.add(dynamicentity);
+                            list_DynamicEntity.add(dynamicentity);
                         }
                         if (gz > 0)
                         {
@@ -224,7 +320,7 @@ public class DynamicFragment extends Fragment
                             dynamicentity.setNote("查看");
                             dynamicentity.setTitle("工作");
                             dynamicentity.setType("GZ");
-                            listData.add(dynamicentity);
+                            list_DynamicEntity.add(dynamicentity);
                         }
                         if (mq > 0)
                         {
@@ -233,9 +329,9 @@ public class DynamicFragment extends Fragment
                             dynamicentity.setNote("查看");
                             dynamicentity.setTitle("苗情");
                             dynamicentity.setType("MQ");
-                            listData.add(dynamicentity);
+                            list_DynamicEntity.add(dynamicentity);
                         }
-                        adapter_dynamic = new Adapter_Dynamic(getActivity(), listData);
+                        Adapter_DynamicFragment adapter_dynamic = new Adapter_DynamicFragment(getActivity(), list_DynamicEntity);
                         lv.setAdapter(adapter_dynamic);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
@@ -243,13 +339,13 @@ public class DynamicFragment extends Fragment
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
                                 Intent intent = null;
-                                String type = listData.get(position).getType();
+                                String type = list_DynamicEntity.get(position).getType();
                                 if (type.equals("ZL"))
                                 {
                                     intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
                                 } else if (type.equals("GZ"))
                                 {
-                                    intent = new Intent(getActivity(), NCZ_GZActivity_.class);
+                                    intent = new Intent(getActivity(), NCZ_JobActivity_.class);
                                 } else if (type.equals("MQ"))
                                 {
                                     intent = new Intent(getActivity(), NCZ_MQActivity_.class);
@@ -333,30 +429,17 @@ public class DynamicFragment extends Fragment
                 return false;
             }
         });
-        pw_command = new PopupWindow(pv_command, 300, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-        pw_command.showAsDropDown(btn_add, 0, 0);
+        pw_command = new PopupWindow(pv_command, 500, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        pw_command.showAsDropDown(view, 0, 0);
 //        int[] location = new int[2];
 //        btn_add.getLocationOnScreen(location);
 //        pw_command.showAtLocation(btn_add, Gravity.NO_GRAVITY, location[0]+line.getWidth(), location[1]);
         pw_command.setOutsideTouchable(true);
-        LinearLayout ll_addcost = (LinearLayout) pv_command.findViewById(R.id.ll_addcontacts);
-        LinearLayout ll_addcontacts = (LinearLayout) pv_command.findViewById(R.id.ll_addcontacts);
-        LinearLayout ll_addcommand = (LinearLayout) pv_command.findViewById(R.id.ll_addcontacts);
+        LinearLayout ll_addcost = (LinearLayout) pv_command.findViewById(R.id.ll_addcost);
+        LinearLayout ll_addcommand = (LinearLayout) pv_command.findViewById(R.id.ll_addcommand);
+
 
         ll_addcost.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                pw_command.dismiss();
-                WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-                lp.alpha = 1f;
-                getActivity().getWindow().setAttributes(lp);
-                Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
-                getActivity().startActivity(intent);
-            }
-        });
-        ll_addcontacts.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)

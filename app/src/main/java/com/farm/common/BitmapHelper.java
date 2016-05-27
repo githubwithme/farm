@@ -67,8 +67,8 @@ public class BitmapHelper
 		{
 			bitmapUtils = new BitmapUtils(context);
 		}
-		bitmapUtils.configDefaultLoadingImage(R.drawable.loading_0);
-		bitmapUtils.configDefaultLoadFailedImage(R.drawable.loading_0);
+//		bitmapUtils.configDefaultLoadingImage(R.drawable.loading_0);
+//		bitmapUtils.configDefaultLoadFailedImage(R.drawable.loading_0);
 		bitmapUtils.configDefaultBitmapConfig(Bitmap.Config.RGB_565);
 		bitmapUtils.configDefaultBitmapMaxSize(BitmapCommonUtils.getScreenSize(context).scaleDown(3));
 		bitmapUtils.display(imageView, ZPDZ, new CustomBitmapLoadCallBack());

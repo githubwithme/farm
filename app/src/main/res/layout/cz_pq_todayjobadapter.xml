@@ -170,8 +170,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dip"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="5dip">
 
                             <TextView
                                 android:id="@+id/tv_type"
@@ -184,15 +183,15 @@
                                 android:textSize="@dimen/size_sp_13"/>
 
                             <TextView
-                                android:id="@+id/tv_zf"
+                                android:id="@+id/tv_jobtime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginLeft="15dip"
-                                android:layout_toRightOf="@+id/tv_type"
-                                android:gravity="left|center_vertical"
-                                android:text="指令来源未知"
-                                android:textColor="@color/red"
+                                android:layout_marginRight="10dip"
+                                android:gravity="center"
+                                android:text="dd"
+                                android:textColor="@color/gray"
                                 android:textSize="@dimen/size_sp_13"/>
 
 
@@ -202,7 +201,8 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dip"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/tv_time"
@@ -214,6 +214,17 @@
                                 android:textColor="@color/bg_text_small"
                                 android:textSize="@dimen/size_14"/>
 
+                            <TextView
+                                android:id="@+id/tv_zf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="15dip"
+                                android:layout_toRightOf="@+id/tv_time"
+                                android:gravity="left|center_vertical"
+                                android:text="指令来源未知"
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/size_sp_13"/>
 
                         </RelativeLayout>
                     </LinearLayout>

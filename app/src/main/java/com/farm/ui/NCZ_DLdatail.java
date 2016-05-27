@@ -20,7 +20,6 @@ import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.NCZ_DLAdapter;
 import com.farm.adapter.NCZ_DLExecute_Adapter;
-import com.farm.adapter.PG_CKofListAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;

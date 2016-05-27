@@ -297,13 +297,15 @@ public class NCZ_BatchDetail_Adapter extends BaseExpandableListAdapter
                     if (salenumber != 0)
                     {
                         view.tv_number.setText("已售完");
-                        convertView.setBackgroundResource(R.color.gray);
+//                        convertView.setBackgroundResource(R.color.gray);
                         view.cb_selectall.setClickable(false);
                         view.btn_number.setClickable(false);
                     } else
                     {
                         view.tv_number.setText("产量未上报");
-                        view.rl_select.setVisibility(View.GONE);
+//                        view.rl_select.setVisibility(View.GONE);
+                        view.cb_selectall.setClickable(false);
+                        view.btn_number.setClickable(false);
                     }
                 } else
                 {

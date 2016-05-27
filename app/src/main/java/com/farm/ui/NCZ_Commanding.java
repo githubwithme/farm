@@ -132,7 +132,8 @@ public class NCZ_Commanding extends Fragment implements View.OnClickListener
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.ncz_commandlist, container, false);
         appContext = (AppContext) getActivity().getApplication();
         dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "NCZ_CMD");
@@ -208,7 +209,7 @@ public class NCZ_Commanding extends Fragment implements View.OnClickListener
         String orderby = selectorUi.getOrderby();
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid",  commembertab.getId());
+        params.addQueryStringParameter("workuserid", commembertab.getId());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
@@ -299,7 +300,6 @@ public class NCZ_Commanding extends Fragment implements View.OnClickListener
                                 if (isAdded())
                                 {
                                     NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
-
                                 }
                             } else
                             {

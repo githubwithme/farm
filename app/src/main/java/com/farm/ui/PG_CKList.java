@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.PG_CKExcute_adapter;
-import com.farm.adapter.WZ_RKExecute_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -31,7 +30,6 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 

@@ -174,11 +174,11 @@ public class NCZ_FarmSale extends Activity
                             }
                         });
                         utils.setListViewHeight(expandableListView);
-                        for (int i = 0; i < listNewData.size(); i++)
-                        {
-                            expandableListView.expandGroup(i);//展开
+//                        for (int i = 0; i < listNewData.size(); i++)
+//                        {
+//                            expandableListView.expandGroup(i);//展开
 //                                  expandableListView.collapseGroup(i);//关闭
-                        }
+//                        }
 
                     } else
                     {

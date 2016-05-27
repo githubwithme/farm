@@ -1,25 +1,23 @@
 package com.farm.ui;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.farm.R;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 /**
  * Created by ${hmj} on 2016/5/26.
  */
-@EFragment
-public class NCZ_JobActivity extends Fragment
+@EActivity(R.layout.ncz_jobfragment)
+public class NCZ_JobActivity extends Activity
 {
     NCZ_DoingJobFragment ncz_doingJobFragment;
     NCZ_CompleteJobFragment ncz_completeJobFragment;
@@ -52,13 +50,14 @@ public class NCZ_JobActivity extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_jobfragment, container, false);
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();
         ncz_doingJobFragment = new NCZ_DoingJobFragment_();
         ncz_completeJobFragment = new NCZ_CompleteJobFragment_();
-        return rootView;
     }
+
 
     private void setBackground(int pos)
     {

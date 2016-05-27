@@ -8,18 +8,20 @@
     <LinearLayout
         android:id="@+id/ll_addcost"
         android:layout_width="match_parent"
-        android:layout_height="40dip"
+        android:layout_height="60dip"
         android:orientation="horizontal">
 
         <View
             android:layout_width="30dip"
             android:layout_height="30dip"
-            android:layout_marginLeft="5dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
             android:background="@drawable/quick_set_create_cw"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="15dip"
             android:gravity="center"
             android:text="专项拨付"
             android:textColor="@color/bg_text"
@@ -29,42 +31,25 @@
     <LinearLayout
         android:id="@+id/ll_addcommand"
         android:layout_width="match_parent"
-        android:layout_height="40dip"
+        android:layout_height="60dip"
         android:orientation="horizontal">
 
         <View
             android:layout_width="30dip"
             android:layout_height="30dip"
-            android:layout_marginLeft="5dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
             android:background="@drawable/quick_set_create_agent"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="15dip"
             android:gravity="center"
             android:text="添加指令"
             android:textColor="@color/bg_text"
             android:textSize="14sp"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_addcontacts"
-        android:layout_width="match_parent"
-        android:layout_height="40dip"
-        android:orientation="horizontal">
 
-        <View
-            android:layout_width="30dip"
-            android:layout_height="30dip"
-            android:layout_marginLeft="5dip"
-            android:background="@drawable/quick_set_create_zg"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="添加联系人"
-            android:textColor="@color/bg_text"
-            android:textSize="14sp"/>
-    </LinearLayout>
 </LinearLayout>

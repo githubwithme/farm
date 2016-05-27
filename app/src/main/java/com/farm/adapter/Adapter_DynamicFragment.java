@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.DynamicBean;
+import com.farm.bean.DynamicEntity;
 import com.farm.widget.CircleImageView;
 
 import java.util.HashMap;
@@ -19,10 +19,9 @@ import java.util.List;
 public class Adapter_DynamicFragment extends BaseAdapter
 {
     private Context context;// 运行上下文
-    private List<DynamicBean> listItems;// 数据集合
+    private List<DynamicEntity> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
-    DynamicBean dynamicBean;
-
+    DynamicEntity dynamicEntity;
     static class ListItemView
     {
         public TextView tv_note;
@@ -31,7 +30,7 @@ public class Adapter_DynamicFragment extends BaseAdapter
         public CircleImageView circle_img;
     }
 
-    public Adapter_DynamicFragment(Context context, List<DynamicBean> data)
+    public Adapter_DynamicFragment(Context context, List<DynamicEntity> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -57,7 +56,7 @@ public class Adapter_DynamicFragment extends BaseAdapter
 
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        dynamicBean = listItems.get(position);
+        dynamicEntity = listItems.get(position);
         // 自定义视图
         ListItemView listItemView = null;
         if (lmap.get(position) == null)
@@ -75,10 +74,10 @@ public class Adapter_DynamicFragment extends BaseAdapter
             convertView.setTag(listItemView);
 
 
-            listItemView.tv_title.setText(dynamicBean.getListdata().get(0).getTitle());
-            listItemView.tv_date.setText(dynamicBean.getListdata().get(0).getDate());
-            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            String type = dynamicBean.getType();
+            listItemView.tv_title.setText(dynamicEntity.getTitle());
+            listItemView.tv_date.setText(dynamicEntity.getDate());
+            listItemView.tv_note.setText(dynamicEntity.getNote());
+            String type = dynamicEntity.getType();
             if (type.equals("ZL"))
             {
                 listItemView.circle_img.setImageResource(R.drawable.bg_importance1);

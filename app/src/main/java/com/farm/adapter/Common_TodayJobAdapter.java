@@ -38,6 +38,7 @@ public class Common_TodayJobAdapter extends BaseAdapter
     static class ListItemView
     {
         public TextView tv_jobname;
+        public TextView tv_jobtime;
         public TextView tv_tip_pf;
         public TextView tv_score;
         public TextView tv_importance;
@@ -93,6 +94,7 @@ public class Common_TodayJobAdapter extends BaseAdapter
             listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
             listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
             listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
+            listItemView.tv_jobtime = (TextView) convertView.findViewById(R.id.tv_jobtime);
             listItemView.tv_jobname = (TextView) convertView.findViewById(R.id.tv_jobname);
             listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
             listItemView.tv_tip_pf = (TextView) convertView.findViewById(R.id.tv_tip_pf);
@@ -127,19 +129,19 @@ public class Common_TodayJobAdapter extends BaseAdapter
             // 添加删除布局的点击事件
             listItemView.ll_menu.setId(position);
             listItemView.ll_menu.setOnClickListener(new View.OnClickListener()
-              {
+            {
 
-                  @Override
-                  public void onClick(View v)
-                  {
+                @Override
+                public void onClick(View v)
+                {
 //                    Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
-                      // 点击完成之后，关闭删除menu
-                      listItemView.swipeLayout.close();
-                      jobtab job = listItems.get(v.getId());
-                      Intent intent = new Intent(context, Common_CommandDetail_Show_.class);
-                      intent.putExtra("cmdid", job.getcommandID());
-                      context.startActivity(intent);
-                  }
+                    // 点击完成之后，关闭删除menu
+                    listItemView.swipeLayout.close();
+                    jobtab job = listItems.get(v.getId());
+                    Intent intent = new Intent(context, Common_CommandDetail_Show_.class);
+                    intent.putExtra("cmdid", job.getcommandID());
+                    context.startActivity(intent);
+                }
             });
             listItemView.iv_record.setId(position);
             listItemView.iv_record.setOnClickListener(new OnClickListener()
@@ -208,44 +210,48 @@ public class Common_TodayJobAdapter extends BaseAdapter
         {
             listItemView.fl_new.setVisibility(View.GONE);
         }
-        if (jobtab.getImportance().equals("0"))
-        {
-            listItemView.tv_importance.setText("一般");
-//            listItemView.circle_img.setImageResource(R.color.bg_blue);
-            listItemView.circle_img.setImageResource(R.drawable.yb);
-        } else if (jobtab.getImportance().equals("1"))
-        {
-            listItemView.tv_importance.setText("重要");
-//            listItemView.circle_img.setImageResource(R.color.bg_green);
-            listItemView.circle_img.setImageResource(R.drawable.zyx);
-        } else if (jobtab.getImportance().equals("2"))
-        {
-            listItemView.tv_importance.setText("非常重要");
-//            listItemView.circle_img.setImageResource(R.color.color_orange);
-            listItemView.circle_img.setImageResource(R.drawable.fczy);
-        } else if (jobtab.getImportance().equals("3"))
-        {
-            listItemView.tv_importance.setText("自");
-            listItemView.circle_img.setImageResource(R.color.bg_job);
-        }
+        listItemView.circle_img.setImageResource(R.drawable.yb);
+        listItemView.tv_importance.setText(jobtab.getjobFromName());
+//        if (jobtab.getImportance().equals("0"))
+//        {
+//            listItemView.tv_importance.setText("一般");
+////            listItemView.circle_img.setImageResource(R.color.bg_blue);
+//            listItemView.circle_img.setImageResource(R.drawable.yb);
+//        } else if (jobtab.getImportance().equals("1"))
+//        {
+//            listItemView.tv_importance.setText("重要");
+////            listItemView.circle_img.setImageResource(R.color.bg_green);
+//            listItemView.circle_img.setImageResource(R.drawable.zyx);
+//        } else if (jobtab.getImportance().equals("2"))
+//        {
+//            listItemView.tv_importance.setText("非常重要");
+////            listItemView.circle_img.setImageResource(R.color.color_orange);
+//            listItemView.circle_img.setImageResource(R.drawable.fczy);
+//        } else if (jobtab.getImportance().equals("3"))
+//        {
+//            listItemView.tv_importance.setText("自");
+//            listItemView.circle_img.setImageResource(R.color.bg_job);
+//        }
         if (jobtab.getFrom().equals("0"))
         {
-            listItemView.tv_zf.setText( "下发");
+            listItemView.tv_zf.setText("下发");
         } else
         {
             listItemView.tv_zf.setText("自发");
         }
-        if (jobtab.getstdJobType().equals("0"))
-        {
-            listItemView.tv_type.setText("非标准生产指令");
-        } else  if (jobtab.getstdJobType().equals("-1"))
-        {
-            listItemView.tv_type.setText("非生产指令");
-        } else
-        {
-            listItemView.tv_type.setText("标准生产指令");
-        }
+        listItemView.tv_type.setText(jobtab.getparkName() + jobtab.getareaName());
+//        if (jobtab.getstdJobType().equals("0"))
+//        {
+//            listItemView.tv_type.setText("非标准生产指令");
+//        } else if (jobtab.getstdJobType().equals("-1"))
+//        {
+//            listItemView.tv_type.setText("非生产指令");
+//        } else
+//        {
+//            listItemView.tv_type.setText("标准生产指令");
+//        }
         listItemView.tv_time.setText(jobtab.getregDate().substring(0, jobtab.getregDate().lastIndexOf(":")));
+        listItemView.tv_jobtime.setText(jobtab.getregDate().substring(5, jobtab.getregDate().lastIndexOf(":")));
         if (jobtab.getaudioJobExecPath().equals("-1"))
         {
             listItemView.tv_score.setText("暂无");

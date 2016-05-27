@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.DynamicEntity;
+import com.farm.bean.DynamicBean;
 import com.farm.widget.CircleImageView;
 
 import java.util.HashMap;
@@ -19,9 +19,9 @@ import java.util.List;
 public class Adapter_Dynamic extends BaseAdapter
 {
     private Context context;// 运行上下文
-    private List<DynamicEntity> listItems;// 数据集合
+    private List<DynamicBean> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
-    DynamicEntity dynamicEntity;
+    DynamicBean dynamicBean;
 
     static class ListItemView
     {
@@ -31,7 +31,7 @@ public class Adapter_Dynamic extends BaseAdapter
         public CircleImageView circle_img;
     }
 
-    public Adapter_Dynamic(Context context, List<DynamicEntity> data)
+    public Adapter_Dynamic(Context context, List<DynamicBean> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -57,7 +57,7 @@ public class Adapter_Dynamic extends BaseAdapter
 
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        dynamicEntity = listItems.get(position);
+        dynamicBean = listItems.get(position);
         // 自定义视图
         ListItemView listItemView = null;
         if (lmap.get(position) == null)
@@ -75,10 +75,10 @@ public class Adapter_Dynamic extends BaseAdapter
             convertView.setTag(listItemView);
 
 
-            listItemView.tv_title.setText(dynamicEntity.getTitle());
-            listItemView.tv_date.setText(dynamicEntity.getDate());
-            listItemView.tv_note.setText(dynamicEntity.getNote());
-            String type = dynamicEntity.getType();
+            listItemView.tv_title.setText(dynamicBean.getListdata().get(0).getTitle());
+            listItemView.tv_date.setText(dynamicBean.getListdata().get(0).getDate());
+            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            String type = dynamicBean.getType();
             if (type.equals("ZL"))
             {
                 listItemView.circle_img.setImageResource(R.drawable.bg_importance1);
