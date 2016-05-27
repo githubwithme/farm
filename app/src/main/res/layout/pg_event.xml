@@ -175,7 +175,7 @@
                 <TextView
                     android:id="@+id/tv_picture"
                     android:layout_width="@dimen/width_colum"
-                    android:layout_height="120dip"
+                    android:layout_height="100dip"
                     android:gravity="left|center_vertical"
                     android:text="现场照片"
                     android:textColor="@color/bg_text"
@@ -183,7 +183,7 @@
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="120dip"
+                    android:layout_height="100dip"
                     android:layout_marginRight="@dimen/size_60"
                     android:layout_toRightOf="@id/tv_picture" >
 
@@ -197,7 +197,7 @@
                 <ImageButton
                     android:id="@+id/imgbtn_addpicture"
                     android:layout_width="@dimen/size_40"
-                    android:layout_height="120dip"
+                    android:layout_height="100dip"
                     android:layout_alignParentRight="true"
                     android:background="@null"
                     android:src="@drawable/plus" />
@@ -217,7 +217,7 @@
                 <TextView
                     android:id="@+id/tv_video"
                     android:layout_width="@dimen/width_colum"
-                    android:layout_height="120dip"
+                    android:layout_height="100dip"
                     android:gravity="left|center_vertical"
                     android:text="现场视频"
                     android:textColor="@color/bg_text"
@@ -225,7 +225,7 @@
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="120dip"
+                    android:layout_height="100dip"
                     android:layout_marginRight="@dimen/size_60"
                     android:layout_toRightOf="@id/tv_video" >
 
@@ -239,7 +239,7 @@
                 <ImageButton
                     android:id="@+id/imgbtn_addvideo"
                     android:layout_width="@dimen/size_40"
-                    android:layout_height="120dip"
+                    android:layout_height="100dip"
                     android:layout_alignParentRight="true"
                     android:background="@null"
                     android:src="@drawable/plus" />

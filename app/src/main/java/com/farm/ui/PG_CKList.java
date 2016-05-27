@@ -1,7 +1,10 @@
 package com.farm.ui;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,8 +95,20 @@ public class PG_CKList extends Fragment
         appContext = (AppContext) getActivity().getApplication();
 //        commembertab commembertab = AppContext.getUserInfo(getActivity());
         commembertab = AppContext.getUserInfo(getActivity());
+
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_PG_REFASH);
+        getActivity().registerReceiver(receiver_update, intentfilter_update);
         return rootView;
     }
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getBreakOffInfoOfContract();
+        }
+    };
     private void getBreakOffInfoOfContract()
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());

@@ -74,6 +74,12 @@ public class NCZ_Eventing extends Fragment
 //        getBreakOffInfoOfContract();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -97,7 +103,8 @@ public class NCZ_Eventing extends Fragment
                 if (position == 0 || view == list_footer)
                     return;
 //                Intent intent=new Intent(getActivity(),NCZ_EventLookList_.class);
-                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
+//                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
+                Intent intent=new Intent(getActivity(),NCZ_EventDatails_.class);
                 ReportedBean reportedBean=listData.get(position-1);
                 intent.putExtra("reportedBean",reportedBean);
                 startActivity(intent);

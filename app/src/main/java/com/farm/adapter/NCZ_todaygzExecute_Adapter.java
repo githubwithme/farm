@@ -141,6 +141,9 @@ public class NCZ_todaygzExecute_Adapter extends BaseExpandableListAdapter
                 public void onClick(View v) {
 //                    Intent intent = new Intent(context, Common_JobDetail_.class);
 //                    Intent intent = new Intent(context, Common_JobDetail_Assess_.class);
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    String job=jobtab1.getId();
+                    AppContext.updateStatus(context, "0", jobtab1.getId(), "1", commembertab.getId());
                     Intent intent = new Intent(context, NCZ_Todayjob_Common_.class);
                     intent.putExtra("bean", jobtab1);//
                     context.startActivity(intent);
