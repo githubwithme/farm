@@ -119,9 +119,9 @@ public class DynamicFragment extends Fragment
 //        getDynamicData();
 //        getNewSaleList_test();
 //        getDynamicData();
-//        timethread = new TimeThread();
-//        timethread.setSleep(false);
-//        timethread.start();
+        timethread = new TimeThread();
+        timethread.setSleep(false);
+        timethread.start();
 //        getNewSaleList_test();
     }
 
@@ -490,7 +490,7 @@ public class DynamicFragment extends Fragment
                     {
                         timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
-                        getDynamicData();
+                        getDynamicData_temp();
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();
