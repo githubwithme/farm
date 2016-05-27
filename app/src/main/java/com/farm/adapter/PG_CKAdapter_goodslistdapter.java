@@ -45,6 +45,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -379,7 +380,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         {
             tv_dw.setText(list.get(currentpos).getFirs());
         }
-
+        btn_sure.setTag(R.id.tag_pgckpc,dialog_layout.findViewById(R.id.storehouse));
         storehouse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -389,20 +390,17 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                 }
             }
         });
-        btn_sure.setTag(R.id.tag_danwei,list.get(currentpos));
-        btn_sure.setOnClickListener(new View.OnClickListener()
-        {
+        btn_sure.setTag(R.id.tag_danwei, list.get(currentpos));
+        btn_sure.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if (et_flsl.getText().toString().equals(""))
-                {
+            public void onClick(View v) {
+                 if (storehouse.getText().toString().equals("选择批次")) {
+                    Toast.makeText(context, "请选择批次", Toast.LENGTH_SHORT).show();
+                } else if (et_flsl.getText().toString().equals("")) {
                     Toast.makeText(context, "请填写数量", Toast.LENGTH_SHORT).show();
-                }else if(Integer.parseInt(et_flsl.getText().toString())>number)
-                {
+                } else if (Integer.parseInt(et_flsl.getText().toString()) > number) {
                     Toast.makeText(context, "数量已超过库存存量", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     goodslisttab goodslisttab = (com.farm.bean.goodslisttab) v.getTag(R.id.tag_danwei);
                     Double acountnumber = 0d;
                     Double neednumber = 0d;
@@ -433,7 +431,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                     ll_flsl.setVisibility(View.VISIBLE);
 
                     TextView tv_flsl = (TextView) currentparentview.findViewById(R.id.tv_flsl);
-                     TextView tv_allnumber = (TextView) currentparentview.findViewById(R.id.tv_allnumber);
+                    TextView tv_allnumber = (TextView) currentparentview.findViewById(R.id.tv_allnumber);
                     TextView tv_zzs = (TextView) currentparentview.findViewById(R.id.tv_zzs);
 
 
@@ -524,13 +522,33 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                 {
                     if (result.getAffectedRows() != 0) {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), PG_CKDWbean.class);
-                        batchNumber = listNewData.get(0).getGoodsInInfoId();
+                        Iterator<PG_CKDWbean> it = listNewData.iterator();
+                        while (it.hasNext())
+                        {
+                            PG_CKDWbean pg_ckdWbean=it.next();
+                            final  String value;
+                            if(!pg_ckdWbean.getThree().equals(""))
+                            {
+                                value = pg_ckdWbean.getThreeNum();
+                            }else if(pg_ckdWbean.getThree().equals("")&&!pg_ckdWbean.getSec().equals(""))
+                            {
+                                value = pg_ckdWbean.getSecNum();
+                            }else {
+                                value = pg_ckdWbean.getFirsNum();
+                            }
+                            if (value.equals("0"))
+                            {
+                                it.remove();
+                            }
+                        }
+
+
+                        listpeople=new  ArrayList<PG_CKDWbean>();
+                        listpeople.addAll(listNewData);
+/*                        batchNumber = listNewData.get(0).getGoodsInInfoId();
                         batchName = listNewData.get(0).getBatchname();
-
-
                         if(!listNewData.get(0).getThree().equals(""))
                         {
-
                             storehouse.setText("第1批次:" +listNewData.get(0).getThreeNum()+listNewData.get(0).getThree());
                             number=Integer.parseInt(listNewData.get(0).getThreeNum());
                         }else if(listNewData.get(0).getThree().equals("")&&!listNewData.get(0).getSec().equals(""))
@@ -540,10 +558,8 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                         }else {
                             storehouse.setText("第1批次:" +listNewData.get(0).getFirsNum()+listNewData.get(0).getFirs());
                             number=Integer.parseInt(listNewData.get(0).getFirsNum());
-                        }
-                        listpeople=new  ArrayList<PG_CKDWbean>();
+                        }*/
 
-                        listpeople.addAll(listNewData);
 
                     } else {
                         listNewData = new ArrayList<PG_CKDWbean>();

@@ -87,6 +87,7 @@ public class PG_EventReported extends Fragment
     @Override
     public void onResume() {
         super.onResume();
+        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -94,6 +95,9 @@ public class PG_EventReported extends Fragment
         View rootView = inflater.inflate(R.layout.pg_eventreported, container, false);
         appContext = (AppContext) getActivity().getApplication();
 //        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_PG_UPEVENT);
+        getActivity().registerReceiver(receiver_update, intentfilter_update);
+
         commembertab = AppContext.getUserInfo(getActivity());
          aa=commembertab.getId();
         return rootView;

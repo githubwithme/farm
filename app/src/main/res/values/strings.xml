@@ -79,5 +79,6 @@
     <item name="tag_picture" type="id"></item>
     <item name="tag_danwei" type="id"></item>
     <item name="tag_eventlisttp" type="id"></item>
+    <item name="tag_pgckpc" type="id"></item>
     <string name="title_activity_observation_record">ObservationRecordActivity</string>
 </resources>

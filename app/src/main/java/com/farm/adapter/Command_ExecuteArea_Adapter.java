@@ -116,7 +116,12 @@ public class Command_ExecuteArea_Adapter extends BaseAdapter
             flyl = flyl + nongzi[i] + ":"+shuliang[i]+daiwei[i]+";";
 //            flyl = flyl + nongzi[i] + ":"+shuliang[i]+";";
         }
-        listItemView.tv_name.setText(flyl);
+        if(commandtab.getstdJobType().equals("-1")&&commandtab.getstdJobId().equals("-1"))
+        {
+            listItemView.tv_name.setText("说明:"+commandtab.getnongziName());
+        }else {
+            listItemView.tv_name.setText(flyl);
+        }
 //        listItemView.tv_name.setText(commandtab.getnongziName());
 //        listItemView.tv_amount.setText(commandtab.getamount()+commandtab.getAmountDW());
         return convertView;

@@ -136,6 +136,7 @@ View view_line2;
     }
     @Click
     void btn_case() {
+        add_upload.setVisibility(View.GONE);
         ll_add.setVisibility(View.GONE);
         imgbtn_addpicture.setVisibility(View.GONE);
         imgbtn_addvideo.setVisibility(View.GONE);
@@ -331,6 +332,8 @@ View view_line2;
 
                 } else {
                     btn_save.setVisibility(View.VISIBLE);
+                    add_upload.setVisibility(View.GONE);
+
                     AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
                     return;
                 }
@@ -365,9 +368,11 @@ View view_line2;
                         AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
                     } else {
                         String event = listData.get(0).getEventId();
-
                     }
 */
+                    Intent intent = new Intent();
+                    intent.setAction(AppContext.BROADCAST_PG_UPEVENT);
+                    PG_EventDetail.this.sendBroadcast(intent);
                 } else {
                     AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
                     return;
@@ -762,10 +767,16 @@ View view_line2;
                         showProgress();
                     } else
                     {
+                        //0
+                        btn_save.setVisibility(View.VISIBLE);
+                        add_upload.setVisibility(View.GONE);
                         AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
                     }
                 } else
                 {
+                    //0
+                    btn_save.setVisibility(View.VISIBLE);
+                    add_upload.setVisibility(View.GONE);
                     AppContext.makeToast(PG_EventDetail.this, "error_connectDataBase");
                     return;
                 }
@@ -789,8 +800,12 @@ View view_line2;
         Long l = latch.getCount();
         if (l.intValue() == 0) // 全部线程是否已经结束
         {
+
             Toast.makeText(PG_EventDetail.this, "保存成功！", Toast.LENGTH_SHORT).show();
             PG_EventDetail.this.finish();
+            Intent intent = new Intent();
+            intent.setAction(AppContext.BROADCAST_PG_UPEVENT);
+            PG_EventDetail.this.sendBroadcast(intent);
         }
     }
 }
