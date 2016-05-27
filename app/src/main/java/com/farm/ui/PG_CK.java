@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -160,75 +161,82 @@ public class PG_CK extends Activity {
         list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
 
          List<PG_CKBean> data=new ArrayList<PG_CKBean>();
-         for (int i=0;i<list_goodslisttab.size();i++)
-         {
+        if (list_goodslisttab.size()==0)
+        {
+            Toast.makeText(PG_CK.this, "请选择物资及数量!", Toast.LENGTH_SHORT).show();
+        }else
+        {
+            for (int i=0;i<list_goodslisttab.size();i++)
+            {
 
-             pg_ckBean=new PG_CKBean();
-             pg_ckBean.setUid(commembertab.getuId());
-             pg_ckBean.setGoodsTypeId(list_goodslisttab.get(i).getGX());
-             pg_ckBean.setUserDefTypeId(list_goodslisttab.get(i).getZS());
-             pg_ckBean.setGoodsId(list_goodslisttab.get(i).getId());
-             pg_ckBean.setStorehouseId(id);
-             pg_ckBean.setGoodsInInfoRKId(list_goodslisttab.get(i).getgoodsNote());
+                pg_ckBean=new PG_CKBean();
+                pg_ckBean.setUid(commembertab.getuId());
+                pg_ckBean.setGoodsTypeId(list_goodslisttab.get(i).getGX());
+                pg_ckBean.setUserDefTypeId(list_goodslisttab.get(i).getZS());
+                pg_ckBean.setGoodsId(list_goodslisttab.get(i).getId());
+                pg_ckBean.setStorehouseId(id);
+                pg_ckBean.setGoodsInInfoRKId(list_goodslisttab.get(i).getgoodsNote());
 
-             if ( list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getFirs()))
-             {
-                 pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
-                 pg_ckBean.setFirsNum(list_goodslisttab.get(i).getYL());
-                 pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
-                 pg_ckBean.setSecNum("0");
-                 pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
-                 pg_ckBean.setThreeNum("0");
-             }else if(list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getSec())){
+                if ( list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getFirs()))
+                {
+                    pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
+                    pg_ckBean.setFirsNum(list_goodslisttab.get(i).getYL());
+                    pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
+                    pg_ckBean.setSecNum("0");
+                    pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
+                    pg_ckBean.setThreeNum("0");
+                }else if(list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getSec())){
 
-                 int x=Integer.parseInt(list_goodslisttab.get(i).getYL());
-                 int y=Integer.parseInt(list_goodslisttab.get(i).getSecNum());
-                 int k=x/y;
-                 pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
-                 pg_ckBean.setFirsNum(k+"");
+                    int x=Integer.parseInt(list_goodslisttab.get(i).getYL());
+                    int y=Integer.parseInt(list_goodslisttab.get(i).getSecNum());
+                    int k=x/y;
+                    pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
+                    pg_ckBean.setFirsNum(k+"");
 
-                 pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
-                 pg_ckBean.setSecNum(list_goodslisttab.get(i).getYL());
-                 pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
-                 pg_ckBean.setThreeNum("0");
-             }else
-             {
-                 int a=Integer.parseInt(list_goodslisttab.get(i).getYL());
-                 int b=Integer.parseInt(list_goodslisttab.get(i).getSecNum());
-                 int c=Integer.parseInt(list_goodslisttab.get(i).getThreeNum());
-                 int k=a/c;
-                 int j=k/b;
-                 pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
-                 pg_ckBean.setFirsNum(j+"");
+                    pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
+                    pg_ckBean.setSecNum(list_goodslisttab.get(i).getYL());
+                    pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
+                    pg_ckBean.setThreeNum("0");
+                }else
+                {
+                    int a=Integer.parseInt(list_goodslisttab.get(i).getYL());
+                    int b=Integer.parseInt(list_goodslisttab.get(i).getSecNum());
+                    int c=Integer.parseInt(list_goodslisttab.get(i).getThreeNum());
+                    int k=a/c;
+                    int j=k/b;
+                    pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
+                    pg_ckBean.setFirsNum(j+"");
 
-                 pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
-                 pg_ckBean.setSecNum(k+"");
-                 pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
-                 pg_ckBean.setThreeNum(list_goodslisttab.get(i).getYL());
-             }
+                    pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
+                    pg_ckBean.setSecNum(k+"");
+                    pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
+                    pg_ckBean.setThreeNum(list_goodslisttab.get(i).getYL());
+                }
 
 
     /*         pg_ckBean.setGoodsSum(list_goodslisttab.get(i).getYL());
              pg_ckBean.setGoodsDw(list_goodslisttab.get(i).getDW());*/
 
-             data.add(pg_ckBean);
-         }
-        pgBean=new PGBean();
-        pgBean.setUserId(commembertab.getId());
-        pgBean.setUid(commembertab.getuId());
-        pgBean.setParkId(commembertab.getparkId());
-        pgBean.setIsConfirm("未确认");
-        StringBuilder builder = new StringBuilder();
+                data.add(pg_ckBean);
+            }
+            pgBean=new PGBean();
+            pgBean.setUserId(commembertab.getId());
+            pgBean.setUid(commembertab.getuId());
+            pgBean.setParkId(commembertab.getparkId());
+            pgBean.setIsConfirm("未确认");
+            StringBuilder builder = new StringBuilder();
 
-        builder.append("{\"tubegoodsinfo\": [");
-        builder.append(JSON.toJSONString(pgBean));
-        builder.append("],\"tubegoodsouttab\": ");
-        builder.append(JSON.toJSONString(data));
-        builder.append("");
-        builder.append("} ");
+            builder.append("{\"tubegoodsinfo\": [");
+            builder.append(JSON.toJSONString(pgBean));
+            builder.append("],\"tubegoodsouttab\": ");
+            builder.append(JSON.toJSONString(data));
+            builder.append("");
+            builder.append("} ");
 
 
-          saveData(builder.toString());
+            saveData(builder.toString());
+        }
+
 //        SqliteDb.deleteAllSelectCmdArea(PG_CK.this, goodslisttab.class);//删除
     }
 

@@ -3,6 +3,8 @@ package com.farm.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,11 +112,19 @@ public class PG_ReportedAdapter extends BaseAdapter {
                     context.startActivity(intent);
                 }
             });
-//            listItemView.circle_img.setTag(R.id.tag_eventlisttp,fJxx);
+            listItemView.circle_img.setTag(R.id.tag_eventlisttp, fJxx);
+
             if (!fJxx.equals("")&& fJxx.size()>0)
             {
-                    BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(0).getLSTLJ());
-
+             for(int i=0;i<fJxx.size();i++) {
+                 if (fJxx.get(i).getFJLX().equals("1")) {
+                     BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(i).getLSTLJ());
+                     break;
+                 }
+             }
+            }else{
+                Bitmap rawBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.noimg);
+                listItemView.circle_img.setImageBitmap(rawBitmap);
             }
 
             // 设置控件集到convertView
@@ -124,6 +134,24 @@ public class PG_ReportedAdapter extends BaseAdapter {
         {
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
+            List<FJxx> data=new ArrayList<FJxx>();
+            data= (List<FJxx>) listItemView.circle_img.getTag(R.id.tag_eventlisttp);
+
+
+            if (!fJxx.equals("")&& fJxx.size()>0)
+            {
+//                BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(0).getLSTLJ());
+                for(int i=0;i<fJxx.size();i++) {
+                    if (fJxx.get(i).getFJLX().equals("1")) {
+                        BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(i).getLSTLJ());
+                        break;
+                    }
+                }
+            }else{
+                Bitmap rawBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.noimg);
+                listItemView.circle_img.setImageBitmap(rawBitmap);
+            }
+
         }
         // 设置文字和图片
 
