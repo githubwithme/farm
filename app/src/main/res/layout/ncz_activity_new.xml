@@ -38,7 +38,7 @@
                     android:layout_width="20dip"
                     android:layout_height="20dip"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/btn_home_selector"
+                    android:background="@drawable/screen_black"
                     android:clickable="false"
                     android:contentDescription=""/>
             </RelativeLayout>
@@ -131,7 +131,7 @@
                     android:layout_width="20dip"
                     android:layout_height="20dip"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/btn_cmd_selector"
+                    android:background="@drawable/btn_home_selector"
                     android:clickable="false"
                     android:contentDescription=""/>
 
@@ -180,7 +180,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:visibility="gone">
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -192,7 +192,7 @@
                     android:layout_width="20dip"
                     android:layout_height="20dip"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/btn_sc_selector"
+                    android:background="@drawable/people_black"
                     android:clickable="false"
                     android:contentDescription=""/>
             </RelativeLayout>
@@ -203,7 +203,7 @@
                 android:layout_height="0dip"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="生产"
+                android:text="联系人"
                 android:textColor="@color/menu_textcolor"
                 android:textSize="@dimen/home_menu_textsize"/>
         </TableLayout>

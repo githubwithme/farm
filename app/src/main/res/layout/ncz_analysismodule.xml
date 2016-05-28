@@ -28,198 +28,244 @@
         android:layout_height="1px"
         android:background="@color/line_color"/>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/rl_kc"
         android:layout_width="match_parent"
-        android:layout_height="90dip"
-        android:layout_marginTop="30dip"
+        android:layout_height="50dip"
+        android:layout_margin="5dip"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_kc"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_margin="5dip"
-            android:layout_weight="1"
-            android:background="@drawable/shape_round_border_red"
-            android:orientation="vertical">
+        <ImageView
+            android:id="@+id/iv_kc"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/temp1"/>
 
-            <ImageView
-                android:layout_width="50dip"
-                android:layout_height="45dip"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/quick_set_create_opportunity"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dip"
+            android:layout_toRightOf="@+id/iv_kc"
+            android:gravity="center"
+            android:text="库存统计"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dip"
-                android:gravity="center"
-                android:text="库存统计"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-        </LinearLayout>
+        <View
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/next_black"/>
+    </RelativeLayout>
 
-
-        <LinearLayout
-            android:id="@+id/ll_xs"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_margin="5dip"
-            android:layout_weight="1"
-            android:background="@drawable/shape_round_border_red"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="50dip"
-                android:layout_height="45dip"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/quick_set_create_agent"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dip"
-                android:gravity="center"
-                android:text="销售统计"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ll_cw"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_margin="5dip"
-            android:layout_weight="1"
-            android:background="@drawable/shape_round_border_red"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="50dip"
-                android:layout_height="45dip"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/quick_set_create_cw"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dip"
-                android:gravity="center"
-                android:text="财务统计"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="90dip"
-        android:layout_marginTop="10dip"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_xs"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_margin="5dip"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_sj"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_margin="5dip"
-            android:layout_weight="1"
-            android:background="@drawable/shape_round_border_red"
-            android:orientation="vertical">
+        <ImageView
+            android:id="@+id/iv_xs"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/temp2"/>
 
-            <ImageView
-                android:layout_width="50dip"
-                android:layout_height="45dip"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/quick_set_create_opportunity"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dip"
+            android:layout_toRightOf="@+id/iv_xs"
+            android:gravity="center"
+            android:text="销售统计"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dip"
-                android:gravity="center"
-                android:text="事件统计"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-        </LinearLayout>
+        <View
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/next_black"/>
+    </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
-        <LinearLayout
-            android:id="@+id/ll_gz"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_margin="5dip"
-            android:layout_weight="1"
-            android:background="@drawable/shape_round_border_red"
-            android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/rl_cw"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_margin="5dip"
+        android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="50dip"
-                android:layout_height="45dip"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/quick_set_create_agent"/>
+        <ImageView
+            android:id="@+id/iv_cw"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/temp3"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dip"
-                android:gravity="center"
-                android:text="工作情况统计"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dip"
+            android:layout_toRightOf="@+id/iv_cw"
+            android:gravity="center"
+            android:text="财务统计"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
-        <LinearLayout
-            android:id="@+id/ll_mq"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_margin="5dip"
-            android:layout_weight="1"
-            android:background="@drawable/shape_round_border_red"
-            android:orientation="vertical">
+        <View
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/next_black"/>
+    </RelativeLayout>
 
-            <ImageView
-                android:layout_width="50dip"
-                android:layout_height="45dip"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/quick_set_create_cw"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dip"
-                android:gravity="center"
-                android:text="苗情统计分析"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-        </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_sj"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_margin="5dip"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_sp"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_margin="5dip"
-            android:layout_weight="1"
-            android:background="@drawable/shape_round_border_red"
-            android:orientation="vertical"
-            android:visibility="gone">
+        <ImageView
+            android:id="@+id/iv_sj"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/temp4"/>
 
-            <ImageView
-                android:layout_width="50dip"
-                android:layout_height="45dip"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/quick_set_create_cw"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dip"
+            android:layout_toRightOf="@+id/iv_sj"
+            android:gravity="center"
+            android:text="事件统计"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dip"
-                android:gravity="center"
-                android:text="苗情统计分析"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
-        </LinearLayout>
-    </LinearLayout>
+        <View
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/next_black"/>
+    </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_gz"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_margin="5dip"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_gz"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/temp5"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dip"
+            android:layout_toRightOf="@+id/iv_gz"
+            android:gravity="center"
+            android:text="工作情况统计"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <View
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/next_black"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_mq"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_margin="5dip"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_mq"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/temp6"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dip"
+            android:layout_toRightOf="@+id/iv_mq"
+            android:gravity="center"
+            android:text="苗情分析统计"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <View
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/next_black"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
 </LinearLayout>

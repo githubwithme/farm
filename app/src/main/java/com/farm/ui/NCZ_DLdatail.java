@@ -47,7 +47,8 @@ import java.util.List;
  * Created by user on 2016/5/26.
  */
 @EActivity(R.layout.ncz_dldetail)
-public class NCZ_DLdatail extends Activity{
+public class NCZ_DLdatail extends Activity
+{
 
     private String id;
     private String name;
@@ -56,7 +57,7 @@ public class NCZ_DLdatail extends Activity{
     View pv_tab;
     @ViewById
     View line;
-//    PG_CKofListAdapter pg_cKlistAdapter;
+    //    PG_CKofListAdapter pg_cKlistAdapter;
     NCZ_DLAdapter ncz_dlAdapter;
     com.farm.bean.commembertab commembertab;
     NCZ_DLExecute_Adapter ncz_dlExecute_adapter;
@@ -74,33 +75,39 @@ public class NCZ_DLdatail extends Activity{
     ExpandableListView expandableListView;
     @ViewById
     RelativeLayout rl_view;
+
     @Click
     void btn_back()
     {
         finish();
     }
+
     @Click
     void tv_title()
     {
         showPop_title();
     }
-@AfterViews
-void aftercreat()
-{
+
+    @AfterViews
+    void aftercreat()
+    {
 //    getIsStartBreakOff();
-    getlistdata();
-}
+        getlistdata();
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(NCZ_DLdatail.this);
     }
+
     public void getIsStartBreakOff(final String parkid)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("parkid",parkid);
+        params.addQueryStringParameter("parkid", parkid);
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("action", "IsStartBreakOff");
         HttpUtils http = new HttpUtils();
@@ -120,7 +127,7 @@ void aftercreat()
                         cz_startdl.setVisibility(View.GONE);
                         getBatchTimeOfPark(parkid);
 
-                    }else
+                    } else
                     {
                         cz_startdl.setVisibility(View.VISIBLE);
                         rl_view.setVisibility(View.GONE);
@@ -142,7 +149,8 @@ void aftercreat()
         });
     }
 
-    private void getlistdata() {
+    private void getlistdata()
+    {
         commembertab commembertab = AppContext.getUserInfo(NCZ_DLdatail.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -150,25 +158,30 @@ void aftercreat()
 //        params.addQueryStringParameter("action", "getGoodsByUid");
         params.addQueryStringParameter("action", "getcontractByUid");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<Wz_Storehouse> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
                         listpeople.addAll(listNewData);
                         id = listNewData.get(0).getId();
                         name = listNewData.get(0).getParkName();
-                        tv_title.setText(listNewData.get(0).getParkName() );
+                        tv_title.setText(listNewData.get(0).getParkName());
                         getIsStartBreakOff(id);
-                    } else {
+                    } else
+                    {
                         listNewData = new ArrayList<Wz_Storehouse>();
                     }
-                } else {
+                } else
+                {
                     AppContext.makeToast(NCZ_DLdatail.this, "error_connectDataBase");
 
                     return;
@@ -177,7 +190,8 @@ void aftercreat()
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 String a = error.getMessage();
                 AppContext.makeToast(NCZ_DLdatail.this, "error_connectServer");
 
@@ -186,13 +200,17 @@ void aftercreat()
 
     }
 
-    public void showPop_title() {//LAYOUT_INFLATER_SERVICE
+    public void showPop_title()
+    {//LAYOUT_INFLATER_SERVICE
         LayoutInflater layoutInflater = (LayoutInflater) NCZ_DLdatail.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         pv_tab = layoutInflater.inflate(R.layout.popup_yq, null);// 外层
-        pv_tab.setOnKeyListener(new View.OnKeyListener() {
+        pv_tab.setOnKeyListener(new View.OnKeyListener()
+        {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing())) {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing()))
+                {
                     pw_tab.dismiss();
 //                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
                     return true;
@@ -200,10 +218,13 @@ void aftercreat()
                 return false;
             }
         });
-        pv_tab.setOnTouchListener(new View.OnTouchListener() {
+        pv_tab.setOnTouchListener(new View.OnTouchListener()
+        {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (pw_tab.isShowing()) {
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_tab.isShowing())
+                {
                     pw_tab.dismiss();
 //                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
                 }
@@ -218,21 +239,23 @@ void aftercreat()
         ListView listview = (ListView) pv_tab.findViewById(R.id.lv_yq);
         ncz_dlAdapter = new NCZ_DLAdapter(NCZ_DLdatail.this, listpeople);
         listview.setAdapter(ncz_dlAdapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3) {
+            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3)
+            {
                 id = listpeople.get(postion).getId();
                 name = listpeople.get(postion).getParkName();
                 pw_tab.dismiss();
 //                iv_dowm_tab.setImageResource(R.drawable.ic_down);
-                tv_title.setText(listpeople.get(postion).getParkName() );
+                tv_title.setText(listpeople.get(postion).getParkName());
                 getIsStartBreakOff(listpeople.get(postion).getId());
 
             }
         });
     }
 
-    public void  getBatchTimeOfPark(String parkid)
+    public void getBatchTimeOfPark(String parkid)
     {
 
   /*     SimpleDateFormat formatter = new SimpleDateFormat ("yyyy");
@@ -241,33 +264,39 @@ void aftercreat()
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("parkid", parkid);
-        params.addQueryStringParameter("year",utils.getYear());
+        params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("action", "getBatchTimeOfPark");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<BatchTime> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() > 0) {
+                    if (result.getAffectedRows() > 0)
+                    {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                         ncz_dlExecute_adapter = new NCZ_DLExecute_Adapter(NCZ_DLdatail.this, listNewData, expandableListView);
                         expandableListView.setAdapter(ncz_dlExecute_adapter);
                         utils.setListViewHeight(expandableListView);
-                        for (int i = 0; i < listNewData.size(); i++) {
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
                             expandableListView.expandGroup(i);//展开
 //                                  expandableListView.collapseGroup(i);//关闭
                         }
                         cz_startdl.setVisibility(View.GONE);
 
-                    } else {
+                    } else
+                    {
                         listNewData = new ArrayList<BatchTime>();
                     }
 
-                } else {
+                } else
+                {
                     AppContext.makeToast(NCZ_DLdatail.this, "error_connectDataBase");
                     return;
                 }
@@ -275,7 +304,8 @@ void aftercreat()
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 AppContext.makeToast(NCZ_DLdatail.this, "error_connectServer");
             }
         });

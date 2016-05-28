@@ -3,7 +3,7 @@ package com.farm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.farm.R;
 import com.farm.chart.FinanceAnalysis_;
@@ -22,45 +22,45 @@ import org.androidannotations.annotations.ViewById;
 public class NCZ_AnalysisModule extends Activity
 {
     @ViewById
-    LinearLayout ll_kc;
+    RelativeLayout rl_kc;
 
     @Click
-    void ll_kc()
+    void rl_kc()
     {
         Intent intent = new Intent(NCZ_AnalysisModule.this, GoodsAnalysis_.class);
         startActivity(intent);
     }
 
     @Click
-    void ll_xs()
+    void rl_xs()
     {
         Intent intent = new Intent(NCZ_AnalysisModule.this, SaleAnalysis_.class);
         startActivity(intent);
     }
 
     @Click
-    void ll_cw()
+    void rl_cw()
     {
         Intent intent = new Intent(NCZ_AnalysisModule.this, FinanceAnalysis_.class);
         startActivity(intent);
     }
 
     @Click
-    void ll_sj()
+    void rl_sj()
     {
         Intent intent = new Intent(NCZ_AnalysisModule.this, FinanceAnalysis_.class);
         startActivity(intent);
     }
 
     @Click
-    void ll_gz()
+    void rl_gz()
     {
         Intent intent = new Intent(NCZ_AnalysisModule.this, FinanceAnalysis_.class);
         startActivity(intent);
     }
 
     @Click
-    void ll_mq()
+    void rl_mq()
     {
         Intent intent = new Intent(NCZ_AnalysisModule.this, FinanceAnalysis_.class);
         startActivity(intent);

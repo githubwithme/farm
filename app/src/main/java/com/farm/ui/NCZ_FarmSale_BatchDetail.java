@@ -64,7 +64,11 @@ public class NCZ_FarmSale_BatchDetail extends Activity
     Button btn_newsale;
     @ViewById
     RelativeLayout pb_upload;
-
+    @Click
+    void btn_back()
+    {
+        finish();
+    }
     @Click
     void btn_createorder()
     {

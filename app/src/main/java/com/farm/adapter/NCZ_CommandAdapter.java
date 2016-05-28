@@ -169,8 +169,8 @@ public class NCZ_CommandAdapter extends BaseAdapter
             listItemView.tv_type.setText("标准生产指令");
         }
         listItemView.circle_img.setImageResource(R.drawable.yb);
-        listItemView.tv_area.setText( commandtab.getfeedbackuserName()+"正在执行中...");
-        listItemView.tv_importance.setText( commandtab.getcommFromName());
+        listItemView.tv_area.setText(commandtab.getfeedbackuserName() + "正在执行中...");
+        listItemView.tv_importance.setText(commandtab.getcommFromName());
         listItemView.tv_qyts.setText("要求天数-" + commandtab.getcommDays() + "天");
         listItemView.tv_qx.setText("开始 " + commandtab.getcommComDate());
         listItemView.tv_time.setText("发布于 " + commandtab.getregDate().subSequence(5, commandtab.getregDate().lastIndexOf(":")));

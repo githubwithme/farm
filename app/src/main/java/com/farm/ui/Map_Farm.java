@@ -169,7 +169,6 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
     FrameLayout fl_map;
 
 
-
     @Click
     void btn_more()
     {
@@ -191,7 +190,7 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
             showPop_park(list_yq);
         } else
         {
-            Toast.makeText(getActivity(), "园区获取失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "还没添加农场园区规划图，请先添加园区规划图", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -391,6 +390,7 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
         error = locationManager.requestLocationUpdates(request, this);
         return rootView;
     }
+
     public void setThreadStatus(boolean hidden)
     {
         ishidding = hidden;
@@ -617,6 +617,7 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
 //显示面
         initMianPolygon();
     }
+
     private void InitArea()
     {
         list_Marker_park = new ArrayList<>();
@@ -677,6 +678,7 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
             }
         });
     }
+
     private void InitPlanMap()
     {
         list_Marker_park = new ArrayList<>();
@@ -883,7 +885,7 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
-                if (getActivity()==null)
+                if (getActivity() == null)
                 {
                     return;
                 }
@@ -922,7 +924,7 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
                                         textview.setGravity(Gravity.RIGHT);
 //                                        textview.setBackgroundResource(R.drawable.round_orange);
 //                                        textview.setText(list_locationInfo.get(i).getparkName() + "-" + list_locationInfo.get(i).getuserName() + "离岗了");
-                                        textview.setText( list_locationInfo.get(i).getuserName() + "离岗");
+                                        textview.setText(list_locationInfo.get(i).getuserName() + "离岗");
                                         textview.setTag(latLng);
                                         textview.setOnClickListener(new View.OnClickListener()
                                         {

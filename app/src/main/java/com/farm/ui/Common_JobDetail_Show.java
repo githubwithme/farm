@@ -112,18 +112,25 @@ public class Common_JobDetail_Show extends Activity
             flyl = flyl + nongzi[i] + "：" + yl[i] + amountdw[i] + "\n";
 //            flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
         }
-        tv_qx.setText(jobtab.getregDate().substring(0,jobtab.getregDate().lastIndexOf(" ")));
+        tv_qx.setText(jobtab.getregDate().substring(0, jobtab.getregDate().lastIndexOf(" ")));
         tv_jobname.setText(jobtab.getstdJobTypeName() + "——" + jobtab.getstdJobName());
         tv_yl.setText(flyl);
         tv_note.setText(jobtab.getjobNote());
-        tv_pf.setText(jobtab.getaudioJobExecPath() + "分");
+        if (jobtab.getaudioJobExecPath().equals(""))
+        {
+            tv_pf.setText("暂未评分");
+        } else
+        {
+            tv_pf.setText(jobtab.getaudioJobExecPath() + "分");
+        }
+
         List<String> pfnr = jobtab.getPF();
         String nr = "";
-        if (pfnr.size()==0)
+        if (pfnr.size() == 0)
         {
             tv_pfnr.setText("此项工作无评分标准");
             tv_pfnr.setGravity(Gravity.RIGHT);
-        }else
+        } else
         {
             for (int i = 0; i < pfnr.size(); i++)
             {
@@ -132,7 +139,7 @@ public class Common_JobDetail_Show extends Activity
             tv_pfnr.setText(nr);
 
         }
-        tv_date_pf.setText(jobtab.getassessDate().substring(0,jobtab.getassessDate().lastIndexOf(" ")));
+        tv_date_pf.setText(jobtab.getassessDate().substring(0, jobtab.getassessDate().lastIndexOf(" ")));
         tv_pfsm.setText(jobtab.getassessNote());
         tv_fkjg.setText(jobtab.getaudioJobAssessPath());
 

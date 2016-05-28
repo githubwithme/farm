@@ -105,19 +105,19 @@ public class Ncz_wz_ll extends FragmentActivity {
         wz_yc.setBackgroundResource(R.color.white);
         switch (pos) {
             case 0:
-                wz_ll.setBackgroundResource(R.drawable.red_bottom);
+                wz_ll.setBackground(getResources().getDrawable(R.drawable.red_bottom));
                 break;
             case 1:
-                wzck.setBackgroundResource(R.drawable.red_bottom);
+                wzck.setBackground(getResources().getDrawable(R.drawable.red_bottom));
                 break;
             case 2:
-                wz_rk.setBackgroundResource(R.drawable.red_bottom);
+                wz_rk.setBackground(getResources().getDrawable(R.drawable.red_bottom));
                 break;
             case 3:
-                wz_ck.setBackgroundResource(R.drawable.red_bottom);
+                wz_ck.setBackground(getResources().getDrawable(R.drawable.red_bottom));
                 break;
             case 4:
-                wz_yc.setBackgroundResource(R.drawable.red_bottom);
+                wz_yc.setBackground(getResources().getDrawable(R.drawable.red_bottom));
                 break;
         }
     }

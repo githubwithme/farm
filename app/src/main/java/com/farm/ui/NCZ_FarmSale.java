@@ -75,6 +75,12 @@ public class NCZ_FarmSale extends Activity
     }
 
     @Click
+    void btn_back()
+    {
+        finish();
+    }
+
+    @Click
     void btn_orders()
     {
         Intent intent = new Intent(NCZ_FarmSale.this, NCZ_OrderManager_.class);

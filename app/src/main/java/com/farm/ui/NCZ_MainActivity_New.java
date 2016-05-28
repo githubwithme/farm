@@ -22,7 +22,6 @@ import com.farm.bean.HaveReadRecord;
 import com.farm.bean.LogInfo;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
-import com.farm.common.FontManager;
 import com.farm.common.GetMobilePhoneInfo;
 import com.farm.common.SqliteDb;
 import com.farm.common.utils;
@@ -43,17 +42,17 @@ import org.androidannotations.annotations.ViewById;
 import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 @EActivity(R.layout.ncz_activity_new)
 public class NCZ_MainActivity_New extends BaseActivity
 {
+    NCZ_ContactsFragment ncz_contactsFragment;
     MyDialog myDialog;
     //	TimeThread timethread;
     int cmd_videoNum;
     Fragment mContent = new Fragment();
-//    NCZ_todaygz ncz_todaygz;
+    //    NCZ_todaygz ncz_todaygz;
     DynamicFragment dynamicFragment;
     NCZ_JobFragment ncz_jobFragment;
     //	NCZ_EventList ncz_eventList;
@@ -186,7 +185,7 @@ public class NCZ_MainActivity_New extends BaseActivity
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_sale.setTextColor(getResources().getColor(R.color.bg_text));
+        tv_sale.setTextColor(getResources().getColor(R.color.red));
         tv_money.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_farmlive.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
@@ -197,7 +196,7 @@ public class NCZ_MainActivity_New extends BaseActivity
         tl_money.setSelected(false);
         tl_farmlive.setSelected(false);
 
-        // switchContent(mContent, productBatchList);
+        switchContent(mContent, ncz_contactsFragment);
     }
 
     @Click
@@ -261,24 +260,24 @@ public class NCZ_MainActivity_New extends BaseActivity
         }
 
 
-        List<Integer> guideResourceId = new ArrayList<Integer>();
-        guideResourceId.add(R.drawable.yd666);
-        guideResourceId.add(R.drawable.yd55555);
-        guideResourceId.add(R.drawable.yd555);
-        guideResourceId.add(R.drawable.yd444);
-        guideResourceId.add(R.drawable.yd333);
-        guideResourceId.add(R.drawable.yd222);
-        guideResourceId.add(R.drawable.yd001);
-        setGuideResId(guideResourceId);// 添加引导页
-        tv_home.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
-        tv_me.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
-        tv_product.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
-        tv_sale.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
-        tv_money.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
+//        List<Integer> guideResourceId = new ArrayList<Integer>();
+//        guideResourceId.add(R.drawable.yd666);
+//        guideResourceId.add(R.drawable.yd55555);
+//        guideResourceId.add(R.drawable.yd555);
+//        guideResourceId.add(R.drawable.yd444);
+//        guideResourceId.add(R.drawable.yd333);
+//        guideResourceId.add(R.drawable.yd222);
+//        guideResourceId.add(R.drawable.yd001);
+//        setGuideResId(guideResourceId);// 添加引导页
+//        tv_home.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
+//        tv_me.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
+//        tv_product.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
+//        tv_sale.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
+//        tv_money.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
         switchContent(mContent, dynamicFragment);
         tv_home.setTextColor(getResources().getColor(R.color.red));
         tl_home.setSelected(true);
-        getCmdVideoNum();
+//        getCmdVideoNum();
     }
 
     @Override
@@ -303,7 +302,7 @@ public class NCZ_MainActivity_New extends BaseActivity
 //		ncz_eventList = new NCZ_EventList_();
 //		ncz_eventList.setArguments(bundle);
         contactsFragment = new ContactsFragment_();
-
+        ncz_contactsFragment = new NCZ_ContactsFragment_();
 
         iFragment = new IFragment_();
 

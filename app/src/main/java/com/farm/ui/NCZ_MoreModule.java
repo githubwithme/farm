@@ -15,37 +15,29 @@ import org.androidannotations.annotations.ViewById;
 /**
  * Created by ${hmj} on 2016/5/25.
  */
-@EActivity(R.layout.ncz_costmodule)
-public class NCZ_CostModule extends Activity
+@EActivity(R.layout.ncz_moremodule)
+public class NCZ_MoreModule extends Activity
 {
     @ViewById
-    RelativeLayout rl_zx;
+    RelativeLayout rl_planmap;
     @ViewById
-    RelativeLayout rl_xe;
-    @ViewById
-    RelativeLayout rl_de;
+    RelativeLayout rl_salemap;
 
 
     @Click
-    void rl_zx()
+    void rl_planmap()
     {
-        Intent intent = new Intent(NCZ_CostModule.this, SpecialCostFragment_.class);
+        Intent intent = new Intent(NCZ_MoreModule.this, MakeLayer_Farm_.class);
         startActivity(intent);
     }
 
     @Click
-    void rl_de()
+    void rl_salemap()
     {
-        Intent intent = new Intent(NCZ_CostModule.this, LargeCostFragment_.class);
+        Intent intent = new Intent(NCZ_MoreModule.this, NCZ_SaleMap_.class);
         startActivity(intent);
     }
 
-    @Click
-    void rl_xe()
-    {
-        Intent intent = new Intent(NCZ_CostModule.this, SmallCostFragment_.class);
-        startActivity(intent);
-    }
 
     @AfterViews
     void afterOncreate()

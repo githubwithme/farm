@@ -16,52 +16,14 @@
             android:layout_marginLeft="10dip"
             android:layout_toRightOf="@+id/logo"
             android:gravity="center"
-            android:text="财务"
+            android:text="更多"
             android:textColor="@color/bg_text"
             android:textSize="16sp"/>
 
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line_color"/>
 
-    <RelativeLayout
-        android:id="@+id/rl_zx"
-        android:layout_width="match_parent"
-        android:layout_height="50dip"
-        android:layout_margin="5dip"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/iv_kc"
-            android:layout_width="35dip"
-            android:layout_height="35dip"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dip"
-            android:background="@drawable/temp1"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dip"
-            android:layout_toRightOf="@+id/iv_kc"
-            android:gravity="center"
-            android:text="专项费用"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14"/>
-
-        <View
-            android:layout_width="20dip"
-            android:layout_height="20dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:background="@drawable/next_black"/>
-    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -69,14 +31,14 @@
         android:background="@color/line_color"/>
 
     <RelativeLayout
-        android:id="@+id/rl_de"
+        android:id="@+id/rl_salemap"
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:layout_margin="5dip"
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/iv_xs"
+            android:id="@+id/iv_salemap"
             android:layout_width="35dip"
             android:layout_height="35dip"
             android:layout_centerVertical="true"
@@ -88,9 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dip"
-            android:layout_toRightOf="@+id/iv_xs"
+            android:layout_toRightOf="@+id/iv_salemap"
             android:gravity="center"
-            android:text="大额费用"
+            android:text="销售图"
             android:textColor="@color/bg_text"
             android:textSize="@dimen/size_14"/>
 
@@ -109,14 +71,14 @@
         android:background="@color/line_color"/>
 
     <RelativeLayout
-        android:id="@+id/rl_xe"
+        android:id="@+id/rl_planmap"
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:layout_margin="5dip"
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/iv_cw"
+            android:id="@+id/iv_planmap"
             android:layout_width="35dip"
             android:layout_height="35dip"
             android:layout_centerVertical="true"
@@ -128,9 +90,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dip"
-            android:layout_toRightOf="@+id/iv_cw"
+            android:layout_toRightOf="@+id/iv_planmap"
             android:gravity="center"
-            android:text="小额费用"
+            android:text="规划农场"
             android:textColor="@color/bg_text"
             android:textSize="@dimen/size_14"/>
 
