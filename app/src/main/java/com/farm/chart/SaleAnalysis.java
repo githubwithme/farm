@@ -7,16 +7,30 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
 import com.farm.bean.ChartEntity;
-import com.farm.common.FileHelper;
+import com.farm.bean.Result;
+import com.farm.bean.commembertab;
 import com.farm.common.SortComparator;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -35,10 +49,11 @@ import java.util.List;
 public class SaleAnalysis extends Activity
 {
     @ViewById
-    ListView listView1;
-    List<ChartEntity> listNewData = null;
+    BarChart chart_bar;
     @ViewById
-    TextView tv_title;
+    LineChart chart_line;
+    List<ChartEntity> list_leftnumber = null;
+    List<ChartEntity> list_outnumber = null;
 
     @Click
     void btn_back()
@@ -49,10 +64,8 @@ public class SaleAnalysis extends Activity
     @AfterViews
     void afterview()
     {
-        listNewData = FileHelper.getAssetsData(SaleAnalysis.this, "getAnalysisData", ChartEntity.class);
-        Comparator comp = new SortComparator();//排序
-        Collections.sort(listNewData, comp);
-        init();
+        getListData_left();
+        getListData_out();
     }
 
 
@@ -65,28 +78,67 @@ public class SaleAnalysis extends Activity
 
     public void init()
     {
-        ArrayList<ChartItem> list = new ArrayList<ChartItem>();
-        list.add(new LineChartItem(R.layout.saleanalysis_linechart, generateDataLine(), SaleAnalysis.this.getApplicationContext()));
-        ChartDataAdapter cda = new ChartDataAdapter(SaleAnalysis.this.getApplicationContext(), list);
-        listView1.setAdapter(cda);
+//        ArrayList<ChartItem> list = new ArrayList<ChartItem>();
+//        list.add(new BarChartItem(R.layout.goodsanalysis, generateDataBar(), SaleAnalysis.this.getApplicationContext()));
+////        list.add(new LineChartItem(R.layout.saleanalysis_linechart, generateDataLine(), GoodsAnalysis.this.getApplicationContext()));
+//        ChartDataAdapter cda = new ChartDataAdapter(SaleAnalysis.this.getApplicationContext(), list);
+//        listView1.setAdapter(cda);
+
     }
 
-    private ArrayList<String> generateItem()
+    private ArrayList<String> generateItem(List<ChartEntity> list)
     {
         ArrayList<String> m = new ArrayList<String>();
-        for (int i = 0; i < listNewData.size(); i++)
+        for (int i = 0; i < list.size(); i++)
         {
-            m.add(listNewData.get(i).getItem());
+            m.add(list.get(i).getItem());
         }
         return m;
     }
 
-    private LineData generateDataLine()
+    private BarData generateDataBar()
+    {
+        ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
+        for (int i = 0; i < list_leftnumber.size(); i++)
+        {
+            entries.add(new BarEntry(Float.valueOf(list_leftnumber.get(i).getNumber()), i));
+        }
+        BarDataSet d1 = new BarDataSet(entries, "物资剩余量/kg");
+        d1.setBarSpacePercent(20f);
+        d1.setColor(Color.rgb(255, 0, 255));
+        d1.setHighLightAlpha(255);
+        d1.setStackLabels(new String[1]);
+        d1.setValueTextSize(12);
+
+//        BarDataSet d2 = new BarDataSet(entries, "待处理事件");
+//        d2.setBarSpacePercent(20f);
+//        d2.setColor(Color.rgb(0, 255, 255));
+//        d2.setHighLightAlpha(255);
+//        d2.setStackLabels(new String[1]);
+//        d2.setValueTextSize(12);
+//
+//        BarDataSet d3 = new BarDataSet(entries, "处理中事件");
+//        d3.setBarSpacePercent(20f);
+//        d3.setColor(Color.rgb(255, 255, 0));
+//        d3.setHighLightAlpha(255);
+//        d3.setStackLabels(new String[1]);
+//        d3.setValueTextSize(12);
+
+
+        ArrayList<BarDataSet> sets = new ArrayList<BarDataSet>();
+        sets.add(d1);
+//        sets.add(d2);
+//        sets.add(d3);
+        BarData cd = new BarData(generateItem(list_leftnumber), sets);
+        return cd;
+    }
+
+    private LineData generateDataLine_used()
     {
         ArrayList<Entry> e1 = new ArrayList<Entry>();
-        for (int i = 0; i < listNewData.size(); i++)
+        for (int i = 0; i < list_outnumber.size(); i++)
         {
-            e1.add(new Entry(Float.valueOf(listNewData.get(i).getNumber()), i));
+            e1.add(new Entry(Float.valueOf(list_outnumber.get(i).getNumber()), i));
         }
         LineDataSet d1 = new LineDataSet(e1, "销售");
         d1.setLineWidth(1.8f);
@@ -114,7 +166,7 @@ public class SaleAnalysis extends Activity
         sets.add(d1);
 //        sets.add(d2);
 
-        LineData cd = new LineData(generateItem(), sets);
+        LineData cd = new LineData(generateItem(list_outnumber), sets);
         return cd;
     }
 
@@ -144,5 +196,93 @@ public class SaleAnalysis extends Activity
         {
             return 3; // we have 3 different item-types
         }
+    }
+
+    private void getListData_left()
+    {
+        commembertab commembertab = AppContext.getUserInfo(SaleAnalysis.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getStorehouseByUid");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        list_leftnumber = JSON.parseArray(result.getRows().toJSONString(), ChartEntity.class);
+                        Comparator comp = new SortComparator();//排序
+                        Collections.sort(list_leftnumber, comp);
+                        chart_bar.setData(generateDataBar());
+                        XAxis xAxis = chart_bar.getXAxis();
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    } else
+                    {
+                        list_leftnumber = new ArrayList<ChartEntity>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(SaleAnalysis.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(SaleAnalysis.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void getListData_out()
+    {
+        commembertab commembertab = AppContext.getUserInfo(SaleAnalysis.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getgoodsOutSumByUid");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        list_outnumber = JSON.parseArray(result.getRows().toJSONString(), ChartEntity.class);
+                        Comparator comp = new SortComparator();//排序
+                        Collections.sort(list_outnumber, comp);
+                        chart_line.setData(generateDataLine_used());
+                        XAxis xAxis = chart_line.getXAxis();
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    } else
+                    {
+                        list_outnumber = new ArrayList<ChartEntity>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(SaleAnalysis.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(SaleAnalysis.this, "error_connectServer");
+            }
+        });
     }
 }

@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -18,6 +16,9 @@ import com.farm.bean.ChartEntity;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.SortComparator;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -44,15 +45,15 @@ import java.util.List;
 /**
  * Created by ${hmj} on 2016/5/25.
  */
-@EActivity(R.layout.goodsanalysisactivity)
-public class GoodsAnalysis extends Activity
+@EActivity(R.layout.goodsanalysisactivity_new)
+public class GoodsAnalysisActivity extends Activity
 {
     @ViewById
-    ListView listView1;
+    BarChart chart_bar;
+    @ViewById
+    LineChart chart_line;
     List<ChartEntity> list_leftnumber = null;
     List<ChartEntity> list_outnumber = null;
-    @ViewById
-    TextView tv_title;
 
     @Click
     void btn_back()
@@ -64,10 +65,7 @@ public class GoodsAnalysis extends Activity
     void afterview()
     {
         getListData_left();
-//        listNewData = FileHelper.getAssetsData(GoodsAnalysis.this, "getAnalysisData", ChartEntity.class);
-//        Comparator comp = new SortComparator();//排序
-//        Collections.sort(listNewData, comp);
-//        init();
+        getListData_out();
     }
 
 
@@ -80,20 +78,20 @@ public class GoodsAnalysis extends Activity
 
     public void init()
     {
-        ArrayList<ChartItem> list = new ArrayList<ChartItem>();
-        list.add(new BarChartItem(R.layout.goodsanalysis, generateDataBar(), GoodsAnalysis.this.getApplicationContext()));
-//        list.add(new LineChartItem(R.layout.saleanalysis_linechart, generateDataLine(), GoodsAnalysis.this.getApplicationContext()));
-        ChartDataAdapter cda = new ChartDataAdapter(GoodsAnalysis.this.getApplicationContext(), list);
-        listView1.setAdapter(cda);
+//        ArrayList<ChartItem> list = new ArrayList<ChartItem>();
+//        list.add(new BarChartItem(R.layout.goodsanalysis, generateDataBar(), GoodsAnalysisActivity.this.getApplicationContext()));
+////        list.add(new LineChartItem(R.layout.saleanalysis_linechart, generateDataLine(), GoodsAnalysis.this.getApplicationContext()));
+//        ChartDataAdapter cda = new ChartDataAdapter(GoodsAnalysisActivity.this.getApplicationContext(), list);
+//        listView1.setAdapter(cda);
 
     }
 
-    private ArrayList<String> generateItem()
+    private ArrayList<String> generateItem(List<ChartEntity> list)
     {
         ArrayList<String> m = new ArrayList<String>();
-        for (int i = 0; i < list_leftnumber.size(); i++)
+        for (int i = 0; i < list.size(); i++)
         {
-            m.add(list_leftnumber.get(i).getItem());
+            m.add(list.get(i).getItem());
         }
         return m;
     }
@@ -105,7 +103,7 @@ public class GoodsAnalysis extends Activity
         {
             entries.add(new BarEntry(Float.valueOf(list_leftnumber.get(i).getNumber()), i));
         }
-        BarDataSet d1 = new BarDataSet(entries, "物资/kg");
+        BarDataSet d1 = new BarDataSet(entries, "物资剩余量/kg");
         d1.setBarSpacePercent(20f);
         d1.setColor(Color.rgb(255, 0, 255));
         d1.setHighLightAlpha(255);
@@ -131,11 +129,11 @@ public class GoodsAnalysis extends Activity
         sets.add(d1);
 //        sets.add(d2);
 //        sets.add(d3);
-        BarData cd = new BarData(generateItem(), sets);
+        BarData cd = new BarData(generateItem(list_leftnumber), sets);
         return cd;
     }
 
-    private LineData generateDataLine()
+    private LineData generateDataLine_used()
     {
         ArrayList<Entry> e1 = new ArrayList<Entry>();
         for (int i = 0; i < list_outnumber.size(); i++)
@@ -168,7 +166,7 @@ public class GoodsAnalysis extends Activity
         sets.add(d1);
 //        sets.add(d2);
 
-        LineData cd = new LineData(generateItem(), sets);
+        LineData cd = new LineData(generateItem(list_outnumber), sets);
         return cd;
     }
 
@@ -202,7 +200,7 @@ public class GoodsAnalysis extends Activity
 
     private void getListData_left()
     {
-        commembertab commembertab = AppContext.getUserInfo(GoodsAnalysis.this);
+        commembertab commembertab = AppContext.getUserInfo(GoodsAnalysisActivity.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getStorehouseByUid");
@@ -221,14 +219,16 @@ public class GoodsAnalysis extends Activity
                         list_leftnumber = JSON.parseArray(result.getRows().toJSONString(), ChartEntity.class);
                         Comparator comp = new SortComparator();//排序
                         Collections.sort(list_leftnumber, comp);
-                        init();
+                        chart_bar.setData(generateDataBar());
+                        XAxis xAxis = chart_bar.getXAxis();
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                     } else
                     {
                         list_leftnumber = new ArrayList<ChartEntity>();
                     }
                 } else
                 {
-                    AppContext.makeToast(GoodsAnalysis.this, "error_connectDataBase");
+                    AppContext.makeToast(GoodsAnalysisActivity.this, "error_connectDataBase");
                     return;
                 }
 
@@ -237,7 +237,51 @@ public class GoodsAnalysis extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(GoodsAnalysis.this, "error_connectServer");
+                AppContext.makeToast(GoodsAnalysisActivity.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void getListData_out()
+    {
+        commembertab commembertab = AppContext.getUserInfo(GoodsAnalysisActivity.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getgoodsOutSumByUid");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        list_outnumber = JSON.parseArray(result.getRows().toJSONString(), ChartEntity.class);
+                        Comparator comp = new SortComparator();//排序
+                        Collections.sort(list_outnumber, comp);
+                        chart_line.setData(generateDataLine_used());
+                        XAxis xAxis = chart_line.getXAxis();
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    } else
+                    {
+                        list_outnumber = new ArrayList<ChartEntity>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(GoodsAnalysisActivity.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(GoodsAnalysisActivity.this, "error_connectServer");
             }
         });
     }

@@ -448,8 +448,8 @@ public class DynamicFragment extends Fragment
                 WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
                 lp.alpha = 1f;
                 getActivity().getWindow().setAttributes(lp);
-                Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
-                getActivity().startActivity(intent);
+                Intent intent = new Intent(getActivity(), AddSpecialCost_.class);
+                startActivity(intent);
             }
         });
         ll_addcommand.setOnClickListener(new View.OnClickListener()

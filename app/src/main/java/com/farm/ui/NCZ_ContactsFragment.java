@@ -71,7 +71,7 @@ public class NCZ_ContactsFragment extends Fragment
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        final commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getUserList");
@@ -89,6 +89,15 @@ public class NCZ_ContactsFragment extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), commembertab.class);
+                        commembertab commember = AppContext.getUserInfo(getActivity());
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            if (commember.getId().equals(listNewData.get(i).getId()))
+                            {
+                                listNewData.remove(i);
+                                break;
+                            }
+                        }
                         ll_tip.setVisibility(View.GONE);
                         frame_listview_news.setVisibility(View.VISIBLE);
                     } else

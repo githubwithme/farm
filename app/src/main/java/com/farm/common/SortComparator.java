@@ -16,6 +16,6 @@ public class SortComparator implements Comparator
         ChartEntity a = (ChartEntity) lhs;
         ChartEntity b = (ChartEntity) rhs;
 
-        return (Integer.valueOf(b.getNumber()) - Integer.valueOf(a.getNumber()));
+        return (int) (Float.valueOf(b.getNumber()) - Float.valueOf(a.getNumber()));
     }
 }

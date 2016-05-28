@@ -5,6 +5,7 @@ package com.farm.bean;
  */
 public class ChartEntity
 {
+    String id;
     String item;
     String number;
 

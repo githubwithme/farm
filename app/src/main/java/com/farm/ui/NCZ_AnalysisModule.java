@@ -7,7 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.farm.R;
 import com.farm.chart.FinanceAnalysis_;
-import com.farm.chart.GoodsAnalysis_;
+import com.farm.chart.GoodsAnalysisActivity_;
 import com.farm.chart.SaleAnalysis_;
 
 import org.androidannotations.annotations.AfterViews;
@@ -27,7 +27,7 @@ public class NCZ_AnalysisModule extends Activity
     @Click
     void rl_kc()
     {
-        Intent intent = new Intent(NCZ_AnalysisModule.this, GoodsAnalysis_.class);
+        Intent intent = new Intent(NCZ_AnalysisModule.this, GoodsAnalysisActivity_.class);
         startActivity(intent);
     }
 
