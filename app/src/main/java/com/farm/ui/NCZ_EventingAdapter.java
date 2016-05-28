@@ -119,6 +119,20 @@ public class NCZ_EventingAdapter extends BaseAdapter
         }
         // 设置文字和图片
 
+
+        if (ReportedBean.getIsflashStr().equals("1"))
+        {
+            listItemView.fl_new_item.setVisibility(View.VISIBLE);
+        }else{
+            listItemView.fl_new_item.setVisibility(View.GONE);
+        }
+        if (ReportedBean.getResultflashStr().equals("1"))
+        {
+            listItemView.fl_new.setVisibility(View.VISIBLE);
+        }else
+        {
+            listItemView.fl_new.setVisibility(View.GONE);
+        }
 //        listItemView.tv_clqk.setText(ReportedBean.getState());
         if(ReportedBean.getState().equals("0"))
         {

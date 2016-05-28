@@ -115,8 +115,13 @@ public class PG_EventReported extends Fragment
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer)
                     return;
-                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
+
                 ReportedBean reportedBean=listData.get(position-1);
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                AppContext.eventStatus(getActivity(), "1", reportedBean.getEventId(),  commembertab.getId());
+                //加个接口
+                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
+
                 intent.putExtra("reportedBean",reportedBean);
                 startActivity(intent);
 
@@ -200,6 +205,7 @@ public class PG_EventReported extends Fragment
 
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("remark2", commembertab.getId());
         params.addQueryStringParameter("action", "getEventListByUID");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
@@ -393,4 +399,6 @@ public class PG_EventReported extends Fragment
             }
         });
     }
+
+
 }

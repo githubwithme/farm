@@ -430,6 +430,7 @@ static int p;
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("eventId", reportedBean.getEventId());
+        params.addQueryStringParameter("userId", commembertab.getId());
         params.addQueryStringParameter("action", "getEventHandleByEventId");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
@@ -446,6 +447,9 @@ static int p;
                             stateone();
                         }
 
+                        HandleBean handleBean=listNewData.get(0);
+                        commembertab commembertab = AppContext.getUserInfo(Event_Process.this);
+                        AppContext.eventStatus(Event_Process.this, "2", handleBean.getEventId(),  commembertab.getId());
                     } else {
                         listNewData = new ArrayList<HandleBean>();
                     }
@@ -732,6 +736,7 @@ static int p;
 
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "eventRecordEd");
+        params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("remark2", solove);
         params.addQueryStringParameter("eventId", reportedBean.getEventId());
         HttpUtils http = new HttpUtils();

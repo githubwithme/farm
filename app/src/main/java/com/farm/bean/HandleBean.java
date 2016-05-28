@@ -28,6 +28,24 @@ public class HandleBean implements Parcelable
     public String thumbImageUrl;//缩略图
     public String imageUrl;     //原图
     public List<FJxx> fjxx;
+    public String isflashStr;
+    public String resultflashStr;
+
+    public String getResultflashStr() {
+        return resultflashStr;
+    }
+
+    public void setResultflashStr(String resultflashStr) {
+        this.resultflashStr = resultflashStr;
+    }
+
+    public String getIsflashStr() {
+        return isflashStr;
+    }
+
+    public void setIsflashStr(String isflashStr) {
+        this.isflashStr = isflashStr;
+    }
 
     public List<FJxx> getFjxx() {
         return fjxx;
@@ -134,6 +152,8 @@ public class HandleBean implements Parcelable
             p.setThumbImageUrl(source.readString());
             p.setImageUrl(source.readString());
             p.fjxx = source.readArrayList(plantgrowthtab.class.getClassLoader());
+            p.setIsflashStr(source.readString());
+            p.setResultflashStr(source.readString());
             return p;
         }
 
@@ -159,6 +179,8 @@ public class HandleBean implements Parcelable
 
         p.writeString(imageUrl);
         p.writeList(fjxx);
+        p.writeString(isflashStr);
+        p.writeString(resultflashStr);
 
     /*    p.writeList(imgUrl);
         p.writeList(thumbImageUrl);*/

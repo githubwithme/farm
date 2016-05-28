@@ -101,6 +101,7 @@ public class PG_ReportedAdapter extends BaseAdapter {
             listItemView.tv_cmdname = (TextView) convertView.findViewById(R.id.tv_cmdname);
             listItemView.tv_clqk = (TextView) convertView.findViewById(R.id.tv_clqk);
 
+
             listItemView.iv_record.setId(position);
             listItemView.iv_record.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -169,7 +170,22 @@ public class PG_ReportedAdapter extends BaseAdapter {
 
         listItemView.tv_cmdname.setText(ReportedBean.getEventType());
         listItemView.tv_qx.setText(ReportedBean.getReporTime());
-
+        String x=ReportedBean.getIsflashStr();
+        String y=ReportedBean.getResultflashStr();
+        if (ReportedBean.getIsflashStr().equals("1"))
+        {
+            listItemView.fl_new_item.setVisibility(View.VISIBLE);
+        }else
+        {
+            listItemView.fl_new_item.setVisibility(View.GONE);
+        }
+        if (ReportedBean.getResultflashStr().equals("1"))
+        {
+            listItemView.fl_new.setVisibility(View.VISIBLE);
+        }else
+        {
+            listItemView.fl_new.setVisibility(View.GONE);
+        }
 //
         return convertView;
     }

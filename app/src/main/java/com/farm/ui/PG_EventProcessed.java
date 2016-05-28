@@ -71,6 +71,13 @@ PG_ReportedAdapter listadpater;
 
             initAnimalListView();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.pg_eventprocessed, container, false);
@@ -92,8 +99,12 @@ PG_ReportedAdapter listadpater;
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer)
                     return;
-                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
+
                 ReportedBean reportedBean=listData.get(position-1);
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                AppContext.eventStatus(getActivity(), "1", reportedBean.getEventId(),  commembertab.getId());
+
+                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
                 intent.putExtra("reportedBean",reportedBean);
                 startActivity(intent);
 
