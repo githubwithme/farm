@@ -32,6 +32,7 @@ public class NCZ_CommandAdapter extends BaseAdapter
 
     static class ListItemView
     {
+        public TextView tv_area;
         public TextView tv_cmdname;
         public TextView tv_qyts;
         public TextView tv_qx;
@@ -94,6 +95,7 @@ public class NCZ_CommandAdapter extends BaseAdapter
             listItemView.tv_qx = (TextView) convertView.findViewById(R.id.tv_qx);
             listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
             listItemView.tv_cmdname = (TextView) convertView.findViewById(R.id.tv_cmdname);
+            listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
             listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
             listItemView.tv_zf = (TextView) convertView.findViewById(R.id.tv_zf);
@@ -166,30 +168,33 @@ public class NCZ_CommandAdapter extends BaseAdapter
         {
             listItemView.tv_type.setText("标准生产指令");
         }
+        listItemView.circle_img.setImageResource(R.drawable.yb);
+        listItemView.tv_area.setText( commandtab.getfeedbackuserName()+"正在执行中...");
+        listItemView.tv_importance.setText( commandtab.getcommFromName());
         listItemView.tv_qyts.setText("要求天数-" + commandtab.getcommDays() + "天");
         listItemView.tv_qx.setText("开始 " + commandtab.getcommComDate());
-        listItemView.tv_time.setText("发布于 " + commandtab.getregDate().subSequence(0, commandtab.getregDate().lastIndexOf(" ")));
-        if (commandtab.getimportance().equals("0"))
-        {
-            listItemView.tv_importance.setText("一般");
-//            listItemView.circle_img.setImageResource(R.color.bg_blue);
-            listItemView.circle_img.setImageResource(R.drawable.yb);
-        } else if (commandtab.getimportance().equals("1"))
-        {
-            listItemView.tv_importance.setText("重要");
-//            listItemView.circle_img.setImageResource(R.color.bg_green);
-            listItemView.circle_img.setImageResource(R.drawable.zyx);
-        } else if (commandtab.getimportance().equals("2"))
-        {
-            listItemView.tv_importance.setText("非常重要");
-//            listItemView.circle_img.setImageResource(R.color.color_orange);
-            listItemView.circle_img.setImageResource(R.drawable.fczy);
-        } else if (commandtab.getimportance().equals("3"))
-        {
-            listItemView.tv_importance.setTextColor(context.getResources().getColor(R.color.bg_text));
-            listItemView.tv_importance.setText("未知");
-//			 listItemView.circle_img.setBorderColor(context.getResources().getColor(R.color.bg_text));
-        }
+        listItemView.tv_time.setText("发布于 " + commandtab.getregDate().subSequence(5, commandtab.getregDate().lastIndexOf(":")));
+//        if (commandtab.getimportance().equals("0"))
+//        {
+//            listItemView.tv_importance.setText("一般");
+////            listItemView.circle_img.setImageResource(R.color.bg_blue);
+//            listItemView.circle_img.setImageResource(R.drawable.yb);
+//        } else if (commandtab.getimportance().equals("1"))
+//        {
+//            listItemView.tv_importance.setText("重要");
+////            listItemView.circle_img.setImageResource(R.color.bg_green);
+//            listItemView.circle_img.setImageResource(R.drawable.zyx);
+//        } else if (commandtab.getimportance().equals("2"))
+//        {
+//            listItemView.tv_importance.setText("非常重要");
+////            listItemView.circle_img.setImageResource(R.color.color_orange);
+//            listItemView.circle_img.setImageResource(R.drawable.fczy);
+//        } else if (commandtab.getimportance().equals("3"))
+//        {
+//            listItemView.tv_importance.setTextColor(context.getResources().getColor(R.color.bg_text));
+//            listItemView.tv_importance.setText("未知");
+////			 listItemView.circle_img.setBorderColor(context.getResources().getColor(R.color.bg_text));
+//        }
         return convertView;
     }
 

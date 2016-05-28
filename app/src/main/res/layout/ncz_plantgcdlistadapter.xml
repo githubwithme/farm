@@ -30,13 +30,13 @@
 
         <FrameLayout
             android:layout_width="0dip"
-            android:layout_weight="5"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="15dip"
             android:layout_marginLeft="20dip"
             android:layout_marginRight="8dip"
-            android:layout_marginTop="15dip">
+            android:layout_marginTop="15dip"
+            android:layout_weight="5">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                             android:gravity="left|center_vertical"
                             android:text="MQ2452233"
                             android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
+                            android:textSize="@dimen/size_16"/>
 
                         <TextView
                             android:id="@+id/tv_type"
@@ -82,7 +82,37 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dip">
+                        android:layout_marginTop="5dip">
+
+                        <TextView
+                            android:id="@+id/tv_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:scrollbarStyle="outsideInset"
+                            android:text="暂无"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <Button
+                            android:id="@+id/btn_plantlist"
+                            android:layout_width="45dip"
+                            android:layout_height="25dip"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dip"
+                            android:background="@drawable/round_orange"
+                            android:text="植株"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/size_11"
+                            android:visibility="gone"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dip">
+
 
                         <TextView
                             android:id="@+id/tv_time"
@@ -95,19 +125,6 @@
                             android:textSize="@dimen/size_14"/>
 
 
-
-                        <Button
-                            android:id="@+id/btn_plantlist"
-                            android:layout_width="45dip"
-                            android:visibility="gone"
-                            android:layout_height="25dip"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dip"
-                            android:layout_toRightOf="@+id/tv_time"
-                            android:background="@drawable/round_orange"
-                            android:text="植株"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_11"/>
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -138,6 +155,7 @@
                     android:textSize="@dimen/size_10"/>
             </FrameLayout>
         </FrameLayout>
+
         <RelativeLayout
             android:layout_width="60dip"
             android:layout_height="match_parent">
@@ -145,8 +163,8 @@
             <FrameLayout
                 android:id="@+id/rl_record"
                 android:layout_width="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:orientation="horizontal">
 
                 <ImageView
