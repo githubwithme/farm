@@ -51,7 +51,6 @@ public class AppContext extends Application
     public final static String BROADCAST_SHOWDIALOG = "BROADCAST_SHOWDIALOG";
     public final static String BROADCAST_PG_UPEVENT = "PG_UPEVENT";
     public final static String BROADCAST_PG_REFASH = "PG_REASH";
-    public final static String BROADCAST_PG_UPEVENT = "PG_UPEVENT";
     public final static String TAG_NCZ_CMD = "TAG_NCZ_CMD";
     public final static String BROADCAST_PG_DATA = "PG_DATA";
     public final static String BROADCAST_Record = "EVENT_RECORD";
