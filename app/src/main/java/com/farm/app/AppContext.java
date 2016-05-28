@@ -50,6 +50,7 @@ public class AppContext extends Application
     public final static String BROADCAST_REFRESHRECORD = "REFRESHRECORD";
     public final static String BROADCAST_SHOWDIALOG = "BROADCAST_SHOWDIALOG";
     public final static String BROADCAST_PG_REFASH = "PG_REASH";
+    public final static String BROADCAST_PG_UPEVENT = "PG_UPEVENT";
     public final static String TAG_NCZ_CMD = "TAG_NCZ_CMD";
     public final static String BROADCAST_PG_DATA = "PG_DATA";
     public final static String BROADCAST_Record = "EVENT_RECORD";
@@ -188,6 +189,32 @@ public class AppContext extends Application
         params.addQueryStringParameter("jobID", jobID);
         params.addQueryStringParameter("comLX", comLX);
         params.addQueryStringParameter("action", "updateView");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1)
+            {
+            }
+        });
+    }
+
+
+    public static void eventStatus(Context context, String type, String eventID, String userID )
+    {
+        //
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("id", eventID );
+        params.addQueryStringParameter("userId", userID);
+        params.addQueryStringParameter("action", "deleteflashStr");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
