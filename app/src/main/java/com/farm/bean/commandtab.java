@@ -62,6 +62,9 @@ public class commandtab implements Parcelable
 	public String phone;
 	public String percent;
 	public List<jobtab> jobList;
+	//坚
+
+
 
 	public String getAmountDW() {
 		return amountDW;

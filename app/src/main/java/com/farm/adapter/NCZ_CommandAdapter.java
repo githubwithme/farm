@@ -125,14 +125,14 @@ public class NCZ_CommandAdapter extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
-//        if (Integer.valueOf(commandtab.getComCount()) > 0)
-//        {
-//            listItemView.fl_new_item.setVisibility(View.VISIBLE);
-//            listItemView.tv_new_item.setText(commandtab.getComCount());
-//        } else
-//        {
-//            listItemView.fl_new_item.setVisibility(View.GONE);
-//        }
+        if (Integer.valueOf(commandtab.getComCount()) > 0)
+        {
+            listItemView.fl_new_item.setVisibility(View.VISIBLE);
+            listItemView.tv_new_item.setText(commandtab.getComCount());
+        } else
+        {
+            listItemView.fl_new_item.setVisibility(View.GONE);
+        }
         if (Integer.valueOf(commandtab.getComvidioCount()) > 0)
         {
             listItemView.fl_new.setVisibility(View.VISIBLE);
