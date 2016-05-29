@@ -169,6 +169,7 @@
         <activity android:name=".ui.NCZ_StatisticsDetail_"/>
         <activity android:name=".ui.NCZ_EventDatails_"/>
         <activity android:name=".ui.NCZ_DLdatail_"/>
+        <activity android:name=".ui.DongtaiListview_"/>
 
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
