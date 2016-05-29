@@ -12,7 +12,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,11 +19,8 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
-import com.farm.ui.Common_CommandDetail_Show_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
-import com.swipelistview.SimpleSwipeListener;
-import com.swipelistview.SwipeLayout;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,12 +38,9 @@ public class Adapter_UserList extends BaseAdapter
     static class ListItemView
     {
         public TextView tv_username;
-        public TextView tv_importance;
-        public TextView tv_area;
-        public ImageView iv_record;
+        public TextView tv_workarea;
+        public Button btn_call;
         public CircleImageView circle_img;
-        public SwipeLayout swipeLayout;
-        public LinearLayout ll_menu;
     }
 
     public Adapter_UserList(Context context, List<commembertab> data)
@@ -85,55 +78,17 @@ public class Adapter_UserList extends BaseAdapter
             convertView = listContainer.inflate(R.layout.adapter_userlist, null);
             listItemView = new ListItemView();
             // 获取控件对象
-            listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
+            listItemView.btn_call = (Button) convertView.findViewById(R.id.btn_call);
             listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
             listItemView.tv_username = (TextView) convertView.findViewById(R.id.tv_username);
-            listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
-            listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
-            listItemView.swipeLayout = (SwipeLayout) convertView.findViewById(R.id.swipe);
-            listItemView.ll_menu = (LinearLayout) convertView.findViewById(R.id.ll_menu);
-            // 当隐藏的删除menu被打开的时候的回调函数
-            listItemView.swipeLayout.addSwipeListener(new SimpleSwipeListener()
-            {
-                @Override
-                public void onOpen(SwipeLayout layout)
-                {
-                }
-            });
-            // 双击的回调函数
-            listItemView.swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener()
-            {
-                @Override
-                public void onDoubleClick(SwipeLayout layout, boolean surface)
-                {
-//                    Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
-                }
-            });
-            // 添加删除布局的点击事件
-            listItemView.ll_menu.setId(position);
-            listItemView.ll_menu.setOnClickListener(new OnClickListener()
-            {
-
-                @Override
-                public void onClick(View v)
-                {
-//                    Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
-                    // 点击完成之后，关闭删除menu
-                    listItemView.swipeLayout.close();
-                    commembertab commembertab = listItems.get(v.getId());
-                    Intent intent = new Intent(context, Common_CommandDetail_Show_.class);
-                    intent.putExtra("cmdid", commembertab.getuserCell());
-                    context.startActivity(intent);
-                }
-            });
-
-            listItemView.iv_record.setId(position);
-            listItemView.iv_record.setOnClickListener(new OnClickListener()
+            listItemView.tv_workarea = (TextView) convertView.findViewById(R.id.tv_workarea);
+            listItemView.btn_call.setTag(position);
+            listItemView.btn_call.setOnClickListener(new OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    showDialog_addsaleinfo(listItems.get(v.getId()).getuserCell());
+                    showDialog_addsaleinfo(listItems.get(Integer.valueOf(v.getTag().toString())).getuserCell());
                 }
             });
 
@@ -157,7 +112,7 @@ public class Adapter_UserList extends BaseAdapter
             BitmapHelper.setImageViewBackground(context, listItemView.circle_img, url);
         }
 
-        listItemView.tv_area.setText(commembertab.getparkName() + commembertab.getareaName());
+        listItemView.tv_workarea.setText(commembertab.getparkName() + commembertab.getareaName());
 
         return convertView;
     }
