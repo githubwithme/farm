@@ -1,5 +1,6 @@
 package com.farm.ui;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.NotificationManager;
@@ -33,7 +34,6 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.tips.BaseActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -45,7 +45,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @EActivity(R.layout.ncz_activity_new)
-public class NCZ_MainActivity_New extends BaseActivity
+public class NCZ_MainActivity_New extends Activity
 {
     NCZ_ContactsFragment ncz_contactsFragment;
     MyDialog myDialog;
