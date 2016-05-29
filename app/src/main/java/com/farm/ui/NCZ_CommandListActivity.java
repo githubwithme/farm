@@ -45,6 +45,8 @@ public class NCZ_CommandListActivity extends Activity
     @AfterViews
     void afterOncreate()
     {
+        ncz_commanding = new NCZ_Commanding_();
+        ncz_commanded = new NCZ_Commanded_();
         setBackground(0);
         switchContent(mContent, ncz_commanding);
     }
@@ -54,8 +56,6 @@ public class NCZ_CommandListActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        ncz_commanding = new NCZ_Commanding_();
-        ncz_commanded = new NCZ_Commanded_();
     }
 
 

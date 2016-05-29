@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dip"
-                    android:text="今天ta还没添加任何工作喔!"/>
+                    android:text="员工还没开始工作喔!"/>
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>

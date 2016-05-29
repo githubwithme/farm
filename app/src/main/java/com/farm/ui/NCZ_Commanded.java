@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -30,13 +29,9 @@ import com.farm.R;
 import com.farm.adapter.NCZ_CommandAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
-import com.farm.bean.SelectRecords;
 import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
-import com.farm.common.DictionaryHelper;
-import com.farm.common.SqliteDb;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
 import com.farm.widget.NewDataToast;
@@ -49,7 +44,6 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -66,7 +60,6 @@ public class NCZ_Commanded extends Fragment implements View.OnClickListener
 {
 
     boolean ishidding = false;
-    Dictionary dictionary = new Dictionary();
     TimeThread timethread;
     SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
@@ -96,7 +89,6 @@ public class NCZ_Commanded extends Fragment implements View.OnClickListener
     String workuserid;
 
 
-
     @Override
     public void onResume()
     {
@@ -106,9 +98,17 @@ public class NCZ_Commanded extends Fragment implements View.OnClickListener
     @AfterViews
     void afterOncreate()
     {
+        appContext = (AppContext) getActivity().getApplication();
+//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
+//        getActivity().registerReceiver(receiver_update, intentfilter_update);
+//        IntentFilter intentfilter_updatesort = new IntentFilter(AppContext.BROADCAST_UPDATEPCMD_SORT);
+//        getActivity().registerReceiver(receiver_updatesort, intentfilter_updatesort);
+//        workuserid = getArguments().getString("workuserid");
+        timethread = new TimeThread();
+        timethread.setStop(false);
+        timethread.setSleep(false);
+        timethread.start();
         btn_add.setVisibility(View.GONE);
-        SqliteDb.deleteAllRecordtemp(getActivity(), SelectRecords.class, "NCZ_CMD");
-        getArealist();
         initAnimalListView();
     }
 
@@ -134,24 +134,9 @@ public class NCZ_Commanded extends Fragment implements View.OnClickListener
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.ncz_commandlist, container, false);
-        appContext = (AppContext) getActivity().getApplication();
-        dictionary = DictionaryHelper.getDictionaryFromAssess(getActivity(), "NCZ_CMD");
-        selectorUi = new SelectorFragment_();
-
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-        getActivity().registerReceiver(receiver_update, intentfilter_update);
-
-        IntentFilter intentfilter_updatesort = new IntentFilter(AppContext.BROADCAST_UPDATEPCMD_SORT);
-        getActivity().registerReceiver(receiver_updatesort, intentfilter_updatesort);
-
-
-//        workuserid = getArguments().getString("workuserid");
-        timethread = new TimeThread();
-        timethread.setStop(false);
-        timethread.setSleep(false);
-        timethread.start();
         return rootView;
     }
 
@@ -206,15 +191,15 @@ public class NCZ_Commanded extends Fragment implements View.OnClickListener
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-        String strWher = DictionaryHelper.getStrWhere_ncz_cmd(getActivity(), dictionary);
-        String orderby = selectorUi.getOrderby();
+//        String strWher = DictionaryHelper.getStrWhere_ncz_cmd(getActivity(), dictionary);
+//        String orderby = selectorUi.getOrderby();
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("workuserid", commembertab.getId());
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("orderby", orderby);
+        params.addQueryStringParameter("orderby", "");
         params.addQueryStringParameter("strWhere", "zt:2");
         params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
         params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
@@ -686,52 +671,5 @@ public class NCZ_Commanded extends Fragment implements View.OnClickListener
         timethread = null;
     }
 
-    private void getArealist()
-    {
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("name", "getstdPark");
-        params.addQueryStringParameter("action", "getDict");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<Dictionary> lsitNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
-                        if (lsitNewData != null)
-                        {
-                            Dictionary dic = DictionaryHelper.getNCZ_CMD_AreaDictionary(getActivity(), lsitNewData.get(0), dictionary);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("bean", dic);
-                            selectorUi.setArguments(bundle);
-                            switchContent(mContent, selectorUi);
-                        }
-                    } else
-                    {
-                        lsitNewData = new ArrayList<Dictionary>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-                    return;
-                }
-            }
 
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
-            }
-        });
-    }
 }

@@ -173,8 +173,6 @@ public class IFragment extends Fragment
     {
         getListData();
 
-
-
 		/*Intent intent = new Intent(getActivity(), UpdateApk.class);
         intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
 		getActivity().startService(intent);*/

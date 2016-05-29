@@ -101,6 +101,7 @@ public class Common_JobDetail_Assess extends Activity
     @AfterViews
     void afterOncreate()
     {
+        jobtab = getIntent().getParcelableExtra("bean");
         if (jobtab.equals("1"))
         {
             btn_score.setVisibility(View.VISIBLE);
@@ -113,8 +114,6 @@ public class Common_JobDetail_Assess extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        jobtab = getIntent().getParcelableExtra("bean");
-
     }
 
     private void showData(jobtab jobtab)
@@ -134,9 +133,9 @@ public class Common_JobDetail_Assess extends Activity
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)
         {
-            flyl = flyl + nongzi[i] + "：" + yl[i] +amountdw[i] + "\n";
+//            flyl = flyl + nongzi[i] + "：" + yl[i] +amountdw[i] + "\n";
 //            flyl = flyl + nongzi[i] + "：" + yl[i]  +jobtab.getAmountDW()+"\n";
-//            flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
+            flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
         }
         tv_qx.setText(jobtab.getregDate().substring(0, jobtab.getregDate().lastIndexOf(" ")));
         tv_jobname.setText(jobtab.getstdJobTypeName() + "——" + jobtab.getstdJobName());

@@ -74,6 +74,9 @@ public class NCZ_todaymq extends Fragment
     void afterOncreate()
     {
         initAnimalListView();
+        timethread = new TimeThread();
+        timethread.setSleep(false);
+        timethread.start();
     }
 
     public void setThreadStatus(boolean hidden)
@@ -102,9 +105,6 @@ public class NCZ_todaymq extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.ncz_todaymq, container, false);
-        timethread = new TimeThread();
-        timethread.setSleep(false);
-        timethread.start();
         return rootView;
     }
 

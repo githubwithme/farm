@@ -207,7 +207,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_80">
+                    android:layout_height="60dip">
 
                     <ImageView
                         android:id="@+id/iv_makemap"
@@ -252,7 +252,7 @@
                         android:background="@color/line_color"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_80">
+                        android:layout_height="60dip">
 
                         <ImageView
                             android:id="@+id/iv_startBreakoff"
@@ -295,7 +295,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_80">
+                    android:layout_height="60dip">
 
                     <ImageView
                         android:id="@+id/iv_share"
@@ -335,7 +335,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_80">
+                    android:layout_height="60dip">
 
                     <ImageView
                         android:id="@+id/iv_gy"
@@ -375,7 +375,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_80">
+                    android:layout_height="60dip">
 
                     <ImageView
                         android:id="@+id/iv_bz"
@@ -414,7 +414,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_80">
+                    android:layout_height="60dip">
 
                     <ImageView
                         android:id="@+id/iv_yj"
@@ -453,7 +453,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_80">
+                    android:layout_height="60dip">
 
                     <ImageView
                         android:id="@+id/iv_changepwd"
@@ -492,7 +492,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_80">
+                    android:layout_height="60dip">
 
                     <FrameLayout
                         android:id="@+id/fl_renewversion"
@@ -567,7 +567,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_80">
+                    android:layout_height="60dip">
 
                     <ImageView
                         android:id="@+id/iv_exist"

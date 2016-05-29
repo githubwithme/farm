@@ -113,8 +113,8 @@ public class Command_ExecuteArea_Adapter extends BaseAdapter
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)
         {
-            flyl = flyl + nongzi[i] + ":"+shuliang[i]+daiwei[i]+";";
-//            flyl = flyl + nongzi[i] + ":"+shuliang[i]+";";
+//            flyl = flyl + nongzi[i] + ":"+shuliang[i]+daiwei[i]+";";
+            flyl = flyl + nongzi[i] + ":"+shuliang[i]+";";
         }
         if(commandtab.getstdJobType().equals("-1")&&commandtab.getstdJobId().equals("-1"))
         {

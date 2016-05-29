@@ -71,7 +71,6 @@ public class Adapter_UserList extends BaseAdapter
     {
         commembertab = listItems.get(position);
         // 自定义视图
-
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图

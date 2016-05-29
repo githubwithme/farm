@@ -49,6 +49,8 @@ public class NCZ_EventofList  extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        ncz_eventing=new NCZ_Eventing_();
+        ncz_evented=new NCZ_Evented_();
         setBackground(0);
         switchContent(mContent, ncz_eventing);
     }
@@ -56,8 +58,7 @@ public class NCZ_EventofList  extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.ncz_eventoflist, container, false);
-        ncz_eventing=new NCZ_Eventing_();
-        ncz_evented=new NCZ_Evented_();
+
         return rootView;
     }
     private void setBackground(int pos)

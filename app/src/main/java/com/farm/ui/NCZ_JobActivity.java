@@ -45,6 +45,8 @@ public class NCZ_JobActivity extends Activity
     @AfterViews
     void afterOncreate()
     {
+        ncz_doingJobFragment = new NCZ_DoingJobFragment_();
+        ncz_completeJobFragment = new NCZ_CompleteJobFragment_();
         setBackground(0);
         switchContent(mContent, ncz_doingJobFragment);
     }
@@ -54,8 +56,6 @@ public class NCZ_JobActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        ncz_doingJobFragment = new NCZ_DoingJobFragment_();
-        ncz_completeJobFragment = new NCZ_CompleteJobFragment_();
     }
 
 

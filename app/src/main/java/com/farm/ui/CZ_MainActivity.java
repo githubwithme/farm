@@ -296,9 +296,13 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
             appContext.setLOCATION_X(String.valueOf(location_latLng.getLatitude()));
             appContext.setLOCATION_Y(String.valueOf(location_latLng.getLongitude()));
             // 每隔15秒记录轨迹
+            if (lasttime == 0l)
+            {
+                lasttime = System.currentTimeMillis();
+            }
             newtime = System.currentTimeMillis();
             int diff = (int) (newtime - lasttime) / 1000;
-            if (diff > 3)// 每隔15秒记录一次
+            if (diff > 300)// 每隔15秒记录一次
             {
                 lasttime = newtime;
                 MarkLocation(location);

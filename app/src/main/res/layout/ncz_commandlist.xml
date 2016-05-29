@@ -1,51 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
 
-    <FrameLayout
-        android:visibility="gone"
-        android:id="@+id/top_container_cmd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="100dip"
-        android:background="@drawable/bg_cmd_add1"
-        android:visibility="gone" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dip"
-        android:background="@color/line_color"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="全部指令 45条  施肥 20条  蕾果23条  植保2条"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_13" />
-
-        <ImageButton
-            android:layout_width="20dip"
-            android:layout_height="10dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dip"
-            android:background="@drawable/back"
-            android:contentDescription="" />
-    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -55,7 +19,7 @@
             android:id="@+id/frame_listview_news"
             style="@style/widget_listview"
             android:divider="#00000000"
-            android:dividerHeight="0dip" />
+            android:dividerHeight="0dip"/>
 
         <ImageButton
             android:id="@+id/btn_add"
@@ -64,7 +28,7 @@
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="15dip"
             android:layout_marginRight="15dip"
-            android:background="@drawable/speedy" />
+            android:background="@drawable/speedy"/>
 
     </FrameLayout>
 </LinearLayout>

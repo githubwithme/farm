@@ -67,18 +67,18 @@ public class NCZ_DoingJobFragment extends Fragment
     @AfterViews
     void afteroncreate()
     {
+        commembertab = AppContext.getUserInfo(getActivity());
         initAnimalListView();
+        timethread = new TimeThread();
+        timethread.setStop(false);
+        timethread.setSleep(false);
+        timethread.start();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.ncz_doingjobfragment, container, false);
-        commembertab = AppContext.getUserInfo(getActivity());
-        timethread = new TimeThread();
-        timethread.setStop(false);
-        timethread.setSleep(false);
-        timethread.start();
         return rootView;
     }
 

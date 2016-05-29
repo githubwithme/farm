@@ -77,6 +77,7 @@ public class NCZ_CompleteJobFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        commembertab = AppContext.getUserInfo(getActivity());
         appContext = (AppContext) getActivity().getApplication();
         initAnimalListView();
     }
@@ -85,8 +86,6 @@ public class NCZ_CompleteJobFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.ncz_completejobfragment, container, false);
-        appContext = (AppContext) getActivity().getApplication();
-        commembertab = AppContext.getUserInfo(getActivity());
         return rootView;
     }
 

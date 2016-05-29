@@ -5,16 +5,14 @@
               android:layout_height="wrap_content"
               android:background="@color/white"
               android:descendantFocusability="blocksDescendants"
-              android:minHeight="90dip"
-              android:orientation="horizontal">
+              android:orientation="vertical">
 
     <com.swipelistview.SwipeLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="15dip"
         android:layout_marginRight="10dip"
-        android:layout_marginTop="20dip">
+        android:layout_marginTop="10dip">
 
         <LinearLayout
             android:id="@+id/ll_menu"
@@ -55,8 +53,8 @@
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:layout_width="50dip"
-                    android:layout_height="50dip"
+                    android:layout_width="45dip"
+                    android:layout_height="45dip"
                     android:layout_centerInParent="true">
 
                     <com.farm.widget.CircleImageView
@@ -83,7 +81,7 @@
                         android:gravity="center"
                         android:text="1"
                         android:textColor="@color/white"
-                        android:textSize="13sp"/>
+                        android:textSize="12sp"/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -238,7 +236,7 @@
             </FrameLayout>
 
             <RelativeLayout
-                android:layout_width="60dip"
+                android:layout_width="50dip"
                 android:layout_height="match_parent">
 
                 <FrameLayout
@@ -251,8 +249,8 @@
 
                     <ImageView
                         android:id="@+id/iv_record"
-                        android:layout_width="35dip"
-                        android:layout_height="35dip"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
                         android:background="@drawable/ht"/>
 
                     <FrameLayout
@@ -288,5 +286,8 @@
 
     </com.swipelistview.SwipeLayout>
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 </LinearLayout>

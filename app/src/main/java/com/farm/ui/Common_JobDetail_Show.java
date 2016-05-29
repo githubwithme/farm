@@ -80,6 +80,7 @@ public class Common_JobDetail_Show extends Activity
     @AfterViews
     void afterOncreate()
     {
+        jobtab = getIntent().getParcelableExtra("bean");
         showData(jobtab);
     }
 
@@ -88,7 +89,6 @@ public class Common_JobDetail_Show extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        jobtab = getIntent().getParcelableExtra("bean");
     }
 
     private void showData(jobtab jobtab)
@@ -108,8 +108,8 @@ public class Common_JobDetail_Show extends Activity
         String flyl = "";
         for (int i = 0; i < nongzi.length; i++)
         {
-//            flyl = flyl + nongzi[i] + "：" + yl[i] +"\n";
-            flyl = flyl + nongzi[i] + "：" + yl[i] + amountdw[i] + "\n";
+            flyl = flyl + nongzi[i] + "：" + yl[i] +"\n";
+//            flyl = flyl + nongzi[i] + "：" + yl[i] + amountdw[i] + "\n";
 //            flyl = flyl + nongzi[i] + "：" + yl[i] + "/株" + "\n";
         }
         tv_qx.setText(jobtab.getregDate().substring(0, jobtab.getregDate().lastIndexOf(" ")));
