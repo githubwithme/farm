@@ -74,7 +74,14 @@ public class NCZ_Evented extends Fragment
         initAnimalListView();
 //        getBreakOffInfoOfContract();
     }
-  /*  @Override
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
+    }
+
+    /*  @Override
     public void onHiddenChanged(boolean hidden)
     {
         ishidding=hidden;
@@ -124,8 +131,12 @@ public class NCZ_Evented extends Fragment
                 if (position == 0 || view == list_footer)
                     return;
 //                Intent intent=new Intent(getActivity(),NCZ_EventLookList_.class);
-                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
                 ReportedBean reportedBean=listData.get(position-1);
+
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                AppContext.eventStatus(getActivity(), "1", reportedBean.getEventId(),  commembertab.getId());
+                Intent intent=new Intent(getActivity(),PG_EventDetail_.class);
+
                 intent.putExtra("reportedBean",reportedBean);
                 startActivity(intent);
 
