@@ -10,10 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -23,11 +26,15 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.DynamicBean;
 import com.farm.bean.DynamicEntity;
+import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.parktab;
 import com.farm.common.FileHelper;
+import com.farm.common.UIHelper;
 import com.farm.common.utils;
+import com.farm.widget.NewDataToast;
+import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -41,6 +48,8 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -115,6 +124,7 @@ public class DynamicFragment extends Fragment
     @AfterViews
     void afterOncrete()
     {
+
         getDynamicData_temp();
 //        getDynamicData();
 //        getNewSaleList_test();
@@ -123,6 +133,7 @@ public class DynamicFragment extends Fragment
         timethread.setSleep(false);
         timethread.start();
 //        getNewSaleList_test();
+
     }
 
     @Override
@@ -331,6 +342,7 @@ public class DynamicFragment extends Fragment
                             dynamicentity.setType("MQ");
                             list_DynamicEntity.add(dynamicentity);
                         }
+
                         Adapter_DynamicFragment adapter_dynamic = new Adapter_DynamicFragment(getActivity(), list_DynamicEntity);
                         lv.setAdapter(adapter_dynamic);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -508,5 +520,59 @@ public class DynamicFragment extends Fragment
         {
             this.stop = stop;
         }
+    }
+
+
+
+    private void getEventList()
+    {
+
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getEventListByUID");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                String a = responseInfo.result;
+                List<ReportedBean> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() >0) {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
+
+                        Iterator<ReportedBean> it = listNewData.iterator();
+                        while (it.hasNext())
+                        {
+                            ReportedBean reportedBean = it.next();
+                            if (reportedBean.getIsflashStr().equals("0")||reportedBean.resultflashStr.equals("0"))
+                            {
+                                it.remove();
+                            }
+                        }
+                        DynamicEntity dynamicentity = new DynamicEntity();
+                        dynamicentity.setDate(utils.getToday());
+                        dynamicentity.setNote(listNewData.size()+"事件更新");
+                        dynamicentity.setTitle("事件");
+                        dynamicentity.setType("SJ");
+                        list_DynamicEntity.add(dynamicentity);
+                    } else {
+                        listNewData = new ArrayList<ReportedBean>();
+                    }
+                } else {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+
+                    return;
+                }
+            }
+            @Override
+            public void onFailure(HttpException error, String msg) {
+                String a = error.getMessage();
+                AppContext.makeToast(getActivity(), "error_connectServer");
+
+            }
+        });
     }
 }
