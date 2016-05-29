@@ -430,8 +430,14 @@ public class NCZ_Commanding extends Fragment implements View.OnClickListener
                 // }
                 // if (animal == null)
                 // return;
+
+
                 commandtab commandtab = listData.get(position - 1);
                 if (commandtab == null) return;
+
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                AppContext.eventStatus(getActivity(), "3", commandtab.getId(),  commembertab.getId());
+
                 Intent intent = new Intent(getActivity(), NCZ_CommandDetail_.class);
                 intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);

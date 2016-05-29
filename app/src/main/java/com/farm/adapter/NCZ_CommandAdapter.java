@@ -128,7 +128,8 @@ public class NCZ_CommandAdapter extends BaseAdapter
         if (Integer.valueOf(commandtab.getComCount()) > 0)
         {
             listItemView.fl_new_item.setVisibility(View.VISIBLE);
-            listItemView.tv_new_item.setText(commandtab.getComCount());
+//            listItemView.tv_new_item.setText(commandtab.getComCount());
+
         } else
         {
             listItemView.fl_new_item.setVisibility(View.GONE);
