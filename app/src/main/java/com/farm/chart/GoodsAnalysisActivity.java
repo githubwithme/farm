@@ -219,9 +219,9 @@ public class GoodsAnalysisActivity extends Activity
                         list_leftnumber = JSON.parseArray(result.getRows().toJSONString(), ChartEntity.class);
                         Comparator comp = new SortComparator();//排序
                         Collections.sort(list_leftnumber, comp);
-                        chart_bar.setData(generateDataBar());
                         XAxis xAxis = chart_bar.getXAxis();
                         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        chart_bar.setData(generateDataBar());
                     } else
                     {
                         list_leftnumber = new ArrayList<ChartEntity>();
@@ -263,9 +263,10 @@ public class GoodsAnalysisActivity extends Activity
                         list_outnumber = JSON.parseArray(result.getRows().toJSONString(), ChartEntity.class);
                         Comparator comp = new SortComparator();//排序
                         Collections.sort(list_outnumber, comp);
-                        chart_line.setData(generateDataLine_used());
                         XAxis xAxis = chart_line.getXAxis();
                         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        chart_line.setData(generateDataLine_used());
+
                     } else
                     {
                         list_outnumber = new ArrayList<ChartEntity>();

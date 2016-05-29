@@ -280,8 +280,8 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
     Button btn_yx;
     @ViewById
     Button btn_addorder;
-    @ViewById
-    Button btn_canclepaint;
+//    @ViewById
+//    Button btn_canclepaint;
     @ViewById
     Button btn_complete;
     @ViewById
@@ -653,11 +653,11 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
         cb_zoom_gesture.setChecked(true);
         uiSettings.setZoomGesturesEnabled(true);
     }
-    @Click
-    void btn_canclepaint()
-    {
-        reloadMap();
-    }
+//    @Click
+//    void btn_canclepaint()
+//    {
+//        reloadMap();
+//    }
     @Click
     void btn_addlayer()
     {
@@ -3708,7 +3708,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
                             return false;
                         }
                     });
-                    btn_canclepaint.setVisibility(View.VISIBLE);
+//                    btn_canclepaint.setVisibility(View.VISIBLE);
                     List<CoordinatesBean> list_coordinatesbean = polygonbean_selected.getCoordinatesBeanList();
                     if (list_coordinatesbean != null && list_coordinatesbean.size() != 0)
                     {
@@ -5708,9 +5708,9 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
         firstmarkerselect = true;
         prelatLng = null;
 
-        btn_addlayer.setVisibility(View.VISIBLE);
+//        btn_addlayer.setVisibility(View.VISIBLE);
         btn_showlayer.setVisibility(View.VISIBLE);
-        btn_setting.setVisibility(View.VISIBLE);
+//        btn_setting.setVisibility(View.VISIBLE);
         btn_addmore.setText("更多");
         drawerType = "";
         currentpointmarker = null;//点
@@ -5727,7 +5727,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
     }
     public void initParamAfterPaint()
     {
-        btn_canclepaint.setVisibility(View.GONE);
+//        btn_canclepaint.setVisibility(View.GONE);
 
         isInner = false;
         pos_line1 = 0;
