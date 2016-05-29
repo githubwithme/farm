@@ -10,13 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -31,10 +28,7 @@ import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.parktab;
 import com.farm.common.FileHelper;
-import com.farm.common.UIHelper;
 import com.farm.common.utils;
-import com.farm.widget.NewDataToast;
-import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -48,7 +42,6 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -62,7 +55,7 @@ public class DynamicFragment extends Fragment
     PopupWindow pw_command;
     View pv_command;
     Adapter_Dynamic adapter_dynamic;
-    List<DynamicBean> listData;
+    List<DynamicBean> listData = new ArrayList<>();
     List<DynamicEntity> list_DynamicEntity;
     @ViewById
     Button btn_add;
@@ -124,10 +117,9 @@ public class DynamicFragment extends Fragment
     @AfterViews
     void afterOncrete()
     {
-
-        getDynamicData_temp();
-//        getDynamicData();
-//        getNewSaleList_test();
+//        getDynamicData_temp();
+        getDynamicData();
+//        getNewSaleList_test(
 //        getDynamicData();
         timethread = new TimeThread();
         timethread.setSleep(false);
@@ -201,7 +193,7 @@ public class DynamicFragment extends Fragment
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("action", "GetDynamicData");
+        params.addQueryStringParameter("action", "GetDynamicData1");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -209,50 +201,93 @@ public class DynamicFragment extends Fragment
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String aa = responseInfo.result;
+                List<DynamicBean> list = null;
+                listData = new ArrayList<DynamicBean>();
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
+//                    if (result.getAffectedRows() != 0)
+//                    {
+                    list = JSON.parseArray(result.getRows().toJSONString(), DynamicBean.class);
+
+                    for (int i = 0; i < list.size(); i++)
                     {
-                        listData = JSON.parseArray(result.getRows().toJSONString(), DynamicBean.class);
-                        adapter_dynamic = new Adapter_Dynamic(getActivity(), listData);
-                        lv.setAdapter(adapter_dynamic);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                        if (list.get(i).getListdata().size() != 0)
                         {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                            {
-                                Intent intent = null;
-                                String type = listData.get(position).getType();
-                                if (type.equals("ZL"))
-                                {
-                                    intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-                                } else if (type.equals("GZ"))
-                                {
-                                    intent = new Intent(getActivity(), NCZ_JobActivity_.class);
-                                } else if (type.equals("MQ"))
-                                {
-                                    intent = new Intent(getActivity(), NCZ_MQActivity_.class);
-                                } else if (type.equals("XS"))
-                                {
-                                    intent = new Intent(getActivity(), NCZ_FarmSale_.class);
-                                } else if (type.equals("KC"))
-                                {
-                                    intent = new Intent(getActivity(), Ncz_wz_ll_.class);
-                                } else if (type.equals("SP"))
-                                {
-                                    intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-                                } else if (type.equals("SJ"))
-                                {
-                                    intent = new Intent(getActivity(), NCZ_SJActivity_.class);
-                                } else if (type.equals("DL"))
-                                {
-                                    intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-                                }
-                                getActivity().startActivity(intent);
-                            }
-                        });
+                            listData.add(list.get(i));
+                        }
                     }
+                    adapter_dynamic = new Adapter_Dynamic(getActivity(), listData);
+                    lv.setAdapter(adapter_dynamic);
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                    {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                        {
+
+                            Intent intent = null;
+                            String type = listData.get(position).getType();
+                            if (type.equals("ZL"))
+                            {
+                                intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+                            } else if (type.equals("GZ"))
+                            {
+                                intent = new Intent(getActivity(), NCZ_JobActivity_.class);
+                            } else if (type.equals("MQ"))
+                            {
+                                intent = new Intent(getActivity(), NCZ_MQActivity_.class);
+                            } else if (type.equals("XS"))
+                            {
+                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
+                            } else if (type.equals("KC"))
+                            {
+                                intent = new Intent(getActivity(), Ncz_wz_ll_.class);
+                            } else if (type.equals("SP"))
+                            {
+                                intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+                            } else if (type.equals("SJ"))
+                            {
+                                intent = new Intent(getActivity(), NCZ_SJActivity_.class);
+                            } else if (type.equals("DL"))
+                            {
+                                intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+                            }
+                            getActivity().startActivity(intent);
+
+
+//                                List<DynamicEntity> list = listData.get(position).getListdata();
+//                                Intent intent = new Intent(getActivity(), DongtaiListview_.class);
+//                                String type = listData.get(position).getType();
+//                                if (type.equals("ZL"))
+//                                {
+//                                    intent.putExtra("type", "ZL");
+//                                } else if (type.equals("GZ"))
+//                                {
+//                                    intent.putExtra("type", "GZ");
+//                                } else if (type.equals("MQ"))
+//                                {
+//                                    intent.putExtra("type", "ZL");
+//                                } else if (type.equals("XS"))
+//                                {
+//                                    intent.putExtra("type", "MQ");
+//                                } else if (type.equals("KC"))
+//                                {
+//                                    intent.putExtra("type", "KC");
+//                                } else if (type.equals("SP"))
+//                                {
+//                                    intent.putExtra("type", "SP");
+//                                } else if (type.equals("SJ"))
+//                                {
+//                                    intent.putExtra("type", "SJ");
+//                                } else if (type.equals("DL"))
+//                                {
+//                                    intent.putExtra("type", "DL");
+//                                }
+//                                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
+//                                getActivity().startActivity(intent);
+                        }
+                    });
+//                    }
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
@@ -502,7 +537,8 @@ public class DynamicFragment extends Fragment
                     {
                         timethread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
-                        getDynamicData_temp();
+//                        getDynamicData_temp();
+                        getDynamicData();
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();
@@ -523,7 +559,6 @@ public class DynamicFragment extends Fragment
     }
 
 
-
     private void getEventList()
     {
 
@@ -532,43 +567,50 @@ public class DynamicFragment extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getEventListByUID");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<ReportedBean> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() >0) {
+                    if (result.getAffectedRows() > 0)
+                    {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
 
                         Iterator<ReportedBean> it = listNewData.iterator();
                         while (it.hasNext())
                         {
                             ReportedBean reportedBean = it.next();
-                            if (reportedBean.getIsflashStr().equals("0")||reportedBean.resultflashStr.equals("0"))
+                            if (reportedBean.getIsflashStr().equals("0") || reportedBean.resultflashStr.equals("0"))
                             {
                                 it.remove();
                             }
                         }
                         DynamicEntity dynamicentity = new DynamicEntity();
                         dynamicentity.setDate(utils.getToday());
-                        dynamicentity.setNote(listNewData.size()+"事件更新");
+                        dynamicentity.setNote(listNewData.size() + "事件更新");
                         dynamicentity.setTitle("事件");
                         dynamicentity.setType("SJ");
                         list_DynamicEntity.add(dynamicentity);
-                    } else {
+                    } else
+                    {
                         listNewData = new ArrayList<ReportedBean>();
                     }
-                } else {
+                } else
+                {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
 
                     return;
                 }
             }
+
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
 

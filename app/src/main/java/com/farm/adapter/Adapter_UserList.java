@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +20,6 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
-import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
 
 import java.util.HashMap;
@@ -40,7 +40,7 @@ public class Adapter_UserList extends BaseAdapter
         public TextView tv_username;
         public TextView tv_workarea;
         public Button btn_call;
-        public CircleImageView circle_img;
+        public ImageView circle_img;
     }
 
     public Adapter_UserList(Context context, List<commembertab> data)
@@ -79,7 +79,7 @@ public class Adapter_UserList extends BaseAdapter
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.btn_call = (Button) convertView.findViewById(R.id.btn_call);
-            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
+            listItemView.circle_img = (ImageView) convertView.findViewById(R.id.circle_img);
             listItemView.tv_username = (TextView) convertView.findViewById(R.id.tv_username);
             listItemView.tv_workarea = (TextView) convertView.findViewById(R.id.tv_workarea);
             listItemView.btn_call.setTag(position);

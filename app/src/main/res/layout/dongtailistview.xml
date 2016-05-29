@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_titlebar"
@@ -22,12 +23,14 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
-            android:text="数据详情"
+            android:text="动态详情"
             android:textColor="@color/textcolor_titlebar"
             android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>
+
     <ListView
         android:id="@+id/listviewss"
         android:layout_width="match_parent"
