@@ -346,7 +346,7 @@ PG_ListOfEvents pg_listOfEvents;
             }
             newtime = System.currentTimeMillis();
             int diff = (int) (newtime - lasttime) / 1000;
-            if (diff > 300)// 每隔15秒记录一次
+            if (diff > 3)// 每隔15秒记录一次
             {
                 lasttime = newtime;
                 MarkLocation(location);

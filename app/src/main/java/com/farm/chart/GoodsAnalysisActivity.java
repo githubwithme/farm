@@ -52,8 +52,8 @@ public class GoodsAnalysisActivity extends Activity
     BarChart chart_bar;
     @ViewById
     LineChart chart_line;
-    List<ChartEntity> list_leftnumber = null;
-    List<ChartEntity> list_outnumber = null;
+    List<ChartEntity> list_leftnumber = new ArrayList<>();
+    List<ChartEntity> list_outnumber = new ArrayList<>();
 
     @Click
     void btn_back()
@@ -64,6 +64,11 @@ public class GoodsAnalysisActivity extends Activity
     @AfterViews
     void afterview()
     {
+
+        chart_bar.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart_line.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart_bar.setData(generateDataBar());
+        chart_line.setData(generateDataLine_used());
         getListData_left();
         getListData_out();
     }
@@ -222,6 +227,7 @@ public class GoodsAnalysisActivity extends Activity
                         XAxis xAxis = chart_bar.getXAxis();
                         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                         chart_bar.setData(generateDataBar());
+                        chart_bar.invalidate();
                     } else
                     {
                         list_leftnumber = new ArrayList<ChartEntity>();
@@ -266,6 +272,7 @@ public class GoodsAnalysisActivity extends Activity
                         XAxis xAxis = chart_line.getXAxis();
                         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                         chart_line.setData(generateDataLine_used());
+                        chart_line.invalidate();
 
                     } else
                     {
