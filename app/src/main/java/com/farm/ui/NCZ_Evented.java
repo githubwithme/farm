@@ -25,7 +25,6 @@ import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
-import com.farm.widget.NewDataToast;
 import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -49,8 +48,7 @@ import java.util.List;
 @EFragment
 public class NCZ_Evented extends Fragment
 {
-    /*  boolean ishidding=false;
-      TimeThread timethread;*/ com.farm.bean.commembertab commembertab;
+    com.farm.bean.commembertab commembertab;
     PG_ReportedAdapter listadpater;
     private AppContext appContext;
     android.support.v4.app.Fragment mContent = new android.support.v4.app.Fragment();
@@ -69,46 +67,17 @@ public class NCZ_Evented extends Fragment
     void afssss()
     {
         appContext = (AppContext) getActivity().getApplication();
-//        commembertab commembertab = AppContext.getUserInfo(getActivity());
         commembertab = AppContext.getUserInfo(getActivity());
-   /*     timethread = new TimeThread();
-        timethread.setSleep(false);
-        timethread.start();*/
         btn_add.setVisibility(View.GONE);
         initAnimalListView();
-//        getBreakOffInfoOfContract();
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
-//        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
     }
 
-    /*  @Override
-    public void onHiddenChanged(boolean hidden)
-    {
-        ishidding=hidden;
-        super.onHiddenChanged(hidden);
-        if (!hidden)
-        {
-            if (timethread != null)
-            {
-//                timethread.setSleep(false);
-                timethread = new TimeThread();
-                timethread.setStop(false);
-                timethread.setSleep(false);
-                timethread.start();
-            }
-        } else
-        {
-            if (timethread != null)
-            {
-                timethread.setSleep(true);
-            }
-        }
-    }*/
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -210,8 +179,6 @@ public class NCZ_Evented extends Fragment
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-
-
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getEventListByUID");
@@ -299,7 +266,7 @@ public class NCZ_Evented extends Fragment
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+//                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else
                             {
                                 // NewDataToast.makeText(NCZ_PQ_CommandList.this,
@@ -376,10 +343,6 @@ public class NCZ_Evented extends Fragment
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
-            /*    if (!ishidding  && timethread!=null)
-                {
-                    timethread.setSleep(false);
-                }*/
             }
 
             @Override
@@ -387,59 +350,9 @@ public class NCZ_Evented extends Fragment
             {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
-        /*        if (!ishidding  && timethread!=null)
-                {
-                    timethread.setSleep(false);
-                }*/
             }
         });
     }
-/*    class TimeThread extends Thread
-    {
-        private boolean isSleep = true;
-        private boolean stop = false;
 
-        public void run()
-        {
-            Long starttime = 0l;
-            while (!stop)
-            {
-                if (isSleep)
-                {
-                } else
-                {
-                    try
-                    {
-                        timethread.sleep(AppContext.TIME_REFRESH);
-                        starttime = starttime + 1000;
-                        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
-                        timethread.setSleep(true);
-                    } catch (InterruptedException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        public void setSleep(boolean sleep)
-        {
-            isSleep = sleep;
-        }
-
-        public void setStop(boolean stop)
-        {
-            this.stop = stop;
-        }
-    }
-
-    @Override
-    public void onDestroyView()
-    {
-        super.onDestroyView();
-        timethread.setStop(true);
-        timethread.interrupt();
-        timethread = null;
-    }*/
 
 }

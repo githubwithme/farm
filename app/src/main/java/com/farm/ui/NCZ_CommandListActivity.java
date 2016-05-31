@@ -101,5 +101,11 @@ public class NCZ_CommandListActivity extends Activity
         }
     }
 
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ncz_commanding.onDestroyView();
+        ncz_commanded.onDestroyView();
+    }
 }

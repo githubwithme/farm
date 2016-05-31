@@ -127,4 +127,9 @@ public class NCZ_SJActivity extends Activity
     }
 
 
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+    }
 }

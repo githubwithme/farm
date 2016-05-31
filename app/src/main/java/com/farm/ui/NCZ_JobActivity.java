@@ -101,4 +101,10 @@ public class NCZ_JobActivity extends Activity
         }
     }
 
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ncz_doingJobFragment.onDestroyView();
+    }
 }

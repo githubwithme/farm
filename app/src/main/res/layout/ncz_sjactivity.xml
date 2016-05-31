@@ -5,9 +5,9 @@
               android:orientation="vertical">
 
     <RelativeLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="50dip">
+        android:layout_height="50dip"
+        android:background="@color/white">
 
 
         <Button

@@ -33,13 +33,16 @@
     </RelativeLayout>
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/line_color"/>
 
-    <FrameLayout
-        android:id="@+id/container"
+    <com.farm.widget.PullToRefreshListView
+        android:id="@+id/frame_listview_news"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:divider="@color/line_color"
+        android:dividerHeight="1px"/>
+
 </LinearLayout>
