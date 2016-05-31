@@ -58,6 +58,7 @@ public class Fragment_CommandDetail extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        commandtab = getArguments().getParcelable("bean");
         getListData();
         showData();
     }
@@ -66,7 +67,6 @@ public class Fragment_CommandDetail extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.fragment_commanddetail, container, false);
-        commandtab = getArguments().getParcelable("bean");
         return rootView;
     }
 
