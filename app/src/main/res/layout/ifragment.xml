@@ -209,6 +209,82 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dip">
 
+                    <FrameLayout
+                        android:id="@+id/fl_renewversion"
+                        android:layout_width="@dimen/width_setting"
+                        android:layout_height="@dimen/width_setting"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dip"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_renewversion"
+                            android:layout_width="@dimen/width_setting"
+                            android:layout_height="@dimen/width_setting"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/logo_wechatmoments"/>
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tv_renewversion"
+                        android:layout_width="@dimen/size_150"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dip"
+                        android:layout_toRightOf="@id/fl_renewversion"
+                        android:gravity="left|center_vertical"
+                        android:text="系统更新"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_13"/>
+
+                    <FrameLayout
+                        android:id="@+id/fl_new"
+                        android:layout_width="40dip"
+                        android:layout_height="15dip"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/tv_renewversion"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_new"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:background="@drawable/shape_round_btn_map"
+                            android:gravity="center"
+                            android:text="NEW"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/size_10"/>
+                    </FrameLayout>
+
+                    <ProgressBar
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dip"
+                        android:layout_toRightOf="@id/fl_renewversion"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:layout_width="12dip"
+                        android:layout_height="12dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="15dip"
+                        android:src="@drawable/next_black"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1px"
+                    android:layout_marginLeft="15sp"
+                    android:layout_marginRight="15sp"
+                    android:background="@color/line_color"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dip"
+                    android:visibility="gone">
+
                     <ImageView
                         android:id="@+id/iv_makemap"
                         android:layout_width="@dimen/size_40"
@@ -242,14 +318,16 @@
                     android:id="@+id/ll_startBreakoff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.1px"
                         android:layout_marginLeft="15sp"
                         android:layout_marginRight="15sp"
                         android:background="@color/line_color"/>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="60dip">
@@ -291,11 +369,13 @@
                     android:layout_height="0.1px"
                     android:layout_marginLeft="15sp"
                     android:layout_marginRight="15sp"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dip">
+                    android:layout_height="60dip"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/iv_share"
@@ -331,7 +411,8 @@
                     android:layout_height="0.1px"
                     android:layout_marginLeft="15sp"
                     android:layout_marginRight="15sp"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -490,80 +571,6 @@
                     android:layout_marginRight="15sp"
                     android:background="@color/line_color"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dip">
-
-                    <FrameLayout
-                        android:id="@+id/fl_renewversion"
-                        android:layout_width="@dimen/width_setting"
-                        android:layout_height="@dimen/width_setting"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dip"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/iv_renewversion"
-                            android:layout_width="@dimen/width_setting"
-                            android:layout_height="@dimen/width_setting"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/temp6"/>
-                    </FrameLayout>
-
-                    <TextView
-                        android:id="@+id/tv_renewversion"
-                        android:layout_width="@dimen/size_150"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="20dip"
-                        android:layout_toRightOf="@id/fl_renewversion"
-                        android:gravity="left|center_vertical"
-                        android:text="系统更新"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_13"/>
-
-                    <FrameLayout
-                        android:id="@+id/fl_new"
-                        android:layout_width="40dip"
-                        android:layout_height="15dip"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/tv_renewversion"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/tv_new"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:background="@drawable/shape_round_btn_map"
-                            android:gravity="center"
-                            android:text="NEW"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_10"/>
-                    </FrameLayout>
-
-                    <ProgressBar
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dip"
-                        android:layout_toRightOf="@id/fl_renewversion"
-                        android:visibility="gone"/>
-
-                    <ImageView
-                        android:layout_width="12dip"
-                        android:layout_height="12dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="15dip"
-                        android:src="@drawable/next_black"/>
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1px"
-                    android:layout_marginLeft="15sp"
-                    android:layout_marginRight="15sp"
-                    android:background="@color/line_color"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"

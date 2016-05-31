@@ -140,7 +140,7 @@
                         android:layout_width="50dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/temp6"/>
+                        android:background="@drawable/icon_zz"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -385,7 +385,7 @@
                         android:layout_width="50dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/icon_zl"/>
+                        android:background="@drawable/logo_qzone"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -413,7 +413,7 @@
                         android:layout_width="50dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/icon_zl"/>
+                        android:background="@drawable/temp6"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -441,7 +441,7 @@
                         android:layout_width="50dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/icon_zl"/>
+                        android:background="@drawable/temp1"/>
 
                     <TextView
                         android:layout_width="match_parent"
