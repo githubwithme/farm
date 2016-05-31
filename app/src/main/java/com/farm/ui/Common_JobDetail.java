@@ -120,15 +120,23 @@ public class Common_JobDetail extends Activity
         }
 
         String[] nongzi = jobtab.getnongziName().split(",");
-        String[] yl = jobtab.getamount().split(";");
-        String[] dw = jobtab.getAmountDW().split("[.]");
+        String[] shuliang = jobtab.getamount().split(";");
+//        String[] dw = jobtab.getAmountDW().split("[.]");
         String flyl = "";
-        for (int i = 0; i < nongzi.length; i++)
-        {
-//            flyl = flyl + nongzi[i] + "：" + yl[i] +"/株" + "\n";
-//            flyl = flyl + nongzi[i] + "：" + yl[i] + "\n";
-            flyl = flyl + nongzi[i] + "：" + yl[i] + dw[i] + "\n";
+        if (jobtab.getAmountDW().equals("")) {
+            for (int i = 0; i < nongzi.length; i++) {
+                flyl = flyl + nongzi[i] + ":" + shuliang[i] + ";";
+            }
+        } else {
+            String[] daiwei = jobtab.getAmountDW().split("[.]");
+            for (int i = 0; i < nongzi.length; i++) {
+                flyl = flyl + nongzi[i] + ":"+shuliang[i]+daiwei[i]+";";
+            }
         }
+/*        for (int i = 0; i < nongzi.length; i++)
+        {
+            flyl = flyl + nongzi[i] + "：" + yl[i] + dw[i] + "\n";
+        }*/
 
         tv_jobname.setText(jobtab.getstdJobTypeName() + "——" + jobtab.getstdJobName());
         tv_yl.setText(flyl);

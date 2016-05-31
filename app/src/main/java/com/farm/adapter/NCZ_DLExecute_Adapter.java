@@ -192,7 +192,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
         TextView tv_park = (TextView) convertView.findViewById(R.id.tv_park);
 
 
-        tv_park.setText(listData.get(groupPosition).getBatchTime()+"    "+listData.get(groupPosition).getBatchColor());
+        tv_park.setText(listData.get(groupPosition).getBatchTime()+"    "+listData.get(groupPosition).getBatchColor()+"丝带");
         if (listData.get(groupPosition).getBatchColor().equals("红色")) {
 //            view.setBackgroundColor(Color.parseColor("#365663"));
 //            rl_color.setBackground(R.color.red);

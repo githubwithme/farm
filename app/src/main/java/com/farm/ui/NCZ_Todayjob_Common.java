@@ -131,13 +131,23 @@ public class NCZ_Todayjob_Common extends Activity {
         }
         String[] nongzi = jobtab.getnongziName().split(",");
         String[] yl = jobtab.getamount().split(";");
-        String[] dw = jobtab.getAmountDW().split("[.]");
+//        String[] dw = jobtab.getAmountDW().split("[.]");
         String flyl = "";
-        for (int i = 0; i < nongzi.length; i++)
+        if (jobtab.getAmountDW().equals("")) {
+            for (int i = 0; i < nongzi.length; i++) {
+                flyl = flyl + nongzi[i] + ":" + yl[i] + ";";
+            }
+        } else {
+            String[] daiwei = jobtab.getAmountDW().split("[.]");
+            for (int i = 0; i < nongzi.length; i++) {
+                flyl = flyl + nongzi[i] + ":"+yl[i]+daiwei[i]+";";
+            }
+        }
+/*        for (int i = 0; i < nongzi.length; i++)
         {
 //            flyl = flyl + nongzi[i] + "：" + yl[i]  + "\n";
             flyl = flyl + nongzi[i] + "：" + yl[i] +dw[i] + "\n";
-        }
+        }*/
         tv_qx.setText(jobtab.getregDate().substring(0, jobtab.getregDate().lastIndexOf(" ")));
         tv_jobname.setText(jobtab.getstdJobTypeName() + "——" + jobtab.getstdJobName());
         tv_yl.setText(flyl);

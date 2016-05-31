@@ -69,13 +69,24 @@ public class CommandDetail_Show_DetailFragment extends Fragment
         }
         String[] nongzi = commandtab.getnongziName().split(",");
         String[] shuliang = commandtab.getamount().split(";");
-        String[] danwei = commandtab.getAmountDW().split("[.]");
-//        String[] yl = commandtab.getamount().split(";");
+//        String[] danwei = commandtab.getAmountDW().split("[.]");
         String flyl = "";
+        if (commandtab.getAmountDW().equals("")) {
+            for (int i = 0; i < nongzi.length; i++) {
+                flyl = flyl + nongzi[i] + ":" + shuliang[i] + ";";
+            }
+        } else {
+            String[] daiwei = commandtab.getAmountDW().split("[.]");
+            for (int i = 0; i < nongzi.length; i++) {
+                flyl = flyl + nongzi[i] + ":"+shuliang[i]+daiwei[i]+";";
+            }
+        }
+/*
         for (int i = 0; i < nongzi.length; i++)
         {
             flyl = flyl + nongzi[i] +":"+shuliang[i]+danwei[i]+ "\n";
         }
+*/
 
         tv_yl.setText(flyl);
         tv_jobname.setText(commandtab.getstdJobTypeName() + "-" + commandtab.getstdJobName());
