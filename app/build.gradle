@@ -56,7 +56,7 @@ android {
     //配置keystore签名
     signingConfigs {
         release {
-//            storeFile file("F:\\项目\\农场管理\\keystore\\keystore_farm.jks")
+            storeFile file("F:\\项目\\农场管理\\keystore\\keystore_farm.jks")
             storePassword "123456abc"
             keyAlias "farmeasy"
             keyPassword "123456abc"
