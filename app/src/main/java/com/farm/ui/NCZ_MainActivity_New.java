@@ -19,10 +19,8 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.app.AppManager;
 import com.farm.bean.ExceptionInfo;
-import com.farm.bean.HaveReadRecord;
 import com.farm.bean.LogInfo;
 import com.farm.bean.Result;
-import com.farm.bean.commembertab;
 import com.farm.common.GetMobilePhoneInfo;
 import com.farm.common.SqliteDb;
 import com.farm.common.utils;
@@ -47,32 +45,19 @@ import java.util.List;
 @EActivity(R.layout.ncz_activity_new)
 public class NCZ_MainActivity_New extends Activity
 {
-    NCZ_ContactsFragment ncz_contactsFragment;
+    NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
     MyDialog myDialog;
-    //	TimeThread timethread;
-    int cmd_videoNum;
     Fragment mContent = new Fragment();
-    //    NCZ_todaygz ncz_todaygz;
-    DynamicFragment dynamicFragment;
-    NCZ_JobFragment ncz_jobFragment;
-    //	NCZ_EventList ncz_eventList;
-//	NCZ_EventofList ncz_eventofList;
-    NCZ_CommandList ncz_CommandList;
-    //    Map_Farm map_farm;
-    ContactsFragment contactsFragment;
-    //	NCZ_CommandOfList ncz_commandOfList;
-    FarmManagerFragment farmManagerFragment;
-    // NCZ_SaleFragment ncz_SaleFragment;
-    // SaleList saleList;
-    ProductBatchList productBatchList;
-    IFragment iFragment;
+    DynamicFragment dynamicFragment;//动态fragment
+    NCZ_JobFragment ncz_jobFragment;//工作fragment
+    FarmManagerFragment farmManagerFragment;//农场工作fragment
+    IFragment iFragment;//个人信息fragment
     @ViewById
     FrameLayout fl_new;
     @ViewById
     TextView tv_new;
     @ViewById
     TextView tv_farmlive_new;
-    commembertab commembertab;
     @ViewById
     ImageButton imgbtn_home;
     @ViewById
@@ -95,8 +80,6 @@ public class NCZ_MainActivity_New extends Activity
     @ViewById
     TextView tv_sale;
     @ViewById
-    TextView tv_money;
-    @ViewById
     TextView tv_farmlive;
 
     @ViewById
@@ -108,8 +91,6 @@ public class NCZ_MainActivity_New extends Activity
     @ViewById
     TableLayout tl_me;
     @ViewById
-    TableLayout tl_money;
-    @ViewById
     TableLayout tl_farmlive;
 
     @Click
@@ -119,14 +100,12 @@ public class NCZ_MainActivity_New extends Activity
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_money.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_farmlive.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_home.setSelected(true);
         tl_me.setSelected(false);
         tl_product.setSelected(false);
         tl_sale.setSelected(false);
-        tl_money.setSelected(false);
         tl_farmlive.setSelected(false);
         switchContent(mContent, dynamicFragment);
     }
@@ -139,41 +118,28 @@ public class NCZ_MainActivity_New extends Activity
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_money.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_farmlive.setSelected(true);
         tl_home.setSelected(false);
         tl_me.setSelected(false);
         tl_product.setSelected(false);
         tl_sale.setSelected(false);
-        tl_money.setSelected(false);
         switchContent(mContent, ncz_jobFragment);
     }
 
     @Click
     void tl_product()
     {
-        HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(NCZ_MainActivity_New.this, AppContext.TAG_NCZ_CMD);
-        if (haveReadRecord != null)
-        {
-            SqliteDb.updateHaveReadRecord(NCZ_MainActivity_New.this, AppContext.TAG_NCZ_CMD, String.valueOf(cmd_videoNum));
-            fl_new.setVisibility(View.GONE);
-        } else
-        {
-            SqliteDb.saveHaveReadRecord(NCZ_MainActivity_New.this, AppContext.TAG_NCZ_CMD, String.valueOf(cmd_videoNum));
-        }
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_product.setTextColor(getResources().getColor(R.color.red));
         tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_money.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_farmlive.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_home.setSelected(false);
         tl_me.setSelected(false);
         tl_product.setSelected(true);
         tl_sale.setSelected(false);
-        tl_money.setSelected(false);
         tl_farmlive.setSelected(false);
 //		switchContent(mContent, ncz_CommandList);
         switchContent(mContent, farmManagerFragment);
@@ -186,39 +152,15 @@ public class NCZ_MainActivity_New extends Activity
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_sale.setTextColor(getResources().getColor(R.color.red));
-        tv_money.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_farmlive.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_home.setSelected(false);
         tl_me.setSelected(false);
         tl_product.setSelected(false);
         tl_sale.setSelected(true);
-        tl_money.setSelected(false);
         tl_farmlive.setSelected(false);
 
         switchContent(mContent, ncz_contactsFragment);
-    }
-
-    @Click
-    void tl_money()
-    {
-        tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_money.setTextColor(getResources().getColor(R.color.red));
-        tv_farmlive.setTextColor(getResources().getColor(R.color.menu_textcolor));
-
-
-        tl_home.setSelected(false);
-        tl_me.setSelected(false);
-        tl_product.setSelected(false);
-        tl_sale.setSelected(false);
-        tl_money.setSelected(true);
-        tl_farmlive.setSelected(false);
-//		switchContent(mContent, ncz_eventList);
-        switchContent(mContent, contactsFragment);
-
     }
 
     @Click
@@ -228,14 +170,12 @@ public class NCZ_MainActivity_New extends Activity
         tv_me.setTextColor(getResources().getColor(R.color.red));
         tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_money.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_farmlive.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_home.setSelected(false);
         tl_me.setSelected(true);
         tl_product.setSelected(false);
         tl_sale.setSelected(false);
-        tl_money.setSelected(false);
         tl_farmlive.setSelected(false);
         switchContent(mContent, iFragment);
     }
@@ -259,7 +199,12 @@ public class NCZ_MainActivity_New extends Activity
             sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(NCZ_MainActivity_New.this).toString(), utils.getToday());
         }
 
-
+        AppManager.getAppManager().addActivity(NCZ_MainActivity_New.this);
+        dynamicFragment = new DynamicFragment_();
+        ncz_jobFragment = new NCZ_JobFragment_();
+        farmManagerFragment = new FarmManagerFragment_();
+        ncz_contactsFragment = new NCZ_ContactsFragment_();
+        iFragment = new IFragment_();
 //        List<Integer> guideResourceId = new ArrayList<Integer>();
 //        guideResourceId.add(R.drawable.yd666);
 //        guideResourceId.add(R.drawable.yd55555);
@@ -277,7 +222,6 @@ public class NCZ_MainActivity_New extends Activity
         switchContent(mContent, dynamicFragment);
         tv_home.setTextColor(getResources().getColor(R.color.red));
         tl_home.setSelected(true);
-//        getCmdVideoNum();
     }
 
     @Override
@@ -285,33 +229,6 @@ public class NCZ_MainActivity_New extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        AppManager.getAppManager().addActivity(NCZ_MainActivity_New.this);
-        commembertab = AppContext.getUserInfo(NCZ_MainActivity_New.this);
-
-        Bundle bundle = new Bundle();
-        bundle.putString("workuserid", commembertab.getId());
-
-        dynamicFragment = new DynamicFragment_();
-        productBatchList = new ProductBatchList_();
-        ncz_jobFragment = new NCZ_JobFragment_();
-//		ncz_CommandList = new NCZ_CommandList_();
-//		ncz_CommandList.setArguments(bundle);
-        farmManagerFragment = new FarmManagerFragment_();
-//		ncz_commandOfList.setArguments(bundle);
-
-//		ncz_eventList = new NCZ_EventList_();
-//		ncz_eventList.setArguments(bundle);
-        contactsFragment = new ContactsFragment_();
-        ncz_contactsFragment = new NCZ_ContactsFragment_();
-
-        iFragment = new IFragment_();
-
-//		timethread = new TimeThread();
-//		timethread.setStop(false);
-//		timethread.setSleep(false);
-//		timethread.start();
-
-//		SqliteDb.InitDbutils(NCZ_MainActivity.this);
     }
 
     public void switchContent(Fragment from, Fragment to)
@@ -330,55 +247,6 @@ public class NCZ_MainActivity_New extends Activity
         }
     }
 
-    private void getCmdVideoNum()
-    {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", commembertab.getId());
-        params.addQueryStringParameter("action", "commandGetVidioCountByNCZ");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String aa = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        cmd_videoNum = result.getAffectedRows();
-                        HaveReadRecord haveReadRecord = SqliteDb.getHaveReadRecord(NCZ_MainActivity_New.this, AppContext.TAG_NCZ_CMD);
-                        if (haveReadRecord != null)
-                        {
-                            String num = haveReadRecord.getNum();
-                            if (num != null && !num.equals("") && (Integer.valueOf(num) < cmd_videoNum))
-                            {
-                                int num_new = cmd_videoNum - Integer.valueOf(num);
-//								fl_new.setVisibility(View.VISIBLE);
-                                tv_new.setText(String.valueOf(num_new));
-                            }
-                        } else
-                        {
-                            SqliteDb.saveHaveReadRecord(NCZ_MainActivity_New.this, AppContext.TAG_NCZ_CMD, String.valueOf(cmd_videoNum));
-                        }
-                    }
-                } else
-                {
-                    AppContext.makeToast(NCZ_MainActivity_New.this, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                String a = error.getMessage();
-                AppContext.makeToast(NCZ_MainActivity_New.this, "error_connectServer");
-            }
-        });
-    }
 
     class TimeThread extends Thread
     {
@@ -398,7 +266,6 @@ public class NCZ_MainActivity_New extends Activity
                     {
                         Thread.sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
-                        getCmdVideoNum();
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace();
@@ -423,9 +290,6 @@ public class NCZ_MainActivity_New extends Activity
     {
         super.onDestroy();
         AppManager.getAppManager().AppExit(NCZ_MainActivity_New.this);
-//		timethread.setStop(true);
-//		timethread.interrupt();
-//		timethread = null;
     }
 
     @Override

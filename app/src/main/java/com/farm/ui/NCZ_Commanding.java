@@ -1,9 +1,6 @@
 package com.farm.ui;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,7 +30,6 @@ import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
-import com.farm.widget.NewDataToast;
 import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -49,7 +45,6 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -60,8 +55,6 @@ public class NCZ_Commanding extends Fragment implements View.OnClickListener
 {
     boolean ishidding = false;
     TimeThread timethread;
-    SelectorFragment selectorUi;
-    Fragment mContent = new Fragment();
     private NCZ_CommandAdapter listAdapter;
     private int listSumData;
     private List<commandtab> listData = new ArrayList<commandtab>();
@@ -100,16 +93,10 @@ public class NCZ_Commanding extends Fragment implements View.OnClickListener
     void afterOncreate()
     {
         appContext = (AppContext) getActivity().getApplication();
-//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
-//        getActivity().registerReceiver(receiver_update, intentfilter_update);
-//        IntentFilter intentfilter_updatesort = new IntentFilter(AppContext.BROADCAST_UPDATEPCMD_SORT);
-//        getActivity().registerReceiver(receiver_updatesort, intentfilter_updatesort);
-//        workuserid = getArguments().getString("workuserid");
         timethread = new TimeThread();
         timethread.setStop(false);
         timethread.setSleep(false);
         timethread.start();
-//        getArealist();
         initAnimalListView();
     }
 
@@ -141,54 +128,6 @@ public class NCZ_Commanding extends Fragment implements View.OnClickListener
         return rootView;
     }
 
-    BroadcastReceiver receiver_updatesort = new BroadcastReceiver()// 从扩展页面返回信息
-    {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-        }
-    };
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
-    {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
-        }
-    };
-
-    public void switchContent(Fragment from, Fragment to)
-    {
-        if (mContent != to)
-        {
-            mContent = to;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if (!to.isAdded())
-            { // 先判断是否被add过
-                transaction.hide(from).add(R.id.top_container_cmd, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else
-            {
-                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
-            }
-        }
-    }
-
-//    private void initSelecter(String BELONG, String firstItemId, String firstItemName, String secondItemId, String secondItemName)
-//    {
-//        SelectRecords selectRecords = new SelectRecords();
-//        selectRecords.setBELONG(BELONG);
-//        selectRecords.setFirstid(firstItemId);
-//        selectRecords.setFirsttype(firstItemName);
-//        selectRecords.setSecondid(secondItemId);
-//        selectRecords.setSecondtype(secondItemName);
-//        selectRecords.setThirdid("");
-//        selectRecords.setThirdtype("");
-//        selectRecords.setId(1);
-//        SqliteDb.save(getActivity(), selectRecords);
-//    }
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
@@ -286,7 +225,7 @@ public class NCZ_Commanding extends Fragment implements View.OnClickListener
                             {
                                 if (isAdded())
                                 {
-                                    NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+//                                    NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                                 }
                             } else
                             {
@@ -531,65 +470,6 @@ public class NCZ_Commanding extends Fragment implements View.OnClickListener
         pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(this);
     }
 
-    public class TitleAdapter extends BaseAdapter
-    {
-        private Context context;
-        private List<String> listItems;
-        private LayoutInflater listContainer;
-        String type;
-
-        class ListItemView
-        {
-            public TextView tv_yq;
-        }
-
-        public TitleAdapter(Context context, List<String> data)
-        {
-            this.context = context;
-            this.listContainer = LayoutInflater.from(context);
-            this.listItems = data;
-        }
-
-        HashMap<Integer, View> lmap = new HashMap<Integer, View>();
-
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
-            type = listItems.get(position);
-            ListItemView listItemView = null;
-            if (lmap.get(position) == null)
-            {
-                convertView = listContainer.inflate(R.layout.yq_item, null);
-                listItemView = new ListItemView();
-                listItemView.tv_yq = (TextView) convertView.findViewById(R.id.tv_yq);
-                lmap.put(position, convertView);
-                convertView.setTag(listItemView);
-            } else
-            {
-                convertView = lmap.get(position);
-                listItemView = (ListItemView) convertView.getTag();
-            }
-            listItemView.tv_yq.setText(type);
-            return convertView;
-        }
-
-        @Override
-        public int getCount()
-        {
-            return listItems.size();
-        }
-
-        @Override
-        public Object getItem(int arg0)
-        {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int arg0)
-        {
-            return 0;
-        }
-    }
 
     @Override
     public void onClick(View v)

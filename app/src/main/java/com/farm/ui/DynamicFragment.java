@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -27,7 +28,6 @@ import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.parktab;
-import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -136,52 +136,6 @@ public class DynamicFragment extends Fragment
     }
 
 
-    private void getNewSaleList_test()
-    {
-        listData = FileHelper.getAssetsData(getActivity(), "GetDynamicData", DynamicBean.class);
-        if (listData != null)
-        {
-            adapter_dynamic = new Adapter_Dynamic(getActivity(), listData);
-            lv.setAdapter(adapter_dynamic);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-            {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                {
-                    Intent intent = null;
-                    String type = listData.get(position).getType();
-                    if (type.equals("ZL"))
-                    {
-                        intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-                    } else if (type.equals("GZ"))
-                    {
-                        intent = new Intent(getActivity(), NCZ_JobActivity_.class);
-                    } else if (type.equals("MQ"))
-                    {
-                        intent = new Intent(getActivity(), NCZ_MQActivity_.class);
-                    } else if (type.equals("XS"))
-                    {
-                        intent = new Intent(getActivity(), NCZ_FarmSale_.class);
-                    } else if (type.equals("KC"))
-                    {
-                        intent = new Intent(getActivity(), Ncz_wz_ll_.class);
-                    } else if (type.equals("SP"))
-                    {
-                        intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-                    } else if (type.equals("SJ"))
-                    {
-                        intent = new Intent(getActivity(), NCZ_SJActivity_.class);
-                    } else if (type.equals("DL"))
-                    {
-                        intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-                    }
-                    getActivity().startActivity(intent);
-                }
-            });
-        }
-
-    }
-
     private void getDynamicData()
     {
         if (getActivity() == null)
@@ -206,10 +160,7 @@ public class DynamicFragment extends Fragment
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-//                    if (result.getAffectedRows() != 0)
-//                    {
                     list = JSON.parseArray(result.getRows().toJSONString(), DynamicBean.class);
-
                     for (int i = 0; i < list.size(); i++)
                     {
                         if (list.get(i).getListdata().size() != 0)
@@ -290,7 +241,8 @@ public class DynamicFragment extends Fragment
 //                    }
                 } else
                 {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    Toast.makeText(getActivity(), "连接数据库异常", Toast.LENGTH_SHORT).show();
+//                    AppContext.makeToast(getActivity(), "error_connectDataBase");
 //                    if (!ishidding && timethread != null)
 //                    {
 //                        timethread.setSleep(false);
@@ -304,7 +256,8 @@ public class DynamicFragment extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                Toast.makeText(getActivity(), "连接服务器异常", Toast.LENGTH_SHORT).show();
+//                AppContext.makeToast(getActivity(), "error_connectServer");
 //                if (!ishidding && timethread != null)
 //                {
 //                    timethread.setSleep(false);

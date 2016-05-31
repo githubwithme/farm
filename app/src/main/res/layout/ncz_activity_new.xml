@@ -41,6 +41,32 @@
                     android:background="@drawable/screen_black"
                     android:clickable="false"
                     android:contentDescription=""/>
+
+                <FrameLayout
+                    android:id="@+id/fl_dynamic"
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_toRightOf="@id/imgbtn_home"
+                    android:visibility="gone">
+
+                    <com.farm.widget.CircleImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@color/red"
+                        app:border_color="@color/red"
+                        app:border_width="0dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_dynamic_new"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size_10"/>
+                </FrameLayout>
             </RelativeLayout>
 
             <TextView
@@ -208,39 +234,6 @@
                 android:textSize="@dimen/home_menu_textsize"/>
         </TableLayout>
 
-        <TableLayout
-            android:id="@+id/tl_money"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1.5">
-
-                <ImageButton
-                    android:id="@+id/imgbtn_money"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/btn_cw_selector"
-                    android:clickable="false"
-                    android:contentDescription=""/>
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_money"
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="联系人"
-                android:textColor="@color/menu_textcolor"
-                android:textSize="@dimen/home_menu_textsize"/>
-        </TableLayout>
 
         <TableLayout
             android:id="@+id/tl_me"
