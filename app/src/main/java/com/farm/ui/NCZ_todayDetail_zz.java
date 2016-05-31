@@ -95,6 +95,8 @@ public class NCZ_todayDetail_zz extends Fragment
     CircleImageView circle_gk;
     @ViewById
     CircleImageView circle_add;
+    @ViewById
+    CircleImageView add_plant;
 
 
     @Click
@@ -139,11 +141,11 @@ public class NCZ_todayDetail_zz extends Fragment
     @Click
     void ll_gk()
     {
-        Intent intent = new Intent(getActivity(), PG_PlantList_.class);
-        intent.putExtra("bean", plantGcd);
-        intent.putExtra("gcdid", plantGcd.getId());
-        intent.putExtra("gcdName", plantGcd.getPlantgcdName());
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), PG_PlantList_.class);
+//        intent.putExtra("bean", plantGcd);
+//        intent.putExtra("gcdid", plantGcd.getId());
+//        intent.putExtra("gcdName", plantGcd.getPlantgcdName());
+//        startActivity(intent);
     }
 
     @AfterViews
@@ -152,6 +154,7 @@ public class NCZ_todayDetail_zz extends Fragment
         circle_zl.setVisibility(View.GONE);
         if (commembertab.getnlevel().equals("0") || commembertab.getnlevel().equals("1"))
         {
+            add_plant.setVisibility(View.GONE);
             circle_add.setVisibility(View.GONE);
         } else
         {

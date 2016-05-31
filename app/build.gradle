@@ -44,13 +44,33 @@ android {
         versionName "2.0"
     }
 
-    buildTypes {
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
+    lintOptions {
+        abortOnError false
+    }
+    //配置keystore签名
+    signingConfigs {
         release {
+            storeFile file("F:\\项目\\农场管理\\keystore\\keystore_farm.jks")
+            storePassword "123456abc"
+            keyAlias "farmeasy"
+            keyPassword "123456abc"
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-    lintOptions {
-        abortOnError false
     }
 }

@@ -129,9 +129,9 @@ public class PlantObservationAdapter extends BaseAdapter
                     @Override
                     public void onClick(View v)
                     {
-                      String url=v.getTag().toString();
-                        Intent intent=new Intent(context, DisplayImage_.class);
-                        intent.putExtra("url",url);
+                        String url = v.getTag().toString();
+                        Intent intent = new Intent(context, DisplayImage_.class);
+                        intent.putExtra("url", url);
                         context.startActivity(intent);
                     }
                 });

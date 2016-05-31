@@ -28,7 +28,6 @@ import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
-import com.farm.widget.NewDataToast;
 import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -187,7 +186,7 @@ public class NCZ_CompleteJobFragment extends Fragment
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+//                                NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                             } else
                             {
                                 // NewDataToast.makeText(Common_MoreJob.this,

@@ -16,7 +16,8 @@ import java.util.List;
 /**
  * Created by user on 2016/5/26.
  */
-public class NCZ_DLAdapter extends BaseAdapter {
+public class NCZ_DLAdapter extends BaseAdapter
+{
     private Context context;
     private List<Wz_Storehouse> listItems;
     private LayoutInflater listContainer;
