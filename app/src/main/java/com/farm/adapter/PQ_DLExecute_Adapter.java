@@ -186,7 +186,7 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
         TextView tv_park = (TextView) convertView.findViewById(R.id.tv_park);
         Button btn_bianjie = (Button) convertView.findViewById(R.id.btn_bianjie);
         LinearLayout groupExpand = (LinearLayout) convertView.findViewById(R.id.groupExpand);
-        tv_park.setText(listData.get(groupPosition).getBatchTime() + "   " + listData.get(groupPosition).getBatchColor());
+        tv_park.setText(listData.get(groupPosition).getBatchTime() + "   " + listData.get(groupPosition).getBatchColor()+"丝带");
         if (listData.get(groupPosition).getBatchColor().equals("红色")) {
 //            view.setBackgroundColor(Color.parseColor("#365663"));
 //            rl_color.setBackground(R.color.red);

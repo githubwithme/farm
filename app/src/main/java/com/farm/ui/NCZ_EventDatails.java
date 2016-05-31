@@ -405,37 +405,29 @@ public class NCZ_EventDatails extends Activity{
             @Override
             public void onClick(View v) {
                 final int index_zp = ll_picture.indexOfChild(v);
-                View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+
+                Intent intent = new Intent(NCZ_EventDatails.this,DisplayImage_.class);
+                intent.putExtra("url",AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
+                startActivity(intent);
+     /*           View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                 myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
                     @Override
                     public void OnClick(View v) {
                         switch (v.getId()) {
                             case R.id.btn_sure:
-                          /*      Intent intent = new Intent(PG_EventDetail.this, ShowPhoto_.class);
-                                intent.putExtra("url", list_picture.get(index_zp).getFJLJ());
-                                startActivity(intent);*/
-//                                    File file = new File(list_picture.get(index_zp).getFJLJ());
-//                                    Intent intent = new Intent(Intent.ACTION_VIEW);
-//                                    intent.setDataAndType(Uri.fromFile(file), "image");
-//                                    startActivity(intent);
 
                                 Intent intent = new Intent(NCZ_EventDatails.this,DisplayImage_.class);
                                 intent.putExtra("url",AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
                                 startActivity(intent);
                                 break;
                             case R.id.btn_cancle:
-//                                    if (list_picture.get(index_zp).getFJID().equals("")) {
-                                deleteFJ(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
-//                                    }else {
-//                                        ll_picture.removeViewAt(index_zp);
-//                                        list_picture.remove(index_zp);
-//                                    }
+//                                deleteFJ(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
                                 myDialog.dismiss();
                                 break;
                         }
                     }
                 });
-                myDialog.show();
+                myDialog.show();*/
             }
         });
     }
