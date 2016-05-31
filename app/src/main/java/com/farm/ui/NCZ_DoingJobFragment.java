@@ -328,7 +328,7 @@ public class NCZ_DoingJobFragment extends Fragment
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.updateStatus(getActivity(), "0", jobtab.getId(), "1", commembertab.getId());
 
-                if (commembertab.getnlevel().equals("0"))
+                if (!jobtab.getstdJobId().equals("-1")&&!jobtab.getstdJobType().equals("-1"))
                 {
                     Intent intent = new Intent(getActivity(), Common_JobDetail_Show_.class);
                     intent.putExtra("bean", jobtab);// 因为list中添加了头部,因此要去掉一个
