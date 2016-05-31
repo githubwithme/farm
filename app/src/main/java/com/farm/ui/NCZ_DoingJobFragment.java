@@ -48,6 +48,7 @@ public class NCZ_DoingJobFragment extends Fragment
     private Common_TodayJobAdapter listAdapter;
     private int listSumData;
     private List<jobtab> listData = new ArrayList<jobtab>();
+    private AppContext appContext;
     private View list_footer;
     private TextView list_foot_more;
     private ProgressBar list_foot_progress;
@@ -57,6 +58,7 @@ public class NCZ_DoingJobFragment extends Fragment
     PullToRefreshListView frame_listview_news;
     @ViewById
     LinearLayout ll_tip;
+    Fragment mContent = new Fragment();
 
 
 
@@ -283,6 +285,7 @@ public class NCZ_DoingJobFragment extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
+                String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
                 if (!ishidding && timethread != null)
                 {
