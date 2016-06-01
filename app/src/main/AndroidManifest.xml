@@ -59,6 +59,10 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.NCZ_JobActivity_"/>
 
+        <activity android:name=".ui.NCZ_CreateOrder_SelectProduct_"/>
+        <activity android:name=".ui.NCZ_CreateOrder_SelectBatchTime_"/>
+        <activity android:name=".ui.PG_MainActivity_New_"/>
+        <activity android:name=".ui.NCZ_SaleActivity_"/>
         <activity android:name=".ui.NCZ_MainActivity_New_"/>
         <activity android:name=".ui.NCZ_FarmMapActivity_"/>
         <activity android:name=".ui.NCZ_MoreModule_"/>

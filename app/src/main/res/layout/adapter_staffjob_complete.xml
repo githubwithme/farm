@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="60dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="45dip"
+                android:layout_height="45dip"
+                android:layout_centerInParent="true">
+
+                <com.farm.widget.CircleImageView
+                    android:id="@+id/circle_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@color/transparent"
+                    app:border_color="@color/transparent"
+                    app:border_width="0px"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/expense_takepicture_select"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_staffname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_new_item"
+                android:layout_width="15dip"
+                android:layout_height="15dip"
+                android:layout_alignParentRight="true"
+                android:visibility="gone">
+
+                <com.farm.widget.CircleImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/hd"
+                    app:border_color="@color/red"
+                    app:border_width="0dp"/>
+
+                <TextView
+                    android:id="@+id/tv_new_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_10"/>
+            </FrameLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="4">
+
+            <TextView
+                android:id="@+id/tv_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="left|center_vertical"
+                android:text="完成"
+                android:textColor="@color/red"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tv_jobname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/tv_tip"
+                android:gravity="center"
+                android:text="植保"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_14"/>
+
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:gravity="center"
+                android:text=""
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dip"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_14"/>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="50dip"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/rl_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_record"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:background="@drawable/ht"/>
+
+                <FrameLayout
+                    android:id="@+id/fl_new"
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_gravity="right"
+                    android:visibility="gone">
+
+                    <com.farm.widget.CircleImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@color/red"
+                        app:border_color="@color/red"
+                        app:border_width="0dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_new"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size_10"/>
+                </FrameLayout>
+            </FrameLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

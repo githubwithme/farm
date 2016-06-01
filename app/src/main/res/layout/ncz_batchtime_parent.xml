@@ -50,6 +50,7 @@
             android:id="@+id/ll_allsele"
             android:layout_width="match_parent"
             android:layout_height="15dip"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <TextView
@@ -82,6 +83,7 @@
             android:id="@+id/ll_saleinfo"
             android:layout_width="match_parent"
             android:layout_height="15dip"
+            android:visibility="gone"
             android:layout_marginBottom="5dip"
             android:orientation="horizontal">
 

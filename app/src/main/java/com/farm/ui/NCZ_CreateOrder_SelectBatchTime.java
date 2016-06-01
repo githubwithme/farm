@@ -1,7 +1,10 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,16 +39,13 @@ import java.util.List;
 /**
  * Created by user on 2016/4/25.
  */
-@EActivity(R.layout.ncz_farmsale)
-public class NCZ_FarmSale extends Activity
+@EActivity(R.layout.ncz_createorder_selectbatchtime)
+public class NCZ_CreateOrder_SelectBatchTime extends Activity
 {
     List<parktab> listNewData = null;
-    //    List<SellOrderDetail_New> list_newsale = null;
     NCZ_FarmSale_Adapter ncz_farmSale_adapter;
     @ViewById
     ExpandableListView expandableListView;
-//    @ViewById
-//    TextView tv_numberofnewsale;
     @ViewById
     Button btn_orders;
 
@@ -55,26 +55,6 @@ public class NCZ_FarmSale extends Activity
         super.onResume();
     }
 
-//    @Click
-//    void btn_newsalelist()
-//    {
-//        if (tv_numberofnewsale.isShown())
-//        {
-//            Intent intent = new Intent(NCZ_FarmSale.this, NCZ_NewSaleList_.class);
-//            startActivity(intent);
-//        } else
-//        {
-//            Toast.makeText(this, "暂无待发布订单", Toast.LENGTH_SHORT).show();
-//        }
-//
-//    }
-
-    @Click
-    void btn_createorders()
-    {
-        Intent intent = new Intent(NCZ_FarmSale.this, NCZ_CreateOrder_SelectBatchTime_.class);
-        startActivity(intent);
-    }
 
     @Click
     void btn_back()
@@ -82,20 +62,12 @@ public class NCZ_FarmSale extends Activity
         finish();
     }
 
-    @Click
-    void btn_orders()
-    {
-        Intent intent = new Intent(NCZ_FarmSale.this, NCZ_OrderManager_.class);
-        startActivity(intent);
-
-    }
 
 
     @AfterViews
     void afterOncreate()
     {
         getBatchTimeByUid();
-//        iSExistNewSale();
 //        getBatchTimeByUid_test();
 //        getNewSaleList_test();
     }
@@ -105,25 +77,24 @@ public class NCZ_FarmSale extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATESELLORDER);
-//        registerReceiver(receiver_update, intentfilter_update);
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATESELLORDER);
+        registerReceiver(receiver_update, intentfilter_update);
     }
 
-//    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
-//    {
-//        @SuppressWarnings("deprecation")
-//        @Override
-//        public void onReceive(Context context, Intent intent)
-//        {
-//            getBatchTimeByUid();
-//            iSExistNewSale();
-//        }
-//    };
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getBatchTimeByUid();
+        }
+    };
 
     private void getBatchTimeByUid_test()
     {
-        listNewData = FileHelper.getAssetsData(NCZ_FarmSale.this, "getBatchTimeByUid", parktab.class);
-        ncz_farmSale_adapter = new NCZ_FarmSale_Adapter(NCZ_FarmSale.this, listNewData, expandableListView);
+        listNewData = FileHelper.getAssetsData(NCZ_CreateOrder_SelectBatchTime.this, "getBatchTimeByUid", parktab.class);
+        ncz_farmSale_adapter = new NCZ_FarmSale_Adapter(NCZ_CreateOrder_SelectBatchTime.this, listNewData, expandableListView);
         expandableListView.setAdapter(ncz_farmSale_adapter);
         utils.setListViewHeight(expandableListView);
         for (int i = 0; i < listNewData.size(); i++)
@@ -145,7 +116,7 @@ public class NCZ_FarmSale extends Activity
 
     private void getBatchTimeByUid()
     {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_FarmSale.this);
+        commembertab commembertab = AppContext.getUserInfo(NCZ_CreateOrder_SelectBatchTime.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
@@ -164,7 +135,7 @@ public class NCZ_FarmSale extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
-                        ncz_farmSale_adapter = new NCZ_FarmSale_Adapter(NCZ_FarmSale.this, listNewData, expandableListView);
+                        ncz_farmSale_adapter = new NCZ_FarmSale_Adapter(NCZ_CreateOrder_SelectBatchTime.this, listNewData, expandableListView);
                         expandableListView.setAdapter(ncz_farmSale_adapter);
                         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
                         {
@@ -174,10 +145,10 @@ public class NCZ_FarmSale extends Activity
                             {
                                 parktab parktab = listNewData.get(groupPosition);
                                 BatchTime batchTime = parktab.getBatchTimeList().get(childPosition);
-                                Intent intent = new Intent(NCZ_FarmSale.this, NCZ_FarmSale_BatchDetail_.class);
+                                Intent intent = new Intent(NCZ_CreateOrder_SelectBatchTime.this, NCZ_CreateOrder_SelectProduct_.class);
                                 intent.putExtra("parkid", parktab.getid());
                                 intent.putExtra("batchTime", batchTime.getBatchTime());
-                                NCZ_FarmSale.this.startActivity(intent);
+                                NCZ_CreateOrder_SelectBatchTime.this.startActivity(intent);
                                 return true;
                             }
                         });
@@ -195,7 +166,7 @@ public class NCZ_FarmSale extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(NCZ_FarmSale.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_CreateOrder_SelectBatchTime.this, "error_connectDataBase");
                     return;
                 }
 
@@ -204,52 +175,10 @@ public class NCZ_FarmSale extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_FarmSale.this, "error_connectServer");
+                AppContext.makeToast(NCZ_CreateOrder_SelectBatchTime.this, "error_connectServer");
             }
         });
     }
 
-//    private void iSExistNewSale()
-//    {
-//        commembertab commembertab = AppContext.getUserInfo(NCZ_FarmSale.this);
-//        RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("year", utils.getYear());
-//        params.addQueryStringParameter("action", "iSExistNewSale");//jobGetList1
-//        HttpUtils http = new HttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-//        {
-//            @Override
-//            public void onSuccess(ResponseInfo<String> responseInfo)
-//            {
-//                String a = responseInfo.result;
-//                Result result = JSON.parseObject(responseInfo.result, Result.class);
-//                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-//                {
-//                    if (result.getAffectedRows() != 0)
-//                    {
-//                        tv_numberofnewsale.setVisibility(View.VISIBLE);
-//                        tv_numberofnewsale.setText("1");
-//                    } else
-//                    {
-//                        tv_numberofnewsale.setVisibility(View.GONE);
-//                    }
-//
-//                } else
-//                {
-//                    AppContext.makeToast(NCZ_FarmSale.this, "error_connectDataBase");
-//                    return;
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(HttpException error, String msg)
-//            {
-//                AppContext.makeToast(NCZ_FarmSale.this, "error_connectServer");
-//
-//            }
-//        });
-//    }
 
 }

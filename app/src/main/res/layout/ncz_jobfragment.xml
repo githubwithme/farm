@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dip"
-            android:text="工作"
+            android:text="员工工作"
             android:textColor="@color/bg_text"
             android:textSize="16sp"/>
 
@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/view"
             android:gravity="center"
-            android:text="进行中"
+            android:text="进行中工作"
             android:textColor="@color/textcolor_titlebar"
             android:textSize="16sp"/>
 
@@ -42,7 +42,8 @@
             android:layout_centerHorizontal="true"
             android:layout_toRightOf="@+id/view"
             android:gravity="center"
-            android:text="已完成"
+            android:text="已评分工作"
+            android:layout_marginLeft="15dip"
             android:textColor="@color/textcolor_titlebar"
             android:textSize="16sp"/>
     </RelativeLayout>

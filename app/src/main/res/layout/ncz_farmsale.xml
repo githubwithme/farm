@@ -36,6 +36,7 @@
             <RelativeLayout
                 android:id="@+id/rl_newsale"
                 android:layout_width="70dip"
+                android:visibility="gone"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true">
 
@@ -48,7 +49,8 @@
                     android:gravity="center"
                     android:text="待发布订单"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_sp_14"/>
+                    android:textSize="@dimen/size_sp_14"
+                    />
 
                 <TextView
                     android:id="@+id/tv_numberofnewsale"
@@ -60,20 +62,10 @@
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@color/white"
-                    android:visibility="gone"/>
+                    />
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/btn_orders"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dip"
-                android:layout_toLeftOf="@+id/rl_newsale"
-                android:background="@null"
-                android:gravity="center"
-                android:text="订单管理"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_14"/>
+
         </RelativeLayout>
 
         <View
@@ -88,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/line"
-            android:layout_marginBottom="40dip"
+            android:layout_marginBottom="45dip"
             android:layout_marginTop="10dip"
             android:orientation="vertical">
 
@@ -101,6 +93,44 @@
                 android:dividerHeight="0dip"
                 android:groupIndicator="@null"/>
         </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:background="@color/green"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_orders"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:text="订单管理"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_14"/>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
+
+            <Button
+                android:id="@+id/btn_createorders"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:text="拟定订单"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_14"/>
+        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>

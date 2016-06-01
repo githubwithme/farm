@@ -42,14 +42,13 @@ import org.apache.http.entity.StringEntity;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-@EActivity(R.layout.ncz_activity_new)
-public class NCZ_MainActivity_New extends Activity
+@EActivity(R.layout.pg_mainactivity_new)
+public class PG_MainActivity_New extends Activity
 {
-    NCZ_FarmLive_Fragment ncz_farmLive_fragment;//农场实况
-//    NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
+    NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
     MyDialog myDialog;
     Fragment mContent = new Fragment();
-    DynamicFragment dynamicFragment;//动态fragment
+    PG_DynamicFragment pg_dynamicFragment;//动态fragment
     NCZ_JobFragment ncz_jobFragment;//工作fragment
     FarmManagerFragment farmManagerFragment;//农场工作fragment
     IFragment iFragment;//个人信息fragment
@@ -108,7 +107,7 @@ public class NCZ_MainActivity_New extends Activity
         tl_product.setSelected(false);
         tl_sale.setSelected(false);
         tl_farmlive.setSelected(false);
-        switchContent(mContent, dynamicFragment);
+        switchContent(mContent, pg_dynamicFragment);
     }
 
     @Click
@@ -161,7 +160,7 @@ public class NCZ_MainActivity_New extends Activity
         tl_sale.setSelected(true);
         tl_farmlive.setSelected(false);
 
-        switchContent(mContent, ncz_farmLive_fragment);
+        switchContent(mContent, ncz_contactsFragment);
     }
 
     @Click
@@ -185,7 +184,7 @@ public class NCZ_MainActivity_New extends Activity
     void afterOncreate()
     {
         //将错误信息提交
-        List<ExceptionInfo> list_exception = SqliteDb.getExceptionInfo(NCZ_MainActivity_New.this);
+        List<ExceptionInfo> list_exception = SqliteDb.getExceptionInfo(PG_MainActivity_New.this);
         if (list_exception != null)
         {
             for (int i = 0; i < list_exception.size(); i++)
@@ -194,17 +193,17 @@ public class NCZ_MainActivity_New extends Activity
             }
         }
         //将日志信息提交
-        List<LogInfo> list_LogInfo = SqliteDb.getLogInfo(NCZ_MainActivity_New.this);
+        List<LogInfo> list_LogInfo = SqliteDb.getLogInfo(PG_MainActivity_New.this);
         if (list_LogInfo != null)
         {
-            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(NCZ_MainActivity_New.this).toString(), utils.getToday());
+            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(PG_MainActivity_New.this).toString(), utils.getToday());
         }
 
-        AppManager.getAppManager().addActivity(NCZ_MainActivity_New.this);
-        dynamicFragment = new DynamicFragment_();
+        AppManager.getAppManager().addActivity(PG_MainActivity_New.this);
+        pg_dynamicFragment = new PG_DynamicFragment_();
         ncz_jobFragment = new NCZ_JobFragment_();
         farmManagerFragment = new FarmManagerFragment_();
-        ncz_farmLive_fragment = new NCZ_FarmLive_Fragment_();
+        ncz_contactsFragment = new NCZ_ContactsFragment_();
         iFragment = new IFragment_();
 //        List<Integer> guideResourceId = new ArrayList<Integer>();
 //        guideResourceId.add(R.drawable.yd666);
@@ -220,7 +219,7 @@ public class NCZ_MainActivity_New extends Activity
 //        tv_product.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
 //        tv_sale.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
 //        tv_money.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
-        switchContent(mContent, dynamicFragment);
+        switchContent(mContent, pg_dynamicFragment);
         tv_home.setTextColor(getResources().getColor(R.color.red));
         tl_home.setSelected(true);
     }
@@ -290,7 +289,7 @@ public class NCZ_MainActivity_New extends Activity
     protected void onDestroy()
     {
         super.onDestroy();
-        AppManager.getAppManager().AppExit(NCZ_MainActivity_New.this);
+        AppManager.getAppManager().AppExit(PG_MainActivity_New.this);
     }
 
     @Override
@@ -307,7 +306,7 @@ public class NCZ_MainActivity_New extends Activity
     private void showExistTip()
     {
         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(NCZ_MainActivity_New.this, R.style.MyDialog, dialog_layout, "确定退出吗？", "确定退出吗？", "退出", "取消", new CustomDialogListener()
+        myDialog = new MyDialog(PG_MainActivity_New.this, R.style.MyDialog, dialog_layout, "确定退出吗？", "确定退出吗？", "退出", "取消", new CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -316,8 +315,8 @@ public class NCZ_MainActivity_New extends Activity
                 {
                     case R.id.btn_sure:
                         myDialog.dismiss();
-                        AppManager.getAppManager().AppExit(NCZ_MainActivity_New.this);
-                        NotificationManager manger = (NotificationManager) NCZ_MainActivity_New.this.getSystemService(NCZ_MainActivity_New.this.NOTIFICATION_SERVICE);
+                        AppManager.getAppManager().AppExit(PG_MainActivity_New.this);
+                        NotificationManager manger = (NotificationManager) PG_MainActivity_New.this.getSystemService(PG_MainActivity_New.this.NOTIFICATION_SERVICE);
                         manger.cancel(101);
                         manger.cancel(100);
                         break;
@@ -350,7 +349,7 @@ public class NCZ_MainActivity_New extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        SqliteDb.deleteExceptionInfo(NCZ_MainActivity_New.this, exception.getExceptionid());
+                        SqliteDb.deleteExceptionInfo(PG_MainActivity_New.this, exception.getExceptionid());
                     }
                 }
             }
@@ -396,7 +395,7 @@ public class NCZ_MainActivity_New extends Activity
                     String rows = result.getRows().get(0).toString();
                     if (rows.equals("1"))
                     {
-                        SqliteDb.updateLogInfo(NCZ_MainActivity_New.this, list);
+                        SqliteDb.updateLogInfo(PG_MainActivity_New.this, list);
                     }
                 }
             }

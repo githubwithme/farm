@@ -11,18 +11,18 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:layout_marginTop="10dip"
-        android:background="@drawable/shape_round_border_red"
+        android:background="@color/green"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/ll_batchtime"
             android:layout_width="match_parent"
-            android:layout_height="30dip"
+            android:layout_height="40dip"
             android:orientation="horizontal">
 
 
             <TextView
-                android:id="@+id/tv_areaname"
+                android:id="@+id/tv_parkname"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"
@@ -32,24 +32,14 @@
                 android:textColor="@color/bg_text"
                 android:textSize="16sp"/>
 
-            <TextView
-                android:id="@+id/tv_number"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/tv_batchtime"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="待售350000"
-                android:textColor="@color/red"
-                android:textSize="16sp"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="15dip"
-            android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_allnumber"
@@ -84,9 +74,9 @@
             android:id="@+id/ll_saleinfo"
             android:layout_width="match_parent"
             android:layout_height="15dip"
-            android:visibility="gone"
             android:layout_marginBottom="5dip"
             android:orientation="horizontal"
+            android:visibility="gone"
             >
 
             <TextView

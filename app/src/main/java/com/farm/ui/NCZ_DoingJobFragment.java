@@ -12,9 +12,11 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.Adapter_StaffJob;
 import com.farm.adapter.Common_TodayJobAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
@@ -45,7 +47,7 @@ public class NCZ_DoingJobFragment extends Fragment
     commembertab commembertab;
     boolean ishidding = false;
     TimeThread timethread;
-    private Common_TodayJobAdapter listAdapter;
+    private Adapter_StaffJob listAdapter;
     private int listSumData;
     private List<jobtab> listData = new ArrayList<jobtab>();
     private AppContext appContext;
@@ -59,8 +61,6 @@ public class NCZ_DoingJobFragment extends Fragment
     @ViewById
     LinearLayout ll_tip;
     Fragment mContent = new Fragment();
-
-
 
 
     @AfterViews
@@ -286,7 +286,8 @@ public class NCZ_DoingJobFragment extends Fragment
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                Toast.makeText(getActivity(), "error_connectServer", Toast.LENGTH_SHORT).show();
+//                AppContext.makeToast(getActivity(), "error_connectServer");
                 if (!ishidding && timethread != null)
                 {
                     timethread.setSleep(false);
@@ -297,7 +298,7 @@ public class NCZ_DoingJobFragment extends Fragment
 
     private void initAnimalListView()
     {
-        listAdapter = new Common_TodayJobAdapter(getActivity(), listData);
+        listAdapter = new Adapter_StaffJob(getActivity(), listData);
         list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
@@ -328,7 +329,7 @@ public class NCZ_DoingJobFragment extends Fragment
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.updateStatus(getActivity(), "0", jobtab.getId(), "1", commembertab.getId());
 
-                if (!jobtab.getstdJobId().equals("-1")&&!jobtab.getstdJobType().equals("-1"))
+                if (!jobtab.getstdJobId().equals("-1") && !jobtab.getstdJobType().equals("-1"))
                 {
                     Intent intent = new Intent(getActivity(), Common_JobDetail_Show_.class);
                     intent.putExtra("bean", jobtab);// 因为list中添加了头部,因此要去掉一个

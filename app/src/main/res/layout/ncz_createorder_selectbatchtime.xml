@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rl_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/titlebar_height"
+            android:background="@color/white">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="30dip"
+                android:layout_height="@dimen/titlebar_height"
+                android:background="@null"
+                android:contentDescription=""
+                android:src="@drawable/back"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dip"
+                android:gravity="center"
+                android:text="选择批次"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_sp_18"/>
+
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/rl_titlebar"
+            android:background="@color/line_color"/>
+
+        <ScrollView
+            android:id="@+id/sl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/line"
+            android:layout_marginBottom="45dip"
+            android:layout_marginTop="10dip"
+            android:orientation="vertical">
+
+            <com.farm.widget.CustomExpandableListView
+                android:id="@+id/expandableListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:childDivider="@color/transparent"
+                android:divider="@color/transparent"
+                android:dividerHeight="0dip"
+                android:groupIndicator="@null"/>
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

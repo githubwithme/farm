@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg_white">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_white"
+              android:orientation="vertical">
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_color" />
 
     <com.farm.widget.PullToRefreshListView
         android:id="@+id/wz_frame_listview"
-        style="@style/wz_listview" />
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        style="@style/wz_listview"/>
 
 
 </LinearLayout>
