@@ -554,7 +554,8 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                 getActivity().getWindow().setAttributes(lp);
                 break;
             case R.id.btn_nonstandardprocommand:
-                intent = new Intent(getActivity(), AddNotStd_Cmd_Self_.class);
+//                intent = new Intent(getActivity(), AddNotStd_Cmd_Self_.class);
+                intent = new Intent(getActivity(), AddNotStd_Cmd_Self_new_.class);
                 intent.putExtra("level", "0");
                 startActivity(intent);
                 pw_command.dismiss();

@@ -103,6 +103,10 @@ public class GrowthTreeFragment_GCD extends Fragment
     CircleImageView circle_add;
     @ViewById
     CircleImageView add_plant;
+    @ViewById
+    TextView plant_gk;
+    @ViewById
+    TextView tv_addplant;
 
     @Click
     void add_plant()
@@ -116,6 +120,16 @@ public class GrowthTreeFragment_GCD extends Fragment
     }
 
     @Click
+    void tv_addplant()
+    {
+        Intent intent = new Intent(getActivity(), AddPlant_.class);
+        intent.putExtra("gcdid",plantGcd.getId());
+        intent.putExtra("gcdName", plantGcd.getPlantgcdName());
+        getActivity().startActivity(intent);
+    }
+
+
+    @Click
     void circle_add()
     {
         Intent intent = new Intent(getActivity(), AddPlantObservation_.class);
@@ -123,6 +137,18 @@ public class GrowthTreeFragment_GCD extends Fragment
         startActivity(intent);
     }
 
+    @Click
+    void plant_gk()
+    {
+        if (ll_gk.isShown())
+        {
+            ll_gk.setVisibility(View.GONE);
+        } else
+        {
+            ll_gk.setVisibility(View.VISIBLE);
+            ll_gk.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.in_top));
+        }
+    }
     @Click
     void circle_zl()
     {

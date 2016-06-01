@@ -38,6 +38,12 @@ public class AddPlant extends Activity
     String gcdid;
     String gcdName;
 
+
+    @Click
+    void imgbtn_back()
+    {
+        finish();
+    }
     @Click
     void imgbtn_addpicture()
     {

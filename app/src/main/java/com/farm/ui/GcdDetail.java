@@ -27,8 +27,7 @@ import java.util.List;
  * Created by ${hmj} on 2016/1/21.
  */
 @EActivity(R.layout.gcddetail)
-public class GcdDetail extends FragmentActivity
-{
+public class GcdDetail extends FragmentActivity {
     com.farm.bean.commembertab commembertab;
     PlantGcd plantGcd;
     com.farm.bean.areatab areatab;
@@ -48,52 +47,53 @@ public class GcdDetail extends FragmentActivity
     TextView tv_zz;
     @ViewById
     Button btn_add;
+    @ViewById
+    TextView plant_add;
+
 
     @Click
-    void btn_add()
-    {
+    void btn_add() {
         Intent intent = new Intent(GcdDetail.this, AddPlantObservation_.class);
         intent.putExtra("gcdid", plantGcd.getId());
         startActivity(intent);
     }
 
     @Click
-    void btn_back()
-    {
+    void plant_add() {
+        Intent intent = new Intent(GcdDetail.this, AddPlantObservation_.class);
+        intent.putExtra("gcdid", plantGcd.getId());
+        startActivity(intent);
+    }
+
+    @Click
+    void btn_back() {
         finish();
     }
 
     @Click
-    void tv_zz()
-    {
+    void tv_zz() {
         vPager.setCurrentItem(1);
     }
 
     @Click
-    void tv_title()
-    {
+    void tv_title() {
         vPager.setCurrentItem(0);
     }
 
     @AfterViews
-    void afterOncreate()
-    {
-        if (commembertab.getnlevel().equals("0") || commembertab.getnlevel().equals("1"))
-        {
+    void afterOncreate() {
+        if (commembertab.getnlevel().equals("0") || commembertab.getnlevel().equals("1")) {
             btn_add.setVisibility(View.GONE);
-        } else
-        {
+        } else {
 
         }
         setBackground(0);
         vPager.setOffscreenPageLimit(1);
         vPager.setIsScrollable(true);
         viewPagerAdapter_gcdDetail = new ViewPagerAdapter_GcdDetail(GcdDetail.this.getSupportFragmentManager(), vPager, fragmentList);
-        viewPagerAdapter_gcdDetail.setOnExtraPageChangeListener(new ViewPagerAdapter_GcdDetail.OnExtraPageChangeListener()
-        {
+        viewPagerAdapter_gcdDetail.setOnExtraPageChangeListener(new ViewPagerAdapter_GcdDetail.OnExtraPageChangeListener() {
             @Override
-            public void onExtraPageSelected(int i)
-            {
+            public void onExtraPageSelected(int i) {
 //                Toast.makeText(GcdDetail.this, "show", Toast.LENGTH_SHORT).show();
                 currentItem = i;
                 setBackground(i);
@@ -101,12 +101,10 @@ public class GcdDetail extends FragmentActivity
         });
     }
 
-    private void setBackground(int pos)
-    {
+    private void setBackground(int pos) {
         tv_zz.setBackgroundResource(R.color.white);
         tv_title.setBackgroundResource(R.color.white);
-        switch (pos)
-        {
+        switch (pos) {
             case 0:
                 tv_title.setBackgroundResource(R.drawable.red_bottom);
                 break;
@@ -118,8 +116,7 @@ public class GcdDetail extends FragmentActivity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         Bundle bundle = new Bundle();

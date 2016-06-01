@@ -59,9 +59,9 @@ public class NCZ_CommandDetail extends Activity
     @AfterViews
     void afterOncreate()
     {
-        switchContent(mContent, fragment_commandDetail);
-        btn_detail.setBackgroundResource(R.drawable.red_bottom);
-        btn_execute.setBackgroundResource(R.drawable.white);
+        switchContent(mContent, fragment_commandExecute);
+        btn_detail.setBackgroundResource(R.drawable.white);
+        btn_execute.setBackgroundResource(R.drawable.red_bottom);
     }
 
     @Override

@@ -42,7 +42,8 @@ import java.util.List;
 @EFragment
 public class AddNotStd_Cmd_StepSix extends Fragment
 {
-    AddNotStd_Cmd fragmentCallBack;
+//    AddNotStd_Cmd fragmentCallBack;
+AddNotStd_Cmd_new fragmentCallBack;
     List<goodslisttab_flsl> list_SelectCmdArea = new ArrayList<goodslisttab_flsl>();
     List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
     @ViewById
@@ -199,7 +200,8 @@ public class AddNotStd_Cmd_StepSix extends Fragment
     public void onAttach(Activity activity)
     {
         super.onAttach(activity);
-        fragmentCallBack = (AddNotStd_Cmd) activity;
+//        fragmentCallBack = (AddNotStd_Cmd) activity;
+        fragmentCallBack = (AddNotStd_Cmd_new) activity;
     }
     @Override
     public void onDestroyView()

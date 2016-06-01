@@ -355,13 +355,13 @@ public class CommandExecute_Adapter extends BaseExpandableListAdapter
         String getcommStatus = listData.get(groupPosition).getcommStatus();
         if (getcommStatus.equals("0"))
         {
-            tv_sd.setText("待反馈");
+            tv_sd.setText("未执行");
         } else if (getcommStatus.equals("1"))
         {
-            tv_sd.setText("已反馈");
+            tv_sd.setText("执行中");
         } else if (getcommStatus.equals("2"))
         {
-            tv_sd.setText("已收到");
+            tv_sd.setText("已执行");
         }
 
         return convertView;

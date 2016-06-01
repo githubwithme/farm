@@ -161,7 +161,7 @@ void btn_back()
         }
         if (et_note.getText().toString().equals(""))
         {
-            Toast.makeText(AddNotProductCommand_CZ.this, "请填写说明！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddNotProductCommand_CZ.this, "请填写指令内容！", Toast.LENGTH_SHORT).show();
             return;
         }
         if (tv_workday.getText().toString().equals(""))

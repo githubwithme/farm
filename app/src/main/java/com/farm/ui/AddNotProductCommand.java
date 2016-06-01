@@ -247,7 +247,7 @@ void imgbtn_back()
         }
         if (et_note.getText().toString().equals(""))
         {
-            Toast.makeText(AddNotProductCommand.this, "请填写说明！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddNotProductCommand.this, "请填写指令内容！", Toast.LENGTH_SHORT).show();
             return;
         }
         if (importance_id.equals(""))

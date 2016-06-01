@@ -266,7 +266,7 @@
                         android:layout_width="@dimen/width_colum"
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
-                        android:text="说明"
+                        android:text="指令内容*"
                         android:textColor="@color/black"
                         android:textSize="@dimen/size_14"/>
 
@@ -277,7 +277,7 @@
                         android:layout_span="3"
                         android:background="@null"
                         android:gravity="left|center_vertical"
-                        android:hint="请输入说明"
+                        android:hint="请详细填写指令内容（*）"
                         android:paddingLeft="40dip"
                         android:textColor="@color/bg_yellow"
                         android:textSize="@dimen/size_14"/>

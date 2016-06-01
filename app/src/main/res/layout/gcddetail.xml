@@ -10,6 +10,22 @@
         android:background="@color/white"
         android:layout_height="@dimen/titlebar_height">
 
+        <TextView
+
+           android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+           android:layout_centerVertical="true"
+            android:layout_marginRight="15dip"
+            android:layout_alignParentRight="true"
+            android:id="@+id/plant_add"
+            android:background="@drawable/shape_round_sq"
+            android:layout_width="60dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="添加植株观察"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_sp_13" />
         <ImageButton
             android:id="@+id/btn_back"
             android:layout_width="30dip"
@@ -48,6 +64,7 @@
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/titlebar_textsize"/>
         </LinearLayout>
+
 
         <ImageButton
             android:id="@+id/btn_search"
