@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
 
     <RelativeLayout
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@drawable/about"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_tip"
@@ -38,14 +38,14 @@
                 android:gravity="center"
                 android:text="加载失败！"
                 android:textColor="@color/gray"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
         </LinearLayout>
 
         <ProgressBar
             android:id="@+id/pb"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -68,7 +68,7 @@
                 android:gravity="center"
                 android:text="武鸣"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/size_sp_16"/>
+                android:textSize="@dimen/size_sp_16" />
 
             <TextView
                 android:id="@+id/tv_pqmc"
@@ -78,7 +78,7 @@
                 android:gravity="center"
                 android:text="第一片区"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/size_sp_16"/>
+                android:textSize="@dimen/size_sp_16" />
 
             <TextView
                 android:id="@+id/tv_zzsl"
@@ -88,7 +88,7 @@
                 android:gravity="center"
                 android:text="5株"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/size_sp_16"/>
+                android:textSize="@dimen/size_sp_16" />
         </LinearLayout>
 
 
@@ -111,7 +111,7 @@
                     android:layout_gravity="center"
                     android:src="@color/color_orange"
                     app:border_color="@color/transparent"
-                    app:border_width="0px"/>
+                    app:border_width="0px" />
 
                 <TextView
                     android:id="@+id/tv_pqname"
@@ -121,7 +121,7 @@
                     android:gravity="center"
                     android:text="未知片区"
                     android:textColor="@color/white"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
             </FrameLayout>
 
             <FrameLayout
@@ -137,7 +137,7 @@
                     android:layout_gravity="center"
                     android:src="@color/color_orange"
                     app:border_color="@color/transparent"
-                    app:border_width="0px"/>
+                    app:border_width="0px" />
 
                 <TextView
                     android:id="@+id/tv_yqname"
@@ -147,7 +147,7 @@
                     android:gravity="center"
                     android:text="未知园区"
                     android:textColor="@color/white"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
             </FrameLayout>
 
             <FrameLayout
@@ -164,7 +164,7 @@
                     android:layout_gravity="center"
                     android:src="@color/color_orange"
                     app:border_color="@color/transparent"
-                    app:border_width="0px"/>
+                    app:border_width="0px" />
 
                 <TextView
                     android:id="@+id/tv_zzs"
@@ -174,7 +174,7 @@
                     android:gravity="center"
                     android:text="未知株数"
                     android:textColor="@color/white"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </FrameLayout>
         </RelativeLayout>
 
@@ -182,7 +182,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dip"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/bg_ground5"/>
+            android:background="@drawable/bg_ground5" />
 
         <ListView
             android:id="@+id/lv_tree"
@@ -190,30 +190,63 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="60dip"
-            android:divider="@null"/>
+            android:divider="@null" />
 
         <LinearLayout
+            android:layout_marginLeft="10dip"
+            android:layout_marginBottom="30dip"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/plant_gk"
+                android:background="@drawable/shape_round_sq"
+                android:layout_width="70dip"
+                android:layout_height="25dip"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="概括"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_sp_15" />
+            <TextView
+                android:id="@+id/tv_addplant"
+                android:layout_marginTop="5dip"
+                android:background="@drawable/shape_round_sq"
+                android:layout_width="70dip"
+                android:layout_height="25dip"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="添加植株"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_sp_15" />
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
             android:layout_width="40dip"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="15dip"
-            android:layout_marginTop="5dip"
+            android:layout_marginTop="15dip"
             android:orientation="vertical">
 
             <FrameLayout
-                android:layout_width="40dip"
-                android:layout_height="40dip"
+                android:visibility="gone"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
                 android:layout_gravity="center_horizontal">
 
                 <com.farm.widget.CircleImageView
                     android:id="@+id/circle_gk"
-                    android:layout_width="35dip"
-                    android:layout_height="35dip"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
                     android:layout_gravity="center"
                     android:src="@color/color_orange"
                     app:border_color="@color/transparent"
-                    app:border_width="0px"/>
+                    app:border_width="0px" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -222,37 +255,39 @@
                     android:gravity="center"
                     android:text="概"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/size_sp_14"/>
+                    android:textSize="@dimen/size_sp_14" />
             </FrameLayout>
 
 
             <com.farm.widget.CircleImageView
-                android:visibility="gone"
                 android:id="@+id/circle_zl"
-                android:layout_width="35dip"
-                android:layout_height="35dip"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dip"
-                android:src="@drawable/ic_connect_circle"
-                app:border_color="@color/transparent"
-                app:border_width="0px"/>
-
-            <com.farm.widget.CircleImageView
-                android:id="@+id/circle_add"
-                android:layout_width="35dip"
-                android:layout_height="35dip"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dip"
-                android:src="@drawable/ic_add_orange"
-                app:border_color="@color/transparent"
-                app:border_width="0px"/>
-
-            <FrameLayout
-
-                android:layout_marginTop="15dip"
                 android:layout_width="40dip"
                 android:layout_height="40dip"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dip"
+                android:src="@drawable/ic_connect_circle"
+                android:visibility="gone"
+                app:border_color="@color/transparent"
+                app:border_width="0px" />
+
+            <com.farm.widget.CircleImageView
+
+                android:id="@+id/circle_add"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dip"
+                android:src="@drawable/ic_add_orange"
+                app:border_color="@color/transparent"
+                app:border_width="0px" />
+
+            <FrameLayout
+                android:visibility="gone"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dip"
+               >
 
                 <com.farm.widget.CircleImageView
                     android:id="@+id/add_plant"
@@ -261,7 +296,7 @@
                     android:layout_gravity="center"
                     android:src="@color/color_orange"
                     app:border_color="@color/transparent"
-                    app:border_width="0px"/>
+                    app:border_width="0px" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -270,10 +305,8 @@
                     android:gravity="center"
                     android:text="添加植株"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/size_sp_14"/>
+                    android:textSize="@dimen/size_sp_14" />
             </FrameLayout>
-
-
 
 
         </LinearLayout>
@@ -301,21 +334,21 @@
                     android:gravity="center"
                     android:text="概况"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/size_sp_12"/>
+                    android:textSize="@dimen/size_sp_12" />
 
                 <ImageView
                     android:layout_width="20dip"
                     android:layout_height="20dip"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/ic_next_white"/>
+                    android:background="@drawable/ic_next_white" />
 
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color"/>
+                android:background="@color/line_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -329,12 +362,12 @@
                     android:gravity="center"
                     android:text="园区"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/size_sp_12"/>
+                    android:textSize="@dimen/size_sp_12" />
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color" />
 
                 <TextView
                     android:id="@+id/tv_yq"
@@ -344,13 +377,13 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/size_sp_12"/>
+                    android:textSize="@dimen/size_sp_12" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color"/>
+                android:background="@color/line_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -364,12 +397,12 @@
                     android:gravity="center"
                     android:text="片区"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/size_sp_12"/>
+                    android:textSize="@dimen/size_sp_12" />
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color" />
 
                 <TextView
                     android:id="@+id/tv_pq"
@@ -379,13 +412,13 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/size_sp_12"/>
+                    android:textSize="@dimen/size_sp_12" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color"/>
+                android:background="@color/line_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -399,12 +432,12 @@
                     android:gravity="center"
                     android:text="观测点"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/size_sp_12"/>
+                    android:textSize="@dimen/size_sp_12" />
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color" />
 
                 <TextView
                     android:id="@+id/tv_gcd"
@@ -414,12 +447,14 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/size_sp_12"/>
+                    android:textSize="@dimen/size_sp_12" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color"/>
+                android:background="@color/line_color" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="25dip"
@@ -432,12 +467,12 @@
                     android:gravity="center"
                     android:text="株数"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/size_sp_12"/>
+                    android:textSize="@dimen/size_sp_12" />
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color" />
 
                 <TextView
                     android:id="@+id/tv_zs"
@@ -447,7 +482,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/size_sp_12"/>
+                    android:textSize="@dimen/size_sp_12" />
             </LinearLayout>
         </LinearLayout>
 

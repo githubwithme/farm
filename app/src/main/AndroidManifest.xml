@@ -170,6 +170,7 @@
         <activity android:name=".ui.NCZ_EventDatails_"/>
         <activity android:name=".ui.NCZ_DLdatail_"/>
         <activity android:name=".ui.DongtaiListview_"/>
+        <activity android:name=".ui.AddNotStd_Cmd_new_"/>
 
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
@@ -197,6 +198,7 @@
         <activity android:name=".ui.PG_CK_"/>
         <activity android:name=".ui.PG_WZ_CKDetail_"/>
         <activity android:name=".ui.PG_CKDetail_"/>
+        <activity android:name=".ui.AddNotStd_Cmd_Self_new_"/>
         <!-- 共用UI -->
         <activity android:name=".chart.BarChartActivity_"/>
         <activity android:name=".ui.ObservationRecordActivity_"/>

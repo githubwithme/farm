@@ -110,6 +110,9 @@ public class PG_CK extends Activity {
     TextView tv_shuju;
     @ViewById
     ImageView iv_dowm_tab;
+
+    @ViewById
+    RelativeLayout rl_pgck;
     String aa = "";
     List<goodslisttab> list_goodslisttab = new ArrayList<goodslisttab>();
     List<PG_CKBean> list_PG_CKBeanlist = new ArrayList<PG_CKBean>();
@@ -399,6 +402,7 @@ public class PG_CK extends Activity {
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0) {
+                        rl_pgck.setVisibility(View.GONE);
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
                         tv_head.setText(listNewData.get(0).getStorehouseName());
                         id = listNewData.get(0).getId();
@@ -407,6 +411,7 @@ public class PG_CK extends Activity {
                         tv_head.setText(name);
                         getCommandlist();
                     } else {
+                        rl_pgck.setVisibility(View.VISIBLE);
                         listNewData = new ArrayList<Wz_Storehouse>();
                     }
                 } else {

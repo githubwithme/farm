@@ -144,7 +144,14 @@ public class NCZ_CommandAdapter extends BaseAdapter
         }
         if (commandtab.getstdJobType().equals("0") || commandtab.getstdJobType().equals("-1"))
         {
-            listItemView.tv_cmdname.setText(commandtab.getcommNote().toString());
+            if (commandtab.getcommNote().toString().length()>20)
+            {
+                listItemView.tv_cmdname.setText(commandtab.getcommNote().toString().substring(0,19));
+            }else
+            {
+                listItemView.tv_cmdname.setText(commandtab.getcommNote().toString());
+            }
+
         } else
         {
             listItemView.tv_cmdname.setText(commandtab.getstdJobTypeName() + "-" + commandtab.getstdJobName());

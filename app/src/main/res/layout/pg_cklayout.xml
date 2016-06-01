@@ -4,7 +4,20 @@
     android:layout_height="match_parent"
     android:background="@color/light_gray"
     android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/rl_pgck"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:text="此园区没有仓库！"
+            android:textSize="25dip" />
 
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rl_pb"
         android:layout_width="match_parent"
@@ -46,6 +59,7 @@
             android:layout_centerInParent="true" />
     </RelativeLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dip"
@@ -77,6 +91,7 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:background="@color/line_color" />
+
     <TextView
         android:id="@+id/tv_shuju"
         android:layout_width="wrap_content"

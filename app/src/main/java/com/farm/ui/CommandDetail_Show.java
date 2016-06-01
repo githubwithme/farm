@@ -57,13 +57,13 @@ public class CommandDetail_Show extends FragmentActivity
     @Click
     void tv_execute()
     {
-        vPager.setCurrentItem(1);
+        vPager.setCurrentItem(0);
     }
 
     @Click
     void tv_detail()
     {
-        vPager.setCurrentItem(0);
+        vPager.setCurrentItem(1);
     }
 
     @AfterViews
@@ -92,11 +92,12 @@ public class CommandDetail_Show extends FragmentActivity
         switch (pos)
         {
             case 0:
-                tv_detail.setBackgroundResource(R.drawable.red_bottom);
-                break;
-            case 1:
                 tv_execute.setBackgroundResource(R.drawable.red_bottom);
                 break;
+            case 1:
+                tv_detail.setBackgroundResource(R.drawable.red_bottom);
+                break;
+
         }
 
     }
@@ -117,8 +118,9 @@ public class CommandDetail_Show extends FragmentActivity
         commandDetail_show_executeFragment = new CommandDetail_Show_ExecuteFragment_();
         commandDetail_show_detailFragment.setArguments(bundle);
         commandDetail_show_executeFragment.setArguments(bundle);
-        fragmentList.add(commandDetail_show_detailFragment);
+
         fragmentList.add(commandDetail_show_executeFragment);
+        fragmentList.add(commandDetail_show_detailFragment);
     }
 
 

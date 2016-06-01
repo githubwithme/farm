@@ -42,13 +42,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_detail"
+            android:id="@+id/btn_execute"
+            android:background="@null"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:background="@null"
-            android:text="详情"
+            android:text="执行情况"
             android:textColor="@color/bg_text"
             android:textSize="@dimen/size_sp_14"/>
 
@@ -57,14 +57,15 @@
             android:layout_height="match_parent"
             android:background="@color/line_color"/>
 
+
         <Button
-            android:id="@+id/btn_execute"
-            android:background="@null"
+            android:id="@+id/btn_detail"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="执行情况"
+            android:background="@null"
+            android:text="详情"
             android:textColor="@color/bg_text"
             android:textSize="@dimen/size_sp_14"/>
     </LinearLayout>

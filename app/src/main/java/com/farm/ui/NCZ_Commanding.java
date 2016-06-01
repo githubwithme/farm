@@ -488,7 +488,8 @@ public class NCZ_Commanding extends Fragment implements View.OnClickListener
                 getActivity().getWindow().setAttributes(lp);
                 break;
             case R.id.btn_nonstandardprocommand:
-                intent = new Intent(getActivity(), AddNotStd_Cmd_.class);
+//                intent = new Intent(getActivity(), AddNotStd_Cmd_.class);
+                intent = new Intent(getActivity(), AddNotStd_Cmd_new_.class);
                 intent.putExtra("level", "1");
                 startActivity(intent);
                 pw_command.dismiss();
