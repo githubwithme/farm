@@ -20,11 +20,21 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
+import com.farm.app.AppConfig;
 import com.farm.bean.BatchOfProduct;
 import com.farm.bean.BatchTimeBean;
 import com.farm.bean.CusPoint;
+import com.farm.bean.Result;
+import com.farm.bean.WZ_Detail;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 2015-8-9 下午9:27:19
@@ -881,4 +893,52 @@ public class utils
             return intersection;
         }
     }
+
+    public static double  getNum(String time1)
+    {
+        String[] num = new String[]{"0","0","0"};
+        String bb;
+        String aa=time1;
+//        string[] num = message.Split(new char[] { '件', '箱', '盒', '袋', '包', '瓶', '桶'});
+
+        String[] str = {"件", "箱", "盒", "袋", "包", "瓶", "桶"};
+        int l = 0;
+        for (int k = 0; k < str.length; k++)
+        {
+
+            String[] dd = aa.split(str[k]);
+            if (dd.length == 2)
+            {
+                aa = dd[1];
+                num[l] = dd[0];
+                l++;
+
+            } else
+            {
+                aa = dd[0];
+                //价格判断是否为数字
+                Pattern p = Pattern.compile("[0-9]*");
+                Matcher m = p.matcher(aa);
+                if (m.matches())
+                {
+                    num[l] = dd[0];
+                }
+
+            }
+
+        }
+        if (!num[2].equals("0"))
+        {
+            bb = num[2];
+        } else if (!num[1].equals("0") && num[2].equals("0"))
+        {
+            bb = num[1];
+        } else
+        {
+            bb = num[0];
+        }
+        return Double.valueOf(bb);
+    }
+
+
 }

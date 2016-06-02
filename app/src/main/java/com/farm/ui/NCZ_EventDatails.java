@@ -517,7 +517,7 @@ public class NCZ_EventDatails extends Activity{
                         {
                             final int index_zp = ll_video.indexOfChild(v);
                             View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                            myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
+                            myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "取消", new MyDialog.CustomDialogListener()
                             {
                                 @Override
                                 public void OnClick(View v)
@@ -532,8 +532,8 @@ public class NCZ_EventDatails extends Activity{
                                             startActivity(intent);
                                             break;
                                         case R.id.btn_cancle:
-                                            FJxx fj_SCFJ =list_video.get(index_zp);
-                                            deleteFJ(list_video.get(index_zp).getFJID(), list_video, ll_video, index_zp);
+//                                            FJxx fj_SCFJ =list_video.get(index_zp);
+//                                            deleteFJ(list_video.get(index_zp).getFJID(), list_video, ll_video, index_zp);
                                             myDialog.dismiss();
                                             break;
                                     }

@@ -18,6 +18,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.WZ_CRk;
+import com.farm.bean.WZ_Detail;
 import com.farm.bean.commembertab;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -42,7 +43,7 @@ public class NCZ_WZ_RKFragment extends Fragment
 {
 
     String goodsName;
-     String indate;
+    String indate;
     WZ_RKExecute_Adapter wz_rkExecute_adapter;
     @ViewById
     ExpandableListView expandableListView;
@@ -50,28 +51,33 @@ public class NCZ_WZ_RKFragment extends Fragment
     ImageButton imgbtn;
     @ViewById
     TextView et_goodsname;
+
     @Click
     void et_goodsname()
     {
         et_goodsname.setText("");
     }
+
     @Click
     void imgbtn()
     {
 
 
-        goodsName=et_goodsname.getText().toString();
+        goodsName = et_goodsname.getText().toString();
         getBreakOffInfoOfContract();
     }
+
     @AfterViews
     void afterOncreate()
     {
 
         getBreakOffInfoOfContract();
     }
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.ncz_wz_crlayout, container, false);
         return rootView;
     }
@@ -81,7 +87,7 @@ public class NCZ_WZ_RKFragment extends Fragment
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("goodsName",goodsName);
+        params.addQueryStringParameter("goodsName", goodsName);
         params.addQueryStringParameter("action", "getGoodsInByUid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -126,4 +132,6 @@ public class NCZ_WZ_RKFragment extends Fragment
             }
         });
     }
+
+
 }

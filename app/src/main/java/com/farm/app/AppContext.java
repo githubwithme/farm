@@ -7,6 +7,9 @@ import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.farm.bean.Result;
+import com.farm.bean.WZ_Detail;
 import com.farm.bean.commembertab;
 import com.farm.common.SqliteDb;
 import com.farm.common.StringUtils;
@@ -16,6 +19,9 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 2015-8-6 下午1:50:43
@@ -234,4 +240,5 @@ public class AppContext extends Application
             }
         });
     }
+
 }

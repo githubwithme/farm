@@ -85,6 +85,7 @@ public class PG_EventDetail extends Activity {
     commembertab commembertab;
     CustomDialog_ListView customDialog_listView;
     FragmentCallBack_AddPlantObservation fragmentCallBack = null;
+    String name="";
     String zzsl = "";
     ReportedBean reportedBean;
     @ViewById
@@ -121,7 +122,7 @@ View view_line2;
     @Click
     void tv_bianjie()
     {
-
+        name="删除";
         ll_add.setVisibility(View.VISIBLE);
         imgbtn_addpicture.setVisibility(View.VISIBLE);
         imgbtn_addvideo.setVisibility(View.VISIBLE);
@@ -136,6 +137,7 @@ View view_line2;
     }
     @Click
     void btn_case() {
+        name="取消";
         add_upload.setVisibility(View.GONE);
         ll_add.setVisibility(View.GONE);
         imgbtn_addpicture.setVisibility(View.GONE);
@@ -195,6 +197,7 @@ View view_line2;
 
     @AfterViews
     void aftercreate() {
+        name="取消";
         if(!reportedBean.getState().equals("0")||commembertab.getnlevel().equals("0"))
         {
             tv_bianjie.setVisibility(View.GONE);
@@ -409,36 +412,37 @@ View view_line2;
                 public void onClick(View v) {
                     final int index_zp = ll_picture.indexOfChild(v);
                     View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                    myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
+                    Intent intent = new Intent(PG_EventDetail.this,DisplayImage_.class);
+                    intent.putExtra("url",AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
+                    startActivity(intent);
+
+       /*             myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看",name, new MyDialog.CustomDialogListener() {
                         @Override
                         public void OnClick(View v) {
                             switch (v.getId()) {
                                 case R.id.btn_sure:
-                          /*      Intent intent = new Intent(PG_EventDetail.this, ShowPhoto_.class);
-                                intent.putExtra("url", list_picture.get(index_zp).getFJLJ());
-                                startActivity(intent);*/
-//                                    File file = new File(list_picture.get(index_zp).getFJLJ());
-//                                    Intent intent = new Intent(Intent.ACTION_VIEW);
-//                                    intent.setDataAndType(Uri.fromFile(file), "image");
-//                                    startActivity(intent);
+
 
                                     Intent intent = new Intent(PG_EventDetail.this,DisplayImage_.class);
                                     intent.putExtra("url",AppConfig.baseurl+list_picture.get(index_zp).getFJLJ());
                                     startActivity(intent);
                                     break;
                                 case R.id.btn_cancle:
-//                                    if (list_picture.get(index_zp).getFJID().equals("")) {
+                                    if(name.equals("取消"))
+                                    {
+                                        myDialog.dismiss();
+                                    }else
+                                    {
                                         deleteFJ(list_picture.get(index_zp).getFJID(), list_picture, ll_picture, index_zp);
-//                                    }else {
-//                                        ll_picture.removeViewAt(index_zp);
-//                                        list_picture.remove(index_zp);
-//                                    }
-                                    myDialog.dismiss();
+
+                                        myDialog.dismiss();
+                                    }
+
                                     break;
                             }
                         }
                     });
-                    myDialog.show();
+                    myDialog.show();*/
                 }
             });
         }
@@ -528,7 +532,7 @@ View view_line2;
                         {
                             final int index_zp = ll_video.indexOfChild(v);
                             View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                            myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
+                            myDialog = new MyDialog(PG_EventDetail.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", name, new MyDialog.CustomDialogListener()
                             {
                                 @Override
                                 public void OnClick(View v)
@@ -543,9 +547,16 @@ View view_line2;
                                             startActivity(intent);
                                             break;
                                         case R.id.btn_cancle:
-                                            FJxx fj_SCFJ =list_video.get(index_zp);
-                                            deleteFJ(list_video.get(index_zp).getFJID(), list_video, ll_video, index_zp);
-                                            myDialog.dismiss();
+                                            if(name.equals("取消"))
+                                            {
+                                                myDialog.dismiss();
+                                            }else {
+                                                FJxx fj_SCFJ =list_video.get(index_zp);
+                                                deleteFJ(list_video.get(index_zp).getFJID(), list_video, ll_video, index_zp);
+                                            }
+                                                myDialog.dismiss();
+
+
                                             break;
                                     }
                                 }

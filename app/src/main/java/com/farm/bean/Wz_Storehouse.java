@@ -23,6 +23,10 @@ public class Wz_Storehouse implements Parcelable
     public String goodsId;
     public String goodsName;
 
+
+    public String goodsStatistical;
+    public String goodsunit;
+
     public String batchNumber;//仓库物资
     public String batchName;
 
@@ -34,6 +38,27 @@ public class Wz_Storehouse implements Parcelable
 
     public String avePrice;
     public String stockValue;
+
+
+    public String getGoodsStatistical()
+    {
+        return goodsStatistical;
+    }
+
+    public void setGoodsStatistical(String goodsStatistical)
+    {
+        this.goodsStatistical = goodsStatistical;
+    }
+
+    public String getGoodsunit()
+    {
+        return goodsunit;
+    }
+
+    public void setGoodsunit(String goodsunit)
+    {
+        this.goodsunit = goodsunit;
+    }
 
     public String getId() {
         return Id;
@@ -178,6 +203,8 @@ public class Wz_Storehouse implements Parcelable
             p.setStoreName(source.readString());
             p.setGoodsId(source.readString());
             p.setGoodsName(source.readString());
+            p.setGoodsStatistical(source.readString());
+            p.setGoodsunit(source.readString());
 
             p.setBatchNumber(source.readString());//仓库物资
             p.setBatchName(source.readString());

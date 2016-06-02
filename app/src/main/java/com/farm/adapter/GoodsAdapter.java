@@ -7,11 +7,24 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
+import com.farm.bean.Result;
 import com.farm.bean.WZ_Detail;
+import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
 import com.farm.common.BitmapHelper;
+import com.farm.common.utils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GoodsAdapter extends BaseAdapter
@@ -22,6 +35,7 @@ public class GoodsAdapter extends BaseAdapter
     private WZ_Detail goodslisttab;
     private Context context;
     Holder view;
+    static  List<WZ_Detail> listdata =new ArrayList<WZ_Detail>();
 
     public GoodsAdapter(Context context, List<WZ_Detail> list)
     {
@@ -84,5 +98,6 @@ public class GoodsAdapter extends BaseAdapter
             tv_number = (TextView) view.findViewById(R.id.tv_number);
         }
     }
+
 
 }

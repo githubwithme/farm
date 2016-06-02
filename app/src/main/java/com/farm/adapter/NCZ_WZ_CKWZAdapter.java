@@ -69,7 +69,7 @@ public class NCZ_WZ_CKWZAdapter extends BaseAdapter
             listItemView = (ListItemView) view.getTag();
         }
         listItemView.goodsName.setText(Wz_Storehouse.getGoodsName());
-        listItemView.quantity.setText("数量:"+Wz_Storehouse.getQuantity());
+        listItemView.quantity.setText("重量:"+Wz_Storehouse.getGoodsStatistical()+Wz_Storehouse.getGoodsunit());
         listItemView.stockValue.setText("总值:"+Wz_Storehouse.getStockValue()+"元");
         return view;
     }

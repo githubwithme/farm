@@ -92,6 +92,9 @@ public class NCZ_WZ_YCFragment extends Fragment
                 intent.putExtra("storehouseId",Wz_Storehouse);
                 startActivity(intent);*/
                 WZ_YCxx wz_yCxx=listData.get(position-1);
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                AppContext.eventStatus(getActivity(), "5", wz_yCxx.getId(),  commembertab.getId());
+
                 Intent intent=new Intent(getActivity(),NCZ_WZ_YCDetail_.class);
                 intent.putExtra("wz_yCxx",wz_yCxx);
                 startActivity(intent);

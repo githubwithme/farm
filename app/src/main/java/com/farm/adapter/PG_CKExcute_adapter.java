@@ -7,13 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.farm.R;
+import com.farm.app.AppContext;
 import com.farm.bean.PG_WZckbean;
 import com.farm.bean.WZ_CRk;
 import com.farm.bean.WZ_RKxx;
+import com.farm.bean.commembertab;
 import com.farm.ui.NCZ_WZ_RKDetail_;
 import com.farm.ui.PG_WZ_CKDetail_;
 import com.farm.widget.CustomDialog_ListView;
@@ -196,7 +199,7 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
 
     //设置父item组件
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
+    public View getGroupView(final int groupPosition,final boolean isExpanded, View convertView, ViewGroup parent)
     {
         if (convertView == null)
         {
@@ -207,7 +210,36 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
         TextView batchName = (TextView) convertView.findViewById(R.id.batchName);
 
         TextView inGoodsValue = (TextView) convertView.findViewById(R.id.inGoodsValue);
+        FrameLayout fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
 
+
+
+
+        convertView.setTag(R.id.tag_pgck, listData.get(groupPosition));
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isExpanded) {
+                    mainlistview.collapseGroup(groupPosition);
+                } else {
+                    mainlistview.expandGroup(groupPosition);
+                }
+                WZ_CRk wz_cRk2 = (WZ_CRk) view.getTag(R.id.tag_pgck);
+                if (wz_cRk2.getFlashStr().equals("1"))
+                {
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    AppContext.eventStatus(context, "4", wz_cRk2.getBatchNumber(), commembertab.getId());
+                }
+
+
+            }
+        });
+        if (listData.get(groupPosition).getFlashStr().equals("1"))
+        {
+            fl_new_item.setVisibility(View.VISIBLE);
+        }else {
+            fl_new_item.setVisibility(View.GONE);
+        }
         String indata=listData.get(groupPosition).getRegDate().substring(0,listData.get(groupPosition).getRegDate().length()-8);
         inDate.setText(indata);
 

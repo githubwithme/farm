@@ -104,7 +104,8 @@ public class NCZ_Evented extends Fragment
 
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.eventStatus(getActivity(), "1", reportedBean.getEventId(), commembertab.getId());
-                Intent intent = new Intent(getActivity(), PG_EventDetail_.class);
+//                Intent intent = new Intent(getActivity(), PG_EventDetail_.class);
+                Intent intent = new Intent(getActivity(), NCZ_EventDatails_.class);
 
                 intent.putExtra("reportedBean", reportedBean);
                 startActivity(intent);

@@ -28,12 +28,24 @@ public class WZ_CRk implements Parcelable
     public String regDate;
     public String inType;  //c
     public String isConfirm;  //c
+    public String flashStr;  //c
     public List<WZ_RKxx> wzcrkxx;
     public List<PG_WZckbean> breakOffList;
+
+
+    public String getFlashStr() {
+        return flashStr;
+    }
+
+    public void setFlashStr(String flashStr) {
+        this.flashStr = flashStr;
+    }
 
     public List<PG_WZckbean> getBreakOffList() {
         return breakOffList;
     }
+
+
 
     public void setBreakOffList(List<PG_WZckbean> breakOffList) {
         this.breakOffList = breakOffList;
@@ -188,6 +200,7 @@ public class WZ_CRk implements Parcelable
             p.setRegDate(source.readString());
             p.setInType(source.readString());
             p.setIsConfirm(source.readString());
+            p.setFlashStr(source.readString());
             p.wzcrkxx = source.readArrayList(plantgrowthtab.class.getClassLoader());
             p.breakOffList = source.readArrayList(plantgrowthtab.class.getClassLoader());
             return p;
@@ -215,6 +228,7 @@ public class WZ_CRk implements Parcelable
         p.writeString(regDate);
         p.writeString(inType);
         p.writeString(isConfirm);
+        p.writeString(flashStr);
         p.writeList(wzcrkxx);
         p.writeList(breakOffList);
     }
