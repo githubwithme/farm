@@ -20,7 +20,7 @@
             android:layout_width="45dip"
             android:layout_height="45dip"
             android:layout_centerVertical="true"
-            android:src="@color/transparent"
+            android:src="@drawable/noimg"
             app:border_color="@color/transparent"
             app:border_width="0px"/>
 

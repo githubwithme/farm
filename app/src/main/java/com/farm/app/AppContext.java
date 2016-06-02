@@ -37,6 +37,7 @@ public class AppContext extends Application
     public final static String BROADCAST_UPDATEAllORDER= "BROADCAST_UPDATEAllORDER";
     public final static String BROADCAST_UPDATENEWSALELIST= "BROADCAST_UPDATENEWSALELIST";
     public final static String BROADCAST_UPDATESELLORDER= "BROADCAST_UPDATESELLORDER";
+    public final static String BROADCAST_FINISHSELECTBATCHTIME= "BROADCAST_FINISHSELECTBATCHTIME";
     public final static String BROADCAST_FINISH= "BROADCAST_FINISH";
     public final static String BROADCAST_UPDATESALENUMBER= "BROADCAST_UPDATESALENUMBER";
     public final static String BROADCAST_UPDATENOTPAYORDER= "BROADCAST_UPDATENOTPAYORDER";
@@ -56,7 +57,7 @@ public class AppContext extends Application
     public final static String BROADCAST_PG_DATA = "PG_DATA";
     public final static String BROADCAST_Record = "EVENT_RECORD";
 
-    public final static int TIME_REFRESH = 10000;
+    public final static int TIME_REFRESH = 5000;
     public final static int TIME_GZ = 60000;
 
     public final static int TIME_STOPWATCH = 1001;

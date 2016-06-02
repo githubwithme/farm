@@ -102,9 +102,9 @@ public class NCZ_todayDetail_zz extends Fragment
     @Click
     void circle_add()
     {
-        Intent intent = new Intent(getActivity(), AddPlantObservation_.class);
-        intent.putExtra("gcdid", plantGcd.getId());
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), AddPlantObservation_.class);
+//        intent.putExtra("gcdid", plantGcd.getId());
+//        startActivity(intent);
     }
 
     @Click

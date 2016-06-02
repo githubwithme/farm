@@ -106,10 +106,6 @@ public class CZ_PlantGcdListAdapter extends BaseAdapter
             listItemView.btn_plantlist.setId(position);
             listItemView.iv_record.setId(position);
             commembertab commembertab = AppContext.getUserInfo(context);
-            if (commembertab.getnlevel().equals("0"))// 农场主去掉添加功能
-            {
-                listItemView.btn_plantlist.setVisibility(View.GONE);
-            }
             listItemView.iv_record.setOnClickListener(new OnClickListener()
             {
                 @Override
