@@ -116,7 +116,8 @@ public class PG_AddEvent extends Activity {
 
 
     }
-    @LongClick
+//    @LongClick
+    @Click
     void tv_type()
     {
         JSONObject jsonObject = utils.parseJsonFile(PG_AddEvent.this, "dictionary.json");

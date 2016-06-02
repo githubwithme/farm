@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -34,6 +35,7 @@ public class NCZ_WZ_YClistAdapter extends BaseAdapter
         public TextView local;
         public TextView goodname;
         public TextView expdata;
+        public FrameLayout fl_new_item;
     }
     @Override
     public int getCount() {
@@ -64,6 +66,7 @@ public class NCZ_WZ_YClistAdapter extends BaseAdapter
             listItemView.local = (TextView) view.findViewById(R.id.local);
             listItemView.goodname = (TextView) view.findViewById(R.id.goodname);
             listItemView.expdata = (TextView) view.findViewById(R.id.expdata);
+            listItemView.fl_new_item = (FrameLayout) view.findViewById(R.id.fl_new_item);
 
             //数据添加
             listItemView.indata.setText(wz_yCxx.getNowDate());
@@ -86,13 +89,19 @@ public class NCZ_WZ_YClistAdapter extends BaseAdapter
 
 
 
+
             lmap.put(i, view);
             view.setTag(listItemView);
         }else {
             view = lmap.get(i);
             listItemView = (ListItemView) view.getTag();
         }
-
+        if (wz_yCxx.getFlashStr().equals("1"))
+        {
+            listItemView.fl_new_item.setVisibility(View.VISIBLE);
+        }else {
+            listItemView.fl_new_item.setVisibility(View.GONE);
+        }
 
         return view;
     }

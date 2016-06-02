@@ -28,6 +28,29 @@ public class WZ_Detail implements Parcelable
     public String three;
     public String threeNum ;
     public String GoodsStatistical ;
+    public String isExchange ;
+    public String costUnit ;
+
+
+    public String getIsExchange()
+    {
+        return isExchange;
+    }
+
+    public void setIsExchange(String isExchange)
+    {
+        this.isExchange = isExchange;
+    }
+
+    public String getCostUnit()
+    {
+        return costUnit;
+    }
+
+    public void setCostUnit(String costUnit)
+    {
+        this.costUnit = costUnit;
+    }
 
     public String getFirs() {
         return firs;
@@ -180,6 +203,8 @@ public class WZ_Detail implements Parcelable
             p.setThree(source.readString());
             p.setThreeNum(source.readString());
             p.setGoodsStatistical(source.readString());
+            p.setIsExchange(source.readString());
+            p.setCostUnit(source.readString());
 
 
             return  p;
@@ -210,6 +235,8 @@ public class WZ_Detail implements Parcelable
         p.writeString(three);
         p.writeString(threeNum );
         p.writeString(GoodsStatistical);
+        p.writeString(isExchange);
+        p.writeString(costUnit);
 
 
     }

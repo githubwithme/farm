@@ -17,6 +17,7 @@ import com.farm.adapter.NCZ_WZ_CKWZAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
+import com.farm.bean.WZ_Detail;
 import com.farm.bean.Wz_Storehouse;
 import com.farm.R;
 import com.farm.bean.commembertab;
@@ -54,6 +55,7 @@ public class NCZ_CKWZDetail extends FragmentActivity {
     NCZ_CKWZDetailAdapter listadpater;
     commembertab commembertab;
     private List<Wz_Storehouse> listData = new ArrayList<Wz_Storehouse>();
+    private List<WZ_Detail> wz_details = new ArrayList<WZ_Detail>();
     Wz_Storehouse Wz_Storehouse;
     Wz_Storehouse wz_storehouse;
     @ViewById
@@ -76,7 +78,7 @@ public class NCZ_CKWZDetail extends FragmentActivity {
 //        tv_title.setText(wz_storehouse.getGoodsName());
         tv_title.setText(localName);
         tv_title.setText(goodsName);
-        getListData();
+        getGoodsxx();
     }
 
     @Override
@@ -93,7 +95,6 @@ public class NCZ_CKWZDetail extends FragmentActivity {
     }
 
     private void getListData() {
-
         commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -111,7 +112,7 @@ public class NCZ_CKWZDetail extends FragmentActivity {
                 {
                     if (result.getAffectedRows() != 0) {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
-                        listadpater = new NCZ_CKWZDetailAdapter(NCZ_CKWZDetail.this, listNewData);
+                        listadpater = new NCZ_CKWZDetailAdapter(NCZ_CKWZDetail.this, listNewData,wz_details);
                         wz_frame_listview.setAdapter(listadpater);
                     } else {
                         listNewData = new ArrayList<Wz_Storehouse>();
@@ -132,5 +133,38 @@ public class NCZ_CKWZDetail extends FragmentActivity {
             }
         });
     }
+    private void getGoodsxx() {
 
+        commembertab commembertab = AppContext.getUserInfo(this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("goodsId", goodsId);
+        params.addQueryStringParameter("action", "getGoodsXxById");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                String a = responseInfo.result;
+                List<WZ_Detail> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() == 0) {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), WZ_Detail.class);
+                        wz_details.addAll(listNewData);
+                        getListData();
+                    } else {
+                        listNewData = new ArrayList<WZ_Detail>();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg) {
+                String a = error.getMessage();
+                AppContext.makeToast(NCZ_CKWZDetail.this, "error_connectServer");
+
+            }
+        });
+    }
 }

@@ -7,12 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.farm.R;
+import com.farm.app.AppContext;
 import com.farm.bean.WZ_CRk;
 import com.farm.bean.WZ_RKxx;
+import com.farm.bean.commembertab;
 import com.farm.ui.NCZ_WZ_CKDetail_;
 import com.farm.ui.NCZ_WZ_RKDetail_;
 import com.farm.widget.CustomDialog_ListView;
@@ -186,7 +190,7 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
 
     //设置父item组件
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
+    public View getGroupView(final int groupPosition,final boolean isExpanded, View convertView, ViewGroup parent)
     {
         if (convertView == null)
         {
@@ -198,13 +202,53 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
         TextView loadingFee = (TextView) convertView.findViewById(R.id.loadingFee);
         TextView shippingFee = (TextView) convertView.findViewById(R.id.shippingFee);
         TextView inGoodsValue = (TextView) convertView.findViewById(R.id.inGoodsValue);
+        FrameLayout fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
+        LinearLayout groupExpand = (LinearLayout) convertView.findViewById(R.id.groupExpand);
+
+        convertView.setTag(R.id.tag_ck, listData.get(groupPosition));
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isExpanded) {
+                    mainlistview.collapseGroup(groupPosition);
+                } else {
+                    mainlistview.expandGroup(groupPosition);
+                }
+                WZ_CRk wz_cRk2 = (WZ_CRk) view.getTag(R.id.tag_ck);
+                if (wz_cRk2.getFlashStr().equals("1"))
+                {
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    AppContext.eventStatus(context, "4", wz_cRk2.getBatchNumber(), commembertab.getId());
+                }
+
+            }
+        });
+/*        groupExpand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isExpanded) {
+                    mainlistview.collapseGroup(groupPosition);
+                } else {
+                    mainlistview.expandGroup(groupPosition);
+                }
+            }
+        });*/
+        if (listData.get(groupPosition).getFlashStr().equals("1"))
+        {
+            fl_new_item.setVisibility(View.VISIBLE);
+        }else {
+            fl_new_item.setVisibility(View.GONE);
+        }
+
+
 //        String indata=listData.get(groupPosition).getInDate().substring(0,listData.get(groupPosition).getInDate().length()-8);
         inDate.setText(listData.get(groupPosition).getInDate());
 //        inDate.setText(indata);
         batchName.setText(listData.get(groupPosition).getInType());
         loadingFee.setText("装卸费:"+listData.get(groupPosition).getLoadingFee()+"元");
         shippingFee.setText("运费:" + listData.get(groupPosition).getShippingFee() + "元");
-        inGoodsValue.setText(listData.get(groupPosition).getInGoodsValue() + "元");
+        double a= Double.valueOf(listData.get(groupPosition).getInGoodsValue())+Double.valueOf(listData.get(groupPosition).getLoadingFee())+Double.valueOf(listData.get(groupPosition).getShippingFee());
+        inGoodsValue.setText(a + "元");
         return convertView;
     }
     @Override

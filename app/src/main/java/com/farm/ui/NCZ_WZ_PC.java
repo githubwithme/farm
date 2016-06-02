@@ -50,12 +50,13 @@ import java.util.List;
  * Created by user on 2016/2/26.
  */
 @EFragment
-public class NCZ_WZ_PC extends Fragment  {
+public class NCZ_WZ_PC extends Fragment
+{
 
 
     private NCZ_WZ_PCAdapter listadpater;
-//    goodslisttab goods;
-WZ_Detail goods;
+    //    goodslisttab goods;
+    WZ_Detail goods;
     Fragment mContent = new Fragment();
     private int listSumData;
     private View list_footer;//5
@@ -65,37 +66,42 @@ WZ_Detail goods;
     private AppContext appContext;
     @ViewById
     PullToRefreshListView wz_frame_listview;
-@AfterViews
-void after()
-{
-    initAnimalListView();
-}
+
+    @AfterViews
+    void after()
+    {
+        initAnimalListView();
+    }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.ncz_wz_pclayout,container,false);
-        goods=getArguments().getParcelable("goods");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.ncz_wz_pclayout, container, false);
+        goods = getArguments().getParcelable("goods");
         return view;
     }
 
-    private void initAnimalListView() {
-        listadpater=new NCZ_WZ_PCAdapter(getActivity(), listData);
+    private void initAnimalListView()
+    {
+        listadpater = new NCZ_WZ_PCAdapter(getActivity(), listData);
         list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         wz_frame_listview.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
         wz_frame_listview.setAdapter(listadpater);
-        wz_frame_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        wz_frame_listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer)
                     return;
 //                Intent intent=new Intent(getActivity(),NCZ_CKWZDetail_.class);
-                WZ_Pcxx wz_pcxx=listData.get(position-1);
-                Intent intent=new Intent(getActivity(),NCZ_WZ_PCDetail_.class);
-                intent.putExtra("goods",goods);
-                intent.putExtra("wz_pcxx",wz_pcxx);
+                WZ_Pcxx wz_pcxx = listData.get(position - 1);
+                Intent intent = new Intent(getActivity(), NCZ_WZ_PCDetail_.class);
+                intent.putExtra("goods", goods);
+                intent.putExtra("wz_pcxx", wz_pcxx);
                 startActivity(intent);
                /* Wz_Storehouse Wz_Storehouse=listData.get((position-1));
                 Intent intent=new Intent(getActivity(),NCZ_WZ_CKWZActivity_.class);
@@ -104,8 +110,10 @@ void after()
 
             }
         });
-        wz_frame_listview.setOnScrollListener(new AbsListView.OnScrollListener() {
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
+        wz_frame_listview.setOnScrollListener(new AbsListView.OnScrollListener()
+        {
+            public void onScrollStateChanged(AbsListView view, int scrollState)
+            {
                 wz_frame_listview.onScrollStateChanged(view, scrollState);
 
                 // 数据为空--不用继续下面代码了
@@ -113,15 +121,18 @@ void after()
 
                 // 判断是否滚动到底部
                 boolean scrollEnd = false;
-                try {
+                try
+                {
                     if (view.getPositionForView(list_footer) == view.getLastVisiblePosition())
                         scrollEnd = true;
-                } catch (Exception e) {
+                } catch (Exception e)
+                {
                     scrollEnd = false;
                 }
 
                 int lvDataState = StringUtils.toInt(wz_frame_listview.getTag());
-                if (scrollEnd && lvDataState == UIHelper.LISTVIEW_DATA_MORE) {
+                if (scrollEnd && lvDataState == UIHelper.LISTVIEW_DATA_MORE)
+                {
                     wz_frame_listview.setTag(UIHelper.LISTVIEW_DATA_LOADING);
                     list_foot_more.setText(R.string.load_ing);// 之前显示为"完成"加载
                     list_foot_progress.setVisibility(View.VISIBLE);
@@ -133,32 +144,39 @@ void after()
                 }
             }
 
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+            {
                 wz_frame_listview.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
-        wz_frame_listview.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-            public void onRefresh() {
+        wz_frame_listview.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener()
+        {
+            public void onRefresh()
+            {
                 // loadLvNewsData(curNewsCatalog, 0, lvNewsHandler,
                 // UIHelper.LISTVIEW_ACTION_REFRESH);
                 getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
             }
         });
         // 加载资讯数据
-        if (listData.isEmpty()) {
+        if (listData.isEmpty())
+        {
             getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
         }
     }
+
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Context context, Intent intent)
+        {
             getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, wz_frame_listview, listadpater, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE_RECORD, 0);
         }
     };
 
-    private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX) {
+    private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
+    {
 
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
@@ -166,20 +184,25 @@ void after()
         params.addQueryStringParameter("goodsId", goods.getGoodsId());
         params.addQueryStringParameter("action", "getWzpcByWzid");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<WZ_Pcxx> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), WZ_Pcxx.class);
-                    } else {
+                    } else
+                    {
                         listNewData = new ArrayList<WZ_Pcxx>();
                     }
-                } else {
+                } else
+                {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
 
                     return;
@@ -187,21 +210,27 @@ void after()
                 // 数据处理
                 int size = listNewData.size();
 
-                switch (actiontype) {
+                switch (actiontype)
+                {
                     case UIHelper.LISTVIEW_ACTION_INIT:// 初始化
                     case UIHelper.LISTVIEW_ACTION_REFRESH:// 顶部刷新
                     case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:// 页面切换
                         int newdata = 0;// 该变量为新加载数据数量-只有顶部刷新才会使用到
-                        switch (objtype) {
+                        switch (objtype)
+                        {
                             case UIHelper.LISTVIEW_DATATYPE_NEWS:
                                 listSumData = size;
-                                if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
+                                if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
+                                {
                                     if (listData.size() > 0)// 页面切换时，若之前列表中已有数据，则往上面添加，并判断去除重复
                                     {
-                                        for (WZ_Pcxx Wz_Storehouse1 : listNewData) {
+                                        for (WZ_Pcxx Wz_Storehouse1 : listNewData)
+                                        {
                                             boolean b = false;
-                                            for (WZ_Pcxx Wz_Storehouse2 : listData) {
-                                                if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())||Wz_Storehouse1.getBatchNumber().equals(Wz_Storehouse2.getBatchNumber())) {
+                                            for (WZ_Pcxx Wz_Storehouse2 : listData)
+                                            {
+                                                if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId()) || Wz_Storehouse1.getBatchNumber().equals(Wz_Storehouse2.getBatchNumber()))
+                                                {
                                                     b = true;
                                                     break;
                                                 }
@@ -209,7 +238,8 @@ void after()
                                             if (!b)// 两个不相等才添加
                                                 newdata++;
                                         }
-                                    } else {
+                                    } else
+                                    {
                                         newdata = size;
                                     }
                                 }
@@ -219,11 +249,14 @@ void after()
                             case UIHelper.LISTVIEW_DATATYPE_BLOG:
                             case UIHelper.LISTVIEW_DATATYPE_COMMENT:
                         }
-                        if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
+                        if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
+                        {
                             // 提示新加载数据
-                            if (newdata > 0) {
+                            if (newdata > 0)
+                            {
                                 NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
-                            } else {
+                            } else
+                            {
                                 // NewDataToast.makeText(NCZ_PQ_CommandList.this,
                                 // getString(R.string.new_data_toast_none), false,
                                 // R.raw.newdatatoast).show();
@@ -231,21 +264,27 @@ void after()
                         }
                         break;
                     case UIHelper.LISTVIEW_ACTION_SCROLL:// 底部刷新，并且判断去除重复数据
-                        switch (objtype) {
+                        switch (objtype)
+                        {
                             case UIHelper.LISTVIEW_DATATYPE_NEWS:
                                 listSumData += size;
-                                if (listNewData.size() > 0) {
-                                    for (WZ_Pcxx Wz_Storehouse1 : listNewData) {
+                                if (listNewData.size() > 0)
+                                {
+                                    for (WZ_Pcxx Wz_Storehouse1 : listNewData)
+                                    {
                                         boolean b = false;
-                                        for (WZ_Pcxx Wz_Storehouse2 : listData) {
-                                            if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId())||Wz_Storehouse1.getBatchNumber().equals(Wz_Storehouse2.getBatchNumber())) {
+                                        for (WZ_Pcxx Wz_Storehouse2 : listData)
+                                        {
+                                            if (Wz_Storehouse1.getStorehouseId().equals(Wz_Storehouse2.getStorehouseId()) || Wz_Storehouse1.getBatchNumber().equals(Wz_Storehouse2.getBatchNumber()))
+                                            {
                                                 b = true;
                                                 break;
                                             }
                                         }
                                         if (!b) listData.add(Wz_Storehouse1);
                                     }
-                                } else {
+                                } else
+                                {
                                     listData.addAll(listNewData);
                                 }
                                 break;
@@ -255,33 +294,40 @@ void after()
                         break;
                 }
                 // 刷新列表
-                if (size >= 0) {
-                    if (size < PAGESIZE) {
+                if (size >= 0)
+                {
+                    if (size < PAGESIZE)
+                    {
                         lv.setTag(UIHelper.LISTVIEW_DATA_FULL);
                         adapter.notifyDataSetChanged();
                         more.setText(R.string.load_full);// 已经全部加载完毕
-                    } else if (size == PAGESIZE) {// 还有数据可以加载
+                    } else if (size == PAGESIZE)
+                    {// 还有数据可以加载
                         lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                         adapter.notifyDataSetChanged();
                         more.setText(R.string.load_more);
                     }
 
-                } else if (size == -1) {
+                } else if (size == -1)
+                {
                     // 有异常--显示加载出错 & 弹出错误消息
                     lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                     more.setText(R.string.load_error);
                     AppContext.makeToast(getActivity(), "load_error");
                 }
-                if (adapter.getCount() == 0) {
+                if (adapter.getCount() == 0)
+                {
                     lv.setTag(UIHelper.LISTVIEW_DATA_EMPTY);
                     more.setText(R.string.load_empty);
                 }
                 progressBar.setVisibility(ProgressBar.GONE);
                 // main_head_progress.setVisibility(ProgressBar.GONE);
-                if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
+                if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
+                {
                     lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
                     lv.setSelection(0);
-                } else if (actiontype == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG) {
+                } else if (actiontype == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG)
+                {
                     lv.onRefreshComplete();
                     lv.setSelection(0);
                 }
@@ -289,7 +335,8 @@ void after()
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
 

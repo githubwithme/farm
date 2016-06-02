@@ -27,6 +27,15 @@ public class WZ_YCxx implements Parcelable
     public String batchName;
     public String expQuantity;
     public String quantity;
+    public String flashStr;
+
+    public String getFlashStr() {
+        return flashStr;
+    }
+
+    public void setFlashStr(String flashStr) {
+        this.flashStr = flashStr;
+    }
 
     public String getBatchName() {
         return batchName;
@@ -162,6 +171,7 @@ public class WZ_YCxx implements Parcelable
             p.setExpQuantity(source.readString());
 
             p.setQuantity(source.readString());
+            p.setFlashStr(source.readString());
 
 
             return  p;
@@ -192,6 +202,7 @@ public class WZ_YCxx implements Parcelable
         p.writeString(batchName);
         p.writeString(expQuantity);
         p.writeString(quantity);
+        p.writeString(flashStr);
 
     }
 
