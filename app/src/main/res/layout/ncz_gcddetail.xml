@@ -10,31 +10,6 @@
         android:layout_height="@dimen/titlebar_height"
         android:background="@color/white">
 
-        <TextView
-            android:id="@+id/tv_observate"
-            android:layout_width="60dip"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:background="@null"
-            android:gravity="center"
-            android:text="我要观察"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_sp_13"/>
-
-        <TextView
-            android:id="@+id/tv_addplant"
-            android:layout_width="60dip"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dip"
-            android:layout_toLeftOf="@+id/tv_observate"
-            android:background="@null"
-            android:gravity="center"
-            android:text="添加植株"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_sp_13"/>
 
         <ImageButton
             android:id="@+id/btn_back"

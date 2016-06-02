@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 
 import com.alibaba.fastjson.JSON;
@@ -46,8 +45,8 @@ public class NCZ_FarmSale extends Activity
     ExpandableListView expandableListView;
 //    @ViewById
 //    TextView tv_numberofnewsale;
-    @ViewById
-    Button btn_orders;
+//    @ViewById
+//    Button btn_orders;
 
     @Override
     protected void onResume()
@@ -69,12 +68,12 @@ public class NCZ_FarmSale extends Activity
 //
 //    }
 
-    @Click
-    void btn_createorders()
-    {
-        Intent intent = new Intent(NCZ_FarmSale.this, NCZ_CreateOrder_SelectBatchTime_.class);
-        startActivity(intent);
-    }
+//    @Click
+//    void btn_createorders()
+//    {
+//        Intent intent = new Intent(NCZ_FarmSale.this, NCZ_CreateOrder_SelectBatchTime_.class);
+//        startActivity(intent);
+//    }
 
     @Click
     void btn_back()
@@ -82,13 +81,13 @@ public class NCZ_FarmSale extends Activity
         finish();
     }
 
-    @Click
-    void btn_orders()
-    {
-        Intent intent = new Intent(NCZ_FarmSale.this, NCZ_OrderManager_.class);
-        startActivity(intent);
-
-    }
+//    @Click
+//    void btn_orders()
+//    {
+//        Intent intent = new Intent(NCZ_FarmSale.this, NCZ_OrderManager_.class);
+//        startActivity(intent);
+//
+//    }
 
 
     @AfterViews

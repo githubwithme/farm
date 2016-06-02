@@ -42,7 +42,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,42 +99,39 @@ public class GrowthTreeFragment_GCD extends Fragment
     @ViewById
     CircleImageView circle_gk;
     @ViewById
-    CircleImageView circle_add;
-    @ViewById
     CircleImageView add_plant;
     @ViewById
     TextView plant_gk;
     @ViewById
+    TextView tv_observate;
+    @ViewById
     TextView tv_addplant;
-
-    @Click
-    void add_plant()
-    {
-//        Intent intent = new Intent(getActivity(), PG_PlantList_.class);
-        Intent intent = new Intent(getActivity(), AddPlant_.class);
-        intent.putExtra("gcdid",plantGcd.getId());
-        intent.putExtra("gcdName", plantGcd.getPlantgcdName());
-//        intent.putExtra("bean", plantGcd);
-        getActivity().startActivity(intent);
-    }
 
     @Click
     void tv_addplant()
     {
         Intent intent = new Intent(getActivity(), AddPlant_.class);
-        intent.putExtra("gcdid",plantGcd.getId());
+        intent.putExtra("gcdid", plantGcd.getId());
         intent.putExtra("gcdName", plantGcd.getPlantgcdName());
         getActivity().startActivity(intent);
     }
 
-
     @Click
-    void circle_add()
+    void tv_observate()
     {
         Intent intent = new Intent(getActivity(), AddPlantObservation_.class);
         intent.putExtra("gcdid", plantGcd.getId());
-        startActivity(intent);
+        getActivity().startActivity(intent);
     }
+
+
+//    @Click
+//    void circle_add()
+//    {
+//        Intent intent = new Intent(getActivity(), AddPlantObservation_.class);
+//        intent.putExtra("gcdid", plantGcd.getId());
+//        startActivity(intent);
+//    }
 
     @Click
     void plant_gk()
@@ -149,6 +145,7 @@ public class GrowthTreeFragment_GCD extends Fragment
             ll_gk.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.in_top));
         }
     }
+
     @Click
     void circle_zl()
     {
@@ -193,13 +190,6 @@ public class GrowthTreeFragment_GCD extends Fragment
     @AfterViews
     void afterOncreate()
     {
-        if (commembertab.getnlevel().equals("0") || commembertab.getnlevel().equals("1"))
-        {
-            circle_add.setVisibility(View.GONE);
-        } else
-        {
-
-        }
         tv_yqname.setText(areatab.getparkName());
         tv_pqname.setText(areatab.getareaName());
         tv_zzs.setText(plantGcd.getPlants() + "株");
@@ -427,19 +417,19 @@ public class GrowthTreeFragment_GCD extends Fragment
                 {
                     BitmapHelper.setImageViewBackground(context, listItemView.iv_img_right, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
                 }
-                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getcDate()) > 0)
+                if (!PlantGcjl.getPlantType().equals("") && Integer.valueOf(PlantGcjl.getcDate()) > 0)
                 {
                     listItemView.ll_tip_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfcl_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfcl_right.setText(PlantGcjl.getcDate() + "株抽蕾");
                 }
-                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getzDate()) > 0)
+                if (!PlantGcjl.getPlantType().equals("") && Integer.valueOf(PlantGcjl.getzDate()) > 0)
                 {
                     listItemView.ll_tip_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfly_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfly_right.setText(PlantGcjl.getzDate() + "株留芽");
                 }
-                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getPlantType()) > 0)
+                if (!PlantGcjl.getPlantType().equals("") && Integer.valueOf(PlantGcjl.getPlantType()) > 0)
                 {
                     listItemView.ll_tip_right.setVisibility(View.VISIBLE);
                     listItemView.tv_sfyz_right.setVisibility(View.VISIBLE);
@@ -459,19 +449,19 @@ public class GrowthTreeFragment_GCD extends Fragment
                 {
                     BitmapHelper.setImageViewBackground(context, listItemView.iv_img_left, AppConfig.baseurl + PlantGcjl.getImgUrl().get(0));
                 }
-                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getcDate()) > 0)
+                if (!PlantGcjl.getPlantType().equals("") && Integer.valueOf(PlantGcjl.getcDate()) > 0)
                 {
                     listItemView.ll_tip_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfcl_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfcl_left.setText(PlantGcjl.getcDate() + "株抽蕾");
                 }
-                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getzDate()) > 0)
+                if (!PlantGcjl.getPlantType().equals("") && Integer.valueOf(PlantGcjl.getzDate()) > 0)
                 {
                     listItemView.ll_tip_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfly_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfly_left.setText(PlantGcjl.getzDate() + "株留芽");
                 }
-                if (!PlantGcjl.getPlantType().equals("")&&Integer.valueOf(PlantGcjl.getPlantType()) > 0)
+                if (!PlantGcjl.getPlantType().equals("") && Integer.valueOf(PlantGcjl.getPlantType()) > 0)
                 {
                     listItemView.ll_tip_left.setVisibility(View.VISIBLE);
                     listItemView.tv_sfyz_left.setVisibility(View.VISIBLE);

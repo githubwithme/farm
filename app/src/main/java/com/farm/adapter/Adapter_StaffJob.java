@@ -32,6 +32,7 @@ public class Adapter_StaffJob extends BaseAdapter
 
     static class ListItemView
     {
+        public TextView tv_area;
         public TextView tv_jobname;
         public TextView tv_staffname;
         public ImageView iv_record;
@@ -82,6 +83,7 @@ public class Adapter_StaffJob extends BaseAdapter
             listItemView.tv_new_item = (TextView) convertView.findViewById(R.id.tv_new_item);
             listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);
             listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
+            listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
             listItemView.tv_jobname = (TextView) convertView.findViewById(R.id.tv_jobname);
             listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
             listItemView.tv_staffname = (TextView) convertView.findViewById(R.id.tv_staffname);
@@ -145,7 +147,7 @@ public class Adapter_StaffJob extends BaseAdapter
         }
         listItemView.circle_img.setImageResource(R.drawable.yb);
         listItemView.tv_staffname.setText(jobtab.getjobFromName());
-
+        listItemView.tv_area.setText(jobtab.getareaName());
         return convertView;
     }
 }

@@ -79,13 +79,19 @@ public class DynamicFragment extends Fragment
     public void onHiddenChanged(boolean hidden)
     {
         super.onHiddenChanged(hidden);
-//        if (hidden)
-//        {
-//            Toast.makeText(getActivity(), "hide1", Toast.LENGTH_SHORT).show();
-//        } else
-//        {
-//            Toast.makeText(getActivity(), "show1", Toast.LENGTH_SHORT).show();
-//        }
+        if (!hidden)
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(false);
+            }
+        } else
+        {
+            if (timethread != null)
+            {
+                timethread.setSleep(true);
+            }
+        }
     }
 
 
@@ -483,7 +489,6 @@ public class DynamicFragment extends Fragment
             {
                 if (isSleep)
                 {
-                    return;
                 } else
                 {
                     try

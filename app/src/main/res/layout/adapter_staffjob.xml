@@ -85,8 +85,7 @@
         <RelativeLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dip"
-            android:layout_weight="4">
+            android:layout_weight="5">
 
             <TextView
                 android:id="@+id/tv_tip"
@@ -96,7 +95,19 @@
                 android:gravity="left|center_vertical"
                 android:text="正在"
                 android:textColor="@color/red"
-                android:textSize="18sp"/>
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tv_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dip"
+                android:layout_toRightOf="@+id/tv_tip"
+                android:gravity="center"
+                android:text="一号区"
+                android:textColor="@color/blue"
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/tv_jobname"
@@ -104,11 +115,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dip"
-                android:layout_toRightOf="@+id/tv_tip"
+                android:layout_toRightOf="@+id/tv_area"
                 android:gravity="center"
                 android:text="植保"
                 android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
+                android:textSize="16sp"/>
 
 
         </RelativeLayout>
@@ -162,4 +173,8 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 </LinearLayout>

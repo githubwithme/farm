@@ -4,23 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.farm.R;
 import com.farm.bean.areajob;
-import com.farm.bean.contractTab;
 import com.farm.bean.parkjob;
-import com.farm.common.utils;
-import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_ListView;
 
 import java.util.HashMap;
@@ -31,7 +22,6 @@ import java.util.List;
  */
 public class Adapter_FarmLive extends BaseExpandableListAdapter
 {
-    GridViewAdapter_SellOrDetail_NCZ gridViewAdapter_sellOrDetail_ncz;
     TextView currentTextView;
     CustomDialog_ListView customDialog_listView;
     private int currentItem = 0;
@@ -62,7 +52,9 @@ public class Adapter_FarmLive extends BaseExpandableListAdapter
 
     static class ListItemView
     {
-        public GridView gv;
+        public TextView tv_areaname;
+        public TextView tv_tip;
+        public TextView tv_jobname;
 
     }
 
@@ -82,7 +74,6 @@ public class Adapter_FarmLive extends BaseExpandableListAdapter
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
-
         List<areajob> childData = listData.get(groupPosition).getArealist();
         final areajob areajob = childData.get(childPosition);
 
@@ -99,16 +90,27 @@ public class Adapter_FarmLive extends BaseExpandableListAdapter
             listItemView = new ListItemView();
 
             // 获取控件对象
-            listItemView.gv = (GridView) convertView.findViewById(R.id.gv);
+            listItemView.tv_tip = (TextView) convertView.findViewById(R.id.tv_tip);
+            listItemView.tv_areaname = (TextView) convertView.findViewById(R.id.tv_areaname);
+            listItemView.tv_jobname = (TextView) convertView.findViewById(R.id.tv_jobname);
             map.put(childPosition, convertView);
             lmap.put(groupPosition, map);
             if (isLastChild)
             {
                 map = new HashMap<>();
             }
-            gridViewAdapter_sellOrDetail_ncz = new GridViewAdapter_SellOrDetail_NCZ(context, childData);
-            listItemView.gv.setAdapter(gridViewAdapter_sellOrDetail_ncz);
-            utils.setGridViewHeight(listItemView.gv);
+
+            if (areajob.getJobname().equals(""))
+            {
+                listItemView.tv_tip.setText("暂无作业活动");
+                listItemView.tv_jobname.setVisibility(View.GONE);
+            } else
+            {
+                listItemView.tv_jobname.setText(areajob.getJobname());
+            }
+            listItemView.tv_areaname.setText(areajob.getAreaname());
+
+
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -130,7 +132,6 @@ public class Adapter_FarmLive extends BaseExpandableListAdapter
     public void onGroupCollapsed(int groupPosition)
     {
         super.onGroupCollapsed(groupPosition);
-
     }
 
     //获取当前父item下的子item的个数
@@ -141,7 +142,7 @@ public class Adapter_FarmLive extends BaseExpandableListAdapter
         {
             return 0;
         }
-        return 1;
+        return listData.get(groupPosition).getArealist().size();
     }
 
     //获取当前父item的数据
@@ -174,8 +175,8 @@ public class Adapter_FarmLive extends BaseExpandableListAdapter
         }
         TextView tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
 
-        parkjob parkjob = listData.get(groupPosition);
         tv_parkname.setText(listData.get(groupPosition).getParkName());
+
         return convertView;
     }
 
@@ -189,110 +190,5 @@ public class Adapter_FarmLive extends BaseExpandableListAdapter
     public boolean isChildSelectable(int groupPosition, int childPosition)
     {
         return true;
-    }
-
-
-    public class GridViewAdapter_SellOrDetail_NCZ extends BaseAdapter
-    {
-        List<areajob> list;
-        EditText et_number;
-        CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
-        private Context context;
-        Holder view;
-
-        public GridViewAdapter_SellOrDetail_NCZ(Context context, List<areajob> list)
-        {
-            this.list = list;
-            this.context = context;
-        }
-
-        @Override
-        public int getCount()
-        {
-            if (list != null && list.size() > 0) return list.size();
-            else return 0;
-        }
-
-        @Override
-        public Object getItem(int position)
-        {
-            return list.get(position);
-        }
-
-        @Override
-        public long getItemId(int position)
-        {
-            return 0;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent)
-        {
-            if (convertView == null)
-            {
-                convertView = View.inflate(context, R.layout.adapter_farmlive_gridview, null);
-                view = new Holder(convertView);
-                areajob areajob = list.get(position);
-                convertView.setTag(view);
-                view.tv_areaname.setText(areajob.getAreaname());
-                view.tv_jobname.setText(areajob.getJobname());
-            } else
-            {
-                view = (Holder) convertView.getTag();
-            }
-
-            return convertView;
-        }
-
-        private class Holder
-        {
-            private TextView tv_areaname;
-            private TextView tv_jobname;
-
-            public Holder(View view)
-            {
-                tv_areaname = (TextView) view.findViewById(R.id.tv_areaname);
-                tv_jobname = (TextView) view.findViewById(R.id.tv_jobname);
-            }
-        }
-
-        public void showDialog_editBreakoffinfo(final contractTab contractTab, final Button button)
-        {
-            final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editcontractsale, null);
-            customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
-            et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
-            et_number.setText(contractTab.getAllsalefor());
-            Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
-            Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
-            btn_sure.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    int leftnumber = Integer.valueOf(contractTab.getAllsalefor()) - Integer.valueOf(et_number.getText().toString());
-                    if (leftnumber < 0)
-                    {
-                        Toast.makeText(context, "剩余量不足", Toast.LENGTH_SHORT).show();
-                    } else
-                    {
-                        customDialog_editSaleInInfo.dismiss();
-                        button.setText(et_number.getText().toString());
-
-                    }
-
-                }
-            });
-            btn_cancle.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    customDialog_editSaleInInfo.dismiss();
-                }
-            });
-            customDialog_editSaleInInfo.show();
-        }
-
-
     }
 }

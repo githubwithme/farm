@@ -11,11 +11,10 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:layout_marginTop="10dip"
-        android:background="@color/green"
+        android:background="@drawable/background_view_rounded_single"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/ll_batchtime"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dip"
             android:orientation="horizontal">
@@ -23,17 +22,16 @@
 
             <TextView
                 android:id="@+id/tv_parkname"
-                android:layout_width="0dip"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1.5"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="10dip"
+                android:gravity="center"
+                android:layout_marginLeft="10dip"
                 android:text="片区一号"
                 android:textColor="@color/bg_text"
                 android:textSize="16sp"/>
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

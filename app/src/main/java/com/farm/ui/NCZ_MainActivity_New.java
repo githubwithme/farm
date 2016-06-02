@@ -45,8 +45,8 @@ import java.util.List;
 @EActivity(R.layout.ncz_activity_new)
 public class NCZ_MainActivity_New extends Activity
 {
-    NCZ_FarmLive_Fragment ncz_farmLive_fragment;//农场实况
-//    NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
+    //    NCZ_FarmLive_Fragment ncz_farmLive_fragment;//农场实况
+    NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
     MyDialog myDialog;
     Fragment mContent = new Fragment();
     DynamicFragment dynamicFragment;//动态fragment
@@ -161,7 +161,7 @@ public class NCZ_MainActivity_New extends Activity
         tl_sale.setSelected(true);
         tl_farmlive.setSelected(false);
 
-        switchContent(mContent, ncz_farmLive_fragment);
+        switchContent(mContent, ncz_contactsFragment);
     }
 
     @Click
@@ -204,7 +204,7 @@ public class NCZ_MainActivity_New extends Activity
         dynamicFragment = new DynamicFragment_();
         ncz_jobFragment = new NCZ_JobFragment_();
         farmManagerFragment = new FarmManagerFragment_();
-        ncz_farmLive_fragment = new NCZ_FarmLive_Fragment_();
+        ncz_contactsFragment = new NCZ_ContactsFragment_();
         iFragment = new IFragment_();
 //        List<Integer> guideResourceId = new ArrayList<Integer>();
 //        guideResourceId.add(R.drawable.yd666);

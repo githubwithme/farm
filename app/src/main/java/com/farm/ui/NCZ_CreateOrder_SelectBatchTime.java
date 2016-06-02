@@ -6,13 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_FarmSale_Adapter;
+import com.farm.adapter.Adapter_SelectBatchTime;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
@@ -21,6 +24,7 @@ import com.farm.bean.commembertab;
 import com.farm.bean.parktab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
+import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -42,8 +46,9 @@ import java.util.List;
 @EActivity(R.layout.ncz_createorder_selectbatchtime)
 public class NCZ_CreateOrder_SelectBatchTime extends Activity
 {
+    MyDialog myDialog;
     List<parktab> listNewData = null;
-    NCZ_FarmSale_Adapter ncz_farmSale_adapter;
+    Adapter_SelectBatchTime adapter_selectBatchTime;
     @ViewById
     ExpandableListView expandableListView;
     @ViewById
@@ -63,7 +68,6 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
     }
 
 
-
     @AfterViews
     void afterOncreate()
     {
@@ -79,8 +83,20 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
         getActionBar().hide();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATESELLORDER);
         registerReceiver(receiver_update, intentfilter_update);
+
+        IntentFilter intentfilter_finish = new IntentFilter(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
+        registerReceiver(receiver_finish, intentfilter_finish);
     }
 
+    BroadcastReceiver receiver_finish = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            finish();
+        }
+    };
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -94,8 +110,8 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
     private void getBatchTimeByUid_test()
     {
         listNewData = FileHelper.getAssetsData(NCZ_CreateOrder_SelectBatchTime.this, "getBatchTimeByUid", parktab.class);
-        ncz_farmSale_adapter = new NCZ_FarmSale_Adapter(NCZ_CreateOrder_SelectBatchTime.this, listNewData, expandableListView);
-        expandableListView.setAdapter(ncz_farmSale_adapter);
+        adapter_selectBatchTime = new Adapter_SelectBatchTime(NCZ_CreateOrder_SelectBatchTime.this, listNewData, expandableListView);
+        expandableListView.setAdapter(adapter_selectBatchTime);
         utils.setListViewHeight(expandableListView);
         for (int i = 0; i < listNewData.size(); i++)
         {
@@ -135,11 +151,30 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
-                        ncz_farmSale_adapter = new NCZ_FarmSale_Adapter(NCZ_CreateOrder_SelectBatchTime.this, listNewData, expandableListView);
-                        expandableListView.setAdapter(ncz_farmSale_adapter);
+                        List<parktab> list = new ArrayList<>();
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            parktab parktab = listNewData.get(i);
+                            if (!parktab.getAllsalefor().equals("0"))
+                            {
+                                List<BatchTime> list_newBatchTime = new ArrayList<>();
+                                List<BatchTime> list_batchtime = parktab.getBatchTimeList();
+                                for (int j = 0; j < list_batchtime.size(); j++)
+                                {
+                                    BatchTime batchtime=list_batchtime.get(j);
+                                    if (!batchtime.getAllsalefor().equals("0"))
+                                    {
+                                        list_newBatchTime.add(batchtime);
+                                    }
+                                }
+                                parktab.setBatchTimeList(list_newBatchTime);
+                                list.add(parktab);
+                            }
+                        }
+                        adapter_selectBatchTime = new Adapter_SelectBatchTime(NCZ_CreateOrder_SelectBatchTime.this, list, expandableListView);
+                        expandableListView.setAdapter(adapter_selectBatchTime);
                         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
                         {
-
                             @Override
                             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
                             {
@@ -180,5 +215,39 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
         });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            cancleOrder();
+        }
+        return false;
+
+    }
+
+    private void cancleOrder()
+    {
+        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(NCZ_CreateOrder_SelectBatchTime.this, R.style.MyDialog, dialog_layout, "取消订单", "取消订单吗？", "取消", "不取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        myDialog.dismiss();
+                        Toast.makeText(NCZ_CreateOrder_SelectBatchTime.this, "已取消", Toast.LENGTH_SHORT).show();
+                        finish();
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.dismiss();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
 
 }

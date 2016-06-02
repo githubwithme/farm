@@ -104,7 +104,6 @@ public class Adapter_UserList extends BaseAdapter
         listItemView.tv_username.setText(commembertab.getrealName());
         if (commembertab.getimgurl().equals(""))
         {
-            listItemView.circle_img.setImageResource(R.drawable.noimg);
         } else
         {
             String url = AppConfig.baseurl + commembertab.getimgurl();

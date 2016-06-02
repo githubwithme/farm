@@ -1,45 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_above="@+id/btn_next"
-        android:orientation="vertical"
-        android:layout_margin="20dip"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:textSize="20dip"
-            android:gravity="center|left"
-            android:text="指令内容(*)："
+            android:id="@+id/tv_tip"
             android:layout_width="match_parent"
-            android:layout_height="50dip" />
-        <EditText
-            android:background="@null"
-            android:id="@+id/et_note"
-            android:text=""
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="45dip"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="10dip"
+            android:text="请输入指令内容:"
+            android:textColor="@color/gray"
+            android:textSize="20dip"/>
 
-    </LinearLayout>
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="match_parent"
-        android:layout_height="45dip"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="10dip"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="10dip"
-        android:background="@drawable/background_view_rounded_single"
-        android:text="下一步"/>
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:layout_below="@+id/tv_tip"
+            android:layout_margin="20dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=""
+                android:textSize="20dip"/>
+
+            <EditText
+                android:id="@+id/et_note"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dip"
+                android:layout_toRightOf="@+id/tv_tip"
+                android:hint="..."
+                android:text=""/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/background_view_rounded_single"
+            android:text="下一步"/>
+    </RelativeLayout>
 
 
 </LinearLayout>

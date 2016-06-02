@@ -30,13 +30,13 @@
 
         <FrameLayout
             android:layout_width="0dip"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="15dip"
             android:layout_marginLeft="20dip"
             android:layout_marginRight="8dip"
-            android:layout_marginTop="15dip">
+            android:layout_marginTop="15dip"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -95,7 +95,6 @@
                             android:textSize="@dimen/size_14"/>
 
 
-
                         <Button
                             android:id="@+id/btn_plantlist"
                             android:layout_width="45dip"
@@ -106,7 +105,8 @@
                             android:background="@drawable/round_orange"
                             android:text="植株"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/size_11"/>
+                            android:textSize="@dimen/size_11"
+                            android:visibility="gone"/>
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -137,14 +137,16 @@
                     android:textSize="@dimen/size_10"/>
             </FrameLayout>
         </FrameLayout>
+
         <RelativeLayout
             android:layout_width="60dip"
             android:layout_height="match_parent">
+
             <FrameLayout
                 android:id="@+id/rl_record"
                 android:layout_width="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:orientation="horizontal">
 
                 <ImageView

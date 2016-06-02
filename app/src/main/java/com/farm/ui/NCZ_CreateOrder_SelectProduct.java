@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,6 +29,7 @@ import com.farm.bean.contractTab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomGridview;
+import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -54,6 +55,10 @@ import java.util.Map;
 @EActivity(R.layout.ncz_createorder_selectproduct)
 public class NCZ_CreateOrder_SelectProduct extends Activity
 {
+    int number_select = 0;
+    MyDialog myDialog;
+    int allnumber = 0;
+    int newsalenumber = 0;
     String parkid;
     String batchTime;
     List<Map<String, String>> uuids;
@@ -79,36 +84,64 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
     @Click
     void btn_cancleorder()
     {
-        finish();
+        cancleOrder();
     }
 
     @Click
     void btn_createorder()
     {
-        setData();
-        Intent intent = new Intent(NCZ_CreateOrder_SelectProduct.this, NCZ_DirectCreateOrder_.class);
-        intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list_sell);
-        Bundle bundle = new Bundle();
-        ArrayList arrayList = new ArrayList();
-        arrayList.add(uuids);
-        String aa = JSON.toJSONString(uuids);
-        bundle.putParcelableArrayList("list_uuid", arrayList);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        if (allnumber == 0)
+        {
+            Toast.makeText(NCZ_CreateOrder_SelectProduct.this, "请先选择产品", Toast.LENGTH_SHORT).show();
+        } else if (number_select == 0)
+        {
+            Intent intent = new Intent(NCZ_CreateOrder_SelectProduct.this, NCZ_CreateMoreOrder_.class);
+            startActivity(intent);
+        } else
+        {
+            pb_upload.setVisibility(View.VISIBLE);
+            setData();
+            StringBuilder builder = new StringBuilder();
+            builder.append("{\"SellOrderDetailList\": ");
+            builder.append(JSON.toJSONString(list_sell));
+            builder.append(", \"uuids\": ");
+            builder.append(JSON.toJSONString(uuids));
+            builder.append("} ");
+            CreateOrder(builder.toString());
+        }
+
+
+//        setData();
+//        Intent intent = new Intent(NCZ_CreateOrder_SelectProduct.this, NCZ_DirectCreateOrder_.class);
+//        intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list_sell);
+//        Bundle bundle = new Bundle();
+//        ArrayList arrayList = new ArrayList();
+//        arrayList.add(uuids);
+//        String aa = JSON.toJSONString(uuids);
+//        bundle.putParcelableArrayList("list_uuid", arrayList);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
     }
 
     @Click
     void btn_addmore()
     {
-        pb_upload.setVisibility(View.VISIBLE);
-        setData();
-        StringBuilder builder = new StringBuilder();
-        builder.append("{\"SellOrderDetailList\": ");
-        builder.append(JSON.toJSONString(list_sell));
-        builder.append(", \"uuids\": ");
-        builder.append(JSON.toJSONString(uuids));
-        builder.append("} ");
-        addNewSale(builder.toString());
+        if (number_select == 0)
+        {
+            finish();
+        } else
+        {
+            pb_upload.setVisibility(View.VISIBLE);
+            setData();
+            StringBuilder builder = new StringBuilder();
+            builder.append("{\"SellOrderDetailList\": ");
+            builder.append(JSON.toJSONString(list_sell));
+            builder.append(", \"uuids\": ");
+            builder.append(JSON.toJSONString(uuids));
+            builder.append("} ");
+            addNewSale(builder.toString());
+        }
+
     }
 
     @AfterViews
@@ -116,6 +149,7 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
     {
 //        getBatchTimeByUid_test();
         getSaleDataOfArea();
+        getNewSalelList();
     }
 
     @Override
@@ -223,7 +257,8 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
 
     public void countSaleNumber()
     {
-        int number_select = 0;
+        allnumber = 0;
+        number_select = 0;
         list_sell = new ArrayList<>();
         uuids = new ArrayList<>();
         int grountCount = adapter_createOrder_selectProduct.getGroupCount();
@@ -246,7 +281,8 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
                         contractTab contractTab = bundle.getParcelable("bean");
                         number_select = number_select + Integer.valueOf(btn_number.getText().toString());
                     }
-                    tv_salenumber.setText(number_select + "株");
+                    allnumber = newsalenumber + number_select;
+                    tv_salenumber.setText(allnumber + "株");
                 }
             }
         }
@@ -336,11 +372,12 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
 
-                        int number = 0;
                         for (int i = 0; i < listNewData.size(); i++)
                         {
-                            number = number + Integer.valueOf(listNewData.get(i).getplannumber());
+                            newsalenumber = newsalenumber + Integer.valueOf(listNewData.get(i).getplannumber());
                         }
+                        allnumber = newsalenumber;
+                        tv_salenumber.setText(allnumber + "株");
                     } else
                     {
                     }
@@ -410,6 +447,57 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
         });
     }
 
+    private void CreateOrder(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        params.addQueryStringParameter("action", "saveSellOrderDetailList");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        pb_upload.setVisibility(View.GONE);
+                        Intent intent = new Intent(NCZ_CreateOrder_SelectProduct.this, NCZ_CreateMoreOrder_.class);
+                        startActivity(intent);
+//                        Toast.makeText(NCZ_CreateOrder_SelectProduct.this, "保存成功", Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent();
+                        intent2.setAction(AppContext.BROADCAST_UPDATESELLORDER);
+                        sendBroadcast(intent2);
+//                        finish();
+                    }
+                } else
+                {
+                    pb_upload.setVisibility(View.GONE);
+                    AppContext.makeToast(NCZ_CreateOrder_SelectProduct.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                pb_upload.setVisibility(View.GONE);
+                AppContext.makeToast(NCZ_CreateOrder_SelectProduct.this, "error_connectServer");
+            }
+        });
+    }
+
     private void getSaleDataOfArea()
     {
         RequestParams params = new RequestParams();
@@ -431,7 +519,27 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), areatab.class);
-                        adapter_createOrder_selectProduct = new Adapter_CreateOrder_SelectProduct(NCZ_CreateOrder_SelectProduct.this, listNewData, expandableListView);
+                        List<areatab> list = new ArrayList<>();
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            areatab areatab = listNewData.get(i);
+                            if (!areatab.getAllsalefor().equals("0"))
+                            {
+                                List<contractTab> list_newcontractTab = new ArrayList<>();
+                                List<contractTab> list_contractTab = areatab.getContractTabList();
+                                for (int j = 0; j < list_contractTab.size(); j++)
+                                {
+                                    contractTab contractTab=list_contractTab.get(j);
+                                    if (!contractTab.getAllsalefor().equals("0"))
+                                    {
+                                        list_newcontractTab.add(contractTab);
+                                    }
+                                }
+                                areatab.setContractTabList(list_newcontractTab);
+                                list.add(areatab);
+                            }
+                        }
+                        adapter_createOrder_selectProduct = new Adapter_CreateOrder_SelectProduct(NCZ_CreateOrder_SelectProduct.this, list, expandableListView);
                         expandableListView.setAdapter(adapter_createOrder_selectProduct);
                         utils.setListViewHeight(expandableListView);
 //                        for (int i = 0; i < listNewData.size(); i++)
@@ -460,4 +568,42 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
         });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            cancleOrder();
+        }
+        return false;
+
+    }
+
+    private void cancleOrder()
+    {
+        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(NCZ_CreateOrder_SelectProduct.this, R.style.MyDialog, dialog_layout, "取消订单", "取消订单吗？", "取消", "不取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        myDialog.dismiss();
+                        Toast.makeText(NCZ_CreateOrder_SelectProduct.this, "已取消", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent();
+                        intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
+                        sendBroadcast(intent1);
+
+                        finish();
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.dismiss();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
 }
