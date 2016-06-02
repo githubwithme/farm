@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dip"
-            android:text="苗情-观测点"
+            android:text="事件"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 
@@ -59,7 +59,6 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dip"
             android:layout_weight="1"
             android:gravity="center"
             android:text="已完成"

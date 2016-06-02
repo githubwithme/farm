@@ -61,7 +61,6 @@
             android:id="@+id/fl_jobcomplete"
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
             android:layout_marginRight="5dip"
             android:layout_weight="1">
 
