@@ -3,7 +3,6 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:background="@color/white"
               android:descendantFocusability="blocksDescendants"
               android:orientation="vertical">
 
@@ -19,12 +18,13 @@
             android:layout_width="0dip"
             android:layout_height="60dip"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <FrameLayout
-                android:layout_width="45dip"
-                android:layout_height="45dip"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
                 android:layout_centerInParent="true">
 
                 <com.farm.widget.CircleImageView
@@ -32,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@color/transparent"
+                    android:background="@drawable/round_gray"
                     app:border_color="@color/transparent"
                     app:border_width="0px"/>
 
@@ -49,9 +49,9 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="1"
+                    android:text=""
                     android:textColor="@color/white"
-                    android:textSize="12sp"/>
+                    android:textSize="14sp"/>
             </FrameLayout>
 
             <FrameLayout
@@ -81,48 +81,53 @@
             </FrameLayout>
         </RelativeLayout>
 
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="5">
-
-            <TextView
-                android:id="@+id/tv_tip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:gravity="left|center_vertical"
-                android:text="正在"
-                android:textColor="@color/red"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/tv_area"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dip"
-                android:layout_toRightOf="@+id/tv_tip"
-                android:gravity="center"
-                android:text="一号区"
-                android:textColor="@color/blue"
-                android:textSize="16sp"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
+            android:layout_weight="5"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_jobname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dip"
-                android:layout_toRightOf="@+id/tv_area"
                 android:gravity="center"
                 android:text="植保"
                 android:textColor="@color/bg_text"
                 android:textSize="16sp"/>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="left|center_vertical"
+                    android:text=""
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_tip"
+                    android:gravity="center"
+                    android:text="一号区"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+
+            </RelativeLayout>
+        </LinearLayout>
 
 
         <RelativeLayout
@@ -133,8 +138,9 @@
                 android:id="@+id/rl_record"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="3dip"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -176,5 +182,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_color"/>
+        android:background="@color/gray"/>
 </LinearLayout>

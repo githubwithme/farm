@@ -18,13 +18,17 @@ import com.farm.bean.jobtab;
 import com.farm.ui.RecordList_;
 import com.farm.widget.CircleImageView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Adapter_StaffJob extends BaseAdapter
 {
     String audiopath;
     private Context context;// 运行上下文
+    private List<String> list_username = new ArrayList<>();// 数据集合
+    private List<Map<String, String>> list_map = new ArrayList<>();// 数据集合
     private List<jobtab> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
     jobtab jobtab;
@@ -145,9 +149,28 @@ public class Adapter_StaffJob extends BaseAdapter
         {
             listItemView.fl_new.setVisibility(View.GONE);
         }
-        listItemView.circle_img.setImageResource(R.drawable.yb);
+//        listItemView.circle_img.setImageResource(R.drawable.yb);
+//        if (position == 0)
+//        {
+//            listItemView.circle_img.setBackgroundResource(R.drawable.round_gray);
+//            Map<String, String> map = new HashMap<>();
+//            map.put("username",jobtab.getjobFromName());
+//            map.put("color",jobtab.getjobFromName());
+//            list_map.add(map);
+//        }
+//        for (int i = 0; i < list_username.size(); i++)
+//        {
+//            if (!list_username.get(i).equals(jobtab.getjobFromName()))
+//            {
+//                listItemView.circle_img.setBackgroundResource(R.drawable.round_gray);
+//            } else
+//            {
+//                listItemView.circle_img.setBackgroundResource(R.drawable.round_gray);
+//            }
+//        }
+
         listItemView.tv_staffname.setText(jobtab.getjobFromName());
-        listItemView.tv_area.setText(jobtab.getareaName());
+        listItemView.tv_area.setText(jobtab.getareaName() + "执行");
         return convertView;
     }
 }

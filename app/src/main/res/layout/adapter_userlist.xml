@@ -43,7 +43,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
-            android:background="@mipmap/ic_call_black"/>
+            android:background="@drawable/colleague_phone"/>
 
         <TextView
             android:id="@+id/tv_workarea"

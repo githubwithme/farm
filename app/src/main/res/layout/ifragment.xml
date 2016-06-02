@@ -9,16 +9,40 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/titlebar_height"
-            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dip"
             android:gravity="center"
             android:text="我"
-            android:textColor="@color/bg_text"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="27dip"
+            android:layout_height="27dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@mipmap/icon_add"
+            android:gravity="center"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="27dip"
+            android:layout_height="27dip"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dip"
+            android:layout_toLeftOf="@+id/btn_add"
+            android:background="@drawable/ic_search"
+            android:gravity="center"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <View
@@ -164,7 +188,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="10dip"
                         android:layout_marginTop="5dip"
-                        android:background="@drawable/shape_round_border_red"
+                        android:background="@drawable/round_green"
                         android:orientation="horizontal">
 
 
@@ -175,13 +199,13 @@
                             android:layout_gravity="center_vertical"
                             android:gravity="center"
                             android:text="更多"
-                            android:textColor="@color/bg_text"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/size_sp_16"/>
 
                         <View
                             android:layout_width="1px"
                             android:layout_height="match_parent"
-                            android:background="@color/red"/>
+                            android:background="@color/white"/>
 
                         <TextView
                             android:id="@+id/tv_edituser"
@@ -190,7 +214,7 @@
                             android:layout_gravity="center_vertical"
                             android:gravity="center"
                             android:text="编辑"
-                            android:textColor="@color/bg_text"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/size_sp_16"/>
                     </LinearLayout>
 
@@ -222,7 +246,7 @@
                             android:layout_width="@dimen/width_setting"
                             android:layout_height="@dimen/width_setting"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/logo_wechatmoments"/>
+                            android:background="@drawable/temp6"/>
                     </FrameLayout>
 
                     <TextView

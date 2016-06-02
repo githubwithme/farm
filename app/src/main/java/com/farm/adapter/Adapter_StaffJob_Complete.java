@@ -34,6 +34,7 @@ public class Adapter_StaffJob_Complete extends BaseAdapter
     {
         public TextView tv_jobname;
         public TextView tv_staffname;
+        public TextView tv_area;
         public TextView tv_score;
         public ImageView iv_record;
         public CircleImageView circle_img;
@@ -87,6 +88,7 @@ public class Adapter_StaffJob_Complete extends BaseAdapter
             listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
             listItemView.tv_score = (TextView) convertView.findViewById(R.id.tv_score);
             listItemView.tv_staffname = (TextView) convertView.findViewById(R.id.tv_staffname);
+            listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
 
 
             listItemView.iv_record.setId(position);
@@ -145,7 +147,8 @@ public class Adapter_StaffJob_Complete extends BaseAdapter
         {
             listItemView.fl_new.setVisibility(View.GONE);
         }
-        listItemView.circle_img.setImageResource(R.drawable.yb);
+//        listItemView.circle_img.setImageResource(R.drawable.yb);
+        listItemView.tv_area.setText("已在" + jobtab.getareaName() + "执行完毕");
         listItemView.tv_staffname.setText(jobtab.getjobFromName());
         if (jobtab.getaudioJobExecPath().equals(""))
         {

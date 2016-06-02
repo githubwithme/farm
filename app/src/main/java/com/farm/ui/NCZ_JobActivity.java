@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -26,6 +27,10 @@ public class NCZ_JobActivity extends Activity
     TextView tv_jobdoning;
     @ViewById
     TextView tv_jobcomplete;
+    @ViewById
+    View view_jobcomplete;
+    @ViewById
+    View view_jobdoing;
 
     @Click
     void tv_jobdoning()
@@ -61,25 +66,29 @@ public class NCZ_JobActivity extends Activity
 
     private void setBackground(int pos)
     {
-        tv_jobdoning.setSelected(false);
-        tv_jobcomplete.setSelected(false);
-
-        tv_jobdoning.setBackgroundResource(R.color.white);
-        tv_jobcomplete.setBackgroundResource(R.color.white);
-
-        tv_jobdoning.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_jobcomplete.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_jobdoning.setSelected(false);
+//        tv_jobcomplete.setSelected(false);
+//
+//        tv_jobdoning.setBackgroundResource(R.color.white);
+//        tv_jobcomplete.setBackgroundResource(R.color.white);
+//
+//        tv_jobdoning.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_jobcomplete.setTextColor(getResources().getColor(R.color.menu_textcolor));
         switch (pos)
         {
             case 0:
-                tv_jobdoning.setSelected(false);
-                tv_jobdoning.setTextColor(getResources().getColor(R.color.bg_blue));
-                tv_jobdoning.setBackgroundResource(R.drawable.red_bottom);
-                break;
+//                tv_jobdoning.setSelected(false);
+//                tv_jobdoning.setTextColor(getResources().getColor(R.color.bg_blue));
+//                tv_jobdoning.setBackgroundResource(R.drawable.red_bottom);
+                view_jobcomplete.setVisibility(View.GONE);
+                view_jobdoing.setVisibility(View.VISIBLE);
+//                break;
             case 1:
-                tv_jobcomplete.setSelected(false);
-                tv_jobcomplete.setTextColor(getResources().getColor(R.color.bg_blue));
-                tv_jobcomplete.setBackgroundResource(R.drawable.red_bottom);
+//                tv_jobcomplete.setSelected(false);
+//                tv_jobcomplete.setTextColor(getResources().getColor(R.color.bg_blue));
+//                tv_jobcomplete.setBackgroundResource(R.drawable.red_bottom);
+                view_jobcomplete.setVisibility(View.VISIBLE);
+                view_jobdoing.setVisibility(View.GONE);
                 break;
         }
 

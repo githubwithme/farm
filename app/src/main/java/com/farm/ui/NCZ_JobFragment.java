@@ -28,6 +28,10 @@ public class NCZ_JobFragment extends Fragment
     TextView tv_jobdoning;
     @ViewById
     TextView tv_jobcomplete;
+    @ViewById
+    View view_jobdoing;
+    @ViewById
+    View view_jobcomplete;
 
     @Click
     void tv_jobdoning()
@@ -62,25 +66,29 @@ public class NCZ_JobFragment extends Fragment
 
     private void setBackground(int pos)
     {
-        tv_jobdoning.setSelected(false);
-        tv_jobcomplete.setSelected(false);
+//        tv_jobdoning.setSelected(false);
+//        tv_jobcomplete.setSelected(false);
 
-        tv_jobdoning.setBackgroundResource(R.color.white);
-        tv_jobcomplete.setBackgroundResource(R.color.white);
+//        tv_jobdoning.setBackgroundResource(R.color.white);
+//        tv_jobcomplete.setBackgroundResource(R.color.white);
 
-        tv_jobdoning.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_jobcomplete.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_jobdoning.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_jobcomplete.setTextColor(getResources().getColor(R.color.menu_textcolor));
         switch (pos)
         {
             case 0:
-                tv_jobdoning.setSelected(false);
-                tv_jobdoning.setTextColor(getResources().getColor(R.color.bg_blue));
-                tv_jobdoning.setBackgroundResource(R.drawable.red_bottom);
+//                tv_jobdoning.setSelected(false);
+//                tv_jobdoning.setTextColor(getResources().getColor(R.color.bg_blue));
+                view_jobdoing.setVisibility(View.VISIBLE);
+                view_jobcomplete.setVisibility(View.GONE);
+//                tv_jobdoning.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 1:
-                tv_jobcomplete.setSelected(false);
-                tv_jobcomplete.setTextColor(getResources().getColor(R.color.bg_blue));
-                tv_jobcomplete.setBackgroundResource(R.drawable.red_bottom);
+//                tv_jobcomplete.setSelected(false);
+//                tv_jobcomplete.setTextColor(getResources().getColor(R.color.bg_blue));
+//                tv_jobcomplete.setBackgroundResource(R.drawable.red_bottom);
+                view_jobdoing.setVisibility(View.GONE);
+                view_jobcomplete.setVisibility(View.VISIBLE);
                 break;
         }
 

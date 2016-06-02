@@ -10,32 +10,25 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
-
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="30dip"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:contentDescription=""
-            android:src="@drawable/back"/>
+        android:background="@color/color_topbar">
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="工作详情"
-            android:textColor="@color/textcolor_titlebar"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:text="员工工作"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 
 
     </RelativeLayout>
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="@dimen/line"
         android:background="@color/line_color"/>
 
     <ScrollView

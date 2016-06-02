@@ -3,6 +3,7 @@
 
     <color name="semitransparent">#92bbbbbb</color>
     <color name="white">#ffffff</color>
+    <color name="color_topbar">#393a3e</color>
     <!-- 圆形样式颜色 -->
     <color name="base_start_color_pressed">#ff3590c4</color>
     <color name="base_end_color_pressed">#ff2570ba</color>
