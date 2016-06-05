@@ -8,7 +8,7 @@
         android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/white">
+        android:background="@color/color_topbar">
 
         <TextView
             android:id="@+id/tv_observate"
@@ -42,7 +42,7 @@
             android:layout_height="@dimen/titlebar_height"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
 
         <LinearLayout
             android:id="@+id/ll_tab"
@@ -54,12 +54,13 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="80dip"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dip"
                 android:gravity="center"
                 android:text="观测点"
-                android:textColor="@color/textcolor_titlebar"
+                android:textColor="@color/white"
                 android:textSize="@dimen/titlebar_textsize"/>
 
             <TextView

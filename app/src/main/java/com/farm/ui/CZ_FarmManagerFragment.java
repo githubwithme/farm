@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import com.farm.R;
+import com.farm.app.AppContext;
+import com.farm.bean.commembertab;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -25,8 +27,9 @@ import org.androidannotations.annotations.ViewById;
  * Created by ${hmj} on 2016/5/26.
  */
 @EFragment
-public class PG_FarmManagerFragment extends Fragment
+public class CZ_FarmManagerFragment extends Fragment
 {
+    commembertab commembertab;
     PopupWindow pw_command;
     View pv_command;
     @ViewById
@@ -41,12 +44,13 @@ public class PG_FarmManagerFragment extends Fragment
     @AfterViews
     void afterOncrete()
     {
+        commembertab = AppContext.getUserInfo(getActivity());
     }
 
     @Click
     void btn_add()
     {
-//        showPop_add();
+        showPop_add();
     }
 
     @Click
@@ -56,12 +60,34 @@ public class PG_FarmManagerFragment extends Fragment
         getActivity().startActivity(intent);
     }
 
+    @Click
+    void ll_zl()
+    {
+//        Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+//        getActivity().startActivity(intent);
+        Intent intent = new Intent(getActivity(), CZ_ToDayPQ_.class);
+        intent.putExtra("parkid", commembertab.getparkId());
+        startActivity(intent);
+    }
+
+    @Click
+    void ll_gz()
+    {
+//        Intent intent = new Intent(getActivity(), NCZ_JobActivity_.class);
+//        getActivity().startActivity(intent);
+        Intent intent = new Intent(getActivity(), CZ_ToDayPQ_.class);
+        intent.putExtra("parkid", commembertab.getparkId());
+        startActivity(intent);
+    }
 
     @Click
     void ll_mq()
     {
-        Intent intent = new Intent(getActivity(), PG_GddList_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_MQActivity_.class);
+//        getActivity().startActivity(intent);
+        Intent intent = new Intent(getActivity(), CZ_ToDayPQ_.class);
+        intent.putExtra("parkid", commembertab.getparkId());
+        startActivity(intent);
     }
 
     @Click
@@ -74,14 +100,14 @@ public class PG_FarmManagerFragment extends Fragment
     @Click
     void ll_kc()
     {
-        Intent intent = new Intent(getActivity(), PG_CKList_.class);
+        Intent intent = new Intent(getActivity(), Ncz_wz_ll_.class);
         getActivity().startActivity(intent);
     }
 
     @Click
     void ll_xs()
     {
-        Intent intent = new Intent(getActivity(), NCZ_SaleChart_.class);
+        Intent intent = new Intent(getActivity(), CZ_OrderManager_.class);
         getActivity().startActivity(intent);
     }
 
@@ -95,10 +121,16 @@ public class PG_FarmManagerFragment extends Fragment
     @Click
     void ll_dl()
     {
-        Intent intent = new Intent(getActivity(), PQ_DLFragment_.class);
+        Intent intent = new Intent(getActivity(), CZ_DLFragment_.class);
         getActivity().startActivity(intent);
     }
 
+    @Click
+    void ll_sp()
+    {
+        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
+        getActivity().startActivity(intent);
+    }
 
     @Click
     void ll_tj()
@@ -116,11 +148,26 @@ public class PG_FarmManagerFragment extends Fragment
         getActivity().startActivity(intent);
     }
 
+    @Click
+    void ll_sk()
+    {
+        Intent intent = new Intent(getActivity(), NCZ_FarmMapActivity_.class);
+        intent.putExtra("parkid", "80");
+        getActivity().startActivity(intent);
+    }
+
+    @Click
+    void ll_more()
+    {
+//        Intent intent = new Intent(getActivity(), NCZ_MoreModule_.class);
+//        intent.putExtra("parkid", "80");
+//        getActivity().startActivity(intent);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.pg_farmmanagerfragment, container, false);
+        View rootView = inflater.inflate(R.layout.cz_farmmanagerfragment, container, false);
         return rootView;
     }
 
@@ -178,8 +225,8 @@ public class PG_FarmManagerFragment extends Fragment
                 WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
                 lp.alpha = 1f;
                 getActivity().getWindow().setAttributes(lp);
-//                Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
-//                getActivity().startActivity(intent);
+                Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
+                getActivity().startActivity(intent);
             }
         });
         ll_addcommand.setOnClickListener(new View.OnClickListener()
@@ -191,8 +238,8 @@ public class PG_FarmManagerFragment extends Fragment
                 WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
                 lp.alpha = 1f;
                 getActivity().getWindow().setAttributes(lp);
-//                Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-//                getActivity().startActivity(intent);
+                Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+                getActivity().startActivity(intent);
             }
         });
 

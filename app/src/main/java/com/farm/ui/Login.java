@@ -196,7 +196,7 @@ public class Login extends Activity
                                 finish();
                             } else if (level.equals("1"))// 场长
                             {
-                                Intent intent = new Intent(Login.this, CZ_MainActivity_.class);
+                                Intent intent = new Intent(Login.this, CZ_MainActivity_New_.class);
                                 startActivity(intent);
                                 finish();
                             } else if (level.equals("2"))// 片管

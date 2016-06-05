@@ -59,6 +59,9 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.NCZ_JobActivity_"/>
 
+        <activity android:name=".ui.CZ_OrderManager_"/>
+        <activity android:name=".ui.CZ_DLFragment_"/>
+        <activity android:name=".ui.CZ_MainActivity_New_"/>
         <activity android:name=".ui.PG_ListOfEvents_"/>
         <activity android:name=".ui.PG_GddList_"/>
         <activity android:name=".ui.PG_CKList_"/>

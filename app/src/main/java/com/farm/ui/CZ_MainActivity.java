@@ -125,7 +125,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         tl_home.setSelected(false);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
-        switchContent(mContent, cz_orderManager);
+//        switchContent(mContent, cz_orderManager);
     }
 
     @Click
@@ -177,7 +177,7 @@ public class CZ_MainActivity extends Activity implements TencentLocationListener
         tl_home.setSelected(false);
         tl_sale.setSelected(false);
         tl_me.setSelected(false);
-        switchContent(mContent, cz_dlFragment);
+//        switchContent(mContent, cz_dlFragment);
     }
 
     @AfterViews
