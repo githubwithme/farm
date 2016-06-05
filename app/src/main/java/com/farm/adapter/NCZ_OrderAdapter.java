@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -36,6 +37,8 @@ public class NCZ_OrderAdapter extends BaseAdapter
         public TextView tv_batchtime;
         public Button btn_cancleorder;
         public Button btn_editorder;
+        public FrameLayout fl_dynamic;
+
     }
 
     public NCZ_OrderAdapter(Context context, List<SellOrder_New> data,String broadcast)
@@ -82,6 +85,7 @@ public class NCZ_OrderAdapter extends BaseAdapter
             listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
+            listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -140,6 +144,14 @@ public class NCZ_OrderAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
+        if (listItems.get(position).getFlashStr().equals("0"))
+        {
+            listItemView.fl_dynamic.setVisibility(View.INVISIBLE);
+        }else
+        {
+            listItemView.fl_dynamic.setVisibility(View.VISIBLE);
+        }
+
         return convertView;
     }
 

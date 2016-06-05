@@ -64,7 +64,7 @@ public class NCZ_JobActivity extends Activity
     }
 
 
-    private void setBackground(int pos)
+    public void setBackground(int pos)
     {
 //        tv_jobdoning.setSelected(false);
 //        tv_jobcomplete.setSelected(false);

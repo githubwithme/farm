@@ -107,6 +107,8 @@ public class NCZ_DealingOrderFragment extends Fragment
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
+                    commembertab commembertab = AppContext.getUserInfo(getActivity());
+                    AppContext.eventStatus(getActivity(), "8",  listData.get(position).getUuid(), commembertab.getId());
                     Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
                     intent.putExtra("bean", listData.get(position));
                     getActivity().startActivity(intent);

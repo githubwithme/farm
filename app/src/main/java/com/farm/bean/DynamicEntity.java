@@ -16,6 +16,18 @@ public class DynamicEntity implements Parcelable
     String note;
     String date;
     String type;
+    String flashStr;
+
+
+    public String getFlashStr()
+    {
+        return flashStr;
+    }
+
+    public void setFlashStr(String flashStr)
+    {
+        this.flashStr = flashStr;
+    }
 
     public void setType(String type)
     {
@@ -90,6 +102,7 @@ public class DynamicEntity implements Parcelable
             p.setNote(source.readString());
             p.setDate(source.readString());
             p.setType(source.readString());
+            p.setFlashStr(source.readString());
             return p;
         }
 
@@ -108,6 +121,7 @@ public class DynamicEntity implements Parcelable
         p.writeString(note);
         p.writeString(date);
         p.writeString(type);
+        p.writeString(flashStr);
 
     }
 

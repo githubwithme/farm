@@ -68,6 +68,7 @@ public class DynamicFragment extends Fragment
     @ViewById
     View view;
 
+    int k=0;
     @Click
     void btn_add()
     {
@@ -144,6 +145,7 @@ public class DynamicFragment extends Fragment
 
     private void getDynamicData()
     {
+
         if (getActivity() == null)
         {
             return;
@@ -167,13 +169,29 @@ public class DynamicFragment extends Fragment
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     list = JSON.parseArray(result.getRows().toJSONString(), DynamicBean.class);
+
+
+
+
                     for (int i = 0; i < list.size(); i++)
                     {
                         if (list.get(i).getListdata().size() != 0)
                         {
+                            for (int l=0;l<list.get(i).getListdata().size();l++)
+                            {
+                                if (list.get(i).getListdata().get(l).getFlashStr().equals("1"))
+                                {
+                                    k++;
+                                }
+                            }
                             listData.add(list.get(i));
                         }
                     }
+                    Intent intent = new Intent();
+                    intent.putExtra("Num", k + "");
+                    intent.setAction(AppContext.BROADCAST_NCZ_DT);
+                    getActivity().sendBroadcast(intent);
+                    k=0;
                     adapter_dynamic = new Adapter_Dynamic(getActivity(), listData);
                     lv.setAdapter(adapter_dynamic);
                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -207,7 +225,7 @@ public class DynamicFragment extends Fragment
                                 intent = new Intent(getActivity(), NCZ_SJActivity_.class);
                             } else if (type.equals("DL"))
                             {
-                                intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+                                intent = new Intent(getActivity(), NCZ_DLdatail_.class);
                             }
                             getActivity().startActivity(intent);
 
