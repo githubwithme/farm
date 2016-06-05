@@ -11,9 +11,20 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
+import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.commembertab;
 import com.farm.ui.NCZ_EditOrder_;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -115,13 +126,14 @@ public class NCZ_OrderAdapter extends BaseAdapter
                     listItemView.tv_state.setText("买家已付尾款");
                 }
             }
-
+            listItemView.btn_cancleorder.setTag(R.id.tag_cash,sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-
+                    SellOrder_New sellOrder_new= (SellOrder_New) v.getTag(R.id.tag_cash);
+                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
             });
             listItemView.btn_editorder.setTag(R.id.tag_postion, position);
@@ -155,5 +167,45 @@ public class NCZ_OrderAdapter extends BaseAdapter
         return convertView;
     }
 
+    private void deleteSellOrderAndDetail(String uuid)
+    {
 
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uuid",uuid );
+        params.addQueryStringParameter("action", "deleteSellOrderAndDetail");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+               /* if (result.getAffectedRows() != 0)
+                {
+                    listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+
+                } else
+                {
+                    listData = new ArrayList<SellOrder_New>();
+                }*/
+
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+
+            }
+        });
+    }
 }
