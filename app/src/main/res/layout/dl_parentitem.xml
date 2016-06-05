@@ -38,16 +38,34 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_10" />
         </FrameLayout>
-        <TextView
+        <RelativeLayout
+            android:id="@+id/rlstr"
             android:layout_toRightOf="@+id/fl_new_item"
-            android:id="@+id/tv_park"
             android:layout_width="match_parent"
-            android:layout_height="50dip"
-            android:background="@drawable/background_view_rounded_single"
-            android:gravity="center|left"
-            android:paddingLeft="20dip"
-            android:text="片区"
-            android:textSize="@dimen/text_size_15"/>
+            android:layout_height="50dip">
+            <TextView
+
+                android:id="@+id/tv_park"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:background="@drawable/background_view_rounded_single"
+                android:gravity="center|left"
+                android:paddingLeft="20dip"
+                android:text="片区"
+                android:textSize="@dimen/text_size_15"/>
+
+            <ImageView
+                android:layout_marginRight="10dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/ic_up"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_marginLeft="5dip"
+                android:background="@mipmap/dl_ic_down"
+                android:contentDescription=""/>
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

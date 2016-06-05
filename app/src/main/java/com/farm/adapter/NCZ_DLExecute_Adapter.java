@@ -11,6 +11,7 @@ import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -194,6 +195,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
         }
         TextView tv_park = (TextView) convertView.findViewById(R.id.tv_park);
         FrameLayout fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
+        RelativeLayout rlstr = (RelativeLayout) convertView.findViewById(R.id.rlstr);
 
         convertView.setTag(R.id.tag_czdl, listData.get(groupPosition));
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -219,16 +221,21 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 //            view.setBackgroundColor(Color.parseColor("#365663"));
 //            rl_color.setBackground(R.color.red);
             tv_park.setBackgroundColor(Color.parseColor("#ff4444"));
+            rlstr.setBackgroundColor(Color.parseColor("#ff4444"));
         } else if (listData.get(groupPosition).getBatchColor().equals("蓝色")) {
 
             tv_park.setBackgroundColor(Color.parseColor("#add8e6"));
+            rlstr.setBackgroundColor(Color.parseColor("#add8e6"));
         } else if (listData.get(groupPosition).getBatchColor().equals("绿色")) {
 
             tv_park.setBackgroundColor(Color.parseColor("#90ee90"));
+            rlstr.setBackgroundColor(Color.parseColor("#90ee90"));
         } else if (listData.get(groupPosition).getBatchColor().equals("紫色")){
             tv_park.setBackgroundColor(Color.parseColor("#d8bfd8"));
+            rlstr.setBackgroundColor(Color.parseColor("#d8bfd8"));
         }else {
             tv_park.setBackgroundColor(Color.parseColor("#ffff00"));
+            rlstr.setBackgroundColor(Color.parseColor("#ffff00"));
         }
 
         if (listData.get(groupPosition).getFlashStr().equals("0"))

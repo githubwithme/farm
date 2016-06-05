@@ -202,10 +202,10 @@ public class IFragment extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         tv_username.setText(commembertab.getparkName() + commembertab.getareaName() + "-" + commembertab.getuserlevelName() + ":" + commembertab.getrealName());
-        if (commembertab.getnlevel().equals("0"))
+    /*    if (commembertab.getnlevel().equals("0"))
         {
             ll_startBreakoff.setVisibility(View.VISIBLE);
-        }
+        }*/
 
         getNew();
     }

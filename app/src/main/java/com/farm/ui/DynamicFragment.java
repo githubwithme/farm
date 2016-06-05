@@ -210,7 +210,8 @@ public class DynamicFragment extends Fragment
                                 intent = new Intent(getActivity(), NCZ_MQActivity_.class);
                             } else if (type.equals("XS"))
                             {
-                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
+//                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
+                                intent = new Intent(getActivity(), NCZ_OrderManager_.class);
                             } else if (type.equals("KC"))
                             {
                                 intent = new Intent(getActivity(), Ncz_wz_ll_.class);

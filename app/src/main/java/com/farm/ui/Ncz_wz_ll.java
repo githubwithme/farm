@@ -29,7 +29,7 @@ public class Ncz_wz_ll extends FragmentActivity
     com.farm.bean.commembertab commembertab;
     String wzgl;
     ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
-    NCZ_WZ_LOOKFragment nec_wz_lookFragment;
+//    NCZ_WZ_LOOKFragment nec_wz_lookFragment;
     NCZ_WZ_CKXXFragment ncz_wz_ckxxFragment;
     NCZ_WZ_RKFragment ncz_wz_rkFragment;
     NCZ_WZ_CKFRagment ncz_wz_ckfRagment;
@@ -68,16 +68,16 @@ public class Ncz_wz_ll extends FragmentActivity
         finish();
     }
 
-    @Click
+/*    @Click
     void wz_ll()
     {
         cvPager.setCurrentItem(3);
-    }
+    }*/
 
     @Click
     void wzck()
     {
-        cvPager.setCurrentItem(4);
+        cvPager.setCurrentItem(3);
     }
 
     @Click
@@ -123,7 +123,7 @@ public class Ncz_wz_ll extends FragmentActivity
         view_ck.setVisibility(View.GONE);
         view_rk.setVisibility(View.GONE);
         view_yc.setVisibility(View.GONE);
-        view_wz.setVisibility(View.GONE);
+//        view_wz.setVisibility(View.GONE);
         view_cangku.setVisibility(View.GONE);
         switch (pos)
         {
@@ -137,11 +137,11 @@ public class Ncz_wz_ll extends FragmentActivity
                 view_yc.setVisibility(View.VISIBLE);
                 break;
             case 3:
-                view_wz.setVisibility(View.VISIBLE);
-                break;
-            case 4:
                 view_cangku.setVisibility(View.VISIBLE);
                 break;
+        /*    case 4:
+                view_cangku.setVisibility(View.VISIBLE);
+                break;*/
         }
     }
 
@@ -155,7 +155,7 @@ public class Ncz_wz_ll extends FragmentActivity
         commembertab = AppContext.getUserInfo(Ncz_wz_ll.this);
         fragmentList = new ArrayList<>();
         ncz_wz_ckxxFragment = new NCZ_WZ_CKXXFragment_();
-        nec_wz_lookFragment = new NCZ_WZ_LOOKFragment_();
+//        nec_wz_lookFragment = new NCZ_WZ_LOOKFragment_();
         ncz_wz_rkFragment = new NCZ_WZ_RKFragment_();
         ncz_wz_ckfRagment = new NCZ_WZ_CKFRagment_();
         ncz_wz_ycFragment = new NCZ_WZ_YCFragment_();
@@ -163,7 +163,7 @@ public class Ncz_wz_ll extends FragmentActivity
         fragmentList.add(ncz_wz_ckfRagment);
         fragmentList.add(ncz_wz_rkFragment);
         fragmentList.add(ncz_wz_ycFragment);
-        fragmentList.add(nec_wz_lookFragment);
+//        fragmentList.add(nec_wz_lookFragment);
         fragmentList.add(ncz_wz_ckxxFragment);
 
 
