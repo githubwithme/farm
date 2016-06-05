@@ -144,7 +144,7 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         tl_event.setSelected(false);
         tl_ck.setSelected(false);
 //        switchContent(mContent, pg_productBatch);
-        switchContent(mContent, pq_dlFragment);
+//        switchContent(mContent, pq_dlFragment);
     }
 
     @Click
@@ -164,7 +164,7 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         tl_event.setSelected(true);
         tl_ck.setSelected(false);
 //        switchContent(mContent, pg_eventList);
-        switchContent(mContent, pg_listOfEvents);
+//        switchContent(mContent, pg_listOfEvents);
     }
 
     @Click
@@ -183,7 +183,7 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         tl_plant.setSelected(true);
         tl_me.setSelected(false);
         tl_event.setSelected(false);
-        switchContent(mContent, pg_gddList);
+//        switchContent(mContent, pg_gddList);
 
     }
 
@@ -222,7 +222,7 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
         tl_dl.setSelected(false);
         tv_ck.setSelected(true);
         tl_event.setSelected(false);
-        switchContent(mContent, pg_ckList);
+//        switchContent(mContent, pg_ckList);
     }
 
     @AfterViews

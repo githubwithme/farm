@@ -60,21 +60,21 @@ public class PG_FarmManagerFragment extends Fragment
     @Click
     void ll_mq()
     {
-        Intent intent = new Intent(getActivity(), NCZ_MQActivity_.class);
+        Intent intent = new Intent(getActivity(), PG_GddList_.class);
         getActivity().startActivity(intent);
     }
 
     @Click
     void ll_sj()
     {
-        Intent intent = new Intent(getActivity(), NCZ_SJActivity_.class);
+        Intent intent = new Intent(getActivity(), PG_ListOfEvents_.class);
         getActivity().startActivity(intent);
     }
 
     @Click
     void ll_kc()
     {
-        Intent intent = new Intent(getActivity(), Ncz_wz_ll_.class);
+        Intent intent = new Intent(getActivity(), PG_CKList_.class);
         getActivity().startActivity(intent);
     }
 
@@ -95,7 +95,7 @@ public class PG_FarmManagerFragment extends Fragment
     @Click
     void ll_dl()
     {
-        Intent intent = new Intent(getActivity(), NCZ_DLdatail_.class);
+        Intent intent = new Intent(getActivity(), PQ_DLFragment_.class);
         getActivity().startActivity(intent);
     }
 

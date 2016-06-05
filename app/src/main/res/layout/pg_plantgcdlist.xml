@@ -8,28 +8,34 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_back"/>
 
         <LinearLayout
             android:id="@+id/ll_tab"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/btn_back"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="观测点列表"
-                android:textColor="@color/textcolor_titlebar"
+                android:text="观测点"
+                android:textColor="@color/white"
                 android:textSize="@dimen/titlebar_textsize"/>
         </LinearLayout>
 
         <ImageButton
-            android:visibility="gone"
             android:id="@+id/btn_search"
             android:layout_width="40dip"
             android:layout_height="40dip"
@@ -37,7 +43,8 @@
             android:layout_centerVertical="true"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/search"/>
+            android:src="@drawable/search"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -51,7 +58,6 @@
         android:id="@+id/top_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
 
 
     <FrameLayout
