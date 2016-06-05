@@ -1,16 +1,12 @@
 package com.farm.ui;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -25,7 +21,6 @@ import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 import com.farm.bean.Result;
-import com.farm.bean.commembertab;
 import com.farm.common.DictionaryHelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -33,11 +28,9 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.HashMap;
@@ -48,7 +41,8 @@ import java.util.List;
  */
 @SuppressLint("NewApi")
 @EFragment
-public class NCZ_WZ_LOOKFragment extends Fragment {
+public class NCZ_WZ_LOOKFragment extends Fragment
+{
     String[] fn;
     Dictionary_wheel dictionary_wheel;
     Dictionary dic;
@@ -83,10 +77,11 @@ public class NCZ_WZ_LOOKFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View view=inflater.inflate(R.layout.ncz_wz_lookfragment,container,false);
-            commembertab = AppContext.getUserInfo(getActivity());
-            return view;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.ncz_wz_lookfragment, container, false);
+        commembertab = AppContext.getUserInfo(getActivity());
+        return view;
     }
 
 
@@ -116,7 +111,7 @@ public class NCZ_WZ_LOOKFragment extends Fragment {
                         {
                             dic = lsitNewData.get(0);
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic);//提供数据
-                            CustomExpandableListAdapter_Goods customExpandableListAdapter = new CustomExpandableListAdapter_Goods(getActivity(), dictionary_wheel, mainlistview, list_goods,tv_top);
+                            CustomExpandableListAdapter_Goods customExpandableListAdapter = new CustomExpandableListAdapter_Goods(getActivity(), dictionary_wheel, mainlistview, list_goods, tv_top);
                             mainlistview.setAdapter(customExpandableListAdapter);
                             mainlistview.expandGroup(0);
                         }

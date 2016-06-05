@@ -69,7 +69,6 @@ public class NCZ_SaleChart extends Activity
     {
         Intent intent = new Intent(NCZ_SaleChart.this, NCZ_OrderManager_.class);
         startActivity(intent);
-
     }
 
     @Click
@@ -134,7 +133,7 @@ public class NCZ_SaleChart extends Activity
         for (int i = 0; i < listNewData.size(); i++)
         {
             parktab parktab = listNewData.get(i);
-            yVals1.add(new BarEntry(new float[]{Float.valueOf(parktab.getAllsaleout()) , Float.valueOf(parktab.getAllsalein()), Float.valueOf(parktab.getAllsalefor()) }, i));
+            yVals1.add(new BarEntry(new float[]{Float.valueOf(parktab.getAllsaleout()), Float.valueOf(parktab.getAllsalein()), Float.valueOf(parktab.getAllsalefor())}, i));
         }
         ArrayList<String> listitem = new ArrayList<String>();
         for (int i = 0; i < listNewData.size(); i++)

@@ -70,7 +70,18 @@ public class parktab implements Parcelable
 	public String allnewsale;
 	public List<areatab> areatabList;
 	public List<BatchTime> batchTimeList;
+	public List<jobtab> jobtabList;
 
+
+	public void setJobtabList(List<jobtab> jobtabList)
+	{
+		this.jobtabList = jobtabList;
+	}
+
+	public List<jobtab> getJobtabList()
+	{
+		return jobtabList;
+	}
 
 	public void setAllsaleout(String allsaleout)
 	{
@@ -604,6 +615,7 @@ public class parktab implements Parcelable
 			p.setAllnewsale(source.readString());
 			p.areatabList = source.readArrayList(areatab.class.getClassLoader());
 			p.batchTimeList = source.readArrayList(areatab.class.getClassLoader());
+			p.jobtabList = source.readArrayList(areatab.class.getClassLoader());
 			return p;
 		}
 
@@ -660,6 +672,7 @@ public class parktab implements Parcelable
 		p.writeString(allnewsale);
 		p.writeList(areatabList);
 		p.writeList(batchTimeList);
+		p.writeList(jobtabList);
 	}
 
 	@Override

@@ -4,16 +4,13 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@+id/wz_title"
-        android:background="@color/line_color_black"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dip"
-        android:background="@drawable/bg_white">
+        android:background="@drawable/bg_white"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
 
         <EditText
@@ -26,7 +23,7 @@
             android:layout_toRightOf="@+id/namess"
             android:hint="请输入物资名称"
             android:paddingLeft="10dip"
-            android:textColor="@color/bg_yellow"
+            android:textColor="@color/bg_text"
             android:textSize="@dimen/size_14"/>
 
         <ImageButton

@@ -47,7 +47,6 @@ import java.util.List;
 @EFragment
 public class NCZ_Eventing extends Fragment
 {
-
     commembertab commembertab;
     NCZ_EventingAdapter listadpater;
     private AppContext appContext;

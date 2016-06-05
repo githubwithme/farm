@@ -14,7 +14,7 @@
             android:id="@+id/rl_titlebar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/titlebar_height"
-            android:background="@color/white">
+            android:background="@color/color_topbar">
 
             <ImageButton
                 android:id="@+id/btn_back"
@@ -22,7 +22,7 @@
                 android:layout_height="@dimen/titlebar_height"
                 android:background="@null"
                 android:contentDescription=""
-                android:src="@drawable/back"/>
+                android:src="@drawable/ic_back"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
                 android:layout_toRightOf="@+id/btn_back"
                 android:gravity="center"
                 android:text="选择产品"
-                android:textColor="@color/bg_text"
+                android:textColor="@color/white"
                 android:textSize="16sp"/>
 
 
@@ -85,6 +85,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -93,6 +94,7 @@
                     android:text="已选"
                     android:textColor="@color/red"
                     android:textSize="16sp"/>
+
                 <TextView
                     android:id="@+id/tv_salenumber"
                     android:layout_width="match_parent"
@@ -103,7 +105,6 @@
                     android:textColor="@color/bg_text"
                     android:textSize="16sp"/>
             </LinearLayout>
-
 
 
             <View

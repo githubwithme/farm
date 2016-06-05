@@ -167,7 +167,6 @@ public class NCZ_FarmSale extends Activity
                         expandableListView.setAdapter(ncz_farmSale_adapter);
                         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
                         {
-
                             @Override
                             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
                             {

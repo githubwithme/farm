@@ -146,9 +146,9 @@ public class FarmManagerFragment extends Fragment
     @Click
     void ll_more()
     {
-        Intent intent = new Intent(getActivity(), NCZ_MoreModule_.class);
-        intent.putExtra("parkid", "80");
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_MoreModule_.class);
+//        intent.putExtra("parkid", "80");
+//        getActivity().startActivity(intent);
     }
 
     @Override

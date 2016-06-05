@@ -169,7 +169,7 @@ public class NCZ_PlantGcdListAdapter extends BaseAdapter
         }
         listItemView.tv_area.setText(PlantGcd.getparkName() + PlantGcd.getareaName());
         listItemView.tv_plantname.setText(PlantGcd.getPlantgcdName());
-        listItemView.tv_time.setText("最近观测:" + PlantGcd.getregDate().substring(5, PlantGcd.getregDate().lastIndexOf(":")));
+        listItemView.tv_time.setText(PlantGcd.getregDate().substring(5, PlantGcd.getregDate().lastIndexOf(":")));
         return convertView;
     }
 }

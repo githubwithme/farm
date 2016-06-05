@@ -77,15 +77,15 @@ public class NCZ_todaymyDetail extends FragmentActivity
 
     private void setBackground(int pos)
     {
-        tv_zz.setBackgroundResource(R.color.white);
-        tv_title.setBackgroundResource(R.color.white);
+//        tv_zz.setBackgroundResource(R.color.white);
+//        tv_title.setBackgroundResource(R.color.white);
         switch (pos)
         {
             case 0:
-                tv_title.setBackgroundResource(R.drawable.red_bottom);
+//                tv_title.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 1:
-                tv_zz.setBackgroundResource(R.drawable.red_bottom);
+//                tv_zz.setBackgroundResource(R.drawable.red_bottom);
                 break;
         }
     }

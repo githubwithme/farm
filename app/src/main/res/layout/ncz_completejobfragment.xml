@@ -6,22 +6,6 @@
               android:orientation="vertical">
 
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_color"/>
-
-    <FrameLayout
-        android:id="@+id/top_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_color"/>
-
     <com.farm.widget.PullToRefreshListView
         android:id="@+id/frame_listview_news"
         style="@style/widget_listview"

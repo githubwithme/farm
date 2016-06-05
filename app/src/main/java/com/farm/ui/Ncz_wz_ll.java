@@ -3,6 +3,7 @@ package com.farm.ui;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -49,43 +50,52 @@ public class Ncz_wz_ll extends FragmentActivity
     @ViewById
     TextView wz_yc;
     @ViewById
+    View view_cangku;
+    @ViewById
+    View view_ck;
+    @ViewById
+    View view_rk;
+    @ViewById
+    View view_wz;
+    @ViewById
+    View view_yc;
+    @ViewById
     CustomViewPager cvPager;
 
     @Click
     void imgbtn_back()
     {
         finish();
-        ;
     }
 
     @Click
     void wz_ll()
     {
-        cvPager.setCurrentItem(0);
+        cvPager.setCurrentItem(3);
     }
 
     @Click
     void wzck()
     {
-        cvPager.setCurrentItem(1);
+        cvPager.setCurrentItem(4);
     }
 
     @Click
     void wz_rk()
     {
-        cvPager.setCurrentItem(2);
+        cvPager.setCurrentItem(1);
     }
 
     @Click
     void wz_ck()
     {
-        cvPager.setCurrentItem(3);
+        cvPager.setCurrentItem(0);
     }
 
     @Click
     void wz_yc()
     {
-        cvPager.setCurrentItem(4);
+        cvPager.setCurrentItem(2);
     }
 
     @AfterViews
@@ -110,27 +120,27 @@ public class Ncz_wz_ll extends FragmentActivity
 
     private void setBackground(int pos)
     {
-        wz_ll.setBackgroundResource(R.color.white);
-        wzck.setBackgroundResource(R.color.white);
-        wz_rk.setBackgroundResource(R.color.white);
-        wz_ck.setBackgroundResource(R.color.white);
-        wz_yc.setBackgroundResource(R.color.white);
+        view_ck.setVisibility(View.GONE);
+        view_rk.setVisibility(View.GONE);
+        view_yc.setVisibility(View.GONE);
+        view_wz.setVisibility(View.GONE);
+        view_cangku.setVisibility(View.GONE);
         switch (pos)
         {
             case 0:
-                wz_ll.setBackground(getResources().getDrawable(R.drawable.red_bottom));
+                view_ck.setVisibility(View.VISIBLE);
                 break;
             case 1:
-                wzck.setBackground(getResources().getDrawable(R.drawable.red_bottom));
+                view_rk.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                wz_rk.setBackground(getResources().getDrawable(R.drawable.red_bottom));
+                view_yc.setVisibility(View.VISIBLE);
                 break;
             case 3:
-                wz_ck.setBackground(getResources().getDrawable(R.drawable.red_bottom));
+                view_wz.setVisibility(View.VISIBLE);
                 break;
             case 4:
-                wz_yc.setBackground(getResources().getDrawable(R.drawable.red_bottom));
+                view_cangku.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -150,11 +160,11 @@ public class Ncz_wz_ll extends FragmentActivity
         ncz_wz_ckfRagment = new NCZ_WZ_CKFRagment_();
         ncz_wz_ycFragment = new NCZ_WZ_YCFragment_();
 
+        fragmentList.add(ncz_wz_ckfRagment);
+        fragmentList.add(ncz_wz_rkFragment);
+        fragmentList.add(ncz_wz_ycFragment);
         fragmentList.add(nec_wz_lookFragment);
         fragmentList.add(ncz_wz_ckxxFragment);
-        fragmentList.add(ncz_wz_rkFragment);
-        fragmentList.add(ncz_wz_ckfRagment);
-        fragmentList.add(ncz_wz_ycFragment);
 
 
     }

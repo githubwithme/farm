@@ -7,7 +7,7 @@
         android:id="@+id/wz_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/white">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/imgbtn_back"
@@ -16,89 +16,144 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
+    </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/wz_tab"
-            android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/wz_tab"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:layout_below="@+id/wz_title"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginRight="20dip"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/wz_ll"
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/red_bottom"
-                android:gravity="center"
-                android:text="物资"
-                android:textColor="@color/textcolor_titlebar"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/wzck"
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="5dip"
-                android:gravity="center"
-                android:text="仓库"
-                android:textColor="@color/textcolor_titlebar"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/wz_rk"
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="5dip"
-                android:gravity="center"
-                android:text="入库"
-                android:textColor="@color/textcolor_titlebar"
-                android:textSize="16sp"/>
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/wz_ck"
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="5dip"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="出库"
-                android:textColor="@color/textcolor_titlebar"
+                android:textColor="@color/bg_text"
                 android:textSize="16sp"/>
+
+            <View
+                android:id="@+id/view_ck"
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:layout_gravity="bottom"
+                android:background="@color/red"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dip"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/wz_rk"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="入库"
+                android:textColor="@color/bg_text"
+                android:textSize="16sp"/>
+
+            <View
+                android:id="@+id/view_rk"
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:layout_gravity="bottom"
+                android:background="@color/red"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dip"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/wz_yc"
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="5dip"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="异常"
-                android:textColor="@color/textcolor_titlebar"
+                android:textColor="@color/bg_text"
                 android:textSize="16sp"/>
 
+            <View
+                android:id="@+id/view_yc"
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:layout_gravity="bottom"
+                android:background="@color/red"/>
+        </FrameLayout>
 
-        </LinearLayout>
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dip"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/wz_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="物资"
+                android:textColor="@color/bg_text"
+                android:textSize="16sp"/>
+
+            <View
+                android:id="@+id/view_wz"
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:layout_gravity="bottom"
+                android:background="@color/red"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dip"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/wzck"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="仓库"
+                android:textColor="@color/bg_text"
+                android:textSize="16sp"/>
+
+            <View
+                android:id="@+id/view_cangku"
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:layout_gravity="bottom"
+                android:background="@color/red"/>
+        </FrameLayout>
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <View
-        android:id="@+id/line"
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@+id/wz_title"
-        android:background="@color/line_color"/>
+        android:layout_height="0.5dip"
+        android:layout_below="@+id/wz_tab"
+        android:background="@color/bg_text"/>
 
     <com.farm.widget.CustomViewPager
         android:id="@+id/cvPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/line"
+        android:layout_below="@+id/view"
         android:divider="@null"/>
 </RelativeLayout>

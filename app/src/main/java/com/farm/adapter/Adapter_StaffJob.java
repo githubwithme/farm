@@ -25,6 +25,7 @@ import java.util.Map;
 
 public class Adapter_StaffJob extends BaseAdapter
 {
+    int colorpostion = 0;
     String audiopath;
     private Context context;// 运行上下文
     private List<String> list_username = new ArrayList<>();// 数据集合
@@ -75,7 +76,6 @@ public class Adapter_StaffJob extends BaseAdapter
     {
         jobtab = listItems.get(position);
         // 自定义视图
-
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
@@ -150,27 +150,36 @@ public class Adapter_StaffJob extends BaseAdapter
             listItemView.fl_new.setVisibility(View.GONE);
         }
 //        listItemView.circle_img.setImageResource(R.drawable.yb);
-//        if (position == 0)
-//        {
-//            listItemView.circle_img.setBackgroundResource(R.drawable.round_gray);
-//            Map<String, String> map = new HashMap<>();
-//            map.put("username",jobtab.getjobFromName());
-//            map.put("color",jobtab.getjobFromName());
-//            list_map.add(map);
-//        }
-//        for (int i = 0; i < list_username.size(); i++)
-//        {
-//            if (!list_username.get(i).equals(jobtab.getjobFromName()))
-//            {
-//                listItemView.circle_img.setBackgroundResource(R.drawable.round_gray);
-//            } else
-//            {
-//                listItemView.circle_img.setBackgroundResource(R.drawable.round_gray);
-//            }
-//        }
+
+
+        int[] color = new int[]{R.color.bg_ask, R.color.bg_work, R.color.red, R.color.gray, R.color.green, R.color.yellow, R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_titlebar, R.color.bg_text_small};
+        if (position == 0)
+        {
+            colorpostion = 0;
+            listItemView.circle_img.setImageResource(R.color.bg_ask);
+        }
+        for (int i = 0; i < position; i++)
+        {
+            if (listItems.get(i).getjobFromName().equals(jobtab.getjobFromName()))
+            {
+                listItemView.circle_img.setImageResource(color[colorpostion]);
+                break;
+            } else if (i == position - 1)
+            {
+                colorpostion = colorpostion + 1;
+                listItemView.circle_img.setImageResource(color[colorpostion]);
+            }
+        }
 
         listItemView.tv_staffname.setText(jobtab.getjobFromName());
-        listItemView.tv_area.setText(jobtab.getareaName() + "执行");
+        listItemView.tv_area.setText("正在"+jobtab.getareaName() + "执行");
         return convertView;
+    }
+
+    @Override
+    public void notifyDataSetChanged()
+    {
+        super.notifyDataSetChanged();
+        colorpostion = 0;
     }
 }

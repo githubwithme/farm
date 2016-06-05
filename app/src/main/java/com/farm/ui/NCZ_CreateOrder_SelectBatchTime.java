@@ -161,7 +161,7 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
                                 List<BatchTime> list_batchtime = parktab.getBatchTimeList();
                                 for (int j = 0; j < list_batchtime.size(); j++)
                                 {
-                                    BatchTime batchtime=list_batchtime.get(j);
+                                    BatchTime batchtime = list_batchtime.get(j);
                                     if (!batchtime.getAllsalefor().equals("0"))
                                     {
                                         list_newBatchTime.add(batchtime);

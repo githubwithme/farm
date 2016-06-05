@@ -94,40 +94,40 @@ public class Adapter_Dynamic extends BaseAdapter
         {
             listItemView.tv_title.setText("指令");
             listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            listItemView.circle_img.setImageResource(R.drawable.bg_importance1);
+            listItemView.circle_img.setBackgroundResource(R.drawable.temp1);
         } else if (type.equals("GZ"))
         {
             listItemView.tv_title.setText("工作");
             listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            listItemView.circle_img.setImageResource(R.drawable.quick_set_create_report);
+            listItemView.circle_img.setBackgroundResource(R.drawable.temp2);
         } else if (type.equals("MQ"))
         {
             listItemView.tv_title.setText("苗情");
             listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            listItemView.circle_img.setImageResource(R.drawable.bg_importance3);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_zz);
         } else if (type.equals("XS"))
         {
             listItemView.tv_title.setText("销售");
             listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            listItemView.circle_img.setImageResource(R.drawable.ic_shoppingcart);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_zl);
         } else if (type.equals("KC"))
         {
-            listItemView.circle_img.setImageResource(R.drawable.bg_importance2);
+            listItemView.circle_img.setBackgroundResource(R.drawable.temp4);
         } else if (type.equals("SP"))
         {
             listItemView.tv_title.setText("审批");
             listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            listItemView.circle_img.setImageResource(R.drawable.ic_shoppingcart);
+            listItemView.circle_img.setBackgroundResource(R.drawable.temp3);
         } else if (type.equals("SJ"))
         {
             listItemView.tv_title.setText("事件");
             listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            listItemView.circle_img.setImageResource(R.drawable.quick_set_create_report);
+            listItemView.circle_img.setBackgroundResource(R.drawable.temp7);
         } else if (type.equals("DL"))
         {
             listItemView.tv_title.setText("断蕾");
             listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            listItemView.circle_img.setImageResource(R.drawable.bg_importance1);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_gz2);
         }
 
         return convertView;

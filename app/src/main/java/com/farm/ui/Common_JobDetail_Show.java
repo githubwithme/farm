@@ -58,6 +58,8 @@ public class Common_JobDetail_Show extends Activity
     TextView tv_note;
     @ViewById
     TextView tv_pfnote;
+    @ViewById
+    TextView tv_title;
 
     jobtab jobtab;
     @ViewById
@@ -80,6 +82,7 @@ public class Common_JobDetail_Show extends Activity
     @AfterViews
     void afterOncreate()
     {
+        tv_title.setText("工作详情");
         jobtab = getIntent().getParcelableExtra("bean");
         showData(jobtab);
     }
@@ -106,14 +109,18 @@ public class Common_JobDetail_Show extends Activity
         String[] yl = jobtab.getamount().split(";");
 //        String[] amountdw = jobtab.getAmountDW().split("[.]");
         String flyl = "";
-        if (jobtab.getAmountDW().equals("")) {
-            for (int i = 0; i < nongzi.length; i++) {
+        if (jobtab.getAmountDW().equals(""))
+        {
+            for (int i = 0; i < nongzi.length; i++)
+            {
                 flyl = flyl + nongzi[i] + ":" + yl[i] + ";";
             }
-        } else {
+        } else
+        {
             String[] daiwei = jobtab.getAmountDW().split("[.]");
-            for (int i = 0; i < nongzi.length; i++) {
-                flyl = flyl + nongzi[i] + ":"+yl[i]+daiwei[i]+";";
+            for (int i = 0; i < nongzi.length; i++)
+            {
+                flyl = flyl + nongzi[i] + ":" + yl[i] + daiwei[i] + ";";
             }
         }
 /*        for (int i = 0; i < nongzi.length; i++)

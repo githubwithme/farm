@@ -529,7 +529,7 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
                                 List<contractTab> list_contractTab = areatab.getContractTabList();
                                 for (int j = 0; j < list_contractTab.size(); j++)
                                 {
-                                    contractTab contractTab=list_contractTab.get(j);
+                                    contractTab contractTab = list_contractTab.get(j);
                                     if (!contractTab.getAllsalefor().equals("0"))
                                     {
                                         list_newcontractTab.add(contractTab);

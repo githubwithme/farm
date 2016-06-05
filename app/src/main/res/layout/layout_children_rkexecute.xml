@@ -20,7 +20,7 @@
             android:layout_width="60dip"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:background="@drawable/round_orange"
+            android:background="@drawable/background_view_rounded_single"
             android:gravity="center"
             android:text="11-15"
             android:textColor="@color/bg_text"

@@ -7,9 +7,6 @@ import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.farm.bean.Result;
-import com.farm.bean.WZ_Detail;
 import com.farm.bean.commembertab;
 import com.farm.common.SqliteDb;
 import com.farm.common.StringUtils;
@@ -19,9 +16,6 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 2015-8-6 下午1:50:43
@@ -63,7 +57,7 @@ public class AppContext extends Application
     public final static String BROADCAST_PG_DATA = "PG_DATA";
     public final static String BROADCAST_Record = "EVENT_RECORD";
 
-    public final static int TIME_REFRESH = 5000;
+    public final static int TIME_REFRESH = 30000;
     public final static int TIME_GZ = 60000;
 
     public final static int TIME_STOPWATCH = 1001;

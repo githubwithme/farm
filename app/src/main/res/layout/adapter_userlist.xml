@@ -14,15 +14,31 @@
         android:layout_marginTop="2dip"
         android:orientation="horizontal">
 
-
-        <com.farm.widget.CircleImageView
-            android:id="@+id/circle_img"
+        <FrameLayout
+            android:id="@+id/fl_img"
             android:layout_width="45dip"
             android:layout_height="45dip"
-            android:layout_centerVertical="true"
-            android:src="@drawable/noimg"
-            app:border_color="@color/transparent"
-            app:border_width="0px"/>
+            android:layout_centerVertical="true">
+
+            <com.farm.widget.CircleImageView
+                android:id="@+id/circle_img"
+                android:layout_width="45dip"
+                android:layout_height="45dip"
+                android:layout_centerVertical="true"
+                android:src="@drawable/noimg"
+                app:border_color="@color/transparent"
+                app:border_width="0px"/>
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="ddd"
+                android:textColor="@color/white"
+                android:textSize="13sp"/>
+        </FrameLayout>
+
 
         <TextView
             android:id="@+id/tv_username"
@@ -30,11 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dip"
-            android:layout_toRightOf="@+id/circle_img"
+            android:layout_toRightOf="@+id/fl_img"
             android:gravity="center"
             android:text="李四"
-            android:textColor="@color/bg_text"
-            android:textSize="14sp"/>
+            android:textColor="@color/gray"
+            android:textSize="18sp"/>
 
         <Button
             android:id="@+id/btn_call"
@@ -43,7 +59,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
-            android:background="@drawable/colleague_phone"/>
+            android:background="@mipmap/call"/>
 
         <TextView
             android:id="@+id/tv_workarea"

@@ -16,9 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.app.AppConfig;
 import com.farm.bean.commembertab;
-import com.farm.common.BitmapHelper;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
 
@@ -27,6 +25,7 @@ import java.util.List;
 
 public class Adapter_UserList extends BaseAdapter
 {
+    int[] color;
     CustomDialog_CallTip custom_calltip;
     String audiopath;
     private Context context;// 运行上下文
@@ -37,6 +36,7 @@ public class Adapter_UserList extends BaseAdapter
 
     static class ListItemView
     {
+        public TextView tv_name;
         public TextView tv_username;
         public TextView tv_workarea;
         public Button btn_call;
@@ -45,6 +45,7 @@ public class Adapter_UserList extends BaseAdapter
 
     public Adapter_UserList(Context context, List<commembertab> data)
     {
+        color = new int[]{R.color.bg_ask, R.color.bg_work, R.color.red, R.color.gray, R.color.green, R.color.yellow, R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_titlebar, R.color.bg_text_small, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_titlebar, R.color.bg_text_small, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_titlebar, R.color.bg_text_small};
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.listItems = data;
@@ -80,6 +81,7 @@ public class Adapter_UserList extends BaseAdapter
             listItemView.btn_call = (Button) convertView.findViewById(R.id.btn_call);
             listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
             listItemView.tv_username = (TextView) convertView.findViewById(R.id.tv_username);
+            listItemView.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             listItemView.tv_workarea = (TextView) convertView.findViewById(R.id.tv_workarea);
             listItemView.btn_call.setTag(position);
             listItemView.btn_call.setOnClickListener(new OnClickListener()
@@ -102,14 +104,15 @@ public class Adapter_UserList extends BaseAdapter
         // 设置文字和图片
 
         listItemView.tv_username.setText(commembertab.getrealName());
+        listItemView.tv_name.setText(commembertab.getrealName());
         if (commembertab.getimgurl().equals(""))
         {
         } else
         {
-            String url = AppConfig.baseurl + commembertab.getimgurl();
-            BitmapHelper.setImageViewBackground(context, listItemView.circle_img, url);
+//            String url = AppConfig.baseurl + commembertab.getimgurl();
+//            BitmapHelper.setImageViewBackground(context, listItemView.circle_img, url);
         }
-
+        listItemView.circle_img.setImageResource(color[position]);
         listItemView.tv_workarea.setText(commembertab.getparkName() + commembertab.getareaName());
 
         return convertView;

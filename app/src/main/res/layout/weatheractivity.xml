@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
 
         <LinearLayout
             android:id="@+id/ll_tab"
@@ -32,7 +32,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:text="园区未知"
-                android:textColor="@color/bg_text"
+                android:textColor="@color/white"
                 android:textSize="16sp"/>
 
             <ImageView
@@ -41,7 +41,7 @@
                 android:layout_height="15dip"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dip"
-                android:background="@drawable/downward"
+                android:background="@drawable/ic_down"
                 android:contentDescription=""/>
         </LinearLayout>
 

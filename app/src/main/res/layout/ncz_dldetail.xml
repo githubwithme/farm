@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
 
         <ImageButton
@@ -14,7 +16,8 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
+
         <LinearLayout
             android:id="@+id/ll_tab"
             android:layout_width="wrap_content"
@@ -29,30 +32,31 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:text="断蕾情况"
-                android:textColor="@color/textcolor_titlebar"
+                android:textColor="@color/white"
                 android:textSize="@dimen/titlebar_textsize"/>
+
             <ImageView
                 android:id="@+id/ic_up"
                 android:layout_width="20dip"
                 android:layout_height="20dip"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dip"
-                android:background="@drawable/downward"
-                android:contentDescription="" />
+                android:background="@drawable/ic_down"
+                android:contentDescription=""/>
         </LinearLayout>
 
 
-
         <TextView
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
             android:id="@+id/shuaxin"
             android:layout_width="50dip"
             android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
             android:gravity="center"
             android:text="刷新"
-            android:textSize="20dip"
-            android:layout_alignParentRight="true"/>
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
 
 
     </RelativeLayout>
@@ -63,11 +67,13 @@
         android:layout_height="1px"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
+
     <RelativeLayout
         android:id="@+id/rl_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ProgressBar
             android:id="@+id/pb_upload"
             android:layout_width="60dip"
@@ -81,38 +87,43 @@
             android:textSize="@dimen/titlebar_textsize"
             />
     </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/cz_startdl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_timelimit"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_colum"
                 android:background="@null"
                 android:gravity="center"
                 android:hint="开始时间"
-                android:textSize="@dimen/size_20"/>
+                android:textSize="@dimen/size_20"
+                android:visibility="gone"/>
         </LinearLayout>
+
         <TextView
             android:id="@+id/startdl"
-            android:text="还没有进行断蕾"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="50dip" />
+            android:layout_height="50dip"
+            android:gravity="center"
+            android:text="还没有进行断蕾"/>
 
 
     </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.farm.widget.CustomExpandableListView
             android:id="@+id/expandableListView"
             android:layout_width="match_parent"

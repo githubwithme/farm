@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dip"
-            android:text="苗情-观测点"
+            android:text="苗情-全部观测点"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 

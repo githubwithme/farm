@@ -8,7 +8,7 @@
         android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/white">
+        android:background="@color/color_topbar">
 
 
         <ImageButton
@@ -17,7 +17,7 @@
             android:layout_height="@dimen/titlebar_height"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
 
         <LinearLayout
             android:id="@+id/ll_tab"
@@ -34,7 +34,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:text="观测点"
-                android:textColor="@color/textcolor_titlebar"
+                android:textColor="@color/white"
                 android:textSize="@dimen/titlebar_textsize"/>
 
             <TextView

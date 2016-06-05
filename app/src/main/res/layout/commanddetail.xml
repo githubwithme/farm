@@ -30,7 +30,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dip"
+        android:layout_height="45dip"
         android:background="@color/white"
         android:orientation="horizontal">
 

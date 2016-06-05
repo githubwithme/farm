@@ -82,7 +82,7 @@ public class NCZ_JobActivity extends Activity
 //                tv_jobdoning.setBackgroundResource(R.drawable.red_bottom);
                 view_jobcomplete.setVisibility(View.GONE);
                 view_jobdoing.setVisibility(View.VISIBLE);
-//                break;
+                break;
             case 1:
 //                tv_jobcomplete.setSelected(false);
 //                tv_jobcomplete.setTextColor(getResources().getColor(R.color.bg_blue));

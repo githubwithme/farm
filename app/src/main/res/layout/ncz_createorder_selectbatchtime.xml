@@ -12,7 +12,7 @@
             android:id="@+id/rl_titlebar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/titlebar_height"
-            android:background="@color/white">
+            android:background="@color/color_topbar">
 
             <ImageButton
                 android:id="@+id/btn_back"
@@ -20,7 +20,7 @@
                 android:layout_height="@dimen/titlebar_height"
                 android:background="@null"
                 android:contentDescription=""
-                android:src="@drawable/back"/>
+                android:src="@drawable/ic_back"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
                 android:layout_marginLeft="30dip"
                 android:gravity="center"
                 android:text="选择批次"
-                android:textColor="@color/bg_text"
+                android:textColor="@color/white"
                 android:textSize="@dimen/size_sp_18"/>
 
 

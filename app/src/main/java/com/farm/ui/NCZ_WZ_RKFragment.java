@@ -13,12 +13,10 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.WZ_RKExecute_Adapter;
-import com.farm.adapter.breakoff_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.WZ_CRk;
-import com.farm.bean.WZ_Detail;
 import com.farm.bean.commembertab;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -106,11 +104,10 @@ public class NCZ_WZ_RKFragment extends Fragment
                         wz_rkExecute_adapter = new WZ_RKExecute_Adapter(getActivity(), listNewData, expandableListView);
                         expandableListView.setAdapter(wz_rkExecute_adapter);
 
-    /*                    for (int i = 0; i < listNewData.size(); i++)
+                        for (int i = 0; i < listNewData.size(); i++)
                         {
                             expandableListView.expandGroup(i);//展开
-//                                  expandableListView.collapseGroup(i);//关闭
-                        }*/
+                        }
 
                     } else
                     {

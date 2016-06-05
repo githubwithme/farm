@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dip"
-            android:text="联系人"
+            android:text="农场易"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
         <Button

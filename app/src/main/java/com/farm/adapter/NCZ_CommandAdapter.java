@@ -25,6 +25,7 @@ import java.util.List;
 @SuppressLint("NewApi")
 public class NCZ_CommandAdapter extends BaseAdapter
 {
+   int  colorpostion = 0;
     private Context context;// 运行上下文
     private List<commandtab> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
@@ -203,6 +204,24 @@ public class NCZ_CommandAdapter extends BaseAdapter
 //            listItemView.tv_importance.setText("未知");
 ////			 listItemView.circle_img.setBorderColor(context.getResources().getColor(R.color.bg_text));
 //        }
+        int[] color = new int[]{R.color.bg_ask, R.color.bg_work, R.color.red, R.color.gray, R.color.green, R.color.yellow, R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_titlebar, R.color.bg_text_small};
+        if (position == 0)
+        {
+            colorpostion = 0;
+            listItemView.circle_img.setImageResource(color[0]);
+        }
+        for (int i = 0; i < position; i++)
+        {
+            if (listItems.get(i).getcommFromName().equals(commandtab.getcommFromName()))
+            {
+                listItemView.circle_img.setImageResource(color[colorpostion]);
+                break;
+            } else if (i == position - 1)
+            {
+                colorpostion = colorpostion + 1;
+                listItemView.circle_img.setImageResource(color[colorpostion]);
+            }
+        }
         return convertView;
     }
 
