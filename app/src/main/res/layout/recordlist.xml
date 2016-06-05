@@ -9,7 +9,7 @@
         android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -18,16 +18,17 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
             android:text="语音聊天"
-            android:textColor="@color/bg_text"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 
         <Button
@@ -103,8 +104,8 @@
             android:layout_height="60dip"
             android:layout_alignParentRight="true"
             android:background="@color/white"
-            android:textColor="@color/bg_text"
-            android:text="发送"/>
+            android:text="发送"
+            android:textColor="@color/bg_text"/>
 
         <View
             android:layout_width="1px"

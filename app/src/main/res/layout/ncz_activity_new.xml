@@ -135,7 +135,7 @@
                 android:layout_height="0dip"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="员工工作"
+                android:text="农场工作"
                 android:textColor="@color/menu_textcolor"
                 android:textSize="@dimen/home_menu_textsize"/>
         </TableLayout>

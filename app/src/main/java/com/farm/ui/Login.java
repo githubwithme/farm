@@ -201,7 +201,7 @@ public class Login extends Activity
                                 finish();
                             } else if (level.equals("2"))// 片管
                             {
-                                Intent intent = new Intent(Login.this, PG_MainActivity_.class);
+                                Intent intent = new Intent(Login.this, PG_MainActivity_New_.class);
                                 startActivity(intent);
                                 finish();
                             } else
