@@ -49,7 +49,7 @@ public class PG_MainActivity_New extends Activity
     MyDialog myDialog;
     Fragment mContent = new Fragment();
     PG_DynamicFragment pg_dynamicFragment;//动态fragment
-    NCZ_JobFragment ncz_jobFragment;//工作fragment
+    PG_JobFragment pg_jobFragment;
     FarmManagerFragment farmManagerFragment;//农场工作fragment
     IFragment iFragment;//个人信息fragment
     @ViewById
@@ -124,7 +124,7 @@ public class PG_MainActivity_New extends Activity
         tl_me.setSelected(false);
         tl_product.setSelected(false);
         tl_sale.setSelected(false);
-        switchContent(mContent, ncz_jobFragment);
+        switchContent(mContent, pg_jobFragment);
     }
 
     @Click
@@ -201,7 +201,7 @@ public class PG_MainActivity_New extends Activity
 
         AppManager.getAppManager().addActivity(PG_MainActivity_New.this);
         pg_dynamicFragment = new PG_DynamicFragment_();
-        ncz_jobFragment = new NCZ_JobFragment_();
+        pg_jobFragment = new PG_JobFragment_();
         farmManagerFragment = new FarmManagerFragment_();
         ncz_contactsFragment = new NCZ_ContactsFragment_();
         iFragment = new IFragment_();

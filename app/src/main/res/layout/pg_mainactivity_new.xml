@@ -38,7 +38,7 @@
                     android:layout_width="20dip"
                     android:layout_height="20dip"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/screen_black"
+                    android:background="@drawable/btn_message_selector"
                     android:clickable="false"
                     android:contentDescription=""/>
 
@@ -98,7 +98,7 @@
                     android:layout_width="20dip"
                     android:layout_height="20dip"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/btn_cmd_selector"
+                    android:background="@drawable/btn_work_selector"
                     android:clickable="false"
                     android:contentDescription=""/>
 
@@ -135,7 +135,7 @@
                 android:layout_height="0dip"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="工作"
+                android:text="农场工作"
                 android:textColor="@color/menu_textcolor"
                 android:textSize="@dimen/home_menu_textsize"/>
         </TableLayout>
@@ -218,7 +218,7 @@
                     android:layout_width="20dip"
                     android:layout_height="20dip"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/people_black"
+                    android:background="@drawable/btn_contacts_selector"
                     android:clickable="false"
                     android:contentDescription=""/>
             </RelativeLayout>

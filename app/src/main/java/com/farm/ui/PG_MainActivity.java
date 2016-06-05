@@ -58,10 +58,10 @@ public class PG_MainActivity extends Activity implements TencentLocationListener
     Fragment mContent = new Fragment();
     PG_MainFragment mainFragment;
     PG_GddList pg_gddList;
-//    PG_EventList pg_eventList;
-PG_ListOfEvents pg_listOfEvents;
+    //    PG_EventList pg_eventList;
+    PG_ListOfEvents pg_listOfEvents;
     PG_CKList pg_ckList;
-//    ProductSale productAndSale;
+    //    ProductSale productAndSale;
 //    ProductAndSale productAndSale;
 //    PG_BreakOff pg_breakOff;
 //    PG_BreakBud pg_breakBud;
@@ -126,6 +126,7 @@ PG_ListOfEvents pg_listOfEvents;
         tl_ck.setSelected(false);
         switchContent(mContent, mainFragment);
     }
+
     @Click
     void tl_dl()
     {
@@ -145,6 +146,7 @@ PG_ListOfEvents pg_listOfEvents;
 //        switchContent(mContent, pg_productBatch);
         switchContent(mContent, pq_dlFragment);
     }
+
     @Click
     void tl_event()
     {
@@ -203,6 +205,7 @@ PG_ListOfEvents pg_listOfEvents;
         tl_event.setSelected(false);
         switchContent(mContent, iFragment);
     }
+
     @Click
     void tl_ck()
     {
@@ -232,13 +235,13 @@ PG_ListOfEvents pg_listOfEvents;
             for (int i = 0; i < list_exception.size(); i++)
             {
                 sendExceptionInfoToServer(list_exception.get(i));
-           }
+            }
         }
         //将日志信息提交
         List<LogInfo> list_LogInfo = SqliteDb.getLogInfo(PG_MainActivity.this);
         if (list_LogInfo != null)
         {
-            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(PG_MainActivity.this).toString(),utils.getToday());
+            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(PG_MainActivity.this).toString(), utils.getToday());
         }
 
 
@@ -252,18 +255,18 @@ PG_ListOfEvents pg_listOfEvents;
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-         commembertab=AppContext.getUserInfo(PG_MainActivity.this);
+        commembertab = AppContext.getUserInfo(PG_MainActivity.this);
         AppManager.getAppManager().addActivity(this);
         mainFragment = new PG_MainFragment_();
         pg_gddList = new PG_GddList_();
 //        pg_eventList = new PG_EventList_();
-        pg_listOfEvents=new PG_ListOfEvents_();
+        pg_listOfEvents = new PG_ListOfEvents_();
 //        productAndSale = new ProductSale_();
-        pg_productBatch=new PG_ProductBatch_();
+        pg_productBatch = new PG_ProductBatch_();
         pg_EveryDayAssessList = new PG_EveryDayAssessList_();
-        pq_dlFragment=new PQ_DLFragment_();
+        pq_dlFragment = new PQ_DLFragment_();
         iFragment = new IFragment_();
-        pg_ckList=new PG_CKList_();
+        pg_ckList = new PG_CKList_();
 
         TencentLocationRequest request = TencentLocationRequest.create();
         TencentLocationManager locationManager = TencentLocationManager.getInstance(PG_MainActivity.this);
@@ -360,18 +363,19 @@ PG_ListOfEvents pg_listOfEvents;
     {
 
     }
+
     private void MarkLocation(TencentLocation location)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "AddLocationInfo");
-        params.addQueryStringParameter("uid",commembertab.getuId() );
-        params.addQueryStringParameter("userid",commembertab.getId() );
-        params.addQueryStringParameter("username",commembertab.getrealName() );
-        params.addQueryStringParameter("parkid",commembertab.getparkId() );
-        params.addQueryStringParameter("parkname",commembertab.getparkName() );
-        params.addQueryStringParameter("areaid",commembertab.getareaId() );
-        params.addQueryStringParameter("areaname",commembertab.getareaName() );
-        params.addQueryStringParameter("lat",String.valueOf(location.getLatitude()) );
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("username", commembertab.getrealName());
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("parkname", commembertab.getparkName());
+        params.addQueryStringParameter("areaid", commembertab.getareaId());
+        params.addQueryStringParameter("areaname", commembertab.getareaName());
+        params.addQueryStringParameter("lat", String.valueOf(location.getLatitude()));
         params.addQueryStringParameter("lng", String.valueOf(location.getLongitude()));
         params.addQueryStringParameter("time", utils.getTime());
         HttpUtils http = new HttpUtils();
@@ -399,6 +403,7 @@ PG_ListOfEvents pg_listOfEvents;
             }
         });
     }
+
     private void sendExceptionInfoToServer(final ExceptionInfo exception)
     {
         RequestParams params = new RequestParams();
@@ -432,15 +437,16 @@ PG_ListOfEvents pg_listOfEvents;
         });
 
     }
-    private void sendLogInfoToServer(final List<LogInfo> list,String deviceuuid,String logday)
+
+    private void sendLogInfoToServer(final List<LogInfo> list, String deviceuuid, String logday)
     {
         StringBuilder builder = new StringBuilder();
         builder.append("{ \"LogInfoList\": ");
         builder.append(JSON.toJSONString(list));
         builder.append("} ");
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("deviceuuid",deviceuuid);
-        params.addQueryStringParameter("logday",logday);
+        params.addQueryStringParameter("deviceuuid", deviceuuid);
+        params.addQueryStringParameter("logday", logday);
         params.addQueryStringParameter("action", "addLogInfo");
         params.setContentType("application/json");
         try
@@ -461,10 +467,10 @@ PG_ListOfEvents pg_listOfEvents;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    String rows=result.getRows().get(0).toString();
+                    String rows = result.getRows().get(0).toString();
                     if (rows.equals("1"))
                     {
-                        SqliteDb.updateLogInfo(PG_MainActivity.this,list);
+                        SqliteDb.updateLogInfo(PG_MainActivity.this, list);
                     }
                 }
             }
