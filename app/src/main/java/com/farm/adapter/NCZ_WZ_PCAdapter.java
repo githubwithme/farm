@@ -74,7 +74,7 @@ public class NCZ_WZ_PCAdapter extends BaseAdapter {
         listItemView.batchNumber.setText("批次号:"+wz_pcxx.getBatchName());
         listItemView.inDate.setText(wz_pcxx.getInDate());
         listItemView.local.setText(wz_pcxx.getParkName()+"-"+wz_pcxx.getStorehouseName());
-        listItemView.quantity.setText(wz_pcxx.getQuantity());
+        listItemView.quantity.setText(wz_pcxx.getSumWeight());
         listItemView.inGoodsValue.setText(wz_pcxx.getInGoodsValue()+"元");
 
         return view;

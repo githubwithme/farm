@@ -100,8 +100,8 @@ public class SearchAllInformation extends Activity
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+                   /* if (result.getAffectedRows() != 0)
+                    {*/
                         ll_tip.setVisibility(View.GONE);
                         listData = JSON.parseArray(result.getRows().toJSONString(), SearchEntity.class);
                         adapter_search = new Adapter_Search(SearchAllInformation.this, listData);
@@ -142,11 +142,11 @@ public class SearchAllInformation extends Activity
                             }
                         });
                     }
-                } else
+          /*      } else
                 {
                     AppContext.makeToast(SearchAllInformation.this, "error_connectDataBase");
                     return;
-                }
+                }*/
 
 
             }

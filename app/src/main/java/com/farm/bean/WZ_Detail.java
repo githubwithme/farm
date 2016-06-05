@@ -30,7 +30,17 @@ public class WZ_Detail implements Parcelable
     public String GoodsStatistical ;
     public String isExchange ;
     public String costUnit ;
+    public String sumWeight ;
 
+    public String getSumWeight()
+    {
+        return sumWeight;
+    }
+
+    public void setSumWeight(String sumWeight)
+    {
+        this.sumWeight = sumWeight;
+    }
 
     public String getIsExchange()
     {
@@ -205,6 +215,7 @@ public class WZ_Detail implements Parcelable
             p.setGoodsStatistical(source.readString());
             p.setIsExchange(source.readString());
             p.setCostUnit(source.readString());
+            p.setSumWeight(source.readString());
 
 
             return  p;
@@ -237,6 +248,7 @@ public class WZ_Detail implements Parcelable
         p.writeString(GoodsStatistical);
         p.writeString(isExchange);
         p.writeString(costUnit);
+        p.writeString(sumWeight);
 
 
     }

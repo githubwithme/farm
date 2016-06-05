@@ -71,7 +71,8 @@ public class NCZ_WZ_FBAdapter extends BaseAdapter
         }
 
         listItemView.local.setText(wz_pcxx.getParkName()+"-"+wz_pcxx.getStorehouseName());
-        listItemView.number.setText("数量:"+wz_pcxx.getNumber());
+//        listItemView.number.setText("数量:"+wz_pcxx.getNumber());
+        listItemView.number.setText("重量:"+wz_pcxx.getSumWeight());
 
 
         return view;

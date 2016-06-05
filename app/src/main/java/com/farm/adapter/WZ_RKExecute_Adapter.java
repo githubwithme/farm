@@ -85,6 +85,7 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
         public TextView local;
         public TextView quantity;
         public TextView inGoodsvalue;
+        public TextView zhongliangs;
     }
 
     //设置子item的组件
@@ -112,6 +113,7 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
             listItemView.local = (TextView) convertView.findViewById(R.id.local);
             listItemView.quantity = (TextView) convertView.findViewById(R.id.quantity);
             listItemView.inGoodsvalue = (TextView) convertView.findViewById(R.id.inGoodsvalue);
+            listItemView.zhongliangs = (TextView) convertView.findViewById(R.id.zhongliangs);
             convertView.setTag(listItemView);
 //            convertView.setTag(R.id.tag_bean, jobtab);
             convertView.setOnClickListener(new View.OnClickListener()
@@ -141,6 +143,7 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
             listItemView.local.setText(wz_rKxx.getParkName() + "-" + wz_rKxx.getStorehouseName());
             listItemView.quantity.setText("数量:" + wz_rKxx.getQuantity());
             listItemView.inGoodsvalue.setText("总值:" + wz_rKxx.getInGoodsvalue() + "元");
+            listItemView.zhongliangs.setText("重量:" + wz_rKxx.getSumWeight() );
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
