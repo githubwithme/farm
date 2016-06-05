@@ -80,6 +80,7 @@ public class GoodsAdapter extends BaseAdapter
             BitmapHelper.setImageViewBackground(context, view.icon,"http://pic4.nipic.com/20090827/3095621_083213047918_2.jpg");
             view.name.setText(goodslisttab.getGoodsName());
             view.tv_number.setText(goodslisttab.getQuantity());
+            view.tv_goodsvalue.setText("重量:"+goodslisttab.getSumWeight());
         }
 
         return convertView;
@@ -90,12 +91,14 @@ public class GoodsAdapter extends BaseAdapter
         private ImageView icon;
         private TextView name;
         private TextView tv_number;
+        private TextView tv_goodsvalue;
 
         public Holder(View view)
         {
             icon = (ImageView) view.findViewById(R.id.typeicon);
             name = (TextView) view.findViewById(R.id.typename);
             tv_number = (TextView) view.findViewById(R.id.tv_number);
+            tv_goodsvalue = (TextView) view.findViewById(R.id.tv_goodsvalue);
         }
     }
 

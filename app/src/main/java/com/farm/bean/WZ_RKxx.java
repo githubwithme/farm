@@ -30,6 +30,18 @@ public class WZ_RKxx implements Parcelable
 
     public String expDate;
     public String note;
+    public String sumWeight;
+
+
+    public String getSumWeight()
+    {
+        return sumWeight;
+    }
+
+    public void setSumWeight(String sumWeight)
+    {
+        this.sumWeight = sumWeight;
+    }
 
     public String getBatchName() {
         return batchName;
@@ -191,6 +203,7 @@ public class WZ_RKxx implements Parcelable
             p.setOutType(source.readString());
             p.setExpDate(source.readString());
             p.setNote(source.readString());
+            p.setSumWeight(source.readString());
 
 
 
@@ -223,6 +236,7 @@ public class WZ_RKxx implements Parcelable
         p.writeString(outType);
         p.writeString(expDate);
         p.writeString(note);
+        p.writeString(sumWeight);
 
 
     }

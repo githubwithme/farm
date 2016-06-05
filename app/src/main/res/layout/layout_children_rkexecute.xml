@@ -55,6 +55,18 @@
             android:text="8分"
             android:textColor="@color/gray"
             android:textSize="@dimen/size_14"/>
+        <TextView
+            android:layout_marginLeft="20dip"
+            android:layout_toRightOf="@+id/quantity"
+            android:id="@+id/zhongliangs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/local"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="8分"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_14"/>
 
         <TextView
             android:id="@+id/inGoodsvalue"

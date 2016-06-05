@@ -23,6 +23,17 @@ public class WZ_Pcxx  implements Parcelable
     public String number;
     public String quantity;
     public String inGoodsValue;
+    public String sumWeight;
+
+    public String getSumWeight()
+    {
+        return sumWeight;
+    }
+
+    public void setSumWeight(String sumWeight)
+    {
+        this.sumWeight = sumWeight;
+    }
 
     public String getNumber() {
         return number;
@@ -131,6 +142,7 @@ public class WZ_Pcxx  implements Parcelable
             p.setNumber(source.readString());
             p.setQuantity(source.readString());
             p.setInGoodsValue(source.readString());
+            p.setSumWeight(source.readString());
 
 
             return  p;
@@ -156,6 +168,7 @@ public class WZ_Pcxx  implements Parcelable
         p.writeString(number);
         p.writeString(quantity);
         p.writeString(inGoodsValue);
+        p.writeString(sumWeight);
 
 
 
