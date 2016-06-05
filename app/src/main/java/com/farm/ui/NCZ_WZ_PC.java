@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,7 +24,6 @@ import com.farm.bean.Result;
 import com.farm.bean.WZ_Detail;
 import com.farm.bean.WZ_Pcxx;
 import com.farm.bean.commembertab;
-import com.farm.bean.goodslisttab;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
 import com.farm.widget.NewDataToast;
@@ -95,8 +92,7 @@ public class NCZ_WZ_PC extends Fragment
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 // 点击头部、底部栏无效
-                if (position == 0 || view == list_footer)
-                    return;
+                if (position == 0 || view == list_footer) return;
 //                Intent intent=new Intent(getActivity(),NCZ_CKWZDetail_.class);
                 WZ_Pcxx wz_pcxx = listData.get(position - 1);
                 Intent intent = new Intent(getActivity(), NCZ_WZ_PCDetail_.class);

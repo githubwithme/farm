@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -17,16 +17,16 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="XX仓库"
-            android:textColor="@color/textcolor_titlebar"
+            android:layout_toRightOf="@+id/btn_back"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>
     <View
