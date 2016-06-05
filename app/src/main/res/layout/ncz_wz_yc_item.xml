@@ -22,7 +22,7 @@
                 android:layout_height="30dip"
                 android:layout_gravity="center|left"
                 android:layout_marginLeft="10dip"
-                android:background="@drawable/round_orange"
+                android:background="@drawable/background_view_rounded_single"
                 android:gravity="center"
                 android:minWidth="60dip"
                 android:text="钾肥"

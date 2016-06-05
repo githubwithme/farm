@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg_white">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_white"
+              android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/imgbtn_back"
@@ -15,22 +16,24 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/imgbtn_back"
             android:gravity="center"
             android:text="异常详细列表"
-            android:textColor="@color/textcolor_titlebar"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/bg_main" />
+        android:background="@color/bg_main"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dip"
@@ -53,11 +56,12 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/bg_main"/>
+
     <LinearLayout
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:orientation="horizontal">
 
         <TextView
@@ -69,12 +73,12 @@
             android:inputType="numberDecimal"
             android:text="所在园区"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -86,19 +90,21 @@
             android:inputType="numberDecimal"
             android:text="叶数"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/bg_main"/>
+
     <LinearLayout
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:orientation="horizontal">
 
         <TextView
@@ -109,12 +115,12 @@
             android:inputType="numberDecimal"
             android:text="所在仓库"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -126,19 +132,21 @@
             android:inputType="numberDecimal"
             android:text="叶数"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/bg_main"/>
+
     <LinearLayout
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:orientation="horizontal">
 
         <TextView
@@ -149,12 +157,12 @@
             android:inputType="numberDecimal"
             android:text="发现时间"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -166,19 +174,21 @@
             android:inputType="numberDecimal"
             android:text="叶数"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/bg_main"/>
+
     <LinearLayout
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:orientation="horizontal">
 
         <TextView
@@ -189,12 +199,12 @@
             android:inputType="numberDecimal"
             android:text="异常原因"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -206,20 +216,22 @@
             android:inputType="numberDecimal"
             android:text="叶数"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/bg_main"/>
+
     <LinearLayout
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:id="@+id/llview1"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:orientation="horizontal">
 
         <TextView
@@ -230,12 +242,12 @@
             android:inputType="numberDecimal"
             android:text="过期批次号"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -247,21 +259,23 @@
             android:inputType="numberDecimal"
             android:text="叶数"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
 
     </LinearLayout>
+
     <View
         android:id="@+id/ltview1"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/bg_main"/>
+
     <LinearLayout
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:id="@+id/llview3"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:orientation="horizontal">
 
         <TextView
@@ -272,12 +286,12 @@
             android:inputType="numberDecimal"
             android:text="过期剩余时间"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -289,21 +303,23 @@
             android:inputType="numberDecimal"
             android:text="叶数"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
 
     </LinearLayout>
+
     <View
         android:id="@+id/ltview2"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/bg_main"/>
+
     <LinearLayout
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:id="@+id/llview2"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:orientation="horizontal">
 
         <TextView
@@ -314,12 +330,12 @@
             android:inputType="numberDecimal"
             android:text="过期物资数量"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -331,21 +347,23 @@
             android:inputType="numberDecimal"
             android:text="叶数"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
 
     </LinearLayout>
+
     <View
         android:id="@+id/ltview3"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/bg_main"/>
+
     <LinearLayout
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:id="@+id/llview4"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:orientation="horizontal">
 
         <TextView
@@ -356,12 +374,12 @@
             android:inputType="numberDecimal"
             android:text="过期物资重量"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -373,20 +391,22 @@
             android:inputType="numberDecimal"
             android:text="叶数"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
 
     </LinearLayout>
+
     <View
         android:id="@+id/ltview4"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/bg_main"/>
+
     <LinearLayout
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:orientation="horizontal">
 
         <TextView
@@ -397,12 +417,12 @@
             android:inputType="numberDecimal"
             android:text="该仓库物资数量"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -414,19 +434,21 @@
             android:inputType="numberDecimal"
             android:text="叶数"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/bg_main"/>
+
     <LinearLayout
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:orientation="horizontal">
 
         <TextView
@@ -437,12 +459,12 @@
             android:inputType="numberDecimal"
             android:text="该仓库物资重量"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -454,10 +476,11 @@
             android:inputType="numberDecimal"
             android:text="叶数"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"

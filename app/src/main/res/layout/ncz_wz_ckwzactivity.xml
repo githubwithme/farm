@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg_white">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_white"
+              android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -15,25 +16,26 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
             android:text="XX仓库"
-            android:textColor="@color/textcolor_titlebar"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
 
     <com.farm.widget.PullToRefreshListView
         android:id="@+id/wz_frame_listview"
-        style="@style/widget_listview" />
+        style="@style/widget_listview"/>
 
 </LinearLayout>

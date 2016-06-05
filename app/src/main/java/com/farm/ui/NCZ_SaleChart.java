@@ -83,6 +83,7 @@ public class NCZ_SaleChart extends Activity
         chart_bar.setDescription("");
         chart_bar.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         chart_bar.setData(generateDataBar());
+        chart_bar.setDrawValueAboveBar(false);
         getBatchTimeByUid();
     }
 

@@ -10,12 +10,12 @@
               android:orientation="horizontal">
 
     <FrameLayout
-        android:visibility="invisible"
-        android:layout_gravity="center_vertical"
         android:id="@+id/fl_dynamic"
         android:layout_width="15dip"
         android:layout_height="15dip"
+        android:layout_gravity="center_vertical"
         android:layout_toRightOf="@id/imgbtn_home"
+        android:visibility="invisible"
         >
 
         <com.farm.widget.CircleImageView
@@ -36,6 +36,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/size_10"/>
     </FrameLayout>
+
     <LinearLayout
         android:layout_width="0dip"
         android:layout_height="wrap_content"
@@ -82,7 +83,7 @@
                 android:minWidth="60dip"
                 android:text="等待买家付款"
                 android:textColor="@color/red"
-                android:textSize="@dimen/size_sp_14"/>
+                android:textSize="14sp"/>
         </RelativeLayout>
 
 
@@ -91,7 +92,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip"
             android:orientation="horizontal">
 
             <TextView
@@ -99,8 +99,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="单价￥:"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_14"/>
+                android:textColor="@color/gray"
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/tv_price"
@@ -109,8 +109,8 @@
                 android:layout_marginLeft="10dip"
                 android:gravity="left"
                 android:text="2.5元"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_14"/>
+                android:textColor="@color/gray"
+                android:textSize="13sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -118,8 +118,8 @@
                 android:layout_marginLeft="30dip"
                 android:gravity="center"
                 android:text="总价￥:"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_14"/>
+                android:textColor="@color/gray"
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/tv_sum"
@@ -128,8 +128,9 @@
                 android:layout_marginLeft="10dip"
                 android:gravity="left"
                 android:text="待反馈"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_14"/>
+                android:visibility="gone"
+                android:textColor="@color/gray"
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/tv_fromtip"
@@ -137,9 +138,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:gravity="center"
+                android:visibility="gone"
                 android:text="产地:"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/size_sp_14"/>
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/tv_from"
@@ -147,11 +149,12 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dip"
+                android:visibility="gone"
                 android:layout_toRightOf="@+id/tv_fromtip"
                 android:gravity="left"
                 android:text="乐丰园区"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/size_sp_14"/>
+                android:textSize="13sp"/>
 
         </LinearLayout>
 
@@ -160,8 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip"
             android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip">
+            android:layout_marginRight="10dip">
 
 
             <TextView
@@ -172,7 +174,7 @@
                 android:gravity="center"
                 android:text="批次:"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/size_sp_14"/>
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/tv_batchtime"
@@ -184,7 +186,7 @@
                 android:gravity="left"
                 android:text="216-05-15至2016-15-18"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/size_sp_14"/>
+                android:textSize="13sp"/>
 
             <Button
                 android:id="@+id/btn_cancleorder"
