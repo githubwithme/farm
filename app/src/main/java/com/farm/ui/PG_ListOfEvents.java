@@ -1,11 +1,9 @@
 package com.farm.ui;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,14 +11,14 @@ import com.farm.R;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 /**
  * Created by user on 2016/4/8.
  */
-@EFragment
-public class PG_ListOfEvents extends Fragment
+@EActivity(R.layout.pg_listofevents)
+public class PG_ListOfEvents extends Activity
 {
     com.farm.bean.commembertab commembertab;
     Fragment mContent = new Fragment();
@@ -40,7 +38,7 @@ public class PG_ListOfEvents extends Fragment
     @Click
     void imgbtn_back()
     {
-        getActivity().finish();
+        PG_ListOfEvents.this.finish();
     }
 
 
@@ -61,6 +59,8 @@ public class PG_ListOfEvents extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        pg_eventReported = new PG_EventReported_();
+        pg_eventProcessed = new PG_EventProcessed_();
         setBackground(0);
         switchContent(mContent, pg_eventReported);
     }
@@ -73,18 +73,18 @@ public class PG_ListOfEvents extends Fragment
         tv_reported.setBackgroundResource(R.color.white);
         tv_processed.setBackgroundResource(R.color.white);
 
-        tv_reported.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_processed.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_reported.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_processed.setTextColor(getResources().getColor(R.color.menu_textcolor));
         switch (pos)
         {
             case 0:
                 tv_reported.setSelected(false);
-                tv_reported.setTextColor(getResources().getColor(R.color.bg_blue));
+//                tv_reported.setTextColor(getResources().getColor(R.color.bg_blue));
                 tv_reported.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 1:
                 tv_processed.setSelected(false);
-                tv_processed.setTextColor(getResources().getColor(R.color.bg_blue));
+//                tv_processed.setTextColor(getResources().getColor(R.color.bg_blue));
                 tv_processed.setBackgroundResource(R.drawable.red_bottom);
                 break;
         }
@@ -92,13 +92,12 @@ public class PG_ListOfEvents extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.pg_listofevents, container, false);
-        pg_eventReported = new PG_EventReported_();
-        pg_eventProcessed = new PG_EventProcessed_();
-        return rootView;
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();
     }
+
 
     public void switchContent(Fragment from, Fragment to)
     {

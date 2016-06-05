@@ -9,7 +9,7 @@
         android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/white">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/imgbtn_back"
@@ -18,18 +18,17 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"
-            android:visibility="gone"/>
+            android:src="@drawable/ic_back"/>
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dip"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/imgbtn_back"
             android:gravity="center"
             android:text="事件列表"
-            android:textColor="@color/textcolor_titlebar"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 
 
