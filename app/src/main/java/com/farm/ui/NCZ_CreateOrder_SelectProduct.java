@@ -474,7 +474,7 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
                         pb_upload.setVisibility(View.GONE);
                         Intent intent = new Intent(NCZ_CreateOrder_SelectProduct.this, NCZ_CreateMoreOrder_.class);
                         startActivity(intent);
-//                        Toast.makeText(NCZ_CreateOrder_SelectProduct.this, "保存成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(NCZ_CreateOrder_SelectProduct.this, "保存成功", Toast.LENGTH_SHORT).show();/
                         Intent intent2 = new Intent();
                         intent2.setAction(AppContext.BROADCAST_UPDATESELLORDER);
                         sendBroadcast(intent2);
