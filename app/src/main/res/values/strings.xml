@@ -89,5 +89,6 @@
     <item name="tag_ck" type="id"></item>
     <item name="tag_pgck" type="id"></item>
     <item name="tag_czdl" type="id"></item>
+    <item name="tag_cash" type="id"></item>
     <string name="title_activity_observation_record">ObservationRecordActivity</string>
 </resources>
