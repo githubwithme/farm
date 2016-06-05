@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-
-
+              android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
@@ -50,7 +48,7 @@
                 android:textSize="@dimen/titlebar_textsize"/>
 
             <View
-                android:id="@+id/view_jobdoing"
+                android:id="@+id/view_jobdoings"
                 android:layout_width="match_parent"
                 android:layout_height="3dip"
                 android:layout_gravity="bottom"
@@ -74,7 +72,7 @@
 
             <View
                 android:visibility="gone"
-                android:id="@+id/view_jobcomplete"
+                android:id="@+id/view_jobcompletes"
                 android:layout_width="match_parent"
                 android:layout_height="3dip"
                 android:layout_gravity="bottom"

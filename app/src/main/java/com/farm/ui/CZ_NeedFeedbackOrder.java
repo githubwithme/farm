@@ -147,6 +147,8 @@ public class CZ_NeedFeedbackOrder extends Fragment
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
+                                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                                AppContext.eventStatus(getActivity(), "8",  listData.get(position).getUuid(), commembertab.getId());
                                 Intent intent = new Intent(getActivity(), CZ_OrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 intent.putExtra("broadcast", AppContext.BROADCAST_UPDATEALLORDER_CZ);

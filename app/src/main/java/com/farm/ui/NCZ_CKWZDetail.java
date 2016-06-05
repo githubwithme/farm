@@ -76,7 +76,7 @@ public class NCZ_CKWZDetail extends FragmentActivity {
     void after() {
 //        tv_title.setText(Wz_Storehouse.getParkName()+"-"+Wz_Storehouse.getStorehouseName());
 //        tv_title.setText(wz_storehouse.getGoodsName());
-        tv_title.setText(localName);
+        goodname.setText(goodsName);
         tv_title.setText(goodsName);
         getGoodsxx();
     }

@@ -112,6 +112,8 @@ public class Adapter_Dynamic extends BaseAdapter
             listItemView.circle_img.setImageResource(R.drawable.ic_shoppingcart);
         } else if (type.equals("KC"))
         {
+            listItemView.tv_title.setText("库存");
+            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
             listItemView.circle_img.setImageResource(R.drawable.bg_importance2);
         } else if (type.equals("SP"))
         {
@@ -128,6 +130,14 @@ public class Adapter_Dynamic extends BaseAdapter
             listItemView.tv_title.setText("断蕾");
             listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
             listItemView.circle_img.setImageResource(R.drawable.bg_importance1);
+        }
+
+        if (dynamicBean.getListdata().get(0).getFlashStr().equals("0"))
+        {
+            listItemView.fl_new_item.setVisibility(View.GONE);
+        }else
+        {
+            listItemView.fl_new_item.setVisibility(View.VISIBLE);
         }
 
         return convertView;

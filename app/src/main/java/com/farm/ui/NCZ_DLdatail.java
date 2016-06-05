@@ -75,6 +75,15 @@ public class NCZ_DLdatail extends Activity
     ExpandableListView expandableListView;
     @ViewById
     RelativeLayout rl_view;
+    @ViewById
+    TextView shuaxin;
+
+    @Click
+    void shuaxin()
+    {
+        if (!id.equals(""))
+        getIsStartBreakOff(id);
+    }
 
     @Click
     void btn_back()
@@ -263,6 +272,7 @@ public class NCZ_DLdatail extends Activity
        String str = formatter.format(curDate);*/
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("userId", commembertab.getId());
         params.addQueryStringParameter("parkid", parkid);
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("action", "getBatchTimeOfPark");

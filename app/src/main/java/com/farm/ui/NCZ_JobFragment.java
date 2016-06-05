@@ -51,6 +51,8 @@ public class NCZ_JobFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        ncz_doingJobFragment = new NCZ_DoingJobFragment_();
+        ncz_completeJobFragment = new NCZ_CompleteJobFragment_();
         setBackground(0);
         switchContent(mContent, ncz_doingJobFragment);
     }
@@ -59,8 +61,6 @@ public class NCZ_JobFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.ncz_jobfragment, container, false);
-        ncz_doingJobFragment = new NCZ_DoingJobFragment_();
-        ncz_completeJobFragment = new NCZ_CompleteJobFragment_();
         return rootView;
     }
 
@@ -79,16 +79,16 @@ public class NCZ_JobFragment extends Fragment
             case 0:
 //                tv_jobdoning.setSelected(false);
 //                tv_jobdoning.setTextColor(getResources().getColor(R.color.bg_blue));
-                view_jobdoing.setVisibility(View.VISIBLE);
                 view_jobcomplete.setVisibility(View.GONE);
+                view_jobdoing.setVisibility(View.VISIBLE);
 //                tv_jobdoning.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 1:
 //                tv_jobcomplete.setSelected(false);
 //                tv_jobcomplete.setTextColor(getResources().getColor(R.color.bg_blue));
 //                tv_jobcomplete.setBackgroundResource(R.drawable.red_bottom);
-                view_jobdoing.setVisibility(View.GONE);
                 view_jobcomplete.setVisibility(View.VISIBLE);
+                view_jobdoing.setVisibility(View.GONE);
                 break;
         }
 

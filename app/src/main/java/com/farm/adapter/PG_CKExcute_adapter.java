@@ -228,7 +228,7 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
                 if (wz_cRk2.getFlashStr().equals("1"))
                 {
                     commembertab commembertab = AppContext.getUserInfo(context);
-                    AppContext.eventStatus(context, "4", wz_cRk2.getBatchNumber(), commembertab.getId());
+                    AppContext.eventStatus(context, "6", wz_cRk2.getId(), commembertab.getId());
                 }
 
 

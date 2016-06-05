@@ -8,14 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.farm.R;
+import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
 import com.farm.bean.BreakOff_New;
+import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
 
@@ -182,7 +185,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 
     //设置父item组件
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
+    public View getGroupView(final int groupPosition,final boolean isExpanded, View convertView, ViewGroup parent)
     {
         if (convertView == null)
         {
@@ -190,9 +193,28 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.dl_parentitem, null);
         }
         TextView tv_park = (TextView) convertView.findViewById(R.id.tv_park);
+        FrameLayout fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
 
+        convertView.setTag(R.id.tag_czdl, listData.get(groupPosition));
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isExpanded) {
+                    mainlistview.collapseGroup(groupPosition);
+                } else {
+                    mainlistview.expandGroup(groupPosition);
+                }
+                BatchTime batchTime = (BatchTime) view.getTag(R.id.tag_czdl);
+                if (batchTime.getFlashStr().equals("1"))
+                {
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    AppContext.eventStatus(context, "7", batchTime.getid(), commembertab.getId());
+                }
 
-        tv_park.setText(listData.get(groupPosition).getBatchTime()+"    "+listData.get(groupPosition).getBatchColor()+"丝带");
+            }
+        });
+
+        tv_park.setText(listData.get(groupPosition).getBatchTime()+"    "+listData.get(groupPosition).getBatchColor()+"绳带");
         if (listData.get(groupPosition).getBatchColor().equals("红色")) {
 //            view.setBackgroundColor(Color.parseColor("#365663"));
 //            rl_color.setBackground(R.color.red);
@@ -207,6 +229,14 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
             tv_park.setBackgroundColor(Color.parseColor("#d8bfd8"));
         }else {
             tv_park.setBackgroundColor(Color.parseColor("#ffff00"));
+        }
+
+        if (listData.get(groupPosition).getFlashStr().equals("0"))
+        {
+            fl_new_item.setVisibility(View.INVISIBLE);
+        }else
+        {
+            fl_new_item.setVisibility(View.VISIBLE);
         }
         return convertView;
     }

@@ -206,6 +206,8 @@ public class IFragment extends Fragment
         {
             ll_startBreakoff.setVisibility(View.VISIBLE);
         }
+
+        getNew();
     }
 
     @Override
@@ -438,7 +440,62 @@ public class IFragment extends Fragment
             }
         });
     }
+    private void getNew()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "getVersion");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<Apk> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Apk.class);
+                        if (listNewData != null)
+                        {
+                            Apk apk = listNewData.get(0);
+                            PackageInfo packageInfo = null;
+                            try
+                            {
+                                packageInfo = getActivity().getApplicationContext().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+                            } catch (NameNotFoundException e)
+                            {
+                                e.printStackTrace();
+                            }
+                            String localVersion = packageInfo.versionName;
+                            if (localVersion.equals(apk.getVersion()))
+                            {
+                                fl_new.setVisibility(View.GONE);
+                            }else
+                            {
+                                fl_new.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    } else
+                    {
+                        listNewData = new ArrayList<Apk>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+            }
 
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
     public void downloadApk(String path, final String target)
     {
         String sss = path;

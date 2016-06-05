@@ -50,8 +50,19 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String xxzt;
     public String producer;
     public String finalpayment;
+    public String flashStr;
     public List<SellOrderDetail_New> sellOrderDetailList;
 
+
+    public String getFlashStr()
+    {
+        return flashStr;
+    }
+
+    public void setFlashStr(String flashStr)
+    {
+        this.flashStr = flashStr;
+    }
 
     public void setFinalpayment(String finalpayment)
     {
@@ -380,6 +391,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setXxzt(source.readString());
             p.setProducer(source.readString());
             p.setFinalpayment(source.readString());
+            p.setFlashStr(source.readString());
             p.sellOrderDetailList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
             return p;
 
@@ -423,6 +435,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(xxzt);
         p.writeString(producer);
         p.writeString(finalpayment);
+        p.writeString(flashStr);
         p.writeList(sellOrderDetailList);
     }
 

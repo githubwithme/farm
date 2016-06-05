@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -30,6 +31,7 @@ public class CZ_OrderAdapter extends BaseAdapter
         public TextView tv_sum;
         public TextView tv_from;
         public TextView tv_batchtime;
+        public FrameLayout fl_dynamic;
     }
 
     public CZ_OrderAdapter(Context context, List<SellOrder_New> data)
@@ -73,6 +75,7 @@ public class CZ_OrderAdapter extends BaseAdapter
             listItemView.tv_sum = (TextView) convertView.findViewById(R.id.tv_sum);
             listItemView.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
             listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
+            listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -109,6 +112,14 @@ public class CZ_OrderAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
+        if (listItems.get(position).getFlashStr().equals("0"))
+        {
+            listItemView.fl_dynamic.setVisibility(View.INVISIBLE);
+        } else
+        {
+            listItemView.fl_dynamic.setVisibility(View.VISIBLE);
+        }
+
         return convertView;
     }
 

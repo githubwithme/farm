@@ -253,6 +253,8 @@ public class CZ_DLFragment extends Fragment
        RequestParams params = new RequestParams();
        params.addQueryStringParameter("uid", commembertab.getuId());
        params.addQueryStringParameter("parkid",commembertab.getparkId());
+       params.addQueryStringParameter("userId",commembertab.getId());
+
        params.addQueryStringParameter("year",utils.getYear());
        params.addQueryStringParameter("action", "getBatchTimeOfPark");
        HttpUtils http = new HttpUtils();

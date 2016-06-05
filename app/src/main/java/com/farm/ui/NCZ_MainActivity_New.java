@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -93,6 +97,10 @@ public class NCZ_MainActivity_New extends Activity
     TableLayout tl_me;
     @ViewById
     TableLayout tl_farmlive;
+    @ViewById
+    FrameLayout fl_dynamic;
+    @ViewById
+    TextView tv_dynamic_new;
 
     @Click
     void tl_home()
@@ -229,8 +237,30 @@ public class NCZ_MainActivity_New extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_NCZ_DT);
+        NCZ_MainActivity_New.this.registerReceiver(receiver_update, intentfilter_update);
         getActionBar().hide();
     }
+
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+
+            String num = intent.getStringExtra("Num");
+            if (num.equals("0"))
+            {
+                fl_dynamic.setVisibility(View.GONE);
+            }else
+            {
+                fl_dynamic.setVisibility(View.VISIBLE);
+//                tv_dynamic_new.setText(num);
+            }
+
+        }
+    };
 
     public void switchContent(Fragment from, Fragment to)
     {
