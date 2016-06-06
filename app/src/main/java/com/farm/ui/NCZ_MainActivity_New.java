@@ -253,7 +253,7 @@ public class NCZ_MainActivity_New extends Activity
             if (num.equals("0"))
             {
                 fl_dynamic.setVisibility(View.GONE);
-            }else
+            } else
             {
                 fl_dynamic.setVisibility(View.VISIBLE);
 //                tv_dynamic_new.setText(num);
