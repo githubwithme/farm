@@ -120,6 +120,7 @@ public class CZ_DLFragment extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        getActionBar().hide();
     }
 
 

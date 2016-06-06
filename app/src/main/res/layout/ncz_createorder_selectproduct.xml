@@ -101,7 +101,7 @@
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:gravity="center"
-                    android:text="145000"
+                    android:text="0"
                     android:textColor="@color/bg_text"
                     android:textSize="16sp"/>
             </LinearLayout>

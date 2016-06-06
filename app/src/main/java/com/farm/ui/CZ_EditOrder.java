@@ -78,6 +78,11 @@ public class CZ_EditOrder extends Activity
 
 
     @Click
+    void btn_back()
+    {
+        finish();
+    }
+    @Click
     void btn_sure()
     {
         setData();

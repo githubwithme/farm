@@ -80,6 +80,7 @@ public class NCZ_CreateMoreOrder extends Activity
     @Click
     void btn_sure()
     {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_CreateMoreOrder.this);
         if (et_name.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -160,7 +161,7 @@ public class NCZ_CreateMoreOrder extends Activity
         String uuid = java.util.UUID.randomUUID().toString();
         SellOrder_New sellOrder = new SellOrder_New();
         sellOrder.setid("");
-        sellOrder.setUid("60");
+        sellOrder.setUid(commembertab.getuId());
         sellOrder.setUuid(uuid);
         sellOrder.setBatchTime(batchtime);
         sellOrder.setSelltype("0");

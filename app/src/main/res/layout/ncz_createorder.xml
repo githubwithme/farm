@@ -278,7 +278,6 @@
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
                             android:hint="请输入采购商地址"
-                            android:inputType="phone"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>

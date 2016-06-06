@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -19,6 +20,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
 import com.farm.ui.NCZ_EditOrder_;
+import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -32,6 +34,7 @@ import java.util.List;
 @SuppressLint("NewApi")
 public class NCZ_OrderAdapter extends BaseAdapter
 {
+    MyDialog myDialog;
     String broadcast;
     private Context context;// 运行上下文
     private List<SellOrder_New> listItems;// 数据集合
@@ -118,7 +121,7 @@ public class NCZ_OrderAdapter extends BaseAdapter
                 listItemView.tv_state.setText("等待买家付定金");
             } else
             {
-                if (sellOrder.getFinalpayment().equals(""))
+                if (sellOrder.getFinalpayment().equals("0"))
                 {
                     listItemView.tv_state.setText("等待买家付尾款");
                 } else
@@ -133,7 +136,8 @@ public class NCZ_OrderAdapter extends BaseAdapter
                 public void onClick(View v)
                 {
                     SellOrder_New sellOrder_new= (SellOrder_New) v.getTag(R.id.tag_cash);
-                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
+                    showDeleteTip(sellOrder_new.getUuid());
+//                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
             });
             listItemView.btn_editorder.setTag(R.id.tag_postion, position);
@@ -207,5 +211,28 @@ public class NCZ_OrderAdapter extends BaseAdapter
 
             }
         });
+    }
+
+    private void showDeleteTip(final String  uuid)
+    {
+
+        View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        deleteSellOrderAndDetail(uuid);
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.cancel();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
     }
 }
