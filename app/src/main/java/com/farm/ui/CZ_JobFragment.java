@@ -468,7 +468,6 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
             {
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer) return;
-
                 // Animal animal = null;
                 // // 判断是否是TextView
                 // if (view instanceof TextView)

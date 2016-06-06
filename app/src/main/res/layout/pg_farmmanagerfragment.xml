@@ -29,7 +29,8 @@
             android:layout_marginRight="10dip"
             android:background="@mipmap/icon_add"
             android:gravity="center"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btn_search"
@@ -39,7 +40,8 @@
             android:layout_marginRight="20dip"
             android:layout_toLeftOf="@+id/btn_add"
             android:background="@drawable/ic_search"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:visibility="gone"/>
 
 
     </RelativeLayout>
@@ -187,7 +189,7 @@
                     android:background="@color/line_color"/>
 
                 <LinearLayout
-                    android:id="@+id/ll_xs"
+                    android:id="@+id/ll_tq"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -197,16 +199,25 @@
                         android:layout_width="50dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/icon_zl"/>
+                        android:background="@drawable/logo_qzone"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dip"
                         android:gravity="center"
-                        android:text="销售"
+                        android:text="农场天气"
                         android:textColor="@color/bg_text"
                         android:textSize="@dimen/size_14"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
                 </LinearLayout>
 
                 <View
@@ -219,7 +230,8 @@
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="50dip"
@@ -252,29 +264,6 @@
                 android:orientation="horizontal">
 
 
-                <LinearLayout
-                    android:id="@+id/ll_tq"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="50dip"
-                        android:layout_height="45dip"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/logo_qzone"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dip"
-                        android:gravity="center"
-                        android:text="农场天气"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
-                </LinearLayout>
-
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
@@ -285,7 +274,8 @@
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="50dip"

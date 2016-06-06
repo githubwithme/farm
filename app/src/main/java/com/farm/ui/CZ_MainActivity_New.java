@@ -231,17 +231,39 @@ public class CZ_MainActivity_New extends Activity
         switchContent(mContent, cz_jobFragment);
         tv_farmlive.setTextColor(getResources().getColor(R.color.red));
         tl_farmlive.setSelected(true);
+
+
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_NCZ_DT);
+        registerReceiver(receiver_update, intentfilter_update);
+        IntentFilter intentfilter_updatemessage = new IntentFilter(AppContext.UPDATEMESSAGE_FARMMANAGER);
+        registerReceiver(receiver_updatemessage, intentfilter_updatemessage);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_NCZ_DT);
-        CZ_MainActivity_New.this.registerReceiver(receiver_update, intentfilter_update);
         getActionBar().hide();
     }
 
+    BroadcastReceiver receiver_updatemessage = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            int number = intent.getIntExtra("number", 0);
+            if (number > 0)
+            {
+                fl_new.setVisibility(View.VISIBLE);
+                tv_new.setText(String.valueOf(number));
+            } else
+            {
+                fl_new.setVisibility(View.GONE);
+                tv_new.setText("");
+            }
+        }
+    };
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -253,7 +275,7 @@ public class CZ_MainActivity_New extends Activity
             if (num.equals("0"))
             {
                 fl_dynamic.setVisibility(View.GONE);
-            }else
+            } else
             {
                 fl_dynamic.setVisibility(View.VISIBLE);
 //                tv_dynamic_new.setText(num);

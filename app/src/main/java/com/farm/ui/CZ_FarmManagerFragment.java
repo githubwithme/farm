@@ -10,18 +10,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.Result;
+import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ${hmj} on 2016/5/26.
@@ -29,6 +44,7 @@ import org.androidannotations.annotations.ViewById;
 @EFragment
 public class CZ_FarmManagerFragment extends Fragment
 {
+    TimeThread timethread;
     commembertab commembertab;
     PopupWindow pw_command;
     View pv_command;
@@ -40,11 +56,27 @@ public class CZ_FarmManagerFragment extends Fragment
     GridView gv;
     @ViewById
     View view;
+    @ViewById
+    TextView tv_plantnumber_new;
+    @ViewById
+    TextView tv_cmdnumber_new;
+    @ViewById
+    TextView tv_worknumber_new;
+    @ViewById
+    FrameLayout fl_worknumber_new;
+    @ViewById
+    FrameLayout fl_plantnumber_new;
+    @ViewById
+    FrameLayout fl_cmdnumber_new;
 
     @AfterViews
     void afterOncrete()
     {
         commembertab = AppContext.getUserInfo(getActivity());
+        getListData();
+        timethread = new TimeThread();
+        timethread.setSleep(false);
+        timethread.start();
     }
 
     @Click
@@ -171,6 +203,80 @@ public class CZ_FarmManagerFragment extends Fragment
         return rootView;
     }
 
+    private void getListData()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("parkID", commembertab.getparkId());
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("username", commembertab.getuserName());
+        params.addQueryStringParameter("action", "parkGetbyParkID");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<areatab> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), areatab.class);
+                        if (listNewData != null)
+                        {
+
+                            areatab areatab = listNewData.get(0);
+                            Intent intent = new Intent();
+                            intent.putExtra("number",  Integer.valueOf(areatab.getJobCount())+Integer.valueOf(areatab.getCommandCount())+Integer.valueOf(areatab.getPlantGrowCount()));
+                            intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
+                            getActivity().sendBroadcast(intent);
+                            if (Integer.valueOf(areatab.getJobCount()) > 0)
+                            {
+                                fl_worknumber_new.setVisibility(View.VISIBLE);
+                                tv_worknumber_new.setText(areatab.getJobCount());
+                            } else
+                            {
+                                fl_worknumber_new.setVisibility(View.GONE);
+                            }
+                            if (Integer.valueOf(areatab.getCommandCount()) > 0)
+                            {
+                                fl_cmdnumber_new.setVisibility(View.VISIBLE);
+                                tv_cmdnumber_new.setText(areatab.getCommandCount());
+                            } else
+                            {
+                                fl_cmdnumber_new.setVisibility(View.GONE);
+                            }
+                            if (Integer.valueOf(areatab.getPlantGrowCount()) > 0)
+                            {
+                                fl_plantnumber_new.setVisibility(View.VISIBLE);
+                                tv_plantnumber_new.setText(areatab.getPlantGrowCount());
+                            } else
+                            {
+                                fl_plantnumber_new.setVisibility(View.GONE);
+                            }
+                        }
+                    } else
+                    {
+                        listNewData = new ArrayList<areatab>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
+
     public void showPop_add()
     {
         LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
@@ -246,5 +352,56 @@ public class CZ_FarmManagerFragment extends Fragment
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = 0.7f;
         getActivity().getWindow().setAttributes(lp);
+    }
+
+    class TimeThread extends Thread
+    {
+        private boolean isSleep = true;
+        private boolean stop = false;
+
+        public void run()
+        {
+            Long starttime = 0l;
+            while (!stop)
+            {
+                if (isSleep)
+                {
+                    return;
+                } else
+                {
+                    try
+                    {
+                        Thread.sleep(AppContext.TIME_REFRESH);
+                        starttime = starttime + 1000;
+                        getListData();
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        public void setSleep(boolean sleep)
+        {
+            isSleep = sleep;
+        }
+
+        public void setStop(boolean stop)
+        {
+            this.stop = stop;
+        }
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        if (timethread != null && timethread.isAlive())
+        {
+            timethread.setStop(true);
+            timethread.interrupt();
+            timethread = null;
+        }
     }
 }

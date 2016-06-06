@@ -117,8 +117,8 @@ public class GcdDetail extends FragmentActivity
 
     private void setBackground(int pos)
     {
-        tv_zz.setBackgroundResource(R.color.white);
-        tv_title.setBackgroundResource(R.color.white);
+//        tv_zz.setBackgroundResource(R.color.white);
+//        tv_title.setBackgroundResource(R.color.white);
         switch (pos)
         {
             case 0:

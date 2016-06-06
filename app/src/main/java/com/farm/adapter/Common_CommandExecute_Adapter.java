@@ -102,14 +102,14 @@ public class Common_CommandExecute_Adapter extends BaseAdapter
 
         if (jobtab.getPercent().equals(""))
         {
-            listItemView.tv_time.setBackgroundResource(R.color.bg_yellow);
+//            listItemView.tv_time.setBackgroundResource(R.color.bg_yellow);
             listItemView.tv_time.setText(jobtab.getregDate().substring(5, jobtab.getregDate().lastIndexOf(" ")));
             listItemView.tv_jd.setText("进行中...");
             listItemView.tv_pf.setText("");
             listItemView.tv_note.setText("");
         } else
         {
-            listItemView.tv_time.setBackgroundResource(R.color.bg_yellow);
+//            listItemView.tv_time.setBackgroundResource(R.color.bg_yellow);
             listItemView.tv_time.setText(jobtab.getregDate().substring(5, jobtab.getregDate().lastIndexOf(" ")));
             listItemView.tv_jd.setText("完成" + jobtab.getPercent() + "%");
             listItemView.tv_pf.setText(jobtab.getaudioJobExecPath() + "分");

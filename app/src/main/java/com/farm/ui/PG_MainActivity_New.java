@@ -48,7 +48,7 @@ public class PG_MainActivity_New extends Activity
     NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
     MyDialog myDialog;
     Fragment mContent = new Fragment();
-//    PG_DynamicFragment pg_dynamicFragment;//动态fragment
+    //    PG_DynamicFragment pg_dynamicFragment;//动态fragment
     PG_JobFragment pg_jobFragment;
     PG_FarmManagerFragment pg_farmManagerFragment;//农场工作fragment
     IFragment iFragment;//个人信息fragment

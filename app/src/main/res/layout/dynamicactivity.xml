@@ -27,6 +27,7 @@
             android:layout_height="27dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             android:layout_marginRight="10dip"
             android:background="@mipmap/icon_add"
             android:gravity="center"
@@ -42,6 +43,7 @@
             android:layout_toLeftOf="@+id/btn_add"
             android:background="@drawable/ic_search"
             android:gravity="center"
+            android:visibility="gone"
             android:textColor="@color/bg_text"
             android:textSize="16sp"/>
 

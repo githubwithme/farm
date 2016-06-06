@@ -39,7 +39,7 @@ public class CommandDetail_Show_ExecuteFragment extends Fragment
 {
     commandtab commandtab;
     @ViewById
-ListView lv;
+    ListView lv;
     @ViewById
     RelativeLayout rl_pb;
     @ViewById
@@ -55,6 +55,7 @@ ListView lv;
     {
         getJobList();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
