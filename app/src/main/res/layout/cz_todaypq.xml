@@ -8,22 +8,24 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
+
         <ImageButton
             android:id="@+id/btn_back"
             android:layout_width="30dip"
             android:layout_height="@dimen/titlebar_height"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
+
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/titlebar_height"
-            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
             android:text="片区情况"
-            android:textColor="@color/textcolor_titlebar"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"
             android:textStyle="bold"/>
 
@@ -31,11 +33,11 @@
             android:id="@+id/btn_addspontaneitywork"
             android:layout_width="20dip"
             android:layout_height="20dip"
-            android:visibility="gone"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
-            android:background="@drawable/plus"/>
+            android:background="@drawable/plus"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <View

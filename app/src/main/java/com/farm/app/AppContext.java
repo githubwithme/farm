@@ -57,6 +57,7 @@ public class AppContext extends Application
     public final static String BROADCAST_PG_DATA = "PG_DATA";
     public final static String BROADCAST_Record = "EVENT_RECORD";
     public final static String BROADCAST_NCZ_DT = "NCZ_DT";
+    public final static String UPDATEMESSAGE_FARMMANAGER= "UPDATEMESSAGE_FARMMANAGER";
 
     public final static int TIME_REFRESH = 30000;
     public final static int TIME_GZ = 60000;

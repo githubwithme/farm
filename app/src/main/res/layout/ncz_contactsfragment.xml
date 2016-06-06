@@ -28,6 +28,7 @@
             android:layout_marginRight="10dip"
             android:background="@mipmap/icon_add"
             android:gravity="center"
+            android:visibility="gone"
             android:textColor="@color/bg_text"
             android:textSize="16sp"/>
 
@@ -39,6 +40,7 @@
             android:layout_marginRight="20dip"
             android:layout_toLeftOf="@+id/btn_add"
             android:background="@drawable/ic_search"
+            android:visibility="gone"
             android:gravity="center"
             android:textColor="@color/bg_text"
             android:textSize="16sp"/>

@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -42,15 +46,16 @@ import org.apache.http.entity.StringEntity;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-@EActivity(R.layout.pg_mainactivity_new)
-public class PG_MainActivity_New extends Activity
+@EActivity(R.layout.cz_activity_new)
+public class CZ_MainActivity_New extends Activity
 {
+    //    NCZ_FarmLive_Fragment ncz_farmLive_fragment;//农场实况
     NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
     MyDialog myDialog;
     Fragment mContent = new Fragment();
-    //    PG_DynamicFragment pg_dynamicFragment;//动态fragment
-    PG_JobFragment pg_jobFragment;
-    PG_FarmManagerFragment pg_farmManagerFragment;//农场工作fragment
+    DynamicFragment dynamicFragment;//动态fragment
+    CZ_JobFragment cz_jobFragment;//工作fragment
+    CZ_FarmManagerFragment cz_farmManagerFragment;//农场工作fragment
     IFragment iFragment;//个人信息fragment
     @ViewById
     FrameLayout fl_new;
@@ -92,6 +97,10 @@ public class PG_MainActivity_New extends Activity
     TableLayout tl_me;
     @ViewById
     TableLayout tl_farmlive;
+    @ViewById
+    FrameLayout fl_dynamic;
+    @ViewById
+    TextView tv_dynamic_new;
 
     @Click
     void tl_home()
@@ -107,7 +116,7 @@ public class PG_MainActivity_New extends Activity
         tl_product.setSelected(false);
         tl_sale.setSelected(false);
         tl_farmlive.setSelected(false);
-        switchContent(mContent, pg_jobFragment);
+        switchContent(mContent, dynamicFragment);
     }
 
     @Click
@@ -124,7 +133,7 @@ public class PG_MainActivity_New extends Activity
         tl_me.setSelected(false);
         tl_product.setSelected(false);
         tl_sale.setSelected(false);
-        switchContent(mContent, pg_jobFragment);
+        switchContent(mContent, cz_jobFragment);
     }
 
     @Click
@@ -142,7 +151,7 @@ public class PG_MainActivity_New extends Activity
         tl_sale.setSelected(false);
         tl_farmlive.setSelected(false);
 //		switchContent(mContent, ncz_CommandList);
-        switchContent(mContent, pg_farmManagerFragment);
+        switchContent(mContent, cz_farmManagerFragment);
     }
 
     @Click
@@ -184,7 +193,7 @@ public class PG_MainActivity_New extends Activity
     void afterOncreate()
     {
         //将错误信息提交
-        List<ExceptionInfo> list_exception = SqliteDb.getExceptionInfo(PG_MainActivity_New.this);
+        List<ExceptionInfo> list_exception = SqliteDb.getExceptionInfo(CZ_MainActivity_New.this);
         if (list_exception != null)
         {
             for (int i = 0; i < list_exception.size(); i++)
@@ -193,16 +202,16 @@ public class PG_MainActivity_New extends Activity
             }
         }
         //将日志信息提交
-        List<LogInfo> list_LogInfo = SqliteDb.getLogInfo(PG_MainActivity_New.this);
+        List<LogInfo> list_LogInfo = SqliteDb.getLogInfo(CZ_MainActivity_New.this);
         if (list_LogInfo != null)
         {
-            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(PG_MainActivity_New.this).toString(), utils.getToday());
+            sendLogInfoToServer(list_LogInfo, GetMobilePhoneInfo.getDeviceUuid(CZ_MainActivity_New.this).toString(), utils.getToday());
         }
 
-        AppManager.getAppManager().addActivity(PG_MainActivity_New.this);
-//        pg_dynamicFragment = new PG_DynamicFragment_();
-        pg_jobFragment = new PG_JobFragment_();
-        pg_farmManagerFragment = new PG_FarmManagerFragment_();
+        AppManager.getAppManager().addActivity(CZ_MainActivity_New.this);
+        dynamicFragment = new DynamicFragment_();
+        cz_jobFragment = new CZ_JobFragment_();
+        cz_farmManagerFragment = new CZ_FarmManagerFragment_();
         ncz_contactsFragment = new NCZ_ContactsFragment_();
         iFragment = new IFragment_();
 //        List<Integer> guideResourceId = new ArrayList<Integer>();
@@ -219,9 +228,15 @@ public class PG_MainActivity_New extends Activity
 //        tv_product.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
 //        tv_sale.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
 //        tv_money.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
-        switchContent(mContent, pg_jobFragment);
+        switchContent(mContent, cz_jobFragment);
         tv_farmlive.setTextColor(getResources().getColor(R.color.red));
         tl_farmlive.setSelected(true);
+
+
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_NCZ_DT);
+        registerReceiver(receiver_update, intentfilter_update);
+        IntentFilter intentfilter_updatemessage = new IntentFilter(AppContext.UPDATEMESSAGE_FARMMANAGER);
+        registerReceiver(receiver_updatemessage, intentfilter_updatemessage);
     }
 
     @Override
@@ -230,6 +245,44 @@ public class PG_MainActivity_New extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
     }
+
+    BroadcastReceiver receiver_updatemessage = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            int number = intent.getIntExtra("number", 0);
+            if (number > 0)
+            {
+                fl_new.setVisibility(View.VISIBLE);
+                tv_new.setText(String.valueOf(number));
+            } else
+            {
+                fl_new.setVisibility(View.GONE);
+                tv_new.setText("");
+            }
+        }
+    };
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+
+            String num = intent.getStringExtra("Num");
+            if (num.equals("0"))
+            {
+                fl_dynamic.setVisibility(View.GONE);
+            } else
+            {
+                fl_dynamic.setVisibility(View.VISIBLE);
+//                tv_dynamic_new.setText(num);
+            }
+
+        }
+    };
 
     public void switchContent(Fragment from, Fragment to)
     {
@@ -289,7 +342,7 @@ public class PG_MainActivity_New extends Activity
     protected void onDestroy()
     {
         super.onDestroy();
-        AppManager.getAppManager().AppExit(PG_MainActivity_New.this);
+        AppManager.getAppManager().AppExit(CZ_MainActivity_New.this);
     }
 
     @Override
@@ -306,7 +359,7 @@ public class PG_MainActivity_New extends Activity
     private void showExistTip()
     {
         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(PG_MainActivity_New.this, R.style.MyDialog, dialog_layout, "确定退出吗？", "确定退出吗？", "退出", "取消", new CustomDialogListener()
+        myDialog = new MyDialog(CZ_MainActivity_New.this, R.style.MyDialog, dialog_layout, "确定退出吗？", "确定退出吗？", "退出", "取消", new CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -315,8 +368,8 @@ public class PG_MainActivity_New extends Activity
                 {
                     case R.id.btn_sure:
                         myDialog.dismiss();
-                        AppManager.getAppManager().AppExit(PG_MainActivity_New.this);
-                        NotificationManager manger = (NotificationManager) PG_MainActivity_New.this.getSystemService(PG_MainActivity_New.this.NOTIFICATION_SERVICE);
+                        AppManager.getAppManager().AppExit(CZ_MainActivity_New.this);
+                        NotificationManager manger = (NotificationManager) CZ_MainActivity_New.this.getSystemService(CZ_MainActivity_New.this.NOTIFICATION_SERVICE);
                         manger.cancel(101);
                         manger.cancel(100);
                         break;
@@ -349,7 +402,7 @@ public class PG_MainActivity_New extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        SqliteDb.deleteExceptionInfo(PG_MainActivity_New.this, exception.getExceptionid());
+                        SqliteDb.deleteExceptionInfo(CZ_MainActivity_New.this, exception.getExceptionid());
                     }
                 }
             }
@@ -395,7 +448,7 @@ public class PG_MainActivity_New extends Activity
                     String rows = result.getRows().get(0).toString();
                     if (rows.equals("1"))
                     {
-                        SqliteDb.updateLogInfo(PG_MainActivity_New.this, list);
+                        SqliteDb.updateLogInfo(CZ_MainActivity_New.this, list);
                     }
                 }
             }

@@ -1,26 +1,23 @@
 package com.farm.ui;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.farm.R;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 /**
  * Created by ${hmj} on 2016/5/16.
  */
-@EFragment
-public class CZ_OrderManager extends Fragment
+@EActivity(R.layout.cz_ordermanager)
+public class CZ_OrderManager extends Activity
 {
     CZ_AllOrderFragment cz_allOrderFragment;
     CZ_NeedFeedbackOrder cz_needFeedbackOrder;
@@ -35,7 +32,7 @@ public class CZ_OrderManager extends Fragment
     void tv_allorder()
     {
         setBackground(1);
-        switchContent(mContent,cz_allOrderFragment );
+        switchContent(mContent, cz_allOrderFragment);
     }
 
 
@@ -49,19 +46,18 @@ public class CZ_OrderManager extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        cz_allOrderFragment = new CZ_AllOrderFragment_();
+        cz_needFeedbackOrder = new CZ_NeedFeedbackOrder_();
         setBackground(0);
         switchContent(mContent, cz_needFeedbackOrder);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.cz_ordermanager, container, false);
-        cz_allOrderFragment = new CZ_AllOrderFragment_();
-        cz_needFeedbackOrder = new CZ_NeedFeedbackOrder_();
-        return rootView;
+        super.onCreate(savedInstanceState);
     }
+
 
     public void switchContent(Fragment from, Fragment to)
     {

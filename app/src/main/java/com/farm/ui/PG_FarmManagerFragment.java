@@ -46,7 +46,7 @@ public class PG_FarmManagerFragment extends Fragment
     @Click
     void btn_add()
     {
-        showPop_add();
+//        showPop_add();
     }
 
     @Click

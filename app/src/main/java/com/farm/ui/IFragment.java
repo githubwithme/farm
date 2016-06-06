@@ -215,7 +215,7 @@ public class IFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.ifragment, container, false);
         /*IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_SHOWDIALOG);
-		getActivity().registerReceiver(receiver_update, intentfilter_update);*/
+        getActivity().registerReceiver(receiver_update, intentfilter_update);*/
         return rootView;
     }
 
@@ -440,6 +440,7 @@ public class IFragment extends Fragment
             }
         });
     }
+
     private void getNew()
     {
         RequestParams params = new RequestParams();
@@ -473,7 +474,7 @@ public class IFragment extends Fragment
                             if (localVersion.equals(apk.getVersion()))
                             {
                                 fl_new.setVisibility(View.GONE);
-                            }else
+                            } else
                             {
                                 fl_new.setVisibility(View.VISIBLE);
                             }
@@ -496,6 +497,7 @@ public class IFragment extends Fragment
             }
         });
     }
+
     public void downloadApk(String path, final String target)
     {
         String sss = path;

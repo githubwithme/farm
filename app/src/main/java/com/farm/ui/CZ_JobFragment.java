@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -23,7 +22,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_PG_JobFragment;
+import com.farm.adapter.Common_TodayJobAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -50,7 +49,7 @@ import java.util.Date;
 import java.util.List;
 
 @EFragment
-public class PG_JobFragment extends Fragment implements View.OnClickListener
+public class CZ_JobFragment extends Fragment implements View.OnClickListener
 {
     boolean ishidding = false;
     PopupWindow pw_command;
@@ -58,7 +57,7 @@ public class PG_JobFragment extends Fragment implements View.OnClickListener
     TimeThread timethread;
     int cmd_videoNum;
     commembertab commembertab;
-    private Adapter_PG_JobFragment adapter_pg_jobFragment;
+    private Common_TodayJobAdapter listAdapter;
     private int listSumData;
     private List<jobtab> listData = new ArrayList<jobtab>();
     private AppContext appContext;
@@ -71,10 +70,10 @@ public class PG_JobFragment extends Fragment implements View.OnClickListener
     LinearLayout ll_tip;
     //    @ViewById
 //    TextView tv_more;
+//    @ViewById
+//    TextView tv_worknumber;
     @ViewById
     Button btn_nature;
-    @ViewById
-    ImageView iv_more;
     @ViewById
     Button btn_cmd;
     @ViewById
@@ -102,22 +101,24 @@ public class PG_JobFragment extends Fragment implements View.OnClickListener
     }
 
     @Click
+    void iv_more()
+    {
+        Intent intent = new Intent(getActivity(), Common_MoreJob_.class);
+        intent.putExtra("workuserid", workuserid);
+        startActivity(intent);
+    }
+
+    @Click
     void btn_cmd()
     {
+
         Intent intent = new Intent(getActivity(), SelectorCommand_.class);
         intent.putParcelableArrayListExtra("jobtablist", (ArrayList<? extends Parcelable>) listData);
         startActivity(intent);
     }
 
-    //    @Click
-//    void tv_more()
-//    {
-//        Intent intent = new Intent(getActivity(), Common_MoreJob_.class);
-//        intent.putExtra("workuserid", workuserid);
-//        startActivity(intent);
-//    }
     @Click
-    void iv_more()
+    void tv_more()
     {
         Intent intent = new Intent(getActivity(), Common_MoreJob_.class);
         intent.putExtra("workuserid", workuserid);
@@ -172,9 +173,10 @@ public class PG_JobFragment extends Fragment implements View.OnClickListener
     @AfterViews
     void afterOncreate()
     {
+
+        appContext = (AppContext) getActivity().getApplication();
         commembertab = AppContext.getUserInfo(getActivity());
         workuserid = commembertab.getId();
-        appContext = (AppContext) getActivity().getApplication();
         initAnimalListView();
         getCmdNum();
         timethread = new TimeThread();
@@ -188,11 +190,11 @@ public class PG_JobFragment extends Fragment implements View.OnClickListener
         super.onResume();
         if (listData.isEmpty())
         {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, adapter_pg_jobFragment, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
 
         } else
         {
-            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, adapter_pg_jobFragment, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
 
     }
@@ -200,7 +202,7 @@ public class PG_JobFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.pg_jobfragment, container, false);
+        View rootView = inflater.inflate(R.layout.cz_jobfragment, container, false);
         return rootView;
     }
 
@@ -454,19 +456,18 @@ public class PG_JobFragment extends Fragment implements View.OnClickListener
 
     private void initAnimalListView()
     {
-        adapter_pg_jobFragment = new Adapter_PG_JobFragment(getActivity(), listData);
+        listAdapter = new Common_TodayJobAdapter(getActivity(), listData);
         list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         frame_listview_news.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
-        frame_listview_news.setAdapter(adapter_pg_jobFragment);
+        frame_listview_news.setAdapter(listAdapter);
         frame_listview_news.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 // 点击头部、底部栏无效
                 if (position == 0 || view == list_footer) return;
-
                 // Animal animal = null;
                 // // 判断是否是TextView
                 // if (view instanceof TextView)
@@ -515,7 +516,7 @@ public class PG_JobFragment extends Fragment implements View.OnClickListener
                     list_foot_progress.setVisibility(View.VISIBLE);
                     // 当前pageIndex
                     int pageIndex = listSumData / AppContext.PAGE_SIZE;// 总数里面包含几个PAGE_SIZE
-                    getListData(UIHelper.LISTVIEW_ACTION_SCROLL, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, adapter_pg_jobFragment, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, pageIndex);
+                    getListData(UIHelper.LISTVIEW_ACTION_SCROLL, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, pageIndex);
                     // loadLvNewsData(curNewsCatalog, pageIndex, lvNewsHandler,
                     // UIHelper.LISTVIEW_ACTION_SCROLL);
                 }
@@ -532,19 +533,19 @@ public class PG_JobFragment extends Fragment implements View.OnClickListener
             {
                 // loadLvNewsData(curNewsCatalog, 0, lvNewsHandler,
                 // UIHelper.LISTVIEW_ACTION_REFRESH);
-                getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, adapter_pg_jobFragment, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+                getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
             }
         });
         // 加载资讯数据
         if (listData.isEmpty())
         {
-            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, adapter_pg_jobFragment, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+            getListData(UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
         }
     }
 
     public void refreshData()
     {
-        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, adapter_pg_jobFragment, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
+        getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
     }
 
     @Override

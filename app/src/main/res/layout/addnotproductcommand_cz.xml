@@ -11,7 +11,7 @@
         android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -19,26 +19,27 @@
             android:layout_height="@dimen/titlebar_height"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
 
-        <ProgressBar
-            android:id="@+id/main_head_progress"
-            style="@style/loading_small"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5.0dip"
-            android:layout_toRightOf="@id/imgbtn_back"
-            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/titlebar_height"
             android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
             android:text="新建非生产指令"
-            android:textColor="@color/bg_text"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 
 
+        <ProgressBar
+            android:id="@+id/main_head_progress"
+            style="@style/loading_small"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5.0dip"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <View
