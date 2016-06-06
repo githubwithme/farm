@@ -278,6 +278,7 @@ public class DynamicFragment extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
+                String a=msg;
                 Toast.makeText(getActivity(), "连接服务器异常", Toast.LENGTH_SHORT).show();
 //                AppContext.makeToast(getActivity(), "error_connectServer");
 //                if (!ishidding && timethread != null)

@@ -37,6 +37,13 @@
             android:textColor="@color/bg_text"
             android:textSize="@dimen/titlebar_textsize"/>
 
+        <ProgressBar
+            android:id="@+id/pb_load"
+            android:layout_marginRight="10dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="60dip"
+            android:layout_height="35dip"/>
         <Button
             android:id="@+id/btn_save"
             android:layout_width="60dip"

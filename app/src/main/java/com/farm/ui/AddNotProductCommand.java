@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -90,21 +91,28 @@ public class AddNotProductCommand extends Activity implements OnClickListener
     String importance = "";
     commembertab commembertab;
 
+    @ViewById
+    ProgressBar pb_load;
+
     @Click
     void btn_save()
     {
+        btn_save.setVisibility(View.GONE);
+        pb_load.setVisibility(View.VISIBLE);
         commandTabAdd();
     }
-@Click
-void imgbtn_back()
-{
-    finish();
-}
+
+    @Click
+    void imgbtn_back()
+    {
+        finish();
+    }
+
     @Click
     void tv_importance()
     {
         JSONObject jsonObject = utils.parseJsonFile(AddNotProductCommand.this, "dictionary.json");
-        JSONArray jsonArray_id= JSONArray.parseArray(jsonObject.getString("importance_id"));
+        JSONArray jsonArray_id = JSONArray.parseArray(jsonObject.getString("importance_id"));
         JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("importance"));
 
         List<String> list = new ArrayList<String>();
@@ -117,7 +125,7 @@ void imgbtn_back()
         {
             list_id.add(jsonArray_id.getString(i));
         }
-        showDialog_Importance(list_id,list);
+        showDialog_Importance(list_id, list);
     }
 
     @Click
@@ -337,6 +345,8 @@ void imgbtn_back()
 
                 } else
                 {
+                    btn_save.setVisibility(View.VISIBLE);
+                    pb_load.setVisibility(View.GONE);
                     AppContext.makeToast(AddNotProductCommand.this, "error_connectDataBase");
                     return;
                 }
@@ -345,6 +355,8 @@ void imgbtn_back()
             @Override
             public void onFailure(HttpException error, String arg1)
             {
+                btn_save.setVisibility(View.VISIBLE);
+                pb_load.setVisibility(View.GONE);
                 String a = error.getMessage();
                 AppContext.makeToast(AddNotProductCommand.this, "error_connectServer");
             }
@@ -472,7 +484,7 @@ void imgbtn_back()
 
     Fragment mContent_top = new Fragment();
 
-    public void showDialog_Importance(List<String> list_id,List<String> list)
+    public void showDialog_Importance(List<String> list_id, List<String> list)
     {
         View dialog_layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(AddNotProductCommand.this, R.style.MyDialog, dialog_layout, list, list_id, new CustomDialog_ListView.CustomDialogListener()

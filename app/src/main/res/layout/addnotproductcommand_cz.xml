@@ -215,6 +215,14 @@
         </LinearLayout>
     </ScrollView>
 
+    <ProgressBar
+        android:id="@+id/pu_load"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dip"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"/>
     <Button
         android:id="@+id/btn_save"
         android:layout_width="match_parent"

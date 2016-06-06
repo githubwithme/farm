@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ import java.util.concurrent.CountDownLatch;
 @EActivity(R.layout.addnotproductcommand_cz)
 public class AddNotProductCommand_CZ extends Activity implements OnClickListener
 {
+
     String tempid = "";
     String tempname = "";
     String workday;
@@ -81,16 +83,23 @@ public class AddNotProductCommand_CZ extends Activity implements OnClickListener
     String importance = "";
     commembertab commembertab;
 
+    @ViewById
+    ProgressBar pu_load;
+
     @Click
     void btn_save()
     {
+        btn_save.setVisibility(View.GONE);
+        pu_load.setVisibility(View.VISIBLE);
         commandTabAdd();
     }
-@Click
-void btn_back()
-{
-    finish();
-}
+
+    @Click
+    void btn_back()
+    {
+        finish();
+    }
+
     @Click
     void tv_importance()
     {
@@ -144,7 +153,7 @@ void btn_back()
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(AddNotProductCommand_CZ.this);
-        level=getIntent().getStringExtra("level");
+        level = getIntent().getStringExtra("level");
     }
 
     private void commandTabAdd()
@@ -174,8 +183,8 @@ void btn_back()
         params.addQueryStringParameter("userName", commembertab.getrealName());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "commandTabAdd");
-        params.addQueryStringParameter("areaId",commembertab.getparkId()+":"+commembertab.getareaId());
-        params.addQueryStringParameter("areaName", commembertab.getparkName()+":"+commembertab.getareaName());
+        params.addQueryStringParameter("areaId", commembertab.getparkId() + ":" + commembertab.getareaId());
+        params.addQueryStringParameter("areaName", commembertab.getparkName() + ":" + commembertab.getareaName());
         params.addQueryStringParameter("parkId", commembertab.getparkId());
         params.addQueryStringParameter("parkName", commembertab.getparkName());
         params.addQueryStringParameter("nongziName", et_note.getText().toString());
@@ -221,6 +230,8 @@ void btn_back()
 
                 } else
                 {
+                    btn_save.setVisibility(View.VISIBLE);
+                    pu_load.setVisibility(View.GONE);
                     AppContext.makeToast(AddNotProductCommand_CZ.this, "error_connectDataBase");
                     return;
                 }
@@ -229,6 +240,8 @@ void btn_back()
             @Override
             public void onFailure(HttpException error, String arg1)
             {
+                btn_save.setVisibility(View.VISIBLE);
+                pu_load.setVisibility(View.GONE);
                 String a = error.getMessage();
                 AppContext.makeToast(AddNotProductCommand_CZ.this, "error_connectServer");
             }
