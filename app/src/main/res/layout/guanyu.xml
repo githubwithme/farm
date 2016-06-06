@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar" >
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -16,23 +16,24 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back" />
+            android:src="@drawable/ic_back"/>
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
             android:text="关于"
-            android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>
+
     <TextView
         android:id="@+id/tv_gy"
         android:layout_width="match_parent"
         android:layout_height="180dip"
         android:gravity="center"
-        android:hint="本版本为测试版" />
+        android:hint="本版本为测试版"/>
 
 </LinearLayout>

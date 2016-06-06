@@ -105,7 +105,7 @@ public class CZ_MainActivity_New extends Activity
     @Click
     void tl_home()
     {
-        tv_home.setTextColor(getResources().getColor(R.color.red));
+        tv_home.setTextColor(getResources().getColor(R.color.blue));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
@@ -122,7 +122,7 @@ public class CZ_MainActivity_New extends Activity
     @Click
     void tl_farmlive()
     {
-        tv_farmlive.setTextColor(getResources().getColor(R.color.red));
+        tv_farmlive.setTextColor(getResources().getColor(R.color.blue));
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
@@ -141,7 +141,7 @@ public class CZ_MainActivity_New extends Activity
     {
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_product.setTextColor(getResources().getColor(R.color.red));
+        tv_product.setTextColor(getResources().getColor(R.color.blue));
         tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_farmlive.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
@@ -160,7 +160,7 @@ public class CZ_MainActivity_New extends Activity
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_sale.setTextColor(getResources().getColor(R.color.red));
+        tv_sale.setTextColor(getResources().getColor(R.color.blue));
         tv_farmlive.setTextColor(getResources().getColor(R.color.menu_textcolor));
 
         tl_home.setSelected(false);
@@ -176,7 +176,7 @@ public class CZ_MainActivity_New extends Activity
     void tl_me()
     {
         tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_me.setTextColor(getResources().getColor(R.color.red));
+        tv_me.setTextColor(getResources().getColor(R.color.blue));
         tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_farmlive.setTextColor(getResources().getColor(R.color.menu_textcolor));
@@ -229,7 +229,7 @@ public class CZ_MainActivity_New extends Activity
 //        tv_sale.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
 //        tv_money.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
         switchContent(mContent, cz_jobFragment);
-        tv_farmlive.setTextColor(getResources().getColor(R.color.red));
+        tv_farmlive.setTextColor(getResources().getColor(R.color.blue));
         tl_farmlive.setSelected(true);
 
 

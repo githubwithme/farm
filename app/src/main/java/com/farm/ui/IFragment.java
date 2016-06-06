@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,6 @@ import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.SqliteDb;
 import com.farm.common.utils;
-import com.farm.widget.CircleImageView;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -78,22 +78,24 @@ public class IFragment extends Fragment
     @ViewById
     TextView tv_makemap;
     @ViewById
-    TextView tv_username;
+    RelativeLayout rl_userinfo;
+    //    @ViewById
+//    TextView tv_username;
     @ViewById
     LinearLayout ll_startBreakoff;
-    @ViewById
-    CircleImageView circle_img;
+    //    @ViewById
+//    CircleImageView circle_img;
     @ViewById
     TextView tv_changepwd;
-    @ViewById
-    LinearLayout ll_edituser;
+//    @ViewById
+//    LinearLayout ll_edituser;
 
-    @Click
-    void tv_detail()
-    {
-        Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
-        startActivity(intent);
-    }
+//    @Click
+//    void tv_detail()
+//    {
+//        Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
+//        startActivity(intent);
+//    }
 
     @Click
     void tv_makemap()
@@ -126,7 +128,7 @@ public class IFragment extends Fragment
     }
 
     @Click
-    void tv_edituser()
+    void rl_userinfo()
     {
         Intent intent = new Intent(getActivity(), EditUserInfo_.class);
         startActivity(intent);
@@ -169,11 +171,10 @@ public class IFragment extends Fragment
     }
 
     @Click
-    void tv_renewversion()
+    void rl_renewversion()
     {
         getListData();
-
-		/*Intent intent = new Intent(getActivity(), UpdateApk.class);
+        /*Intent intent = new Intent(getActivity(), UpdateApk.class);
         intent.setAction(UpdateApk.ACTION_NOTIFICATION_CONTROL);
 		getActivity().startService(intent);*/
 
@@ -201,12 +202,11 @@ public class IFragment extends Fragment
     void afterOncreate()
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
-        tv_username.setText(commembertab.getparkName() + commembertab.getareaName() + "-" + commembertab.getuserlevelName() + ":" + commembertab.getrealName());
+//        tv_username.setText(commembertab.getparkName() + commembertab.getareaName() + "-" + commembertab.getuserlevelName() + ":" + commembertab.getrealName());
     /*    if (commembertab.getnlevel().equals("0"))
         {
             ll_startBreakoff.setVisibility(View.VISIBLE);
         }*/
-
         getNew();
     }
 
@@ -320,7 +320,7 @@ public class IFragment extends Fragment
 //	}
 
 	/*private void getListData()
-	{
+    {
 		RequestParams params = new RequestParams();
 		params.addQueryStringParameter("action", "getVersion");
 		HttpUtils http = new HttpUtils();

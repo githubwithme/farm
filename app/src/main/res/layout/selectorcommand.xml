@@ -18,6 +18,14 @@
             android:contentDescription=""
             android:src="@drawable/ic_back"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/btn_back"
+            android:text="选择指令"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -55,6 +63,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/ll_menu"
         android:layout_width="match_parent"
         android:layout_height="45dip"
         android:layout_below="@+id/rl_titlebar"
@@ -85,7 +94,7 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_below="@id/rl_titlebar"
+        android:layout_below="@id/ll_menu"
         android:background="@color/line_color"/>
 
 

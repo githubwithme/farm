@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_white"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_white"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/imgbtn_back"
@@ -16,17 +16,18 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back" />
+            android:src="@drawable/ic_back"/>
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/imgbtn_back"
             android:gravity="center"
             android:text="出库详细列表"
-            android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/titlebar_textsize" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"/>
+
         <LinearLayout
             android:id="@+id/ll_pgck"
             android:layout_width="wrap_content"
@@ -39,11 +40,11 @@
                 android:layout_height="45dip"
                 android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/background_view_rounded_single"
+                android:background="@null"
                 android:gravity="center"
                 android:text="编辑"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14" />
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
 
             <Button
                 android:id="@+id/tv_delete"
@@ -51,41 +52,101 @@
                 android:layout_height="45dip"
                 android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/background_view_rounded_single"
+                android:background="@null"
                 android:gravity="center"
                 android:text="删除"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14" />
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
         </LinearLayout>
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/bg_main" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:inputType="numberDecimal"
+            android:text="已出库物资"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
 
         <TextView
             android:id="@+id/goodsname"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center|right"
             android:inputType="numberDecimal"
             android:text="磷肥"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textColor="@color/gray"
+            android:textSize="16sp"/>
+
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/bg_main" />
+        android:background="@color/line_color"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:inputType="numberDecimal"
+            android:text="出库数量"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
+
+
+        <EditText
+            android:id="@+id/quantity"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center|right"
+            android:inputType="numberDecimal"
+            android:text="暂无数据"
+            android:textColor="@color/gray"
+            android:textSize="16sp"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -103,12 +164,12 @@
             android:inputType="numberDecimal"
             android:text="所在园区"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -118,9 +179,9 @@
             android:layout_weight="1"
             android:gravity="center|right"
             android:inputType="numberDecimal"
-            android:text="叶数"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:text="暂无数据"
+            android:textColor="@color/gray"
+            android:textSize="16sp"/>
 
 
     </LinearLayout>
@@ -128,7 +189,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/bg_main" />
+        android:background="@color/line_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -145,12 +206,12 @@
             android:inputType="numberDecimal"
             android:text="所在仓库"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -160,9 +221,9 @@
             android:layout_weight="1"
             android:gravity="center|right"
             android:inputType="numberDecimal"
-            android:text="叶数"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:text="暂无数据"
+            android:textColor="@color/gray"
+            android:textSize="16sp"/>
 
 
     </LinearLayout>
@@ -170,7 +231,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/bg_main" />
+        android:background="@color/line_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -187,12 +248,12 @@
             android:inputType="numberDecimal"
             android:text="批次号"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -202,9 +263,9 @@
             android:layout_weight="1"
             android:gravity="center|right"
             android:inputType="numberDecimal"
-            android:text="叶数"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:text="暂无数据"
+            android:textColor="@color/gray"
+            android:textSize="16sp"/>
 
 
     </LinearLayout>
@@ -212,7 +273,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/bg_main" />
+        android:background="@color/line_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -229,12 +290,12 @@
             android:inputType="numberDecimal"
             android:text="出库时间"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -244,9 +305,9 @@
             android:layout_weight="1"
             android:gravity="center|right"
             android:inputType="numberDecimal"
-            android:text="叶数"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:text="暂无数据"
+            android:textColor="@color/gray"
+            android:textSize="16sp"/>
 
 
     </LinearLayout>
@@ -254,7 +315,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/bg_main" />
+        android:background="@color/line_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -271,12 +332,12 @@
             android:inputType="numberDecimal"
             android:text="是否确认"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -286,9 +347,9 @@
             android:layout_weight="1"
             android:gravity="center|right"
             android:inputType="numberDecimal"
-            android:text="叶数"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:text="暂无数据"
+            android:textColor="@color/gray"
+            android:textSize="16sp"/>
 
 
     </LinearLayout>
@@ -296,64 +357,18 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/bg_main" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dip"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:inputType="numberDecimal"
-            android:text="数量"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
-
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/line_color" />
-
-
-        <EditText
-            android:id="@+id/quantity"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center|right"
-            android:inputType="numberDecimal"
-            android:background="@null"
-            android:text="叶数"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
-
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/bg_main" />
-
-
-
-
+        android:background="@color/line_color"/>
 
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/ll_add"
         android:layout_width="match_parent"
         android:layout_height="45dip"
         android:layout_marginTop="10dip"
+        android:visibility="gone"
 
         >
+
         <ProgressBar
             android:id="@+id/add_upload"
             android:layout_width="60dip"
@@ -363,7 +378,8 @@
             android:gravity="center"
             android:text="保存"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="16sp"/>
+
         <Button
             android:id="@+id/btn_save"
             android:layout_width="60dip"
@@ -373,22 +389,24 @@
             android:gravity="center"
             android:text="保存"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="16sp"/>
+
         <TextView
-            android:layout_centerInParent="true"
             android:id="@+id/loacal"
             android:layout_width="20dip"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
         <Button
-            android:layout_toRightOf="@+id/loacal"
             android:id="@+id/btn_case"
             android:layout_width="60dip"
             android:layout_height="45dip"
+            android:layout_toRightOf="@+id/loacal"
             android:background="@drawable/background_view_rounded_single"
             android:gravity="center"
             android:text="取消"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="16sp"/>
 
     </RelativeLayout>
 </LinearLayout>

@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/imgbtn_back"
@@ -19,23 +19,23 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
 
         <ProgressBar
             android:id="@+id/main_head_progress"
             style="@style/loading_small"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5.0dip"
-            android:layout_toRightOf="@id/imgbtn_back"
+            android:layout_marginRight="5dip"
+            android:layout_alignParentRight="true"
             android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/titlebar_height"
-            android:layout_centerHorizontal="true"
             android:gravity="center"
+            android:layout_toRightOf="@+id/imgbtn_back"
             android:text="添加标准生产指令"
-            android:textColor="@color/bg_text"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 
 

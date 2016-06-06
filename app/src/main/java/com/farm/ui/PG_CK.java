@@ -23,14 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
-import com.farm.adapter.AddStd_cmd_StepTwo_self_Adapter;
 import com.farm.adapter.PG_CKAdapter;
-import com.farm.adapter.PG_CKlistAdapter;
 import com.farm.adapter.PG_CKofListAdapter;
-import com.farm.adapter.PeopleAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
@@ -44,8 +39,6 @@ import com.farm.bean.goodslisttab;
 import com.farm.com.custominterface.FragmentCallBack;
 import com.farm.common.DictionaryHelper;
 import com.farm.common.SqliteDb;
-import com.farm.common.UIHelper;
-import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -69,7 +62,8 @@ import java.util.List;
  * Created by user on 2016/5/17.
  */
 @EActivity(R.layout.pg_cklayout)
-public class PG_CK extends Activity {
+public class PG_CK extends Activity
+{
 
     private String id;
     private String name;
@@ -77,7 +71,7 @@ public class PG_CK extends Activity {
     View pv_tab;
     @ViewById
     View line;
-//    PG_CKlistAdapter pg_cKlistAdapter;
+    //    PG_CKlistAdapter pg_cKlistAdapter;
     PG_CKofListAdapter pg_cKlistAdapter;
     List<Wz_Storehouse> listpeople = new ArrayList<Wz_Storehouse>();
     //    AddStd_cmd_StepTwo_self_Adapter addStd_cmd_stepTwo_self_adapter;
@@ -119,8 +113,10 @@ public class PG_CK extends Activity {
     CustomDialog_ListView customDialog_listView;
     PG_CKBean pg_ckBean;
     PGBean pgBean;
+
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
 /*        list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
         if (list_goodslisttab.size()>0)
@@ -136,15 +132,17 @@ public class PG_CK extends Activity {
     }
 
     @Click
-    void tv_shuju() {
+    void tv_shuju()
+    {
         list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < list_goodslisttab.size(); i++)
         {
-            list.add(list_goodslisttab.get(i).getgoodsName()+"-"+list_goodslisttab.get(i).getYL()+list_goodslisttab.get(i).getDW());
+            list.add(list_goodslisttab.get(i).getgoodsName() + "-" + list_goodslisttab.get(i).getYL() + list_goodslisttab.get(i).getDW());
         }
         showDialog_workday(list);
     }
+
     public void showDialog_workday(List<String> list)
     {
         View dialog_layout = (RelativeLayout) PG_CK.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
@@ -159,20 +157,22 @@ public class PG_CK extends Activity {
         });
         customDialog_listView.show();
     }
+
     @Click
-    void btn_next() {
+    void btn_next()
+    {
         list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
 
-         List<PG_CKBean> data=new ArrayList<PG_CKBean>();
-        if (list_goodslisttab.size()==0)
+        List<PG_CKBean> data = new ArrayList<PG_CKBean>();
+        if (list_goodslisttab.size() == 0)
         {
             Toast.makeText(PG_CK.this, "请选择物资及数量!", Toast.LENGTH_SHORT).show();
-        }else
+        } else
         {
-            for (int i=0;i<list_goodslisttab.size();i++)
+            for (int i = 0; i < list_goodslisttab.size(); i++)
             {
 
-                pg_ckBean=new PG_CKBean();
+                pg_ckBean = new PG_CKBean();
                 pg_ckBean.setUid(commembertab.getuId());
                 pg_ckBean.setGoodsTypeId(list_goodslisttab.get(i).getGX());
                 pg_ckBean.setUserDefTypeId(list_goodslisttab.get(i).getZS());
@@ -180,7 +180,7 @@ public class PG_CK extends Activity {
                 pg_ckBean.setStorehouseId(id);
                 pg_ckBean.setGoodsInInfoRKId(list_goodslisttab.get(i).getgoodsNote());
 
-                if ( list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getFirs()))
+                if (list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getFirs()))
                 {
                     pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
                     pg_ckBean.setFirsNum(list_goodslisttab.get(i).getYL());
@@ -188,30 +188,31 @@ public class PG_CK extends Activity {
                     pg_ckBean.setSecNum("0");
                     pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
                     pg_ckBean.setThreeNum("0");
-                }else if(list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getSec())){
+                } else if (list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getSec()))
+                {
 
-                    int x=Integer.parseInt(list_goodslisttab.get(i).getYL());
-                    int y=Integer.parseInt(list_goodslisttab.get(i).getSecNum());
-                    int k=x/y;
+                    int x = Integer.parseInt(list_goodslisttab.get(i).getYL());
+                    int y = Integer.parseInt(list_goodslisttab.get(i).getSecNum());
+                    int k = x / y;
                     pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
-                    pg_ckBean.setFirsNum(k+"");
+                    pg_ckBean.setFirsNum(k + "");
 
                     pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
                     pg_ckBean.setSecNum(list_goodslisttab.get(i).getYL());
                     pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
                     pg_ckBean.setThreeNum("0");
-                }else
+                } else
                 {
-                    int a=Integer.parseInt(list_goodslisttab.get(i).getYL());
-                    int b=Integer.parseInt(list_goodslisttab.get(i).getSecNum());
-                    int c=Integer.parseInt(list_goodslisttab.get(i).getThreeNum());
-                    int k=a/c;
-                    int j=k/b;
+                    int a = Integer.parseInt(list_goodslisttab.get(i).getYL());
+                    int b = Integer.parseInt(list_goodslisttab.get(i).getSecNum());
+                    int c = Integer.parseInt(list_goodslisttab.get(i).getThreeNum());
+                    int k = a / c;
+                    int j = k / b;
                     pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
-                    pg_ckBean.setFirsNum(j+"");
+                    pg_ckBean.setFirsNum(j + "");
 
                     pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
-                    pg_ckBean.setSecNum(k+"");
+                    pg_ckBean.setSecNum(k + "");
                     pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
                     pg_ckBean.setThreeNum(list_goodslisttab.get(i).getYL());
                 }
@@ -222,7 +223,7 @@ public class PG_CK extends Activity {
 
                 data.add(pg_ckBean);
             }
-            pgBean=new PGBean();
+            pgBean = new PGBean();
             pgBean.setUserId(commembertab.getId());
             pgBean.setUid(commembertab.getuId());
             pgBean.setParkId(commembertab.getparkId());
@@ -244,7 +245,8 @@ public class PG_CK extends Activity {
     }
 
     @Click
-    void tv_head() {
+    void tv_head()
+    {
         //list_goodslisttab = SqliteDb.getSelectCmdArea(PG_CK.this, goodslisttab.class);//拿数据
 //        SqliteDb.deleteAllSelectCmdArea(PG_CK.this, goodslisttab.class);//删除
 
@@ -257,21 +259,22 @@ public class PG_CK extends Activity {
     }
 
     @AfterViews
-    void afssss() {
+    void afssss()
+    {
         SqliteDb.deleteAllSelectCmdArea(PG_CK.this, goodslisttab.class);//删除
         getlistdata();
-
-
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(PG_CK.this);
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_PG_DATA);
         PG_CK.this.registerReceiver(receiver_update, intentfilter_update);
     }
+
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -288,27 +291,34 @@ public class PG_CK extends Activity {
                 }
             }*/
 //            tv_shuju.setText("a");
-            tv_shuju.setText("已经选择了"+list_goodslisttab.size()+"种物资");
+            tv_shuju.setText("已经选择了" + list_goodslisttab.size() + "种物资");
         }
     };
-    private void getCommandlist() {
+
+    private void getCommandlist()
+    {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("name", "getWZ");
         params.addQueryStringParameter("action", "getDict");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<Dictionary> lsitNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1) {
-                    if (result.getAffectedRows() != 0) {
+                if (result.getResultCode() == 1)
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
                         rl_pb.setVisibility(View.GONE);
                         String aa = result.getRows().toJSONString();
                         lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
-                        if (lsitNewData != null) {
+                        if (lsitNewData != null)
+                        {
                             dic = lsitNewData.get(0);
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic);
                             pg_ckAdapter = new PG_CKAdapter(PG_CK.this, dictionary_wheel, mainlistview, list_goods, tv_head, fragmentCallBack, id);
@@ -316,12 +326,14 @@ public class PG_CK extends Activity {
                             mainlistview.expandGroup(0);
                         }
 
-                    } else {
+                    } else
+                    {
                         ll_tip.setVisibility(View.VISIBLE);
                         tv_tip.setText("暂无数据！");
                         pb.setVisibility(View.GONE);
                     }
-                } else {
+                } else
+                {
                     ll_tip.setVisibility(View.VISIBLE);
                     tv_tip.setText("数据加载异常！");
                     pb.setVisibility(View.GONE);
@@ -330,7 +342,8 @@ public class PG_CK extends Activity {
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 ll_tip.setVisibility(View.VISIBLE);
                 tv_tip.setText("网络连接异常！");
                 pb.setVisibility(View.GONE);
@@ -339,13 +352,17 @@ public class PG_CK extends Activity {
     }
 
 
-    public void showPop_title() {//LAYOUT_INFLATER_SERVICE
+    public void showPop_title()
+    {//LAYOUT_INFLATER_SERVICE
         LayoutInflater layoutInflater = (LayoutInflater) PG_CK.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         pv_tab = layoutInflater.inflate(R.layout.popup_yq, null);// 外层
-        pv_tab.setOnKeyListener(new View.OnKeyListener() {
+        pv_tab.setOnKeyListener(new View.OnKeyListener()
+        {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing())) {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing()))
+                {
                     pw_tab.dismiss();
 //                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
                     return true;
@@ -353,10 +370,13 @@ public class PG_CK extends Activity {
                 return false;
             }
         });
-        pv_tab.setOnTouchListener(new View.OnTouchListener() {
+        pv_tab.setOnTouchListener(new View.OnTouchListener()
+        {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (pw_tab.isShowing()) {
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_tab.isShowing())
+                {
                     pw_tab.dismiss();
 //                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
                 }
@@ -371,9 +391,11 @@ public class PG_CK extends Activity {
         ListView listview = (ListView) pv_tab.findViewById(R.id.lv_yq);
         pg_cKlistAdapter = new PG_CKofListAdapter(PG_CK.this, listpeople);
         listview.setAdapter(pg_cKlistAdapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3) {
+            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3)
+            {
                 id = listpeople.get(postion).getId();
                 name = listpeople.get(postion).getStoreName();
                 pw_tab.dismiss();
@@ -385,23 +407,27 @@ public class PG_CK extends Activity {
         });
     }
 
-    private void getlistdata() {
+    private void getlistdata()
+    {
         commembertab commembertab = AppContext.getUserInfo(PG_CK.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("parkId", commembertab.getparkId());
-        String x=commembertab.getparkId();
+        String x = commembertab.getparkId();
         params.addQueryStringParameter("action", "getstorehousesByParkId");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<Wz_Storehouse> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         rl_pgck.setVisibility(View.GONE);
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
                         tv_head.setText(listNewData.get(0).getStorehouseName());
@@ -410,11 +436,13 @@ public class PG_CK extends Activity {
                         listpeople.addAll(listNewData);
                         tv_head.setText(name);
                         getCommandlist();
-                    } else {
+                    } else
+                    {
                         rl_pgck.setVisibility(View.VISIBLE);
                         listNewData = new ArrayList<Wz_Storehouse>();
                     }
-                } else {
+                } else
+                {
                     AppContext.makeToast(PG_CK.this, "error_connectDataBase");
 
                     return;
@@ -423,7 +451,8 @@ public class PG_CK extends Activity {
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 String a = error.getMessage();
                 AppContext.makeToast(PG_CK.this, "error_connectServer");
 
@@ -431,8 +460,10 @@ public class PG_CK extends Activity {
         });
 
     }
-    private void saveData(String data) {
-        String x=data;
+
+    private void saveData(String data)
+    {
+        String x = data;
         RequestParams params = new RequestParams();
         params.setContentType("application/json");
         try
@@ -444,22 +475,27 @@ public class PG_CK extends Activity {
         }
         params.addQueryStringParameter("action", "addtubegoodsOutTab");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<PG_CKBean> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
 
                         SqliteDb.deleteAllSelectCmdArea(PG_CK.this, goodslisttab.class);
                         finish();
-                    } else {
+                    } else
+                    {
                         listNewData = new ArrayList<PG_CKBean>();
                     }
-                } else {
+                } else
+                {
                     AppContext.makeToast(PG_CK.this, "error_connectDataBase");
 
                     return;
@@ -468,7 +504,8 @@ public class PG_CK extends Activity {
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 String a = error.getMessage();
                 AppContext.makeToast(PG_CK.this, "error_connectServer");
 

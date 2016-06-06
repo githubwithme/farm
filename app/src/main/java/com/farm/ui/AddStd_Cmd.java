@@ -184,24 +184,24 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
             case 0:
                 image_one.setBackgroundResource(R.drawable.green_line);
                 text_one.setTextColor(Color.parseColor("#FFFFFF"));
-                text_one.setBackgroundResource(R.drawable.tag_next);
+                text_one.setBackgroundResource(R.drawable.tag_next_black);
                 break;
 
             case 1:
                 image_three.setBackgroundResource(R.drawable.green_line);
                 text_one.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
-                text_one.setBackgroundResource(R.drawable.tag_red);
-                text_three.setBackgroundResource(R.drawable.tag_next);
+                text_one.setBackgroundResource(R.drawable.tag_black);
+                text_three.setBackgroundResource(R.drawable.tag_next_black);
                 break;
             case 2:
                 image_four.setBackgroundResource(R.drawable.green_line);
                 text_one.setTextColor(Color.parseColor("#FFFFFF"));
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
                 text_four.setTextColor(Color.parseColor("#FFFFFF"));
-                text_one.setBackgroundResource(R.drawable.tag_red);
-                text_three.setBackgroundResource(R.drawable.tag_red);
-                text_four.setBackgroundResource(R.drawable.tag_next);
+                text_one.setBackgroundResource(R.drawable.tag_black);
+                text_three.setBackgroundResource(R.drawable.tag_black);
+                text_four.setBackgroundResource(R.drawable.tag_next_black);
                 break;
             case 3:
                 image_five.setBackgroundResource(R.drawable.green_line);
@@ -209,10 +209,10 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
                 text_four.setTextColor(Color.parseColor("#FFFFFF"));
                 text_five.setTextColor(Color.parseColor("#FFFFFF"));
-                text_one.setBackgroundResource(R.drawable.tag_red);
-                text_three.setBackgroundResource(R.drawable.tag_red);
-                text_four.setBackgroundResource(R.drawable.tag_red);
-                text_five.setBackgroundResource(R.drawable.tag_next);
+                text_one.setBackgroundResource(R.drawable.tag_black);
+                text_three.setBackgroundResource(R.drawable.tag_black);
+                text_four.setBackgroundResource(R.drawable.tag_black);
+                text_five.setBackgroundResource(R.drawable.tag_next_black);
                 break;
             case 4:
                 image_six.setBackgroundResource(R.drawable.green_line);
@@ -221,11 +221,11 @@ public class AddStd_Cmd extends FragmentActivity implements FragmentCallBack
                 text_four.setTextColor(Color.parseColor("#FFFFFF"));
                 text_five.setTextColor(Color.parseColor("#FFFFFF"));
                 text_six.setTextColor(Color.parseColor("#FFFFFF"));
-                text_one.setBackgroundResource(R.drawable.tag_red);
-                text_three.setBackgroundResource(R.drawable.tag_red);
-                text_four.setBackgroundResource(R.drawable.tag_red);
-                text_five.setBackgroundResource(R.drawable.tag_red);
-                text_six.setBackgroundResource(R.drawable.tag_next);
+                text_one.setBackgroundResource(R.drawable.tag_black);
+                text_three.setBackgroundResource(R.drawable.tag_black);
+                text_four.setBackgroundResource(R.drawable.tag_black);
+                text_five.setBackgroundResource(R.drawable.tag_black);
+                text_six.setBackgroundResource(R.drawable.tag_next_black);
                 break;
         }
 

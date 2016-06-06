@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light_gray"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/light_gray"
+              android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/rl_pgck"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
         <TextView
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:text="此园区没有仓库！"
-            android:textSize="25dip" />
+            android:textSize="25dip"/>
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rl_pb"
         android:layout_width="match_parent"
@@ -38,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@drawable/about"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/tv_tip"
@@ -49,21 +53,23 @@
                 android:gravity="center"
                 android:text="加载失败！"
                 android:textColor="@color/gray"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
         </LinearLayout>
 
         <ProgressBar
             android:id="@+id/pb"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dip"
+        android:background="@color/color_topbar"
         android:gravity="center">
+
         <TextView
             android:id="@+id/tv_head"
             android:layout_width="wrap_content"
@@ -71,17 +77,18 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="请选择仓库"
-            android:textSize="20dip" />
+            android:textColor="@color/white"
+            android:textSize="20dip"/>
+
         <ImageView
             android:id="@+id/ic_up"
             android:layout_width="20dip"
             android:layout_height="20dip"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dip"
-            android:background="@drawable/downward"
-            android:contentDescription="" />
+            android:background="@drawable/ic_down"
+            android:contentDescription=""/>
     </LinearLayout>
-
 
 
     <View
@@ -90,23 +97,27 @@
         android:layout_height="1px"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
 
     <TextView
         android:id="@+id/tv_shuju"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="物资确认"
-        android:textSize="20dip" />
+        android:background="@drawable/background_view_rounded_single"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dip"
+        android:text="请选择出库物资"
+        android:textSize="16sp"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -126,12 +137,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dip"
-                android:layout_weight="2.5" />
+                android:layout_weight="2.5"/>
 
             <View
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/line_color" />
+                android:background="@color/line_color"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -148,7 +159,7 @@
                     android:layout_centerInParent="true"
                     android:divider="@color/transparent"
                     android:dividerHeight="0dip"
-                    android:scrollbars="none" />
+                    android:scrollbars="none"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -163,6 +174,6 @@
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:background="@drawable/background_view_rounded_single"
-            android:text="保存" />
+            android:text="保存"/>
     </RelativeLayout>
 </LinearLayout>

@@ -49,8 +49,8 @@
             android:layout_toRightOf="@+id/fl_img"
             android:gravity="center"
             android:text="李四"
-            android:textColor="@color/gray"
-            android:textSize="18sp"/>
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/btn_call"

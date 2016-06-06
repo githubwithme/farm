@@ -42,7 +42,7 @@
     <!-- 设置栏高度 -->
     <dimen name="height_setting">60dip</dimen>
     <!-- 设置栏提示宽度 -->
-    <dimen name="width_setting">40dip</dimen>
+    <dimen name="width_setting">42dip</dimen>
     <!-- 设置栏提示高度 -->
     <dimen name="height_setting_column">40dip</dimen>
     <!-- 设置栏标题宽度 -->

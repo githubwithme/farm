@@ -237,9 +237,9 @@
 
                         <ImageView
                             android:id="@+id/iv_record"
-                            android:layout_width="35dip"
-                            android:layout_height="35dip"
-                            android:background="@drawable/ht"/>
+                            android:layout_width="30dip"
+                            android:layout_height="30dip"
+                            android:background="@drawable/feedback"/>
 
                         <FrameLayout
                             android:id="@+id/fl_new"

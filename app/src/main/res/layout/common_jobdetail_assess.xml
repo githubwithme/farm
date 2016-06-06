@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -19,29 +19,30 @@
             android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:src="@drawable/ic_back"/>
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
             android:text="工作详情"
-            android:textColor="@color/textcolor_titlebar"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
+
         <Button
             android:id="@+id/btn_score"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@null"
             android:layout_alignParentRight="true"
-            android:textColor="@color/bg_text"
-            android:text="评分"
-            android:textSize="@dimen/size_sp_14"
             android:layout_marginRight="10dip"
+            android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
+            android:text="评分"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_sp_16"
+            />
 
     </RelativeLayout>
 

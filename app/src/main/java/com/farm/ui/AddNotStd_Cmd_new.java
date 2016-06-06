@@ -14,8 +14,6 @@ import android.widget.Toast;
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_AddNotStd_Cmd;
 import com.farm.bean.SelectCmdArea;
-import com.farm.bean.commandtab_single;
-import com.farm.bean.commembertab_singleton;
 import com.farm.bean.goodslisttab;
 import com.farm.bean.goodslisttab_flsl;
 import com.farm.com.custominterface.FragmentCallBack;
@@ -174,22 +172,22 @@ public class AddNotStd_Cmd_new extends FragmentActivity implements FragmentCallB
             case 0:
                 image_first.setBackgroundResource(R.drawable.green_line);
                 text_first.setTextColor(Color.parseColor("#FFFFFF"));
-                text_first.setBackgroundResource(R.drawable.tag_next);
+                text_first.setBackgroundResource(R.drawable.tag_next_black);
                 break;
             case 1:
                 image_three.setBackgroundResource(R.drawable.green_line);
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
-                text_three.setBackgroundResource(R.drawable.tag_next);
-                text_first.setBackgroundResource(R.drawable.tag_red);
+                text_three.setBackgroundResource(R.drawable.tag_next_black);
+                text_first.setBackgroundResource(R.drawable.tag_black);
                 text_first.setTextColor(Color.parseColor("#FFFFFF"));
                 break;
             case 2:
                 image_four.setBackgroundResource(R.drawable.green_line);
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
                 text_four.setTextColor(Color.parseColor("#FFFFFF"));
-                text_three.setBackgroundResource(R.drawable.tag_red);
-                text_four.setBackgroundResource(R.drawable.tag_next);
-                text_first.setBackgroundResource(R.drawable.tag_red);
+                text_three.setBackgroundResource(R.drawable.tag_black);
+                text_four.setBackgroundResource(R.drawable.tag_next_black);
+                text_first.setBackgroundResource(R.drawable.tag_black);
                 text_first.setTextColor(Color.parseColor("#FFFFFF"));
                 break;
             case 3:
@@ -197,10 +195,10 @@ public class AddNotStd_Cmd_new extends FragmentActivity implements FragmentCallB
                 text_three.setTextColor(Color.parseColor("#FFFFFF"));
                 text_four.setTextColor(Color.parseColor("#FFFFFF"));
                 text_five.setTextColor(Color.parseColor("#FFFFFF"));
-                text_three.setBackgroundResource(R.drawable.tag_red);
-                text_four.setBackgroundResource(R.drawable.tag_red);
-                text_five.setBackgroundResource(R.drawable.tag_next);
-                text_first.setBackgroundResource(R.drawable.tag_red);
+                text_three.setBackgroundResource(R.drawable.tag_black);
+                text_four.setBackgroundResource(R.drawable.tag_black);
+                text_five.setBackgroundResource(R.drawable.tag_next_black);
+                text_first.setBackgroundResource(R.drawable.tag_black);
                 text_first.setTextColor(Color.parseColor("#FFFFFF"));
                 break;
             case 4:
@@ -209,11 +207,11 @@ public class AddNotStd_Cmd_new extends FragmentActivity implements FragmentCallB
                 text_four.setTextColor(Color.parseColor("#FFFFFF"));
                 text_five.setTextColor(Color.parseColor("#FFFFFF"));
                 text_six.setTextColor(Color.parseColor("#FFFFFF"));
-                text_three.setBackgroundResource(R.drawable.tag_red);
-                text_four.setBackgroundResource(R.drawable.tag_red);
-                text_five.setBackgroundResource(R.drawable.tag_red);
-                text_six.setBackgroundResource(R.drawable.tag_next);
-                text_first.setBackgroundResource(R.drawable.tag_red);
+                text_three.setBackgroundResource(R.drawable.tag_black);
+                text_four.setBackgroundResource(R.drawable.tag_black);
+                text_five.setBackgroundResource(R.drawable.tag_black);
+                text_six.setBackgroundResource(R.drawable.tag_next_black);
+                text_first.setBackgroundResource(R.drawable.tag_black);
                 text_first.setTextColor(Color.parseColor("#FFFFFF"));
                 break;
         }

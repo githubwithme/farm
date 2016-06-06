@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/work" android:state_pressed="true"/>
-    <item android:drawable="@drawable/work_press" android:state_selected="true"/>
+    <item android:drawable="@drawable/work_blue_press" android:state_selected="true"/>
     <item android:drawable="@drawable/work" android:state_pressed="false"/>
 
 </selector>

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_white">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_white"
+              android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/titlebar_height" >
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/imgbtn_back"
@@ -13,18 +16,18 @@
             android:layout_height="@dimen/titlebar_height"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back" />
+            android:src="@drawable/ic_back"/>
 
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/titlebar_height"
-            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/imgbtn_back"
             android:gravity="center"
             android:text="事件处理过程"
-            android:textColor="@color/black"
-            android:textSize="@dimen/titlebar_textsize" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -32,7 +35,6 @@
             android:layout_alignParentRight="true">
 
             <Button
-                android:visibility="gone"
                 android:id="@+id/tv_bianjie"
                 android:layout_width="50dip"
                 android:layout_height="45dip"
@@ -42,10 +44,10 @@
                 android:gravity="center"
                 android:text="指派人"
                 android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14" />
+                android:textSize="@dimen/size_14"
+                android:visibility="gone"/>
 
             <Button
-                android:visibility="gone"
                 android:id="@+id/tv_delete"
                 android:layout_width="50dip"
                 android:layout_height="45dip"
@@ -55,8 +57,10 @@
                 android:gravity="center"
                 android:text="完成"
                 android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14" />
-        </LinearLayout>/>
+                android:textSize="@dimen/size_14"
+                android:visibility="gone"/>
+        </LinearLayout>
+        />
 
         <ProgressBar
             android:id="@+id/pb_upload"
@@ -70,20 +74,21 @@
             android:text="上传"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
-        android:background="@color/bg_yellow" />
+        android:background="@color/bg_yellow"/>
 
     <com.farm.widget.PullToRefreshListView
         android:id="@+id/wz_frame_listview"
         style="@style/xxss_listview"
         android:dividerHeight="1px"
         android:transcriptMode="alwaysScroll"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
@@ -94,11 +99,11 @@
         android:layout_height="40dip">
 
         <RelativeLayout
-            android:gravity="center"
             android:id="@+id/rl_record"
             android:layout_width="40dip"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true">
+            android:layout_alignParentLeft="true"
+            android:gravity="center">
 
 
             <com.customview.RecordsButton
@@ -116,10 +121,10 @@
             android:background="@color/line_color"/>
 
         <EditText
-            android:layout_toLeftOf="@+id/btn_record"
             android:id="@+id/et_content"
             android:layout_width="match_parent"
             android:layout_height="40dip"
+            android:layout_toLeftOf="@+id/btn_record"
             android:layout_toRightOf="@id/line1"
             android:background="@null"
             android:gravity="center"
@@ -128,19 +133,20 @@
             android:textSize="@dimen/titlebar_textsize"/>
 
         <Button
-            android:layout_toLeftOf="@+id/btn_sent"
             android:id="@+id/btn_record"
             android:layout_width="40dip"
             android:layout_height="40dip"
+            android:layout_toLeftOf="@+id/btn_sent"
             android:background="@drawable/picture_bag"/>
+
         <Button
             android:id="@+id/btn_sent"
             android:layout_width="60dip"
             android:layout_height="40dip"
             android:layout_alignParentRight="true"
             android:background="@drawable/btn_selectblue"
-            android:textColor="@color/bg_text"
-            android:text="发送"/>
+            android:text="发送"
+            android:textColor="@color/bg_text"/>
 
         <View
             android:layout_width="1px"

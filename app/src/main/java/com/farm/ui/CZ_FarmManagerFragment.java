@@ -230,7 +230,7 @@ public class CZ_FarmManagerFragment extends Fragment
 
                             areatab areatab = listNewData.get(0);
                             Intent intent = new Intent();
-                            intent.putExtra("number",  Integer.valueOf(areatab.getJobCount())+Integer.valueOf(areatab.getCommandCount())+Integer.valueOf(areatab.getPlantGrowCount()));
+                            intent.putExtra("number", Integer.valueOf(areatab.getJobCount()) + Integer.valueOf(areatab.getCommandCount()) + Integer.valueOf(areatab.getPlantGrowCount()));
                             intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
                             getActivity().sendBroadcast(intent);
                             if (Integer.valueOf(areatab.getJobCount()) > 0)

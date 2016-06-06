@@ -24,10 +24,10 @@
         <TableLayout
             android:id="@+id/tl_home"
             android:layout_width="0dip"
-            android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"

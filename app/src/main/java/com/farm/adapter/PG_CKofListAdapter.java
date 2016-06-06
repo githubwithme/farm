@@ -16,7 +16,8 @@ import java.util.List;
 /**
  * Created by user on 2016/5/20.
  */
-public class PG_CKofListAdapter extends BaseAdapter {
+public class PG_CKofListAdapter extends BaseAdapter
+{
     private Context context;
     private List<Wz_Storehouse> listItems;
     private LayoutInflater listContainer;

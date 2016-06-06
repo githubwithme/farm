@@ -46,7 +46,6 @@
                 android:layout_centerVertical="true"
                 android:background="@mipmap/ic_edit"
                 android:gravity="center"
-                android:text="编辑"
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
 
@@ -59,7 +58,6 @@
                 android:layout_marginLeft="5dip"
                 android:background="@mipmap/ic_deletebutton"
                 android:gravity="center"
-                android:text="删除"
                 android:textColor="@color/bg_text"
                 android:textSize="@dimen/size_14"/>
         </LinearLayout>

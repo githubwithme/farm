@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="1.5">
@@ -37,16 +37,19 @@
                     android:id="@+id/imgbtn_home"
                     android:layout_width="20dip"
                     android:layout_height="20dip"
-                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:background="@drawable/btn_message_selector"
                     android:clickable="false"
                     android:contentDescription=""/>
 
                 <FrameLayout
                     android:id="@+id/fl_dynamic"
-                    android:layout_width="15dip"
-                    android:layout_height="15dip"
-                    android:layout_toRightOf="@id/imgbtn_home"
+                    android:layout_width="10dip"
+                    android:layout_height="10dip"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginTop="3dip"
                     android:visibility="gone">
 
                     <com.farm.widget.CircleImageView
@@ -67,7 +70,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/size_10"/>
                 </FrameLayout>
-            </RelativeLayout>
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tv_home"

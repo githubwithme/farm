@@ -15,9 +15,7 @@ import com.farm.R;
 import com.farm.app.AppContext;
 import com.farm.bean.PG_WZckbean;
 import com.farm.bean.WZ_CRk;
-import com.farm.bean.WZ_RKxx;
 import com.farm.bean.commembertab;
-import com.farm.ui.NCZ_WZ_RKDetail_;
 import com.farm.ui.PG_WZ_CKDetail_;
 import com.farm.widget.CustomDialog_ListView;
 import com.swipelistview.SwipeLayout;
@@ -61,6 +59,7 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
         }
         return listData.get(groupPosition).getBreakOffList().get(childPosition);
     }
+
     //得到子item的ID
     @Override
     public long getChildId(int groupPosition, int childPosition)
@@ -79,16 +78,17 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
         public TextView quantity;
         public TextView inGoodsvalue;
     }
+
     //设置子item的组件
     @Override
-    public View getChildView( int groupPosition,  int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
         List<PG_WZckbean> childData = listData.get(groupPosition).getBreakOffList();
         final PG_WZckbean pg_wZckbean = childData.get(childPosition);
-        final String inType=listData.get(groupPosition).getIsConfirm();
-        final String indate=listData.get(groupPosition).getRegDate();
-        final String batchname=listData.get(groupPosition).getBatchName();
+        final String inType = listData.get(groupPosition).getIsConfirm();
+        final String indate = listData.get(groupPosition).getRegDate();
+        final String batchname = listData.get(groupPosition).getBatchName();
         View v = null;
         if (lmap.get(groupPosition) != null)
         {
@@ -104,9 +104,11 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
             listItemView.local = (TextView) convertView.findViewById(R.id.local);
             listItemView.inGoodsvalue = (TextView) convertView.findViewById(R.id.inGoodsvalue);
             convertView.setTag(listItemView);
-            convertView.setOnClickListener(new View.OnClickListener() {
+            convertView.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
 //                    Intent intent = new Intent(context, NCZ_WZ_CKDetail_.class);
                     Intent intent = new Intent(context, PG_WZ_CKDetail_.class);
                     intent.putExtra("pg_wZckbean", pg_wZckbean);
@@ -126,15 +128,16 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
 
             //数据添加
             listItemView.goodsname.setText(pg_wZckbean.getGoodsName());
-            listItemView.local.setText(pg_wZckbean.getParkName() + "-" + pg_wZckbean.getStoreName());
-            if(!pg_wZckbean.getThree().equals(""))
+            listItemView.local.setText("出库位置:" + pg_wZckbean.getParkName() + "-" + pg_wZckbean.getStoreName());
+            if (!pg_wZckbean.getThree().equals(""))
             {
-                listItemView.inGoodsvalue.setText(pg_wZckbean.getThreeNum()+pg_wZckbean.getThree());
-            }else if(pg_wZckbean.getThree().equals("")&&!pg_wZckbean.getSec().equals(""))
+                listItemView.inGoodsvalue.setText("出库" + pg_wZckbean.getThreeNum() + pg_wZckbean.getThree());
+            } else if (pg_wZckbean.getThree().equals("") && !pg_wZckbean.getSec().equals(""))
             {
-                listItemView.inGoodsvalue.setText(pg_wZckbean.getSecNum()+pg_wZckbean.getSec());
-            }else {
-                listItemView.inGoodsvalue.setText(pg_wZckbean.getFirsNum()+pg_wZckbean.getFirs());
+                listItemView.inGoodsvalue.setText("出库" + pg_wZckbean.getSecNum() + pg_wZckbean.getSec());
+            } else
+            {
+                listItemView.inGoodsvalue.setText("出库" + pg_wZckbean.getFirsNum() + pg_wZckbean.getFirs());
             }
 
         } else
@@ -162,12 +165,14 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
 //        mainlistview  WZ_RKExecute_Adapter
 
     }
+
     @Override
     public void onGroupCollapsed(int groupPosition)
     {
         super.onGroupCollapsed(groupPosition);
 
     }
+
     //获取当前父item下的子item的个数
     @Override
     public int getChildrenCount(int groupPosition)
@@ -191,6 +196,7 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
     {
         return listData.size();
     }
+
     @Override
     public long getGroupId(int groupPosition)
     {
@@ -199,7 +205,7 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
 
     //设置父item组件
     @Override
-    public View getGroupView(final int groupPosition,final boolean isExpanded, View convertView, ViewGroup parent)
+    public View getGroupView(final int groupPosition, final boolean isExpanded, View convertView, ViewGroup parent)
     {
         if (convertView == null)
         {
@@ -213,15 +219,17 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
         FrameLayout fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
 
 
-
-
         convertView.setTag(R.id.tag_pgck, listData.get(groupPosition));
-        convertView.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                if (isExpanded) {
+            public void onClick(View view)
+            {
+                if (isExpanded)
+                {
                     mainlistview.collapseGroup(groupPosition);
-                } else {
+                } else
+                {
                     mainlistview.expandGroup(groupPosition);
                 }
                 WZ_CRk wz_cRk2 = (WZ_CRk) view.getTag(R.id.tag_pgck);
@@ -237,17 +245,19 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
         if (listData.get(groupPosition).getFlashStr().equals("1"))
         {
             fl_new_item.setVisibility(View.VISIBLE);
-        }else {
+        } else
+        {
             fl_new_item.setVisibility(View.GONE);
         }
-        String indata=listData.get(groupPosition).getRegDate().substring(0,listData.get(groupPosition).getRegDate().length()-8);
-        inDate.setText(indata);
+        String indata = listData.get(groupPosition).getRegDate().substring(0, listData.get(groupPosition).getRegDate().length() - 8);
+        inDate.setText(indata + "出库一次");
 
-        batchName.setText(listData.get(groupPosition).getBatchName());
+        batchName.setText("出库批次号:" + listData.get(groupPosition).getBatchName());
 
         inGoodsValue.setText(listData.get(groupPosition).getIsConfirm());
         return convertView;
     }
+
     @Override
     public boolean hasStableIds()
     {

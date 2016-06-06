@@ -9,25 +9,26 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <ImageButton
             android:id="@+id/ib_back"
-            android:layout_width="15dip"
-            android:layout_height="15dip"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
             android:layout_alignParentLeft="true"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dip"
-            android:background="@drawable/back"/>
+            android:background="@drawable/ic_back"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/titlebar_height"
-            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/ib_back"
             android:gravity="center"
             android:text="编辑个人信息"
-            android:textColor="@color/bg_text"
+            android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 
         <Button
@@ -35,11 +36,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
-            android:text="保存"
-            android:textSize="@dimen/size_sp_14"
             android:background="@null"
-            android:layout_centerVertical="true"/>
+            android:text="保存"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <ScrollView
@@ -50,8 +52,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:focusableInTouchMode="true"
             android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <FrameLayout
@@ -142,8 +144,8 @@
                 android:layout_height="0.1px"
                 android:layout_marginLeft="15sp"
                 android:layout_marginRight="15sp"
-                android:visibility="gone"
-                android:background="@color/line_color"/>
+                android:background="@color/line_color"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -183,9 +185,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.1px"
                 android:layout_marginLeft="15sp"
-                android:visibility="gone"
                 android:layout_marginRight="15sp"
-                android:background="@color/line_color"/>
+                android:background="@color/line_color"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -224,10 +226,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1px"
-                android:visibility="gone"
                 android:layout_marginLeft="15sp"
                 android:layout_marginRight="15sp"
-                android:background="@color/line_color"/>
+                android:background="@color/line_color"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -266,10 +268,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1px"
-                android:visibility="gone"
                 android:layout_marginLeft="15sp"
                 android:layout_marginRight="15sp"
-                android:background="@color/line_color"/>
+                android:background="@color/line_color"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

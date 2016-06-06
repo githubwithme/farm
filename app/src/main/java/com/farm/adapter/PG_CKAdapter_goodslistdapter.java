@@ -13,13 +13,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +27,6 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.PG_CKDWbean;
 import com.farm.bean.Result;
-import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
 import com.farm.bean.goodslisttab;
 import com.farm.common.BitmapHelper;
@@ -95,15 +91,15 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
     String y;
     String id;
 
-    public PG_CKAdapter_goodslistdapter(Context context, ImageView currentiv_tip, List<goodslisttab> list,String x,String y,String id)
+    public PG_CKAdapter_goodslistdapter(Context context, ImageView currentiv_tip, List<goodslisttab> list, String x, String y, String id)
     {
         commembertab = AppContext.getUserInfo(context);
         this.list = list;
         this.currentiv_tip = currentiv_tip;
         this.context = context;
-        this.x=x;
-        this.y=y;
-        this.id=id;
+        this.x = x;
+        this.y = y;
+        this.id = id;
 
     }
 
@@ -151,16 +147,17 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                 }
 
                 listItemView.typename.setText(goodslisttab.getgoodsName());
-                if(!goodslisttab.getThree().equals(""))
+                if (!goodslisttab.getThree().equals(""))
                 {
 
 //                    listItemView.tv_gg.setText("规格：" +goodslisttab.getThree() +"/"+ goodslisttab.getgoodsunit());
-                    listItemView.tv_gg.setText("规格：" +goodslisttab.getGoodsStatistical()+goodslisttab.getgoodsunit() +"/"+ goodslisttab.getThree());
-                }else if(goodslisttab.getThree().equals("")&&!goodslisttab.getSec().equals(""))
+                    listItemView.tv_gg.setText("规格：" + goodslisttab.getGoodsStatistical() + goodslisttab.getgoodsunit() + "/" + goodslisttab.getThree());
+                } else if (goodslisttab.getThree().equals("") && !goodslisttab.getSec().equals(""))
                 {
-                    listItemView.tv_gg.setText("规格：" +goodslisttab.getGoodsStatistical()+goodslisttab.getgoodsunit() +"/"+ goodslisttab.getSec());
-                }else {
-                    listItemView.tv_gg.setText("规格：" +goodslisttab.getGoodsStatistical()+goodslisttab.getgoodsunit() +"/"+ goodslisttab.getFirs());
+                    listItemView.tv_gg.setText("规格：" + goodslisttab.getGoodsStatistical() + goodslisttab.getgoodsunit() + "/" + goodslisttab.getSec());
+                } else
+                {
+                    listItemView.tv_gg.setText("规格：" + goodslisttab.getGoodsStatistical() + goodslisttab.getgoodsunit() + "/" + goodslisttab.getFirs());
                 }
             }
             listItemView.cb_fl.setTag(R.id.tag_bean, goodslisttab);
@@ -214,9 +211,8 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
             {
                 if (list_goodslisttab.get(i).getId().equals(goodslisttab.getId()))
                 {
-                    Double acountnumber=0d;
+                    Double acountnumber = 0d;
                     isrecovery = true;
-
 
 
                     listItemView.cb_fl.setChecked(true);
@@ -286,20 +282,21 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                         String three = result.getRows().getJSONObject(0).getString("three");
 
 
-                        if(!three.equals(""))
+                        if (!three.equals(""))
                         {
-                            sum=threeNum+three;
-                        }else if(three.equals("")&&!sec.equals(""))
+                            sum = threeNum + three;
+                        } else if (three.equals("") && !sec.equals(""))
                         {
-                            sum=secNum+sec;
-                        }else {
-                            sum=firsNum+firs;
+                            sum = secNum + sec;
+                        } else
+                        {
+                            sum = firsNum + firs;
                         }
 //                        String jsonarray = result.getRows().getJSONObject(0).getString("goodsSum");
 
 
 //                        JSONArray jsonarray = result.getRows().getJSONObject(0).getJSONArray("goodsSum");
-                        showDialog_flsl("0",sum);
+                        showDialog_flsl("0", sum);
 
                     } else
                     {
@@ -320,7 +317,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         });
     }
 
-    public void showDialog_flsl(final String zzs,String goodssum)
+    public void showDialog_flsl(final String zzs, String goodssum)
     {
         final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_pg_ck, null);
 //        final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_pg_cks, null);
@@ -334,7 +331,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         et_flsl = (EditText) dialog_layout.findViewById(R.id.et_flsl);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         storehouse = (TextView) dialog_layout.findViewById(R.id.storehouse);
-        tv_line= (View) dialog_layout.findViewById(R.id.tv_line);
+        tv_line = (View) dialog_layout.findViewById(R.id.tv_line);
         //
 //        btn_add= (ImageButton) dialog_layout.findViewById(R.id.btn_add);
 //        ll_bottems= (LinearLayout) dialog_layout.findViewById(R.id.ll_bottems);
@@ -354,16 +351,17 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
 
 
         tv_goodsname.setText(list.get(currentpos).getgoodsName());
-        if(!list.get(currentpos).getThree().equals(""))
+        if (!list.get(currentpos).getThree().equals(""))
         {
 //            tv_spec.setText(list.get(currentpos).getThree() + "/" + list.get(currentpos).getgoodsunit());
 
-            tv_spec.setText(list.get(currentpos).getGoodsStatistical()+list.get(currentpos).getgoodsunit() + "/" + list.get(currentpos).getThree());
-        }else if(list.get(currentpos).getThree().equals("")&&!list.get(currentpos).getSec().equals(""))
+            tv_spec.setText(list.get(currentpos).getGoodsStatistical() + list.get(currentpos).getgoodsunit() + "/" + list.get(currentpos).getThree());
+        } else if (list.get(currentpos).getThree().equals("") && !list.get(currentpos).getSec().equals(""))
         {
-            tv_spec.setText(list.get(currentpos).getGoodsStatistical()+list.get(currentpos).getgoodsunit() + "/" + list.get(currentpos).getSec());
-        }else {
-            tv_spec.setText(list.get(currentpos).getGoodsStatistical()+list.get(currentpos).getgoodsunit() + "/" + list.get(currentpos).getFirs());
+            tv_spec.setText(list.get(currentpos).getGoodsStatistical() + list.get(currentpos).getgoodsunit() + "/" + list.get(currentpos).getSec());
+        } else
+        {
+            tv_spec.setText(list.get(currentpos).getGoodsStatistical() + list.get(currentpos).getgoodsunit() + "/" + list.get(currentpos).getFirs());
         }
 
 
@@ -373,34 +371,43 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
 
             tv_dw.setText(list.get(currentpos).getThree());
 
-        }else if(!list.get(currentpos).getSec().equals("") &&list.get(currentpos).getThree().equals(""))
+        } else if (!list.get(currentpos).getSec().equals("") && list.get(currentpos).getThree().equals(""))
         {
             tv_dw.setText(list.get(currentpos).getSec());
-        }else
+        } else
         {
             tv_dw.setText(list.get(currentpos).getFirs());
         }
-        btn_sure.setTag(R.id.tag_pgckpc,dialog_layout.findViewById(R.id.storehouse));
-        storehouse.setOnClickListener(new View.OnClickListener() {
+        btn_sure.setTag(R.id.tag_pgckpc, dialog_layout.findViewById(R.id.storehouse));
+        storehouse.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
 
-                if (listpeople.size() > 0) {
+                if (listpeople.size() > 0)
+                {
                     showPop_title();
                 }
             }
         });
         btn_sure.setTag(R.id.tag_danwei, list.get(currentpos));
-        btn_sure.setOnClickListener(new View.OnClickListener() {
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                 if (storehouse.getText().toString().equals("选择批次")) {
+            public void onClick(View v)
+            {
+                if (storehouse.getText().toString().equals("选择批次"))
+                {
                     Toast.makeText(context, "请选择批次", Toast.LENGTH_SHORT).show();
-                } else if (et_flsl.getText().toString().equals("")) {
+                } else if (et_flsl.getText().toString().equals(""))
+                {
                     Toast.makeText(context, "请填写数量", Toast.LENGTH_SHORT).show();
-                } else if (Integer.parseInt(et_flsl.getText().toString()) > number) {
+                } else if (Integer.parseInt(et_flsl.getText().toString()) > number)
+                {
                     Toast.makeText(context, "数量已超过库存存量", Toast.LENGTH_SHORT).show();
-                } else {
+                } else
+                {
                     goodslisttab goodslisttab = (com.farm.bean.goodslisttab) v.getTag(R.id.tag_danwei);
                     Double acountnumber = 0d;
                     Double neednumber = 0d;
@@ -444,23 +451,30 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
     }
 
 
-    public void showPop_title() {//LAYOUT_INFLATER_SERVICE
+    public void showPop_title()
+    {//LAYOUT_INFLATER_SERVICE
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         pv_tab = layoutInflater.inflate(R.layout.popup_yq, null);// 外层
-        pv_tab.setOnKeyListener(new View.OnKeyListener() {
+        pv_tab.setOnKeyListener(new View.OnKeyListener()
+        {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing())) {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing()))
+                {
                     pw_tab.dismiss();
                     return true;
                 }
                 return false;
             }
         });
-        pv_tab.setOnTouchListener(new View.OnTouchListener() {
+        pv_tab.setOnTouchListener(new View.OnTouchListener()
+        {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (pw_tab.isShowing()) {
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_tab.isShowing())
+                {
                     pw_tab.dismiss();
                 }
                 return false;
@@ -474,24 +488,27 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         ListView listview = (ListView) pv_tab.findViewById(R.id.lv_yq);
         pg_cKlistAdapter = new PG_CKlistAdapter(context, listpeople);
         listview.setAdapter(pg_cKlistAdapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3) {
+            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3)
+            {
                 batchNumber = listpeople.get(postion).getGoodsInInfoId();
                 batchName = listpeople.get(postion).getBatchname();
                 currentgoods.setgoodsNote(listpeople.get(postion).getGoodsInInfoId());
-                int num=postion+1;
-                if(!listpeople.get(postion).getThree().equals(""))
+                int num = postion + 1;
+                if (!listpeople.get(postion).getThree().equals(""))
                 {
-                    storehouse.setText("第"+num+"批次:" +listpeople.get(postion).getThreeNum()+listpeople.get(postion).getThree());
-                    number=Integer.parseInt(listpeople.get(postion).getThreeNum());
-                }else if(listpeople.get(postion).getThree().equals("")&&!listpeople.get(0).getSec().equals(""))
+                    storehouse.setText("第" + num + "批次:剩余" + listpeople.get(postion).getThreeNum() + listpeople.get(postion).getThree());
+                    number = Integer.parseInt(listpeople.get(postion).getThreeNum());
+                } else if (listpeople.get(postion).getThree().equals("") && !listpeople.get(0).getSec().equals(""))
                 {
-                    storehouse.setText("第"+num+"批次:" +listpeople.get(postion).getThreeNum()+listpeople.get(postion).getSec());
-                    number=Integer.parseInt(listpeople.get(postion).getSecNum());
-                }else {
-                    storehouse.setText("第"+num+"批次:" +listpeople.get(postion).getFirsNum()+listpeople.get(postion).getFirs());
-                    number=Integer.parseInt(listpeople.get(postion).getFirsNum());
+                    storehouse.setText("第" + num + "批次:剩余" + listpeople.get(postion).getThreeNum() + listpeople.get(postion).getSec());
+                    number = Integer.parseInt(listpeople.get(postion).getSecNum());
+                } else
+                {
+                    storehouse.setText("第" + num + "批次:剩余" + listpeople.get(postion).getFirsNum() + listpeople.get(postion).getFirs());
+                    number = Integer.parseInt(listpeople.get(postion).getFirsNum());
                 }
 
 
@@ -502,38 +519,44 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
             }
         });
     }
-//
-    private void getlistdata(String goodsId) {
+
+    //
+    private void getlistdata(String goodsId)
+    {
         commembertab commembertab = AppContext.getUserInfo(context);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("goodsId",goodsId);
-        params.addQueryStringParameter("storehouseId",id);
+        params.addQueryStringParameter("goodsId", goodsId);
+        params.addQueryStringParameter("storehouseId", id);
 //        params.addQueryStringParameter("action", "getPCSLByWzIdCKId");
         params.addQueryStringParameter("action", "getSumBygoodsIdStoreId1");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<PG_CKDWbean> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), PG_CKDWbean.class);
                         Iterator<PG_CKDWbean> it = listNewData.iterator();
                         while (it.hasNext())
                         {
-                            PG_CKDWbean pg_ckdWbean=it.next();
-                            final  String value;
-                            if(!pg_ckdWbean.getThree().equals(""))
+                            PG_CKDWbean pg_ckdWbean = it.next();
+                            final String value;
+                            if (!pg_ckdWbean.getThree().equals(""))
                             {
                                 value = pg_ckdWbean.getThreeNum();
-                            }else if(pg_ckdWbean.getThree().equals("")&&!pg_ckdWbean.getSec().equals(""))
+                            } else if (pg_ckdWbean.getThree().equals("") && !pg_ckdWbean.getSec().equals(""))
                             {
                                 value = pg_ckdWbean.getSecNum();
-                            }else {
+                            } else
+                            {
                                 value = pg_ckdWbean.getFirsNum();
                             }
                             if (value.equals("0"))
@@ -543,7 +566,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                         }
 
 
-                        listpeople=new  ArrayList<PG_CKDWbean>();
+                        listpeople = new ArrayList<PG_CKDWbean>();
                         listpeople.addAll(listNewData);
 /*                        batchNumber = listNewData.get(0).getGoodsInInfoId();
                         batchName = listNewData.get(0).getBatchname();
@@ -561,10 +584,12 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                         }*/
 
 
-                    } else {
+                    } else
+                    {
                         listNewData = new ArrayList<PG_CKDWbean>();
                     }
-                } else {
+                } else
+                {
                     AppContext.makeToast(context, "error_connectDataBase");
 
                     return;
@@ -573,7 +598,8 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 String a = error.getMessage();
                 AppContext.makeToast(context, "error_connectServer");
 

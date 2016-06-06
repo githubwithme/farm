@@ -29,7 +29,8 @@
             android:background="@mipmap/icon_add"
             android:gravity="center"
             android:textColor="@color/bg_text"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btn_search"
@@ -41,7 +42,8 @@
             android:background="@drawable/ic_search"
             android:gravity="center"
             android:textColor="@color/bg_text"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:visibility="gone"/>
 
 
     </RelativeLayout>
@@ -101,12 +103,12 @@
                 android:textSize="@dimen/titlebar_textsize"/>
 
             <View
-                android:visibility="gone"
                 android:id="@+id/view_jobcomplete"
                 android:layout_width="match_parent"
                 android:layout_height="2dip"
                 android:layout_gravity="bottom"
-                android:background="@color/red"/>
+                android:background="@color/red"
+                android:visibility="gone"/>
         </FrameLayout>
     </LinearLayout>
 

@@ -59,9 +59,9 @@ public class PG_CKAdapter extends BaseExpandableListAdapter
     FragmentCallBack fragmentCallBack;
     private PG_CKAdapter_goodslistdapter adapter;
     ListView listview;
-    String  id;
+    String id;
 
-    public PG_CKAdapter(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview, ListView listview, TextView tv_head, FragmentCallBack fragmentCallBack,String id)
+    public PG_CKAdapter(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview, ListView listview, TextView tv_head, FragmentCallBack fragmentCallBack, String id)
     {
         this.listview = listview;
         this.fragmentCallBack = fragmentCallBack;
@@ -76,8 +76,8 @@ public class PG_CKAdapter extends BaseExpandableListAdapter
         currentChildId = map_id.get(parentId[0])[0];
         currentParentName = parentData[0];
         currentChildName = map.get(parentData[0])[0];
-        this.id=id;
-        adapter = new PG_CKAdapter_goodslistdapter(context, currentiv_tip, list_goods,currentParentId,currentChildId,id);
+        this.id = id;
+        adapter = new PG_CKAdapter_goodslistdapter(context, currentiv_tip, list_goods, currentParentId, currentChildId, id);
         listview.setAdapter(adapter);
     }
 
@@ -95,6 +95,7 @@ public class PG_CKAdapter extends BaseExpandableListAdapter
     {
         return childPosition;
     }
+
     HashMap<Integer, HashMap<Integer, View>> lmap = new HashMap<Integer, HashMap<Integer, View>>();
     HashMap<Integer, View> map_view = new HashMap<>();
     ListItemView listItemView = null;
@@ -105,6 +106,7 @@ public class PG_CKAdapter extends BaseExpandableListAdapter
         public ImageView iv_tip;
         public TextView tv;
     }
+
     //设置子item的组件
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
@@ -139,7 +141,7 @@ public class PG_CKAdapter extends BaseExpandableListAdapter
             }
             listItemView.tv.setText(info);
             listItemView.tv.setTag(R.id.tag_fi, parentId[groupPosition]);
-            listItemView. tv.setTag(R.id.tag_fn, key);
+            listItemView.tv.setTag(R.id.tag_fn, key);
             listItemView.tv.setTag(R.id.tag_si, map_id.get(parentId[groupPosition])[childPosition]);
             listItemView.tv.setTag(R.id.tag_sn, info);
             listItemView.tv.setTag(R.id.tag_childsize, childData.length);
@@ -184,7 +186,7 @@ public class PG_CKAdapter extends BaseExpandableListAdapter
             {
                 map_view = new HashMap<>();
             }
-        }else
+        } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
             listItemView = (ListItemView) convertView.getTag();
@@ -324,20 +326,20 @@ public class PG_CKAdapter extends BaseExpandableListAdapter
                         list_goods.addAll(list);
                         if (list_goods != null)
                         {
-                            adapter = new PG_CKAdapter_goodslistdapter(context, currentiv_tip, list_goods,currentParentId,currentChildId,id);
+                            adapter = new PG_CKAdapter_goodslistdapter(context, currentiv_tip, list_goods, currentParentId, currentChildId, id);
                             listview.setAdapter(adapter);
 
                         } else
                         {
                             list_goods = new ArrayList<goodslisttab>();
-                            adapter = new PG_CKAdapter_goodslistdapter(context, currentiv_tip, list_goods,currentParentId,currentChildId,id);
+                            adapter = new PG_CKAdapter_goodslistdapter(context, currentiv_tip, list_goods, currentParentId, currentChildId, id);
                             listview.setAdapter(adapter);
                         }
 
                     } else
                     {
                         list_goods = new ArrayList<goodslisttab>();
-                        adapter = new PG_CKAdapter_goodslistdapter(context, currentiv_tip, list_goods,currentParentId,currentChildId,id);
+                        adapter = new PG_CKAdapter_goodslistdapter(context, currentiv_tip, list_goods, currentParentId, currentChildId, id);
                         listview.setAdapter(adapter);
                     }
                 } else
