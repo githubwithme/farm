@@ -1,11 +1,7 @@
 package com.farm.adapter;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +17,10 @@ import com.farm.app.AppContext;
 import com.farm.bean.WZ_CRk;
 import com.farm.bean.WZ_RKxx;
 import com.farm.bean.commembertab;
-import com.farm.bean.jobtab;
 import com.farm.ui.NCZ_WZ_RKDetail_;
 import com.farm.widget.CustomDialog_ListView;
-import com.swipelistview.SimpleSwipeListener;
 import com.swipelistview.SwipeLayout;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -143,7 +136,7 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
             listItemView.local.setText(wz_rKxx.getParkName() + "-" + wz_rKxx.getStorehouseName());
             listItemView.quantity.setText("数量:" + wz_rKxx.getQuantity());
             listItemView.inGoodsvalue.setText("总值:" + wz_rKxx.getInGoodsvalue() + "元");
-            listItemView.zhongliangs.setText("重量:" + wz_rKxx.getSumWeight() );
+            listItemView.zhongliangs.setText("总量:" + wz_rKxx.getSumWeight() );
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);

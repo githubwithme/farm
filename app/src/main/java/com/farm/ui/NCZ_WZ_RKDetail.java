@@ -3,32 +3,15 @@ package com.farm.ui;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.app.AppConfig;
-import com.farm.app.AppContext;
-import com.farm.bean.Result;
-import com.farm.bean.WZ_Detail;
 import com.farm.bean.WZ_RKxx;
-import com.farm.bean.commembertab;
-import com.farm.common.utils;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by user on 2016/4/8.
@@ -98,7 +81,8 @@ public class NCZ_WZ_RKDetail extends FragmentActivity {
         } else {
             note.setText(wz_rKxx.getNote());
         }
-        getGoodsxx();
+        zhongliang.setText(wz_rKxx.getSumWeight());
+//        getGoodsxx();
     }
 
     @Override
@@ -111,7 +95,7 @@ public class NCZ_WZ_RKDetail extends FragmentActivity {
 
     }
 
-    private void getGoodsxx() {
+    /*private void getGoodsxx() {
 
         commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
@@ -143,5 +127,5 @@ public class NCZ_WZ_RKDetail extends FragmentActivity {
 
             }
         });
-    }
+    }*/
 }

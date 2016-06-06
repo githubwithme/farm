@@ -131,7 +131,7 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
             listItemView.local.setText(wz_rKxx.getParkName() + "-" + wz_rKxx.getStorehouseName());
             listItemView.quantity.setText("数量:" + wz_rKxx.getQuantity());
             listItemView.inGoodsvalue.setText("总值:" + wz_rKxx.getOutGoodsvalue() + "元");
-            listItemView.zhongliangs.setText("重量:" + wz_rKxx.getSumWeight() );
+            listItemView.zhongliangs.setText("总量:" + wz_rKxx.getSumWeight() );
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);

@@ -17,8 +17,8 @@
 
         <TextView
             android:id="@+id/goodsname"
-            android:layout_width="60dip"
-            android:layout_height="40dp"
+            android:layout_width="80dip"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:background="@drawable/background_view_rounded_single"
             android:gravity="center"
