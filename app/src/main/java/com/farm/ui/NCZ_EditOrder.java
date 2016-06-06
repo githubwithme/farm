@@ -74,8 +74,8 @@ public class NCZ_EditOrder extends Activity
     EditText et_price;
     @ViewById
     EditText et_weight;
-    @ViewById
-    EditText et_number;
+/*    @ViewById
+    EditText et_number;*/
     @ViewById
     EditText et_phone;
     @ViewById
@@ -119,11 +119,11 @@ public class NCZ_EditOrder extends Activity
             Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (et_number.getText().toString().equals(""))
+     /*   if (et_number.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
         if (et_values.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -255,7 +255,7 @@ public class NCZ_EditOrder extends Activity
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    String rows = result.getRows().get(0).toString();
+            /*        String rows = result.getRows().get(0).toString();
                     if (rows.equals("1"))
                     {
                         Toast.makeText(NCZ_EditOrder.this, "修改成功！", Toast.LENGTH_SHORT).show();
@@ -266,7 +266,8 @@ public class NCZ_EditOrder extends Activity
                     {
                         Toast.makeText(NCZ_EditOrder.this, "修改失败！", Toast.LENGTH_SHORT).show();
                     }
-
+*/
+                    finish();
                 } else
                 {
                     Toast.makeText(NCZ_EditOrder.this, "修改失败！", Toast.LENGTH_SHORT).show();
@@ -438,7 +439,7 @@ public class NCZ_EditOrder extends Activity
         private void showDeleteTip(final SellOrderDetail_New sellOrderDetail_new)
         {
             View dialog_layout = (LinearLayout) context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-            myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
+            myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
             {
                 @Override
                 public void OnClick(View v)

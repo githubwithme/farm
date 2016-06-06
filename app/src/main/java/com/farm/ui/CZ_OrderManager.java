@@ -27,6 +27,11 @@ public class CZ_OrderManager extends Activity
     @ViewById
     TextView tv_needfeedback;
 
+    @Click
+    void btn_back()
+    {
+        finish();
+    }
 
     @Click
     void tv_allorder()
