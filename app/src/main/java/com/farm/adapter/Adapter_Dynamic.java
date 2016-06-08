@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.DynamicBean;
+import com.farm.common.utils;
 import com.farm.widget.CircleImageView;
 
 import java.util.HashMap;
@@ -88,7 +89,8 @@ public class Adapter_Dynamic extends BaseAdapter
         }
 //        listItemView.tv_new_item.setText(String.valueOf(dynamicBean.getListdata().size()));
         String date = dynamicBean.getListdata().get(0).getDate();
-        listItemView.tv_date.setText(date.substring(5, date.lastIndexOf(":")));
+        date = date.replace("/", "-");
+        listItemView.tv_date.setText(utils.OffSetOfDate(utils.getToday(), date));
         String type = dynamicBean.getType();
         if (type.equals("ZL"))
         {
@@ -135,7 +137,7 @@ public class Adapter_Dynamic extends BaseAdapter
         if (dynamicBean.getListdata().get(0).getFlashStr().equals("0"))
         {
             listItemView.fl_new_item.setVisibility(View.GONE);
-        }else
+        } else
         {
             listItemView.fl_new_item.setVisibility(View.VISIBLE);
         }

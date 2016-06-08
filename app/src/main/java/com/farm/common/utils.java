@@ -20,21 +20,12 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
-import com.farm.app.AppConfig;
 import com.farm.bean.BatchOfProduct;
 import com.farm.bean.BatchTimeBean;
 import com.farm.bean.CusPoint;
-import com.farm.bean.Result;
-import com.farm.bean.WZ_Detail;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
+import com.farm.bean.DynamicBean;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -159,6 +150,84 @@ public class utils
         {
         }
         return dt;
+    }
+
+    public static String OffSetOfDate(String today, String date)
+    {
+        String dt = new String();
+        if (today.equals("") || today.equals("null") || date.equals("") || date.equals("null"))
+        {
+            return "";
+        }
+        try
+        {
+            SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date_today = dfs.parse(today);
+            java.util.Date date_date = dfs.parse(date);
+
+            long between = (date_today.getTime() - date_date.getTime()) / 1000;// 除以1000是为了转换成秒
+            long day1 = between / (24 * 3600);
+            if (date_date.before(date_today))
+            {
+                if (day1 == 1)
+                {
+                    dt = "昨天" + date.substring(date.lastIndexOf(" "), date.lastIndexOf(":"));
+                } else if (day1 == 2)
+                {
+                    dt = "前天";
+                } else if (day1 == 3)
+                {
+                    dt = "3天前";
+                } else if (day1 >= 7)
+                {
+                    dt = "一周前";
+                }
+                return dt;
+            } else
+            {
+                dt = date.substring(date.lastIndexOf(" "), date.lastIndexOf(":"));
+            }
+
+
+        } catch (Exception e)
+        {
+        }
+        return dt;
+    }
+
+    public static List<DynamicBean> BubbleSortArray(List<DynamicBean> list)
+    {
+        int n = list.size();
+        SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd");
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n - i-1; j++)
+            {
+                String date1 = list.get(j).getListdata().get(0).getDate();
+                String date2 = list.get(j + 1).getListdata().get(0).getDate();
+                date1=date1.replace("/","-");
+                date2=date2.replace("/","-");
+                Date date_date1 = null;
+                Date date_date2 = null;
+                try
+                {
+                    date_date1 = dfs.parse(date1);
+                    date_date2 = dfs.parse(date2);
+                } catch (ParseException e)
+                {
+                    e.printStackTrace();
+                }
+
+                if (date_date1.before(date_date2))//比较交换相邻元素
+                {
+                    DynamicBean temp;
+                    temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
+                }
+            }
+        }
+        return list;
     }
 
     public static int getDayAcount(String time1, String time2)
@@ -454,38 +523,39 @@ public class utils
         return list_time;
     }
 
-    public static int getBatchColorByName( String colorname)
+    public static int getBatchColorByName(String colorname)
     {
         if (colorname.equals("青色"))
         {
             return Color.argb(1000, 0, 255, 255);
-        } else  if (colorname.equals("灰色"))
+        } else if (colorname.equals("灰色"))
         {
             return Color.argb(1000, 192, 192, 192);
-        }  else  if (colorname.equals("深橄榄绿"))
+        } else if (colorname.equals("深橄榄绿"))
         {
             return Color.argb(1000, 79, 79, 47);
-        }  else  if (colorname.equals("土黄色"))
+        } else if (colorname.equals("土黄色"))
         {
             return Color.argb(1000, 159, 159, 95);
-        } else  if (colorname.equals("绿色"))
+        } else if (colorname.equals("绿色"))
         {
             return Color.argb(1000, 0, 255, 0);
         }
         return 0;
     }
-    public static int returnBatchColorByName( String colorname)
+
+    public static int returnBatchColorByName(String colorname)
     {
         if (colorname.equals("青色"))
         {
             return R.color.navyblue;
-        } else  if (colorname.equals("灰色"))
+        } else if (colorname.equals("灰色"))
         {
             return R.color.curegray;
-        }  else  if (colorname.equals("深橄榄绿"))
+        } else if (colorname.equals("深橄榄绿"))
         {
             return R.color.darkOlivegreen;
-        }  else  if (colorname.equals("土黄色"))
+        } else if (colorname.equals("土黄色"))
         {
             return R.color.soilyellow;
         }
@@ -585,6 +655,7 @@ public class utils
         //params.height最后得到整个ListView完整显示需要的高度
         listView.setLayoutParams(params);
     }
+
     public static void setGridViewHeight(GridView gridView)
     {
         ListAdapter listAdapter = gridView.getAdapter();
@@ -602,6 +673,7 @@ public class utils
         gridView.setLayoutParams(params);
         gridView.requestLayout();
     }
+
     public static void setListViewHeight(ListView listView)
     {
         ListAdapter listAdapter = listView.getAdapter();
@@ -634,34 +706,32 @@ public class utils
 
         return totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
     }
+
     public static int CheckInPloy(Point[] pts, int n, Point pt) //pts为多边形的顶点数组，n为多边形顶点数，pt为将要被判断的点
     {
-        int i,j,k,wn=0;
-        for(i=n-1, j=0; j<n; i=j, j++)
+        int i, j, k, wn = 0;
+        for (i = n - 1, j = 0; j < n; i = j, j++)
         {
             k = (pt.x - pts[i].x) * (pts[j].y - pts[i].y) - (pts[j].x - pts[i].x) * (pt.y - pts[i].y);
-            if((pt.y >= pts[i].y && pt.y <= pts[j].y)||(pt.y <= pts[i].y && pt.y >= pts[j].y))
+            if ((pt.y >= pts[i].y && pt.y <= pts[j].y) || (pt.y <= pts[i].y && pt.y >= pts[j].y))
             {
-                if( k < 0)
-                    wn++;
-                else if(k > 0)
-                    wn--;
+                if (k < 0) wn++;
+                else if (k > 0) wn--;
                 else
                 {
-                    if( (pt.y <= pts[i].y && pt.y >= pts[j].y && pt.x <= pts[i].x && pt.x >= pts[j].x) ||
+                    if ((pt.y <= pts[i].y && pt.y >= pts[j].y && pt.x <= pts[i].x && pt.x >= pts[j].x) ||
                             (pt.y <= pts[i].y && pt.y >= pts[j].y && pt.x >= pts[i].x && pt.x <= pts[j].x) ||
                             (pt.y >= pts[i].y && pt.y <= pts[j].y && pt.x <= pts[i].x && pt.x >= pts[j].x) ||
-                            (pt.y >= pts[i].y && pt.y <= pts[j].y && pt.x >= pts[i].x && pt.x <= pts[j].x) )
+                            (pt.y >= pts[i].y && pt.y <= pts[j].y && pt.x >= pts[i].x && pt.x <= pts[j].x))
                         return 0; //点在多边形边界上
                 }
 
             }
         }
-        if(wn == 0)
-            return 1; //点在多边形外部
-        else
-            return -1; //点在多边形内部
+        if (wn == 0) return 1; //点在多边形外部
+        else return -1; //点在多边形内部
     }
+
     /**
      * 判断点是否在线上
      *
@@ -894,11 +964,11 @@ public class utils
         }
     }
 
-    public static double  getNum(String time1)
+    public static double getNum(String time1)
     {
-        String[] num = new String[]{"0","0","0"};
+        String[] num = new String[]{"0", "0", "0"};
         String bb;
-        String aa=time1;
+        String aa = time1;
 //        string[] num = message.Split(new char[] { '件', '箱', '盒', '袋', '包', '瓶', '桶'});
 
         String[] str = {"件", "箱", "盒", "袋", "包", "瓶", "桶"};
