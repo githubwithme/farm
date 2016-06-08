@@ -49,7 +49,6 @@ import java.util.List;
 @EActivity(R.layout.ncz_activity_new)
 public class NCZ_MainActivity_New extends Activity
 {
-    //    NCZ_FarmLive_Fragment ncz_farmLive_fragment;//农场实况
     NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
     MyDialog myDialog;
     Fragment mContent = new Fragment();
@@ -150,7 +149,6 @@ public class NCZ_MainActivity_New extends Activity
         tl_product.setSelected(true);
         tl_sale.setSelected(false);
         tl_farmlive.setSelected(false);
-//		switchContent(mContent, ncz_CommandList);
         switchContent(mContent, farmManagerFragment);
     }
 
@@ -192,6 +190,9 @@ public class NCZ_MainActivity_New extends Activity
     @AfterViews
     void afterOncreate()
     {
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_NCZ_DT);
+        NCZ_MainActivity_New.this.registerReceiver(receiver_update, intentfilter_update);
+        getActionBar().hide();
         //将错误信息提交
         List<ExceptionInfo> list_exception = SqliteDb.getExceptionInfo(NCZ_MainActivity_New.this);
         if (list_exception != null)
@@ -237,14 +238,10 @@ public class NCZ_MainActivity_New extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_NCZ_DT);
-        NCZ_MainActivity_New.this.registerReceiver(receiver_update, intentfilter_update);
-        getActionBar().hide();
     }
 
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
-        @SuppressWarnings("deprecation")
         @Override
         public void onReceive(Context context, Intent intent)
         {
@@ -278,43 +275,6 @@ public class NCZ_MainActivity_New extends Activity
         }
     }
 
-
-    class TimeThread extends Thread
-    {
-        private boolean isSleep = true;
-        private boolean stop = false;
-
-        public void run()
-        {
-            Long starttime = 0l;
-            while (!stop)
-            {
-                if (isSleep)
-                {
-                } else
-                {
-                    try
-                    {
-                        Thread.sleep(AppContext.TIME_REFRESH);
-                        starttime = starttime + 1000;
-                    } catch (InterruptedException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        public void setSleep(boolean sleep)
-        {
-            isSleep = sleep;
-        }
-
-        public void setStop(boolean stop)
-        {
-            this.stop = stop;
-        }
-    }
 
     @Override
     protected void onDestroy()

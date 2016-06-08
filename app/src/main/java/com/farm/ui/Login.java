@@ -108,7 +108,7 @@ public class Login extends Activity
     void rl_down()
     {
         list = SqliteDb.getUserList(this, commembertab.class);
-        if (popupWindow_tab!=null && popupWindow_tab.isShowing())
+        if (popupWindow_tab != null && popupWindow_tab.isShowing())
         {
             Toast.makeText(this, "请不要重复点击", Toast.LENGTH_SHORT).show();
         } else
@@ -170,7 +170,7 @@ public class Login extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                Log.d(TAG, "登陆数据接收"+a);
+                Log.d(TAG, "登陆数据接收" + a);
                 List<commembertab> listData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表

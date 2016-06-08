@@ -111,6 +111,13 @@ public class AddCommand_BZSC extends FragmentActivity implements FragmentCallBac
     @AfterViews
     void afterOncreate()
     {
+        getActionBar().hide();
+        commandtab_single.getInstance().clearAll();
+        SqliteDb.deleteAllSelectCmdArea(AddCommand_BZSC.this, SelectCmdArea.class);
+        SqliteDb.deleteAllSelectCmdArea(AddCommand_BZSC.this, goodslisttab.class);
+        SqliteDb.deleteAllSelectCmdArea(AddCommand_BZSC.this, goodslisttab_flsl.class);
+        level = getIntent().getStringExtra("level");
+
         addStd_cmd_stepOne = new AddStd_Cmd_StepOne_Temp_();
         addStd_cmd_stepTwo = new AddStd_Cmd_StepTwo_();
         addStd_cmd_stepThree_temp = new AddStd_Cmd_StepThree_Temp_();
@@ -131,12 +138,6 @@ public class AddCommand_BZSC extends FragmentActivity implements FragmentCallBac
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        getActionBar().hide();
-        commandtab_single.getInstance().clearAll();
-        SqliteDb.deleteAllSelectCmdArea(AddCommand_BZSC.this, SelectCmdArea.class);
-        SqliteDb.deleteAllSelectCmdArea(AddCommand_BZSC.this, goodslisttab.class);
-        SqliteDb.deleteAllSelectCmdArea(AddCommand_BZSC.this, goodslisttab_flsl.class);
-        level = getIntent().getStringExtra("level");
     }
 
 
@@ -212,7 +213,7 @@ public class AddCommand_BZSC extends FragmentActivity implements FragmentCallBac
 
                 break;
             case 1:
-                ((AddStd_Cmd_StepTwo)fragmentList.get(currentItem)).update();
+                ((AddStd_Cmd_StepTwo) fragmentList.get(currentItem)).update();
                 break;
             case 2:
                 addStd_cmd_stepThree_temp.update();

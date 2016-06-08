@@ -18,16 +18,12 @@ public class AddEvent extends Activity
     @AfterViews
     void afterOncreate()
     {
+        getActionBar().hide();
     }
 
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        getActionBar().hide();
-
     }
-
-    ;
-
 
 }

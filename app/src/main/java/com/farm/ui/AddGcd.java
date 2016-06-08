@@ -70,7 +70,15 @@ public class AddGcd extends Activity implements TencentLocationListener
     void tv_zzsl()
     {
         JSONObject jsonObject = utils.parseJsonFile(AddGcd.this, "dictionary.json");
-        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+        JSONArray jsonArray = null;
+        try
+        {
+            jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+        } catch (Exception e)
+        {
+
+        }
+
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < jsonArray.size(); i++)
         {
@@ -277,7 +285,7 @@ public class AddGcd extends Activity implements TencentLocationListener
             AppContext appContext = (AppContext) AddGcd.this.getApplication();
             appContext.setLOCATION_X(String.valueOf(location_latLng.getLatitude()));
             appContext.setLOCATION_Y(String.valueOf(location_latLng.getLongitude()));
-            tv_location.setText("经度"+location_latLng.getLatitude()+"\n"+"纬度"+location_latLng.getLongitude());
+            tv_location.setText("经度" + location_latLng.getLatitude() + "\n" + "纬度" + location_latLng.getLongitude());
         }
     }
 
