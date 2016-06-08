@@ -97,8 +97,8 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         this.list = list;
         this.currentiv_tip = currentiv_tip;
         this.context = context;
-        this.x = x;
-        this.y = y;
+        this.x = x;//1级
+        this.y = y;//2级
         this.id = id;
 
     }
@@ -175,6 +175,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                     currentpos = (Integer) buttonView.getTag(R.id.tag_postion);
 
                     getlistdata(currentgoods.getId());
+
                     if (isChecked && !isrecovery)
                     {
                         if (currentiv_tip != null)
@@ -317,7 +318,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         });
     }
 
-    public void showDialog_flsl(final String zzs, String goodssum)
+    public void showDialog_flsl(final String zzs, final String goodssum)
     {
         final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_pg_ck, null);
 //        final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_pg_cks, null);
@@ -378,8 +379,8 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         {
             tv_dw.setText(list.get(currentpos).getFirs());
         }
-        btn_sure.setTag(R.id.tag_pgckpc, dialog_layout.findViewById(R.id.storehouse));
-        storehouse.setOnClickListener(new View.OnClickListener()
+//        btn_sure.setTag(R.id.tag_pgckpc, dialog_layout.findViewById(R.id.storehouse));
+/*        storehouse.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -390,24 +391,96 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                     showPop_title();
                 }
             }
-        });
+        });*/
         btn_sure.setTag(R.id.tag_danwei, list.get(currentpos));
         btn_sure.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                if (storehouse.getText().toString().equals("选择批次"))
+            /*    if (storehouse.getText().toString().equals("选择批次"))
                 {
                     Toast.makeText(context, "请选择批次", Toast.LENGTH_SHORT).show();
-                } else if (et_flsl.getText().toString().equals(""))
+                } else*/
+                if (et_flsl.getText().toString().equals(""))
                 {
                     Toast.makeText(context, "请填写数量", Toast.LENGTH_SHORT).show();
-                } else if (Integer.parseInt(et_flsl.getText().toString()) > number)
+                } else if (Integer.parseInt(et_flsl.getText().toString()) > Integer.parseInt(goodssum.substring(0, goodssum.length() - 1)))
                 {
                     Toast.makeText(context, "数量已超过库存存量", Toast.LENGTH_SHORT).show();
                 } else
                 {
+
+                          /*                 batchNumber = listNewData.get(0).getGoodsInInfoId();
+                        batchName = listNewData.get(0).getBatchname();
+                        if(!listNewData.get(0).getThree().equals(""))
+                        {
+//                            storehouse.setText("第1批次:" +listNewData.get(0).getThreeNum()+listNewData.get(0).getThree());
+                            number=Integer.parseInt(listNewData.get(0).getThreeNum());
+                        }else if(listNewData.get(0).getThree().equals("")&&!listNewData.get(0).getSec().equals(""))
+                        {
+//                            storehouse.setText("第1批次:" +listNewData.get(0).getSecNum()+listNewData.get(0).getSec());
+                            number=Integer.parseInt(listNewData.get(0).getSecNum());
+                        }else {
+//                            storehouse.setText("第1批次:" +listNewData.get(0).getFirsNum()+listNewData.get(0).getFirs());
+                            number=Integer.parseInt(listNewData.get(0).getFirsNum());
+                        }*/
+
+
+//                    batchNumber = listpeople.get(postion).getGoodsInInfoId();
+//                    batchName = listpeople.get(postion).getBatchname();
+                    String batch = "";
+                    String strnum = "";
+//                Integer.parseInt(et_flsl.getText().toString())  总量
+//                        listpeople
+                    int nums = Integer.parseInt(et_flsl.getText().toString());
+                    for (int p = 0; p < listpeople.size(); p++)
+                    {
+                        if (!listpeople.get(p).getThree().equals(""))
+                        {
+                            if (Integer.parseInt(listpeople.get(p).getThreeNum()) > nums)
+                            {
+                                strnum += nums + ",";
+                                batch += listpeople.get(p).getGoodsInInfoId() + ",";
+                                break;
+                            } else
+                            {
+                                nums = nums - Integer.parseInt(listpeople.get(p).getThreeNum());
+                                strnum += listpeople.get(p).getThreeNum() + ",";
+                                batch += listpeople.get(p).getGoodsInInfoId() + ",";
+                            }
+                        } else if (!listpeople.get(p).getSec().equals("")&&listpeople.get(p).getThree().equals(""))
+                        {
+                            if (Integer.parseInt(listpeople.get(p).getSecNum()) > nums)
+                            {
+                                strnum += nums + ",";
+                                batch += listpeople.get(p).getGoodsInInfoId() + ",";
+                                break;
+                            } else
+                            {
+                                nums = nums - Integer.parseInt(listpeople.get(p).getSecNum());
+                                strnum += listpeople.get(p).getSecNum() + ",";
+                                batch += listpeople.get(p).getGoodsInInfoId() + ",";
+                            }
+                        } else
+                        {
+                            if (Integer.parseInt(listpeople.get(p).getFirsNum()) > nums)
+                            {
+                                strnum += nums + ",";
+                                batch += listpeople.get(p).getGoodsInInfoId() + ",";
+                                break;
+                            } else
+                            {
+                                nums = nums - Integer.parseInt(listpeople.get(p).getFirsNum());
+                                strnum += listpeople.get(p).getFirsNum() + ",";
+                                batch += listpeople.get(p).getGoodsInInfoId() + ",";
+                            }
+                        }
+
+                    }
+                    String a=strnum;
+                    String b=batch;
+
                     goodslisttab goodslisttab = (com.farm.bean.goodslisttab) v.getTag(R.id.tag_danwei);
                     Double acountnumber = 0d;
                     Double neednumber = 0d;
@@ -415,11 +488,13 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
                     currentgoods.setParkName(commembertab.getparkName());
                     currentgoods.setAreaId(commembertab.getareaId());
                     currentgoods.setAreaName(commembertab.getareaName());
-                    currentgoods.setYL(et_flsl.getText().toString());
+//                    currentgoods.setYL(et_flsl.getText().toString());//余量
+                    currentgoods.setYL(strnum);//余量
                     currentgoods.setDW(tv_dw.getText().toString());
                     currentgoods.setGX(x);
                     currentgoods.setZS(y);
-                    currentgoods.setgoodsNote(batchNumber);
+//                    currentgoods.setgoodsNote(batchNumber);//批次
+                    currentgoods.setgoodsNote(batch);//批次
 
                     currentgoods.setFirs(goodslisttab.getFirs());
                     currentgoods.setSec(goodslisttab.getSec());
@@ -451,7 +526,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
     }
 
 
-    public void showPop_title()
+/*    public void showPop_title()
     {//LAYOUT_INFLATER_SERVICE
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         pv_tab = layoutInflater.inflate(R.layout.popup_yq, null);// 外层
@@ -518,7 +593,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
 
             }
         });
-    }
+    }*/
 
     //
     private void getlistdata(String goodsId)
@@ -568,18 +643,19 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
 
                         listpeople = new ArrayList<PG_CKDWbean>();
                         listpeople.addAll(listNewData);
-/*                        batchNumber = listNewData.get(0).getGoodsInInfoId();
+
+       /*                 batchNumber = listNewData.get(0).getGoodsInInfoId();
                         batchName = listNewData.get(0).getBatchname();
                         if(!listNewData.get(0).getThree().equals(""))
                         {
-                            storehouse.setText("第1批次:" +listNewData.get(0).getThreeNum()+listNewData.get(0).getThree());
+//                            storehouse.setText("第1批次:" +listNewData.get(0).getThreeNum()+listNewData.get(0).getThree());
                             number=Integer.parseInt(listNewData.get(0).getThreeNum());
                         }else if(listNewData.get(0).getThree().equals("")&&!listNewData.get(0).getSec().equals(""))
                         {
-                            storehouse.setText("第1批次:" +listNewData.get(0).getSecNum()+listNewData.get(0).getSec());
+//                            storehouse.setText("第1批次:" +listNewData.get(0).getSecNum()+listNewData.get(0).getSec());
                             number=Integer.parseInt(listNewData.get(0).getSecNum());
                         }else {
-                            storehouse.setText("第1批次:" +listNewData.get(0).getFirsNum()+listNewData.get(0).getFirs());
+//                            storehouse.setText("第1批次:" +listNewData.get(0).getFirsNum()+listNewData.get(0).getFirs());
                             number=Integer.parseInt(listNewData.get(0).getFirsNum());
                         }*/
 

@@ -6,33 +6,46 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dip"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="25dip"
         android:layout_marginRight="25dip"
         android:layout_marginTop="5dip"
         android:background="@drawable/background_view_rounded_single">
-
         <TextView
-            android:id="@+id/goodsname"
-            android:layout_width="60dip"
-            android:layout_height="match_parent"
+            android:layout_marginLeft="5dip"
+            android:id="@+id/batchnums"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="钾肥"
             android:textColor="@color/bg_text"
-            android:textSize="16sp"/>
+            android:textSize="15sp"/>
+        <TextView
+            android:layout_marginTop="2dip"
+            android:layout_marginLeft="10dip"
+            android:layout_toRightOf="@+id/batchnums"
+            android:id="@+id/goodsname"
+            android:layout_width="120dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="钾肥"
+            android:textColor="@color/bg_text"
+            android:textSize="15sp"/>
 
         <TextView
+            android:layout_marginLeft="10dip"
             android:id="@+id/inGoodsvalue"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="10dip"
             android:layout_toRightOf="@+id/goodsname"
             android:gravity="center"
             android:text="10包"
             android:textColor="@color/gray"
-            android:textSize="16sp"/>
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/local"

@@ -46,6 +46,18 @@ public class PG_WZckbean implements Parcelable
     public String three;
     public String threeNum;
     public String goodsOutNote;
+    public String batchName;
+
+
+    public String getBatchName()
+    {
+        return batchName;
+    }
+
+    public void setBatchName(String batchName)
+    {
+        this.batchName = batchName;
+    }
 
     public String getGoodsName() {
         return goodsName;
@@ -225,6 +237,7 @@ public class PG_WZckbean implements Parcelable
             p.setThree(source.readString());
             p.setThreeNum(source.readString());
             p.setGoodsOutNote(source.readString());
+            p.setBatchName(source.readString());
             return p;
         }
 
@@ -256,6 +269,7 @@ public class PG_WZckbean implements Parcelable
         p.writeString(three);
         p.writeString(threeNum);
         p.writeString(goodsOutNote);
+        p.writeString(batchName);
     }
 
     @Override
