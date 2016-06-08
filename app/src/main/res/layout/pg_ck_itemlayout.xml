@@ -7,7 +7,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dip"
-        android:layout_margin="15dip"
+        android:layout_marginLeft="25dip"
+        android:layout_marginRight="25dip"
+        android:layout_marginTop="5dip"
         android:background="@drawable/background_view_rounded_single">
         <TextView
             android:id="@+id/batchnums"

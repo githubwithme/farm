@@ -6,7 +6,8 @@
     <RelativeLayout
         android:id="@+id/meadiaChooserHeaderBar"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/color_topbar"
         android:layout_alignParentTop="true" >
 
         <ImageView
@@ -19,7 +20,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:scaleType="centerInside"
-            android:src="@drawable/back"
+            android:src="@drawable/ic_back"
             android:visibility="visible" />
 
         <TextView
@@ -29,6 +30,8 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:text="@string/video"
+            android:textSize="16sp"
+            android:layout_toRightOf="@+id/backArrowImageViewFromMediaChooserHeaderView"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
@@ -48,11 +51,12 @@
 
         <ImageView
             android:id="@+id/cameraImageViewFromMediaChooserHeaderBar"
-            android:layout_width="32dp"
-            android:layout_height="24dp"
+            android:layout_width="25dp"
+            android:layout_height="20dp"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
+            android:background="@mipmap/icon_camara"
             android:layout_toLeftOf="@id/doneImageViewFromMediaChooserHeaderView"
             android:adjustViewBounds="true"
             android:contentDescription="@null"
