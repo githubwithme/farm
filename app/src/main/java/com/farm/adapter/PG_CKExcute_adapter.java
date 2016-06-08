@@ -77,6 +77,7 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
         public TextView local;
         public TextView quantity;
         public TextView inGoodsvalue;
+        public TextView batchnums;
     }
 
     //设置子item的组件
@@ -103,6 +104,7 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
             listItemView.goodsname = (TextView) convertView.findViewById(R.id.goodsname);
             listItemView.local = (TextView) convertView.findViewById(R.id.local);
             listItemView.inGoodsvalue = (TextView) convertView.findViewById(R.id.inGoodsvalue);
+            listItemView.batchnums = (TextView) convertView.findViewById(R.id.batchnums);
             convertView.setTag(listItemView);
             convertView.setOnClickListener(new View.OnClickListener()
             {
@@ -127,6 +129,7 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
             }
 
             //数据添加
+            listItemView.batchnums.setText("批次号:"+batchname);
             listItemView.goodsname.setText(pg_wZckbean.getGoodsName());
             listItemView.local.setText("出库位置:" + pg_wZckbean.getParkName() + "-" + pg_wZckbean.getStoreName());
             if (!pg_wZckbean.getThree().equals(""))

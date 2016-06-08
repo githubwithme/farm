@@ -169,60 +169,113 @@ public class PG_CK extends Activity
             Toast.makeText(PG_CK.this, "请选择物资及数量!", Toast.LENGTH_SHORT).show();
         } else
         {
+
             for (int i = 0; i < list_goodslisttab.size(); i++)
             {
 
-                pg_ckBean = new PG_CKBean();
-                pg_ckBean.setUid(commembertab.getuId());
-                pg_ckBean.setGoodsTypeId(list_goodslisttab.get(i).getGX());
-                pg_ckBean.setUserDefTypeId(list_goodslisttab.get(i).getZS());
-                pg_ckBean.setGoodsId(list_goodslisttab.get(i).getId());
-                pg_ckBean.setStorehouseId(id);
-                pg_ckBean.setGoodsInInfoRKId(list_goodslisttab.get(i).getgoodsNote());
-
-                if (list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getFirs()))
+                String [] danwei=  list_goodslisttab.get(i).getgoodsNote().split(",");
+                String [] nums= list_goodslisttab.get(i).getYL().split(",");
+                if(danwei.length>1)
                 {
-                    pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
-                    pg_ckBean.setFirsNum(list_goodslisttab.get(i).getYL());
-                    pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
-                    pg_ckBean.setSecNum("0");
-                    pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
-                    pg_ckBean.setThreeNum("0");
-                } else if (list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getSec()))
+                    for (int h=0;h<danwei.length;h++)
+                    {
+                        pg_ckBean = new PG_CKBean();
+                        pg_ckBean.setUid(commembertab.getuId());
+                        pg_ckBean.setGoodsTypeId(list_goodslisttab.get(i).getGX());
+                        pg_ckBean.setUserDefTypeId(list_goodslisttab.get(i).getZS());
+                        pg_ckBean.setGoodsId(list_goodslisttab.get(i).getId());
+                        pg_ckBean.setStorehouseId(id);
+                        pg_ckBean.setGoodsInInfoRKId(danwei[h]);
+
+                        if (list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getFirs()))
+                        {
+                            pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
+                            pg_ckBean.setFirsNum(nums[h]);
+                            pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
+                            pg_ckBean.setSecNum("0");
+                            pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
+                            pg_ckBean.setThreeNum("0");
+                        } else if (list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getSec()))
+                        {
+
+                            int x = Integer.parseInt(nums[h]);
+                            int y = Integer.parseInt(list_goodslisttab.get(i).getSecNum());
+                            int k = x / y;
+                            pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
+                            pg_ckBean.setFirsNum(k + "");
+
+                            pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
+                            pg_ckBean.setSecNum(nums[h]);
+                            pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
+                            pg_ckBean.setThreeNum("0");
+                        } else
+                        {
+                            int a = Integer.parseInt(nums[h]);
+                            int b = Integer.parseInt(list_goodslisttab.get(i).getSecNum());
+                            int c = Integer.parseInt(list_goodslisttab.get(i).getThreeNum());
+                            int k = a / c;
+                            int j = k / b;
+                            pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
+                            pg_ckBean.setFirsNum(j + "");
+
+                            pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
+                            pg_ckBean.setSecNum(k + "");
+                            pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
+                            pg_ckBean.setThreeNum(nums[h]);
+                        }
+                        data.add(pg_ckBean);
+                    }
+
+                }else
                 {
+                    pg_ckBean = new PG_CKBean();
+                    pg_ckBean.setUid(commembertab.getuId());
+                    pg_ckBean.setGoodsTypeId(list_goodslisttab.get(i).getGX());
+                    pg_ckBean.setUserDefTypeId(list_goodslisttab.get(i).getZS());
+                    pg_ckBean.setGoodsId(list_goodslisttab.get(i).getId());
+                    pg_ckBean.setStorehouseId(id);
+                    pg_ckBean.setGoodsInInfoRKId(danwei[0]);
 
-                    int x = Integer.parseInt(list_goodslisttab.get(i).getYL());
-                    int y = Integer.parseInt(list_goodslisttab.get(i).getSecNum());
-                    int k = x / y;
-                    pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
-                    pg_ckBean.setFirsNum(k + "");
+                    if (list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getFirs()))
+                    {
+                        pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
+                        pg_ckBean.setFirsNum(nums[0]);
+                        pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
+                        pg_ckBean.setSecNum("0");
+                        pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
+                        pg_ckBean.setThreeNum("0");
+                    } else if (list_goodslisttab.get(i).getDW().equals(list_goodslisttab.get(i).getSec()))
+                    {
 
-                    pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
-                    pg_ckBean.setSecNum(list_goodslisttab.get(i).getYL());
-                    pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
-                    pg_ckBean.setThreeNum("0");
-                } else
-                {
-                    int a = Integer.parseInt(list_goodslisttab.get(i).getYL());
-                    int b = Integer.parseInt(list_goodslisttab.get(i).getSecNum());
-                    int c = Integer.parseInt(list_goodslisttab.get(i).getThreeNum());
-                    int k = a / c;
-                    int j = k / b;
-                    pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
-                    pg_ckBean.setFirsNum(j + "");
+                        int x = Integer.parseInt(nums[0]);
+                        int y = Integer.parseInt(list_goodslisttab.get(i).getSecNum());
+                        int k = x / y;
+                        pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
+                        pg_ckBean.setFirsNum(k + "");
 
-                    pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
-                    pg_ckBean.setSecNum(k + "");
-                    pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
-                    pg_ckBean.setThreeNum(list_goodslisttab.get(i).getYL());
+                        pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
+                        pg_ckBean.setSecNum(nums[0]);
+                        pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
+                        pg_ckBean.setThreeNum("0");
+                    } else
+                    {
+                        int a = Integer.parseInt(nums[0]);
+                        int b = Integer.parseInt(list_goodslisttab.get(i).getSecNum());
+                        int c = Integer.parseInt(list_goodslisttab.get(i).getThreeNum());
+                        int k = a / c;
+                        int j = k / b;
+                        pg_ckBean.setFirs(list_goodslisttab.get(i).getFirs());
+                        pg_ckBean.setFirsNum(j + "");
+
+                        pg_ckBean.setSec(list_goodslisttab.get(i).getSec());
+                        pg_ckBean.setSecNum(k + "");
+                        pg_ckBean.setThree(list_goodslisttab.get(i).getThree());
+                        pg_ckBean.setThreeNum(nums[0]);
+                    }
+                    data.add(pg_ckBean);
                 }
-
-
-    /*         pg_ckBean.setGoodsSum(list_goodslisttab.get(i).getYL());
-             pg_ckBean.setGoodsDw(list_goodslisttab.get(i).getDW());*/
-
-                data.add(pg_ckBean);
             }
+            //nums[]  list_goodslisttab.get(i).getYL()
             pgBean = new PGBean();
             pgBean.setUserId(commembertab.getId());
             pgBean.setUid(commembertab.getuId());
