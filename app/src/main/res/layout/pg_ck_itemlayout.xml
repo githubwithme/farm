@@ -9,8 +9,18 @@
         android:layout_height="45dip"
         android:layout_margin="15dip"
         android:background="@drawable/background_view_rounded_single">
-
         <TextView
+            android:id="@+id/batchnums"
+            android:layout_width="60dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="钾肥"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_marginLeft="10dip"
+            android:layout_toRightOf="@+id/batchnums"
             android:id="@+id/goodsname"
             android:layout_width="60dip"
             android:layout_height="match_parent"
