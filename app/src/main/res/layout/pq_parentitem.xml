@@ -3,19 +3,31 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/groupExpand"
         android:layout_width="match_parent"
         android:layout_height="50dip">
         <TextView
-            android:layout_marginLeft="10dip"
+            android:background="@drawable/background_view_rounded_single"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dip"
             android:textSize="15dip"
             android:id="@+id/tv_park"
             android:gravity="center"
             android:text="片区"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
+        <TextView
+            android:layout_toLeftOf="@+id/btn_bianjie"
+            android:background="@drawable/background_view_rounded_single"
+            android:textSize="15dip"
+            android:id="@+id/tv_nums"
+            android:gravity="center"
+            android:text="片区"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
         <Button
+            android:layout_toLeftOf="@+id/ic_up"
             android:text="编辑"
             android:layout_marginLeft="10dip"
             android:id="@+id/btn_bianjie"
@@ -23,6 +35,15 @@
             android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="50dip" />
-    </LinearLayout>
+        <ImageView
+            android:layout_marginRight="15dip"
+            android:layout_alignParentRight="true"
+            android:id="@+id/ic_up"
+            android:layout_marginTop="15dip"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:background="@mipmap/dl_ic_down"
+            android:contentDescription=""/>
+    </RelativeLayout>
 
 </LinearLayout>

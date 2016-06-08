@@ -34,7 +34,7 @@ import java.util.Map;
 public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 {
     CZ_GV_Adapter cz_gv_adapter;
-//    private SimpleAdapter sim_adapter;
+    //    private SimpleAdapter sim_adapter;
     TextView currentTextView;
     CustomDialog_ListView customDialog_listView;
     private int currentItem = 0;
@@ -44,12 +44,14 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
     private GoodsAdapter adapter;
     List<BatchTime> listData;
     ListView list;
+
     public NCZ_DLExecute_Adapter(Context context, List<BatchTime> listData, ExpandableListView mainlistview)
     {
         this.mainlistview = mainlistview;
         this.listData = listData;
         this.context = context;
     }
+
     //得到子item需要关联的数据
     @Override
     public Object getChild(int groupPosition, int childPosition)
@@ -66,19 +68,21 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
     {
         public GridView gridView;
     }
+
     //得到子item的ID
     @Override
     public long getChildId(int groupPosition, int childPosition)
     {
         return childPosition;
     }
+
     HashMap<Integer, HashMap<Integer, View>> lmap = new HashMap<Integer, HashMap<Integer, View>>();
     HashMap<Integer, View> map = new HashMap<>();
     ListItemView listItemView = null;
 
     //设置子item的组件
     @Override
-    public View getChildView( int groupPosition,  int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
         List<BreakOff_New> childData = listData.get(groupPosition).getBreakOffList();
@@ -99,9 +103,11 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
             listItemView.gridView = (GridView) convertView.findViewById(R.id.gridView);
 
             convertView.setTag(listItemView);
-            convertView.setOnClickListener(new View.OnClickListener() {
+            convertView.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
       /*              Intent intent = new Intent(context, NCZ_WZ_RKDetail_.class);
                     intent.putExtra("wz_rKxx", wz_rKxx);
                     intent.putExtra("batchname", batchname);
@@ -119,7 +125,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 
             //数据添加
 //            listItemView.goodsname.setText(wz_rKxx.getGoodsname());
-            cz_gv_adapter=new CZ_GV_Adapter(context,childData);
+            cz_gv_adapter = new CZ_GV_Adapter(context, childData);
             listItemView.gridView.setAdapter(cz_gv_adapter);
 //            utils.getGridViewHeight(listItemView.gridView);
 
@@ -148,6 +154,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 //        mainlistview  WZ_RKExecute_Adapter
 
     }
+
     public void onGroupCollapsed(int groupPosition)
     {
         super.onGroupCollapsed(groupPosition);
@@ -165,6 +172,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 //        return listData.get(groupPosition).getWzcrkxx().size();
         return 1;
     }
+
     //获取当前父item的数据
     @Override
     public Object getGroup(int groupPosition)
@@ -177,6 +185,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
     {
         return listData.size();
     }
+
     @Override
     public long getGroupId(int groupPosition)
     {
@@ -186,7 +195,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 
     //设置父item组件
     @Override
-    public View getGroupView(final int groupPosition,final boolean isExpanded, View convertView, ViewGroup parent)
+    public View getGroupView(final int groupPosition, final boolean isExpanded, View convertView, ViewGroup parent)
     {
         if (convertView == null)
         {
@@ -196,14 +205,19 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
         TextView tv_park = (TextView) convertView.findViewById(R.id.tv_park);
         FrameLayout fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
         RelativeLayout rlstr = (RelativeLayout) convertView.findViewById(R.id.rlstr);
+        TextView tv_allnum = (TextView) convertView.findViewById(R.id.tv_allnum);
 
         convertView.setTag(R.id.tag_czdl, listData.get(groupPosition));
-        convertView.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                if (isExpanded) {
+            public void onClick(View view)
+            {
+                if (isExpanded)
+                {
                     mainlistview.collapseGroup(groupPosition);
-                } else {
+                } else
+                {
                     mainlistview.expandGroup(groupPosition);
                 }
                 BatchTime batchTime = (BatchTime) view.getTag(R.id.tag_czdl);
@@ -215,38 +229,60 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
 
             }
         });
+        int num=0;
+        if (listData.get(groupPosition).getBreakOffList().size() > 0)
+        {
+            for (int i = 0; i < listData.get(groupPosition).getBreakOffList().size(); i++)
+            {
+               num+=Integer.parseInt(listData.get(groupPosition).getBreakOffList().get(i).getnumberofbreakoff());
+            }
+        } else
+        {
 
-        tv_park.setText(listData.get(groupPosition).getBatchTime()+"    "+listData.get(groupPosition).getBatchColor()+"绳带");
-        if (listData.get(groupPosition).getBatchColor().equals("红色")) {
+        }
+        tv_allnum.setText(num+"");
+        tv_park.setText(listData.get(groupPosition).getBatchTime() + "    " + listData.get(groupPosition).getBatchColor() + "绳带");
+        if (listData.get(groupPosition).getBatchColor().equals("红色"))
+        {
 //            view.setBackgroundColor(Color.parseColor("#365663"));
 //            rl_color.setBackground(R.color.red);
             tv_park.setBackgroundColor(Color.parseColor("#ff4444"));
+            tv_allnum.setBackgroundColor(Color.parseColor("#ff4444"));
             rlstr.setBackgroundColor(Color.parseColor("#ff4444"));
-        } else if (listData.get(groupPosition).getBatchColor().equals("蓝色")) {
+        } else if (listData.get(groupPosition).getBatchColor().equals("蓝色"))
+        {
 
             tv_park.setBackgroundColor(Color.parseColor("#add8e6"));
+            tv_allnum.setBackgroundColor(Color.parseColor("#add8e6"));
             rlstr.setBackgroundColor(Color.parseColor("#add8e6"));
-        } else if (listData.get(groupPosition).getBatchColor().equals("绿色")) {
+        } else if (listData.get(groupPosition).getBatchColor().equals("绿色"))
+        {
 
             tv_park.setBackgroundColor(Color.parseColor("#90ee90"));
+            tv_allnum.setBackgroundColor(Color.parseColor("#90ee90"));
             rlstr.setBackgroundColor(Color.parseColor("#90ee90"));
-        } else if (listData.get(groupPosition).getBatchColor().equals("紫色")){
+        } else if (listData.get(groupPosition).getBatchColor().equals("紫色"))
+        {
             tv_park.setBackgroundColor(Color.parseColor("#d8bfd8"));
+            tv_allnum.setBackgroundColor(Color.parseColor("#d8bfd8"));
             rlstr.setBackgroundColor(Color.parseColor("#d8bfd8"));
-        }else {
+        } else
+        {
             tv_park.setBackgroundColor(Color.parseColor("#ffff00"));
+            tv_allnum.setBackgroundColor(Color.parseColor("#ffff00"));
             rlstr.setBackgroundColor(Color.parseColor("#ffff00"));
         }
 
         if (listData.get(groupPosition).getFlashStr().equals("0"))
         {
             fl_new_item.setVisibility(View.INVISIBLE);
-        }else
+        } else
         {
             fl_new_item.setVisibility(View.VISIBLE);
         }
         return convertView;
     }
+
     @Override
     public boolean hasStableIds()
     {

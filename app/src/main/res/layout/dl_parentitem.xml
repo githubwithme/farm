@@ -54,6 +54,19 @@
                 android:text="片区"
                 android:textSize="@dimen/text_size_15"/>
 
+
+
+            <TextView
+                android:layout_marginRight="10dip"
+                android:layout_toLeftOf="@+id/ic_up"
+                android:id="@+id/tv_allnum"
+                android:layout_width="wrap_content"
+                android:layout_height="50dip"
+                android:background="@drawable/background_view_rounded_single"
+                android:gravity="center"
+                android:text="数量未知"
+                android:textSize="@dimen/text_size_14"/>
+
             <ImageView
                 android:layout_marginRight="10dip"
                 android:layout_alignParentRight="true"

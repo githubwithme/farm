@@ -12,6 +12,7 @@ import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -185,34 +186,61 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
         }
         TextView tv_park = (TextView) convertView.findViewById(R.id.tv_park);
         Button btn_bianjie = (Button) convertView.findViewById(R.id.btn_bianjie);
-        LinearLayout groupExpand = (LinearLayout) convertView.findViewById(R.id.groupExpand);
+        TextView tv_nums = (TextView) convertView.findViewById(R.id.tv_nums);
+        RelativeLayout groupExpand = (RelativeLayout) convertView.findViewById(R.id.groupExpand);
         tv_park.setText(listData.get(groupPosition).getBatchTime() + "   " + listData.get(groupPosition).getBatchColor()+"绳带");
         if (listData.get(groupPosition).getBatchColor().equals("红色")) {
 //            view.setBackgroundColor(Color.parseColor("#365663"));
 //            rl_color.setBackground(R.color.red);
             groupExpand.setBackgroundColor(Color.parseColor("#ff4444"));
+            tv_park.setBackgroundColor(Color.parseColor("#ff4444"));
+            tv_nums.setBackgroundColor(Color.parseColor("#ff4444"));
         } else if (listData.get(groupPosition).getBatchColor().equals("蓝色")) {
 
             groupExpand.setBackgroundColor(Color.parseColor("#add8e6"));
+            tv_nums.setBackgroundColor(Color.parseColor("#add8e6"));
+            tv_park.setBackgroundColor(Color.parseColor("#add8e6"));
         } else if (listData.get(groupPosition).getBatchColor().equals("绿色")) {
 
             groupExpand.setBackgroundColor(Color.parseColor("#90ee90"));
+            tv_nums.setBackgroundColor(Color.parseColor("#90ee90"));
+            tv_park.setBackgroundColor(Color.parseColor("#90ee90"));
         } else if (listData.get(groupPosition).getBatchColor().equals("紫色")){
 
             groupExpand.setBackgroundColor(Color.parseColor("#d8bfd8"));
+            tv_nums.setBackgroundColor(Color.parseColor("#d8bfd8"));
+            tv_park.setBackgroundColor(Color.parseColor("#d8bfd8"));
         }else{
             groupExpand.setBackgroundColor(Color.parseColor("#ffff00"));
+            tv_nums.setBackgroundColor(Color.parseColor("#ffff00"));
+            tv_park.setBackgroundColor(Color.parseColor("#ffff00"));
         }
-        groupExpand.setOnClickListener(new View.OnClickListener() {
+        groupExpand.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                if (isExpanded) {
+            public void onClick(View v)
+            {
+                if (isExpanded)
+                {
                     mainlistview.collapseGroup(groupPosition);
-                } else {
+                } else
+                {
                     mainlistview.expandGroup(groupPosition);
                 }
             }
         });
+        int num=0;
+        if (listData.get(groupPosition).getBreakOffList().size() > 0)
+        {
+            for (int i = 0; i < listData.get(groupPosition).getBreakOffList().size(); i++)
+            {
+                num+=Integer.parseInt(listData.get(groupPosition).getBreakOffList().get(i).getnumberofbreakoff());
+            }
+        } else
+        {
+
+        }
+        tv_nums.setText(num + "");
         btn_bianjie.setTag(R.id.tag_text, batchTime);
         btn_bianjie.setOnClickListener(new View.OnClickListener() {
             @Override
