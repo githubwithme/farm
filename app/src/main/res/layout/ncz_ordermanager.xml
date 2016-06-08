@@ -43,16 +43,6 @@
             android:textColor="@color/bg_text"
             android:textSize="@dimen/size_sp_16"/>
 
-        <TextView
-            android:id="@+id/tv_allorder"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/tv_notpay"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="全部订单"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_dealing"
@@ -63,6 +53,17 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="交易中"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_sp_16"/>
+
+        <TextView
+            android:id="@+id/tv_allorder"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/tv_notpay"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="全部订单"
             android:textColor="@color/bg_text"
             android:textSize="@dimen/size_sp_16"/>
     </LinearLayout>

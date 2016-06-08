@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,12 +18,10 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.FJxx;
-import com.farm.bean.PlantGcd;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
 import com.farm.ui.Event_Process_;
-import com.farm.ui.RecordList_;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +31,8 @@ import java.util.List;
  * Created by user on 2016/4/11.
  */
 @SuppressLint("NewApi")
-public class PG_ReportedAdapter extends BaseAdapter {
+public class PG_ReportedAdapter extends BaseAdapter
+{
     private Context context;// 运行上下文
     private List<ReportedBean> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
@@ -45,6 +45,7 @@ public class PG_ReportedAdapter extends BaseAdapter {
         public TextView tv_qyts;
         public TextView tv_qx;
         public TextView tv_clqk;
+        public Button btn_dealevent;
         public ImageView circle_img;
         public ImageView iv_record;
         public FrameLayout rl_record;
@@ -80,8 +81,8 @@ public class PG_ReportedAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent)
     {
         ReportedBean = listItems.get(position);
-        fJxx=new ArrayList<FJxx>();
-        fJxx=ReportedBean.getFjxx();
+        fJxx = new ArrayList<FJxx>();
+        fJxx = ReportedBean.getFjxx();
         // 自定义视图
         ListItemView listItemView = null;
         if (lmap.get(position) == null)
@@ -100,12 +101,28 @@ public class PG_ReportedAdapter extends BaseAdapter {
             listItemView.tv_qx = (TextView) convertView.findViewById(R.id.tv_qx);
             listItemView.tv_cmdname = (TextView) convertView.findViewById(R.id.tv_cmdname);
             listItemView.tv_clqk = (TextView) convertView.findViewById(R.id.tv_clqk);
+            listItemView.btn_dealevent = (Button) convertView.findViewById(R.id.btn_dealevent);
 
 
             listItemView.iv_record.setId(position);
-            listItemView.iv_record.setOnClickListener(new View.OnClickListener() {
+            listItemView.iv_record.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
+                    ReportedBean reportedBean = listItems.get(v.getId());
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    Intent intent = new Intent(context, Event_Process_.class);
+                    intent.putExtra("event", reportedBean);
+                    context.startActivity(intent);
+                }
+            });
+            listItemView.btn_dealevent.setId(position);
+            listItemView.btn_dealevent.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
                     ReportedBean reportedBean = listItems.get(v.getId());
                     commembertab commembertab = AppContext.getUserInfo(context);
                     Intent intent = new Intent(context, Event_Process_.class);
@@ -115,15 +132,18 @@ public class PG_ReportedAdapter extends BaseAdapter {
             });
             listItemView.circle_img.setTag(R.id.tag_eventlisttp, fJxx);
 
-            if (!fJxx.equals("")&& fJxx.size()>0)
+            if (!fJxx.equals("") && fJxx.size() > 0)
             {
-             for(int i=0;i<fJxx.size();i++) {
-                 if (fJxx.get(i).getFJLX().equals("1")) {
-                     BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(i).getLSTLJ());
-                     break;
-                 }
-             }
-            }else{
+                for (int i = 0; i < fJxx.size(); i++)
+                {
+                    if (fJxx.get(i).getFJLX().equals("1"))
+                    {
+                        BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(i).getLSTLJ());
+                        break;
+                    }
+                }
+            } else
+            {
                 Bitmap rawBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.noimg);
                 listItemView.circle_img.setImageBitmap(rawBitmap);
             }
@@ -135,20 +155,23 @@ public class PG_ReportedAdapter extends BaseAdapter {
         {
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
-            List<FJxx> data=new ArrayList<FJxx>();
-            data= (List<FJxx>) listItemView.circle_img.getTag(R.id.tag_eventlisttp);
+            List<FJxx> data = new ArrayList<FJxx>();
+            data = (List<FJxx>) listItemView.circle_img.getTag(R.id.tag_eventlisttp);
 
 
-            if (!fJxx.equals("")&& fJxx.size()>0)
+            if (!fJxx.equals("") && fJxx.size() > 0)
             {
 //                BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(0).getLSTLJ());
-                for(int i=0;i<fJxx.size();i++) {
-                    if (fJxx.get(i).getFJLX().equals("1")) {
+                for (int i = 0; i < fJxx.size(); i++)
+                {
+                    if (fJxx.get(i).getFJLX().equals("1"))
+                    {
                         BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fJxx.get(i).getLSTLJ());
                         break;
                     }
                 }
-            }else{
+            } else
+            {
                 Bitmap rawBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.noimg);
                 listItemView.circle_img.setImageBitmap(rawBitmap);
             }
@@ -157,32 +180,32 @@ public class PG_ReportedAdapter extends BaseAdapter {
         // 设置文字和图片
 
 //        listItemView.tv_clqk.setText(ReportedBean.getState());
-        if(ReportedBean.getState().equals("0"))
+        if (ReportedBean.getState().equals("0"))
         {
             listItemView.tv_clqk.setText("未处理");
-        }else if(ReportedBean.getState().equals("1"))
+        } else if (ReportedBean.getState().equals("1"))
         {
             listItemView.tv_clqk.setText("待处理");
-        }else
+        } else
         {
             listItemView.tv_clqk.setText("已处理");
         }
 
         listItemView.tv_cmdname.setText(ReportedBean.getEventType());
         listItemView.tv_qx.setText(ReportedBean.getReporTime());
-        String x=ReportedBean.getIsflashStr();
-        String y=ReportedBean.getResultflashStr();
+        String x = ReportedBean.getIsflashStr();
+        String y = ReportedBean.getResultflashStr();
         if (ReportedBean.getIsflashStr().equals("1"))
         {
             listItemView.fl_new_item.setVisibility(View.VISIBLE);
-        }else
+        } else
         {
             listItemView.fl_new_item.setVisibility(View.GONE);
         }
         if (ReportedBean.getResultflashStr().equals("1"))
         {
             listItemView.fl_new.setVisibility(View.VISIBLE);
-        }else
+        } else
         {
             listItemView.fl_new.setVisibility(View.GONE);
         }

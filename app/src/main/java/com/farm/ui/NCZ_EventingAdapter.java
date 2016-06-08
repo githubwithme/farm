@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +20,6 @@ import com.farm.bean.ReportedBean;
 import com.farm.bean.commembertab;
 import com.farm.common.BitmapHelper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +40,7 @@ public class NCZ_EventingAdapter extends BaseAdapter
         public TextView tv_cmdname;
         public TextView tv_qyts;
         public TextView tv_qx;
+        public Button btn_dealevent;
         public TextView tv_clqk;
         public ImageView circle_img;
         public ImageView iv_record;
@@ -76,13 +77,13 @@ public class NCZ_EventingAdapter extends BaseAdapter
     public View getView(int position, View convertView, ViewGroup parent)
     {
         ReportedBean = listItems.get(position);
-        fJxx=ReportedBean.getFjxx();
+        fJxx = ReportedBean.getFjxx();
         // 自定义视图
         ListItemView listItemView = null;
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.listitem_event, null);
+            convertView = listContainer.inflate(R.layout.adapter_event_ncz, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
@@ -94,13 +95,29 @@ public class NCZ_EventingAdapter extends BaseAdapter
             listItemView.tv_qyts = (TextView) convertView.findViewById(R.id.tv_qyts);
             listItemView.tv_qx = (TextView) convertView.findViewById(R.id.tv_qx);
             listItemView.tv_cmdname = (TextView) convertView.findViewById(R.id.tv_cmdname);
+            listItemView.btn_dealevent = (Button) convertView.findViewById(R.id.btn_dealevent);
             listItemView.tv_clqk = (TextView) convertView.findViewById(R.id.tv_clqk);
 
 
             listItemView.iv_record.setId(position);
-            listItemView.iv_record.setOnClickListener(new View.OnClickListener() {
+            listItemView.iv_record.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
+                    ReportedBean reportedBean = listItems.get(v.getId());
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    Intent intent = new Intent(context, Event_Process_.class);
+                    intent.putExtra("event", reportedBean);
+                    context.startActivity(intent);
+                }
+            });
+            listItemView.btn_dealevent.setId(position);
+            listItemView.btn_dealevent.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
                     ReportedBean reportedBean = listItems.get(v.getId());
                     commembertab commembertab = AppContext.getUserInfo(context);
                     Intent intent = new Intent(context, Event_Process_.class);
@@ -123,24 +140,25 @@ public class NCZ_EventingAdapter extends BaseAdapter
         if (ReportedBean.getIsflashStr().equals("1"))
         {
             listItemView.fl_new_item.setVisibility(View.VISIBLE);
-        }else{
+        } else
+        {
             listItemView.fl_new_item.setVisibility(View.GONE);
         }
         if (ReportedBean.getResultflashStr().equals("1"))
         {
             listItemView.fl_new.setVisibility(View.VISIBLE);
-        }else
+        } else
         {
             listItemView.fl_new.setVisibility(View.GONE);
         }
 //        listItemView.tv_clqk.setText(ReportedBean.getState());
-        if(ReportedBean.getState().equals("0"))
+        if (ReportedBean.getState().equals("0"))
         {
             listItemView.tv_clqk.setText("未处理");
-        }else if(ReportedBean.getState().equals("1"))
+        } else if (ReportedBean.getState().equals("1"))
         {
             listItemView.tv_clqk.setText("处理中");
-        }else
+        } else
         {
             listItemView.tv_clqk.setText("已处理");
         }
@@ -149,10 +167,11 @@ public class NCZ_EventingAdapter extends BaseAdapter
         listItemView.tv_qx.setText(ReportedBean.getReporTime());
         listItemView.circle_img.setTag(R.id.tag_picture, fJxx);
 
-        List<FJxx> fjlist= (List<FJxx>) listItemView.circle_img.getTag(R.id.tag_picture);
-        if (!fjlist.equals("")&& fJxx.size()>0)
+        List<FJxx> fjlist = (List<FJxx>) listItemView.circle_img.getTag(R.id.tag_picture);
+        if (!fjlist.equals("") && fJxx.size() > 0)
         {
-            if(fjlist.get(0).getFJLX().equals("1")) {
+            if (fjlist.get(0).getFJLX().equals("1"))
+            {
 
                 BitmapHelper.setImageView(context, listItemView.circle_img, AppConfig.baseurl + fjlist.get(0).getLSTLJ());
             }

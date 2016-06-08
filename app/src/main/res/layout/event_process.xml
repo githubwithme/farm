@@ -36,29 +36,30 @@
 
             <Button
                 android:id="@+id/tv_bianjie"
-                android:layout_width="50dip"
-                android:layout_height="45dip"
-                android:layout_alignParentBottom="true"
+                android:layout_width="70dip"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:background="@drawable/background_view_rounded_single"
+                android:layout_marginRight="5dip"
+                android:background="@null"
                 android:gravity="center"
-                android:text="指派人"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"
-                android:visibility="gone"/>
+                android:text="指派处理"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="gone"
+                />
 
             <Button
                 android:id="@+id/tv_delete"
-                android:layout_width="50dip"
-                android:layout_height="45dip"
-                android:layout_alignParentBottom="true"
+                android:layout_width="70dip"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:background="@drawable/background_view_rounded_single"
+                android:background="@null"
                 android:gravity="center"
                 android:text="完成"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"
-                android:visibility="gone"/>
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="gone"
+                />
         </LinearLayout>
         />
 

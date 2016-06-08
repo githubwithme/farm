@@ -254,7 +254,14 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
 
         batchName.setText("出库批次号:" + listData.get(groupPosition).getBatchName());
 
-        inGoodsValue.setText(listData.get(groupPosition).getIsConfirm());
+        if (listData.get(groupPosition).getIsConfirm().equals("未确认"))
+        {
+            inGoodsValue.setText("未审批");
+        } else
+        {
+            inGoodsValue.setText("已审批");
+        }
+
         return convertView;
     }
 
