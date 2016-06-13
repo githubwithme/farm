@@ -39,6 +39,7 @@ public class Adapter_CreateSellOrderDetail_NCZ extends BaseAdapter
     {
         public TextView tv_area;
         public TextView tv_plannumber;
+        public TextView tv_batchtime;
 
         public TextView tv_yq;
         public TextView tv_pq;
@@ -81,6 +82,7 @@ public class Adapter_CreateSellOrderDetail_NCZ extends BaseAdapter
             // 获取控件对象
             listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
             listItemView.tv_plannumber = (TextView) convertView.findViewById(R.id.tv_plannumber);
+            listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -91,6 +93,7 @@ public class Adapter_CreateSellOrderDetail_NCZ extends BaseAdapter
         }
         // 设置文字和图片
         listItemView.tv_plannumber.setText(SellOrderDetail.getplannumber());
+        listItemView.tv_batchtime.setText(SellOrderDetail.getBatchTime());
         listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
         return convertView;
     }

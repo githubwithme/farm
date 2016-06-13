@@ -98,7 +98,7 @@
                             android:textSize="@dimen/size_14"/>
 
 
-                        <EditText
+                        <TextView
                             android:id="@+id/et_name"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -128,7 +128,7 @@
                             android:layout_height="match_parent"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*单价"
+                            android:text="*单价(元)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
@@ -203,7 +203,7 @@
                             android:textSize="@dimen/size_14"/>
 
 
-                        <EditText
+                        <TextView
                             android:id="@+id/et_values"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

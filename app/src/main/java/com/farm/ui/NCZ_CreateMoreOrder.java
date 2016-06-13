@@ -3,24 +3,33 @@ package com.farm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
+import com.farm.common.FileHelper;
 import com.farm.common.utils;
+import com.farm.widget.CustomDialog_ListView;
+import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -48,6 +57,9 @@ import java.util.List;
 @EActivity(R.layout.ncz_createorder)
 public class NCZ_CreateMoreOrder extends Activity
 {
+    MyDialog myDialog;
+    CustomDialog_ListView customDialog_listView;
+    String zzsl = "";
     String batchtime = "";
     List<SellOrderDetail_New> list_SellOrderDetail;
     Adapter_CreateSellOrderDetail_NCZ adapter_sellOrderDetail;
@@ -59,9 +71,9 @@ public class NCZ_CreateMoreOrder extends Activity
     @ViewById
     Button btn_sure;
     @ViewById
-    EditText et_values;
+    TextView et_values;
     @ViewById
-    EditText et_name;
+    TextView et_name;
     @ViewById
     EditText et_address;
     @ViewById
@@ -76,6 +88,48 @@ public class NCZ_CreateMoreOrder extends Activity
     EditText et_note;
     @ViewById
     TextView tv_allnumber;
+
+    List<Purchaser> listNewData = null;
+
+    @Click
+    void et_values()
+    {
+        if (et_price.getText().toString().equals(""))
+        {
+            Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写单价", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_weight.getText().toString().equals(""))
+        {
+            Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写重量", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        double ss = Double.valueOf(et_price.getText().toString()) * Double.valueOf(et_weight.getText().toString());
+        et_values.setText(ss+"");
+    }
+
+    @Click
+    void et_name()
+    {
+
+        listNewData = FileHelper.getAssetsData(NCZ_CreateMoreOrder.this, "getPurchaser", Purchaser.class);
+
+ /*       JSONObject jsonObject = utils.parseJsonFile(NCZ_CreateMoreOrder.this, "dictionary.json");
+        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("Happen"));
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < jsonArray.size(); i++)
+        {
+            list.add(jsonArray.getString(i));
+        }*/
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listNewData.size(); i++)
+        {
+            listdata.add(listNewData.get(i).getPurchaser());
+            listid.add(listNewData.get(i).getId());
+        }
+        showDialog_workday(listdata, listid);
+    }
 
     @Click
     void btn_sure()
@@ -116,6 +170,11 @@ public class NCZ_CreateMoreOrder extends Activity
             Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
+        //
+
+        SmsManager smsMessage = SmsManager.getDefault();
+        smsMessage.sendTextMessage(et_phone.getText().toString(), null, "单价:"+et_price.getText().toString()+"元,重量:"+et_weight.getText().toString()+"斤,总价:"+et_values.getText().toString()+"元", null, null);
+        //
         List<String> list_uuid = new ArrayList<>();
         String batchtime = "";
         String producer = "";
@@ -319,4 +378,31 @@ public class NCZ_CreateMoreOrder extends Activity
         });
     }
 
+    public void showDialog_workday(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) NCZ_CreateMoreOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(NCZ_CreateMoreOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                et_name.setText(zzsl);
+
+                for (int i = 0; i < listNewData.size(); i++)
+                {
+                    if (listNewData.get(i).getPurchaser().equals(zzsl))
+                    {
+                        et_phone.setText(listNewData.get(i).getPhone());
+                        et_address.setText(listNewData.get(i).getAddress());
+                        et_email.setText(listNewData.get(i).getEms());
+                    }
+                }
+
+
+            }
+        });
+        customDialog_listView.show();
+    }
 }
