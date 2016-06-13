@@ -142,7 +142,7 @@ public class NCZ_SaleChart extends Activity
             listitem.add(listNewData.get(i).getparkName());
         }
 
-        BarDataSet set1 = new BarDataSet(yVals1, "");
+        BarDataSet set1 = new BarDataSet(yVals1, "单位:株");
         set1.setColors(getColors());
         set1.setStackLabels(new String[]{"已售", "售中", "待售"});
 
@@ -150,6 +150,8 @@ public class NCZ_SaleChart extends Activity
         dataSets.add(set1);
 
         BarData cd = new BarData(listitem, set1);
+        cd.setValueTextSize(16);
+        cd.setValueTextColor(getResources().getColor(R.color.white));
 //        data.setValueFormatter(new MyValueFormatter());
 
 

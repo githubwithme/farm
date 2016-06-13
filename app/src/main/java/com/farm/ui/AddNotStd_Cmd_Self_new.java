@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_AddNotStd_Cmd_Self;
 import com.farm.bean.SelectCmdArea;
-import com.farm.bean.commandtab_single;
 import com.farm.bean.goodslisttab;
 import com.farm.bean.goodslisttab_flsl;
 import com.farm.com.custominterface.FragmentCallBack;
@@ -44,8 +43,8 @@ public class AddNotStd_Cmd_Self_new extends FragmentActivity implements Fragment
     ViewPagerAdapter_AddNotStd_Cmd_Self adapter;
     AddNotStd_Cmd_StepFirst addNotStd_cmd_stepFirst;
     AddStd_Cmd_Self_StepTwo addStd_cmd_self_stepTwo;
-//    AddStd_Cmd_StepFive addStd_cmd_stepFive;
-AddNotStd_Cmd_StepFive addStd_cmd_stepFive;
+    //    AddStd_Cmd_StepFive addStd_cmd_stepFive;
+    AddNotStd_Cmd_StepFive addStd_cmd_stepFive;
     AddNotStd_Cmd_StepSix_Self addStd_cmd_stepSix;
     private ArrayList<Fragment> fragmentList;
 
@@ -104,10 +103,10 @@ AddNotStd_Cmd_StepFive addStd_cmd_stepFive;
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self_new.this, goodslisttab_flsl.class);
 
         fragmentList = new ArrayList<Fragment>();
-        addNotStd_cmd_stepFirst=new AddNotStd_Cmd_StepFirst_();
+        addNotStd_cmd_stepFirst = new AddNotStd_Cmd_StepFirst_();
         addStd_cmd_self_stepTwo = new AddStd_Cmd_Self_StepTwo_();
 //        addStd_cmd_stepFive = new AddStd_Cmd_StepFive_();
-        addStd_cmd_stepFive =new AddNotStd_Cmd_StepFive_();
+        addStd_cmd_stepFive = new AddNotStd_Cmd_StepFive_();
         addStd_cmd_stepSix = new AddNotStd_Cmd_StepSix_Self_();
 
         fragmentList.add(addNotStd_cmd_stepFirst);
@@ -233,9 +232,11 @@ AddNotStd_Cmd_StepFive addStd_cmd_stepFive;
                 text_first.setClickable(true);
                 text_three.setClickable(true);
                 commandtab_single = com.farm.bean.commandtab_single.getInstance();
-                if (commandtab_single.getcommNote().equals("")) {
+                if (commandtab_single.getcommNote().equals(""))
+                {
                     Toast.makeText(AddNotStd_Cmd_Self_new.this, "必须完整填写指令内容！", Toast.LENGTH_SHORT).show();
-                } else {
+                } else
+                {
                     vPager.setIsScrollable(true);
                     vPager.setCurrentItem(currentItem + 1);
 
@@ -247,11 +248,11 @@ AddNotStd_Cmd_StepFive addStd_cmd_stepFive;
             case 1:
                 text_three.setClickable(true);
                 text_five.setClickable(true);
-                list_goodslisttab= SqliteDb.getSelectCmdArea(AddNotStd_Cmd_Self_new.this, goodslisttab.class);
-                if (list_goodslisttab.size()>0)
+                list_goodslisttab = SqliteDb.getSelectCmdArea(AddNotStd_Cmd_Self_new.this, goodslisttab.class);
+                if (list_goodslisttab.size() > 0)
                 {
                     vPager.setCurrentItem(currentItem + 1);
-                }else
+                } else
                 {
                     Toast.makeText(AddNotStd_Cmd_Self_new.this, "必须完整填写或者选择相应信息！", Toast.LENGTH_SHORT).show();
                 }
@@ -262,8 +263,8 @@ AddNotStd_Cmd_StepFive addStd_cmd_stepFive;
                 commandtab_single = com.farm.bean.commandtab_single.getInstance();
                 if (commandtab_single.getimportance().equals("") || commandtab_single.getcommComDate().equals("") || commandtab_single.getcommDays().equals(""))
                 {
-                    Toast.makeText(AddNotStd_Cmd_Self_new.this,"必须完整填写或者选择相应信息！",Toast.LENGTH_SHORT).show();
-                }else
+                    Toast.makeText(AddNotStd_Cmd_Self_new.this, "必须完整填写或者选择相应信息！", Toast.LENGTH_SHORT).show();
+                } else
                 {
                     vPager.setIsScrollable(true);
                     setMenuCliable();
@@ -297,6 +298,7 @@ AddNotStd_Cmd_StepFive addStd_cmd_stepFive;
         return false;
 
     }
+
     private void setMenuCliable()
     {
 
@@ -306,6 +308,7 @@ AddNotStd_Cmd_StepFive addStd_cmd_stepFive;
         text_six.setClickable(true);
 
     }
+
     private void setMenuUnCliable()
     {
 
@@ -314,6 +317,7 @@ AddNotStd_Cmd_StepFive addStd_cmd_stepFive;
         text_five.setClickable(false);
         text_six.setClickable(false);
     }
+
     private void showExistTip()
     {
         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);

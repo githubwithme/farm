@@ -184,12 +184,13 @@ public class DynamicFragment extends Fragment
                             listData.add(list.get(i));
                         }
                     }
+                    list = utils.BubbleSortArray(list);
                     Intent intent = new Intent();
                     intent.putExtra("Num", k + "");
                     intent.setAction(AppContext.BROADCAST_NCZ_DT);
                     getActivity().sendBroadcast(intent);
                     k = 0;
-                    adapter_dynamic = new Adapter_Dynamic(getActivity(), listData);
+                    adapter_dynamic = new Adapter_Dynamic(getActivity(), list);
                     lv.setAdapter(adapter_dynamic);
                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {
@@ -278,7 +279,7 @@ public class DynamicFragment extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                String a=msg;
+                String a = msg;
                 Toast.makeText(getActivity(), "连接服务器异常", Toast.LENGTH_SHORT).show();
 //                AppContext.makeToast(getActivity(), "error_connectServer");
 //                if (!ishidding && timethread != null)
