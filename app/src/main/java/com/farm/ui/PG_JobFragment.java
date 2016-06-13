@@ -482,7 +482,8 @@ public class PG_JobFragment extends Fragment implements View.OnClickListener
                 // return;
                 jobtab jobtab = listData.get(position - 1);
                 if (jobtab == null) return;
-                Intent intent = new Intent(getActivity(), Common_JobDetail_.class);
+//                Intent intent = new Intent(getActivity(), Common_JobDetail_.class);
+                Intent intent = new Intent(getActivity(), PG_jobDetailNew_.class);
                 intent.putExtra("bean", jobtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
             }

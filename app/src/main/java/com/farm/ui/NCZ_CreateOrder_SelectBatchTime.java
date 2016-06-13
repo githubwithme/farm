@@ -74,6 +74,7 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
         getBatchTimeByUid();
 //        getBatchTimeByUid_test();
 //        getNewSaleList_test();
+        deleNewSaleAddsalefor();
     }
 
     @Override
@@ -249,5 +250,45 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
         });
         myDialog.show();
     }
+    private void deleNewSaleAddsalefor()
+    {
+        commembertab commembertab = AppContext.getUserInfo(this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "deleNewSaleAddsalefor");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+               /* if (result.getAffectedRows() != 0)
+                {
+                    listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
+                } else
+                {
+                    listData = new ArrayList<SellOrder_New>();
+                }*/
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_CreateOrder_SelectBatchTime.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_CreateOrder_SelectBatchTime.this, "error_connectServer");
+
+            }
+        });
+    }
 }

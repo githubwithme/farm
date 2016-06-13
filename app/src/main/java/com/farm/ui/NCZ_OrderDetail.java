@@ -139,7 +139,7 @@ public class NCZ_OrderDetail extends Activity
         tv_name.setText(sellOrder.getBuyers());
         tv_planprice.setText(sellOrder.getPrice());
         tv_planweight.setText(sellOrder.getWeight());
-        tv_plansumvalues.setText(sellOrder.getBuyers());
+        tv_plansumvalues.setText(sellOrder.getSumvalues());
         tv_deposit.setText(sellOrder.getDeposit());
         tv_phone.setText(sellOrder.getPhone());
         tv_address.setText(sellOrder.getAddress());
