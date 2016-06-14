@@ -28,12 +28,12 @@
 
             <View
                 android:id="@+id/view"
-                android:layout_width="30dip"
-                android:layout_height="30dip"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dip"
-                android:background="@drawable/performance_calendar"/>
+                android:background="@drawable/downward"/>
 
             <TextView
                 android:id="@+id/tv_number"

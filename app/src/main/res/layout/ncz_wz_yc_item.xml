@@ -9,8 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dip"
-        android:layout_marginLeft="5dip"
+        android:layout_marginTop="10dip"
+        android:layout_marginLeft="10dip"
+        android:background="@color/white"
+        android:layout_marginRight="10dip"
         android:orientation="vertical">
 
         <LinearLayout
@@ -22,12 +24,11 @@
                 android:layout_height="30dip"
                 android:layout_gravity="center|left"
                 android:layout_marginLeft="10dip"
-                android:background="@drawable/background_view_rounded_single"
                 android:gravity="center"
                 android:minWidth="60dip"
                 android:text="钾肥"
                 android:textColor="@color/textcolor_titlebar"
-                android:textSize="@dimen/home_textsize_find"/>
+                android:textSize="16sp"/>
             <FrameLayout
                 android:layout_marginLeft="100dip"
                 android:visibility="gone"
@@ -64,7 +65,6 @@
 
 
             <TextView
-
                 android:id="@+id/local"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,18 +72,18 @@
                 android:layout_marginLeft="10dip"
                 android:gravity="center"
                 android:text="仓库"
-                android:textColor="@color/textcolor_titlebar"
+                android:textColor="@color/gray"
                 android:textSize="@dimen/home_textsize_find"/>
 
             <TextView
-                android:layout_toRightOf="@+id/local"
                 android:id="@+id/expdata"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="30dip"
-                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dip"
+               android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:text="过期"
-                android:textColor="@color/textcolor_titlebar"
+                android:textColor="@color/gray"
                 android:textSize="@dimen/home_textsize_find"/>
 
             <TextView

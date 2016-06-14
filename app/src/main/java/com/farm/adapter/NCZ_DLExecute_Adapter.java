@@ -1,7 +1,6 @@
 package com.farm.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -20,13 +18,10 @@ import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
 import com.farm.bean.BreakOff_New;
 import com.farm.bean.commembertab;
-import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by user on 2016/5/1.
@@ -240,7 +235,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
         {
 
         }
-        tv_allnum.setText(num+"");
+        tv_allnum.setText(num+"株");
         tv_park.setText(listData.get(groupPosition).getBatchTime() + "    " + listData.get(groupPosition).getBatchColor() + "绳带");
         if (listData.get(groupPosition).getBatchColor().equals("红色"))
         {

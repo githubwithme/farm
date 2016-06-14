@@ -202,7 +202,7 @@ public class Adapter_SelectBatchTime extends BaseExpandableListAdapter
 
             } else
             {
-                listItemView.tv_number.setText("待售" + batchTime.getAllsalefor());
+                listItemView.tv_number.setText("待售" + batchTime.getAllsalefor()+"株");
             }
 
         } else
@@ -321,7 +321,7 @@ public class Adapter_SelectBatchTime extends BaseExpandableListAdapter
             }
         } else
         {
-            tv_number.setText("总株树:" + parktab.getAllsalefor());
+            tv_number.setText("待售" + parktab.getAllsalefor()+"株");
         }
         return convertView;
     }
