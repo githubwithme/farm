@@ -309,7 +309,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dip"
-                    android:visibility="gone">
+                    >
 
                     <ImageView
                         android:id="@+id/iv_share"
