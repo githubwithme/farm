@@ -79,7 +79,7 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
     protected void onRestart()
     {
         super.onRestart();
-        deleNewSaleAddsalefor();
+
     }
 
     @Click
@@ -157,7 +157,6 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
 //        getBatchTimeByUid_test();
         getSaleDataOfArea();
         getNewSalelList();
-        deleNewSaleAddsalefor();
     }
 
     @Override

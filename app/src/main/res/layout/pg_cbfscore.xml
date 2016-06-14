@@ -2,23 +2,181 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:Android="http://schemas.android.com/tools"
               android:orientation="vertical">
 
-    <ListView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/color_topbar">
+
+        <ImageButton
+            android:id="@+id/imgbtn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/titlebar_height"
+            android:layout_marginLeft="5dip"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/ic_back"/>
+
+        <TextView
+
+            android:layout_centerInParent="true"
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/titlebar_height"
+            android:gravity="center"
+            android:text="承包户"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"/>
+
+
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/bg_yellow"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                Android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+
+                    android:gravity="center|left"
+                    android:text="领取物资"
+                    android:layout_width="100dip"
+                    android:layout_height="50dip"/>
+                <EditText
+                    android:gravity="center|right"
+                    android:hint="若无领取则不填"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <RadioGroup
+                android:id="@+id/rg_score"
+                android:layout_width="match_parent"
+                android:layout_height="60dip"
+                android:layout_below="@+id/ll_pfbz"
+                android:orientation="horizontal"
+                >
+
+                <RadioButton
+                    android:id="@+id/rb_y"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="优"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/size_12"/>
+
+                <RadioButton
+                    android:id="@+id/rb_hg"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="合格"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/size_12"/>
+
+                <RadioButton
+                    android:id="@+id/rb_bhg"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="不合格"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/size_12"/>
+            </RadioGroup>
+            <RelativeLayout
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_picture"
+                    android:layout_width="@dimen/width_colum"
+                    android:layout_height="100dip"
+                    android:gravity="left|center_vertical"
+                    android:text="现场照片"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dip"
+                    android:layout_marginRight="@dimen/size_60"
+                    android:layout_toRightOf="@id/tv_picture">
+
+                    <LinearLayout
+                        android:id="@+id/ll_picture"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"/>
+                </HorizontalScrollView>
+
+                <ImageButton
+                    android:id="@+id/imgbtn_addpicture"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="100dip"
+                    android:layout_alignParentRight="true"
+                    android:background="@null"
+                    android:src="@drawable/plus"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+
+                    android:gravity="center|left"
+                    android:text="备注"
+                    android:layout_width="100dip"
+                    android:layout_height="50dip"/>
+                <EditText
+                    android:gravity="center|right"
+                    android:hint=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <Button
+                android:text="保存"
+                android:background="@null"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        </ScrollView>
+
+
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
         android:background="@color/line_color"/>
-    <LinearLayout
+    <ListView
+        android:layout_marginTop="20dip"
         android:layout_width="match_parent"
-        android:layout_height="50dip">
-        <TextView
-            android:text=""
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
+        android:layout_height="wrap_content"></ListView>
 </LinearLayout>

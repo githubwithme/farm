@@ -28,6 +28,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import android.widget.AdapterView.OnItemClickListener;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -87,13 +88,15 @@ public class PG_cbhdetail extends Fragment
                         list_contractTab = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
                         pg_cbhAdapter = new PG_cbhAdapter(getActivity(), list_contractTab);
                         gv_cbh.setAdapter(pg_cbhAdapter);
-            /*            gv_cbh.setOnItemClickListener(new OnItemClickListener()
+                        gv_cbh.setOnItemClickListener(new OnItemClickListener()
                         {
                             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
                             {
-                                Toast.makeText(getActivity(), "pic" + position, Toast.LENGTH_SHOR..;
+                                Intent intent = new Intent(getActivity(), PG_cbfscore_.class);
+                                intent.putExtra("contracttab", list_contractTab.get(position));
+                                getActivity().startActivity(intent);
                             }
-                        });*/
+                        });
                     }
                 } else
                 {

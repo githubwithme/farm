@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/color_topbar">
+
+        <ImageButton
+            android:id="@+id/imgbtn_back"
+            android:layout_width="35dip"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/ic_back"/>
+
+        <TextView
+
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/imgbtn_back"
+            android:gravity="center"
+            android:text="工单"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"/>
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bg_main"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dip"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:inputType="numberDecimal"
+                    android:text="施工负责人"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/line_color"/>
+
+
+                <EditText
+                    android:background="@null"
+                    android:id="@+id/parkName"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center|right"
+                    android:inputType="numberDecimal"
+                    android:hint="请输入施工负责人"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bg_main"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dip"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:inputType="numberDecimal"
+                    android:text="人数"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+
+
+
+                <EditText
+                    android:background="@null"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:hint="填写雇佣人数"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/line_color"/>
+
+                <CheckBox
+                    android:gravity="center"
+                    android:text="代付"
+                    android:layout_weight="1"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bg_main"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dip"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:inputType="numberDecimal"
+                    android:text="项目"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/line_color"/>
+
+
+                <EditText
+                    android:background="@null"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center|right"
+                    android:hint="请输入项目"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bg_main"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dip"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_span="3"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="工作内容及要求"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/line_color"/>
+
+
+                <EditText
+                    android:background="@null"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center|right"
+                    android:hint="填写工作内容及要求"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bg_main"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dip"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_span="3"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="完成情况及工资额"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/line_color"/>
+
+
+                <EditText
+                    android:background="@null"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center|right"
+                    android:inputType="numberDecimal"
+                    android:hint="填写完成情况及工资额"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bg_main"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dip"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_span="3"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="备注"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/line_color"/>
+
+
+                <EditText
+                    android:background="@null"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center|right"
+                    android:inputType="numberDecimal"
+                    android:text=""
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bg_main"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,6 +122,26 @@ public class Adapter_SelectBatchTime extends BaseExpandableListAdapter
 //                    context.startActivity(intent);
 //                }
 //            });
+            if (batchTime.getBatchColor().equals("红色"))
+            {
+                listItemView.ll_batchtime.setBackgroundColor(Color.parseColor("#ff4444"));
+               /* groupExpand.setBackgroundColor(Color.parseColor("#ff4444"));
+                tv_park.setBackgroundColor(Color.parseColor("#ff4444"));
+                tv_nums.setBackgroundColor(Color.parseColor("#ff4444"));*/
+            } else if (batchTime.getBatchColor().equals("蓝色"))
+            {
+
+                listItemView.ll_batchtime.setBackgroundColor(Color.parseColor("#add8e6"));
+            } else if (batchTime.getBatchColor().equals("绿色"))
+            {
+                listItemView.ll_batchtime.setBackgroundColor(Color.parseColor("#90ee90"));
+            } else if (batchTime.getBatchColor().equals("紫色"))
+            {
+                listItemView.ll_batchtime.setBackgroundColor(Color.parseColor("#d8bfd8"));
+            } else
+            {
+                listItemView.ll_batchtime.setBackgroundColor(Color.parseColor("#ffff00"));
+            }
             view.setTag(convertView);
             view.setOnClickListener(new View.OnClickListener()
             {
@@ -300,7 +321,7 @@ public class Adapter_SelectBatchTime extends BaseExpandableListAdapter
             }
         } else
         {
-            tv_number.setText("待售" + parktab.getAllsalefor());
+            tv_number.setText("总株树:" + parktab.getAllsalefor());
         }
         return convertView;
     }

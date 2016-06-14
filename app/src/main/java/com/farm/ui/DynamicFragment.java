@@ -192,7 +192,7 @@ public class DynamicFragment extends Fragment
                     k = 0;
                     adapter_dynamic = new Adapter_Dynamic(getActivity(), list);
                     lv.setAdapter(adapter_dynamic);
-                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                   /* lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -260,7 +260,7 @@ public class DynamicFragment extends Fragment
 //                                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
 //                                getActivity().startActivity(intent);
                         }
-                    });
+                    });*/
 //                    }
                 } else
                 {

@@ -49,7 +49,7 @@
                 android:layout_toLeftOf="@+id/view"
                 android:gravity="right|center_vertical"
                 android:text="待售350000"
-                android:textColor="@color/red"
+                android:textColor="@color/bg_text"
                 android:textSize="16sp"/>
 
         </RelativeLayout>

@@ -2,16 +2,25 @@ package com.farm.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.DynamicBean;
 import com.farm.common.utils;
+import com.farm.ui.NCZ_CommandListActivity_;
+import com.farm.ui.NCZ_DLdatail_;
+import com.farm.ui.NCZ_JobActivity_;
+import com.farm.ui.NCZ_MQActivity_;
+import com.farm.ui.NCZ_OrderManager_;
+import com.farm.ui.NCZ_SJActivity_;
+import com.farm.ui.Ncz_wz_ll_;
 import com.farm.widget.CircleImageView;
 
 import java.util.HashMap;
@@ -34,6 +43,7 @@ public class Adapter_Dynamic extends BaseAdapter
         public TextView tv_new_item;
         public TextView tv_title;
         public CircleImageView circle_img;
+        public LinearLayout ll_select;
     }
 
     public Adapter_Dynamic(Context context, List<DynamicBean> data)
@@ -78,6 +88,7 @@ public class Adapter_Dynamic extends BaseAdapter
             listItemView.tv_newnumber = (TextView) convertView.findViewById(R.id.tv_newnumber);
             listItemView.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
+            listItemView.ll_select = (LinearLayout) convertView.findViewById(R.id.ll_select);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -141,7 +152,48 @@ public class Adapter_Dynamic extends BaseAdapter
         {
             listItemView.fl_new_item.setVisibility(View.VISIBLE);
         }
+        listItemView.ll_select.setTag(R.id.tag_dt,dynamicBean);
+        listItemView.ll_select.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                DynamicBean dynamicBean1= (DynamicBean) view.getTag(R.id.tag_dt);
+                Intent intent = null;
+                String type = dynamicBean1.getType();
+                if (type.equals("ZL"))
+                {
+                    intent = new Intent(context, NCZ_CommandListActivity_.class);
+                } else if (type.equals("GZ"))
+                {
+                    intent = new Intent(context, NCZ_JobActivity_.class);
+                } else if (type.equals("MQ"))
+                {
+                    intent = new Intent(context, NCZ_MQActivity_.class);
+                } else if (type.equals("XS"))
+                {
+//                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
+                    intent = new Intent(context, NCZ_OrderManager_.class);
+                } else if (type.equals("KC"))
+                {
+                    intent = new Intent(context, Ncz_wz_ll_.class);
+                } else if (type.equals("SP"))
+                {
+                    intent = new Intent(context, NCZ_CommandListActivity_.class);
+                } else if (type.equals("SJ"))
+                {
+                    intent = new Intent(context, NCZ_SJActivity_.class);
+                } else if (type.equals("DL"))
+                {
+                    intent = new Intent(context, NCZ_DLdatail_.class);
+                }
+                context.startActivity(intent);
 
+
+//
+
+            }
+        });
         return convertView;
     }
 

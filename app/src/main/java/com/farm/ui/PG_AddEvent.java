@@ -211,7 +211,7 @@ public class PG_AddEvent extends Activity {
                     {
                         final int index_zp = ll_picture.indexOfChild(v);
                         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-                        myDialog = new MyDialog(PG_AddEvent.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "取消", "删除", new MyDialog.CustomDialogListener()
+                        myDialog = new MyDialog(PG_AddEvent.this, R.style.MyDialog, dialog_layout, "图片", "删除该图片?", "查看", "删除", new MyDialog.CustomDialogListener()
                         {
                             @Override
                             public void OnClick(View v)
@@ -220,6 +220,10 @@ public class PG_AddEvent extends Activity {
                                 {
                                     case R.id.btn_sure:
 
+                                        Intent intent = new Intent(PG_AddEvent.this,DisplayImageOfLocal_.class);
+                                        intent.putExtra("url", list_picture.get(index_zp).getFJBDLJ());
+                                        String aa=list_picture.get(index_zp).getFJBDLJ();
+                                        startActivity(intent);
                                      /*   File file = new File(list_picture.get(index_zp).getFJBDLJ());
                                         Intent intent = new Intent(Intent.ACTION_VIEW);
                                         intent.setDataAndType(Uri.fromFile(file), "image");

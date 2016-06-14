@@ -215,6 +215,8 @@
         <activity android:name=".ui.PG_CKDetail_"/>
         <activity android:name=".ui.AddNotStd_Cmd_Self_new_"/>
         <activity android:name=".ui.PG_jobDetailNew_"/>
+        <activity android:name=".ui.PG_cbfscore_"/>
+        <activity android:name=".ui.PG_WorkOrder_"/>
         <!-- 共用UI -->
         <activity android:name=".chart.BarChartActivity_"/>
         <activity android:name=".ui.ObservationRecordActivity_"/>
@@ -246,6 +248,7 @@
         <activity android:name=".ui.Common_CommandFeedBack_"/>
         <activity android:name=".ui.Common_CommandDetail_"/>
         <activity android:name=".ui.Event_Process_"/>
+        <activity android:name=".ui.DisplayImageOfLocal_"/>
 
 
         <!-- 服务 -->

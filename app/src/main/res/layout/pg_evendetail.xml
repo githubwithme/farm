@@ -126,7 +126,7 @@
                     android:layout_span="3"
                     android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="请选择事件类型"
+                    android:hint=""
                     android:paddingLeft="10dip"
                     android:textColor="@color/bg_yellow"
                     android:textSize="@dimen/size_14"/>
@@ -162,7 +162,7 @@
                     android:layout_span="3"
                     android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="请选择事件类型"
+                    android:hint=""
                     android:paddingLeft="10dip"
                     android:textColor="@color/bg_yellow"
                     android:textSize="@dimen/size_14"/>

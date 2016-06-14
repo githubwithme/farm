@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.farm.R;
 import com.farm.bean.contractTab;
 import com.farm.common.utils;
+import com.farm.ui.PG_cbfscore_;
 
 import java.util.HashMap;
 import java.util.List;
@@ -81,7 +82,7 @@ public class PG_cbhAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    Intent intent = new Intent(context, .class);
+                    Intent intent = new Intent(context,PG_cbfscore_.class);
                     intent.putExtra("contracttab", contracttab);
                     context.startActivity(intent);
                 }
