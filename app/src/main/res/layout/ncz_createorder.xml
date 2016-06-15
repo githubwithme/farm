@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
+              android:background="@color/line_color"
               android:layout_height="match_parent"
-              android:background="@color/light_gray"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -70,6 +70,7 @@
                 android:layout_marginBottom="10dip"
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
                 android:background="@color/white">
 
                 <LinearLayout
@@ -373,7 +374,7 @@
                     android:gravity="left|center_vertical"
                     android:paddingRight="10dip"
                     android:text="150000"
-                    android:textColor="@color/bg_text"
+                    android:textColor="@color/red"
                     android:textSize="@dimen/size_sp_16"/>
 
             </RelativeLayout>
@@ -382,8 +383,9 @@
                 android:id="@+id/lv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dip"
-                android:background="@color/white"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="5dip"
                 android:divider="@color/transparent"
                 android:dividerHeight="0dip"/>
 

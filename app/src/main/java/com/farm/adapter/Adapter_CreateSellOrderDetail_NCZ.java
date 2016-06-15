@@ -92,8 +92,8 @@ public class Adapter_CreateSellOrderDetail_NCZ extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
-        listItemView.tv_plannumber.setText(SellOrderDetail.getplannumber());
-        listItemView.tv_batchtime.setText(SellOrderDetail.getBatchTime());
+        listItemView.tv_plannumber.setText("出售"+SellOrderDetail.getplannumber()+"株");
+        listItemView.tv_batchtime.setText("批次号:"+SellOrderDetail.getBatchTime());
         listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
         return convertView;
     }

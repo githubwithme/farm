@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="80dip"
+              android:layout_height="wrap_content"
               android:orientation="horizontal">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dip"
+        android:layout_height="40dip"
         android:layout_marginRight="25dip"
         android:layout_marginTop="10dip"
         android:background="@color/line_color"
@@ -63,7 +63,7 @@ android:layout_toLeftOf="@+id/iv_next"
 android:layout_toLeftOf="@+id/quantity"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="已入库"
+            android:text="已出库"
             android:layout_marginRight="5dip"
             android:textColor="@color/bg_text"
             android:textSize="16sp"/>

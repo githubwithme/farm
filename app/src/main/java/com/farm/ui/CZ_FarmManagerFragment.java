@@ -97,7 +97,7 @@ public class CZ_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
 //        getActivity().startActivity(intent);
-        Intent intent = new Intent(getActivity(), CZ_ToDayPQ_.class);
+        Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
         intent.putExtra("parkid", commembertab.getparkId());
         startActivity(intent);
     }
@@ -107,7 +107,7 @@ public class CZ_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), NCZ_JobActivity_.class);
 //        getActivity().startActivity(intent);
-        Intent intent = new Intent(getActivity(), CZ_ToDayPQ_.class);
+        Intent intent = new Intent(getActivity(), NCZ_JobActivity_.class);
         intent.putExtra("parkid", commembertab.getparkId());
         startActivity(intent);
     }
@@ -115,11 +115,11 @@ public class CZ_FarmManagerFragment extends Fragment
     @Click
     void ll_mq()
     {
-//        Intent intent = new Intent(getActivity(), NCZ_MQActivity_.class);
-//        getActivity().startActivity(intent);
-        Intent intent = new Intent(getActivity(), CZ_ToDayPQ_.class);
-        intent.putExtra("parkid", commembertab.getparkId());
-        startActivity(intent);
+        Intent intent = new Intent(getActivity(), NCZ_MQActivity_.class);
+        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), CZ_ToDayPQ_.class);
+//        intent.putExtra("parkid", commembertab.getparkId());
+//        startActivity(intent);
     }
 
     @Click

@@ -104,10 +104,11 @@ public class NCZ_WZ_RKFragment extends Fragment
                         wz_rkExecute_adapter = new WZ_RKExecute_Adapter(getActivity(), listNewData, expandableListView);
                         expandableListView.setAdapter(wz_rkExecute_adapter);
 
-                        for (int i = 0; i < listNewData.size(); i++)
-                        {
-                            expandableListView.expandGroup(i);//展开
-                        }
+//                        for (int i = 0; i < listNewData.size(); i++)
+//                        {
+////                            expandableListView.expandGroup(i);//展开
+//                            expandableListView.collapseGroup(i);//关闭
+//                        }
 
                     } else
                     {
