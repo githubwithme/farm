@@ -200,6 +200,7 @@
         <activity android:name=".ui.CZ_ChangeWeather_"/>
         <activity android:name=".ui.CZ_PG_Assess_"/>
         <activity android:name=".ui.CZ_PQ_TodayPlant_"/>
+        <activity android:name=".ui.CZ_CommandListActivity_"/>
         <!-- 片管UI -->
         <activity android:name=".ui.PG_MainActivity_"/>
         <activity android:name=".ui.PG_PlantList_"/>
@@ -217,6 +218,7 @@
         <activity android:name=".ui.PG_jobDetailNew_"/>
         <activity android:name=".ui.PG_cbfscore_"/>
         <activity android:name=".ui.PG_WorkOrder_"/>
+        <activity android:name=".ui.PG_Workplan_"/>
         <!-- 共用UI -->
         <activity android:name=".chart.BarChartActivity_"/>
         <activity android:name=".ui.ObservationRecordActivity_"/>

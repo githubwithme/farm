@@ -97,7 +97,7 @@ public class CZ_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
 //        getActivity().startActivity(intent);
-        Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+        Intent intent = new Intent(getActivity(), CZ_CommandListActivity_.class);
         intent.putExtra("parkid", commembertab.getparkId());
         startActivity(intent);
     }
