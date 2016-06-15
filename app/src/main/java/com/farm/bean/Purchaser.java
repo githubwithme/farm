@@ -12,10 +12,15 @@ import com.lidroid.xutils.db.annotation.Table;
 public class Purchaser implements Parcelable
 {
     public String id;
-    public String purchaser;
-    public String phone;
-    public String ems;
+    public String uid;
+    public String name;
+    public String telephone;
     public String address;
+    public String mailbox;
+    public String note;
+    public String regDate;
+    public String remark1;
+    public String remark2;
 
     public String getId()
     {
@@ -27,34 +32,84 @@ public class Purchaser implements Parcelable
         this.id = id;
     }
 
-    public String getPurchaser()
+    public String getUid()
     {
-        return purchaser;
+        return uid;
     }
 
-    public void setPurchaser(String purchaser)
+    public void setUid(String uid)
     {
-        this.purchaser = purchaser;
+        this.uid = uid;
     }
 
-    public String getPhone()
+    public String getName()
     {
-        return phone;
+        return name;
     }
 
-    public void setPhone(String phone)
+    public void setName(String name)
     {
-        this.phone = phone;
+        this.name = name;
     }
 
-    public String getEms()
+    public String getTelephone()
     {
-        return ems;
+        return telephone;
     }
 
-    public void setEms(String ems)
+    public void setTelephone(String telephone)
     {
-        this.ems = ems;
+        this.telephone = telephone;
+    }
+
+    public String getMailbox()
+    {
+        return mailbox;
+    }
+
+    public void setMailbox(String mailbox)
+    {
+        this.mailbox = mailbox;
+    }
+
+    public String getNote()
+    {
+        return note;
+    }
+
+    public void setNote(String note)
+    {
+        this.note = note;
+    }
+
+    public String getRegDate()
+    {
+        return regDate;
+    }
+
+    public void setRegDate(String regDate)
+    {
+        this.regDate = regDate;
+    }
+
+    public String getRemark1()
+    {
+        return remark1;
+    }
+
+    public void setRemark1(String remark1)
+    {
+        this.remark1 = remark1;
+    }
+
+    public String getRemark2()
+    {
+        return remark2;
+    }
+
+    public void setRemark2(String remark2)
+    {
+        this.remark2 = remark2;
     }
 
     public String getAddress()
@@ -74,10 +129,15 @@ public class Purchaser implements Parcelable
             // 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错
             Purchaser p = new Purchaser();
             p.setId(source.readString());
-            p.setPurchaser(source.readString());
-            p.setPhone(source.readString());
-            p.setEms(source.readString());
+            p.setUid(source.readString());
+            p.setName(source.readString());
+            p.setTelephone(source.readString());
             p.setAddress(source.readString());
+            p.setMailbox(source.readString());
+            p.setNote(source.readString());
+            p.setRegDate(source.readString());
+            p.setRemark1(source.readString());
+            p.setRemark2(source.readString());
 
             return p;
         }
@@ -93,10 +153,15 @@ public class Purchaser implements Parcelable
     public void writeToParcel(Parcel p, int arg1)
     {
         p.writeString(id);
-        p.writeString(purchaser);
-        p.writeString(phone);
-        p.writeString(ems);
+        p.writeString(uid);
+        p.writeString(name);
+        p.writeString(telephone);
         p.writeString(address);
+        p.writeString(mailbox);
+        p.writeString(note);
+        p.writeString(regDate);
+        p.writeString(remark1);
+        p.writeString(remark2);
 
     }
 
