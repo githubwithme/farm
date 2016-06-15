@@ -75,7 +75,7 @@ public class NCZ_WZ_RKDetail extends FragmentActivity {
         inType.setText(wz_rKxx.getInType());
         quantity.setText(wz_rKxx.getQuantity());
         price.setText(wz_rKxx.getPrice());
-        inGoodsvalue.setText(String.format("%.2f", wz_rKxx.getInGoodsvalue()) + "元");
+        inGoodsvalue.setText(String.format("%.2f", Double.valueOf(wz_rKxx.getInGoodsvalue())) + "元");
         if (wz_rKxx.getNote().equals("")) {
             note.setText("无");
         } else {

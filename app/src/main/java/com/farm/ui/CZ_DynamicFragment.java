@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.Adapter_Dynamic;
 import com.farm.adapter.Adapter_DynamicFragment;
+import com.farm.adapter.CZ_Adapter_Dynamic;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.DynamicBean;
@@ -54,7 +55,7 @@ public class CZ_DynamicFragment extends Fragment
     TimeThread timethread;
     PopupWindow pw_command;
     View pv_command;
-    Adapter_Dynamic adapter_dynamic;
+    CZ_Adapter_Dynamic adapter_dynamic;
     List<DynamicBean> listData = new ArrayList<>();
     List<DynamicEntity> list_DynamicEntity;
     @ViewById
@@ -156,7 +157,8 @@ public class CZ_DynamicFragment extends Fragment
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("action", "GetDynamicData1");
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("action", "GetDynamicDataByCCArea");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -190,7 +192,7 @@ public class CZ_DynamicFragment extends Fragment
                     intent.setAction(AppContext.BROADCAST_NCZ_DT);
                     getActivity().sendBroadcast(intent);
                     k = 0;
-                    adapter_dynamic = new Adapter_Dynamic(getActivity(), list);
+                    adapter_dynamic = new CZ_Adapter_Dynamic(getActivity(), list);
                     lv.setAdapter(adapter_dynamic);
                    /* lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {

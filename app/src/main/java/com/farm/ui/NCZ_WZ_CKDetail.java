@@ -60,7 +60,7 @@ public class NCZ_WZ_CKDetail extends FragmentActivity {
         inDate.setText(indate);
         batchName.setText(wz_rKxx.getBatchName());
         quantity.setText(wz_rKxx.getQuantity());
-        outGoodsvalue.setText(String.format("%.2f", wz_rKxx.getOutGoodsvalue()) + "元");
+        outGoodsvalue.setText(String.format("%.2f", Double.valueOf(wz_rKxx.getOutGoodsvalue())) + "元");
         if (wz_rKxx.getNote().equals("")) {
             note.setText("无");
         } else {
