@@ -203,22 +203,31 @@ public class utils
         {
             for (int j = 0; j < n - i-1; j++)
             {
-                String date1 = list.get(j).getListdata().get(0).getDate();
-                String date2 = list.get(j + 1).getListdata().get(0).getDate();
-                date1=date1.replace("/","-");
-                date2=date2.replace("/","-");
-                Date date_date1 = null;
-                Date date_date2 = null;
-                try
+                if (list.get(j).getListdata().size()>0&&list.get(j+1).getListdata().size()>0)
                 {
-                    date_date1 = dfs.parse(date1);
-                    date_date2 = dfs.parse(date2);
-                } catch (ParseException e)
-                {
-                    e.printStackTrace();
-                }
+                    String date1 = list.get(j).getListdata().get(0).getDate();
+                    String date2 = list.get(j + 1).getListdata().get(0).getDate();
+                    date1 = date1.replace("/", "-");
+                    date2 = date2.replace("/", "-");
+                    Date date_date1 = null;
+                    Date date_date2 = null;
+                    try
+                    {
+                        date_date1 = dfs.parse(date1);
+                        date_date2 = dfs.parse(date2);
+                    } catch (ParseException e)
+                    {
+                        e.printStackTrace();
+                    }
 
-                if (date_date1.before(date_date2))//比较交换相邻元素
+                    if (date_date1.before(date_date2))//比较交换相邻元素
+                    {
+                        DynamicBean temp;
+                        temp = list.get(j);
+                        list.set(j, list.get(j + 1));
+                        list.set(j + 1, temp);
+                    }
+                }else if (list.get(j).getListdata().size()==0&&list.get(j+1).getListdata().size()>0)
                 {
                     DynamicBean temp;
                     temp = list.get(j);

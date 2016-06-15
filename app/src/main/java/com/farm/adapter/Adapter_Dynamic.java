@@ -99,59 +99,125 @@ public class Adapter_Dynamic extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
 //        listItemView.tv_new_item.setText(String.valueOf(dynamicBean.getListdata().size()));
-        String date = dynamicBean.getListdata().get(0).getDate();
-        date = date.replace("/", "-");
-        listItemView.tv_date.setText(utils.OffSetOfDate(utils.getToday(), date));
+        if (dynamicBean.getListdata().size()>0)
+        {
+            String date = dynamicBean.getListdata().get(0).getDate();
+            date = date.replace("/", "-");
+            listItemView.tv_date.setText(utils.OffSetOfDate(utils.getToday(), date));
+        }else
+        {
+            listItemView.tv_date.setText("无");
+        }
         String type = dynamicBean.getType();
         if (type.equals("ZL"))
         {
             listItemView.tv_title.setText("指令");
-            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            if (dynamicBean.getListdata().size()>0)
+            {
+                listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            }else
+            {
+                listItemView.tv_note.setText("无");
+            }
+
             listItemView.circle_img.setBackgroundResource(R.drawable.temp1);
         } else if (type.equals("GZ"))
         {
             listItemView.tv_title.setText("工作");
-            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+//            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            if (dynamicBean.getListdata().size()>0)
+            {
+                listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            }else
+            {
+                listItemView.tv_note.setText("无");
+            }
             listItemView.circle_img.setBackgroundResource(R.drawable.temp2);
         } else if (type.equals("MQ"))
         {
             listItemView.tv_title.setText("苗情");
-            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+//            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            if (dynamicBean.getListdata().size()>0)
+            {
+                listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            }else
+            {
+                listItemView.tv_note.setText("无");
+            }
             listItemView.circle_img.setBackgroundResource(R.drawable.icon_zz);
         } else if (type.equals("XS"))
         {
             listItemView.tv_title.setText("销售");
-            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+//            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            if (dynamicBean.getListdata().size()>0)
+            {
+                listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            }else
+            {
+                listItemView.tv_note.setText("无");
+            }
             listItemView.circle_img.setBackgroundResource(R.drawable.icon_zl);
         } else if (type.equals("KC"))
         {
             listItemView.tv_title.setText("库存");
-            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+//            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            if (dynamicBean.getListdata().size()>0)
+            {
+                listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            }else
+            {
+                listItemView.tv_note.setText("无");
+            }
             listItemView.circle_img.setBackgroundResource(R.drawable.temp4);
         } else if (type.equals("SP"))
         {
             listItemView.tv_title.setText("审批");
-            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+//            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            if (dynamicBean.getListdata().size()>0)
+            {
+                listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            }else
+            {
+                listItemView.tv_note.setText("无");
+            }
             listItemView.circle_img.setBackgroundResource(R.drawable.temp3);
         } else if (type.equals("SJ"))
         {
             listItemView.tv_title.setText("事件");
-            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+//            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            if (dynamicBean.getListdata().size()>0)
+            {
+                listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            }else
+            {
+                listItemView.tv_note.setText("无");
+            }
             listItemView.circle_img.setBackgroundResource(R.drawable.temp7);
         } else if (type.equals("DL"))
         {
             listItemView.tv_title.setText("断蕾");
-            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+//            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            if (dynamicBean.getListdata().size()>0)
+            {
+                listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            }else
+            {
+                listItemView.tv_note.setText("无");
+            }
             listItemView.circle_img.setBackgroundResource(R.drawable.icon_gz2);
         }
 
-        if (dynamicBean.getListdata().get(0).getFlashStr().equals("0"))
+        if(dynamicBean.getListdata().size()>0)
         {
-            listItemView.fl_new_item.setVisibility(View.GONE);
-        } else
-        {
-            listItemView.fl_new_item.setVisibility(View.VISIBLE);
+            if (dynamicBean.getListdata().get(0).getFlashStr().equals("0"))
+            {
+                listItemView.fl_new_item.setVisibility(View.GONE);
+            } else
+            {
+                listItemView.fl_new_item.setVisibility(View.VISIBLE);
+            }
         }
+
         listItemView.ll_select.setTag(R.id.tag_dt,dynamicBean);
         listItemView.ll_select.setOnClickListener(new View.OnClickListener()
         {

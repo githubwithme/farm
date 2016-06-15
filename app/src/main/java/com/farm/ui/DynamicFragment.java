@@ -184,7 +184,7 @@ public class DynamicFragment extends Fragment
                             listData.add(list.get(i));
                         }
                     }
-                    list = utils.BubbleSortArray(list);
+                    list = utils.BubbleSortArray(list);//本地不行
                     Intent intent = new Intent();
                     intent.putExtra("Num", k + "");
                     intent.setAction(AppContext.BROADCAST_NCZ_DT);

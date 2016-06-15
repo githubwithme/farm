@@ -200,6 +200,7 @@
         <activity android:name=".ui.CZ_ChangeWeather_"/>
         <activity android:name=".ui.CZ_PG_Assess_"/>
         <activity android:name=".ui.CZ_PQ_TodayPlant_"/>
+        <activity android:name=".ui.CZ_CommandListActivity_"/>
         <!-- 片管UI -->
         <activity android:name=".ui.PG_MainActivity_"/>
         <activity android:name=".ui.PG_PlantList_"/>
