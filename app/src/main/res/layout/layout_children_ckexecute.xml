@@ -44,7 +44,6 @@
             android:layout_height="20dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
             android:background="@drawable/ic_next"/>
 
         <TextView
@@ -56,7 +55,7 @@
             android:gravity="left|center_vertical"
             android:text="8分"
             android:textColor="@color/red"
-            android:textSize="16sp"/>
+            android:textSize="15sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -67,6 +66,6 @@
             android:gravity="center"
             android:text="已出库"
             android:textColor="@color/bg_text"
-            android:textSize="16sp"/>
+            android:textSize="15sp"/>
     </RelativeLayout>
 </LinearLayout>

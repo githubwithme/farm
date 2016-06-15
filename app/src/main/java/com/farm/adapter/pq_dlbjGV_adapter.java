@@ -275,7 +275,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
                     if (result.getAffectedRows() != 0) {
                         btn_add.setVisibility(View.VISIBLE);
                         bp_upload.setVisibility(View.GONE);
-                        Toast.makeText(context, "保存成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "保存成功", Toast.LENGTH_SHORT).show();
                     }else
                     {
                         bp_upload.setVisibility(View.GONE);
@@ -320,7 +320,7 @@ public class pq_dlbjGV_adapter extends BaseAdapter {
                     if (result.getAffectedRows() != 0) {
                         bp_upload.setVisibility(View.GONE);
                         btn_add.setVisibility(View.VISIBLE);
-                        Toast.makeText(context, "修改成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "修改成功", Toast.LENGTH_SHORT).show();
 
                     }else
                     {

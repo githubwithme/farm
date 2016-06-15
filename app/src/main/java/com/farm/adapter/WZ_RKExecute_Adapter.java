@@ -261,7 +261,7 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
         loadingFee.setText("装卸费:" + listData.get(groupPosition).getLoadingFee() + "元");
         shippingFee.setText("运费:" + listData.get(groupPosition).getShippingFee() + "元");
          double a= Double.valueOf(listData.get(groupPosition).getInGoodsValue())+Double.valueOf(listData.get(groupPosition).getLoadingFee())+Double.valueOf(listData.get(groupPosition).getShippingFee());
-        inGoodsValue.setText("总值"+a + "元");
+        inGoodsValue.setText("总值"+String.format("%.2f",a) + "元");
         return convertView;
     }
 

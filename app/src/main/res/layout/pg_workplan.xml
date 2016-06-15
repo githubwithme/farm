@@ -50,7 +50,7 @@
         >
 
         <RadioButton
-            android:id="@+id/rb_y"
+            android:id="@+id/rb_bz"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -59,7 +59,7 @@
             android:textSize="@dimen/size_12"/>
 
         <RadioButton
-            android:id="@+id/rb_hg"
+            android:id="@+id/rb_fbz"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -73,14 +73,17 @@
         android:layout_height="40dip">
 
         <LinearLayout
+            android:id="@+id/ll_bz"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="40dip">
             <TextView
+                android:id="@+id/tv_bz"
+                android:gravity="center"
                 android:text="请选择作物"
                 android:textSize="15dip"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
             <ImageView
                 android:layout_marginRight="15dip"
                 android:layout_alignParentRight="true"
@@ -93,6 +96,7 @@
 
 
         <EditText
+            android:id="@+id/et_fbz"
             android:visibility="gone"
             android:background="@null"
             android:gravity="center"
