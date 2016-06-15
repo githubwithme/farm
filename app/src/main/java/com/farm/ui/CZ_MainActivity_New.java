@@ -228,9 +228,9 @@ public class CZ_MainActivity_New extends Activity
 //        tv_product.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
 //        tv_sale.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
 //        tv_money.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
-        switchContent(mContent, cz_jobFragment);
-        tv_farmlive.setTextColor(getResources().getColor(R.color.blue));
-        tl_farmlive.setSelected(true);
+        switchContent(mContent, dynamicFragment);
+        tv_home.setTextColor(getResources().getColor(R.color.blue));
+        tl_home.setSelected(true);
 
 
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_NCZ_DT);
