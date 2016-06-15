@@ -1,9 +1,7 @@
 package com.farm.ui;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -65,7 +63,7 @@ import java.util.concurrent.CountDownLatch;
 @EFragment
 public class SelectCommandFragment extends Fragment implements OnClickListener
 {
-    boolean ishidding=false;
+    boolean ishidding = false;
     commembertab commembertab;
     TimeThread timethread;
     private List<jobtab> joblist;
@@ -130,7 +128,7 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
     @Override
     public void onHiddenChanged(boolean hidden)
     {
-        ishidding=hidden;
+        ishidding = hidden;
         super.onHiddenChanged(hidden);
         if (!hidden)
         {
@@ -158,6 +156,7 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
 //        switchContent(mContent, selectorUi);
         initAnimalListView();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -245,13 +244,13 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
-                    if (!ishidding  && timethread!=null)
+                    if (!ishidding && timethread != null)
                     {
                         timethread.setSleep(false);
                     }
                     return;
                 }
-                if (!ishidding  && timethread!=null)
+                if (!ishidding && timethread != null)
                 {
                     timethread.setSleep(false);
                 }
@@ -261,7 +260,7 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
             public void onFailure(HttpException arg0, String arg1)
             {
                 AppContext.makeToast(getActivity(), "error_connectServer");
-                if (!ishidding  && timethread!=null)
+                if (!ishidding && timethread != null)
                 {
                     timethread.setSleep(false);
                 }
@@ -353,7 +352,8 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                if (isAdded()) {
+                                if (isAdded())
+                                {
                                     NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
                                 }
                             } else
@@ -425,7 +425,8 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
                 // main_head_progress.setVisibility(ProgressBar.GONE);
                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
                 {
-                    if(isAdded()){
+                    if (isAdded())
+                    {
                         lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
                         lv.setSelection(0);
                     }
@@ -822,10 +823,10 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
             listItemView.tv_time.setText(commandtab.getregDate());
             if (commandtab.getcommFromVPath().equals("0"))
             {
-                listItemView.tv_zf.setText(commandtab.getcommFromName()+"下发");
+                listItemView.tv_zf.setText(commandtab.getcommFromName() + "下发");
             } else
             {
-                listItemView.tv_zf.setText(commandtab.getcommFromName()+"自发");
+                listItemView.tv_zf.setText(commandtab.getcommFromName() + "自发");
             }
             if (commandtab.getstdJobType().equals("0"))
             {
@@ -912,7 +913,8 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
             }
         });
     }
-    private void commandSetStatus( commandtab commandtab)
+
+    private void commandSetStatus(commandtab commandtab)
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
@@ -961,6 +963,7 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
             }
         });
     }
+
     class TimeThread extends Thread
     {
         private boolean isSleep = true;

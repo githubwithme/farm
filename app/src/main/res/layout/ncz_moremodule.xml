@@ -24,7 +24,7 @@
             android:layout_marginLeft="5dip"
             android:layout_toRightOf="@+id/imgbtn_back"
             android:gravity="center"
-            android:text="更多"
+            android:text="地图应用"
             android:textColor="@color/white"
             android:textSize="16sp"/>
 

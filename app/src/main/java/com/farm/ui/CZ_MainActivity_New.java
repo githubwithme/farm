@@ -53,7 +53,7 @@ public class CZ_MainActivity_New extends Activity
     NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
     MyDialog myDialog;
     Fragment mContent = new Fragment();
-    DynamicFragment dynamicFragment;//动态fragment
+    CZ_DynamicFragment cz_dynamicFragment;//动态fragment
     CZ_JobFragment cz_jobFragment;//工作fragment
     CZ_FarmManagerFragment cz_farmManagerFragment;//农场工作fragment
     IFragment iFragment;//个人信息fragment
@@ -116,7 +116,7 @@ public class CZ_MainActivity_New extends Activity
         tl_product.setSelected(false);
         tl_sale.setSelected(false);
         tl_farmlive.setSelected(false);
-        switchContent(mContent, dynamicFragment);
+        switchContent(mContent, cz_dynamicFragment);
     }
 
     @Click
@@ -209,7 +209,7 @@ public class CZ_MainActivity_New extends Activity
         }
 
         AppManager.getAppManager().addActivity(CZ_MainActivity_New.this);
-        dynamicFragment = new DynamicFragment_();
+        cz_dynamicFragment = new CZ_DynamicFragment_();
         cz_jobFragment = new CZ_JobFragment_();
         cz_farmManagerFragment = new CZ_FarmManagerFragment_();
         ncz_contactsFragment = new NCZ_ContactsFragment_();
@@ -228,7 +228,7 @@ public class CZ_MainActivity_New extends Activity
 //        tv_product.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
 //        tv_sale.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
 //        tv_money.setTypeface(FontManager.getTypefaceByFontName(NCZ_MainActivity_New.this, "wsyh.ttf"));
-        switchContent(mContent, dynamicFragment);
+        switchContent(mContent, cz_dynamicFragment);
         tv_home.setTextColor(getResources().getColor(R.color.blue));
         tl_home.setSelected(true);
 
