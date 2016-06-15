@@ -29,7 +29,7 @@ public class Ncz_wz_ll extends FragmentActivity
     com.farm.bean.commembertab commembertab;
     String wzgl;
     ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
-//    NCZ_WZ_LOOKFragment nec_wz_lookFragment;
+    //    NCZ_WZ_LOOKFragment nec_wz_lookFragment;
     NCZ_WZ_CKXXFragment ncz_wz_ckxxFragment;
     NCZ_WZ_RKFragment ncz_wz_rkFragment;
     NCZ_WZ_CKFRagment ncz_wz_ckfRagment;

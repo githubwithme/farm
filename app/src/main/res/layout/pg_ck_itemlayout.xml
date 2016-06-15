@@ -6,46 +6,47 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dip"
         android:layout_marginLeft="25dip"
         android:layout_marginRight="25dip"
         android:layout_marginTop="5dip"
-        android:background="@drawable/background_view_rounded_single">
+        android:background="@color/white">
+
         <TextView
-            android:layout_marginLeft="5dip"
             android:id="@+id/batchnums"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="5dip"
             android:gravity="center"
             android:text="钾肥"
             android:textColor="@color/bg_text"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:visibility="gone"/>
+
         <TextView
-            android:layout_marginTop="2dip"
-            android:layout_marginLeft="10dip"
-            android:layout_toRightOf="@+id/batchnums"
             android:id="@+id/goodsname"
-            android:layout_width="120dip"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dip"
             android:gravity="center"
             android:text="钾肥"
             android:textColor="@color/bg_text"
             android:textSize="15sp"/>
 
         <TextView
-            android:layout_marginLeft="10dip"
             android:id="@+id/inGoodsvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
             android:layout_toRightOf="@+id/goodsname"
             android:gravity="center"
             android:text="10包"
-            android:textColor="@color/gray"
-            android:textSize="15sp"/>
+            android:textColor="@color/red"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/local"
@@ -59,6 +60,13 @@
             android:textSize="16sp"
             android:visibility="gone"/>
 
+        <View
+            android:layout_width="15dip"
+            android:layout_height="15dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dip"
+            android:background="@drawable/next_black"/>
 
     </RelativeLayout>
 

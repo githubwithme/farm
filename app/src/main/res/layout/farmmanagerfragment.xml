@@ -428,13 +428,28 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_more"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="50dip"
+                        android:layout_height="45dip"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/temp6"/>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dip"
+                        android:gravity="center"
+                        android:text="地图应用"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
                 </LinearLayout>
+
 
             </LinearLayout>
 

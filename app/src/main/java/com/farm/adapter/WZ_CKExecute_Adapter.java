@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -210,7 +210,7 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
         TextView shippingFee = (TextView) convertView.findViewById(R.id.shippingFee);
         TextView inGoodsValue = (TextView) convertView.findViewById(R.id.inGoodsValue);
         FrameLayout fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
-        LinearLayout groupExpand = (LinearLayout) convertView.findViewById(R.id.groupExpand);
+        RelativeLayout groupExpand = (RelativeLayout) convertView.findViewById(R.id.groupExpand);
 
         convertView.setTag(R.id.tag_ck, listData.get(groupPosition));
         convertView.setOnClickListener(new View.OnClickListener()

@@ -129,18 +129,18 @@ public class PG_CKExcute_adapter extends BaseExpandableListAdapter
             }
 
             //数据添加
-            listItemView.batchnums.setText("批次号:"+"\n"+pg_wZckbean.getBatchName());
+            listItemView.batchnums.setText("批次号:" + "\n" + pg_wZckbean.getBatchName());
             listItemView.goodsname.setText(pg_wZckbean.getGoodsName());
             listItemView.local.setText("出库位置:" + pg_wZckbean.getParkName() + "-" + pg_wZckbean.getStoreName());
             if (!pg_wZckbean.getThree().equals(""))
             {
-                listItemView.inGoodsvalue.setText("出库"+"\n" + pg_wZckbean.getThreeNum() + pg_wZckbean.getThree());
+                listItemView.inGoodsvalue.setText("出库" + pg_wZckbean.getThreeNum() + pg_wZckbean.getThree());
             } else if (pg_wZckbean.getThree().equals("") && !pg_wZckbean.getSec().equals(""))
             {
-                listItemView.inGoodsvalue.setText("出库"+"\n" + pg_wZckbean.getSecNum() + pg_wZckbean.getSec());
+                listItemView.inGoodsvalue.setText("出库" + pg_wZckbean.getSecNum() + pg_wZckbean.getSec());
             } else
             {
-                listItemView.inGoodsvalue.setText("出库"+"\n" + pg_wZckbean.getFirsNum() + pg_wZckbean.getFirs());
+                listItemView.inGoodsvalue.setText("出库" + pg_wZckbean.getFirsNum() + pg_wZckbean.getFirs());
             }
 
         } else

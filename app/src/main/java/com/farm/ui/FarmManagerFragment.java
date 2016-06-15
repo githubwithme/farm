@@ -143,13 +143,13 @@ public class FarmManagerFragment extends Fragment
         getActivity().startActivity(intent);
     }
 
-//    @Click
-//    void ll_more()
-//    {
-//        Intent intent = new Intent(getActivity(), NCZ_MoreModule_.class);
-//        intent.putExtra("parkid", "80");
-//        getActivity().startActivity(intent);
-//    }
+    @Click
+    void ll_more()
+    {
+        Intent intent = new Intent(getActivity(), NCZ_MoreModule_.class);
+        intent.putExtra("parkid", "80");
+        getActivity().startActivity(intent);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
