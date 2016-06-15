@@ -20,7 +20,8 @@
             android:src="@drawable/ic_back"/>
 
         <TextView
-
+            android:layout_marginLeft="20dip"
+            android:layout_toRightOf="@+id/imgbtn_back"
             android:layout_centerInParent="true"
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
