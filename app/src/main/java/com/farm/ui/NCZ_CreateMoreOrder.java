@@ -99,7 +99,7 @@ public class NCZ_CreateMoreOrder extends Activity
     void et_name()
     {
 
-        listNewData = FileHelper.getAssetsData(NCZ_CreateMoreOrder.this, "getPurchaser", Purchaser.class);
+//        listNewData = FileHelper.getAssetsData(NCZ_CreateMoreOrder.this, "getPurchaser", Purchaser.class);
 
  /*       JSONObject jsonObject = utils.parseJsonFile(NCZ_CreateMoreOrder.this, "dictionary.json");
         JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("Happen"));
@@ -112,7 +112,7 @@ public class NCZ_CreateMoreOrder extends Activity
         List<String> listid = new ArrayList<String>();
         for (int i = 0; i < listNewData.size(); i++)
         {
-            listdata.add(listNewData.get(i).getPurchaser());
+            listdata.add(listNewData.get(i).getName());
             listid.add(listNewData.get(i).getId());
         }
         showDialog_workday(listdata, listid);
@@ -247,6 +247,7 @@ public class NCZ_CreateMoreOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
+        getpurchaser();
         et_price.addTextChangedListener(new TextWatcher()
         {
             @Override
@@ -441,11 +442,11 @@ public class NCZ_CreateMoreOrder extends Activity
 
                 for (int i = 0; i < listNewData.size(); i++)
                 {
-                    if (listNewData.get(i).getPurchaser().equals(zzsl))
+                    if (listNewData.get(i).getName().equals(zzsl))
                     {
-                        et_phone.setText(listNewData.get(i).getPhone());
+                        et_phone.setText(listNewData.get(i).getTelephone());
                         et_address.setText(listNewData.get(i).getAddress());
-                        et_email.setText(listNewData.get(i).getEms());
+                        et_email.setText(listNewData.get(i).getMailbox());
                     }
                 }
 
@@ -453,5 +454,52 @@ public class NCZ_CreateMoreOrder extends Activity
             }
         });
         customDialog_listView.show();
+    }
+
+    private void getpurchaser()
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_CreateMoreOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getpurchaser");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        if (result.getAffectedRows() != 0)
+                        {
+                            listNewData=JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
+                        } else
+                        {
+                            listNewData = new ArrayList<Purchaser>();
+                        }
+
+                    } else
+                    {
+                        listNewData = new ArrayList<Purchaser>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_CreateMoreOrder.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_CreateMoreOrder.this, "error_connectServer");
+            }
+        });
     }
 }
