@@ -16,8 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
@@ -94,7 +92,6 @@ public class NCZ_CreateMoreOrder extends Activity
     List<Purchaser> listNewData = null;
 
 
-
     @Click
     void et_name()
     {
@@ -160,7 +157,7 @@ public class NCZ_CreateMoreOrder extends Activity
         //
 
         SmsManager smsMessage = SmsManager.getDefault();
-        smsMessage.sendTextMessage(et_phone.getText().toString(), null, "单价:"+et_price.getText().toString()+"元,重量:"+et_weight.getText().toString()+"斤,总价:"+et_values.getText().toString()+"元", null, null);
+        smsMessage.sendTextMessage(et_phone.getText().toString(), null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元", null, null);
         //
         List<String> list_uuid = new ArrayList<>();
         String batchtime = "";
@@ -231,6 +228,7 @@ public class NCZ_CreateMoreOrder extends Activity
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
         sellOrder.setProducer(producer);
+        sellOrder.setFinalpayment("0");
 
 
         List<SellOrder_New> SellOrderList = new ArrayList<>();
@@ -275,7 +273,7 @@ public class NCZ_CreateMoreOrder extends Activity
                     return;
                 }
                 double ss = Double.valueOf(et_price.getText().toString()) * Double.valueOf(et_weight.getText().toString());
-                et_values.setText(String.format("%.2f",ss));
+                et_values.setText(String.format("%.2f", ss));
             }
         });
         et_weight.addTextChangedListener(new TextWatcher()
@@ -306,7 +304,7 @@ public class NCZ_CreateMoreOrder extends Activity
                     return;
                 }
                 double ss = Double.valueOf(et_price.getText().toString()) * Double.valueOf(et_weight.getText().toString());
-                et_values.setText(String.format("%.2f",ss));
+                et_values.setText(String.format("%.2f", ss));
             }
         });
         getNewSaleList();
@@ -406,8 +404,12 @@ public class NCZ_CreateMoreOrder extends Activity
                     {
                         Toast.makeText(NCZ_CreateMoreOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent();
-                        intent1.setAction(AppContext.BROADCAST_UPDATESELLORDER);
+                        intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
                         sendBroadcast(intent1);
+
+                        Intent intent2 = new Intent();
+                        intent2.setAction(AppContext.BROADCAST_FINISH);
+                        sendBroadcast(intent2);
                         finish();
                     }
 
