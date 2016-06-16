@@ -79,7 +79,7 @@ public class AppContext extends Application
         // 注册crashHandler
         appException.init(getApplicationContext());
         // 发送以前没发送的报告(可选)
-        appException.sendPreviousReportsToServer();
+//        appException.sendPreviousReportsToServer();
     }
 
     public void setLOCATION_X(String lOCATION_X)

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -183,6 +182,22 @@ public class Login extends Activity
                             Toast.makeText(Login.this, "用户名或密码错误!", Toast.LENGTH_SHORT).show();
                         } else
                         {
+                            commembertab commembertab = listData.get(0);
+                            SharedPreferences sp = getSharedPreferences("userInfo", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("userName", commembertab.getuserName());
+                            editor.commit();
+                            if (cb_autologin.isChecked())
+                            {
+                                commembertab.setAutoLogin("1");
+                                commembertab.setuserPwd(psw);
+                                SqliteDb.save(Login.this, commembertab);
+                            } else
+                            {
+                                commembertab.setAutoLogin("0");
+                                commembertab.setuserPwd("");
+                                SqliteDb.save(Login.this, commembertab);
+                            }
                             String level = listData.get(0).getnlevel().toString();
                             if (level.equals("0"))// 农场主
                             {
@@ -208,22 +223,6 @@ public class Login extends Activity
                             {
                                 Toast.makeText(Login.this, "该用户已被锁定，暂不能登陆!", Toast.LENGTH_SHORT).show();
                                 return;
-                            }
-                            commembertab commembertab = listData.get(0);
-                            SharedPreferences sp = getSharedPreferences("userInfo", MODE_PRIVATE);
-                            Editor editor = sp.edit();
-                            editor.putString("userName", commembertab.getuserName());
-                            editor.commit();
-                            if (cb_autologin.isChecked())
-                            {
-                                commembertab.setAutoLogin("1");
-                                commembertab.setuserPwd(psw);
-                                SqliteDb.save(Login.this, commembertab);
-                            } else
-                            {
-                                commembertab.setAutoLogin("0");
-                                commembertab.setuserPwd("");
-                                SqliteDb.save(Login.this, commembertab);
                             }
                         }
                     } else

@@ -28,6 +28,7 @@ import com.farm.R;
 import com.farm.adapter.OrderList_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.app.AppManager;
 import com.farm.bean.BreakOff;
 import com.farm.bean.CoordinatesBean;
 import com.farm.bean.CusPoint;
@@ -673,17 +674,18 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        commembertab = AppContext.getUserInfo(NCZ_SaleMap.this);
-        TencentLocationRequest request = TencentLocationRequest.create();
-        TencentLocationManager locationManager = TencentLocationManager.getInstance(NCZ_SaleMap.this);
-        locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84
-        error = locationManager.requestLocationUpdates(request, this);
     }
 
 
     @AfterViews
     void afterOncreate()
     {
+        AppManager.getAppManager().addActivity(this);
+        commembertab = AppContext.getUserInfo(NCZ_SaleMap.this);
+        TencentLocationRequest request = TencentLocationRequest.create();
+        TencentLocationManager locationManager = TencentLocationManager.getInstance(NCZ_SaleMap.this);
+        locationManager.setCoordinateType(1);//设置坐标系为gcj02坐标，1为GCJ02，0为WGS84
+        error = locationManager.requestLocationUpdates(request, this);
         tencentMap = mapview.getMap();
         tencentMap.setZoom(18);
         uiSettings = mapview.getUiSettings();

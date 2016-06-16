@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.RelativeLayout;
 
 import com.farm.R;
+import com.farm.app.AppManager;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -42,7 +43,7 @@ public class NCZ_MoreModule extends Activity
     @AfterViews
     void afterOncreate()
     {
-
+        AppManager.getAppManager().addActivity(this);
     }
 
     @Override
