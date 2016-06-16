@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -17,9 +18,12 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.farm.R;
+import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
 import com.farm.bean.BreakOff_New;
+import com.farm.bean.commembertab;
 import com.farm.ui.PQ_DLbjFragment_;
+import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_ListView;
 
 import java.util.ArrayList;
@@ -188,6 +192,7 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
         Button btn_bianjie = (Button) convertView.findViewById(R.id.btn_bianjie);
         TextView tv_nums = (TextView) convertView.findViewById(R.id.tv_nums);
         RelativeLayout groupExpand = (RelativeLayout) convertView.findViewById(R.id.groupExpand);
+        com.farm.widget.CircleImageView fl_new_item = (com.farm.widget.CircleImageView) convertView.findViewById(R.id.fl_new_item);
         tv_park.setText(listData.get(groupPosition).getBatchTime() + "   " + listData.get(groupPosition).getBatchColor()+"绳带");
         if (listData.get(groupPosition).getBatchColor().equals("红色")) {
 //            view.setBackgroundColor(Color.parseColor("#365663"));
@@ -215,7 +220,7 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
             tv_nums.setBackgroundColor(Color.parseColor("#ffff00"));
             tv_park.setBackgroundColor(Color.parseColor("#ffff00"));
         }
-        groupExpand.setOnClickListener(new View.OnClickListener()
+/*        groupExpand.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -227,6 +232,28 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
                 {
                     mainlistview.expandGroup(groupPosition);
                 }
+            }
+        });*/
+        convertView.setTag(R.id.tag_pgdl, listData.get(groupPosition));
+        convertView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if (isExpanded)
+                {
+                    mainlistview.collapseGroup(groupPosition);
+                } else
+                {
+                    mainlistview.expandGroup(groupPosition);
+                }
+                BatchTime batchTime = (BatchTime) view.getTag(R.id.tag_pgdl);
+                if (batchTime.getFlashStr().equals("1"))
+                {
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    AppContext.eventStatus(context, "7", batchTime.getid(), commembertab.getId());
+                }
+
             }
         });
         int num=0;
@@ -240,7 +267,7 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
         {
 
         }
-        tv_nums.setText(num + "");
+        tv_nums.setText(num + "株");
         btn_bianjie.setTag(R.id.tag_text, batchTime);
         btn_bianjie.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,6 +279,13 @@ public class PQ_DLExecute_Adapter extends BaseExpandableListAdapter
                 context.startActivity(intent);
             }
         });
+        if (listData.get(groupPosition).getFlashStr().equals("0"))
+        {
+            fl_new_item.setVisibility(View.INVISIBLE);
+        } else
+        {
+            fl_new_item.setVisibility(View.VISIBLE);
+        }
         return convertView;
     }
     @Override

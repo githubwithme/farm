@@ -10,16 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.Adapter_Dynamic;
 import com.farm.adapter.Adapter_DynamicFragment;
+import com.farm.adapter.PG_Adapter_Dynamic;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.DynamicBean;
@@ -27,8 +31,12 @@ import com.farm.bean.DynamicEntity;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.bean.jobtab;
 import com.farm.bean.parktab;
+import com.farm.common.UIHelper;
 import com.farm.common.utils;
+import com.farm.widget.NewDataToast;
+import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -42,6 +50,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -54,8 +63,9 @@ public class PG_DynamicFragment extends Fragment
     TimeThread timethread;
     PopupWindow pw_command;
     View pv_command;
-    Adapter_Dynamic adapter_dynamic;
+    PG_Adapter_Dynamic adapter_dynamic;
     List<DynamicBean> listData = new ArrayList<>();
+    private List<jobtab> listDatas = new ArrayList<jobtab>();
     List<DynamicEntity> list_DynamicEntity;
     @ViewById
     Button btn_add;
@@ -125,7 +135,7 @@ public class PG_DynamicFragment extends Fragment
         timethread.setSleep(false);
         timethread.start();
 //        getNewSaleList_test();
-
+        getListData( AppContext.PAGE_SIZE, 0);
     }
 
     @Override
@@ -147,7 +157,9 @@ public class PG_DynamicFragment extends Fragment
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("action", "GetDynamicData1");
+        params.addQueryStringParameter("parkId", commembertab.getparkId());
+        params.addQueryStringParameter("areaId", commembertab.getareaId());
+        params.addQueryStringParameter("action", "GetDynamicDataByCCArea");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -161,15 +173,26 @@ public class PG_DynamicFragment extends Fragment
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     list = JSON.parseArray(result.getRows().toJSONString(), DynamicBean.class);
-                    for (int i = 0; i < list.size(); i++)
+                    Iterator<DynamicBean> it = list.iterator();
+                    while (it.hasNext())
+                    {
+                        String value = it.next().getType();
+                        if (value.equals("GZ"))
+                        {
+                            it.remove();
+                        }
+                    }
+             /*       for (int i = 0; i < list.size(); i++)
                     {
                         if (list.get(i).getListdata().size() != 0)
                         {
                             listData.add(list.get(i));
                         }
-                    }
-                    adapter_dynamic = new Adapter_Dynamic(getActivity(), listData);
+                    }*/
+                    list = utils.BubbleSortArray(list);//本地不行
+                    adapter_dynamic = new PG_Adapter_Dynamic(getActivity(), list,listDatas);
                     lv.setAdapter(adapter_dynamic);
+                  /*
                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {
                         @Override
@@ -237,7 +260,7 @@ public class PG_DynamicFragment extends Fragment
 //                                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
 //                                getActivity().startActivity(intent);
                         }
-                    });
+                    });*/
 //                    }
                 } else
                 {
@@ -512,13 +535,19 @@ public class PG_DynamicFragment extends Fragment
     }
 
 
-    private void getEventList()
+    private void getListData( final int PAGESIZE, int PAGEINDEX)
     {
-
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
+        params.addQueryStringParameter("workuserid", commembertab.getId());
+        params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getEventListByUID");
+        params.addQueryStringParameter("username", commembertab.getuserName());
+        params.addQueryStringParameter("orderby", "regDate desc");
+        params.addQueryStringParameter("strWhere", "");
+        params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
+        params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
+        params.addQueryStringParameter("action", "jobGetList");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -526,39 +555,18 @@ public class PG_DynamicFragment extends Fragment
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<ReportedBean> listNewData = null;
+                List<jobtab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() > 0)
-                    {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
-
-                        Iterator<ReportedBean> it = listNewData.iterator();
-                        while (it.hasNext())
-                        {
-                            ReportedBean reportedBean = it.next();
-                            if (reportedBean.getIsflashStr().equals("0") || reportedBean.resultflashStr.equals("0"))
-                            {
-                                it.remove();
-                            }
-                        }
-                        DynamicEntity dynamicentity = new DynamicEntity();
-                        dynamicentity.setDate(utils.getToday());
-                        dynamicentity.setNote(listNewData.size() + "事件更新");
-                        dynamicentity.setTitle("事件");
-                        dynamicentity.setType("SJ");
-                        list_DynamicEntity.add(dynamicentity);
-                    } else
-                    {
-                        listNewData = new ArrayList<ReportedBean>();
-                    }
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                    listDatas.addAll(listNewData);
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
-
                     return;
                 }
+
             }
 
             @Override
@@ -566,7 +574,6 @@ public class PG_DynamicFragment extends Fragment
             {
                 String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
-
             }
         });
     }

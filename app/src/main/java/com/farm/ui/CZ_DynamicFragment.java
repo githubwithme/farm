@@ -157,7 +157,7 @@ public class CZ_DynamicFragment extends Fragment
         params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("parkId", commembertab.getparkId());
         params.addQueryStringParameter("action", "GetDynamicDataByCCArea");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -172,7 +172,7 @@ public class CZ_DynamicFragment extends Fragment
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     list = JSON.parseArray(result.getRows().toJSONString(), DynamicBean.class);
-                    for (int i = 0; i < list.size(); i++)
+         /*           for (int i = 0; i < list.size(); i++)
                     {
                         if (list.get(i).getListdata().size() != 0)
                         {
@@ -191,7 +191,8 @@ public class CZ_DynamicFragment extends Fragment
                     intent.putExtra("Num", k + "");
                     intent.setAction(AppContext.BROADCAST_NCZ_DT);
                     getActivity().sendBroadcast(intent);
-                    k = 0;
+                    k = 0;*/
+                    list = utils.BubbleSortArray(list);//本地不行
                     adapter_dynamic = new CZ_Adapter_Dynamic(getActivity(), list);
                     lv.setAdapter(adapter_dynamic);
                    /* lv.setOnItemClickListener(new AdapterView.OnItemClickListener()

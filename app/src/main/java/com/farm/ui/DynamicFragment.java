@@ -170,6 +170,7 @@ public class DynamicFragment extends Fragment
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     list = JSON.parseArray(result.getRows().toJSONString(), DynamicBean.class);
+
                     for (int i = 0; i < list.size(); i++)
                     {
                         if (list.get(i).getListdata().size() != 0)

@@ -77,6 +77,7 @@ public class PQ_DLFragment extends Activity
         params.addQueryStringParameter("parkid", commembertab.getparkId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("areaid", commembertab.getareaId());
+        params.addQueryStringParameter("userId", commembertab.getId());
         params.addQueryStringParameter("action", "getBatchTimeOfArea");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

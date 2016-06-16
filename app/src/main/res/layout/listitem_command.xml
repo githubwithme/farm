@@ -55,8 +55,8 @@
 
             <FrameLayout
                 android:id="@+id/fl_new_item"
-                android:layout_width="20dip"
-                android:layout_height="20dip"
+                android:layout_width="15dip"
+                android:layout_height="15dip"
                 android:layout_alignParentRight="true"
                 android:visibility="gone">
 

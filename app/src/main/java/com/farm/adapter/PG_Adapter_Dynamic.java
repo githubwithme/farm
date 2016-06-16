@@ -1,8 +1,8 @@
 package com.farm.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +13,8 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.bean.DynamicBean;
+import com.farm.bean.jobtab;
 import com.farm.common.utils;
-import com.farm.ui.CZ_CommandListActivity_;
-import com.farm.ui.CZ_DLFragment_;
-import com.farm.ui.CZ_JobActivity_;
-import com.farm.ui.CZ_MQActivity_;
-import com.farm.ui.CZ_OrderManager_;
 import com.farm.ui.NCZ_CommandListActivity_;
 import com.farm.ui.NCZ_DLdatail_;
 import com.farm.ui.NCZ_JobActivity_;
@@ -26,21 +22,26 @@ import com.farm.ui.NCZ_MQActivity_;
 import com.farm.ui.NCZ_OrderManager_;
 import com.farm.ui.NCZ_SJActivity_;
 import com.farm.ui.Ncz_wz_ll_;
+import com.farm.ui.PG_GddList_;
 import com.farm.ui.PG_ListOfEvents_;
+import com.farm.ui.PG_PlantList_;
+import com.farm.ui.PQ_DLFragment_;
+import com.farm.ui.SelectorCommand_;
 import com.farm.widget.CircleImageView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by hasee on 2016/6/15.
+ * Created by hasee on 2016/6/16.
  */
-@SuppressLint("NewApi")
-public class CZ_Adapter_Dynamic extends BaseAdapter
+public class PG_Adapter_Dynamic extends BaseAdapter
 {
     private Context context;// 运行上下文
     private List<DynamicBean> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
+    List<jobtab> listDatas;
     DynamicBean dynamicBean;
 
     static class ListItemView
@@ -55,8 +56,9 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
         public LinearLayout ll_select;
     }
 
-    public CZ_Adapter_Dynamic(Context context, List<DynamicBean> data)
+    public PG_Adapter_Dynamic(Context context, List<DynamicBean> data,List<jobtab> listDatas )
     {
+        this.listDatas=listDatas;
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.listItems = data;
@@ -133,7 +135,6 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
         } else if (type.equals("GZ"))
         {
             listItemView.tv_title.setText("工作");
-//            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
             if (dynamicBean.getListdata().size()>0)
             {
                 listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
@@ -233,34 +234,36 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             @Override
             public void onClick(View view)
             {
-                DynamicBean dynamicBean1= (DynamicBean) view.getTag(R.id.tag_dt);
+                DynamicBean dynamicBean1 = (DynamicBean) view.getTag(R.id.tag_dt);
                 Intent intent = null;
                 String type = dynamicBean1.getType();
                 if (type.equals("ZL"))
                 {
-                    intent = new Intent(context, CZ_CommandListActivity_.class);//1
+                    intent = new Intent(context, SelectorCommand_.class);
+                    intent.putParcelableArrayListExtra("jobtablist", (ArrayList<? extends Parcelable>) listDatas);
+
                 } else if (type.equals("GZ"))
                 {
-                    intent = new Intent(context, CZ_JobActivity_.class);//1
+                    intent = new Intent(context, NCZ_JobActivity_.class);
                 } else if (type.equals("MQ"))
                 {
-                    intent = new Intent(context, CZ_MQActivity_.class);//1
-                } else if (type.equals("XS"))
+                    intent = new Intent(context, PG_GddList_.class);
+                }/* else if (type.equals("XS"))
                 {
 //                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
-                    intent = new Intent(context, CZ_OrderManager_.class);//1
+                    intent = new Intent(context, NCZ_OrderManager_.class);
                 } else if (type.equals("KC"))
                 {
-                    intent = new Intent(context, Ncz_wz_ll_.class);//0
+                    intent = new Intent(context, Ncz_wz_ll_.class);
                 } else if (type.equals("SP"))
                 {
-                    intent = new Intent(context, PG_ListOfEvents_.class);//1
-                } else if (type.equals("SJ"))
+                    intent = new Intent(context, NCZ_CommandListActivity_.class);
+                } */ else if (type.equals("SJ"))
                 {
-                    intent = new Intent(context, PG_ListOfEvents_.class);//0
+                    intent = new Intent(context, PG_ListOfEvents_.class);
                 } else if (type.equals("DL"))
                 {
-                    intent = new Intent(context, CZ_DLFragment_.class);//1
+                    intent = new Intent(context, PQ_DLFragment_.class);
                 }
                 context.startActivity(intent);
 
