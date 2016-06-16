@@ -480,7 +480,7 @@ public class SelectCommandFragment extends Fragment implements OnClickListener
 
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.updateStatus(getActivity(), "0", commandtab.getId(), "2", commembertab.getId());
-
+                commandSetStatus(commandtab);
                 Intent intent = new Intent(getActivity(), CommandDetail_Edit_.class);
                 intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);

@@ -93,8 +93,8 @@ public class NCZ_WZ_CKFRagment extends Fragment
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+                /*    if (result.getAffectedRows() != 0)
+                    {*/
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), WZ_CRk.class);
                         wz_ckExecute_adapter = new WZ_CKExecute_Adapter(getActivity(), listNewData, expandableListView);
                         expandableListView.setAdapter(wz_ckExecute_adapter);
@@ -103,10 +103,10 @@ public class NCZ_WZ_CKFRagment extends Fragment
 //                        {
 //                            expandableListView.expandGroup(i);//展开
 //                        }
-                    } else
+             /*       } else
                     {
                         listNewData = new ArrayList<WZ_CRk>();
-                    }
+                    }*/
 
                 } else
                 {

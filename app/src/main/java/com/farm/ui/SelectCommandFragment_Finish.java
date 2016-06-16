@@ -402,7 +402,8 @@ public class SelectCommandFragment_Finish extends Fragment implements OnClickLis
                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                 AppContext.updateStatus(getActivity(), "0", commandtab.getId(), "2", commembertab.getId());
 
-                Intent intent = new Intent(getActivity(), CommandDetail_Edit_.class);
+//                Intent intent = new Intent(getActivity(), CommandDetail_Edit_.class);
+                Intent intent = new Intent(getActivity(), PG_commdetail_.class);
                 intent.putExtra("bean", commandtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
             }

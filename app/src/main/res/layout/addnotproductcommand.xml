@@ -39,26 +39,7 @@
             android:textSize="@dimen/titlebar_textsize"/>
 
 
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="60dip"
-            android:layout_height="35dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:background="@null"
-            android:gravity="center"
-            android:text="保存"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14"/>
 
-        <ProgressBar
-            android:id="@+id/pb_load"
-            android:layout_width="60dip"
-            android:layout_height="35dip"
-            android:layout_centerVertical="true"
-            android:visibility="gone"
-            android:layout_toLeftOf="@+id/btn_save"/>
     </RelativeLayout>
 
     <View
@@ -294,6 +275,27 @@
                 </TableRow>
             </TableLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dip">
+                <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="保存"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_14"/>
+
+                <ProgressBar
+                    android:id="@+id/pb_load"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:layout_toLeftOf="@+id/btn_save"/>
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5px"

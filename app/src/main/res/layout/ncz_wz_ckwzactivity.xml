@@ -28,7 +28,40 @@
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_yellow"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/bg_white"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
+
+        <EditText
+            android:id="@+id/et_goodsname"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_colum"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="50dip"
+            android:layout_span="3"
+            android:layout_toRightOf="@+id/namess"
+            android:hint="请输入物资名称"
+            android:paddingLeft="10dip"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <ImageButton
+            android:id="@+id/imgbtn"
+            android:layout_width="40dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dip"
+            android:background="@null"
+            android:src="@drawable/searchitem"/>
+    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
