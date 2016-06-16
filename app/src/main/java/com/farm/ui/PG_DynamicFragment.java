@@ -183,25 +183,25 @@ public class PG_DynamicFragment extends Fragment
                                 intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
                             } else if (type.equals("GZ"))
                             {
-                                intent = new Intent(getActivity(), NCZ_JobActivity_.class);
+                                intent = new Intent(getActivity(), NCZ_JobActivity_.class);//0
                             } else if (type.equals("MQ"))
                             {
-                                intent = new Intent(getActivity(), NCZ_MQActivity_.class);
+                                intent = new Intent(getActivity(), PG_PlantList_.class);//1
                             } else if (type.equals("XS"))
                             {
-                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
+                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);//0
                             } else if (type.equals("KC"))
                             {
-                                intent = new Intent(getActivity(), Ncz_wz_ll_.class);
+                                intent = new Intent(getActivity(), Ncz_wz_ll_.class);//0
                             } else if (type.equals("SP"))
                             {
-                                intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+                                intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);//0
                             } else if (type.equals("SJ"))
                             {
-                                intent = new Intent(getActivity(), NCZ_SJActivity_.class);
+                                intent = new Intent(getActivity(), PG_ListOfEvents_.class);//1
                             } else if (type.equals("DL"))
                             {
-                                intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+                                intent = new Intent(getActivity(), PQ_DLFragment_.class);//1
                             }
                             getActivity().startActivity(intent);
 
