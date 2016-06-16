@@ -112,6 +112,7 @@ public class AppManager
 		try
 		{
 			finishAllActivity();
+			android.os.Process.killProcess(android.os.Process.myPid());
 //			ActivityManager activityMgr = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 //			activityMgr.restartPackage(context.getPackageName());
 //			System.exit(0);

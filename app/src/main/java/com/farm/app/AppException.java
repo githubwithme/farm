@@ -1,12 +1,16 @@
 package com.farm.app;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,6 +22,7 @@ import com.farm.bean.commembertab;
 import com.farm.common.GetMobilePhoneInfo;
 import com.farm.common.SqliteDb;
 import com.farm.common.utils;
+import com.guide.Guide_List;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -116,23 +121,20 @@ public class AppException implements UncaughtExceptionHandler
         if (!handleException(ex) && mDefaultHandler != null)
         {
             // 如果用户没有处理则让系统默认的异常处理器来处理
-            // mDefaultHandler.uncaughtException(thread, ex);
+            mDefaultHandler.uncaughtException(thread, ex);
+        }
 
-            // Sleep一会后结束程序，来让线程停止一会是为了显示Toast信息给用户，然后Kill程序
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setIcon(android.R.drawable.ic_dialog_info);
-            builder.setTitle(R.string.app_error);
-            builder.setMessage(R.string.app_error_relogin);
-            builder.setNegativeButton(R.string.sure, new DialogInterface.OnClickListener()
-            {
-                public void onClick(DialogInterface dialog, int which)
-                {
-                    dialog.dismiss();
-                    // 退出
-                    AppManager.getAppManager().AppExit(mContext);
-                }
-            });
-            builder.show();
+        //退出及重启应用
+        try
+        {
+            Thread.sleep(2000);
+            Intent intent = new Intent(mContext, Guide_List.class);
+            PendingIntent restartIntent = PendingIntent.getActivity(mContext, 0, intent, 0);
+            AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, restartIntent); // 1秒钟后重启应用
+            AppManager.getAppManager().AppExit(mContext);
+        } catch (InterruptedException e)
+        {
         }
 
     }
@@ -174,7 +176,7 @@ public class AppException implements UncaughtExceptionHandler
     {
         if (ex == null)
         {
-            return true;
+            return false;
         }
         final String msg = ex.getLocalizedMessage();
         // 收集设备信息
@@ -183,8 +185,33 @@ public class AppException implements UncaughtExceptionHandler
         String crashFileName = saveCrashInfoToFile(ex);
         // 发送错误报告到服务器
 //        sendCrashReportsToServer(mContext);
-
+        //使用Toast来显示异常信息
+        new Thread()
+        {
+            @Override
+            public void run()
+            {
+                Looper.prepare();
+                //            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+//            builder.setIcon(android.R.drawable.ic_dialog_info);
+//            builder.setTitle(R.string.app_error);
+//            builder.setMessage(R.string.app_error_relogin);
+//            builder.setNegativeButton(R.string.sure, new DialogInterface.OnClickListener()
+//            {
+//                public void onClick(DialogInterface dialog, int which)
+//                {
+//                    dialog.dismiss();
+//                    // 退出
+//                    AppManager.getAppManager().AppExit(mContext);
+//                }
+//            });
+//            builder.show();
+                Toast.makeText(mContext, "出现未知异常,即将重启应用", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+        }.start();
         return true;
+
     }
 
     /**

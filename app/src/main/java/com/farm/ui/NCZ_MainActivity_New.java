@@ -190,6 +190,7 @@ public class NCZ_MainActivity_New extends Activity
     @AfterViews
     void afterOncreate()
     {
+//        AppManager.getAppManager().addActivity(this);
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_NCZ_DT);
         NCZ_MainActivity_New.this.registerReceiver(receiver_update, intentfilter_update);
         getActionBar().hide();
