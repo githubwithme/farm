@@ -34,7 +34,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".app.AppContext"
         android:allowBackup="true"
@@ -240,6 +240,7 @@
         <activity android:name=".ui.ShowUserInfo_"/>
         <activity android:name=".ui.GuideViewActivity"/>
         <activity android:name=".ui.Login_"/>
+        <activity android:name=".ui.NC_Weater_"/>
         <activity
             android:name=".ui.GuideViewDoor"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"

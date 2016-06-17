@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/white"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -195,11 +196,27 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="invisible"
+                    android:id="@+id/ce_tq"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="50dip"
+                        android:layout_height="45dip"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/logo_qzone"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dip"
+                        android:gravity="center"
+                        android:text="农场天气"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
 
                 </LinearLayout>
 
