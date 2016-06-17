@@ -25,8 +25,8 @@ import java.util.List;
 @SuppressLint("NewApi")
 public class NCZ_CommandAdapter extends BaseAdapter
 {
-    String name="";
-   int  colorpostion = 0;
+    static String name = "";
+    int colorpostion = 0;
     private Context context;// 运行上下文
     private List<commandtab> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
@@ -146,10 +146,10 @@ public class NCZ_CommandAdapter extends BaseAdapter
         }
         if (commandtab.getstdJobType().equals("0") || commandtab.getstdJobType().equals("-1"))
         {
-            if (commandtab.getcommNote().toString().length()>20)
+            if (commandtab.getcommNote().toString().length() > 20)
             {
-                listItemView.tv_cmdname.setText(commandtab.getcommNote().toString().substring(0,19));
-            }else
+                listItemView.tv_cmdname.setText(commandtab.getcommNote().toString().substring(0, 19));
+            } else
             {
                 listItemView.tv_cmdname.setText(commandtab.getcommNote().toString());
             }
@@ -205,8 +205,8 @@ public class NCZ_CommandAdapter extends BaseAdapter
 //            listItemView.tv_importance.setText("未知");
 ////			 listItemView.circle_img.setBorderColor(context.getResources().getColor(R.color.bg_text));
 //        }
-        int[] color = new int[]{R.color.bg_ask, R.color.bg_work, R.color.red, R.color.gray, R.color.green, R.color.yellow, R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_titlebar, R.color.bg_text_small};
-        if (position == 0)
+        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work,  R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
+/*        if (position == 0)
         {
             colorpostion = 0;
             listItemView.circle_img.setImageResource(color[0]);
@@ -222,25 +222,37 @@ public class NCZ_CommandAdapter extends BaseAdapter
                 colorpostion = colorpostion + 1;
                 listItemView.circle_img.setImageResource(color[colorpostion]);
             }
-        }
-/*        commembertab commembertabss = AppContext.getUserInfo(context);
-        name+=commembertabss.getrealName()+",";
-        for(int i=0;i<position;i++)
-        {
-            //                String[] nongzi = commandtab.getnongziName().split(",");
-            if (name.indexOf(listItems.get(i).getcommFromName())!=-1)
-            {
-                String [] data=name.split(",");
-                for (int j=0;j<data.length;j++)
-                {
-                if(data)
-                    listItemView.circle_img.setImageResource(color[colorpostion]);
-                }
-
-            }
-
-
         }*/
+        commembertab commembertabss = AppContext.getUserInfo(context);
+
+        if (name.equals(""))
+        {
+            name += commembertabss.getrealName() + ",";
+        }
+
+//        for(int i=0;i<position;i++)
+        int str = position;
+
+
+        //                String[] nongzi = commandtab.getnongziName().split(",");
+
+        if (name.indexOf(listItems.get(position).getcommFromName()) != -1)
+        {
+            String[] data = name.split(",");
+            for (int j = 0; j < data.length; j++)
+            {
+                if (data[j].equals(listItems.get(position).getcommFromName()))
+                    listItemView.circle_img.setImageResource(color[j % color.length]);
+                int x = j % color.length;
+            }
+        } else
+        {
+            String[] data = name.split(",");
+            name += listItems.get(position).getcommFromName() + ",";
+            listItemView.circle_img.setImageResource(color[(data.length ) % color.length]);
+            int y = (data.length ) % color.length;
+        }
+
 
         return convertView;
     }
