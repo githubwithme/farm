@@ -3,6 +3,7 @@ package com.farm.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,19 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
 import com.farm.bean.DynamicBean;
+import com.farm.bean.Result;
+import com.farm.bean.commembertab;
+import com.farm.bean.jobtab;
 import com.farm.common.utils;
 import com.farm.ui.CZ_CommandListActivity_;
 import com.farm.ui.CZ_DLFragment_;
 import com.farm.ui.CZ_JobActivity_;
+import com.farm.ui.CZ_JobFragment_;
 import com.farm.ui.CZ_MQActivity_;
 import com.farm.ui.CZ_OrderManager_;
 import com.farm.ui.NCZ_CommandListActivity_;
@@ -27,8 +35,16 @@ import com.farm.ui.NCZ_OrderManager_;
 import com.farm.ui.NCZ_SJActivity_;
 import com.farm.ui.Ncz_wz_ll_;
 import com.farm.ui.PG_ListOfEvents_;
+import com.farm.ui.SelectorCommand_;
 import com.farm.widget.CircleImageView;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +56,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
 {
     private Context context;// 运行上下文
     private List<DynamicBean> listItems;// 数据集合
+    List<jobtab> listDatas;
     private LayoutInflater listContainer;// 视图容器
     DynamicBean dynamicBean;
 
@@ -55,8 +72,9 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
         public LinearLayout ll_select;
     }
 
-    public CZ_Adapter_Dynamic(Context context, List<DynamicBean> data)
+    public CZ_Adapter_Dynamic(Context context, List<DynamicBean> data,List<jobtab> listDatas)
     {
+        this.listDatas=listDatas;
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.listItems = data;
@@ -118,9 +136,9 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             listItemView.tv_date.setText("无");
         }
         String type = dynamicBean.getType();
-        if (type.equals("ZL"))
+        if (type.equals("PGZL"))
         {
-            listItemView.tv_title.setText("指令");
+            listItemView.tv_title.setText("片管指令");
             if (dynamicBean.getListdata().size()>0)
             {
                 listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
@@ -130,9 +148,22 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             }
 
             listItemView.circle_img.setBackgroundResource(R.drawable.temp1);
-        } else if (type.equals("GZ"))
+        }else if (type.equals("ZL"))
         {
-            listItemView.tv_title.setText("工作");
+            listItemView.tv_title.setText("指令");
+//            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            if (dynamicBean.getListdata().size()>0)
+            {
+                listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            }else
+            {
+                listItemView.tv_note.setText("无");
+            }
+            listItemView.circle_img.setBackgroundResource(R.drawable.temp2);
+        }
+        else if (type.equals("GZ"))
+        {
+            listItemView.tv_title.setText("片管工作");
 //            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
             if (dynamicBean.getListdata().size()>0)
             {
@@ -233,37 +264,53 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             @Override
             public void onClick(View view)
             {
-                DynamicBean dynamicBean1= (DynamicBean) view.getTag(R.id.tag_dt);
+                DynamicBean dynamicBean1 = (DynamicBean) view.getTag(R.id.tag_dt);
                 Intent intent = null;
                 String type = dynamicBean1.getType();
-                if (type.equals("ZL"))
+                if (type.equals("PGZL"))
                 {
                     intent = new Intent(context, CZ_CommandListActivity_.class);//1
-                } else if (type.equals("GZ"))
+                    context.startActivity(intent);
+                }/* else if (type.equals("ZL"))
+                {
+                    getListData( AppContext.PAGE_SIZE, 0);
+
+                }*/ else if (type.equals("GZ"))
                 {
                     intent = new Intent(context, CZ_JobActivity_.class);//1
+                    context.startActivity(intent);
                 } else if (type.equals("MQ"))
                 {
                     intent = new Intent(context, CZ_MQActivity_.class);//1
+                    context.startActivity(intent);
                 } else if (type.equals("XS"))
                 {
 //                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
                     intent = new Intent(context, CZ_OrderManager_.class);//1
+                    context.startActivity(intent);
                 } else if (type.equals("KC"))
                 {
                     intent = new Intent(context, Ncz_wz_ll_.class);//0
+                    context.startActivity(intent);
                 } else if (type.equals("SP"))
                 {
                     intent = new Intent(context, PG_ListOfEvents_.class);//1
+                    context.startActivity(intent);
                 } else if (type.equals("SJ"))
                 {
                     intent = new Intent(context, PG_ListOfEvents_.class);//0
+                    context.startActivity(intent);
                 } else if (type.equals("DL"))
                 {
                     intent = new Intent(context, CZ_DLFragment_.class);//1
+                    context.startActivity(intent);
                 }
-                context.startActivity(intent);
 
+                if (type.equals("ZL"))
+                {
+                    getListData(AppContext.PAGE_SIZE, 0);
+
+                }
 
 //
 
@@ -271,5 +318,49 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
         });
         return convertView;
     }
+    private void getListData( final int PAGESIZE, int PAGEINDEX)
+    {
+        commembertab commembertab = AppContext.getUserInfo(context);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("workuserid", commembertab.getId());
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("username", commembertab.getuserName());
+        params.addQueryStringParameter("orderby", "regDate desc");
+        params.addQueryStringParameter("strWhere", "");
+        params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
+        params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
+        params.addQueryStringParameter("action", "jobGetList");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<jobtab> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                    Intent intents = null;
+                    intents = new Intent(context, SelectorCommand_.class);//0
+                    intents.putParcelableArrayListExtra("jobtablist", (ArrayList<? extends Parcelable>) listNewData);
+                    context.startActivity(intents);
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
 
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
 }

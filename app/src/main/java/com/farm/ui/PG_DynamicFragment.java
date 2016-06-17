@@ -135,7 +135,7 @@ public class PG_DynamicFragment extends Fragment
         timethread.setSleep(false);
         timethread.start();
 //        getNewSaleList_test();
-        getListData( AppContext.PAGE_SIZE, 0);
+
     }
 
     @Override
@@ -177,7 +177,7 @@ public class PG_DynamicFragment extends Fragment
                     while (it.hasNext())
                     {
                         String value = it.next().getType();
-                        if (value.equals("GZ"))
+                        if (value.equals("GZ")||value.equals("ZL"))
                         {
                             it.remove();
                         }

@@ -11,8 +11,13 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
 import com.farm.bean.DynamicBean;
+import com.farm.bean.Result;
+import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
 import com.farm.common.utils;
 import com.farm.ui.NCZ_CommandListActivity_;
@@ -28,6 +33,12 @@ import com.farm.ui.PG_PlantList_;
 import com.farm.ui.PQ_DLFragment_;
 import com.farm.ui.SelectorCommand_;
 import com.farm.widget.CircleImageView;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -120,7 +131,7 @@ public class PG_Adapter_Dynamic extends BaseAdapter
             listItemView.tv_date.setText("无");
         }
         String type = dynamicBean.getType();
-        if (type.equals("ZL"))
+        if (type.equals("PGZL"))
         {
             listItemView.tv_title.setText("指令");
             if (dynamicBean.getListdata().size()>0)
@@ -237,17 +248,19 @@ public class PG_Adapter_Dynamic extends BaseAdapter
                 DynamicBean dynamicBean1 = (DynamicBean) view.getTag(R.id.tag_dt);
                 Intent intent = null;
                 String type = dynamicBean1.getType();
-                if (type.equals("ZL"))
+                if (type.equals("PGZL"))
                 {
-                    intent = new Intent(context, SelectorCommand_.class);
-                    intent.putParcelableArrayListExtra("jobtablist", (ArrayList<? extends Parcelable>) listDatas);
+                    getListData(AppContext.PAGE_SIZE, 0);
+
 
                 } else if (type.equals("GZ"))
                 {
                     intent = new Intent(context, NCZ_JobActivity_.class);
+                    context.startActivity(intent);
                 } else if (type.equals("MQ"))
                 {
                     intent = new Intent(context, PG_GddList_.class);
+                    context.startActivity(intent);
                 }/* else if (type.equals("XS"))
                 {
 //                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
@@ -261,11 +274,13 @@ public class PG_Adapter_Dynamic extends BaseAdapter
                 } */ else if (type.equals("SJ"))
                 {
                     intent = new Intent(context, PG_ListOfEvents_.class);
+                    context.startActivity(intent);
                 } else if (type.equals("DL"))
                 {
                     intent = new Intent(context, PQ_DLFragment_.class);
+                    context.startActivity(intent);
                 }
-                context.startActivity(intent);
+
 
 
 //
@@ -275,4 +290,49 @@ public class PG_Adapter_Dynamic extends BaseAdapter
         return convertView;
     }
 
+    private void getListData( final int PAGESIZE, int PAGEINDEX)
+    {
+        commembertab commembertab = AppContext.getUserInfo(context);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("workuserid", commembertab.getId());
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("username", commembertab.getuserName());
+        params.addQueryStringParameter("orderby", "regDate desc");
+        params.addQueryStringParameter("strWhere", "");
+        params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
+        params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
+        params.addQueryStringParameter("action", "jobGetList");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<jobtab> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
+                    Intent intents=null;
+                    intents = new Intent(context, SelectorCommand_.class);
+                    intents.putParcelableArrayListExtra("jobtablist", (ArrayList<? extends Parcelable>) listNewData);
+                    context.startActivity(intents);
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
 }

@@ -25,6 +25,7 @@ import java.util.List;
 @SuppressLint("NewApi")
 public class NCZ_CommandAdapter extends BaseAdapter
 {
+    String name="";
    int  colorpostion = 0;
     private Context context;// 运行上下文
     private List<commandtab> listItems;// 数据集合
@@ -222,6 +223,25 @@ public class NCZ_CommandAdapter extends BaseAdapter
                 listItemView.circle_img.setImageResource(color[colorpostion]);
             }
         }
+/*        commembertab commembertabss = AppContext.getUserInfo(context);
+        name+=commembertabss.getrealName()+",";
+        for(int i=0;i<position;i++)
+        {
+            //                String[] nongzi = commandtab.getnongziName().split(",");
+            if (name.indexOf(listItems.get(i).getcommFromName())!=-1)
+            {
+                String [] data=name.split(",");
+                for (int j=0;j<data.length;j++)
+                {
+                if(data)
+                    listItemView.circle_img.setImageResource(color[colorpostion]);
+                }
+
+            }
+
+
+        }*/
+
         return convertView;
     }
 

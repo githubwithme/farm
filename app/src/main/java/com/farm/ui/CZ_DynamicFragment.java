@@ -28,6 +28,7 @@ import com.farm.bean.DynamicEntity;
 import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.bean.jobtab;
 import com.farm.bean.parktab;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
@@ -57,6 +58,7 @@ public class CZ_DynamicFragment extends Fragment
     View pv_command;
     CZ_Adapter_Dynamic adapter_dynamic;
     List<DynamicBean> listData = new ArrayList<>();
+    private List<jobtab> listDatas = new ArrayList<jobtab>();
     List<DynamicEntity> list_DynamicEntity;
     @ViewById
     Button btn_add;
@@ -134,7 +136,6 @@ public class CZ_DynamicFragment extends Fragment
         timethread.setSleep(false);
         timethread.start();
 //        getNewSaleList_test();
-
     }
 
     @Override
@@ -193,7 +194,7 @@ public class CZ_DynamicFragment extends Fragment
                     getActivity().sendBroadcast(intent);
                     k = 0;*/
                     list = utils.BubbleSortArray(list);//本地不行
-                    adapter_dynamic = new CZ_Adapter_Dynamic(getActivity(), list);
+                    adapter_dynamic = new CZ_Adapter_Dynamic(getActivity(), list,listDatas);
                     lv.setAdapter(adapter_dynamic);
                    /* lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {
@@ -538,62 +539,5 @@ public class CZ_DynamicFragment extends Fragment
     }
 
 
-    private void getEventList()
-    {
 
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getEventListByUID");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<ReportedBean> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() > 0)
-                    {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), ReportedBean.class);
-
-                        Iterator<ReportedBean> it = listNewData.iterator();
-                        while (it.hasNext())
-                        {
-                            ReportedBean reportedBean = it.next();
-                            if (reportedBean.getIsflashStr().equals("0") || reportedBean.resultflashStr.equals("0"))
-                            {
-                                it.remove();
-                            }
-                        }
-                        DynamicEntity dynamicentity = new DynamicEntity();
-                        dynamicentity.setDate(utils.getToday());
-                        dynamicentity.setNote(listNewData.size() + "事件更新");
-                        dynamicentity.setTitle("事件");
-                        dynamicentity.setType("SJ");
-                        list_DynamicEntity.add(dynamicentity);
-                    } else
-                    {
-                        listNewData = new ArrayList<ReportedBean>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
-
-            }
-        });
-    }
 }
