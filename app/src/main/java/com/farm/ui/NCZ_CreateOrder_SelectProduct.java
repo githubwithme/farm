@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -91,7 +90,9 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
     @Click
     void btn_cancleorder()
     {
-        cancleOrder();
+//        cancleOrder();
+
+        finish();
     }
 
     @Click
@@ -100,11 +101,7 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
         if (allnumber == 0)
         {
             Toast.makeText(NCZ_CreateOrder_SelectProduct.this, "请先选择产品", Toast.LENGTH_SHORT).show();
-        } else if (number_select == 0)
-        {
-            Intent intent = new Intent(NCZ_CreateOrder_SelectProduct.this, NCZ_CreateMoreOrder_.class);
-            startActivity(intent);
-        } else
+        } else if (number_select != 0)
         {
             pb_upload.setVisibility(View.VISIBLE);
             setData();
@@ -117,17 +114,26 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
             CreateOrder(builder.toString());
         }
 
+//        if (allnumber == 0)
+//        {
+//            Toast.makeText(NCZ_CreateOrder_SelectProduct.this, "请先选择产品", Toast.LENGTH_SHORT).show();
+//        } else if (number_select == 0)
+//        {
+//            Intent intent = new Intent(NCZ_CreateOrder_SelectProduct.this, NCZ_CreateMoreOrder_.class);
+//            startActivity(intent);
+//        } else
+//        {
+//            pb_upload.setVisibility(View.VISIBLE);
+//            setData();
+//            StringBuilder builder = new StringBuilder();
+//            builder.append("{\"SellOrderDetailList\": ");
+//            builder.append(JSON.toJSONString(list_sell));
+//            builder.append(", \"uuids\": ");
+//            builder.append(JSON.toJSONString(uuids));
+//            builder.append("} ");
+//            CreateOrder(builder.toString());
+//        }
 
-//        setData();
-//        Intent intent = new Intent(NCZ_CreateOrder_SelectProduct.this, NCZ_DirectCreateOrder_.class);
-//        intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list_sell);
-//        Bundle bundle = new Bundle();
-//        ArrayList arrayList = new ArrayList();
-//        arrayList.add(uuids);
-//        String aa = JSON.toJSONString(uuids);
-//        bundle.putParcelableArrayList("list_uuid", arrayList);
-//        intent.putExtras(bundle);
-//        startActivity(intent);
     }
 
     @Click
@@ -478,14 +484,19 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
+//                        pb_upload.setVisibility(View.GONE);
+//                        Intent intent = new Intent(NCZ_CreateOrder_SelectProduct.this, NCZ_CreateMoreOrder_.class);
+//                        startActivity(intent);
+//                        Intent intent2 = new Intent();
+//                        intent2.setAction(AppContext.BROADCAST_UPDATESELLORDER);
+//                        sendBroadcast(intent2);
+
+
                         pb_upload.setVisibility(View.GONE);
-                        Intent intent = new Intent(NCZ_CreateOrder_SelectProduct.this, NCZ_CreateMoreOrder_.class);
-                        startActivity(intent);
-//                        Toast.makeText(NCZ_CreateOrder_SelectProduct.this, "保存成功", Toast.LENGTH_SHORT).show();/
-                        Intent intent2 = new Intent();
-                        intent2.setAction(AppContext.BROADCAST_UPDATESELLORDER);
-                        sendBroadcast(intent2);
-//                        finish();
+                        Intent intent1 = new Intent();
+                        intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
+                        sendBroadcast(intent1);
+                        finish();
                     }
                 } else
                 {
@@ -575,16 +586,16 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
         });
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if (keyCode == KeyEvent.KEYCODE_BACK)
-        {
-            cancleOrder();
-        }
-        return false;
-
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event)
+//    {
+//        if (keyCode == KeyEvent.KEYCODE_BACK)
+//        {
+//            cancleOrder();
+//        }
+//        return false;
+//
+//    }
 
     private void cancleOrder()
     {

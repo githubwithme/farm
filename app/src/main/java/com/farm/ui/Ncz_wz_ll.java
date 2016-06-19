@@ -111,7 +111,6 @@ public class Ncz_wz_ll extends FragmentActivity
             @Override
             public void onExtraPageSelected(int i)
             {
-//                Toast.makeText(GcdDetail.this, "show", Toast.LENGTH_SHORT).show();
                 currentItem = i;
                 setBackground(i);
             }
@@ -150,8 +149,6 @@ public class Ncz_wz_ll extends FragmentActivity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        ;
-
         commembertab = AppContext.getUserInfo(Ncz_wz_ll.this);
         fragmentList = new ArrayList<>();
         ncz_wz_ckxxFragment = new NCZ_WZ_CKXXFragment_();
