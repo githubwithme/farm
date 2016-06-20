@@ -199,14 +199,14 @@ public class utils
     {
         int n = list.size();
         SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd");
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n - 1; i++)
         {
-            for (int j = 0; j < n - i-1; j++)
+            for (int j = 1; j < n - i; j++)
             {
-                if (list.get(j).getListdata().size()>0&&list.get(j+1).getListdata().size()>0)
+                if (list.get(j - 1).getListdata().size() > 0 && list.get(j).getListdata().size() > 0)
                 {
-                    String date1 = list.get(j).getListdata().get(0).getDate();
-                    String date2 = list.get(j + 1).getListdata().get(0).getDate();
+                    String date1 = list.get(j - 1).getListdata().get(0).getDate();
+                    String date2 = list.get(j).getListdata().get(0).getDate();
                     date1 = date1.replace("/", "-");
                     date2 = date2.replace("/", "-");
                     Date date_date1 = null;
@@ -223,16 +223,16 @@ public class utils
                     if (date_date1.before(date_date2))//比较交换相邻元素
                     {
                         DynamicBean temp;
-                        temp = list.get(j);
-                        list.set(j, list.get(j + 1));
-                        list.set(j + 1, temp);
+                        temp = list.get(j - 1);
+                        list.set(j - 1, list.get(j));
+                        list.set(j, temp);
                     }
-                }else if (list.get(j).getListdata().size()==0&&list.get(j+1).getListdata().size()>0)
+                } else if (list.get(j - 1).getListdata().size() == 0 && list.get(j).getListdata().size() > 0)
                 {
                     DynamicBean temp;
-                    temp = list.get(j);
-                    list.set(j, list.get(j + 1));
-                    list.set(j + 1, temp);
+                    temp = list.get(j - 1);
+                    list.set(j - 1, list.get(j));
+                    list.set(j, temp);
                 }
             }
         }

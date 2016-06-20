@@ -59,7 +59,7 @@ public class NCZ_SaleChart extends Activity
     @Click
     void btn_createorders()
     {
-        Intent intent = new Intent(NCZ_SaleChart.this, NCZ_CreateOrder_SelectBatchTime_.class);
+        Intent intent = new Intent(NCZ_SaleChart.this, NCZ_CreateNewOrder_.class);
         startActivity(intent);
     }
 

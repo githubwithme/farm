@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -61,6 +60,7 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
     }
 
 
+
     @Click
     void btn_back()
     {
@@ -74,7 +74,7 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
         getBatchTimeByUid();
 //        getBatchTimeByUid_test();
 //        getNewSaleList_test();
-        deleNewSaleAddsalefor();
+//        deleNewSaleAddsalefor();
     }
 
     @Override
@@ -216,16 +216,15 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
         });
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if (keyCode == KeyEvent.KEYCODE_BACK)
-        {
-            cancleOrder();
-        }
-        return false;
-
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event)
+//    {
+//        if (keyCode == KeyEvent.KEYCODE_BACK)
+//        {
+//            cancleOrder();
+//        }
+//        return false;
+//    }
 
     private void cancleOrder()
     {
@@ -250,6 +249,7 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
         });
         myDialog.show();
     }
+
     private void deleNewSaleAddsalefor()
     {
         commembertab commembertab = AppContext.getUserInfo(this);
