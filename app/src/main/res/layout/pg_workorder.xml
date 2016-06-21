@@ -27,6 +27,17 @@
             android:text="工单"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
+        <Button
+            android:id="@+id/btn_upload"
+            android:layout_width="60dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_16"/>
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -44,7 +55,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dip"
+                android:layout_height="60dip"
                 android:layout_marginLeft="20dip"
                 android:layout_marginRight="20dip"
                 android:orientation="horizontal">
@@ -58,7 +69,7 @@
                     android:inputType="numberDecimal"
                     android:text="施工负责人"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
 
                 <View
                     android:layout_width="1px"
@@ -67,16 +78,16 @@
 
 
                 <EditText
+                    android:layout_marginLeft="10dip"
                     android:background="@null"
-                    android:id="@+id/parkName"
+                    android:id="@+id/fuzeren"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="center|right"
-                    android:inputType="numberDecimal"
                     android:hint="请输入施工负责人"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
 
 
             </LinearLayout>
@@ -87,7 +98,7 @@
                 android:background="@color/bg_main"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dip"
+                android:layout_height="60dip"
                 android:layout_marginLeft="20dip"
                 android:layout_marginRight="20dip"
                 android:orientation="horizontal">
@@ -101,12 +112,16 @@
                     android:inputType="numberDecimal"
                     android:text="人数"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
 
 
 
-
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/line_color"/>
                 <EditText
+                    android:id="@+id/gd_num"
                     android:background="@null"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
@@ -115,13 +130,14 @@
                     android:hint="填写雇佣人数"
                     android:inputType="numberDecimal"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
                     android:background="@color/line_color"/>
 
                 <CheckBox
+                    android:id="@+id/gd_df"
                     android:gravity="center"
                     android:text="代付"
                     android:layout_weight="1"
@@ -135,7 +151,7 @@
                 android:background="@color/bg_main"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dip"
+                android:layout_height="60dip"
                 android:layout_marginLeft="20dip"
                 android:layout_marginRight="20dip"
                 android:orientation="horizontal">
@@ -149,7 +165,7 @@
                     android:inputType="numberDecimal"
                     android:text="项目"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
 
                 <View
                     android:layout_width="1px"
@@ -158,6 +174,8 @@
 
 
                 <EditText
+                    android:id="@+id/gd_xm"
+                    android:layout_marginLeft="10dip"
                     android:background="@null"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
@@ -165,7 +183,7 @@
                     android:gravity="center|right"
                     android:hint="请输入项目"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
 
 
             </LinearLayout>
@@ -176,7 +194,7 @@
                 android:background="@color/bg_main"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dip"
+                android:layout_height="60dip"
                 android:layout_marginLeft="20dip"
                 android:layout_marginRight="20dip"
                 android:orientation="horizontal">
@@ -189,7 +207,7 @@
                     android:gravity="center|left"
                     android:text="工作内容及要求"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
 
                 <View
                     android:layout_width="1px"
@@ -198,6 +216,8 @@
 
 
                 <EditText
+                    android:id="@+id/gd_yq"
+                    android:layout_marginLeft="10dip"
                     android:background="@null"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
@@ -205,7 +225,7 @@
                     android:gravity="center|right"
                     android:hint="填写工作内容及要求"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
 
 
             </LinearLayout>
@@ -216,7 +236,7 @@
                 android:background="@color/bg_main"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dip"
+                android:layout_height="60dip"
                 android:layout_marginLeft="20dip"
                 android:layout_marginRight="20dip"
                 android:orientation="horizontal">
@@ -229,7 +249,7 @@
                     android:gravity="center|left"
                     android:text="完成情况及工资额"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
 
                 <View
                     android:layout_width="1px"
@@ -238,15 +258,16 @@
 
 
                 <EditText
+                    android:id="@+id/gd_money"
+                    android:layout_marginLeft="10dip"
                     android:background="@null"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="center|right"
-                    android:inputType="numberDecimal"
                     android:hint="填写完成情况及工资额"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
 
 
             </LinearLayout>
@@ -257,7 +278,7 @@
                 android:background="@color/bg_main"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dip"
+                android:layout_height="60dip"
                 android:layout_marginLeft="20dip"
                 android:layout_marginRight="20dip"
                 android:orientation="horizontal">
@@ -270,7 +291,7 @@
                     android:gravity="center|left"
                     android:text="备注"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
 
                 <View
                     android:layout_width="1px"
@@ -279,15 +300,16 @@
 
 
                 <EditText
+                    android:id="@+id/gd_note"
+                    android:layout_marginLeft="10dip"
                     android:background="@null"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="center|right"
-                    android:inputType="numberDecimal"
                     android:text=""
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_15"/>
 
 
             </LinearLayout>

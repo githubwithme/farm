@@ -50,6 +50,20 @@ public class PG_FarmManagerFragment extends Fragment
     }
 
     @Click
+    void ll_jsd()
+    {
+        Intent intent = new Intent(getActivity(), PG_JSD_.class);
+        getActivity().startActivity(intent);
+    }
+
+    @Click
+    void gongdan()
+    {
+        Intent intent = new Intent(getActivity(), PG_WorkOrder_.class);
+        getActivity().startActivity(intent);
+    }
+
+    @Click
     void btn_search()
     {
         Intent intent = new Intent(getActivity(), SearchAllInformation_.class);

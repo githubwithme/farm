@@ -223,6 +223,7 @@
         <activity android:name=".ui.PG_WorkOrder_"/>
         <activity android:name=".ui.PG_Workplan_"/>
         <activity android:name=".ui.PG_commdetail_"/>
+        <activity android:name=".ui.PG_JSD_"/>
         <!-- 共用UI -->
         <activity android:name=".chart.BarChartActivity_"/>
         <activity android:name=".ui.ObservationRecordActivity_"/>

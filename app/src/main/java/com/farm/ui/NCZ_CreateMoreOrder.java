@@ -73,7 +73,7 @@ public class NCZ_CreateMoreOrder extends Activity
     @ViewById
     TextView et_values;
     @ViewById
-    TextView et_name;
+    EditText et_name;
     @ViewById
     EditText et_address;
     @ViewById

@@ -8,6 +8,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -17,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
@@ -27,6 +32,7 @@ import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
+import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDialog;
@@ -45,6 +51,7 @@ import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -73,7 +80,7 @@ public class NCZ_CreateNewOrder extends Activity
     @ViewById
     TextView et_values;
     @ViewById
-    TextView et_name;
+    AutoCompleteTextView et_name;
     @ViewById
     EditText et_address;
     @ViewById
@@ -92,28 +99,29 @@ public class NCZ_CreateNewOrder extends Activity
     List<Purchaser> listNewData = null;
 
 
-    @Click
+/*    @Click
     void et_name()
     {
 
-//        listNewData = FileHelper.getAssetsData(NCZ_CreateMoreOrder.this, "getPurchaser", Purchaser.class);
+        listNewData = FileHelper.getAssetsData(NCZ_CreateNewOrder.this, "getPurchaser", Purchaser.class);
 
- /*       JSONObject jsonObject = utils.parseJsonFile(NCZ_CreateMoreOrder.this, "dictionary.json");
-        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("Happen"));
+//        JSONObject jsonObject = utils.parseJsonFile(NCZ_CreateNewOrder.this, "dictionary.json");
+//        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("Happen"));
         List<String> list = new ArrayList<String>();
-        for (int i = 0; i < jsonArray.size(); i++)
+        for (int i = 0; i < listNewData.size(); i++)
         {
-            list.add(jsonArray.getString(i));
-        }*/
-        List<String> listdata = new ArrayList<String>();
+            list.add(listNewData.get(i).getName());
+        }
+*//*        List<String> listdata = new ArrayList<String>();
         List<String> listid = new ArrayList<String>();
         for (int i = 0; i < listNewData.size(); i++)
         {
             listdata.add(listNewData.get(i).getName());
             listid.add(listNewData.get(i).getId());
         }
-        showDialog_workday(listdata, listid);
-    }
+        showDialog_workday(listdata, listid);*//*
+        showDialog_workday(list, list);
+    }*/
 
     @Override
     protected void onResume()
@@ -272,6 +280,33 @@ public class NCZ_CreateNewOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
+
+        listNewData = FileHelper.getAssetsData(NCZ_CreateNewOrder.this, "getPurchaser", Purchaser.class);
+        String [] str=new String [listNewData.size()];
+        for (int i=0;i<listNewData.size();i++)
+        {
+            str[i]=listNewData.get(i).getName();
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line,str);
+        et_name.setAdapter(adapter);
+        et_name.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                Object obj = adapterView.getItemAtPosition(i);
+                String ss=obj.toString();
+                int a=listNewData.size();
+                List<Purchaser> listNewDatas = null;
+                listNewDatas = FileHelper.getAssetsData(NCZ_CreateNewOrder.this, "getPurchaser", Purchaser.class);
+                et_phone.setText(listNewDatas.get(i).getTelephone());
+                et_address.setText(listNewDatas.get(i).getAddress());
+                et_email.setText(listNewDatas.get(i).getMailbox());
+            }
+        });
+
+
         deleNewSaleAddsalefor();
         et_price.addTextChangedListener(new TextWatcher()
         {
