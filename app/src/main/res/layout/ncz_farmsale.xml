@@ -63,7 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:childDivider="@color/yellow"
-                android:divider="@color/blue"
+
+                android:divider="@color/white"
                 android:dividerHeight="0dip"
                 android:groupIndicator="@null"/>
         </ScrollView>

@@ -46,6 +46,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.LongClick;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.entity.StringEntity;
 
@@ -99,35 +100,35 @@ public class NCZ_CreateNewOrder extends Activity
     List<Purchaser> listNewData = null;
 
 
-/*    @Click
+    @LongClick
     void et_name()
     {
 
-        listNewData = FileHelper.getAssetsData(NCZ_CreateNewOrder.this, "getPurchaser", Purchaser.class);
+//        listNewData = FileHelper.getAssetsData(NCZ_CreateNewOrder.this, "getPurchaser", Purchaser.class);
 
 //        JSONObject jsonObject = utils.parseJsonFile(NCZ_CreateNewOrder.this, "dictionary.json");
 //        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("Happen"));
-        List<String> list = new ArrayList<String>();
+/*        List<String> list = new ArrayList<String>();
         for (int i = 0; i < listNewData.size(); i++)
         {
             list.add(listNewData.get(i).getName());
-        }
-*//*        List<String> listdata = new ArrayList<String>();
+        }*/
+        List<String> listdata = new ArrayList<String>();
         List<String> listid = new ArrayList<String>();
         for (int i = 0; i < listNewData.size(); i++)
         {
             listdata.add(listNewData.get(i).getName());
             listid.add(listNewData.get(i).getId());
         }
-        showDialog_workday(listdata, listid);*//*
-        showDialog_workday(list, list);
-    }*/
+        showDialog_workday(listdata, listid);
+//        showDialog_workday(list, list);
+    }
 
     @Override
     protected void onResume()
     {
         super.onResume();
-        getpurchaser();
+        getpurchaser("");
         getNewSaleList();
     }
 
@@ -281,6 +282,7 @@ public class NCZ_CreateNewOrder extends Activity
     void afterOncreate()
     {
 
+/*
         listNewData = FileHelper.getAssetsData(NCZ_CreateNewOrder.this, "getPurchaser", Purchaser.class);
         String [] str=new String [listNewData.size()];
         for (int i=0;i<listNewData.size();i++)
@@ -305,6 +307,7 @@ public class NCZ_CreateNewOrder extends Activity
                 et_email.setText(listNewDatas.get(i).getMailbox());
             }
         });
+*/
 
 
         deleNewSaleAddsalefor();
@@ -562,7 +565,7 @@ public class NCZ_CreateNewOrder extends Activity
         customDialog_listView.show();
     }
 
-    private void getpurchaser()
+    private void getpurchaser(String name)
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_CreateNewOrder.this);
         RequestParams params = new RequestParams();
@@ -583,6 +586,33 @@ public class NCZ_CreateNewOrder extends Activity
                         if (result.getAffectedRows() != 0)
                         {
                             listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
+                            String [] str=new String [listNewData.size()];
+                            for (int i=0;i<listNewData.size();i++)
+                            {
+                                str[i]=listNewData.get(i).getName();
+                            }
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(NCZ_CreateNewOrder.this,
+                                    android.R.layout.simple_dropdown_item_1line,str);
+                            et_name.setAdapter(adapter);
+                            et_name.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                            {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                                {
+                                    Object obj = adapterView.getItemAtPosition(i);
+                                    String ss = obj.toString();
+                                    for (int j = 0; j < listNewData.size(); j++)
+                                    {
+                                        if (listNewData.get(j).getName().equals(ss))
+                                        {
+                                            et_phone.setText(listNewData.get(j).getTelephone());
+                                            et_address.setText(listNewData.get(j).getAddress());
+                                            et_email.setText(listNewData.get(j).getMailbox());
+                                        }
+                                    }
+                                }
+                            });
+
                         } else
                         {
                             listNewData = new ArrayList<Purchaser>();
