@@ -76,6 +76,7 @@ public class NCZ_New_farmsaleItem extends BaseAdapter
         int allnumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein()) + Integer.valueOf(batchTime.getAllnewsale()) + Integer.valueOf(batchTime.getAllsalefor());
         listItemView.batchtimes.setText(batchTime.getBatchTime());
         listItemView.allnum.setText(allnumber+"");
+
         listItemView.allsalefor.setText(batchTime.getAllsalefor());
 
         return view;

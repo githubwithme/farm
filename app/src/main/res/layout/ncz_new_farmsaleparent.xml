@@ -3,49 +3,103 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/red"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dip"
-        android:background="@drawable/shape_round_border_red"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dip">
-
-            <TextView
-                android:id="@+id/tv_parkname"
-                android:layout_width="120dip"
-                android:layout_height="match_parent"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="15dip"
-                android:textColor="@color/bg_text"
-                android:textSize="16sp"/>
-
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="20dip"
-                android:layout_height="20dip"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dip"
-                android:background="@drawable/downward"/>
-
-            <TextView
-                android:id="@+id/tv_number"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="20dip"
-                android:layout_toLeftOf="@+id/view"
-                android:gravity="right|center_vertical"
-                android:textColor="@color/red"
-                android:textSize="16sp"/>
-        </RelativeLayout>
+        android:layout_height="50dip">
 
 
 
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="批次"
+            android:textSize="14dip"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bg_main"/>
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="断蕾数"
+            android:textSize="14dip"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bg_main"/>
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="库存数"
+            android:textSize="14dip"/>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bg_main"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip">
+
+
+
+        <TextView
+            android:id="@+id/tv_parkname"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="1号园区"
+            android:textSize="14dip"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bg_main"/>
+
+        <TextView
+            android:id="@+id/tv_allnumber"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="断蕾数"
+            android:textSize="14dip"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bg_main"/>
+
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="库存数"
+            android:textSize="14dip"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bg_main"/>
 </LinearLayout>

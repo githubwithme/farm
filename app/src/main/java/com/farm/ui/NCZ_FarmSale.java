@@ -177,7 +177,7 @@ public class NCZ_FarmSale extends Activity
                         expandableListView.setAdapter(ncz_new_farmsale);
 
                         utils.setListViewHeight(expandableListView);
- /*                       expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
+       /*                 expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
                         {
                             @Override
                             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
@@ -191,7 +191,6 @@ public class NCZ_FarmSale extends Activity
                                 return true;
                             }
                         });*/
-                        utils.setListViewHeight(expandableListView);
 //                        for (int i = 0; i < listNewData.size(); i++)
 //                        {
 //                            expandableListView.expandGroup(i);//展开

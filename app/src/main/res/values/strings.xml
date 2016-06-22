@@ -92,5 +92,7 @@
     <item name="tag_pgdl" type="id"></item>
     <item name="tag_cash" type="id"></item>
     <item name="tag_dt" type="id"></item>
+    <item name="tag_hg" type="id"></item>k
+    <item name="tag_kg" type="id"></item>
     <string name="title_activity_observation_record">ObservationRecordActivity</string>
 </resources>

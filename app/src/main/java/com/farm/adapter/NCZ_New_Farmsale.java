@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.farm.R;
 import com.farm.app.AppContext;
@@ -50,12 +51,16 @@ public class NCZ_New_Farmsale extends BaseExpandableListAdapter
         {
             return null;
         }
-//        return listData.get(groupPosition).getBreakOffList().get(childPosition);
-        return listData.get(groupPosition).getBatchTimeList();
+        return listData.get(groupPosition).getBatchTimeList().get(childPosition);
+//        return listData.get(groupPosition).getBatchTimeList();
     }
     static class ListItemView
     {
-        public ListView exdata;
+//        public ListView exdata;
+        public TextView tv_pc;
+        public TextView quantity;
+        public TextView leftquantity;
+        public LinearLayout ll_linear;
     }
     //得到子item的ID
     @Override
@@ -72,9 +77,8 @@ public class NCZ_New_Farmsale extends BaseExpandableListAdapter
     {
 
         List<BatchTime> childData = listData.get(groupPosition).getBatchTimeList();
-//        final BreakOff_New breakOff_new = childData.get(childPosition);
-//        final String batchname=listData.get(groupPosition).getBatchName();
-//        final String indate=listData.get(groupPosition).getInDate();
+        BatchTime batchTime=childData.get(childPosition);
+        String id=listData.get(groupPosition).getid();
         View v = null;
   /*      if (lmap.get(groupPosition) != null)
         {
@@ -86,9 +90,31 @@ public class NCZ_New_Farmsale extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.ncz_new_farmsale, null);
             listItemView = new ListItemView();
-            listItemView.exdata = (ListView) convertView.findViewById(R.id.exdata);
+//            listItemView.exdata = (ListView) convertView.findViewById(R.id.exdata);
+            listItemView.tv_pc = (TextView) convertView.findViewById(R.id.tv_pc);
+            listItemView.quantity = (TextView) convertView.findViewById(R.id.quantity);
+            listItemView.leftquantity = (TextView) convertView.findViewById(R.id.leftquantity);
+            listItemView.ll_linear = (LinearLayout) convertView.findViewById(R.id.ll_linear);
 
 
+            listItemView.leftquantity.setTag(R.id.tag_kg,id);
+            listItemView.leftquantity.setTag(R.id.tag_hg,childData.get(childPosition));
+            listItemView.leftquantity.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+
+                    BatchTime batchTimes= (BatchTime) view.getTag(R.id.tag_hg);
+//                    parktab parktab = (parktab) view.getTag(R.id.tag_hg);
+                    String a= (String) view.getTag(R.id.tag_kg);
+                    Intent intent = new Intent(context, NCZ_FarmSale_BatchDetail_.class);
+                    intent.putExtra("parkid", a);
+                    intent.putExtra("batchTime", batchTimes.getBatchTime());
+                    context.startActivity(intent);
+                }
+            });
             map.put(childPosition, convertView);
             lmap.put(groupPosition, map);
             if (isLastChild)
@@ -96,9 +122,19 @@ public class NCZ_New_Farmsale extends BaseExpandableListAdapter
                 map = new HashMap<>();
             }
 
+            int allnumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein()) + Integer.valueOf(batchTime.getAllnewsale()) + Integer.valueOf(batchTime.getAllsalefor());
+            listItemView.tv_pc.setText(batchTime.getBatchTime());
+            listItemView.quantity.setText(allnumber + "");
+            if (Integer.valueOf(batchTime.getAllsalefor())>0)
+            {
+                listItemView.leftquantity.setTextColor(context.getResources().getColor(R.color.red));
+//            tv.setTextColor(this.getResources().getColor(R.color.red))
+            }
+            listItemView.leftquantity.setText(batchTime.getAllsalefor());
+
             //数据添加
 //            listItemView.goodsname.setText(wz_rKxx.getGoodsname());
-            ncz_new_farmsaleItem = new NCZ_New_farmsaleItem(context, childData);
+/*            ncz_new_farmsaleItem = new NCZ_New_farmsaleItem(context, childData);
             listItemView.exdata.setAdapter(ncz_new_farmsaleItem);
             listItemView.exdata.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -112,8 +148,7 @@ public class NCZ_New_Farmsale extends BaseExpandableListAdapter
                     intent.putExtra("batchTime", batchTime.getBatchTime());
                     context.startActivity(intent);
                 }
-            });
-//            utils.getGridViewHeight(listItemView.gridView);
+            });*/
 
         } else
         {
@@ -147,7 +182,7 @@ public class NCZ_New_Farmsale extends BaseExpandableListAdapter
             return 0;
         }
 //        return listData.get(groupPosition).getWzcrkxx().size();
-        return 1;
+        return listData.get(groupPosition).getBatchTimeList().size();
     }
     //获取当前父item的数据
     @Override
@@ -178,14 +213,22 @@ public class NCZ_New_Farmsale extends BaseExpandableListAdapter
         }
         TextView tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
         TextView tv_number = (TextView) convertView.findViewById(R.id.tv_number);
+        TextView tv_allnumber = (TextView) convertView.findViewById(R.id.tv_allnumber);
 
         parktab parktab = listData.get(groupPosition);
         int percent = 0;
-        float allnumber = Integer.valueOf(parktab.getAllsaleout()) + Integer.valueOf(parktab.getAllsalein()) + Integer.valueOf(parktab.getAllnewsale()) + Integer.valueOf(parktab.getAllsalefor());
+        int allnumber = Integer.valueOf(parktab.getAllsaleout()) + Integer.valueOf(parktab.getAllsalein()) + Integer.valueOf(parktab.getAllnewsale()) + Integer.valueOf(parktab.getAllsalefor());
         float salenumber = Integer.valueOf(parktab.getAllsaleout()) + Integer.valueOf(parktab.getAllsalein()) + Integer.valueOf(parktab.getAllnewsale());
 
+        if (Integer.valueOf(parktab.getAllsalefor())>0)
+        {
+            tv_number.setTextColor(context.getResources().getColor(R.color.red));
+//            tv.setTextColor(this.getResources().getColor(R.color.red))
+        }
         tv_parkname.setText(listData.get(groupPosition).getparkName());
-        if (parktab.getAllsalefor().equals("0"))
+        tv_allnumber.setText(allnumber+"");
+        tv_number.setText(parktab.getAllsalefor());
+/*        if (parktab.getAllsalefor().equals("0"))
         {
             if (salenumber != 0)
             {
@@ -197,7 +240,7 @@ public class NCZ_New_Farmsale extends BaseExpandableListAdapter
         } else
         {
             tv_number.setText("待售" + parktab.getAllsalefor()+"株");
-        }
+        }*/
         return convertView;
     }
 
@@ -210,6 +253,6 @@ public class NCZ_New_Farmsale extends BaseExpandableListAdapter
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition)
     {
-        return true;
+        return false;
     }
 }

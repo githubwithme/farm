@@ -58,13 +58,12 @@
             android:layout_marginTop="10dip"
             android:orientation="vertical">
             <com.farm.widget.CustomExpandableListView
-                android:descendantFocusability="afterDescendants"
                 android:layout_below="@+id/line"
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:childDivider="@color/transparent"
-                android:divider="@color/transparent"
+                android:childDivider="@color/yellow"
+                android:divider="@color/blue"
                 android:dividerHeight="0dip"
                 android:groupIndicator="@null"/>
         </ScrollView>
