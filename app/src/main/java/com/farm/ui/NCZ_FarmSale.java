@@ -3,18 +3,14 @@ package com.farm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_FarmSale_Adapter;
 import com.farm.adapter.NCZ_New_Farmsale;
 import com.farm.adapter.NCZ_New_farmsaleItem;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.parktab;
@@ -74,13 +70,32 @@ public class NCZ_FarmSale extends Activity
 //
 //    }
 
-//    @Click
+    //    @Click
 //    void btn_createorders()
 //    {
 //        Intent intent = new Intent(NCZ_FarmSale.this, NCZ_CreateOrder_SelectBatchTime_.class);
 //        startActivity(intent);
 //    }
+    @Click
+    void btn_createorders()
+    {
+        Intent intent = new Intent(NCZ_FarmSale.this, NCZ_CreateNewOrder_.class);
+        startActivity(intent);
+    }
 
+
+    @Click
+    void btn_orders()
+    {
+        Intent intent = new Intent(NCZ_FarmSale.this, NCZ_OrderManager_.class);
+        startActivity(intent);
+    }
+    @Click
+    void btn_customer()
+    {
+//        Intent intent = new Intent(NCZ_FarmSale.this, NCZ_OrderManager_.class);
+//        startActivity(intent);
+    }
     @Click
     void btn_back()
     {
@@ -130,7 +145,7 @@ public class NCZ_FarmSale extends Activity
         listNewData = FileHelper.getAssetsData(NCZ_FarmSale.this, "getBatchTimeByUid", parktab.class);
 //        ncz_farmSale_adapter = new NCZ_FarmSale_Adapter(NCZ_FarmSale.this, listNewData, expandableListView);
 //        expandableListView.setAdapter(ncz_farmSale_adapter);
-        ncz_new_farmsale=new NCZ_New_Farmsale(NCZ_FarmSale.this, listNewData, expandableListView);
+        ncz_new_farmsale = new NCZ_New_Farmsale(NCZ_FarmSale.this, listNewData, expandableListView);
         expandableListView.setAdapter(ncz_new_farmsale);
         utils.setListViewHeight(expandableListView);
         for (int i = 0; i < listNewData.size(); i++)
@@ -173,7 +188,7 @@ public class NCZ_FarmSale extends Activity
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
 //                        ncz_farmSale_adapter = new NCZ_FarmSale_Adapter(NCZ_FarmSale.this, listNewData, expandableListView);
 //                        expandableListView.setAdapter(ncz_farmSale_adapter);
-                        ncz_new_farmsale=new NCZ_New_Farmsale(NCZ_FarmSale.this, listNewData, expandableListView);
+                        ncz_new_farmsale = new NCZ_New_Farmsale(NCZ_FarmSale.this, listNewData, expandableListView);
                         expandableListView.setAdapter(ncz_new_farmsale);
 
                         utils.setListViewHeight(expandableListView);

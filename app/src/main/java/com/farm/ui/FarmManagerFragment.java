@@ -100,7 +100,9 @@ public class FarmManagerFragment extends Fragment
     @Click
     void ll_xs()
     {
-        Intent intent = new Intent(getActivity(), NCZ_SaleChart_.class);
+//        Intent intent = new Intent(getActivity(), NCZ_SaleChart_.class);
+//        getActivity().startActivity(intent);
+        Intent intent = new Intent(getActivity(), NCZ_FarmSale_.class);
         getActivity().startActivity(intent);
     }
 
