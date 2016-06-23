@@ -43,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="xxx"
+                android:text=""
                 android:textColor="@color/textcolor_titlebar"
                 android:textSize="@dimen/titlebar_textsize"/>
         </LinearLayout>
@@ -56,6 +56,7 @@
         android:gravity="center">
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/wz_pici"
             android:layout_width="0dip"
             android:layout_height="match_parent"

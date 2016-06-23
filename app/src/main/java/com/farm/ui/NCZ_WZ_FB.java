@@ -52,6 +52,7 @@ import java.util.List;
 public class NCZ_WZ_FB extends Fragment
 {
 
+    String parkid;
     NCZ_WZ_FBAdapter listadpater;
     //    goodslisttab goods;
     WZ_Detail goods;
@@ -77,6 +78,7 @@ public class NCZ_WZ_FB extends Fragment
     {
         View view = inflater.inflate(R.layout.ncz_wz_pclayout, container, false);
         goods = getArguments().getParcelable("goods");
+        parkid = getArguments().getString("parkid");
         return view;
     }
 
@@ -101,7 +103,7 @@ public class NCZ_WZ_FB extends Fragment
                 intent.putExtra("goodsId", goods.getGoodsId());
                 intent.putExtra("localName", wz_pcxx.getParkName() + "-" + wz_pcxx.getStorehouseName());
                 intent.putExtra("goodsName", goods.getGoodsName());
-
+                intent.putExtra("wz_pcxx",wz_pcxx);
                 startActivity(intent);
 
             }
@@ -178,6 +180,7 @@ public class NCZ_WZ_FB extends Fragment
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("goodsId", goods.getGoodsId());
+        params.addQueryStringParameter("parkId", parkid);
         params.addQueryStringParameter("action", "getWzfbByWzid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

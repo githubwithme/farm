@@ -43,6 +43,8 @@ import java.util.List;
 @EFragment
 public class NCZ_WZ_LOOKFragment extends Fragment
 {
+    String id;
+    String name;
     String[] fn;
     Dictionary_wheel dictionary_wheel;
     Dictionary dic;
@@ -73,6 +75,7 @@ public class NCZ_WZ_LOOKFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
+
         getCommandlist();
     }
 
@@ -81,6 +84,8 @@ public class NCZ_WZ_LOOKFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.ncz_wz_lookfragment, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
+        id=getArguments().getString("id");
+        name=getArguments().getString("name");
         return view;
     }
 
@@ -90,6 +95,7 @@ public class NCZ_WZ_LOOKFragment extends Fragment
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("name", "getWZ");
+
         params.addQueryStringParameter("action", "getDict");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -111,7 +117,7 @@ public class NCZ_WZ_LOOKFragment extends Fragment
                         {
                             dic = lsitNewData.get(0);
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic);//提供数据
-                            CustomExpandableListAdapter_Goods customExpandableListAdapter = new CustomExpandableListAdapter_Goods(getActivity(), dictionary_wheel, mainlistview, list_goods, tv_top);
+                            CustomExpandableListAdapter_Goods customExpandableListAdapter = new CustomExpandableListAdapter_Goods(getActivity(), dictionary_wheel, mainlistview, list_goods, tv_top,id);
                             mainlistview.setAdapter(customExpandableListAdapter);
                             mainlistview.expandGroup(0);
                         }

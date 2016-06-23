@@ -62,9 +62,11 @@ public class CustomExpandableListAdapter_Goods extends BaseExpandableListAdapter
     int currentChildsize = 0;
     private GoodsAdapter adapter;
     ListView list;
+    String id;
 
-    public CustomExpandableListAdapter_Goods(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview, ListView list, TextView tv_top)
+    public CustomExpandableListAdapter_Goods(Context context, Dictionary_wheel dictionary_wheel, ExpandableListView mainlistview, ListView list, TextView tv_top,String id)
     {
+        this.id=id;
         this.tv_top = tv_top;
         this.list = list;
         this.dictionary_wheel = dictionary_wheel;
@@ -119,7 +121,13 @@ public class CustomExpandableListAdapter_Goods extends BaseExpandableListAdapter
             tv.setTextColor(0xFFFF5D5E);
             TextPaint tp = tv.getPaint();
             tp.setFakeBoldText(true);
-            getGoodslist();
+            if (id==null||id.equals(""))
+            {
+                getGoodslist();
+            }else
+            {
+                getGoodslistpark();
+            }
             tempChildView = tv;
 
             tv_top.setText(currentParentName+"-"+currentChildName);
@@ -153,8 +161,16 @@ public class CustomExpandableListAdapter_Goods extends BaseExpandableListAdapter
                 currentChildId = (String) v.getTag(R.id.tag_si);
                 currentChildName = (String) v.getTag(R.id.tag_sn);
                 currentChildsize = (Integer) v.getTag(R.id.tag_childsize);
-                tv_top.setText(currentParentName+"-"+currentChildName);
-                getGoodslist();
+                tv_top.setText(currentParentName + "-" + currentChildName);
+                if (id==null||id.equals(""))
+                {
+                    getGoodslist();
+                }else
+                {
+                    getGoodslistpark();
+                }
+
+
             }
         });
         return convertView;
@@ -371,7 +387,90 @@ public class CustomExpandableListAdapter_Goods extends BaseExpandableListAdapter
 //                                    goodslisttab goods=list_goods.get(pos);
 //                                    intent.putExtra("goods",goods);
                                     WZ_Detail goods=list_goodsed.get(pos);
+                                    intent.putExtra("parkid",id);
                                     intent.putExtra("goods",goods);
+                                    context.startActivity(intent);
+                                }
+                            });
+                            adapter.notifyDataSetChanged();
+                        } else
+                        {
+                            list_goodsed = new ArrayList<WZ_Detail>();
+                            adapter = new GoodsAdapter(context, list_goodsed);
+                            list.setAdapter(adapter);
+                        }
+
+                    } else
+                    {
+                        list_goodsed = new ArrayList<WZ_Detail>();
+                        adapter = new GoodsAdapter(context, list_goodsed);
+                        list.setAdapter(adapter);
+                    }
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
+
+    private void getGoodslistpark()
+    {
+        commembertab commembertab = AppContext.getUserInfo(context);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("wz1", currentParentId);
+        params.addQueryStringParameter("wz2", currentChildId);
+        params.addQueryStringParameter("parkId", id);
+        params.addQueryStringParameter("action", "getGoodsListByFirsSecParkId");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        String aa = result.getRows().toJSONString();
+                        list_goodsed = JSON.parseArray(result.getRows().toJSONString(), WZ_Detail.class);
+                        if (list_goods != null)
+                        {
+                            adapter = new GoodsAdapter(context, list_goodsed);
+                            list.setAdapter(adapter);
+                            list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                @Override
+                                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    Intent intent = new Intent(context, NCZ_WZ_Detail_.class);
+                                    WZ_Detail goods=list_goodsed.get(i);
+                                    intent.putExtra("goods",goods);
+                                    context.startActivity(intent);
+
+                                    return true;
+                                }
+                            });
+                            list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                            {
+                                @Override
+                                public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3)
+                                {
+//                                      Intent intent = new Intent(context, SingleGoodList_.class);
+                                    Intent intent = new Intent(context, NCZ_WZ_XXList_.class);
+//                                    goodslisttab goods=list_goods.get(pos);
+//                                    intent.putExtra("goods",goods);
+                                    WZ_Detail goods=list_goodsed.get(pos);
+                                    intent.putExtra("goods",goods);
+                                    intent.putExtra("parkid",id);
                                     context.startActivity(intent);
                                 }
                             });

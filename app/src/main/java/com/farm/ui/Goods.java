@@ -114,8 +114,8 @@ public class Goods extends Activity
                         {
                             dic = lsitNewData.get(0);
                             dictionary_wheel = DictionaryHelper.getDictionary_Command(dic);
-                            CustomExpandableListAdapter_Goods customExpandableListAdapter = new CustomExpandableListAdapter_Goods(Goods.this, dictionary_wheel, mainlistview, list_goods,tv_top);
-                            mainlistview.setAdapter(customExpandableListAdapter);
+//                            CustomExpandableListAdapter_Goods customExpandableListAdapter = new CustomExpandableListAdapter_Goods(Goods.this, dictionary_wheel, mainlistview, list_goods,tv_top);
+//                            mainlistview.setAdapter(customExpandableListAdapter);
                             mainlistview.expandGroup(0);
                         }
 

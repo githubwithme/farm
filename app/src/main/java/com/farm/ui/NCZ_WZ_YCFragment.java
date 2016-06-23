@@ -52,6 +52,8 @@ import java.util.List;
 @EFragment
 public class NCZ_WZ_YCFragment extends Fragment
 {
+    String id;
+    String name;
     NCZ_WZ_YClistAdapter listadpater;
     Fragment mContent = new Fragment();
     private int listSumData;
@@ -70,6 +72,7 @@ public class NCZ_WZ_YCFragment extends Fragment
 
     @AfterViews
     void afterwzoncreat() {
+
 
         initAnimalListView();
     }
@@ -154,7 +157,8 @@ public class NCZ_WZ_YCFragment extends Fragment
         appContext = (AppContext) getActivity().getApplication();
    /*     IntentFilter intentFilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEPLANT);
         getActivity().registerReceiver(receiver_update, intentFilter_update);*/
-
+        id=getArguments().getString("id");
+        name=getArguments().getString("name");
         return view;
     }
 

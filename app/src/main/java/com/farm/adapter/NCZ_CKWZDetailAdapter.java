@@ -99,7 +99,7 @@ public class NCZ_CKWZDetailAdapter extends BaseAdapter
 
         String a = Wz_Storehouse.getExpDate().substring(0, Wz_Storehouse.getExpDate().length() - 8);
         String b = Wz_Storehouse.getInDate().substring(0, Wz_Storehouse.getInDate().length() - 8);
-        listItemView.batchName.setText(Wz_Storehouse.getBatchName());
+        listItemView.batchName.setText("批次号："+Wz_Storehouse.getBatchName());
         if (!wz_detail.getThree().equals(""))
         {
             listItemView.guige.setText(wz_detail.getGoodsStatistical() + wz_detail.getGoodsunit() + "/" + wz_detail.getThree());
@@ -158,7 +158,7 @@ public class NCZ_CKWZDetailAdapter extends BaseAdapter
 
   /*      int x=Integer.parseInt(Wz_Storehouse.getQuantity().substring(0,Wz_Storehouse.getQuantity().length()-1));
         int y=Integer.parseInt(wz_detail.getGoodsStatistical());*/
-        listItemView.quantity.setText(Integer.parseInt(bb)*Integer.parseInt(wz_detail.getGoodsStatistical())+ Wz_Storehouse.getGoodsunit());
+        listItemView.quantity.setText(Double.valueOf(bb)*Double.valueOf(wz_detail.getGoodsStatistical())+ Wz_Storehouse.getGoodsunit());
 //        listItemView.quantity.setText(Wz_Storehouse.getGoodsStatistical() + Wz_Storehouse.getGoodsunit());
         listItemView.shuliang.setText(Wz_Storehouse.getQuantity());
         listItemView.inGoodsValue.setText(Wz_Storehouse.getInGoodsValue() + "元");

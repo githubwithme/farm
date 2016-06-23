@@ -3,6 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
@@ -18,18 +19,16 @@
             android:src="@drawable/ic_back"/>
 
         <TextView
-            android:layout_marginLeft="20dip"
-            android:layout_toRightOf="@+id/imgbtn_back"
-            android:layout_centerInParent="true"
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/titlebar_height"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dip"
+            android:layout_toRightOf="@+id/imgbtn_back"
             android:gravity="center"
             android:text="每日工作"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
-
-
 
 
     </RelativeLayout>
@@ -38,71 +37,123 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
         android:background="@color/bg_yellow"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="40dip">
-    <RadioGroup
-        android:id="@+id/rg_score"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dip"
-        android:layout_below="@+id/ll_pfbz"
-        android:orientation="horizontal"
-        >
-
-        <RadioButton
-            android:id="@+id/rb_bz"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="标准化作业"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/size_12"/>
-
-        <RadioButton
-            android:id="@+id/rb_fbz"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="非标准化作业"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/size_12"/>
-    </RadioGroup>
-</LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dip">
-
-        <LinearLayout
-            android:id="@+id/ll_bz"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="40dip">
-            <TextView
-                android:id="@+id/tv_bz"
-                android:gravity="center"
-                android:text="请选择作物"
-                android:textSize="15dip"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-            <ImageView
-                android:layout_marginRight="15dip"
-                android:layout_alignParentRight="true"
-                android:id="@+id/ic_up"
-                android:layout_width="20dip"
-                android:layout_height="20dip"
-                android:background="@mipmap/dl_ic_down"
-                android:contentDescription=""/>
-        </LinearLayout>
-
+        android:layout_height="50dip"
+        android:layout_margin="10dip"
+        android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/et_fbz"
-            android:visibility="gone"
-            android:background="@null"
-            android:gravity="center"
-            android:textSize="15dip"
-            android:text="请详细填写工作内容(*)"
+            android:id="@+id/work_nr"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:hint="请填写或选择工作内容"/>
+
+        <Button
+            android:id="@+id/btn_nr"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="选择"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/rl_zw"
             android:layout_width="match_parent"
-            android:layout_height="50dip"/>
-    </RelativeLayout>
+            android:layout_height="40dip"
+            android:layout_margin="10dip"
+            android:background="@drawable/shape_round_border_red">
+
+            <TextView
+                android:id="@+id/tv_zw"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="芒果"
+                android:textColor="@color/bg_text"
+                android:textSize="16sp"/>
+
+            <View
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/downward"/>
+        </RelativeLayout>
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:background="@color/line_color"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dip"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/pb_cmd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+
+            <HorizontalScrollView
+                android:id="@+id/cmd_tools_scrlllview"
+                android:layout_width="fill_parent"
+                android:layout_height="60dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="20dip"
+                android:fadingEdge="none"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/cmd_tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"/>
+            </HorizontalScrollView>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dip"
+                android:layout_marginTop="10dip"
+                android:background="@color/line_color"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/cmd_pager"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

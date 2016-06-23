@@ -88,8 +88,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_centerInParent="true"
-                android:divider="@color/transparent"
-                android:dividerHeight="0dip"
+                android:divider="@color/line_color"
+                android:dividerHeight="1dip"
                 android:scrollbars="none"
                 />
 

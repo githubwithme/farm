@@ -39,6 +39,8 @@ import java.util.List;
 @EFragment
 public class NCZ_WZ_CKFRagment extends Fragment
 {
+    String id;
+    String name;
     WZ_CKExecute_Adapter wz_ckExecute_adapter;
     String goodsName;
     @ViewById
@@ -64,6 +66,7 @@ public class NCZ_WZ_CKFRagment extends Fragment
     @AfterViews
     void afterOncreate()
     {
+
         getBreakOffInfoOfContract();
     }
 
@@ -72,6 +75,8 @@ public class NCZ_WZ_CKFRagment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.ncz_wz_crlayout, container, false);
+        id=getArguments().getString("id");
+        name=getArguments().getString("name");
         return rootView;
     }
 
@@ -80,6 +85,7 @@ public class NCZ_WZ_CKFRagment extends Fragment
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("parkId", id);
         params.addQueryStringParameter("goodsName", goodsName);
         params.addQueryStringParameter("action", "getGoodsOutByUid");
         HttpUtils http = new HttpUtils();
@@ -119,6 +125,7 @@ public class NCZ_WZ_CKFRagment extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
+                String a=msg;
                 AppContext.makeToast(getActivity(), "error_connectServer");
             }
         });

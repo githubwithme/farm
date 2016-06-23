@@ -24,6 +24,18 @@ public class WZ_Pcxx  implements Parcelable
     public String quantity;
     public String inGoodsValue;
     public String sumWeight;
+    public String stockValue;
+
+
+    public String getStockValue()
+    {
+        return stockValue;
+    }
+
+    public void setStockValue(String stockValue)
+    {
+        this.stockValue = stockValue;
+    }
 
     public String getSumWeight()
     {
@@ -143,6 +155,7 @@ public class WZ_Pcxx  implements Parcelable
             p.setQuantity(source.readString());
             p.setInGoodsValue(source.readString());
             p.setSumWeight(source.readString());
+            p.setStockValue(source.readString());
 
 
             return  p;
@@ -169,12 +182,7 @@ public class WZ_Pcxx  implements Parcelable
         p.writeString(quantity);
         p.writeString(inGoodsValue);
         p.writeString(sumWeight);
-
-
-
-
-
-
+        p.writeString(stockValue);
 
     }
 

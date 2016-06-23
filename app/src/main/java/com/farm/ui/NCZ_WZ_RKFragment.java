@@ -1,5 +1,9 @@
 package com.farm.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,6 +44,9 @@ import java.util.List;
 public class NCZ_WZ_RKFragment extends Fragment
 {
 
+    String id;
+    String name;
+
     String goodsName;
     String indate;
     WZ_RKExecute_Adapter wz_rkExecute_adapter;
@@ -68,15 +75,28 @@ public class NCZ_WZ_RKFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
-
+       /* IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_NCZ_WZ_ParkId);
+        getActivity().registerReceiver(receiver_update, intentfilter_update);*/
         getBreakOffInfoOfContract();
     }
 
+/*    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+           String a=intent.getStringExtra("id");
+           String b=intent.getStringExtra("name");
+        }
+    };*/
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.ncz_wz_crlayout, container, false);
+        id = getArguments().getString("id");
+        name = getArguments().getString("name");
         return rootView;
     }
 
@@ -86,6 +106,7 @@ public class NCZ_WZ_RKFragment extends Fragment
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("goodsName", goodsName);
+        params.addQueryStringParameter("parkId", id);
         params.addQueryStringParameter("action", "getGoodsInByUid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

@@ -17,6 +17,7 @@
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_gravity="center_vertical"
@@ -24,6 +25,7 @@
 
 
             <ImageView
+
                 android:id="@+id/typeicon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

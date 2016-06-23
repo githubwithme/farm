@@ -15,27 +15,17 @@
         android:layout_marginRight="10dip"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30dip">
-            <TextView
-                android:id="@+id/goodname"
-                android:layout_width="wrap_content"
-                android:layout_height="30dip"
-                android:layout_gravity="center|left"
-                android:layout_marginLeft="10dip"
-                android:gravity="center"
-                android:minWidth="60dip"
-                android:text="钾肥"
-                android:textColor="@color/textcolor_titlebar"
-                android:textSize="16sp"/>
             <FrameLayout
-                android:layout_marginLeft="100dip"
-                android:visibility="gone"
+                android:layout_centerVertical="true"
+                android:visibility="invisible"
+                android:layout_gravity="center|left"
                 android:id="@+id/fl_new_item"
                 android:layout_width="15dip"
                 android:layout_height="15dip"
-                android:layout_gravity="center"
+              android:layout_alignParentLeft="true"
                 >
 
                 <com.farm.widget.CircleImageView
@@ -56,7 +46,18 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/size_10" />
             </FrameLayout>
-        </LinearLayout>
+            <TextView
+                android:id="@+id/goodname"
+                android:layout_width="wrap_content"
+                android:layout_height="30dip"
+           android:layout_toRightOf="@+id/fl_new_item"
+                android:gravity="center"
+                android:minWidth="60dip"
+                android:text="钾肥"
+                android:textColor="@color/textcolor_titlebar"
+                android:textSize="16sp"/>
+
+        </RelativeLayout>
 
 
         <RelativeLayout
@@ -69,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dip"
+                android:layout_marginLeft="30dip"
                 android:gravity="center"
                 android:text="仓库"
                 android:textColor="@color/gray"

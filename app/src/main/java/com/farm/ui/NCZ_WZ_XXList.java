@@ -31,6 +31,7 @@ import java.util.List;
 @EActivity(R.layout.wz_ck_xxlist)
 public class NCZ_WZ_XXList extends FragmentActivity
 {
+    String parkid;
 //    goodslisttab goods;
     WZ_Detail goods;
     ViewPagerAdapter_WZ viewPagerAdapter_wz;
@@ -39,7 +40,7 @@ public class NCZ_WZ_XXList extends FragmentActivity
     int currentItem = 0;
 
     List<Fragment> fragmentList;
-    NCZ_WZ_PC ncz_wz_pc;
+//    NCZ_WZ_PC ncz_wz_pc;
     NCZ_WZ_FB ncz_wz_fb;
     Fragment mContent = new Fragment();
     @ViewById
@@ -67,8 +68,9 @@ public class NCZ_WZ_XXList extends FragmentActivity
     }
     @AfterViews
     void afterOncreat(){
-        wzxx_tab.setText(goods.getGoodsName());
-        setBackground(0);
+//        wzxx_tab.setText(goods.getGoodsName());
+        wz_fenbu.setText(goods.getGoodsName());
+//        setBackground(0);
         cvPager.setOffscreenPageLimit(1);
         cvPager.setIsScrollable(true);
         viewPagerAdapter_wz=new ViewPagerAdapter_WZ(NCZ_WZ_XXList.this.getSupportFragmentManager(), cvPager, fragmentList);
@@ -77,7 +79,7 @@ public class NCZ_WZ_XXList extends FragmentActivity
             @Override
             public void onExtraPageScrolled(int i, float v, int i2) {
                 currentItem = i;
-                setBackground(i);
+//                setBackground(i);
             }
         });
 
@@ -88,11 +90,11 @@ public class NCZ_WZ_XXList extends FragmentActivity
 
         switch (pos) {
             case 0:
-                wz_pici.setBackgroundResource(R.drawable.red_bottom);
-                break;
-            case 1:
                 wz_fenbu.setBackgroundResource(R.drawable.red_bottom);
                 break;
+//  /*          case 1:
+//                wz_fenbu.setBackgroundResource(R.drawable.red_bottom);
+//                break;*/
 
         }
     }
@@ -101,18 +103,21 @@ public class NCZ_WZ_XXList extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         goods=getIntent().getParcelableExtra("goods");
+        parkid = getIntent().getStringExtra("parkid");
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         Bundle bundle = new Bundle();
         bundle.putParcelable("goods",goods);
+        bundle.putString("parkid", parkid);
         commembertab = AppContext.getUserInfo(NCZ_WZ_XXList.this);
         fragmentList = new ArrayList<>();
-        ncz_wz_pc=new NCZ_WZ_PC_();
+//        ncz_wz_pc=new NCZ_WZ_PC_();
         ncz_wz_fb=new NCZ_WZ_FB_();
-        ncz_wz_pc.setArguments(bundle);
+//        ncz_wz_pc.setArguments(bundle);
         ncz_wz_fb.setArguments(bundle);
-        fragmentList.add(ncz_wz_pc);
+
         fragmentList.add(ncz_wz_fb);
+//        fragmentList.add(ncz_wz_pc);
 
 
     }
