@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -59,7 +61,19 @@ public class NCZ_AllOrderFragment extends Fragment
     View line;
     @ViewById
     ListView lv;
-
+    @ViewById
+    Spinner provinceSpinner;
+    @ViewById
+    Spinner citySpinner;
+    @ViewById
+    Spinner countySpinner;
+    ArrayAdapter<String> provinceAdapter = null;  //省级适配器
+    ArrayAdapter<String> cityAdapter = null;    //地级适配器
+    ArrayAdapter<String> countyAdapter = null;    //县级适配器
+    static int provincePosition = 3;
+    private String[] mProvinceDatas=new String[]{"全部分场","乐丰分场","双桥分场"};
+    private String[] mCitisDatasMap=new String[]{"全部产品","香蕉","柑橘"};
+    private String[] mAreaDatasMap=new String[]{"不限采购商","李四","张三"};
 
     @Override
     public void onResume()
@@ -71,6 +85,7 @@ public class NCZ_AllOrderFragment extends Fragment
     void afterOncreate()
     {
 //        getNewSaleList_test();
+        setSpinner();
         getAllOrders();
     }
 
@@ -174,7 +189,57 @@ public class NCZ_AllOrderFragment extends Fragment
             }
         });
     }
+    /*
+        * 设置下拉框
+        */
+    private void setSpinner()
+    {
+        //绑定适配器和值
+        provinceAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mProvinceDatas);
+        provinceSpinner.setAdapter(provinceAdapter);
+        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
 
+        cityAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mCitisDatasMap);
+        citySpinner.setAdapter(cityAdapter);
+        citySpinner.setSelection(0, true);  //默认选中第0个
+
+        countyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mAreaDatasMap);
+        countySpinner.setAdapter(countyAdapter);
+        countySpinner.setSelection(0, true);
+
+        //省级下拉框监听
+        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            // 表示选项被改变的时候触发此方法，主要实现办法：动态改变地级适配器的绑定值
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3)
+            {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0)
+            {
+            }
+
+        });
+
+
+        //地级下拉监听
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3)
+            {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0)
+            {
+
+            }
+        });
+    }
 
     @Override
     public void onDestroyView()

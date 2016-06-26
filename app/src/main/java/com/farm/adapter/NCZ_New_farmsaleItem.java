@@ -36,25 +36,35 @@ public class NCZ_New_farmsaleItem extends BaseAdapter
         public TextView allnum;
         public TextView allsalefor;
     }
+
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         return listItems.size();
     }
+
     @Override
-    public Object getItem(int i) {
+    public Object getItem(int i)
+    {
         return null;
     }
+
     @Override
-    public long getItemId(int i) {
+    public long getItemId(int i)
+    {
         return 0;
     }
+
     HashMap<Integer, View> lmap = new HashMap<Integer, View>();
+
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int i, View view, ViewGroup viewGroup)
+    {
         batchTime = listItems.get(i);
         // 自定义视图
         ListItemView listItemView = null;
-        if (lmap.get(i) == null) {
+        if (lmap.get(i) == null)
+        {
             // 获取list_item布局文件的视图
             view = listContainer.inflate(R.layout.ncz_new_farmsaleitem, null);
             listItemView = new ListItemView();
@@ -65,17 +75,16 @@ public class NCZ_New_farmsaleItem extends BaseAdapter
             listItemView.allsalefor = (TextView) view.findViewById(R.id.allsalefor);
 
 
-
-
             lmap.put(i, view);
             view.setTag(listItemView);
-        }else {
+        } else
+        {
             view = lmap.get(i);
             listItemView = (ListItemView) view.getTag();
         }
         int allnumber = Integer.valueOf(batchTime.getAllsaleout()) + Integer.valueOf(batchTime.getAllsalein()) + Integer.valueOf(batchTime.getAllnewsale()) + Integer.valueOf(batchTime.getAllsalefor());
         listItemView.batchtimes.setText(batchTime.getBatchTime());
-        listItemView.allnum.setText(allnumber+"");
+        listItemView.allnum.setText(allnumber + "");
 
         listItemView.allsalefor.setText(batchTime.getAllsalefor());
 

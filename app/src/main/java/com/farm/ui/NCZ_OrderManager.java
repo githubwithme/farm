@@ -23,11 +23,17 @@ public class NCZ_OrderManager extends Activity
     NCZ_AllOrderFragment ncz_allOrderFragment;
     NCZ_NotPayFragment ncz_notPayFragment;
     NCZ_DealingOrderFragment ncz_dealingOrderFragment;
+    NCZ_ScheduleOrderFragment ncz_scheduleOrderFragment;
+    NCZ_NeedApproveOrderFragment ncz_needApproveOrderFragment;
     Fragment mContent = new Fragment();
     @ViewById
     Button btn_back;
     @ViewById
     TextView tv_allorder;
+    @ViewById
+    TextView tv_pending;
+    @ViewById
+    TextView tv_schedule;
     @ViewById
     TextView tv_dealing;
     @ViewById
@@ -40,9 +46,16 @@ public class NCZ_OrderManager extends Activity
     }
 
     @Click
+    void tv_schedule()
+    {
+        setBackground(0);
+        switchContent(mContent, ncz_scheduleOrderFragment);
+    }
+
+    @Click
     void tv_allorder()
     {
-        setBackground(2);
+        setBackground(4);
         switchContent(mContent, ncz_allOrderFragment);
 
     }
@@ -50,22 +63,28 @@ public class NCZ_OrderManager extends Activity
     @Click
     void tv_dealing()
     {
-        setBackground(1);
+        setBackground(3);
         switchContent(mContent, ncz_dealingOrderFragment);
     }
 
     @Click
     void tv_notpay()
     {
-        setBackground(0);
+        setBackground(2);
         switchContent(mContent, ncz_notPayFragment);
+    }
+    @Click
+    void tv_pending()
+    {
+        setBackground(1);
+        switchContent(mContent, ncz_needApproveOrderFragment);
     }
 
     @AfterViews
     void afterOncreate()
     {
         setBackground(0);
-        switchContent(mContent, ncz_notPayFragment);
+        switchContent(mContent, ncz_scheduleOrderFragment);
     }
 
     @Override
@@ -73,9 +92,11 @@ public class NCZ_OrderManager extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+        ncz_scheduleOrderFragment = new NCZ_ScheduleOrderFragment_();
         ncz_allOrderFragment = new NCZ_AllOrderFragment_();
         ncz_notPayFragment = new NCZ_NotPayFragment_();
         ncz_dealingOrderFragment = new NCZ_DealingOrderFragment_();
+        ncz_needApproveOrderFragment=new NCZ_NeedApproveOrderFragment_();
     }
 
     public void switchContent(Fragment from, Fragment to)
@@ -99,27 +120,43 @@ public class NCZ_OrderManager extends Activity
         tv_allorder.setSelected(false);
         tv_notpay.setSelected(false);
         tv_dealing.setSelected(false);
+        tv_schedule.setSelected(false);
+        tv_pending.setSelected(false);
 
         tv_allorder.setBackgroundResource(R.color.white);
         tv_notpay.setBackgroundResource(R.color.white);
         tv_dealing.setBackgroundResource(R.color.white);
+        tv_schedule.setBackgroundResource(R.color.white);
+        tv_pending.setBackgroundResource(R.color.white);
 
         tv_allorder.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_notpay.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_dealing.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_schedule.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_pending.setTextColor(getResources().getColor(R.color.menu_textcolor));
         switch (pos)
         {
             case 0:
+                tv_schedule.setSelected(false);
+                tv_schedule.setTextColor(getResources().getColor(R.color.bg_blue));
+                tv_schedule.setBackgroundResource(R.drawable.red_bottom);
+                break;
+            case 1:
+                tv_pending.setSelected(false);
+                tv_pending.setTextColor(getResources().getColor(R.color.bg_blue));
+                tv_pending.setBackgroundResource(R.drawable.red_bottom);
+                break;
+            case 2:
                 tv_notpay.setSelected(false);
                 tv_notpay.setTextColor(getResources().getColor(R.color.bg_blue));
                 tv_notpay.setBackgroundResource(R.drawable.red_bottom);
                 break;
-            case 1:
+            case 3:
                 tv_dealing.setSelected(false);
                 tv_dealing.setTextColor(getResources().getColor(R.color.bg_blue));
                 tv_dealing.setBackgroundResource(R.drawable.red_bottom);
                 break;
-            case 2:
+            case 4:
                 tv_allorder.setSelected(false);
                 tv_allorder.setTextColor(getResources().getColor(R.color.bg_blue));
                 tv_allorder.setBackgroundResource(R.drawable.red_bottom);

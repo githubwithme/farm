@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dip"
-        android:background="@color/bg_titlebar">
+        android:background="@color/color_topbar">
 
         <Button
             android:id="@+id/btn_back"
@@ -16,7 +16,7 @@
             android:layout_height="20dip"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dip"
-            android:background="@drawable/back"/>
+            android:background="@drawable/ic_back"/>
 
         <Button
             android:id="@+id/btn_sure"
@@ -25,16 +25,17 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dip"
-            android:background="@drawable/background_view_rounded_single"
+            android:background="@null"
             android:text="确定"
-            android:textColor="@color/bg_text"
+            android:textColor="@color/white"
             android:textSize="16sp"/>
 
         <LinearLayout
             android:id="@+id/ll_tab"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/btn_back"
             android:orientation="horizontal">
 
             <TextView
@@ -43,8 +44,8 @@
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="编辑订单"
-                android:textColor="@color/textcolor_titlebar"
+                android:text="调整订单"
+                android:textColor="@color/white"
                 android:textSize="@dimen/titlebar_textsize"/>
         </LinearLayout>
     </RelativeLayout>
