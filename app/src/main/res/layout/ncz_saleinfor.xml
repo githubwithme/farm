@@ -85,122 +85,12 @@
                 android:scrollbars="none">
 
                 <LinearLayout
+                    android:id="@+id/ll_park"
                     android:layout_width="fill_parent"
                     android:layout_height="40dip"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="100dip"
-                        android:layout_height="fill_parent"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="乐丰分场"
-                        android:textColor="@color/bg_text"
-                        android:textSize="13sp"/>
 
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray"/>
-
-                    <TextView
-                        android:layout_width="100dip"
-                        android:layout_height="fill_parent"
-                        android:gravity="center"
-                        android:text="双桥分场"
-                        android:textColor="@color/bg_text"
-                        android:textSize="13sp"/>
-
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray"/>
-
-                    <TextView
-                        android:layout_width="100dip"
-                        android:layout_height="fill_parent"
-                        android:gravity="center"
-                        android:text="其他分场1"
-                        android:textColor="@color/bg_text"
-                        android:textSize="13sp"/>
-
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray"/>
-
-                    <TextView
-                        android:layout_width="100dip"
-                        android:layout_height="fill_parent"
-                        android:gravity="center"
-                        android:text="其他分场2"
-                        android:textColor="@color/bg_text"
-                        android:textSize="13sp"/>
-
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray"/>
-
-                    <TextView
-                        android:layout_width="100dip"
-                        android:layout_height="fill_parent"
-                        android:gravity="center"
-                        android:text="其他分场3"
-                        android:textColor="@color/bg_text"
-                        android:textSize="13sp"/>
-
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray"/>
-
-                    <TextView
-                        android:layout_width="100dip"
-                        android:layout_height="fill_parent"
-                        android:gravity="center"
-                        android:text="其他分场4"
-                        android:textColor="@color/bg_text"
-                        android:textSize="13sp"/>
-
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray"/>
-
-                    <TextView
-                        android:layout_width="100dip"
-                        android:layout_height="fill_parent"
-                        android:gravity="center"
-                        android:text="其他分场5"
-                        android:textColor="@color/bg_text"
-                        android:textSize="13sp"/>
-
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray"/>
-
-                    <TextView
-                        android:layout_width="100dip"
-                        android:layout_height="fill_parent"
-                        android:gravity="center"
-                        android:text="其他分场6"
-                        android:textColor="@color/bg_text"
-                        android:textSize="13sp"/>
-
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray"/>
-
-                    <TextView
-                        android:layout_width="100dip"
-                        android:layout_height="fill_parent"
-                        android:gravity="center"
-                        android:text="其他分场7"
-                        android:textColor="@color/bg_text"
-                        android:textSize="13sp"/>
                 </LinearLayout>
             </com.farm.widget.CustomHorizontalScrollView>
         </LinearLayout>

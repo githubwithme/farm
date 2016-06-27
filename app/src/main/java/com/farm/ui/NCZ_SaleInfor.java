@@ -1,24 +1,28 @@
 package com.farm.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farm.R;
+import com.farm.bean.SaleDataBean;
+import com.farm.common.FileHelper;
 import com.farm.widget.CustomHorizontalScrollView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,12 +35,21 @@ import java.util.Map;
 @EActivity(R.layout.ncz_saleinfor)
 public class NCZ_SaleInfor extends Activity
 {
+    List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
+
+    String[] item_batchtimedata;
+    List<SaleDataBean> listData = null;
+
+    @ViewById
+    LinearLayout ll_park;
+
     @AfterViews
     void afterOncreate()
     {
-        initViews();
+        getNewSaleList_test();
         getActionBar().hide();
     }
+
     @Click
     void btn_createorders()
     {
@@ -51,6 +64,7 @@ public class NCZ_SaleInfor extends Activity
         Intent intent = new Intent(NCZ_SaleInfor.this, NCZ_OrderManager_.class);
         startActivity(intent);
     }
+
     @Click
     void btn_customer()
     {
@@ -62,7 +76,6 @@ public class NCZ_SaleInfor extends Activity
     public HorizontalScrollView mTouchView;
     // 加载所有的ScrollView
     protected List<CustomHorizontalScrollView> mHScrollViews = new ArrayList<CustomHorizontalScrollView>();
-    private String[] cols = new String[]{"title", "data_1", "data_2", "data_3", "data_4", "data_5", "data_6", "data_7", "data_8", "data_9",};
 
     private ScrollAdapter mAdapter;
 
@@ -72,27 +85,52 @@ public class NCZ_SaleInfor extends Activity
         super.onCreate(savedInstanceState);
     }
 
+    private void getNewSaleList_test()
+    {
+        listData = FileHelper.getAssetsData(NCZ_SaleInfor.this, "getsaledata", SaleDataBean.class);
+        if (listData != null)
+        {
+            initViews();
+        }
+
+    }
+
     private void initViews()
     {
-        List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
+        LayoutInflater inflater = (LayoutInflater) NCZ_SaleInfor.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        item_batchtimedata = new String[listData.get(0).getParklist().size() + 1];//batchtime占了一位
+        item_batchtimedata[0] = "batchtime";
+        for (int i = 0; i < item_batchtimedata.length - 1; i++)
+        {
+            //顶部园区控件
+            item_batchtimedata[i + 1] = "data_" + i;
+        }
+        for (int i = 0; i < listData.get(0).getParklist().size(); i++)
+        {
+            View view = inflater.inflate(R.layout.saleinfo_parkitem, null);
+            TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
+            tv_parkname.setText(listData.get(0).getParklist().get(i).getParkname() + "\n" + "库存量");
+            ll_park.addView(view);
+        }
+
+
         Map<String, String> data = null;
         CustomHorizontalScrollView headerScroll = (CustomHorizontalScrollView) findViewById(R.id.item_scroll_title);
         // 添加头滑动事件
         mHScrollViews.add(headerScroll);
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < listData.size(); i++)
         {
             data = new HashMap<String, String>();
-            data.put("title", "05-11_" + i);
-            for (int j = 1; j <= cols.length; j++)
+            data.put("batchtime", listData.get(i).getBatchtime());
+            for (int j = 0; j < item_batchtimedata.length - 1; j++)
             {
-                data.put("data_" + j, String.valueOf(1500 + j + i));
+                data.put("data_" + (j), listData.get(i).getParklist().get(j).getNumber());
             }
-
             datas.add(data);
         }
-        mAdapter = new ScrollAdapter(this, datas, R.layout.scrolladapter_item// R.layout.item
-                , cols, new int[]{R.id.item_titlev, R.id.item_datav1, R.id.item_datav2, R.id.item_datav3, R.id.item_datav4, R.id.item_datav5, R.id.item_datav6, R.id.item_datav7, R.id.item_datav8});
+        mAdapter = new ScrollAdapter();
         mListView.setAdapter(mAdapter);
     }
 
@@ -129,23 +167,30 @@ public class NCZ_SaleInfor extends Activity
         }
     }
 
-    class ScrollAdapter extends SimpleAdapter
+    class ScrollAdapter extends BaseAdapter
     {
 
-        private List<? extends Map<String, ?>> datas;
-        private int res;
-        private String[] from;
-        private int[] to;
-        private Context context;
-
-        public ScrollAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to)
+        public ScrollAdapter()
         {
-            super(context, data, resource, from, to);
-            this.context = context;
-            this.datas = data;
-            this.res = resource;
-            this.from = from;
-            this.to = to;
+
+        }
+
+        @Override
+        public int getCount()
+        {
+            return datas.size();
+        }
+
+        @Override
+        public Object getItem(int position)
+        {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position)
+        {
+            return 0;
         }
 
         @Override
@@ -154,17 +199,60 @@ public class NCZ_SaleInfor extends Activity
             View v = convertView;
             if (v == null)
             {
-                v = LayoutInflater.from(context).inflate(res, null);
+                View[] views = new View[item_batchtimedata.length];
+                v = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.scrolladapter_item, null);
+                TextView item_titlev = (TextView) v.findViewById(R.id.item_titlev);
+                LinearLayout ll_middle = (LinearLayout) v.findViewById(R.id.ll_middle);
+                item_titlev.setText(datas.get(0).get(item_batchtimedata[0]).toString());
+
+                for (int i = 0; i < item_batchtimedata.length - 1; i++)
+                {
+                    View view = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.saleinfo_dataitem, null);
+                    TextView tv_data = (TextView) view.findViewById(R.id.tv_data);
+                    tv_data.setText(datas.get(i + 1).get(item_batchtimedata[i + 1]).toString());
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+                    lp.gravity = Gravity.CENTER;
+                    view.setLayoutParams(lp);
+                    ll_middle.addView(view);
+
+                    tv_data.setOnClickListener(clickListener);
+                    views[i] = tv_data;
+                }
                 // 第一次初始化的时候装进来
                 addHViews((CustomHorizontalScrollView) v.findViewById(R.id.item_chscroll_scroll));
-                View[] views = new View[to.length];
+
+
+//                LayoutInflater inflater = (LayoutInflater) NCZ_SaleInfor.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+//                View view1 = inflater.inflate(R.layout.scrolladapter_item, null);
+//                TextView item_titlev = (TextView) view1.findViewById(R.id.item_titlev);
+//                int[] views_data = new int[listData.get(0).getParklist().size() + 1];
+//                views_data[0] = item_titlev.getId();//批次控件
+//
+//                item_batchtimedata = new String[listData.get(0).getParklist().size() + 1];//batchtime占了一位
+//                item_batchtimedata[0] = "batchtime";
+//                for (int i = 0; i < item_batchtimedata.length - 1; i++)
+//                {
+//                    //顶部园区控件
+//                    item_batchtimedata[i + 1] = "data_" + i;
+//                    View view = inflater.inflate(R.layout.saleinfo_parkitem, null);
+//                    TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
+//                    ll_park.addView(view);
+//                    //批次+销售数据控件
+//                    View view2 = inflater.inflate(R.layout.saleinfo_dataitem, null);
+//                    TextView tv_data = (TextView) view2.findViewById(R.id.tv_data);
+//                    views_data[i + 1] = tv_data.getId();
+//
+//                }
+
+
+//                View[] views = new View[to.length];
                 // 单元格点击事件
-                for (int i = 0; i < to.length; i++)
-                {
-                    View tv = v.findViewById(to[i]);
-                    tv.setOnClickListener(clickListener);
-                    views[i] = tv;
-                }
+//                for (int i = 0; i < to.length; i++)
+//                {
+//                    View tv = v.findViewById(to[i]);
+//                    tv.setOnClickListener(clickListener);
+//                    views[i] = tv;
+//                }
                 // 每行点击事件
                 /*
                  * for(int i = 0 ; i < from.length; i++) { View tv =
@@ -173,12 +261,12 @@ public class NCZ_SaleInfor extends Activity
                 //
                 v.setTag(views);
             }
-            View[] holders = (View[]) v.getTag();
-            int len = holders.length;
-            for (int i = 0; i < len; i++)
-            {
-                ((TextView) holders[i]).setText(this.datas.get(position).get(from[i]).toString());
-            }
+//            View[] holders = (View[]) v.getTag();
+//            int len = holders.length;
+//            for (int i = 0; i < len; i++)
+//            {
+//                ((TextView) holders[i]).setText(this.datas.get(position).get(from[i]).toString());
+//            }
             return v;
         }
     }
@@ -190,7 +278,7 @@ public class NCZ_SaleInfor extends Activity
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            Toast.makeText(NCZ_SaleInfor.this, "点击了:" + ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(NCZ_SaleInfor.this, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
         }
     };
 }
