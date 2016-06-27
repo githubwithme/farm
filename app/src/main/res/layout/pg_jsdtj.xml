@@ -40,6 +40,7 @@
             android:textSize="@dimen/size_16"/>
     </RelativeLayout>
     <RelativeLayout
+        android:layout_marginTop="20dip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -49,20 +50,14 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:text="单位：金额(元);重量(斤)"
-                android:layout_marginRight="20dip"
-                android:gravity="center|right"
-                android:textSize="14dip"
-                android:layout_width="match_parent"
-                android:layout_height="35dip"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/bg_main"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dip">
+                android:layout_height="40dip">
 
                 <TextView
                     android:layout_width="0dip"
@@ -77,17 +72,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/bg_main"/>
 
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="单价"
-                    android:textSize="14dip"/>
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="match_parent"
-                    android:background="@color/bg_main"/>
+
 
                 <TextView
                     android:layout_width="0dip"
@@ -132,7 +117,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dip">
+                android:layout_height="40dip">
 
                 <TextView
                     android:layout_width="0dip"
@@ -142,17 +127,6 @@
                     android:text="正品"
                     android:textSize="14dip"/>
 
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="match_parent"
-                    android:background="@color/bg_main"/>
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textSize="14dip"/>
 
                 <View
                     android:layout_width="1px"
@@ -205,7 +179,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dip">
+                android:layout_height="40dip">
 
                 <TextView
                     android:layout_width="0dip"
@@ -215,17 +189,7 @@
                     android:text="次蕉"
                     android:textSize="14dip"/>
 
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="match_parent"
-                    android:background="@color/bg_main"/>
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textSize="14dip"/>
+
 
                 <View
                     android:layout_width="1px"
@@ -276,7 +240,7 @@
                 android:background="@color/bg_main"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dip"
+                android:layout_height="40dip"
                 android:orientation="horizontal">
 
                 <TextView
@@ -339,7 +303,7 @@
                 android:background="@color/bg_main"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dip"
+                android:layout_height="40dip"
                 android:orientation="horizontal">
 
                 <TextView
@@ -348,7 +312,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="实收"
+                    android:text="搬运费"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
@@ -377,7 +341,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="填写采收数据"
+                    android:text="实收"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
@@ -392,18 +356,34 @@
                     android:layout_weight="1"
                     android:layout_width="0dip"
                     android:layout_height="match_parent">
-                    <Button
 
-                        android:id="@+id/btn_addproduct"
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dip"
-                        android:background="@mipmap/ic_add"/>
                 </LinearLayout>
 
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bg_main"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dip">
+                <TextView
+                    android:gravity="center"
+                    android:layout_marginLeft="20dip"
+                    android:text="填写每户数据"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+                <Button
+
+                    android:id="@+id/btn_addproduct"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dip"
+                    android:background="@mipmap/ic_add"/>
+
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
@@ -425,4 +405,6 @@
         android:layout_marginTop="5dip"
         android:divider="@color/transparent"
         android:dividerHeight="0dip"/>
+
+
 </LinearLayout>

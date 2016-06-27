@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dip"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/painqu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="选择片区"
+                android:textSize="14dip"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bg_main"/>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dip"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/chengbaohu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:gravity="center"
+                android:text="选择承包户"
+                android:textSize="14dip"/>
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bg_main"/>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dip"
+            android:layout_height="match_parent">
+            <EditText
+                android:id="@+id/zhushu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@null"
+                android:gravity="center"
+                android:hint="0"
+                android:numeric="decimal"
+                android:textSize="14dip"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bg_main"/>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/zhengpin"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="正品"
+                android:numeric="decimal"
+                android:textSize="14dip"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bg_main"/>
+
+            <EditText
+                android:id="@+id/cipin"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="次品"
+                android:numeric="decimal"
+                android:textSize="14dip"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bg_main"/>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dip"
+            android:layout_height="match_parent">
+            <EditText
+                android:id="@+id/jinzhong"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@null"
+                android:gravity="center"
+                android:hint="0"
+                android:numeric="decimal"
+                android:textSize="14dip"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bg_main"/>
+</LinearLayout>
