@@ -216,11 +216,13 @@ public class NCZ_AllOrderFragment extends Fragment
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3)
             {
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0)
             {
+                
             }
 
         });

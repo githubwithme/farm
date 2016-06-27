@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="explore_color">#5A89C5</color>
     <color name="semitransparent">#92bbbbbb</color>
     <color name="white">#ffffff</color>
     <color name="color_topbar">#393a3e</color>
