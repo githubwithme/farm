@@ -190,6 +190,7 @@
         <activity android:name=".ui.NCZ_DLdatail_"/>
         <activity android:name=".ui.DongtaiListview_"/>
         <activity android:name=".ui.AddNotStd_Cmd_new_"/>
+        <activity android:name=".ui.NCZ_CreateNewFarmOrder_"/>
 
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
@@ -227,6 +228,7 @@
         <activity android:name=".ui.PG_Workplan_"/>
         <activity android:name=".ui.PG_commdetail_"/>
         <activity android:name=".ui.PG_JSD_"/>
+        <activity android:name=".ui.PG_JSD_CBH_"/>
         <!-- 共用UI -->
         <activity android:name=".chart.BarChartActivity_"/>
         <activity android:name=".ui.ObservationRecordActivity_"/>
