@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -28,6 +27,7 @@ import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
+import com.farm.widget.CustomArrayAdapter;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -67,13 +67,14 @@ public class NCZ_ScheduleOrderFragment extends Fragment
     Spinner citySpinner;
     @ViewById
     Spinner countySpinner;
-    ArrayAdapter<String> provinceAdapter = null;  //省级适配器
-    ArrayAdapter<String> cityAdapter = null;    //地级适配器
-    ArrayAdapter<String> countyAdapter = null;    //县级适配器
+    CustomArrayAdapter provinceAdapter = null;  //省级适配器
+    CustomArrayAdapter cityAdapter = null;    //地级适配器
+    CustomArrayAdapter countyAdapter = null;    //县级适配器
     static int provincePosition = 3;
-    private String[] mProvinceDatas=new String[]{"全部分场","乐丰分场","双桥分场"};
-    private String[] mCitisDatasMap=new String[]{"全部产品","香蕉","柑橘"};
-    private String[] mAreaDatasMap=new String[]{"不限采购商","李四","张三"};
+    private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
+    private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
+    private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
+
     @Override
     public void onResume()
     {
@@ -114,7 +115,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), listData,AppContext.BROADCAST_UPDATEAllORDER);
+            listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -188,21 +189,22 @@ public class NCZ_ScheduleOrderFragment extends Fragment
             }
         });
     }
+
     /*
      * 设置下拉框
      */
     private void setSpinner()
     {
         //绑定适配器和值
-        provinceAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mProvinceDatas);
+        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
         provinceSpinner.setAdapter(provinceAdapter);
         provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
 
-        cityAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mCitisDatasMap);
+        cityAdapter = new CustomArrayAdapter(getActivity(), mCitisDatasMap);
         citySpinner.setAdapter(cityAdapter);
         citySpinner.setSelection(0, true);  //默认选中第0个
 
-        countyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mAreaDatasMap);
+        countyAdapter = new CustomArrayAdapter(getActivity(), mAreaDatasMap);
         countySpinner.setAdapter(countyAdapter);
         countySpinner.setSelection(0, true);
 

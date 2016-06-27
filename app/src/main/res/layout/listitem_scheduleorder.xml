@@ -55,6 +55,7 @@
             </FrameLayout>
 
             <View
+
                 android:layout_width="1px"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/fl_time"
@@ -62,11 +63,14 @@
                 android:background="@color/bg_text"/>
 
             <View
+                android:id="@+id/view_top"
                 android:layout_width="1px"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/fl_time"
                 android:layout_centerHorizontal="true"
                 android:background="@color/bg_text"/>
+
+
         </RelativeLayout>
 
         <LinearLayout
