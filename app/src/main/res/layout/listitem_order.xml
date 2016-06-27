@@ -4,7 +4,6 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:layout_margin="10dip"
-              android:background="@color/white"
               android:descendantFocusability="blocksDescendants"
               android:minHeight="100dip"
               android:orientation="horizontal">
@@ -40,10 +39,11 @@
     <LinearLayout
         android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dip"
-        android:layout_marginTop="10dip"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
         android:layout_weight="4"
-        android:background="@drawable/background_view_rounded_single"
+        android:background="@drawable/round_white"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -58,27 +58,31 @@
                 android:id="@+id/tv_cmdname_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:gravity="center"
                 android:text="采购商:"
                 android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_16"/>
+                android:textSize="@dimen/size_sp_15"/>
 
             <TextView
                 android:id="@+id/tv_buyer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dip"
                 android:layout_toRightOf="@id/tv_cmdname_tip"
                 android:gravity="left|center_vertical"
                 android:text="李总"
                 android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_16"/>
+                android:textSize="@dimen/size_sp_15"/>
+
 
             <TextView
                 android:id="@+id/tv_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:gravity="center"
                 android:minWidth="60dip"
                 android:text="等待买家付款"
@@ -92,7 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -128,9 +133,9 @@
                 android:layout_marginLeft="10dip"
                 android:gravity="left"
                 android:text="待反馈"
-                android:visibility="gone"
                 android:textColor="@color/gray"
-                android:textSize="13sp"/>
+                android:textSize="13sp"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_fromtip"
@@ -138,10 +143,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:gravity="center"
-                android:visibility="gone"
                 android:text="产地:"
                 android:textColor="@color/gray"
-                android:textSize="13sp"/>
+                android:textSize="13sp"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_from"
@@ -149,14 +154,47 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dip"
-                android:visibility="gone"
                 android:layout_toRightOf="@+id/tv_fromtip"
                 android:gravity="left"
                 android:text="乐丰园区"
                 android:textColor="@color/gray"
-                android:textSize="13sp"/>
+                android:textSize="13sp"
+                android:visibility="gone"/>
 
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip">
+
+
+            <TextView
+                android:id="@+id/tv_batchtimetip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="采收准备工作："
+                android:textColor="@color/gray"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/tv_batchtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dip"
+                android:layout_toRightOf="@+id/tv_batchtimetip"
+                android:gravity="left"
+                android:text="就绪"
+                android:textColor="@color/red"
+                android:textSize="13sp"/>
+
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -167,49 +205,48 @@
 
 
             <TextView
-                android:id="@+id/tv_batchtimetip"
+                android:id="@+id/tv_car_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="批次:"
+                android:gravity="left"
+                android:text="采收区域："
                 android:textColor="@color/gray"
                 android:textSize="13sp"/>
 
             <TextView
-                android:id="@+id/tv_batchtime"
+                android:id="@+id/tv_car"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dip"
-                android:layout_toRightOf="@+id/tv_batchtimetip"
+                android:layout_toRightOf="@+id/tv_car_tip"
                 android:gravity="left"
-                android:text="216-05-15至2016-15-18"
-                android:textColor="@color/gray"
+                android:text="乐丰分场"
+                android:textColor="@color/red"
                 android:textSize="13sp"/>
 
             <Button
                 android:id="@+id/btn_cancleorder"
-                android:layout_width="50dip"
-                android:layout_height="25dip"
+                android:layout_width="40dip"
+                android:layout_height="20dip"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@color/red"
-                android:text="取消订单"
+                android:background="@drawable/round_red"
+                android:text="取消"
                 android:textColor="@color/white"
-                android:textSize="@dimen/size_sp_12"/>
+                android:textSize="11sp"/>
 
             <Button
                 android:id="@+id/btn_editorder"
                 android:layout_width="40dip"
-                android:layout_height="25dip"
+                android:layout_height="20dip"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dip"
+                android:layout_marginRight="2dip"
                 android:layout_toLeftOf="@+id/btn_cancleorder"
-                android:background="@color/red"
-                android:text="编辑"
+                android:background="@drawable/round_red"
+                android:text="调整"
                 android:textColor="@color/white"
-                android:textSize="@dimen/size_sp_12"/>
+                android:textSize="11sp"/>
         </RelativeLayout>
 
 

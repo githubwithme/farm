@@ -13,7 +13,7 @@
                     android:endColor="@color/base_end_color_pressed"
                     android:startColor="@color/base_start_color_pressed" />
 
-                <corners android:radius="5.0dip" />
+                <corners android:radius="0dip" />
             </shape>
         </item>
         <item>
@@ -24,10 +24,10 @@
 
                 <gradient
                     android:angle="270.0"
-                    android:endColor="@color/base_end_color_default"
-                    android:startColor="@color/base_start_color_default" />
+                    android:endColor="@color/white"
+                    android:startColor="@color/white" />
 
-                <corners android:radius="5.0dip" />
+                <corners android:radius="0dip" />
             </shape>
         </item>
     </selector>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,12 +18,12 @@
             android:inputType="numberDecimal"
             android:text="位置"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="45dip"
-            android:background="@color/bg_main" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -35,12 +35,12 @@
             android:inputType="numberDecimal"
             android:text="数量"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="45dip"
-            android:background="@color/bg_main" />
+            android:background="@color/line_color"/>
 
 
         <TextView
@@ -52,13 +52,12 @@
             android:inputType="numberDecimal"
             android:text="总值"
             android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color" />
-
+            android:background="@color/line_color"/>
 
 
     </LinearLayout>
