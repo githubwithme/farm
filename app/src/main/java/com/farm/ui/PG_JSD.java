@@ -8,20 +8,28 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.CustomArray_cbh_Adapter;
 import com.farm.adapter.WZ_RKExecute_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.Park_AllCBH;
 import com.farm.bean.Result;
 import com.farm.bean.WZ_CRk;
 import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
+import com.farm.bean.contractTab;
+import com.farm.widget.CustomArrayAdapter;
 import com.farm.widget.CustomDialog_Expandlistview;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDialog;
@@ -48,10 +56,34 @@ import java.util.List;
 public class PG_JSD extends Activity
 {
 
+    CustomArray_cbh_Adapter customArray_cbh_adapter;
+//    ArrayAdapter<String> CustomArray_cbh_Adapter = null;  //省级适配器
+    private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
+    private String[] mDatas;
+    @ViewById
+    RadioButton rb_nc_chose;
+    @ViewById
+    RadioButton rb_kh_chose;
+    @ViewById
+    RadioButton nc_banyun;
+    @ViewById
+    RadioButton kh_banyun;
+    @ViewById
+    RadioButton wu_banyun;
+
     @ViewById
     TextView zp_jingzhong;
     @ViewById
     TextView cp_jingzhong;
+    @ViewById
+    LinearLayout other_baozhuang;
+    @ViewById
+    LinearLayout nc_baozhuang;
+
+    @ViewById
+    LinearLayout ll_nobanyun;
+    @ViewById
+    LinearLayout ll_banyun;
 
     @ViewById
     TextView allnum;
@@ -65,11 +97,14 @@ public class PG_JSD extends Activity
     String parkname;
     String cbhname;
     MyDialog myDialog;
-    //    CustomDialog_ListView customDialog_listView;
+//        CustomDialog_ListView customDialog_listView;
     CustomDialog_Expandlistview customDialog_listView;
 
     List<WZ_CRk> listpeople = new ArrayList<WZ_CRk>();
+    List<contractTab> listdata = new ArrayList<contractTab>();
 
+    private String [] areaId=new String [30];
+    private String [] contractId=new String [30];
     private TextView[] pianqus = new TextView[30];
     private TextView[] chengbaohus = new TextView[30];
     private EditText[] zhushus = new EditText[30];
@@ -81,6 +116,39 @@ public class PG_JSD extends Activity
     private LayoutInflater inflater;
     @ViewById
     LinearLayout pg_dts;
+
+    @Click
+    void nc_banyun()
+    {
+        ll_nobanyun.setVisibility(View.GONE);
+        ll_banyun.setVisibility(View.VISIBLE);
+    }
+    @Click
+    void kh_banyun()
+    {
+        ll_nobanyun.setVisibility(View.VISIBLE);
+        ll_banyun.setVisibility(View.GONE);
+    }
+    @Click
+    void wu_banyun()
+    {
+        ll_nobanyun.setVisibility(View.GONE);
+        ll_banyun.setVisibility(View.GONE);
+    }
+
+    @Click
+    void rb_nc_chose()
+    {
+        other_baozhuang.setVisibility(View.GONE);
+        nc_baozhuang.setVisibility(View.VISIBLE);
+    }
+
+    @Click
+    void rb_kh_chose()
+    {
+        other_baozhuang.setVisibility(View.VISIBLE);
+        nc_baozhuang.setVisibility(View.GONE);
+    }
 
     @Click
     void btn_upload()
@@ -107,10 +175,35 @@ public class PG_JSD extends Activity
     {
         View view = inflater.inflate(R.layout.pg_dtcbh, null);
         view.setId(curremt);
-        TextView painqu = (TextView) view.findViewById(R.id.painqu);
-        painqu.setId(curremt);
+//        TextView painqu = (TextView) view.findViewById(R.id.painqu);
+/*        painqu.setId(curremt);
         painqu.setOnClickListener(toolsItemListener);
-        TextView chengbaohu = (TextView) view.findViewById(R.id.chengbaohu);
+        TextView chengbaohu = (TextView) view.findViewById(R.id.chengbaohu);*/
+        Spinner provinceSpinner= (Spinner) view.findViewById(R.id.provinceSpinner);
+//        CustomArray_cbh_Adapter = new CustomArrayAdapter(PG_JSD.this, mDatas);
+        customArray_cbh_adapter = new CustomArray_cbh_Adapter(PG_JSD.this, listdata);
+        provinceSpinner.setAdapter(customArray_cbh_adapter);
+        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第0个值
+
+        areaId [curremt]=listdata.get(0).getAreaId();
+        contractId [curremt]=listdata.get(0).getid();
+        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+
+                areaId [curremt]=listdata.get(i).getAreaId();
+                contractId [curremt]=listdata.get(i).getid();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
+
         EditText zhushu = (EditText) view.findViewById(R.id.zhushu);
         zhushu.addTextChangedListener(onclickText);
         EditText zhengpin = (EditText) view.findViewById(R.id.zhengpin);
@@ -122,15 +215,15 @@ public class PG_JSD extends Activity
         jinzhong.addTextChangedListener(onjinzhong);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         lp.setMargins(0, 0, 0, 0);
-        painqu.setLayoutParams(lp);
-        chengbaohu.setLayoutParams(lp);
+//        painqu.setLayoutParams(lp);
+//        chengbaohu.setLayoutParams(lp);
         zhushu.setLayoutParams(lp);
         zhengpin.setLayoutParams(lp);
         cipin.setLayoutParams(lp);
         jinzhong.setLayoutParams(lp);
         pg_dts.addView(view);
-        pianqus[curremt] = painqu;
-        chengbaohus[curremt] = chengbaohu;
+//        pianqus[curremt] = painqu;
+//        chengbaohus[curremt] = chengbaohu;
         zhushus[curremt] = zhushu;
         zhengpins[curremt] = zhengpin;
         cipins[curremt] = cipin;
@@ -142,8 +235,9 @@ public class PG_JSD extends Activity
     @AfterViews
     void after()
     {
-//        getchengbaohu();
-        getBreakOffInfoOfContract();
+
+        getchengbaohu();
+//        getBreakOffInfoOfContract();
         inflater = LayoutInflater.from(PG_JSD.this);
 
     }
@@ -157,7 +251,7 @@ public class PG_JSD extends Activity
 
 
     //全部净重自动
-    private TextWatcher onzidong  = new TextWatcher()
+    private TextWatcher onzidong = new TextWatcher()
     {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
@@ -179,7 +273,7 @@ public class PG_JSD extends Activity
             all_zhongpin
                     allcipin*/
             double num = 0;
-            if (!zp_jingzhong.equals("")&&!cp_jingzhong.equals(""))
+            if (!zp_jingzhong.equals("") && !cp_jingzhong.equals(""))
             {
 
                 if (!all_zhengpin.equals(""))
@@ -375,61 +469,12 @@ public class PG_JSD extends Activity
         customDialog_listView.show();
     }
 
-    private void getBreakOffInfoOfContract()
+/*    private void getBreakOffInfoOfContract()
     {
         commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getGoodsInByUid");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<WZ_CRk> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    /*if (result.getAffectedRows() != 0)
-                    {*/
-                    listNewData = JSON.parseArray(result.getRows().toJSONString(), WZ_CRk.class);
-                    listpeople.addAll(listNewData);
-//                        for (int i = 0; i < listNewData.size(); i++)
-//                        {
-////                            expandableListView.expandGroup(i);//展开
-//                            expandableListView.collapseGroup(i);//关闭
-//                        }
-
-                /*    } else
-                    {
-                        listNewData = new ArrayList<WZ_CRk>();
-                    }*/
-
-                } else
-                {
-                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(PG_JSD.this, "error_connectServer");
-            }
-        });
-    }
-
-/*    private void getchengbaohu()
-    {
-        commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("parkId", commembertab.getparkId());
-        params.addQueryStringParameter("action", "getAreaAndContract");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -471,4 +516,73 @@ public class PG_JSD extends Activity
             }
         });
     }*/
+
+    private void getchengbaohu()
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("parkId", commembertab.getparkId());
+        params.addQueryStringParameter("action", "getAreaAndContract");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<Park_AllCBH> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), Park_AllCBH.class);
+
+                        for (int i=0;i<listNewData.size();i++)
+                        {
+                            for (int j=0;j<listNewData.get(i).getContractList().size();j++)
+                            {
+                                contractTab contractTab=new contractTab();
+                                contractTab=listNewData.get(i).getContractList().get(j);
+                                contractTab.setparkName(listNewData.get(i).getParkName());
+                                contractTab.setareaName(listNewData.get(i).getAreaName());
+                                listdata.add(contractTab);
+                            }
+                        }
+                        int xxx=listdata.size();
+                        mDatas=new String [listdata.size()];
+                        for (int k=0;k<listdata.size();k++)
+                        {
+                            mDatas[k]=listdata.get(k).getareaName()+"\n"+listdata.get(k).getContractNum();
+                        }
+//                        for (int i = 0; i < listNewData.size(); i++)
+//                        {
+////                            expandableListView.expandGroup(i);//展开
+//                            expandableListView.collapseGroup(i);//关闭
+//                        }
+
+                    } else
+                    {
+                        listNewData = new ArrayList<Park_AllCBH>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+            }
+        });
+    }
+
+
+
 }
