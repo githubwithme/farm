@@ -1,8 +1,14 @@
 package com.farm.adapter;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +24,9 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
-import com.farm.bean.commembertab;
 import com.farm.ui.NCZ_EditOrder_;
+import com.farm.ui.RecoveryDetail_;
+import com.farm.widget.CustomDialog_CallTip;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -34,6 +41,7 @@ import java.util.List;
 @SuppressLint("NewApi")
 public class NCZ_OrderAdapter extends BaseAdapter
 {
+    CustomDialog_CallTip custom_calltip;
     MyDialog myDialog;
     String broadcast;
     private Context context;// 运行上下文
@@ -104,11 +112,34 @@ public class NCZ_OrderAdapter extends BaseAdapter
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
+            SpannableString content = new SpannableString(sellOrder.getBuyers());
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            listItemView.tv_buyer.setText(content);
+            listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    showDialog_addsaleinfo("15989154871");
+                }
+            });
 
-            listItemView.tv_buyer.setText(sellOrder.getBuyers());
+            SpannableString spanStr_buyer = new SpannableString("就绪");
+            spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
+            listItemView.tv_batchtime.setText(spanStr_buyer);
+            listItemView.tv_batchtime.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent = new Intent(context, RecoveryDetail_.class);
+                    context.startActivity(intent);
+                }
+            });
+//            listItemView.tv_buyer.setText(sellOrder.getBuyers());
             listItemView.tv_price.setText(sellOrder.getPrice());
             listItemView.tv_from.setText(sellOrder.getProducer());
-            listItemView.tv_batchtime.setText(sellOrder.getBatchTime());
+//            listItemView.tv_batchtime.setText(sellOrder.getBatchTime());
             if (sellOrder.getActualsumvalues().equals(""))
             {
                 listItemView.tv_sum.setText("待反馈");
@@ -211,6 +242,45 @@ public class NCZ_OrderAdapter extends BaseAdapter
 
             }
         });
+    }
+    public void showDialog_addsaleinfo(final String phone)
+    {
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_calltip, null);
+        custom_calltip = new CustomDialog_CallTip(context, R.style.MyDialog, dialog_layout);
+        TextView tv_tips = (TextView) dialog_layout.findViewById(R.id.tv_tips);
+        tv_tips.setText(phone + "拨打这个电话吗?");
+        Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+        Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                custom_calltip.dismiss();
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                context.startActivity(intent);
+            }
+        });
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                custom_calltip.dismiss();
+            }
+        });
+        custom_calltip.show();
     }
 
     private void showDeleteTip(final String  uuid)

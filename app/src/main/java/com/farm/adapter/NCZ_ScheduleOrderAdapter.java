@@ -55,6 +55,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter
         public TextView tv_state;
         public TextView tv_price;
         public TextView tv_sum;
+        public View view_top;
         public TextView tv_from;
         public TextView tv_batchtime;
         public Button btn_cancleorder;
@@ -101,6 +102,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter
             // 获取控件对象
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
+            listItemView.view_top = (View) convertView.findViewById(R.id.view_top);
             listItemView.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
             listItemView.tv_sum = (TextView) convertView.findViewById(R.id.tv_sum);
             listItemView.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
@@ -198,6 +200,10 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter
             listItemView.fl_dynamic.setVisibility(View.VISIBLE);
         }
 
+        if (position == 0)
+        {
+            listItemView.view_top.setVisibility(View.GONE);
+        }
         return convertView;
     }
 

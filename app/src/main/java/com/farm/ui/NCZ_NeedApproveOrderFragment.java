@@ -28,6 +28,7 @@ import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
+import com.farm.widget.CustomArrayAdapter;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -196,15 +197,15 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
     private void setSpinner()
     {
         //绑定适配器和值
-        provinceAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mProvinceDatas);
+        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
         provinceSpinner.setAdapter(provinceAdapter);
         provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
 
-        cityAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mCitisDatasMap);
+        cityAdapter = new CustomArrayAdapter(getActivity(), mCitisDatasMap);
         citySpinner.setAdapter(cityAdapter);
         citySpinner.setSelection(0, true);  //默认选中第0个
 
-        countyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mAreaDatasMap);
+        countyAdapter = new CustomArrayAdapter(getActivity(), mAreaDatasMap);
         countySpinner.setAdapter(countyAdapter);
         countySpinner.setSelection(0, true);
 
