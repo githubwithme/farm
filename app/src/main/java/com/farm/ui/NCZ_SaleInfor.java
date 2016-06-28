@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farm.R;
+import com.farm.bean.ParkDataBean;
 import com.farm.bean.SaleDataBean;
 import com.farm.common.FileHelper;
 import com.farm.widget.CustomHorizontalScrollView;
@@ -35,6 +36,7 @@ import java.util.Map;
 @EActivity(R.layout.ncz_saleinfor)
 public class NCZ_SaleInfor extends Activity
 {
+    int allnumber=0;
     List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
 
     String[] item_batchtimedata;
@@ -42,6 +44,10 @@ public class NCZ_SaleInfor extends Activity
 
     @ViewById
     LinearLayout ll_park;
+    @ViewById
+    LinearLayout ll_total;
+    @ViewById
+    TextView alltoatal;
 
     @AfterViews
     void afterOncreate()
@@ -110,15 +116,30 @@ public class NCZ_SaleInfor extends Activity
         {
             View view = inflater.inflate(R.layout.saleinfo_parkitem, null);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
-            tv_parkname.setText(listData.get(0).getParklist().get(i).getParkname() + "\n" + "库存量");
+            tv_parkname.setText(listData.get(0).getParklist().get(i).getParkname());
             ll_park.addView(view);
         }
-
+        for (int i = 0; i < listData.get(0).getParklist().size(); i++)
+        {
+            View view = inflater.inflate(R.layout.saleinfo_totalitem, null);
+            TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
+            int totalnumber = 0;
+            for (int j = 0; j < listData.size(); j++)
+            {
+                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getParklist().get(i).getNumber());
+            }
+            tv_total.setText(String.valueOf(totalnumber));
+            ll_total.addView(view);
+            allnumber=allnumber+totalnumber;
+        }
+        alltoatal.setText(String.valueOf(allnumber));
 
         Map<String, String> data = null;
         CustomHorizontalScrollView headerScroll = (CustomHorizontalScrollView) findViewById(R.id.item_scroll_title);
+        CustomHorizontalScrollView totalScroll = (CustomHorizontalScrollView) findViewById(R.id.totalScroll);
         // 添加头滑动事件
         mHScrollViews.add(headerScroll);
+        mHScrollViews.add(totalScroll);
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
         for (int i = 0; i < listData.size(); i++)
         {
@@ -202,14 +223,23 @@ public class NCZ_SaleInfor extends Activity
                 View[] views = new View[item_batchtimedata.length];
                 v = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.scrolladapter_item, null);
                 TextView item_titlev = (TextView) v.findViewById(R.id.item_titlev);
+                TextView item_total = (TextView) v.findViewById(R.id.item_total);
                 LinearLayout ll_middle = (LinearLayout) v.findViewById(R.id.ll_middle);
                 item_titlev.setText(datas.get(0).get(item_batchtimedata[0]).toString());
+                int totalnumber = 0;
+                List<ParkDataBean> list = listData.get(position).getParklist();
+                for (int j = 0; j < list.size(); j++)
+                {
+                    totalnumber = totalnumber + Integer.valueOf(list.get(j).getNumber());
+                }
+                item_total.setText(String.valueOf(totalnumber));
+
 
                 for (int i = 0; i < item_batchtimedata.length - 1; i++)
                 {
                     View view = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.saleinfo_dataitem, null);
                     TextView tv_data = (TextView) view.findViewById(R.id.tv_data);
-                    tv_data.setText(datas.get(i + 1).get(item_batchtimedata[i + 1]).toString());
+                    tv_data.setText(datas.get(position).get(item_batchtimedata[i+1]).toString());
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
                     lp.gravity = Gravity.CENTER;
                     view.setLayoutParams(lp);
@@ -221,6 +251,11 @@ public class NCZ_SaleInfor extends Activity
                 // 第一次初始化的时候装进来
                 addHViews((CustomHorizontalScrollView) v.findViewById(R.id.item_chscroll_scroll));
 
+//                if (position == datas.size() - 1)
+//                {
+//                    addHViews(totalScroll);
+//                    mHScrollViews.add(totalScroll);
+//                }
 
 //                LayoutInflater inflater = (LayoutInflater) NCZ_SaleInfor.this.getSystemService(LAYOUT_INFLATER_SERVICE);
 //                View view1 = inflater.inflate(R.layout.scrolladapter_item, null);

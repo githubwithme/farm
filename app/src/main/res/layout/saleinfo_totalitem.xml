@@ -9,12 +9,12 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_parkname"
+            android:id="@+id/tv_total"
             android:layout_width="70dip"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text=""
-            android:textColor="@color/bg_text"
+            android:textColor="@color/red"
             android:textSize="15sp"/>
 
         <View
