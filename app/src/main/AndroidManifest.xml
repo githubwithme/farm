@@ -64,6 +64,7 @@
         <activity android:name=".ui.NCZ_CreateNewOrder_"/>
         <activity android:name=".ui.CZ_OrderManager_"/>
         <activity android:name=".ui.RecoveryDetail_"/>
+        <activity android:name=".ui.NCZ_AreaSaleData_"/>
         <activity android:name=".ui.NCZ_SaleInfor_"/>
         <activity android:name=".ui.CZ_DLFragment_"/>
         <activity android:name=".ui.CZ_MainActivity_New_"/>

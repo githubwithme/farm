@@ -5,8 +5,19 @@ package com.farm.bean;
  */
 public class ParkDataBean
 {
+    String parkid;
     String parkname;
     String number;
+
+    public String getParkid()
+    {
+        return parkid;
+    }
+
+    public void setParkid(String parkid)
+    {
+        this.parkid = parkid;
+    }
 
     public String getParkname()
     {

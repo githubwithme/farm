@@ -14,11 +14,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
 import com.farm.bean.ParkDataBean;
+import com.farm.bean.Result;
 import com.farm.bean.SaleDataBean;
+import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.widget.CustomHorizontalScrollView;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -36,10 +47,11 @@ import java.util.Map;
 @EActivity(R.layout.ncz_saleinfor)
 public class NCZ_SaleInfor extends Activity
 {
-    int allnumber=0;
+    int allnumber = 0;
     List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
 
     String[] item_batchtimedata;
+    String[] item_parkid;
     List<SaleDataBean> listData = null;
 
     @ViewById
@@ -52,8 +64,9 @@ public class NCZ_SaleInfor extends Activity
     @AfterViews
     void afterOncreate()
     {
-        getNewSaleList_test();
+//        getNewSaleList_test();
         getActionBar().hide();
+        getfarmSalesData();
     }
 
     @Click
@@ -100,17 +113,59 @@ public class NCZ_SaleInfor extends Activity
         }
 
     }
+    private void getfarmSalesData()
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_SaleInfor.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getfarmSalesData");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() == 0)
+                    {
+                        listData = JSON.parseArray(result.getRows().toJSONString(), SaleDataBean.class);
+                        initViews();
+                    } else
+                    {
+                        listData = new ArrayList<SaleDataBean>();
+                    }
 
+                } else
+                {
+                    AppContext.makeToast(NCZ_SaleInfor.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_SaleInfor.this, "error_connectServer");
+            }
+        });
+    }
     private void initViews()
     {
         LayoutInflater inflater = (LayoutInflater) NCZ_SaleInfor.this.getSystemService(LAYOUT_INFLATER_SERVICE);
 
         item_batchtimedata = new String[listData.get(0).getParklist().size() + 1];//batchtime占了一位
+        item_parkid = new String[listData.get(0).getParklist().size() + 1];//batchtime占了一位
         item_batchtimedata[0] = "batchtime";
+        item_parkid[0] = "parkid";
         for (int i = 0; i < item_batchtimedata.length - 1; i++)
         {
             //顶部园区控件
             item_batchtimedata[i + 1] = "data_" + i;
+            item_parkid[i + 1] = "parkid_" + i;
         }
         for (int i = 0; i < listData.get(0).getParklist().size(); i++)
         {
@@ -130,7 +185,7 @@ public class NCZ_SaleInfor extends Activity
             }
             tv_total.setText(String.valueOf(totalnumber));
             ll_total.addView(view);
-            allnumber=allnumber+totalnumber;
+            allnumber = allnumber + totalnumber;
         }
         alltoatal.setText(String.valueOf(allnumber));
 
@@ -148,6 +203,7 @@ public class NCZ_SaleInfor extends Activity
             for (int j = 0; j < item_batchtimedata.length - 1; j++)
             {
                 data.put("data_" + (j), listData.get(i).getParklist().get(j).getNumber());
+                data.put("parkid_" + (j), listData.get(i).getParklist().get(j).getParkid());
             }
             datas.add(data);
         }
@@ -225,7 +281,7 @@ public class NCZ_SaleInfor extends Activity
                 TextView item_titlev = (TextView) v.findViewById(R.id.item_titlev);
                 TextView item_total = (TextView) v.findViewById(R.id.item_total);
                 LinearLayout ll_middle = (LinearLayout) v.findViewById(R.id.ll_middle);
-                item_titlev.setText(datas.get(0).get(item_batchtimedata[0]).toString());
+                item_titlev.setText(datas.get(position).get(item_batchtimedata[0]).toString());
                 int totalnumber = 0;
                 List<ParkDataBean> list = listData.get(position).getParklist();
                 for (int j = 0; j < list.size(); j++)
@@ -239,13 +295,16 @@ public class NCZ_SaleInfor extends Activity
                 {
                     View view = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.saleinfo_dataitem, null);
                     TextView tv_data = (TextView) view.findViewById(R.id.tv_data);
-                    tv_data.setText(datas.get(position).get(item_batchtimedata[i+1]).toString());
+                    tv_data.setText(datas.get(position).get(item_batchtimedata[i + 1]).toString());
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
                     lp.gravity = Gravity.CENTER;
                     view.setLayoutParams(lp);
                     ll_middle.addView(view);
 
                     tv_data.setOnClickListener(clickListener);
+                    tv_data.setTag(R.id.tag_kg, datas.get(position).get(item_parkid[i + 1]));
+                    tv_data.setTag(R.id.tag_hg, datas.get(position).get("batchtime"));
+                    tv_data.setTag(R.id.tag_parkname,listData.get(0).getParklist().get(i).getParkname());
                     views[i] = tv_data;
                 }
                 // 第一次初始化的时候装进来
@@ -313,7 +372,16 @@ public class NCZ_SaleInfor extends Activity
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            Toast.makeText(NCZ_SaleInfor.this, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+            String batchTimes = (String) v.getTag(R.id.tag_hg);
+            String parkid = (String) v.getTag(R.id.tag_kg);
+            String parkname = (String) v.getTag(R.id.tag_parkname);
+            Intent intent = new Intent(NCZ_SaleInfor.this, NCZ_AreaSaleData_.class);
+            intent.putExtra("parkid", parkid);
+            intent.putExtra("parkname", parkname);
+            intent.putExtra("batchTime", batchTimes);
+            NCZ_SaleInfor.this.startActivity(intent);
+
+            Toast.makeText(NCZ_SaleInfor.this, parkid + "/" + batchTimes, Toast.LENGTH_SHORT).show();
         }
     };
 }
