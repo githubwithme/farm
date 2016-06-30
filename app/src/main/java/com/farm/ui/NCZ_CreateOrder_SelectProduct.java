@@ -27,7 +27,6 @@ import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
-import com.farm.widget.CustomGridview;
 import com.farm.widget.CustomListView;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
@@ -215,11 +214,11 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
             for (int j = 0; j < childrenCount; j++)
             {
                 LinearLayout linearlayout = (LinearLayout) adapter_selectProduct.getChildView(i, j, false, null, null);
-                CustomGridview gv = (CustomGridview) linearlayout.findViewById(R.id.gv);
-                int childCount = gv.getChildCount();
+                CustomListView lv = (CustomListView) linearlayout.findViewById(R.id.lv);
+                int childCount = lv.getChildCount();
                 for (int k = 0; k < childCount; k++)
                 {
-                    LinearLayout ll = (LinearLayout) gv.getChildAt(k);
+                    LinearLayout ll = (LinearLayout) lv.getChildAt(k);
                     CheckBox cb_selectall = (CheckBox) ll.findViewById(R.id.cb_selectall);
                     Button btn_number = (Button) ll.findViewById(R.id.btn_number);
                     if (cb_selectall.isChecked())
