@@ -2,27 +2,19 @@ package com.farm.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.farm.R;
 import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
 import com.farm.bean.parktab;
-import com.farm.ui.NCZ_FarmSale_BatchDetail_;
-import com.farm.widget.CustomDialog_ListView;
+import com.farm.ui.NCZ_AreaSaleData_;
 
 import java.util.HashMap;
 import java.util.List;
@@ -109,7 +101,7 @@ public class NCZ_New_Farmsale extends BaseExpandableListAdapter
                     BatchTime batchTimes= (BatchTime) view.getTag(R.id.tag_hg);
 //                    parktab parktab = (parktab) view.getTag(R.id.tag_hg);
                     String a= (String) view.getTag(R.id.tag_kg);
-                    Intent intent = new Intent(context, NCZ_FarmSale_BatchDetail_.class);
+                    Intent intent = new Intent(context, NCZ_AreaSaleData_.class);
                     intent.putExtra("parkid", a);
                     intent.putExtra("batchTime", batchTimes.getBatchTime());
                     context.startActivity(intent);
