@@ -19,7 +19,7 @@ public class Purchaser implements Parcelable
     public String mailbox;
     public String note;
     public String regDate;
-    public String remark1;
+    public String userType;
     public String remark2;
 
     public String getId()
@@ -92,14 +92,14 @@ public class Purchaser implements Parcelable
         this.regDate = regDate;
     }
 
-    public String getRemark1()
+    public String getUserType()
     {
-        return remark1;
+        return userType;
     }
 
-    public void setRemark1(String remark1)
+    public void setUserType(String userType)
     {
-        this.remark1 = remark1;
+        this.userType = userType;
     }
 
     public String getRemark2()
@@ -136,7 +136,7 @@ public class Purchaser implements Parcelable
             p.setMailbox(source.readString());
             p.setNote(source.readString());
             p.setRegDate(source.readString());
-            p.setRemark1(source.readString());
+            p.setUserType(source.readString());
             p.setRemark2(source.readString());
 
             return p;
@@ -160,7 +160,7 @@ public class Purchaser implements Parcelable
         p.writeString(mailbox);
         p.writeString(note);
         p.writeString(regDate);
-        p.writeString(remark1);
+        p.writeString(userType);
         p.writeString(remark2);
 
     }

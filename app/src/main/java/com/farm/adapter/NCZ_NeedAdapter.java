@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -26,6 +27,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
+import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
@@ -35,12 +37,19 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import org.apache.http.entity.StringEntity;
+
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Created by hasee on 2016/6/29.
+ */
 @SuppressLint("NewApi")
-public class NCZ_OrderAdapter extends BaseAdapter
+public class NCZ_NeedAdapter extends BaseAdapter
 {
+    static String name="";
     CustomDialog_CallTip custom_calltip;
     MyDialog myDialog;
     String broadcast;
@@ -51,6 +60,9 @@ public class NCZ_OrderAdapter extends BaseAdapter
 
     static class ListItemView
     {
+        public CircleImageView circle_img;
+        public TextView tv_car;
+        public TextView tv_importance;
         public TextView tv_buyer;
         public TextView tv_state;
         public TextView tv_price;
@@ -59,11 +71,14 @@ public class NCZ_OrderAdapter extends BaseAdapter
         public TextView tv_batchtime;
         public Button btn_cancleorder;
         public Button btn_editorder;
+
         public FrameLayout fl_dynamic;
+        public Button btn_pizhun;
+        public Button btn_bohui;
 
     }
 
-    public NCZ_OrderAdapter(Context context, List<SellOrder_New> data,String broadcast)
+    public NCZ_NeedAdapter(Context context, List<SellOrder_New> data,String broadcast)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -96,9 +111,10 @@ public class NCZ_OrderAdapter extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.listitem_order, null);
+            convertView = listContainer.inflate(R.layout.ncz_needadapter, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
             listItemView.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
@@ -108,9 +124,14 @@ public class NCZ_OrderAdapter extends BaseAdapter
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
+            listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
+            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
+            listItemView.btn_pizhun = (Button) convertView.findViewById(R.id.btn_pizhun);
+            listItemView.btn_bohui = (Button) convertView.findViewById(R.id.btn_bohui);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
+            listItemView.tv_importance.setText(sellOrder.getMainPepName());
 
             SpannableString content = new SpannableString(sellOrder.getBuyersName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -126,7 +147,8 @@ public class NCZ_OrderAdapter extends BaseAdapter
 
             SpannableString spanStr_buyer = new SpannableString("就绪");
             spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
-            listItemView.tv_batchtime.setText(spanStr_buyer);
+            //下划线跳转
+/*            listItemView.tv_batchtime.setText(spanStr_buyer);
             listItemView.tv_batchtime.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -135,9 +157,36 @@ public class NCZ_OrderAdapter extends BaseAdapter
                     Intent intent = new Intent(context, RecoveryDetail_.class);
                     context.startActivity(intent);
                 }
+            });*/
+
+            if(sellOrder.getFreeDeposit().equals("0"))
+            {
+                listItemView.tv_batchtime.setText("申请免付订金");
+            }else if (sellOrder.getFreeFinalPay().equals("0"))
+            {
+                listItemView.tv_batchtime.setText("申请免付尾款");
+            }else if(sellOrder.getIsNeedAudit().equals("0"))
+            {
+                listItemView.tv_batchtime.setText("价格，重量");
+            }else
+            {
+                listItemView.tv_batchtime.setText("订单审批");
+            }
+            listItemView.btn_pizhun.setTag(R.id.tag_cash,sellOrder);
+            listItemView.btn_pizhun.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    SellOrder_New sellOrdesr=new SellOrder_New();
+                    sellOrdesr= (SellOrder_New) view.getTag(R.id.tag_cash);
+                    showDeleteTip(sellOrdesr);
+                }
             });
+
 //            listItemView.tv_buyer.setText(sellOrder.getBuyers());
             listItemView.tv_price.setText(sellOrder.getPrice());
+            listItemView.tv_car.setText(sellOrder.getProducer());
             listItemView.tv_from.setText(sellOrder.getProducer());
 //            listItemView.tv_batchtime.setText(sellOrder.getBatchTime());
             if (sellOrder.getActualsumvalues().equals(""))
@@ -160,17 +209,17 @@ public class NCZ_OrderAdapter extends BaseAdapter
                     listItemView.tv_state.setText("买家已付尾款");
                 }
             }
-            listItemView.btn_cancleorder.setTag(R.id.tag_cash,sellOrder);
+/*            listItemView.btn_cancleorder.setTag(R.id.tag_cash,sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
                     SellOrder_New sellOrder_new= (SellOrder_New) v.getTag(R.id.tag_cash);
-                    showDeleteTip(sellOrder_new.getUuid());
+                    showDeleteTip(sellOrder_new);
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
-            });
+            });*/
             listItemView.btn_editorder.setTag(R.id.tag_postion, position);
             listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
             listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
@@ -199,6 +248,34 @@ public class NCZ_OrderAdapter extends BaseAdapter
             listItemView.fl_dynamic.setVisibility(View.VISIBLE);
         }
 
+        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work,  R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
+        if (name.equals(""))
+        {
+            name += sellOrder.getMainPepole() + ",";
+        }
+
+//        for(int i=0;i<position;i++)
+        int str = position;
+
+
+        //                String[] nongzi = commandtab.getnongziName().split(",");
+
+        if (name.indexOf(listItems.get(position).getMainPepole()) != -1)
+        {
+            String[] data = name.split(",");
+            for (int j = 0; j < data.length; j++)
+            {
+                if (data[j].equals(listItems.get(position).getMainPepole()))
+                    listItemView.circle_img.setImageResource(color[j % color.length]);
+                int x = j % color.length;
+            }
+        } else
+        {
+            String[] data = name.split(",");
+            name += listItems.get(position).getMainPepole() + ",";
+            listItemView.circle_img.setImageResource(color[(data.length) % color.length]);
+            int y = (data.length ) % color.length;
+        }
         return convertView;
     }
 
@@ -206,7 +283,7 @@ public class NCZ_OrderAdapter extends BaseAdapter
     {
 
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uuid",uuid );
+        params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("action", "deleteSellOrderAndDetail");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -283,11 +360,11 @@ public class NCZ_OrderAdapter extends BaseAdapter
         custom_calltip.show();
     }
 
-    private void showDeleteTip(final String  uuid)
+    private void showDeleteTip(final SellOrder_New sellOrdesr)
     {
 
         View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "是否批准申请", "批准", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -295,7 +372,26 @@ public class NCZ_OrderAdapter extends BaseAdapter
                 switch (v.getId())
                 {
                     case R.id.btn_sure:
-                        deleteSellOrderAndDetail(uuid);
+                        SellOrder_New sellOrdesrt=new SellOrder_New();
+                        sellOrdesrt=sellOrdesr;
+                        if (sellOrdesr.getFreeDeposit().equals("0"))
+                        {
+                            sellOrdesrt.setBuyers(sellOrdesrt.getBuyersId());
+                            sellOrdesr.setFreeDeposit("1");
+                            sellOrdesr.setSelltype("待付尾款");
+                        }
+                        if (sellOrdesr.getFreeFinalPay().equals("0"))
+                        {
+                            sellOrdesrt.setBuyers(sellOrdesrt.getBuyersId());
+                            sellOrdesr.setFreeFinalPay("1");
+                            sellOrdesr.setSelltype("已完成");
+                        }
+                        StringBuilder builder = new StringBuilder();
+                        builder.append("{\"SellOrder_new\": [");
+                        builder.append(JSON.toJSONString(sellOrdesr));
+                        builder.append("]} ");
+                        newaddOrder(builder.toString());
+//                        deleteSellOrderAndDetail(uuid);
                         break;
                     case R.id.btn_cancle:
                         myDialog.cancel();
@@ -304,5 +400,50 @@ public class NCZ_OrderAdapter extends BaseAdapter
             }
         });
         myDialog.show();
+    }
+
+    private void newaddOrder( String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "editOrder");
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(context, "已完成审批！", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
     }
 }

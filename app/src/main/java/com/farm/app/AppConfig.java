@@ -41,6 +41,7 @@ public class AppConfig
         {
             appConfig = new AppConfig();
             appConfig.mContext = context;
+
         }
         return appConfig;
     }

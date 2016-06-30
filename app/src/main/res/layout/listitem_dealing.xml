@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="10dip"
+              android:descendantFocusability="blocksDescendants"
+              android:minHeight="100dip"
+              android:orientation="horizontal">
+    <FrameLayout
+        android:id="@+id/fl_dynamic"
+        android:layout_width="15dip"
+        android:layout_height="15dip"
+        android:layout_gravity="center_vertical"
+        android:layout_toRightOf="@id/imgbtn_home"
+        android:visibility="invisible"
+        >
+
+        <com.farm.widget.CircleImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@color/red"
+            app:border_color="@color/red"
+            app:border_width="0dp"/>
+
+        <TextView
+            android:id="@+id/tv_dynamic_new"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_10"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="15dip"
+        android:layout_weight="4"
+        android:background="@drawable/round_white"
+        android:orientation="vertical">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <FrameLayout
+                android:layout_centerVertical="true"
+                android:id="@+id/ddfzr"
+                android:layout_width="49dip"
+                android:layout_height="49dip"
+                >
+
+                <com.farm.widget.CircleImageView
+                    android:id="@+id/circle_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@color/transparent"
+                    app:border_color="@color/transparent"
+                    app:border_width="0px"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/expense_takepicture_select"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_importance"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"/>
+            </FrameLayout>
+            <RelativeLayout
+                android:layout_toRightOf="@+id/ddfzr"
+                android:id="@+id/re_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_cmdname_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="采购商:"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_sp_15"/>
+
+                <TextView
+                    android:id="@+id/tv_buyer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dip"
+                    android:layout_toRightOf="@id/tv_cmdname_tip"
+                    android:gravity="left|center_vertical"
+                    android:text="李总"
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_sp_15"/>
+
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tv_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:minWidth="60dip"
+                    android:text="等待买家付款"
+                    android:textColor="@color/red"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_toRightOf="@+id/ddfzr"
+                android:layout_below="@+id/re_tv"
+                android:layout_marginTop="10dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip">
+
+
+                <TextView
+                    android:id="@+id/tv_car_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="left"
+                    android:text="采收区域："
+                    android:textColor="@color/gray"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/tv_car"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_car_tip"
+                    android:gravity="left"
+                    android:text="乐丰分场"
+                    android:textColor="@color/red"
+                    android:textSize="13sp"/>
+
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/btn_cancleorder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/round_red"
+                    android:text="取消订单"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"/>
+
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/btn_editorder"
+                    android:layout_width="40dip"
+                    android:layout_height="20dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dip"
+                    android:layout_toLeftOf="@+id/btn_cancleorder"
+                    android:background="@drawable/round_red"
+                    android:text="调整"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"/>
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/dd_jsje"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:text="结算金额:10000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="单价￥:"
+                android:textColor="@color/gray"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:gravity="left"
+                android:text="2.5元"
+                android:textColor="@color/gray"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:gravity="center"
+                android:text="总价￥:"
+                android:textColor="@color/gray"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/tv_sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:gravity="left"
+                android:text="待反馈"
+                android:textColor="@color/gray"
+                android:textSize="13sp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_fromtip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:gravity="center"
+                android:text="产地:"
+                android:textColor="@color/gray"
+                android:textSize="13sp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dip"
+                android:layout_toRightOf="@+id/tv_fromtip"
+                android:gravity="left"
+                android:text="乐丰园区"
+                android:textColor="@color/gray"
+                android:textSize="13sp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip">
+
+
+            <TextView
+                android:id="@+id/tv_batchtimetip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="采收准备工作："
+                android:textColor="@color/gray"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/tv_batchtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dip"
+                android:layout_toRightOf="@+id/tv_batchtimetip"
+                android:gravity="left"
+                android:text="就绪"
+                android:textColor="@color/red"
+                android:textSize="13sp"/>
+
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+</LinearLayout>

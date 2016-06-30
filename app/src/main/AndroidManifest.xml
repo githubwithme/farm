@@ -264,6 +264,7 @@
         <activity android:name=".ui.Common_CommandDetail_"/>
         <activity android:name=".ui.Event_Process_"/>
         <activity android:name=".ui.DisplayImageOfLocal_"/>
+        <activity android:name=".ui.Add_workPeopel_"/>
 
 
         <!-- 服务 -->

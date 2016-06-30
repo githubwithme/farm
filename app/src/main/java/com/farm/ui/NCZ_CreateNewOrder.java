@@ -2,10 +2,14 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.SmsManager;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +30,7 @@ import com.farm.R;
 import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.PeopelList;
 import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail;
@@ -35,6 +40,7 @@ import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
+import com.farm.widget.MyDatepicker;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -51,9 +57,23 @@ import org.androidannotations.annotations.ViewById;
 import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
+
+import javax.activation.DataHandler;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 /**
  * Created by ${hmj} on 2016/1/20.
@@ -65,6 +85,33 @@ import java.util.List;
 @EActivity(R.layout.ncz_createneworder)
 public class NCZ_CreateNewOrder extends Activity
 {
+   String mail;
+    String telphone;
+    @ViewById
+    Button btn_addcg;
+    @ViewById
+    Button btn_addbz;
+    @ViewById
+    Button btn_addby;
+    List<PeopelList> listpeople = new ArrayList<PeopelList>();
+    @ViewById
+    EditText bz_danjia;
+    @ViewById
+    EditText dingjin;
+    @ViewById
+    EditText by_danjia;
+    @ViewById
+    EditText bz_guige;
+    @ViewById
+    EditText dd_cl;
+    @ViewById
+    TextView dd_time;
+    @ViewById
+    EditText dd_fzr;
+    @ViewById
+    EditText dd_bz;
+    @ViewById
+    EditText dd_by;
     MyDialog myDialog;
     CustomDialog_ListView customDialog_listView;
     String zzsl = "";
@@ -72,8 +119,8 @@ public class NCZ_CreateNewOrder extends Activity
     List<SellOrderDetail_New> list_SellOrderDetail;
     Adapter_CreateSellOrderDetail_NCZ adapter_sellOrderDetail;
     SellOrderDetail SellOrderDetail;
-    @ViewById
-    LinearLayout ll_flyl;
+    /*   @ViewById
+       LinearLayout ll_flyl;*/
     @ViewById
     ListView lv;
     @ViewById
@@ -97,10 +144,58 @@ public class NCZ_CreateNewOrder extends Activity
     @ViewById
     TextView tv_allnumber;
 
-    List<Purchaser> listNewData = null;
+    String cgId = "";
+    String byId = "";
+    String bzId = "";
+    String fzrId = "";
+    List<Purchaser> listData_CG = new ArrayList<Purchaser>();
+    List<Purchaser> listData_BY = new ArrayList<Purchaser>();
+    List<Purchaser> listData_BZ = new ArrayList<Purchaser>();
 
 
-    @LongClick
+
+    @Click
+    void btn_addcg()
+    {
+        Intent intent=new Intent(NCZ_CreateNewOrder.this,Add_workPeopel_.class);
+        intent.putExtra("type","采购商");
+        startActivity(intent);
+    }
+    @Click
+    void btn_addby()
+    {
+        Intent intent=new Intent(NCZ_CreateNewOrder.this,Add_workPeopel_.class);
+        intent.putExtra("type","搬运工头");
+        startActivity(intent);
+    }
+    @Click
+    void btn_addbz()
+    {
+        Intent intent=new Intent(NCZ_CreateNewOrder.this,Add_workPeopel_.class);
+        intent.putExtra("type","包装工头");
+        startActivity(intent);
+    }
+    @Click
+    void dd_time()
+    {
+        MyDatepicker myDatepicker = new MyDatepicker(NCZ_CreateNewOrder.this, dd_time);
+        myDatepicker.getDialog().show();
+    }
+
+    @Click
+    void dd_fzr()
+    {
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listpeople.size(); i++)
+        {
+            listdata.add(listpeople.get(i).getRealName());
+            listid.add(listpeople.get(i).getId());
+        }
+        showDialog_fzr(listdata, listid);
+    }
+
+    @Click
     void et_name()
     {
 
@@ -115,13 +210,39 @@ public class NCZ_CreateNewOrder extends Activity
         }*/
         List<String> listdata = new ArrayList<String>();
         List<String> listid = new ArrayList<String>();
-        for (int i = 0; i < listNewData.size(); i++)
+        for (int i = 0; i < listData_CG.size(); i++)
         {
-            listdata.add(listNewData.get(i).getName());
-            listid.add(listNewData.get(i).getId());
+            listdata.add(listData_CG.get(i).getName());
+            listid.add(listData_CG.get(i).getId());
         }
         showDialog_workday(listdata, listid);
 //        showDialog_workday(list, list);
+    }
+
+    @Click
+    void dd_bz()
+    {
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listData_BZ.size(); i++)
+        {
+            listdata.add(listData_BZ.get(i).getName());
+            listid.add(listData_BZ.get(i).getId());
+        }
+        showDialog_bz(listdata, listid);
+    }
+
+    @Click
+    void dd_by()
+    {
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listData_BY.size(); i++)
+        {
+            listdata.add(listData_BY.get(i).getName());
+            listid.add(listData_BY.get(i).getId());
+        }
+        showDialog_by(listdata, listid);
     }
 
     @Override
@@ -155,26 +276,36 @@ public class NCZ_CreateNewOrder extends Activity
     void btn_sure()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_CreateNewOrder.this);
+        if (dd_fzr.getText().toString().equals(""))
+        {
+            Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (dd_time.getText().toString().equals(""))
+        {
+            Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (et_name.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (et_email.getText().toString().equals(""))
+   /*     if (et_email.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
         if (et_address.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (et_phone.getText().toString().equals(""))
+  /*      if (et_phone.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
         if (et_price.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -191,10 +322,35 @@ public class NCZ_CreateNewOrder extends Activity
             return;
         }
         //
+/*        String phone = phoneEt.getText().toString();
+        String context = contextEt.getText().toString();
+        SmsManager manager = SmsManager.getDefault();
+        ArrayList<String> list = manager.divideMessage(context);  //因为一条短信有字数限制，因此要将长短信拆分
+        for(String text:list){
+            manager.sendTextMessage(phone, null, text, null, null);
+        }*/
 
+        //短信
         SmsManager smsMessage = SmsManager.getDefault();
-        smsMessage.sendTextMessage(et_phone.getText().toString(), null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元", null, null);
+//        List<String> divideContents = smsMessage.divideMessage(message);
+        smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元", null, null);
         //
+//邮箱
+        new Thread(networkTask).start();
+/*        Intent data=new Intent(Intent.ACTION_SENDTO);
+        data.setData(Uri.parse(mail));
+        data.putExtra(Intent.EXTRA_SUBJECT, "订单");
+        data.putExtra(Intent.EXTRA_TEXT, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元");
+        startActivity(data);*/
+/*
+        Intent myIntent=new Intent(android.content.Intent.ACTION_SEND);
+        myIntent.setType("plain/text");//设置邮件格式
+
+        myIntent.putExtra(android.content.Intent.EXTRA_EMAIL, mail);
+        myIntent.putExtra(android.content.Intent.EXTRA_CC, "");//副本
+        myIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "订单");//主题
+        myIntent.putExtra(android.content.Intent.EXTRA_TEXT, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元");//内容
+        startActivity(Intent.createChooser(myIntent, "标题"));*/
         List<String> list_uuid = new ArrayList<>();
         String batchtime = "";
         String producer = "";
@@ -243,10 +399,12 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setUid(commembertab.getuId());
         sellOrder.setUuid(uuid);
         sellOrder.setBatchTime(batchtime);
-        sellOrder.setSelltype("0");
+        sellOrder.setSelltype("待付订金");
         sellOrder.setStatus("0");
-        sellOrder.setBuyers(et_name.getText().toString());
+//        sellOrder.setBuyers(et_name.getText().toString());
+        sellOrder.setBuyers(cgId);
         sellOrder.setAddress(et_address.getText().toString());
+
         sellOrder.setEmail(et_email.getText().toString());
         sellOrder.setPhone(et_phone.getText().toString());
         sellOrder.setPrice(et_price.getText().toString());
@@ -259,14 +417,25 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setActualsumvalues("");
         sellOrder.setDeposit("0");
         sellOrder.setReg(utils.getTime());
-        sellOrder.setSaletime(utils.getTime());
+//        sellOrder.setSaletime(utils.getTime());
+        sellOrder.setSaletime(dd_time.getText().toString());
         sellOrder.setYear(utils.getYear());
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
         sellOrder.setProducer(producer);
         sellOrder.setFinalpayment("0");
 
-
+        sellOrder.setMainPepole(fzrId);
+        sellOrder.setPlateNumber(dd_cl.getText().toString());
+        sellOrder.setContractorId(bzId);
+        sellOrder.setPickId(byId);
+        sellOrder.setCarryPrice(by_danjia.getText().toString());
+        sellOrder.setPackPrice(bz_danjia.getText().toString());
+        sellOrder.setPackPec(bz_guige.getText().toString());
+        sellOrder.setWaitDeposit(dingjin.getText().toString());
+        sellOrder.setFreeFinalPay("2");
+        sellOrder.setFreeDeposit("2");
+        sellOrder.setIsNeedAudit("2");
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
         StringBuilder builder = new StringBuilder();
@@ -281,35 +450,15 @@ public class NCZ_CreateNewOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
+/*        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String str = formatter.format(curDate);
+        dd_time.setText(str);*/
+        dd_bz.setInputType(InputType.TYPE_NULL);
+        dd_by.setInputType(InputType.TYPE_NULL);
+        dd_fzr.setInputType(InputType.TYPE_NULL);
 
-/*
-        listNewData = FileHelper.getAssetsData(NCZ_CreateNewOrder.this, "getPurchaser", Purchaser.class);
-        String [] str=new String [listNewData.size()];
-        for (int i=0;i<listNewData.size();i++)
-        {
-            str[i]=listNewData.get(i).getName();
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line,str);
-        et_name.setAdapter(adapter);
-        et_name.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-            {
-                Object obj = adapterView.getItemAtPosition(i);
-                String ss=obj.toString();
-                int a=listNewData.size();
-                List<Purchaser> listNewDatas = null;
-                listNewDatas = FileHelper.getAssetsData(NCZ_CreateNewOrder.this, "getPurchaser", Purchaser.class);
-                et_phone.setText(listNewDatas.get(i).getTelephone());
-                et_address.setText(listNewDatas.get(i).getAddress());
-                et_email.setText(listNewDatas.get(i).getMailbox());
-            }
-        });
-*/
-
-
+        getlistdata();
         deleNewSaleAddsalefor();
         et_price.addTextChangedListener(new TextWatcher()
         {
@@ -537,6 +686,7 @@ public class NCZ_CreateNewOrder extends Activity
         });
     }
 
+    //采购商的弹窗
     public void showDialog_workday(List<String> listdata, List<String> listid)
     {
         View dialog_layout = (RelativeLayout) NCZ_CreateNewOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
@@ -548,17 +698,74 @@ public class NCZ_CreateNewOrder extends Activity
                 //id也是有的
                 zzsl = bundle.getString("name");
                 et_name.setText(zzsl);
+                cgId = bundle.getString("id");
 
-                for (int i = 0; i < listNewData.size(); i++)
+                for (int i = 0; i < listData_CG.size(); i++)
                 {
-                    if (listNewData.get(i).getName().equals(zzsl))
+                    if (listData_CG.get(i).getName().equals(zzsl))
                     {
-                        et_phone.setText(listNewData.get(i).getTelephone());
-                        et_address.setText(listNewData.get(i).getAddress());
-                        et_email.setText(listNewData.get(i).getMailbox());
+                            telphone=listData_CG.get(i).getTelephone();
+                        mail=listData_CG.get(i).getMailbox();
                     }
                 }
 
+
+            }
+        });
+        customDialog_listView.show();
+    }
+
+    //包装工
+    public void showDialog_bz(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) NCZ_CreateNewOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(NCZ_CreateNewOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                dd_bz.setText(zzsl);
+                bzId = bundle.getString("id");
+
+            }
+        });
+        customDialog_listView.show();
+    }
+
+    //搬运工
+    public void showDialog_by(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) NCZ_CreateNewOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(NCZ_CreateNewOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                dd_by.setText(zzsl);
+                byId = bundle.getString("id");
+
+            }
+        });
+        customDialog_listView.show();
+    }
+
+    //负责人
+    public void showDialog_fzr(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) NCZ_CreateNewOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(NCZ_CreateNewOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                dd_fzr.setText(zzsl);
+                fzrId = bundle.getString("id");
 
             }
         });
@@ -578,6 +785,7 @@ public class NCZ_CreateNewOrder extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
+                List<Purchaser> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
@@ -586,13 +794,28 @@ public class NCZ_CreateNewOrder extends Activity
                         if (result.getAffectedRows() != 0)
                         {
                             listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
-                            String [] str=new String [listNewData.size()];
-                            for (int i=0;i<listNewData.size();i++)
+                            for (int i = 0; i < listNewData.size(); i++)
                             {
-                                str[i]=listNewData.get(i).getName();
+                                if (listNewData.get(i).userType.equals("采购商"))
+                                {
+                                    listData_CG.add(listNewData.get(i));
+                                } else if (listNewData.get(i).userType.equals("包装工头"))
+                                {
+                                    listData_BZ.add(listNewData.get(i));
+                                } else
+                                {
+                                    listData_BY.add(listNewData.get(i));
+                                }
+                            }
+
+
+                  /*          String[] str = new String[listData_CG.size()];
+                            for (int i = 0; i < listData_CG.size(); i++)
+                            {
+                                str[i] = listData_CG.get(i).getName();
                             }
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(NCZ_CreateNewOrder.this,
-                                    android.R.layout.simple_dropdown_item_1line,str);
+                                    android.R.layout.simple_dropdown_item_1line, str);
                             et_name.setAdapter(adapter);
                             et_name.setOnItemClickListener(new AdapterView.OnItemClickListener()
                             {
@@ -601,17 +824,17 @@ public class NCZ_CreateNewOrder extends Activity
                                 {
                                     Object obj = adapterView.getItemAtPosition(i);
                                     String ss = obj.toString();
-                                    for (int j = 0; j < listNewData.size(); j++)
+                                    for (int j = 0; j < listData_CG.size(); j++)
                                     {
-                                        if (listNewData.get(j).getName().equals(ss))
+                                        if (listData_CG.get(j).getName().equals(ss))
                                         {
-                                            et_phone.setText(listNewData.get(j).getTelephone());
-                                            et_address.setText(listNewData.get(j).getAddress());
-                                            et_email.setText(listNewData.get(j).getMailbox());
+                                            et_phone.setText(listData_CG.get(j).getTelephone());
+                                            et_address.setText(listData_CG.get(j).getAddress());
+                                            et_email.setText(listData_CG.get(j).getMailbox());
                                         }
                                     }
                                 }
-                            });
+                            });*/
 
                         } else
                         {
@@ -680,4 +903,107 @@ public class NCZ_CreateNewOrder extends Activity
 
     }
 
+    //获取人员列表
+    private void getlistdata()
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_CreateNewOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("nlevel", "1,2");
+        params.addQueryStringParameter("action", "getUserlisttByUID");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<PeopelList> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PeopelList.class);
+
+                        listpeople.addAll(listNewData);
+                        //方法一
+                     /*   List<String> list = new ArrayList<String>();
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            list.add(listNewData.get(i).getUserlevelName()+"-"+listNewData.get(i).getRealName());
+//                            list.add(jsonArray.getString(i));
+                        }
+                        showDialog_workday(list);*/
+                    } else
+                    {
+                        listNewData = new ArrayList<PeopelList>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(NCZ_CreateNewOrder.this, "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(NCZ_CreateNewOrder.this, "error_connectServer");
+
+            }
+        });
+    }
+
+
+public  void  sendEmail()
+{
+
+
+}
+    Runnable networkTask = new Runnable() {
+
+        @Override
+        public void run() {
+            Multipart multiPart;
+            String finalString = "";
+
+            Properties props = System.getProperties();
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host","smtp.qq.com");
+            props.put("mail.smtp.user", "956935952@qq.com");
+            props.put("mail.smtp.password", "Fenf5201314.");
+            props.put("mail.smtp.port", "25");
+            props.put("mail.smtp.auth", "true");
+            Session session = Session.getDefaultInstance(props, null);
+            DataHandler handler = new DataHandler(new ByteArrayDataSource(finalString.getBytes(), "text/plain"));
+            MimeMessage message = new MimeMessage(session);
+
+            try
+            {
+                message.setFrom(new InternetAddress("956935952@qq.com"));
+                message.setDataHandler(handler);
+                Log.i("Check", "done sessions");
+
+                multiPart = new MimeMultipart();
+                InternetAddress toAddress;
+                toAddress = new InternetAddress("2580859001@qq.com");
+                message.addRecipient(Message.RecipientType.TO, toAddress);
+                message.setSubject("订单");
+                message.setContent(multiPart);
+                message.setText("测试");
+
+                Transport transport = session.getTransport("smtp");
+                transport.connect("smtp.qq.com", "956935952@qq.com", "Fenf5201314.");
+                transport.sendMessage(message, message.getAllRecipients());
+                transport.close();
+            } catch (MessagingException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    };
 }

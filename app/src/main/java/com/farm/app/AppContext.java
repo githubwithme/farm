@@ -59,6 +59,7 @@ public class AppContext extends Application
     public final static String BROADCAST_NCZ_DT = "NCZ_DT";
     public final static String BROADCAST_NCZ_XSTJ = "NCZ_SXTJ";
     public final static String BROADCAST_NCZ_WZ_ParkId = "NCZ_WZ_ParkId";
+    public final static String BROADCAST_DD_REFASH = "DD_REFASH";
     public final static String UPDATEMESSAGE_FARMMANAGER= "UPDATEMESSAGE_FARMMANAGER";
 
     public final static int TIME_REFRESH = 30000;
