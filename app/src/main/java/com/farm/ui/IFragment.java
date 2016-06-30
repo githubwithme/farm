@@ -130,7 +130,7 @@ public class IFragment extends Fragment
     @Click
     void rl_userinfo()
     {
-        Intent intent = new Intent(getActivity(), EditUserInfo_.class);
+        Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
         startActivity(intent);
     }
 

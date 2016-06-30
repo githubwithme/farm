@@ -116,6 +116,7 @@ public class FarmManagerFragment extends Fragment
     @Click
     void ll_dl()
     {
+//        Intent intent = new Intent(getActivity(), NCZ_BreakOffActivity_.class);
         Intent intent = new Intent(getActivity(), NCZ_DLdatail_.class);
         getActivity().startActivity(intent);
     }

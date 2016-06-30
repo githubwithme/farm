@@ -11,7 +11,7 @@
     <dimen name="line">1px</dimen>
     <dimen name="home_textsize_find">14sp</dimen>
     <dimen name="home_textsize_other">12sp</dimen>
-    <dimen name="home_menu_textsize">12sp</dimen>
+    <dimen name="home_menu_textsize">14sp</dimen>
     <dimen name="actionbar_textsize">16sp</dimen>
     <!-- popuwindow高度 -->
     <dimen name="popuwindow_height">60dip</dimen>

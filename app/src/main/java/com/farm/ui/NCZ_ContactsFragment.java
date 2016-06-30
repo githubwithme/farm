@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -282,9 +283,9 @@ public class NCZ_ContactsFragment extends Fragment
                 // return;
                 commembertab commembertab = listData.get(position - 1);
                 if (commembertab == null) return;
-//                Intent intent = new Intent(getActivity(), Common_JobDetail_Show_.class);
-//                intent.putExtra("bean", commembertab);// 因为list中添加了头部,因此要去掉一个
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
+                intent.putExtra("userid", commembertab.getId());// 因为list中添加了头部,因此要去掉一个
+                startActivity(intent);
 
             }
         });

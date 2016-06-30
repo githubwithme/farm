@@ -40,7 +40,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.farm.widget.CustomHorizontalScrollView
+        <com.farm.widget.CustomHorizontalScrollView_BreakOff
             android:id="@+id/item_chscroll_scroll"
             android:layout_width="fill_parent"
             android:layout_height="40dip"
@@ -54,7 +54,7 @@
 
 
             </LinearLayout>
-        </com.farm.widget.CustomHorizontalScrollView>
+        </com.farm.widget.CustomHorizontalScrollView_BreakOff>
 
         <View
             android:layout_width="match_parent"

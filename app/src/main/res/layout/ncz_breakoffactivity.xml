@@ -1,34 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/line_color">
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
         android:background="@color/color_topbar">
 
+
         <ImageButton
             android:id="@+id/btn_back"
             android:layout_width="30dip"
-            android:layout_height="@dimen/titlebar_height"
+            android:layout_height="match_parent"
             android:background="@null"
             android:contentDescription=""
             android:src="@drawable/ic_back"/>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/ll_tab"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="断蕾情况"
+                android:textColor="@color/white"
+                android:textSize="@dimen/titlebar_textsize"/>
+
+            <ImageView
+                android:id="@+id/ic_up"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dip"
+                android:background="@drawable/ic_down"
+                android:contentDescription=""/>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/shuaxin"
+            android:layout_width="50dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="30dip"
+            android:layout_marginRight="10dip"
             android:gravity="center"
-            android:text="销售"
+            android:text="刷新"
             android:textColor="@color/white"
-            android:textSize="@dimen/size_sp_18"/>
+            android:textSize="16sp"/>
 
 
     </RelativeLayout>
@@ -37,8 +65,62 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_below="@id/rl_titlebar"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
         android:background="@color/line_color"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pb_upload"
+            android:layout_width="60dip"
+            android:layout_height="45dip"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dip"
+            android:background="@null"
+            android:gravity="center"
+            android:text="上传"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/cz_startdl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_timelimit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_colum"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="开始时间"
+                android:textSize="@dimen/size_20"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/startdl"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:gravity="center"
+            android:text="还没有进行断蕾"/>
+
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rl_note"
@@ -52,7 +134,7 @@
             android:layout_height="30dip"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="农场各分场各批次产品库存量"
+            android:text="断蕾情况(单位：株)"
             android:textColor="@color/bg_text"
             android:textSize="15sp"/>
 
@@ -64,7 +146,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_note"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dip"
+        android:layout_marginBottom="10dip"
         android:layout_marginLeft="5dip"
         android:layout_marginRight="5dip"
         android:layout_marginTop="2dip"
@@ -96,7 +178,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/gray"/>
 
-            <com.farm.widget.CustomHorizontalScrollView
+            <com.farm.widget.CustomHorizontalScrollView_BreakOff
                 android:id="@+id/item_scroll_title"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -112,7 +194,7 @@
 
 
                 </LinearLayout>
-            </com.farm.widget.CustomHorizontalScrollView>
+            </com.farm.widget.CustomHorizontalScrollView_BreakOff>
 
             <View
                 android:layout_width="1px"
@@ -178,7 +260,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/gray"/>
 
-            <com.farm.widget.CustomHorizontalScrollView
+            <com.farm.widget.CustomHorizontalScrollView_BreakOff
                 android:id="@+id/totalScroll"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -194,7 +276,7 @@
 
 
                 </LinearLayout>
-            </com.farm.widget.CustomHorizontalScrollView>
+            </com.farm.widget.CustomHorizontalScrollView_BreakOff>
 
             <View
                 android:layout_width="1px"
@@ -228,60 +310,4 @@
             android:background="@color/gray"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_menu"
-        android:layout_width="match_parent"
-        android:layout_height="45dip"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dip"
-        android:layout_marginLeft="5dip"
-        android:layout_marginRight="5dip"
-        android:background="@color/red"
-        android:orientation="horizontal">
-
-
-        <Button
-            android:id="@+id/btn_createorders"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:gravity="center"
-            android:text="创建订单"
-            android:textColor="@color/white"
-            android:textSize="@dimen/size_sp_14"/>
-
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
-
-        <Button
-            android:id="@+id/btn_orders"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:gravity="center"
-            android:text="订单管理"
-            android:textColor="@color/white"
-            android:textSize="@dimen/size_sp_14"/>
-
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
-
-        <Button
-            android:id="@+id/btn_customer"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:gravity="center"
-            android:text="客户合同"
-            android:textColor="@color/white"
-            android:textSize="@dimen/size_sp_14"/>
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
