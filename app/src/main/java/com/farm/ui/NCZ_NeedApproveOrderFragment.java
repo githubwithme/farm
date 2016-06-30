@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.NCZ_NeedAdapter;
 import com.farm.adapter.NCZ_OrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
@@ -47,7 +48,8 @@ import java.util.List;
 @EFragment
 public class NCZ_NeedApproveOrderFragment extends Fragment
 {
-    private NCZ_OrderAdapter listAdapter;
+//    private NCZ_OrderAdapter listAdapter;
+    private NCZ_NeedAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     private AppContext appContext;
@@ -96,6 +98,7 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
+//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
         return rootView;
@@ -116,7 +119,7 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_OrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+            listAdapter = new NCZ_NeedAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -139,6 +142,7 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("type", "0");
+        params.addQueryStringParameter("isApprove", "1");//不为空
         params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -153,7 +157,7 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        listAdapter = new NCZ_OrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+                        listAdapter = new NCZ_NeedAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {

@@ -81,10 +81,10 @@
                     android:orientation="vertical">
 
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/ll_flyl"
                         android:layout_width="fill_parent"
-                        android:layout_height="60dip"
+                        android:layout_height="50dip"
                         android:orientation="horizontal">
 
 
@@ -100,6 +100,8 @@
 
 
                         <EditText
+                            android:layout_toLeftOf="@+id/btn_addcg"
+                            android:layout_toRightOf="@+id/tv_yl_tip"
                             android:id="@+id/et_name"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -109,8 +111,14 @@
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
-
-                    </LinearLayout>
+                        <Button
+                            android:id="@+id/btn_addcg"
+                            android:layout_width="30dip"
+                            android:layout_height="30dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@mipmap/ic_add"/>
+                    </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -120,7 +128,7 @@
 
                     <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="60dip"
+                        android:layout_height="50dip"
                         android:orientation="horizontal">
 
 
@@ -147,6 +155,114 @@
 
 
                     </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="100dip"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="搬运单价   （元/件）"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <EditText
+                            android:id="@+id/by_danjia"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:hint="搬运单价"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="100dip"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="包装规格   （斤/件）"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <EditText
+                            android:id="@+id/bz_guige"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:hint="包装规格"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="100dip"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="包装单价                   （件/元）"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <EditText
+                            android:id="@+id/bz_danjia"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:hint="包装单价"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                    </LinearLayout>
+
+
 
                     <View
                         android:layout_width="match_parent"
@@ -156,7 +272,7 @@
 
                     <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="60dip"
+                        android:layout_height="50dip"
                         android:orientation="horizontal">
 
                         <TextView
@@ -188,7 +304,7 @@
 
                     <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="60dip"
+                        android:layout_height="50dip"
                         android:orientation="horizontal">
 
                         <TextView
@@ -219,8 +335,9 @@
                         android:background="@color/line_color"/>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="fill_parent"
-                        android:layout_height="60dip"
+                        android:layout_height="50dip"
                         android:orientation="horizontal">
 
 
@@ -245,7 +362,6 @@
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
                     </LinearLayout>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
@@ -253,7 +369,40 @@
 
                     <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="60dip"
+                        android:layout_height="50dip"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="100dip"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="*待付订金(元)"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <EditText
+                            android:id="@+id/dingjin"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:hint="请输入订金"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
                         android:orientation="horizontal">
 
 
@@ -262,7 +411,7 @@
                             android:layout_height="match_parent"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*采购商地址"
+                            android:text="*发往城市"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
@@ -280,13 +429,15 @@
                     </LinearLayout>
 
                     <View
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:background="@color/line_color"/>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="fill_parent"
-                        android:layout_height="60dip"
+                        android:layout_height="50dip"
                         android:orientation="horizontal">
 
 
@@ -310,6 +461,33 @@
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="100dip"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="*采收时间"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <TextView
+                            android:id="@+id/dd_time"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:hint="请选择采收时间"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -318,7 +496,158 @@
 
                     <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="60dip"
+                        android:layout_height="50dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="100dip"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="*负责人"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <EditText
+                            android:id="@+id/dd_fzr"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:hint="请输入负责人"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="100dip"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="车辆"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <EditText
+                            android:id="@+id/dd_cl"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:hint="请输入车牌号（多辆请用逗号隔开）"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/dd_tv"
+                            android:layout_width="100dip"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="包装工"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <TextView
+                            android:layout_toRightOf="@+id/dd_tv"
+                            android:layout_toLeftOf="@+id/btn_addbz"
+                            android:id="@+id/dd_bz"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:hint="请输入包装工"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+                        <Button
+                            android:id="@+id/btn_addbz"
+                            android:layout_width="30dip"
+                            android:layout_height="30dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@mipmap/ic_add"/>
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/by_tv"
+                            android:layout_width="100dip"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="搬运工"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <EditText
+                            android:layout_toRightOf="@+id/by_tv"
+                            android:layout_toLeftOf="@+id/btn_addby"
+                            android:id="@+id/dd_by"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:hint="请输入搬运工"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+                        <Button
+                            android:id="@+id/btn_addby"
+                            android:layout_width="30dip"
+                            android:layout_height="30dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@mipmap/ic_add"/>
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_color"/>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
                         android:orientation="horizontal">
 
                         <TextView
@@ -357,7 +686,7 @@
                     android:layout_height="match_parent"
                     android:gravity="left|center_vertical"
                     android:paddingLeft="10dip"
-                    android:text="销售明细条目"
+                    android:text="订单列表"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_sp_16"/>
 

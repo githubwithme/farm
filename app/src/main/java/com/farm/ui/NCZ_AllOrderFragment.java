@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.NCZ_DealingAdapter;
 import com.farm.adapter.NCZ_OrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
@@ -41,13 +42,15 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @SuppressLint("NewApi")
 @EFragment
 public class NCZ_AllOrderFragment extends Fragment
 {
-    private NCZ_OrderAdapter listAdapter;
+//    private NCZ_OrderAdapter listAdapter;
+private NCZ_DealingAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     private AppContext appContext;
@@ -116,7 +119,7 @@ public class NCZ_AllOrderFragment extends Fragment
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_OrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+            listAdapter = new NCZ_DealingAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -153,7 +156,17 @@ public class NCZ_AllOrderFragment extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        listAdapter = new NCZ_OrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+                        //已取消
+                        Iterator<SellOrder_New> it = listData.iterator();
+                        while (it.hasNext())
+                        {
+                            String value = it.next().getSelltype();
+                            if (!value.equals("已完成"))
+                            {
+                                it.remove();
+                            }
+                        }
+                        listAdapter = new NCZ_DealingAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {

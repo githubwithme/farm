@@ -20,9 +20,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.NCZ_NotpayAdapter;
 import com.farm.adapter.NCZ_OrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
@@ -41,13 +43,15 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @SuppressLint("NewApi")
 @EFragment
 public class NCZ_NotPayFragment extends Fragment
 {
-    private NCZ_OrderAdapter listAdapter;
+//    private NCZ_OrderAdapter listAdapter;
+    private NCZ_NotpayAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     private AppContext appContext;
@@ -97,8 +101,10 @@ public class NCZ_NotPayFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENOTPAYORDER);
+//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENOTPAYORDER);
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
+
         return rootView;
     }
 
@@ -118,7 +124,7 @@ public class NCZ_NotPayFragment extends Fragment
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_OrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+            listAdapter = new NCZ_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -142,7 +148,7 @@ public class NCZ_NotPayFragment extends Fragment
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "1");
+        params.addQueryStringParameter("type", "0");
         params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -157,7 +163,18 @@ public class NCZ_NotPayFragment extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        listAdapter = new NCZ_OrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+                        Iterator<SellOrder_New> it = listData.iterator();
+                        while (it.hasNext())
+                        {
+                            String value = it.next().getSelltype();
+                            if (value.equals("已完成"))
+                            {
+                                it.remove();
+                            }
+                        }
+
+
+                        listAdapter = new NCZ_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {

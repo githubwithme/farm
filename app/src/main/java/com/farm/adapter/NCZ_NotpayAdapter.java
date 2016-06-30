@@ -1,7 +1,6 @@
 package com.farm.adapter;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,6 +25,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
+import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
@@ -38,9 +38,12 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import java.util.HashMap;
 import java.util.List;
 
-@SuppressLint("NewApi")
-public class NCZ_OrderAdapter extends BaseAdapter
+/**
+ * Created by hasee on 2016/6/29.
+ */
+public class NCZ_NotpayAdapter  extends BaseAdapter
 {
+    static String name = "";
     CustomDialog_CallTip custom_calltip;
     MyDialog myDialog;
     String broadcast;
@@ -51,6 +54,9 @@ public class NCZ_OrderAdapter extends BaseAdapter
 
     static class ListItemView
     {
+        public CircleImageView circle_img;
+        public TextView tv_importance;
+        public TextView tv_car;
         public TextView tv_buyer;
         public TextView tv_state;
         public TextView tv_price;
@@ -63,7 +69,7 @@ public class NCZ_OrderAdapter extends BaseAdapter
 
     }
 
-    public NCZ_OrderAdapter(Context context, List<SellOrder_New> data,String broadcast)
+    public NCZ_NotpayAdapter(Context context, List<SellOrder_New> data,String broadcast)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -96,9 +102,10 @@ public class NCZ_OrderAdapter extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.listitem_order, null);
+            convertView = listContainer.inflate(R.layout.listitem_notplay, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
             listItemView.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
@@ -108,10 +115,21 @@ public class NCZ_OrderAdapter extends BaseAdapter
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
+            listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
+            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
+            if ( sellOrder.getSellOrderDetailList().size()>0)
+            {
+                listItemView.tv_car.setText( sellOrder.getSellOrderDetailList().get(0).getparkname());
+            }else
+            {
+                listItemView.tv_car.setText("没有选择区域");
+            }
+            listItemView.tv_importance.setText(sellOrder.getMainPepole());
+//            listItemView.tv_car.setText(sellOrder.getProducer());
             SpannableString content = new SpannableString(sellOrder.getBuyersName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             listItemView.tv_buyer.setText(content);
@@ -147,7 +165,18 @@ public class NCZ_OrderAdapter extends BaseAdapter
             {
                 listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
             }
-            if (sellOrder.getDeposit().equals("0"))
+            if (sellOrder.getSelltype().equals("待付订金"))
+            {
+                listItemView.tv_state.setText("等待买家付定金");
+            }else if (sellOrder.getSelltype().equals("交易中"))
+            {
+                listItemView.tv_state.setText("交易正在进行中");
+            }else if(sellOrder.getSelltype().equals("待付尾款"))
+            {
+                listItemView.tv_state.setText("等待买家付尾款");
+            }
+
+/*            if (sellOrder.getDeposit().equals("0"))
             {
                 listItemView.tv_state.setText("等待买家付定金");
             } else
@@ -159,7 +188,7 @@ public class NCZ_OrderAdapter extends BaseAdapter
                 {
                     listItemView.tv_state.setText("买家已付尾款");
                 }
-            }
+            }*/
             listItemView.btn_cancleorder.setTag(R.id.tag_cash,sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
@@ -198,7 +227,35 @@ public class NCZ_OrderAdapter extends BaseAdapter
         {
             listItemView.fl_dynamic.setVisibility(View.VISIBLE);
         }
+        //
+        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work,  R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
+        if (name.equals(""))
+        {
+            name += sellOrder.getMainPepole() + ",";
+        }
 
+//        for(int i=0;i<position;i++)
+        int str = position;
+
+
+        //                String[] nongzi = commandtab.getnongziName().split(",");
+
+        if (name.indexOf(listItems.get(position).getMainPepole()) != -1)
+        {
+            String[] data = name.split(",");
+            for (int j = 0; j < data.length; j++)
+            {
+                if (data[j].equals(listItems.get(position).getMainPepole()))
+                    listItemView.circle_img.setImageResource(color[j % color.length]);
+                int x = j % color.length;
+            }
+        } else
+        {
+            String[] data = name.split(",");
+            name += listItems.get(position).getMainPepole() + ",";
+            listItemView.circle_img.setImageResource(color[(data.length ) % color.length]);
+            int y = (data.length ) % color.length;
+        }
         return convertView;
     }
 
@@ -218,6 +275,11 @@ public class NCZ_OrderAdapter extends BaseAdapter
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
+
+                    Intent intent = new Intent();
+//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
+                    intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                    context.sendBroadcast(intent);
                /* if (result.getAffectedRows() != 0)
                 {
                     listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
@@ -305,4 +367,5 @@ public class NCZ_OrderAdapter extends BaseAdapter
         });
         myDialog.show();
     }
+
 }

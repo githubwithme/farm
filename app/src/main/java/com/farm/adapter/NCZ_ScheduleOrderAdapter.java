@@ -16,17 +16,21 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
+import com.farm.bean.SellOrder;
 import com.farm.bean.SellOrder_New;
 import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
+import com.farm.widget.MyDateMaD;
+import com.farm.widget.MyDatepicker;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -35,11 +39,14 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import org.apache.http.entity.StringEntity;
+
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 
 @SuppressLint("NewApi")
-public class NCZ_ScheduleOrderAdapter extends BaseAdapter
+public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClickListener
 {
     CustomDialog_CallTip custom_calltip;
     MyDialog myDialog;
@@ -48,9 +55,18 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter
     private List<SellOrder_New> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
     SellOrder_New sellOrder;
+    private Callback mCallback;
+
+    @Override
+    public void onClick(View view)
+    {
+        mCallback.click(view);
+    }
 
     static class ListItemView
     {
+        public TextView tv_car;
+        public TextView tv_name;
         public TextView tv_buyer;
         public TextView tv_state;
         public TextView tv_price;
@@ -61,15 +77,22 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter
         public Button btn_cancleorder;
         public Button btn_editorder;
         public CircleImageView fl_dynamic;
+        public CircleImageView circle_img;
 
     }
 
-    public NCZ_ScheduleOrderAdapter(Context context, List<SellOrder_New> data, String broadcast)
+    public interface Callback
+    {
+        public void click(View v);
+    }
+
+    public NCZ_ScheduleOrderAdapter(Context context, List<SellOrder_New> data, String broadcast,Callback callback)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.listItems = data;
         this.broadcast = broadcast;
+        mCallback=callback;
     }
 
     public int getCount()
@@ -100,6 +123,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter
             convertView = listContainer.inflate(R.layout.listitem_scheduleorder, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
             listItemView.view_top = (View) convertView.findViewById(R.id.view_top);
@@ -110,11 +134,16 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.fl_dynamic = (CircleImageView) convertView.findViewById(R.id.fl_dynamic);
+            listItemView.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-            SpannableString content = new SpannableString(sellOrder.getBuyers());
+
+            listItemView.tv_car.setText(sellOrder.getProducer());
+//            SpannableString content = new SpannableString(sellOrder.getBuyers());
+            SpannableString content = new SpannableString(sellOrder.getBuyersName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             listItemView.tv_buyer.setText(content);
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
@@ -123,6 +152,26 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter
                 public void onClick(View v)
                 {
                     showDialog_addsaleinfo("15989154871");
+                }
+            });
+//            listItemView.circle_img.setOnClickListener(this);
+            listItemView.circle_img.setTag(R.id.tag_kg, listItemView);
+            listItemView.circle_img.setTag(R.id.tag_hg, sellOrder);
+            listItemView.circle_img.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
+                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
+                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name,sellOrders);
+                    myDatepicker.getDialog().show();
+    /*                sellOrders.setSaletime(listItemView2.tv_name.getText().toString());
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("{\"SellOrder_new\": [");
+                    builder.append(JSON.toJSONString(sellOrders));
+                    builder.append("]} ");*/
+//                    newaddOrder(builder.toString());
                 }
             });
 
@@ -138,6 +187,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter
                     context.startActivity(intent);
                 }
             });
+            listItemView.tv_name.setText(sellOrder.getSaletime().substring(5, sellOrder.getSaletime().length() - 8));//时间
             listItemView.tv_price.setText(sellOrder.getPrice());
             listItemView.tv_from.setText(sellOrder.getProducer());
 //            listItemView.tv_batchtime.setText(sellOrder.getBatchTime());
@@ -148,19 +198,20 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter
             {
                 listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
             }
-            if (sellOrder.getDeposit().equals("0"))
+            listItemView.tv_state.setText(sellOrder.getMainPepole());
+/*            if (sellOrder.getDeposit().equals("0"))
             {
                 listItemView.tv_state.setText("等待买家付定金");
             } else
             {
-                if (sellOrder.getFinalpayment().equals("0"))
+                    if (sellOrder.getFinalpayment().equals("0"))
                 {
                     listItemView.tv_state.setText("等待买家付尾款");
                 } else
                 {
                     listItemView.tv_state.setText("买家已付尾款");
                 }
-            }
+            }*/
             listItemView.btn_cancleorder.setTag(R.id.tag_cash, sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
@@ -310,5 +361,50 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter
             }
         });
         myDialog.show();
+    }
+
+    private void newaddOrder(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "editOrder");
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(context, "订单修改成功！", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
     }
 }

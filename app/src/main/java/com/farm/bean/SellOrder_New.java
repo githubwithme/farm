@@ -29,8 +29,8 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String batchTime;
     public String selltype;
     public String status;
-    public String buyers;
-    public String address;
+    public String buyers;   //采购商id//0
+    public String address;  //产品发往城市
     public String email;
     public String phone;
     public String price;
@@ -53,6 +53,246 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String flashStr;
     public List<SellOrderDetail_New> sellOrderDetailList;
 
+   public  String pactId;
+    public String plateNumber; // 车牌号
+    public String mainPepole;  // 负责人id
+    public String mainPepName;  // 负责人
+    public String contractorId ; // 包工头
+    public String pickId ;      //  挑工头
+    public String carryPrice ;  // 搬运单价
+    public String packPrice ;   // 包装单价
+    public String defectPrice ;   //次品单价
+    public String defectNum ;   // 次品数量
+    public String packPec ;   // 包装规格
+    public String waitDeposit ;   // 要付订金
+
+    public String buyersId ;   // 采购商id
+    public String buyersName ;   // 采购商名
+    public String contractorName ;   //  包工头名
+    public String pickName ;   //  搬运工名
+    public String purchaTel ;   //采购商电话
+    public String purchaMail ;   // 采购商mail
+    public String isNeedAudit ;   // 单价，订金的修改
+    public String freeDeposit ;   // 免付订金
+    public String freeFinalPay ;   // 免付尾款
+
+
+    public String getFreeFinalPay()
+    {
+        return freeFinalPay;
+    }
+
+    public void setFreeFinalPay(String freeFinalPay)
+    {
+        this.freeFinalPay = freeFinalPay;
+    }
+
+    public String getFreeDeposit()
+    {
+        return freeDeposit;
+    }
+
+    public void setFreeDeposit(String freeDeposit)
+    {
+        this.freeDeposit = freeDeposit;
+    }
+
+    public String getIsNeedAudit()
+    {
+        return isNeedAudit;
+    }
+
+    public void setIsNeedAudit(String isNeedAudit)
+    {
+        this.isNeedAudit = isNeedAudit;
+    }
+
+    public String getPactId()
+    {
+        return pactId;
+    }
+
+    public void setPactId(String pactId)
+    {
+        this.pactId = pactId;
+    }
+
+    public String getPurchaTel()
+    {
+        return purchaTel;
+    }
+
+    public void setPurchaTel(String purchaTel)
+    {
+        this.purchaTel = purchaTel;
+    }
+
+    public String getPurchaMail()
+    {
+        return purchaMail;
+    }
+
+    public void setPurchaMail(String purchaMail)
+    {
+        this.purchaMail = purchaMail;
+    }
+
+    public String getMainPepName()
+    {
+        return mainPepName;
+    }
+
+    public void setMainPepName(String mainPepName)
+    {
+        this.mainPepName = mainPepName;
+    }
+
+    public String getBuyersId()
+    {
+        return buyersId;
+    }
+
+    public void setBuyersId(String buyersId)
+    {
+        this.buyersId = buyersId;
+    }
+
+    public String getBuyersName()
+    {
+        return buyersName;
+    }
+
+    public void setBuyersName(String buyersName)
+    {
+        this.buyersName = buyersName;
+    }
+
+    public String getContractorName()
+    {
+        return contractorName;
+    }
+
+    public void setContractorName(String contractorName)
+    {
+        this.contractorName = contractorName;
+    }
+
+    public String getPickName()
+    {
+        return pickName;
+    }
+
+    public void setPickName(String pickName)
+    {
+        this.pickName = pickName;
+    }
+
+/*    buyersId      //采购商id
+            buyersName  // 采购商名
+    contractorId   //包公头id
+            contractorName // 包工头名
+    pickId     //搬运工id
+            pickName  //搬运工名*/
+
+    public String getPackPec()
+    {
+        return packPec;
+    }
+
+    public void setPackPec(String packPec)
+    {
+        this.packPec = packPec;
+    }
+
+    public String getWaitDeposit()
+    {
+        return waitDeposit;
+    }
+
+    public void setWaitDeposit(String waitDeposit)
+    {
+        this.waitDeposit = waitDeposit;
+    }
+
+    public String getContractorId()
+    {
+        return contractorId;
+    }
+
+    public void setContractorId(String contractorId)
+    {
+        this.contractorId = contractorId;
+    }
+
+    public String getPickId()
+    {
+        return pickId;
+    }
+
+    public void setPickId(String pickId)
+    {
+        this.pickId = pickId;
+    }
+
+    public String getCarryPrice()
+    {
+        return carryPrice;
+    }
+
+    public void setCarryPrice(String carryPrice)
+    {
+        this.carryPrice = carryPrice;
+    }
+
+    public String getPackPrice()
+    {
+        return packPrice;
+    }
+
+    public void setPackPrice(String packPrice)
+    {
+        this.packPrice = packPrice;
+    }
+
+    public String getDefectPrice()
+    {
+        return defectPrice;
+    }
+
+    public void setDefectPrice(String defectPrice)
+    {
+        this.defectPrice = defectPrice;
+    }
+
+    public String getDefectNum()
+    {
+        return defectNum;
+    }
+
+    public void setDefectNum(String defectNum)
+    {
+        this.defectNum = defectNum;
+    }
+
+    public String getPlateNumber()
+    {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber)
+    {
+        this.plateNumber = plateNumber;
+    }
+
+    public String getMainPepole()
+    {
+        return mainPepole;
+    }
+
+    public void setMainPepole(String mainPepole)
+    {
+        this.mainPepole = mainPepole;
+    }
 
     public String getFlashStr()
     {
@@ -393,6 +633,27 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setFinalpayment(source.readString());
             p.setFlashStr(source.readString());
             p.sellOrderDetailList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
+
+
+            p.setPactId(source.readString());
+            p.setPlateNumber(source.readString());
+            p.setMainPepole(source.readString());
+            p.setMainPepName(source.readString());
+            p.setContractorId(source.readString());
+            p.setPickId(source.readString());
+            p.setCarryPrice(source.readString());
+            p.setPackPrice(source.readString());
+            p.setPackPec(source.readString());
+            p.setWaitDeposit(source.readString());
+            p.setBuyersId(source.readString());
+            p.setBuyersName(source.readString());
+            p.setContractorName(source.readString());
+            p.setPickName(source.readString());
+            p.setPurchaTel(source.readString());
+            p.setPurchaMail(source.readString());
+            p.setIsNeedAudit(source.readString());
+            p.setFreeDeposit(source.readString());
+            p.setFreeFinalPay(source.readString());
             return p;
 
 
@@ -437,6 +698,26 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(finalpayment);
         p.writeString(flashStr);
         p.writeList(sellOrderDetailList);
+
+        p.writeString(pactId);
+        p.writeString(plateNumber);
+        p.writeString(mainPepole);
+        p.writeString(mainPepName);
+        p.writeString(contractorId);
+        p.writeString(pickId);
+        p.writeString(carryPrice);
+        p.writeString(packPrice);
+        p.writeString(packPec);
+        p.writeString(waitDeposit);
+        p.writeString(buyersId);
+        p.writeString(buyersName);
+        p.writeString(contractorName);
+        p.writeString(pickName);
+        p.writeString(purchaTel);
+        p.writeString(purchaMail);
+        p.writeString(isNeedAudit);
+        p.writeString(freeDeposit);
+        p.writeString(freeFinalPay);
     }
 
     @Override

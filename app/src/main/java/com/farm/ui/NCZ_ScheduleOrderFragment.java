@@ -22,8 +22,11 @@ import com.farm.R;
 import com.farm.adapter.NCZ_ScheduleOrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.AllType;
+import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
@@ -34,21 +37,30 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @SuppressLint("NewApi")
 @EFragment
-public class NCZ_ScheduleOrderFragment extends Fragment
+public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleOrderAdapter.Callback
 {
+    List<AllType> listdata_cp = new ArrayList<AllType>();
+    List<Purchaser> listData_CG = new ArrayList<Purchaser>();
+    List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
+    private static NCZ_ScheduleOrderAdapter.Callback mCallback;
     private NCZ_ScheduleOrderAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
+    static private List<SellOrder_New> secletpark;
+    static private List<SellOrder_New> secletchanpin;
+    static private List<SellOrder_New> secletcgs;
     private AppContext appContext;
     private View list_footer;
     private TextView list_foot_more;
@@ -75,6 +87,11 @@ public class NCZ_ScheduleOrderFragment extends Fragment
     private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
     private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
 
+
+    String parkname="";
+    String cpname="";
+    String cgsname="";
+
     @Override
     public void onResume()
     {
@@ -84,8 +101,14 @@ public class NCZ_ScheduleOrderFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        secletchanpin = new ArrayList<SellOrder_New>();
+        secletcgs = new ArrayList<SellOrder_New>();
+        secletpark = new ArrayList<SellOrder_New>();
+        getchanpin();
+        getpurchaser();//采购商
+        getlistdata();//园区
 //        getNewSaleList_test();
-        setSpinner();
+//        setSpinner();
         getAllOrders();
     }
 
@@ -98,6 +121,8 @@ public class NCZ_ScheduleOrderFragment extends Fragment
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
         return rootView;
+
+
     }
 
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
@@ -115,7 +140,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+            listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER, this);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -151,8 +176,19 @@ public class NCZ_ScheduleOrderFragment extends Fragment
                 {
                     if (result.getAffectedRows() != 0)
                     {
+
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+                        Iterator<SellOrder_New> it = listData.iterator();
+                        while (it.hasNext())
+                        {
+                            String value = it.next().getSelltype();
+                            if (value.equals("已完成"))
+                            {
+                                it.remove();
+                            }
+                        }
+
+                        listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER, mCallback);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
@@ -195,10 +231,33 @@ public class NCZ_ScheduleOrderFragment extends Fragment
      */
     private void setSpinner()
     {
+        String park[] = new String[listpark.size()];
+        for (int i = 0; i < listpark.size(); i++)
+        {
+            park[i] = listpark.get(i).getParkName();
+        }
+
         //绑定适配器和值
-        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
+        int a = park.length;
+//        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
+        provinceAdapter = new CustomArrayAdapter(getActivity(), park);
         provinceSpinner.setAdapter(provinceAdapter);
         provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
+        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
 
         cityAdapter = new CustomArrayAdapter(getActivity(), mCitisDatasMap);
         citySpinner.setAdapter(cityAdapter);
@@ -215,6 +274,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3)
             {
+
             }
 
             @Override
@@ -250,4 +310,479 @@ public class NCZ_ScheduleOrderFragment extends Fragment
     }
 
 
+    @Override
+    public void click(View v)
+    {
+//        getAllOrders();
+    }
+
+
+    //园区
+    private void getlistdata()
+    {
+        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+//        params.addQueryStringParameter("parkId", "16");
+//        params.addQueryStringParameter("action", "getGoodsByUid");
+        params.addQueryStringParameter("action", "getcontractByUid");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<Wz_Storehouse> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Wz_Storehouse wz_storehouses = new Wz_Storehouse();
+                        wz_storehouses.setParkId("");
+                        wz_storehouses.setParkName("全部分场");
+                        listpark.add(wz_storehouses);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
+                        listpark.addAll(listNewData);
+
+
+                        String park[] = new String[listpark.size()];
+                        for (int i = 0; i < listpark.size(); i++)
+                        {
+                            park[i] = listpark.get(i).getParkName();
+                        }
+
+                        //绑定适配器和值
+//        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
+                        provinceAdapter = new CustomArrayAdapter(getActivity(), park);
+                        provinceSpinner.setAdapter(provinceAdapter);
+                        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
+                        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                        {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                            {
+
+                                parkname = listpark.get(i).getParkName();
+                                getAllOrdersname();
+             /*                   secletpark = new ArrayList<SellOrder_New>();
+                                secletpark.addAll(listData);
+//                                getAllOrdersname("分场", listpark.get(i).getParkName());
+                                if (!listpark.get(i).getParkName().equals("全部分场"))
+                                {
+                                    Iterator<SellOrder_New> it = secletpark.iterator();
+                                    while (it.hasNext())
+                                    {
+                                        String value = it.next().getProducer();
+//                            if (!value.equals("已完成"))
+                                        if (value.indexOf(listpark.get(i).getParkName()) == -1)
+                                        {
+                                            it.remove();
+                                        }
+                                    }
+                                }
+
+                                listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), secletpark, AppContext.BROADCAST_UPDATEAllORDER, mCallback);
+                                lv.setAdapter(listAdapter);
+                                lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                                {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                                    {
+
+                                        commembertab commembertab = AppContext.getUserInfo(getActivity());
+                                        AppContext.eventStatus(getActivity(), "8", secletpark.get(position).getUuid(), commembertab.getId());
+                                        Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                                        intent.putExtra("bean", secletpark.get(position));
+                                        getActivity().startActivity(intent);
+                                    }
+                                });*/
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView)
+                            {
+
+                            }
+                        });
+                    } else
+                    {
+                        listNewData = new ArrayList<Wz_Storehouse>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(getActivity(), "error_connectServer");
+
+            }
+        });
+
+    }
+
+    private void getAllOrdersname()
+    {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("type", "0");
+        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+
+
+                        if (!parkname.equals(""))
+                        {
+                            if (!parkname.equals("全部分场"))
+                            {
+                                Iterator<SellOrder_New> it = listData.iterator();
+                                while (it.hasNext())
+                                {
+                                    String value = it.next().getProducer();
+//                            if (!value.equals("已完成"))
+                                    if (value.indexOf(parkname) == -1)
+                                    {
+                                        it.remove();
+                                    }
+                                }
+                            }
+                        }
+                        if (!cgsname.equals(""))
+                        {
+
+                            if (!cgsname.equals("不限采购商"))
+                            {
+                                Iterator<SellOrder_New> its = listData.iterator();
+                                while (its.hasNext())
+                                {
+                                    String value = its.next().getBuyersName();
+//                            if (!value.equals("已完成"))
+                                    if (value.indexOf(cgsname) == -1)
+                                    {
+                                        its.remove();
+                                    }
+                                }
+                            }
+                        }
+         /*               Iterator<SellOrder_New> its = listData.iterator();
+                        if (!parkname.equals("不限采购商"))
+                        {
+                            while (its.hasNext())
+                            {
+                                String value = its.next().getBuyersName();
+//                            if (!value.equals("已完成"))
+                                if (value.indexOf(parkname) == -1)
+                                {
+                                    its.remove();
+                                }
+                            }
+                        }*/
+                        listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER, mCallback);
+                        lv.setAdapter(listAdapter);
+                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                        {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                            {
+
+                                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                                AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
+                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                                intent.putExtra("bean", listData.get(position));
+                                getActivity().startActivity(intent);
+                            }
+                        });
+
+                    } else
+                    {
+                        listData = new ArrayList<SellOrder_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+
+            }
+        });
+    }
+
+    //采购商
+    private void getpurchaser()
+    {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getpurchaser");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<Purchaser> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        if (result.getAffectedRows() != 0)
+                        {
+                            listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
+                            Purchaser purchaser = new Purchaser();
+                            purchaser.setId("");
+                            purchaser.setName("不限采购商");
+                            listData_CG.add(purchaser);
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+
+                                if (listNewData.get(i).userType.equals("采购商"))
+                                {
+                                    listData_CG.add(listNewData.get(i));
+                                }/* else if (listNewData.get(i).userType.equals("包装工头"))
+                                {
+                                    listData_BZ.add(listNewData.get(i));
+                                } else
+                                {
+                                    listData_BY.add(listNewData.get(i));
+                                }*/
+                            }
+
+
+                            String park[] = new String[listData_CG.size()];
+                            for (int i = 0; i < listData_CG.size(); i++)
+                            {
+                                park[i] = listData_CG.get(i).getName();
+                            }
+                            countyAdapter = new CustomArrayAdapter(getActivity(), park);
+                            countySpinner.setAdapter(countyAdapter);
+                            countySpinner.setSelection(0, true);
+                            countySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                            {
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                                {
+                                    cgsname = listData_CG.get(i).getName();
+                                    getAllOrdersname();
+//                                    getAllOrdersname("采购商", listData_CG.get(i).getName());
+//                                    secletcgs = new ArrayList<SellOrder_New>();
+//                                    if (secletchanpin.size()==0||secletchanpin.equals("")||secletchanpin==null)
+//                                    {
+//                                        secletcgs.addAll(listData);
+//                                    }else
+//                                    {
+//                                        secletcgs.addAll(secletchanpin);
+//                                    }
+//                                    if (!listData_CG.get(i).getName().equals("不限采购商"))
+//                                    {
+//                                        Iterator<SellOrder_New> it = secletcgs.iterator();
+//                                        while (it.hasNext())
+//                                        {
+//                                            String value = it.next().getBuyersName();
+////                            if (!value.equals("已完成"))
+//                                            if (value.indexOf(listData_CG.get(i).getName()) == -1)
+//                                            {
+//                                                it.remove();
+//                                            }
+//                                        }
+//                                    }
+//
+//
+//                                    listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), secletcgs, AppContext.BROADCAST_UPDATEAllORDER, mCallback);
+//                                    lv.setAdapter(listAdapter);
+//                                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//                                    {
+//                                        @Override
+//                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//                                        {
+//
+//                                            commembertab commembertab = AppContext.getUserInfo(getActivity());
+//                                            AppContext.eventStatus(getActivity(), "8", secletcgs.get(position).getUuid(), commembertab.getId());
+//                                            Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+//                                            intent.putExtra("bean", secletcgs.get(position));
+//                                            getActivity().startActivity(intent);
+//                                        }
+//                                    });
+
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView)
+                                {
+
+                                }
+                            });
+                        } else
+                        {
+                            listNewData = new ArrayList<Purchaser>();
+                        }
+
+                    } else
+                    {
+                        listNewData = new ArrayList<Purchaser>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+            }
+        });
+    }
+
+
+    private void getchanpin()
+    {
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getProduct");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<AllType> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), AllType.class);
+                        AllType allType = new AllType();
+                        allType.setId("");
+                        allType.setProductName("全部产品");
+                        listdata_cp.add(allType);
+                        listdata_cp.addAll(listNewData);
+
+
+                        String park[] = new String[listdata_cp.size()];
+                        for (int i = 0; i < listdata_cp.size(); i++)
+                        {
+                            park[i] = listdata_cp.get(i).getProductName();
+                        }
+                        cityAdapter = new CustomArrayAdapter(getActivity(), mCitisDatasMap);
+                        citySpinner.setAdapter(cityAdapter);
+                        citySpinner.setSelection(0, true);  //默认选中第0个
+                        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                        {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                            {
+
+                                cpname = listdata_cp.get(i).getProductName();
+                    /*            secletchanpin = new ArrayList<SellOrder_New>();
+                                if (secletpark.size()==0)
+                                {
+                                    secletchanpin.addAll(listData);
+                                }else
+                                {
+                                    secletchanpin.addAll(secletpark);
+
+                                }*/
+
+       /*                         if (!listpark.get(i).getParkName().equals("全部分场"))
+                                {
+                                    Iterator<SellOrder_New> it = secletpark.iterator();
+                                    while (it.hasNext())
+                                    {
+                                        String value = it.next().getProducer();
+//                            if (!value.equals("已完成"))
+                                        if (value.indexOf(listpark.get(i).getParkName()) == -1)
+                                        {
+                                            it.remove();
+                                        }
+                                    }
+                                }*/
+
+
+                     /*           listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), secletchanpin, AppContext.BROADCAST_UPDATEAllORDER, mCallback);
+                                lv.setAdapter(listAdapter);
+                                lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                                {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                                    {
+
+                                        commembertab commembertab = AppContext.getUserInfo(getActivity());
+                                        AppContext.eventStatus(getActivity(), "8", secletchanpin.get(position).getUuid(), commembertab.getId());
+                                        Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                                        intent.putExtra("bean", secletchanpin.get(position));
+                                        getActivity().startActivity(intent);
+                                    }
+                                });*/
+
+
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView)
+                            {
+
+                            }
+                        });
+                    } else
+                    {
+                        listNewData = new ArrayList<AllType>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(getActivity(), "error_connectServer");
+
+            }
+        });
+
+    }
 }
