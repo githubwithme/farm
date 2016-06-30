@@ -77,7 +77,7 @@
 
                     <ImageView
                         android:id="@+id/image_view1"
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/temp1"/>
@@ -101,7 +101,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/temp2"/>
@@ -124,7 +124,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/icon_gz2"/>
@@ -157,7 +157,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/icon_zz"/>
@@ -180,7 +180,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/logo_qzone"/>
@@ -204,7 +204,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/logo_qzone"/>
@@ -229,7 +229,7 @@
                     android:visibility="gone">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/quick_set_create_cw"/>
@@ -268,7 +268,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/temp4"/>
@@ -292,7 +292,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/icon_zl"/>
@@ -316,7 +316,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/temp3"/>
@@ -348,7 +348,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/icon_sq"/>
@@ -405,7 +405,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/temp7"/>
@@ -428,7 +428,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/temp6"/>
@@ -452,7 +452,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dip"
+                        android:layout_width="45dip"
                         android:layout_height="45dip"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/temp6"/>

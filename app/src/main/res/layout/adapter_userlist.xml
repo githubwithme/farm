@@ -8,16 +8,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="55dip"
-        android:layout_marginLeft="15dip"
-        android:layout_marginRight="10dip"
-        android:layout_marginTop="2dip"
+        android:layout_height="60dip"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <FrameLayout
             android:id="@+id/fl_img"
             android:layout_width="45dip"
             android:layout_height="45dip"
+            android:layout_marginLeft="15dip"
             android:layout_centerVertical="true">
 
             <com.farm.widget.CircleImageView
@@ -34,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:layout_margin="3dip"
                 android:text="ddd"
                 android:textColor="@color/white"
                 android:textSize="13sp"/>
@@ -54,12 +54,12 @@
 
         <Button
             android:id="@+id/btn_call"
-            android:layout_width="20dip"
-            android:layout_height="20dip"
+            android:layout_width="12dip"
+            android:layout_height="12dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:background="@mipmap/call"/>
+            android:layout_margin="15dip"
+            android:background="@drawable/next_black"/>
 
         <TextView
             android:id="@+id/tv_workarea"

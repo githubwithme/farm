@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_CreateOrder_SelectProduct;
+import com.farm.adapter.Adapter_SelectProduct;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -28,6 +28,7 @@ import com.farm.bean.contractTab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomGridview;
+import com.farm.widget.CustomListView;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -60,9 +61,10 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
     int newsalenumber = 0;
     String parkid;
     String batchTime;
+    String parkname;
     List<Map<String, String>> uuids;
     List<SellOrderDetail_New> list_sell;
-    Adapter_CreateOrder_SelectProduct adapter_createOrder_selectProduct;
+    Adapter_SelectProduct adapter_selectProduct;
     @ViewById
     ExpandableListView expandableListView;
     @ViewById
@@ -71,6 +73,8 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
     Button btn_cancleorder;
     @ViewById
     TextView tv_salenumber;
+    @ViewById
+    TextView tv_note;
     @ViewById
     RelativeLayout pb_upload;
 
@@ -161,8 +165,17 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
     void afterOncreate()
     {
 //        getBatchTimeByUid_test();
+        parkid = getIntent().getStringExtra("parkid");
+        parkname = getIntent().getStringExtra("parkname");
+        batchTime = getIntent().getStringExtra("batchTime");
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_FINISH);
+        registerReceiver(receiver_finish, intentfilter_update);
+        IntentFilter intentfilter_updatesalenumber = new IntentFilter(AppContext.BROADCAST_UPDATESALENUMBER);
+        registerReceiver(receiver_updatesalenumber, intentfilter_updatesalenumber);
+
         getSaleDataOfArea();
         getNewSalelList();
+        tv_note.setText(parkname + "***" + batchTime + "批次***" + "");
     }
 
     @Override
@@ -170,12 +183,6 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        parkid = getIntent().getStringExtra("parkid");
-        batchTime = getIntent().getStringExtra("batchTime");
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_FINISH);
-        registerReceiver(receiver_finish, intentfilter_update);
-        IntentFilter intentfilter_updatesalenumber = new IntentFilter(AppContext.BROADCAST_UPDATESALENUMBER);
-        registerReceiver(receiver_updatesalenumber, intentfilter_updatesalenumber);
     }
 
     BroadcastReceiver receiver_updatesalenumber = new BroadcastReceiver()// 从扩展页面返回信息
@@ -201,13 +208,13 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
     {
         list_sell = new ArrayList<>();
         uuids = new ArrayList<>();
-        int grountCount = adapter_createOrder_selectProduct.getGroupCount();
+        int grountCount = adapter_selectProduct.getGroupCount();
         for (int i = 0; i < grountCount; i++)
         {
-            int childrenCount = adapter_createOrder_selectProduct.getChildrenCount(i);
+            int childrenCount = adapter_selectProduct.getChildrenCount(i);
             for (int j = 0; j < childrenCount; j++)
             {
-                LinearLayout linearlayout = (LinearLayout) adapter_createOrder_selectProduct.getChildView(i, j, false, null, null);
+                LinearLayout linearlayout = (LinearLayout) adapter_selectProduct.getChildView(i, j, false, null, null);
                 CustomGridview gv = (CustomGridview) linearlayout.findViewById(R.id.gv);
                 int childCount = gv.getChildCount();
                 for (int k = 0; k < childCount; k++)
@@ -274,18 +281,18 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
         number_select = 0;
         list_sell = new ArrayList<>();
         uuids = new ArrayList<>();
-        int grountCount = adapter_createOrder_selectProduct.getGroupCount();
+        int grountCount = adapter_selectProduct.getGroupCount();
         for (int i = 0; i < grountCount; i++)
         {
-            int childrenCount = adapter_createOrder_selectProduct.getChildrenCount(i);
+            int childrenCount = adapter_selectProduct.getChildrenCount(i);
             for (int j = 0; j < childrenCount; j++)
             {
-                LinearLayout linearlayout = (LinearLayout) adapter_createOrder_selectProduct.getChildView(i, j, false, null, null);
-                CustomGridview gv = (CustomGridview) linearlayout.findViewById(R.id.gv);
-                int childCount = gv.getChildCount();
+                LinearLayout linearlayout = (LinearLayout) adapter_selectProduct.getChildView(i, j, false, null, null);
+                CustomListView lv = (CustomListView) linearlayout.findViewById(R.id.lv);
+                int childCount = lv.getChildCount();
                 for (int k = 0; k < childCount; k++)
                 {
-                    LinearLayout ll = (LinearLayout) gv.getChildAt(k);
+                    LinearLayout ll = (LinearLayout) lv.getChildAt(k);
                     CheckBox cb_selectall = (CheckBox) ll.findViewById(R.id.cb_selectall);
                     Button btn_number = (Button) ll.findViewById(R.id.btn_number);
                     if (cb_selectall.isChecked())
@@ -304,8 +311,8 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
     private void getBatchTimeByUid_test()
     {
         List<areatab> listNewData = FileHelper.getAssetsData(NCZ_CreateOrder_SelectProduct.this, "getSellOrderDetailByBatchtime", areatab.class);
-        adapter_createOrder_selectProduct = new Adapter_CreateOrder_SelectProduct(NCZ_CreateOrder_SelectProduct.this, listNewData, expandableListView);
-        expandableListView.setAdapter(adapter_createOrder_selectProduct);
+        adapter_selectProduct = new Adapter_SelectProduct(NCZ_CreateOrder_SelectProduct.this, listNewData, expandableListView);
+        expandableListView.setAdapter(adapter_selectProduct);
         utils.setListViewHeight(expandableListView);
 //        for (int i = 0; i < listNewData.size(); i++)
 //        {
@@ -333,8 +340,8 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), areatab.class);
-                        adapter_createOrder_selectProduct = new Adapter_CreateOrder_SelectProduct(NCZ_CreateOrder_SelectProduct.this, listNewData, expandableListView);
-                        expandableListView.setAdapter(adapter_createOrder_selectProduct);
+                        adapter_selectProduct = new Adapter_SelectProduct(NCZ_CreateOrder_SelectProduct.this, listNewData, expandableListView);
+                        expandableListView.setAdapter(adapter_selectProduct);
                         utils.setListViewHeight(expandableListView);
                         for (int i = 0; i < listNewData.size(); i++)
                         {
@@ -557,8 +564,8 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
                                 list.add(areatab);
                             }
                         }
-                        adapter_createOrder_selectProduct = new Adapter_CreateOrder_SelectProduct(NCZ_CreateOrder_SelectProduct.this, list, expandableListView);
-                        expandableListView.setAdapter(adapter_createOrder_selectProduct);
+                        adapter_selectProduct = new Adapter_SelectProduct(NCZ_CreateOrder_SelectProduct.this, list, expandableListView);
+                        expandableListView.setAdapter(adapter_selectProduct);
                         utils.setListViewHeight(expandableListView);
 //                        for (int i = 0; i < listNewData.size(); i++)
 //                        {

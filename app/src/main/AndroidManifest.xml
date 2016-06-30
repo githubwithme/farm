@@ -62,6 +62,7 @@
         <activity android:name=".ui.NCZ_JobActivity_"/>
 
         <activity android:name=".ui.NCZ_CreateNewOrder_"/>
+        <activity android:name=".ui.NCZ_BreakOffActivity_"/>
         <activity android:name=".ui.CZ_OrderManager_"/>
         <activity android:name=".ui.RecoveryDetail_"/>
         <activity android:name=".ui.NCZ_AreaSaleData_"/>

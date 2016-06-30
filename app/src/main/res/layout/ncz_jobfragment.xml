@@ -115,9 +115,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/line_color"
-        />
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
 
     <FrameLayout
         android:id="@+id/job_container"

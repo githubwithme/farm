@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_SelectBatchTime;
+import com.farm.adapter.SelectBatchTime_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
@@ -47,7 +47,7 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
 {
     MyDialog myDialog;
     List<parktab> listNewData = null;
-    Adapter_SelectBatchTime adapter_selectBatchTime;
+    SelectBatchTime_Adapter selectBatchTime_adapter;
     @ViewById
     ExpandableListView expandableListView;
     @ViewById
@@ -111,8 +111,8 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
     private void getBatchTimeByUid_test()
     {
         listNewData = FileHelper.getAssetsData(NCZ_CreateOrder_SelectBatchTime.this, "getBatchTimeByUid", parktab.class);
-        adapter_selectBatchTime = new Adapter_SelectBatchTime(NCZ_CreateOrder_SelectBatchTime.this, listNewData, expandableListView);
-        expandableListView.setAdapter(adapter_selectBatchTime);
+        selectBatchTime_adapter = new SelectBatchTime_Adapter(NCZ_CreateOrder_SelectBatchTime.this, listNewData, expandableListView);
+        expandableListView.setAdapter(selectBatchTime_adapter);
         utils.setListViewHeight(expandableListView);
         for (int i = 0; i < listNewData.size(); i++)
         {
@@ -172,8 +172,8 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
                                 list.add(parktab);
                             }
                         }
-                        adapter_selectBatchTime = new Adapter_SelectBatchTime(NCZ_CreateOrder_SelectBatchTime.this, list, expandableListView);
-                        expandableListView.setAdapter(adapter_selectBatchTime);
+                        selectBatchTime_adapter = new SelectBatchTime_Adapter(NCZ_CreateOrder_SelectBatchTime.this, list, expandableListView);
+                        expandableListView.setAdapter(selectBatchTime_adapter);
                         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
                         {
                             @Override
@@ -183,6 +183,7 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
                                 BatchTime batchTime = parktab.getBatchTimeList().get(childPosition);
                                 Intent intent = new Intent(NCZ_CreateOrder_SelectBatchTime.this, NCZ_CreateOrder_SelectProduct_.class);
                                 intent.putExtra("parkid", parktab.getid());
+                                intent.putExtra("parkname", parktab.getparkName());
                                 intent.putExtra("batchTime", batchTime.getBatchTime());
                                 NCZ_CreateOrder_SelectBatchTime.this.startActivity(intent);
                                 return true;

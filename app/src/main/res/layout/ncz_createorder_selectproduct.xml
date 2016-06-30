@@ -44,11 +44,20 @@
             android:layout_below="@id/rl_titlebar"
             android:background="@color/line_color"/>
 
+        <TextView
+            android:id="@+id/tv_note"
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:layout_below="@+id/line"
+            android:layout_marginTop="10dip"
+            android:gravity="center"
+            android:textColor="@color/bg_text"
+            android:textSize="18sp"/>
         <ScrollView
             android:id="@+id/sl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/line"
+            android:layout_below="@+id/tv_note"
             android:layout_marginBottom="40dip"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
@@ -92,13 +101,13 @@
                     android:background="@null"
                     android:gravity="center"
                     android:text="已选"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="15dip"
                     android:textColor="@color/red"
                     android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/tv_salenumber"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:gravity="center"

@@ -89,7 +89,7 @@ public class Adapter_UserList extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    showDialog_addsaleinfo(listItems.get(Integer.valueOf(v.getTag().toString())).getuserCell());
+//                    showDialog_addsaleinfo(listItems.get(Integer.valueOf(v.getTag().toString())).getuserCell());
                 }
             });
 
@@ -104,7 +104,21 @@ public class Adapter_UserList extends BaseAdapter
         // 设置文字和图片
 
         listItemView.tv_username.setText(commembertab.getrealName());
-        listItemView.tv_name.setText(commembertab.getrealName());
+        int length = commembertab.getrealName().length();
+        if (length == 1 || length == 2)
+        {
+            listItemView.tv_name.setText(commembertab.getrealName());
+        } else if (length == 3)
+        {
+            listItemView.tv_name.setText(commembertab.getrealName().substring(1, commembertab.getrealName().length()));
+        } else if (length == 4)
+        {
+            listItemView.tv_name.setText(commembertab.getrealName().substring(2, commembertab.getrealName().length()));
+        } else
+        {
+            listItemView.tv_name.setText(commembertab.getrealName().substring(0, 1));
+        }
+
         if (commembertab.getimgurl().equals(""))
         {
         } else
@@ -113,6 +127,7 @@ public class Adapter_UserList extends BaseAdapter
 //            BitmapHelper.setImageViewBackground(context, listItemView.circle_img, url);
         }
         listItemView.circle_img.setImageResource(color[position]);
+//        BitmapHelper.setImageViewBackground(context, listItemView.circle_img, AppConfig.baseurl + commembertab.getimgurl());
         listItemView.tv_workarea.setText(commembertab.getparkName() + commembertab.getareaName());
 
         return convertView;

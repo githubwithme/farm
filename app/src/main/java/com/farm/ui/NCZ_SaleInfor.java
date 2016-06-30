@@ -3,7 +3,6 @@ package com.farm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import com.farm.bean.SaleDataBean;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.widget.CustomHorizontalScrollView;
+import com.guide.DensityUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -42,31 +42,41 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by ${hmj} on 2016/6/27.
+ * Created by ${hmj} on 2016/6/57.
  */
 @EActivity(R.layout.ncz_saleinfor)
 public class NCZ_SaleInfor extends Activity
 {
-    int allnumber = 0;
-    List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
-
-    String[] item_batchtimedata;
-    String[] item_parkid;
     List<SaleDataBean> listData = null;
 
+    private ListView mListView;
+    public HorizontalScrollView mTouchView;
+    protected List<CustomHorizontalScrollView> mHScrollViews = new ArrayList<CustomHorizontalScrollView>();
+    private ScrollAdapter mAdapter;
+    String[] item_batchtimedata;
+    String[] item_parkid;
+    int screenWidth = 0;
+    int allnumber = 0;
+    List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
     @ViewById
     LinearLayout ll_park;
     @ViewById
     LinearLayout ll_total;
     @ViewById
     TextView alltoatal;
+    @ViewById
+    TextView tv_top_left;
+    @ViewById
+    TextView tv_top_right;
+    @ViewById
+    TextView tv_bottom_left;
 
     @AfterViews
     void afterOncreate()
     {
-//        getNewSaleList_test();
         getActionBar().hide();
-        getfarmSalesData();
+//        getfarmSalesData();
+        getNewSaleList_test();
     }
 
     @Click
@@ -91,12 +101,7 @@ public class NCZ_SaleInfor extends Activity
 //        startActivity(intent);
     }
 
-    private ListView mListView;
-    public HorizontalScrollView mTouchView;
-    // 加载所有的ScrollView
-    protected List<CustomHorizontalScrollView> mHScrollViews = new ArrayList<CustomHorizontalScrollView>();
 
-    private ScrollAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -109,10 +114,28 @@ public class NCZ_SaleInfor extends Activity
         listData = FileHelper.getAssetsData(NCZ_SaleInfor.this, "getsaledata", SaleDataBean.class);
         if (listData != null)
         {
+            DensityUtil densityUtil = new DensityUtil(NCZ_SaleInfor.this);
+            screenWidth = densityUtil.getScreenWidth();
+           int size= listData.get(0).getParklist().size();
+            if (size == 1)
+            {
+                screenWidth = screenWidth / 3;
+            } else if (size == 2)
+            {
+                screenWidth = screenWidth / 4;
+            } else
+            {
+                screenWidth = screenWidth / 5;
+            }
+            tv_top_left.getLayoutParams().width = (screenWidth);
+            tv_top_right.getLayoutParams().width = (screenWidth);
+            tv_bottom_left.getLayoutParams().width = (screenWidth);
+            alltoatal.getLayoutParams().width = (screenWidth);
             initViews();
         }
 
     }
+
     private void getfarmSalesData()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_SaleInfor.this);
@@ -132,6 +155,23 @@ public class NCZ_SaleInfor extends Activity
                     if (result.getAffectedRows() == 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SaleDataBean.class);
+                        DensityUtil densityUtil = new DensityUtil(NCZ_SaleInfor.this);
+                        screenWidth = densityUtil.getScreenWidth();
+                        int size= listData.get(0).getParklist().size();
+                        if (size == 1)
+                        {
+                            screenWidth = screenWidth / 3;
+                        } else if (size == 2)
+                        {
+                            screenWidth = screenWidth / 4;
+                        } else
+                        {
+                            screenWidth = screenWidth / 5;
+                        }
+                        tv_top_left.getLayoutParams().width = (screenWidth);
+                        tv_top_right.getLayoutParams().width = (screenWidth);
+                        tv_bottom_left.getLayoutParams().width = (screenWidth);
+                        alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
                     } else
                     {
@@ -153,6 +193,7 @@ public class NCZ_SaleInfor extends Activity
             }
         });
     }
+
     private void initViews()
     {
         LayoutInflater inflater = (LayoutInflater) NCZ_SaleInfor.this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -170,14 +211,22 @@ public class NCZ_SaleInfor extends Activity
         for (int i = 0; i < listData.get(0).getParklist().size(); i++)
         {
             View view = inflater.inflate(R.layout.saleinfo_parkitem, null);
+//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(screenWidth /5, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+//            lp.gravity = Gravity.CENTER;
+//            view.setLayoutParams(lp);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
+            tv_parkname.getLayoutParams().width = (screenWidth);
             tv_parkname.setText(listData.get(0).getParklist().get(i).getParkname());
             ll_park.addView(view);
         }
         for (int i = 0; i < listData.get(0).getParklist().size(); i++)
         {
             View view = inflater.inflate(R.layout.saleinfo_totalitem, null);
+//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(screenWidth /5, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+//            lp.gravity = Gravity.CENTER;
+//            view.setLayoutParams(lp);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
+            tv_total.getLayoutParams().width = (screenWidth);
             int totalnumber = 0;
             for (int j = 0; j < listData.size(); j++)
             {
@@ -280,6 +329,12 @@ public class NCZ_SaleInfor extends Activity
                 v = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.scrolladapter_item, null);
                 TextView item_titlev = (TextView) v.findViewById(R.id.item_titlev);
                 TextView item_total = (TextView) v.findViewById(R.id.item_total);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(screenWidth, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+//                lp.gravity = Gravity.CENTER;
+//                item_total.setLayoutParams(lp);
+//                item_titlev.setLayoutParams(lp);
+                item_titlev.getLayoutParams().width = (screenWidth);
+                item_total.getLayoutParams().width = (screenWidth);
                 LinearLayout ll_middle = (LinearLayout) v.findViewById(R.id.ll_middle);
                 item_titlev.setText(datas.get(position).get(item_batchtimedata[0]).toString());
                 int totalnumber = 0;
@@ -296,15 +351,15 @@ public class NCZ_SaleInfor extends Activity
                     View view = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.saleinfo_dataitem, null);
                     TextView tv_data = (TextView) view.findViewById(R.id.tv_data);
                     tv_data.setText(datas.get(position).get(item_batchtimedata[i + 1]).toString());
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-                    lp.gravity = Gravity.CENTER;
-                    view.setLayoutParams(lp);
+//                    lp.gravity = Gravity.CENTER;
+//                    view.setLayoutParams(lp);
+                    tv_data.getLayoutParams().width = (screenWidth);
                     ll_middle.addView(view);
 
                     tv_data.setOnClickListener(clickListener);
                     tv_data.setTag(R.id.tag_kg, datas.get(position).get(item_parkid[i + 1]));
                     tv_data.setTag(R.id.tag_hg, datas.get(position).get("batchtime"));
-                    tv_data.setTag(R.id.tag_parkname,listData.get(0).getParklist().get(i).getParkname());
+                    tv_data.setTag(R.id.tag_parkname, listData.get(0).getParklist().get(i).getParkname());
                     views[i] = tv_data;
                 }
                 // 第一次初始化的时候装进来
