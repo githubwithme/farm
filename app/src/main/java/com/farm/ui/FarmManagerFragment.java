@@ -102,7 +102,8 @@ public class FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), NCZ_SaleChart_.class);
 //        getActivity().startActivity(intent);
-        Intent intent = new Intent(getActivity(), NCZ_SaleInfor_.class);
+//        Intent intent = new Intent(getActivity(), NCZ_SaleInfor_.class);
+        Intent intent = new Intent(getActivity(), NCZ_FarmSaleData_.class);
         getActivity().startActivity(intent);
     }
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -53,11 +54,11 @@ public class NCZ_SaleInfor extends Activity
     public HorizontalScrollView mTouchView;
     protected List<CustomHorizontalScrollView> mHScrollViews = new ArrayList<CustomHorizontalScrollView>();
     private ScrollAdapter mAdapter;
-    String[] item_batchtimedata;
-    String[] item_parkid;
+    //    String[] item_batchtimedata;
+//    String[] item_parkid;
     int screenWidth = 0;
     int allnumber = 0;
-    List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
+    //    List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
     @ViewById
     LinearLayout ll_park;
     @ViewById
@@ -75,8 +76,8 @@ public class NCZ_SaleInfor extends Activity
     void afterOncreate()
     {
         getActionBar().hide();
-//        getfarmSalesData();
-        getNewSaleList_test();
+        getfarmSalesData();
+//        getNewSaleList_test();
     }
 
     @Click
@@ -102,7 +103,6 @@ public class NCZ_SaleInfor extends Activity
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -116,7 +116,7 @@ public class NCZ_SaleInfor extends Activity
         {
             DensityUtil densityUtil = new DensityUtil(NCZ_SaleInfor.this);
             screenWidth = densityUtil.getScreenWidth();
-           int size= listData.get(0).getParklist().size();
+            int size = listData.get(0).getParklist().size();
             if (size == 1)
             {
                 screenWidth = screenWidth / 3;
@@ -157,7 +157,7 @@ public class NCZ_SaleInfor extends Activity
                         listData = JSON.parseArray(result.getRows().toJSONString(), SaleDataBean.class);
                         DensityUtil densityUtil = new DensityUtil(NCZ_SaleInfor.this);
                         screenWidth = densityUtil.getScreenWidth();
-                        int size= listData.get(0).getParklist().size();
+                        int size = listData.get(0).getParklist().size();
                         if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
@@ -197,23 +197,9 @@ public class NCZ_SaleInfor extends Activity
     private void initViews()
     {
         LayoutInflater inflater = (LayoutInflater) NCZ_SaleInfor.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-
-        item_batchtimedata = new String[listData.get(0).getParklist().size() + 1];//batchtime占了一位
-        item_parkid = new String[listData.get(0).getParklist().size() + 1];//batchtime占了一位
-        item_batchtimedata[0] = "batchtime";
-        item_parkid[0] = "parkid";
-        for (int i = 0; i < item_batchtimedata.length - 1; i++)
-        {
-            //顶部园区控件
-            item_batchtimedata[i + 1] = "data_" + i;
-            item_parkid[i + 1] = "parkid_" + i;
-        }
         for (int i = 0; i < listData.get(0).getParklist().size(); i++)
         {
             View view = inflater.inflate(R.layout.saleinfo_parkitem, null);
-//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(screenWidth /5, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-//            lp.gravity = Gravity.CENTER;
-//            view.setLayoutParams(lp);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
             tv_parkname.setText(listData.get(0).getParklist().get(i).getParkname());
@@ -222,9 +208,6 @@ public class NCZ_SaleInfor extends Activity
         for (int i = 0; i < listData.get(0).getParklist().size(); i++)
         {
             View view = inflater.inflate(R.layout.saleinfo_totalitem, null);
-//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(screenWidth /5, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-//            lp.gravity = Gravity.CENTER;
-//            view.setLayoutParams(lp);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
             tv_total.getLayoutParams().width = (screenWidth);
             int totalnumber = 0;
@@ -245,17 +228,6 @@ public class NCZ_SaleInfor extends Activity
         mHScrollViews.add(headerScroll);
         mHScrollViews.add(totalScroll);
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
-        for (int i = 0; i < listData.size(); i++)
-        {
-            data = new HashMap<String, String>();
-            data.put("batchtime", listData.get(i).getBatchtime());
-            for (int j = 0; j < item_batchtimedata.length - 1; j++)
-            {
-                data.put("data_" + (j), listData.get(i).getParklist().get(j).getNumber());
-                data.put("parkid_" + (j), listData.get(i).getParklist().get(j).getParkid());
-            }
-            datas.add(data);
-        }
         mAdapter = new ScrollAdapter();
         mListView.setAdapter(mAdapter);
     }
@@ -301,10 +273,19 @@ public class NCZ_SaleInfor extends Activity
 
         }
 
+        ListItemView listItemView = null;
+
+        class ListItemView
+        {
+            public TextView item_titlev;
+            public TextView item_total;
+            public Button btn_data;
+        }
+
         @Override
         public int getCount()
         {
-            return datas.size();
+            return listData.size();
         }
 
         @Override
@@ -319,104 +300,58 @@ public class NCZ_SaleInfor extends Activity
             return 0;
         }
 
+        HashMap<Integer, View> lmap = new HashMap<Integer, View>();
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            View v = convertView;
-            if (v == null)
-            {
-                View[] views = new View[item_batchtimedata.length];
-                v = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.scrolladapter_item, null);
-                TextView item_titlev = (TextView) v.findViewById(R.id.item_titlev);
-                TextView item_total = (TextView) v.findViewById(R.id.item_total);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(screenWidth, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-//                lp.gravity = Gravity.CENTER;
-//                item_total.setLayoutParams(lp);
-//                item_titlev.setLayoutParams(lp);
-                item_titlev.getLayoutParams().width = (screenWidth);
-                item_total.getLayoutParams().width = (screenWidth);
-                LinearLayout ll_middle = (LinearLayout) v.findViewById(R.id.ll_middle);
-                item_titlev.setText(datas.get(position).get(item_batchtimedata[0]).toString());
+            // 自定义视图
+//            if (lmap.get(position) == null)
+//            {
+                // 获取list_item布局文件的视图
+                convertView = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.scrolladapter_item, null);
+                listItemView = new ListItemView();
+                listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+                listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+                listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+                listItemView.item_total.getLayoutParams().width = (screenWidth);
+                LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
+                listItemView.item_titlev.setText(listData.get(position).getBatchtime());
                 int totalnumber = 0;
                 List<ParkDataBean> list = listData.get(position).getParklist();
                 for (int j = 0; j < list.size(); j++)
                 {
                     totalnumber = totalnumber + Integer.valueOf(list.get(j).getNumber());
                 }
-                item_total.setText(String.valueOf(totalnumber));
+                listItemView.item_total.setText(String.valueOf(totalnumber));
 
-
-                for (int i = 0; i < item_batchtimedata.length - 1; i++)
+                for (int i = 0; i < listData.get(position).getParklist().size(); i++)
                 {
                     View view = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.saleinfo_dataitem, null);
-                    TextView tv_data = (TextView) view.findViewById(R.id.tv_data);
-                    tv_data.setText(datas.get(position).get(item_batchtimedata[i + 1]).toString());
-//                    lp.gravity = Gravity.CENTER;
-//                    view.setLayoutParams(lp);
-                    tv_data.getLayoutParams().width = (screenWidth);
+                    listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
+                    listItemView.btn_data.setText(listData.get(position).getParklist().get(i).getNumber());
+                    listItemView.btn_data.getLayoutParams().width = (screenWidth);
                     ll_middle.addView(view);
 
-                    tv_data.setOnClickListener(clickListener);
-                    tv_data.setTag(R.id.tag_kg, datas.get(position).get(item_parkid[i + 1]));
-                    tv_data.setTag(R.id.tag_hg, datas.get(position).get("batchtime"));
-                    tv_data.setTag(R.id.tag_parkname, listData.get(0).getParklist().get(i).getParkname());
-                    views[i] = tv_data;
+                    listItemView.btn_data.requestFocusFromTouch();
+                    listItemView.btn_data.setTag(R.id.tag_kg, listData.get(position).getParklist().get(i).getParkid());
+                    listItemView.btn_data.setTag(R.id.tag_hg, listData.get(position).getBatchtime());
+                    listItemView.btn_data.setTag(R.id.tag_parkname, listData.get(position).getParklist().get(i).getParkname());
+                    listItemView.btn_data.setOnClickListener(clickListener);
+
                 }
                 // 第一次初始化的时候装进来
-                addHViews((CustomHorizontalScrollView) v.findViewById(R.id.item_chscroll_scroll));
-
-//                if (position == datas.size() - 1)
-//                {
-//                    addHViews(totalScroll);
-//                    mHScrollViews.add(totalScroll);
-//                }
-
-//                LayoutInflater inflater = (LayoutInflater) NCZ_SaleInfor.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-//                View view1 = inflater.inflate(R.layout.scrolladapter_item, null);
-//                TextView item_titlev = (TextView) view1.findViewById(R.id.item_titlev);
-//                int[] views_data = new int[listData.get(0).getParklist().size() + 1];
-//                views_data[0] = item_titlev.getId();//批次控件
-//
-//                item_batchtimedata = new String[listData.get(0).getParklist().size() + 1];//batchtime占了一位
-//                item_batchtimedata[0] = "batchtime";
-//                for (int i = 0; i < item_batchtimedata.length - 1; i++)
-//                {
-//                    //顶部园区控件
-//                    item_batchtimedata[i + 1] = "data_" + i;
-//                    View view = inflater.inflate(R.layout.saleinfo_parkitem, null);
-//                    TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
-//                    ll_park.addView(view);
-//                    //批次+销售数据控件
-//                    View view2 = inflater.inflate(R.layout.saleinfo_dataitem, null);
-//                    TextView tv_data = (TextView) view2.findViewById(R.id.tv_data);
-//                    views_data[i + 1] = tv_data.getId();
-//
-//                }
-
-
-//                View[] views = new View[to.length];
-                // 单元格点击事件
-//                for (int i = 0; i < to.length; i++)
-//                {
-//                    View tv = v.findViewById(to[i]);
-//                    tv.setOnClickListener(clickListener);
-//                    views[i] = tv;
-//                }
-                // 每行点击事件
-                /*
-                 * for(int i = 0 ; i < from.length; i++) { View tv =
-				 * v.findViewById(row_hlistview[i]); }
-				 */
-                //
-                v.setTag(views);
-            }
-//            View[] holders = (View[]) v.getTag();
-//            int len = holders.length;
-//            for (int i = 0; i < len; i++)
+                addHViews((CustomHorizontalScrollView) convertView.findViewById(R.id.item_chscroll_scroll));
+                // 设置控件集到convertView
+//                lmap.put(position, convertView);
+//                convertView.setTag(listItemView);
+//            } else
 //            {
-//                ((TextView) holders[i]).setText(this.datas.get(position).get(from[i]).toString());
+//                convertView = lmap.get(position);
+//                listItemView = (ListItemView) convertView.getTag();
 //            }
-            return v;
+
+            return convertView;
         }
     }
 

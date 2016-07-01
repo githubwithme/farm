@@ -135,28 +135,28 @@ public class IFragment extends Fragment
     }
 
     @Click
-    void tv_yj()
+    void rl_feedback()
     {
         Intent intent = new Intent(getActivity(), YiJianFanKui_.class);
         startActivity(intent);
     }
 
     @Click
-    void tv_bz()
+    void rl_help()
     {
         Intent intent = new Intent(getActivity(), Helper_.class);
         startActivity(intent);
     }
 
     @Click
-    void tv_gy()
+    void rl_gy()
     {
         Intent intent = new Intent(getActivity(), GuanYu_.class);
         startActivity(intent);
     }
 
     @Click
-    void tv_share()
+    void rl_share()
     {
         // Intent inte = new Intent(Intent.ACTION_SEND);
         // inte.setType("image/*");
@@ -181,7 +181,7 @@ public class IFragment extends Fragment
     }
 
     @Click
-    void tv_changepwd()
+    void rl_changepwd()
     {
         Intent intent = new Intent(getActivity(), ChangePwd_.class);
         startActivity(intent);
@@ -189,7 +189,7 @@ public class IFragment extends Fragment
     }
 
     @Click
-    void tv_exist()
+    void rl_exist()
     {
         CleanLoginInfo();
         AppManager.getAppManager().AppExit(getActivity());
