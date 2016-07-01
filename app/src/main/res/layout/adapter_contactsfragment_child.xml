@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginLeft="17dip"
+        android:layout_marginRight="17dip">
+
+
+        <FrameLayout
+            android:id="@+id/fl_img"
+            android:layout_width="45dip"
+            android:layout_height="45dip"
+            android:layout_marginLeft="15dip"
+            android:layout_centerVertical="true">
+
+            <com.farm.widget.CircleImageView
+                android:id="@+id/circle_img"
+                android:layout_width="45dip"
+                android:layout_height="45dip"
+                android:layout_centerVertical="true"
+                android:src="@drawable/noimg"
+                app:border_color="@color/transparent"
+                app:border_width="0px"/>
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_margin="3dip"
+                android:text="ddd"
+                android:textColor="@color/white"
+                android:textSize="13sp"/>
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_width="12dip"
+            android:layout_height="12dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/next_black"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dip"
+            android:layout_toRightOf="@+id/fl_img"
+            android:gravity="center"
+            android:text="@string/hello_world"
+            android:textColor="@color/gray"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+
+</LinearLayout>

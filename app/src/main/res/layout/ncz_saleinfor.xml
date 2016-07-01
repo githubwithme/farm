@@ -60,8 +60,8 @@
 
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_below="@+id/rl_note"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dip"
@@ -140,7 +140,7 @@
         <ListView
             android:id="@+id/hlistview_scroll_list"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_below="@+id/line_middle"
             android:layout_marginBottom="42dip"
             android:layout_marginLeft="1px"
