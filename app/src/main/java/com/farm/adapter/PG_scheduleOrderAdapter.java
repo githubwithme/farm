@@ -1,7 +1,6 @@
 package com.farm.adapter;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,21 +15,19 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.SellOrder;
 import com.farm.bean.SellOrder_New;
 import com.farm.ui.NCZ_EditOrder_;
+import com.farm.ui.PG_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
 import com.farm.widget.MyDateMaD;
-import com.farm.widget.MyDatepicker;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -39,14 +36,13 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
-import org.apache.http.entity.StringEntity;
-
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 
-@SuppressLint("NewApi")
-public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClickListener
+/**
+ * Created by hasee on 2016/7/1.
+ */
+public class PG_scheduleOrderAdapter extends BaseAdapter
 {
     CustomDialog_CallTip custom_calltip;
     MyDialog myDialog;
@@ -57,11 +53,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
     SellOrder_New sellOrder;
     private Callback mCallback;
 
-    @Override
-    public void onClick(View view)
-    {
-        mCallback.click(view);
-    }
+
 
     static class ListItemView
     {
@@ -86,13 +78,12 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
         public void click(View v);
     }
 
-    public NCZ_ScheduleOrderAdapter(Context context, List<SellOrder_New> data, String broadcast,Callback callback)
+    public PG_scheduleOrderAdapter(Context context, List<SellOrder_New> data, String broadcast)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.listItems = data;
         this.broadcast = broadcast;
-        mCallback=callback;
     }
 
     public int getCount()
@@ -141,9 +132,9 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             convertView.setTag(listItemView);
 
 
-            listItemView.tv_car.setText(sellOrder.getProducer()+sellOrder.getGoodsname());
+            listItemView.tv_car.setText(sellOrder.getProducer());
 //            SpannableString content = new SpannableString(sellOrder.getBuyers());
-            SpannableString content = new SpannableString(sellOrder.getBuyersName());
+            SpannableString content = new SpannableString(sellOrder.getPurchaName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             listItemView.tv_buyer.setText(content);
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
@@ -151,7 +142,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                 @Override
                 public void onClick(View v)
                 {
-                    showDialog_addsaleinfo("15989154871");
+                    showDialog_addsaleinfo(sellOrder.getPurchaTel());
                 }
             });
 //            listItemView.circle_img.setOnClickListener(this);
@@ -164,7 +155,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                 {
                     SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
                     ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name,sellOrders,"1");
+                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name,sellOrders,"2");
                     myDatepicker.getDialog().show();
     /*                sellOrders.setSaletime(listItemView2.tv_name.getText().toString());
                     StringBuilder builder = new StringBuilder();
@@ -198,7 +189,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             {
                 listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
             }
-            listItemView.tv_state.setText(sellOrder.getMainPepName());
+            listItemView.tv_state.setText(sellOrder.getMainPepole());
 /*            if (sellOrder.getDeposit().equals("0"))
             {
                 listItemView.tv_state.setText("等待买家付定金");
@@ -232,7 +223,8 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                 {
                     int pos = (int) v.getTag(R.id.tag_postion);
                     SellOrder_New sellOrder = (SellOrder_New) v.getTag(R.id.tag_bean);
-                    Intent intent = new Intent(context, NCZ_EditOrder_.class);
+//                    Intent intent = new Intent(context, NCZ_EditOrder_.class);
+                    Intent intent = new Intent(context, PG_EditOrder_.class);
                     intent.putExtra("bean", sellOrder);
                     intent.putExtra("broadcast", broadcast);
                     context.startActivity(intent);
@@ -361,50 +353,5 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             }
         });
         myDialog.show();
-    }
-
-    private void newaddOrder(String data)
-    {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("action", "editOrder");
-        params.setContentType("application/json");
-        try
-        {
-            params.setBodyEntity(new StringEntity(data, "utf-8"));
-        } catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
-        HttpUtils http = new HttpUtils();
-        http.configTimeout(60000);
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        Toast.makeText(context, "订单修改成功！", Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } else
-                {
-                    AppContext.makeToast(context, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(context, "error_connectServer");
-            }
-        });
     }
 }

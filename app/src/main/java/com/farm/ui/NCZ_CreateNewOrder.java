@@ -30,6 +30,7 @@ import com.farm.R;
 import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.AllType;
 import com.farm.bean.PeopelList;
 import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
@@ -39,6 +40,7 @@ import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
+import com.farm.widget.CustomArrayAdapter;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDatepicker;
 import com.farm.widget.MyDialog;
@@ -85,7 +87,7 @@ import javax.mail.util.ByteArrayDataSource;
 @EActivity(R.layout.ncz_createneworder)
 public class NCZ_CreateNewOrder extends Activity
 {
-   String mail;
+    String mail;
     String telphone;
     @ViewById
     Button btn_addcg;
@@ -109,9 +111,9 @@ public class NCZ_CreateNewOrder extends Activity
     @ViewById
     EditText dd_fzr;
     @ViewById
-    EditText dd_bz;
+    TextView dd_bz;
     @ViewById
-    EditText dd_by;
+    TextView dd_by;
     MyDialog myDialog;
     CustomDialog_ListView customDialog_listView;
     String zzsl = "";
@@ -128,7 +130,7 @@ public class NCZ_CreateNewOrder extends Activity
     @ViewById
     TextView et_values;
     @ViewById
-    AutoCompleteTextView et_name;
+    TextView et_name;
     @ViewById
     EditText et_address;
     @ViewById
@@ -143,38 +145,44 @@ public class NCZ_CreateNewOrder extends Activity
     EditText et_note;
     @ViewById
     TextView tv_allnumber;
+    @ViewById
+    TextView CR_chanpin;
 
     String cgId = "";
     String byId = "";
     String bzId = "";
     String fzrId = "";
+    String cpid="";
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Purchaser> listData_BY = new ArrayList<Purchaser>();
     List<Purchaser> listData_BZ = new ArrayList<Purchaser>();
-
+    List<AllType> listAlltype = new ArrayList<AllType>();
 
 
     @Click
     void btn_addcg()
     {
-        Intent intent=new Intent(NCZ_CreateNewOrder.this,Add_workPeopel_.class);
-        intent.putExtra("type","采购商");
+        Intent intent = new Intent(NCZ_CreateNewOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "采购商");
         startActivity(intent);
     }
+
     @Click
     void btn_addby()
     {
-        Intent intent=new Intent(NCZ_CreateNewOrder.this,Add_workPeopel_.class);
-        intent.putExtra("type","搬运工头");
+        Intent intent = new Intent(NCZ_CreateNewOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "搬运工头");
         startActivity(intent);
     }
+
     @Click
     void btn_addbz()
     {
-        Intent intent=new Intent(NCZ_CreateNewOrder.this,Add_workPeopel_.class);
-        intent.putExtra("type","包装工头");
+        Intent intent = new Intent(NCZ_CreateNewOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "包装工头");
         startActivity(intent);
     }
+
     @Click
     void dd_time()
     {
@@ -182,6 +190,18 @@ public class NCZ_CreateNewOrder extends Activity
         myDatepicker.getDialog().show();
     }
 
+    @Click
+    void CR_chanpin()
+    {
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listAlltype.size(); i++)
+        {
+            listdata.add(listAlltype.get(i).getProductName());
+            listid.add(listAlltype.get(i).getId());
+        }
+        showDialog_fcp(listdata, listid);
+    }
     @Click
     void dd_fzr()
     {
@@ -276,6 +296,11 @@ public class NCZ_CreateNewOrder extends Activity
     void btn_sure()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_CreateNewOrder.this);
+        if (CR_chanpin.getText().toString().equals(""))
+        {
+            Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (dd_fzr.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -404,7 +429,7 @@ public class NCZ_CreateNewOrder extends Activity
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrder.setBuyers(cgId);
         sellOrder.setAddress(et_address.getText().toString());
-
+        sellOrder.setGoodsname(CR_chanpin.getText().toString());
         sellOrder.setEmail(et_email.getText().toString());
         sellOrder.setPhone(et_phone.getText().toString());
         sellOrder.setPrice(et_price.getText().toString());
@@ -457,7 +482,7 @@ public class NCZ_CreateNewOrder extends Activity
         dd_bz.setInputType(InputType.TYPE_NULL);
         dd_by.setInputType(InputType.TYPE_NULL);
         dd_fzr.setInputType(InputType.TYPE_NULL);
-
+        getchanpin();
         getlistdata();
         deleNewSaleAddsalefor();
         et_price.addTextChangedListener(new TextWatcher()
@@ -704,8 +729,8 @@ public class NCZ_CreateNewOrder extends Activity
                 {
                     if (listData_CG.get(i).getName().equals(zzsl))
                     {
-                            telphone=listData_CG.get(i).getTelephone();
-                        mail=listData_CG.get(i).getMailbox();
+                        telphone = listData_CG.get(i).getTelephone();
+                        mail = listData_CG.get(i).getMailbox();
                     }
                 }
 
@@ -753,6 +778,24 @@ public class NCZ_CreateNewOrder extends Activity
         customDialog_listView.show();
     }
 
+    //产品
+    public void showDialog_fcp(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) NCZ_CreateNewOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(NCZ_CreateNewOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                CR_chanpin.setText(zzsl);
+                cpid = bundle.getString("id");
+
+            }
+        });
+        customDialog_listView.show();
+    }
     //负责人
     public void showDialog_fzr(List<String> listdata, List<String> listid)
     {
@@ -959,21 +1002,24 @@ public class NCZ_CreateNewOrder extends Activity
     }
 
 
-public  void  sendEmail()
-{
+    public void sendEmail()
+    {
 
 
-}
-    Runnable networkTask = new Runnable() {
+    }
+
+    Runnable networkTask = new Runnable()
+    {
 
         @Override
-        public void run() {
+        public void run()
+        {
             Multipart multiPart;
             String finalString = "";
 
             Properties props = System.getProperties();
             props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.host","smtp.qq.com");
+            props.put("mail.smtp.host", "smtp.qq.com");
             props.put("mail.smtp.user", "956935952@qq.com");
             props.put("mail.smtp.password", "Fenf5201314.");
             props.put("mail.smtp.port", "25");
@@ -1006,4 +1052,51 @@ public  void  sendEmail()
             }
         }
     };
+
+    private void getchanpin()
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_CreateNewOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getProduct");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<AllType> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), AllType.class);
+
+                        listAlltype.addAll(listNewData);
+
+                    } else
+                    {
+                        listNewData = new ArrayList<AllType>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(NCZ_CreateNewOrder.this, "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(NCZ_CreateNewOrder.this, "error_connectServer");
+
+            }
+        });
+
+    }
 }

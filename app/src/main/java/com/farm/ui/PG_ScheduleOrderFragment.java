@@ -1,6 +1,5 @@
 package com.farm.ui;
 
-import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.NCZ_ScheduleOrderAdapter;
+import com.farm.adapter.PG_scheduleOrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
@@ -37,7 +37,6 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -47,15 +46,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@SuppressLint("NewApi")
+/**
+ * Created by hasee on 2016/7/1.
+ */
 @EFragment
-public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleOrderAdapter.Callback
+public class PG_ScheduleOrderFragment  extends Fragment
 {
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
-    private static NCZ_ScheduleOrderAdapter.Callback mCallback;
-    private NCZ_ScheduleOrderAdapter listAdapter;
+//    private NCZ_ScheduleOrderAdapter listAdapter;
+    private PG_scheduleOrderAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     static private List<SellOrder_New> secletpark;
@@ -104,7 +105,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
         secletchanpin = new ArrayList<SellOrder_New>();
         secletcgs = new ArrayList<SellOrder_New>();
         secletpark = new ArrayList<SellOrder_New>();
-        getchanpin();//产品
+        getchanpin();
         getpurchaser();//采购商
         getlistdata();//园区
 //        getNewSaleList_test();
@@ -140,7 +141,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER, this);
+            listAdapter = new PG_scheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -160,10 +161,10 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
+        params.addQueryStringParameter("userId", commembertab.getId());
+//        params.addQueryStringParameter("year", utils.getYear());
+//        params.addQueryStringParameter("type", "0");
+        params.addQueryStringParameter("action", "getOrderByPGOrCC");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -188,7 +189,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
                             }
                         }
 
-                        listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER, mCallback);
+                        listAdapter = new PG_scheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
@@ -310,11 +311,6 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
     }
 
 
-    @Override
-    public void click(View v)
-    {
-//        getAllOrders();
-    }
 
 
     //园区
@@ -486,20 +482,8 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
                                 }
                             }
                         }
-         /*               Iterator<SellOrder_New> its = listData.iterator();
-                        if (!parkname.equals("不限采购商"))
-                        {
-                            while (its.hasNext())
-                            {
-                                String value = its.next().getBuyersName();
-//                            if (!value.equals("已完成"))
-                                if (value.indexOf(parkname) == -1)
-                                {
-                                    its.remove();
-                                }
-                            }
-                        }*/
-                        listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER, mCallback);
+
+                        listAdapter = new PG_scheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
@@ -702,7 +686,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
                         {
                             park[i] = listdata_cp.get(i).getProductName();
                         }
-                        cityAdapter = new CustomArrayAdapter(getActivity(), park);
+                        cityAdapter = new CustomArrayAdapter(getActivity(), mCitisDatasMap);
                         citySpinner.setAdapter(cityAdapter);
                         citySpinner.setSelection(0, true);  //默认选中第0个
                         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()

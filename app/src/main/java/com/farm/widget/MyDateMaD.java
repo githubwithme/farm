@@ -45,12 +45,14 @@ public class MyDateMaD
 
     static final int DATE_DIALOG_ID = 0;
     Context context;
+   private String type;
 
-    public MyDateMaD(Context context, TextView textView,SellOrder_New sellOrders)
+    public MyDateMaD(Context context, TextView textView,SellOrder_New sellOrders,String type)
     {
         this.context = context;
         this.textView = textView;
         this.sellOrders=sellOrders;
+        this.type=type;
     }
 
     public MyDateMaD(Context context, EditText editText)
@@ -73,8 +75,16 @@ public class MyDateMaD
     public void updateDisplay(TextView textView)
     {
         textView.setText(new StringBuilder().append(mMonth + 1).append("/").append(mDay).append(" "));
-        sellOrders.setSaletime(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" ").toString());
-        sellOrders.setBuyers(sellOrders.getBuyersId());
+        if (type.equals("1"))
+        {
+            sellOrders.setBuyers(sellOrders.getBuyersId());
+            sellOrders.setSaletime(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" ").toString());
+        }else
+        {
+            sellOrders.setOldsaletime(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" ").toString());
+            sellOrders.setIsNeedAudit("0");
+        }
+
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrder_new\": [");
         builder.append(JSON.toJSONString(sellOrders));

@@ -375,6 +375,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:id="@+id/zp_ds_zhong"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -404,6 +405,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:id="@+id/zp_bds_zhong"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -436,6 +438,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:id="@+id/cp_ds_zhong"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -582,6 +585,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:id="@+id/zp_jsje"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -640,6 +644,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:id="@+id/cp_jsje"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

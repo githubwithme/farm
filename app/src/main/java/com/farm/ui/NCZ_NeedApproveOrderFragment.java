@@ -143,7 +143,7 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("type", "0");
         params.addQueryStringParameter("isApprove", "1");//不为空
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
+        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

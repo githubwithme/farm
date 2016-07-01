@@ -66,7 +66,8 @@ public class PG_FarmManagerFragment extends Fragment
     @Click
     void gongdan()
     {
-        Intent intent = new Intent(getActivity(), PG_WorkOrder_.class);
+//        Intent intent = new Intent(getActivity(), PG_WorkOrder_.class);
+        Intent intent = new Intent(getActivity(), PG_XS_Activity_.class);
         getActivity().startActivity(intent);
     }
 

@@ -70,12 +70,101 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String buyersName ;   // 采购商名
     public String contractorName ;   //  包工头名
     public String pickName ;   //  搬运工名
+    public String purchaName ;   // 片管获取采购商名字
     public String purchaTel ;   //采购商电话
     public String purchaMail ;   // 采购商mail
     public String isNeedAudit ;   // 单价，订金的修改
     public String freeDeposit ;   // 免付订金
     public String freeFinalPay ;   // 免付尾款
 
+    public String oldPrice;        //旧的单价
+    public String oldCarryPrice;   //旧的搬运价格
+    public String oldPackPrice;   //旧的包装价格
+    public String oldnumber;     //旧的数量
+    public String oldsaletime;     //旧的数量
+    public String creatorid;    //创建者id
+    public String goodsname;     //物资名字
+
+
+    public String getPurchaName()
+    {
+        return purchaName;
+    }
+
+    public void setPurchaName(String purchaName)
+    {
+        this.purchaName = purchaName;
+    }
+
+    public String getOldsaletime()
+    {
+        return oldsaletime;
+    }
+
+    public void setOldsaletime(String oldsaletime)
+    {
+        this.oldsaletime = oldsaletime;
+    }
+
+    public String getOldPrice()
+    {
+        return oldPrice;
+    }
+
+    public void setOldPrice(String oldPrice)
+    {
+        this.oldPrice = oldPrice;
+    }
+
+    public String getOldCarryPrice()
+    {
+        return oldCarryPrice;
+    }
+
+    public void setOldCarryPrice(String oldCarryPrice)
+    {
+        this.oldCarryPrice = oldCarryPrice;
+    }
+
+    public String getOldPackPrice()
+    {
+        return oldPackPrice;
+    }
+
+    public void setOldPackPrice(String oldPackPrice)
+    {
+        this.oldPackPrice = oldPackPrice;
+    }
+
+    public String getOldnumber()
+    {
+        return oldnumber;
+    }
+
+    public void setOldnumber(String oldnumber)
+    {
+        this.oldnumber = oldnumber;
+    }
+
+    public String getCreatorid()
+    {
+        return creatorid;
+    }
+
+    public void setCreatorid(String creatorid)
+    {
+        this.creatorid = creatorid;
+    }
+
+    public String getGoodsname()
+    {
+        return goodsname;
+    }
+
+    public void setGoodsname(String goodsname)
+    {
+        this.goodsname = goodsname;
+    }
 
     public String getFreeFinalPay()
     {
@@ -649,11 +738,19 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setBuyersName(source.readString());
             p.setContractorName(source.readString());
             p.setPickName(source.readString());
+            p.setPurchaName(source.readString());
             p.setPurchaTel(source.readString());
             p.setPurchaMail(source.readString());
             p.setIsNeedAudit(source.readString());
             p.setFreeDeposit(source.readString());
             p.setFreeFinalPay(source.readString());
+            p.setOldPrice(source.readString());
+            p.setOldCarryPrice(source.readString());
+            p.setOldPackPrice(source.readString());
+            p.setOldnumber(source.readString());
+            p.setOldsaletime(source.readString());
+            p.setCreatorid(source.readString());
+            p.setGoodsname(source.readString());
             return p;
 
 
@@ -713,11 +810,19 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(buyersName);
         p.writeString(contractorName);
         p.writeString(pickName);
+        p.writeString(purchaName);
         p.writeString(purchaTel);
         p.writeString(purchaMail);
         p.writeString(isNeedAudit);
         p.writeString(freeDeposit);
         p.writeString(freeFinalPay);
+        p.writeString(oldPrice);
+        p.writeString(oldCarryPrice);
+        p.writeString(oldPackPrice);
+        p.writeString(oldnumber);
+        p.writeString(oldsaletime);
+        p.writeString(creatorid);
+        p.writeString(goodsname);
     }
 
     @Override

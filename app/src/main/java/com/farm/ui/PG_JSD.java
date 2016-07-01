@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -25,6 +26,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Park_AllCBH;
 import com.farm.bean.Result;
+import com.farm.bean.SellOrder_New_First;
 import com.farm.bean.WZ_CRk;
 import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
@@ -44,8 +46,10 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.apache.http.entity.StringEntity;
 import org.w3c.dom.Text;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +61,7 @@ public class PG_JSD extends Activity
 {
 
     CustomArray_cbh_Adapter customArray_cbh_adapter;
-//    ArrayAdapter<String> CustomArray_cbh_Adapter = null;  //省级适配器
+    //    ArrayAdapter<String> CustomArray_cbh_Adapter = null;  //省级适配器
     private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
     private String[] mDatas;
     @ViewById
@@ -73,8 +77,7 @@ public class PG_JSD extends Activity
 
     @ViewById
     TextView zp_jingzhong;
-    @ViewById
-    TextView cp_jingzhong;
+
     @ViewById
     LinearLayout other_baozhuang;
     @ViewById
@@ -97,14 +100,14 @@ public class PG_JSD extends Activity
     String parkname;
     String cbhname;
     MyDialog myDialog;
-//        CustomDialog_ListView customDialog_listView;
+    //        CustomDialog_ListView customDialog_listView;
     CustomDialog_Expandlistview customDialog_listView;
 
     List<WZ_CRk> listpeople = new ArrayList<WZ_CRk>();
     List<contractTab> listdata = new ArrayList<contractTab>();
 
-    private String [] areaId=new String [30];
-    private String [] contractId=new String [30];
+    private String[] areaId = new String[30];
+    private String[] contractId = new String[30];
     private TextView[] pianqus = new TextView[30];
     private TextView[] chengbaohus = new TextView[30];
     private EditText[] zhushus = new EditText[30];
@@ -117,18 +120,33 @@ public class PG_JSD extends Activity
     @ViewById
     LinearLayout pg_dts;
 
+    @ViewById
+    EditText zp_ds_zhong;
+    @ViewById
+    EditText cp_ds_zhong;
+    @ViewById
+    EditText zp_bds_zhong;
+    @ViewById
+    EditText cp_jingzhong;
+    @ViewById
+    EditText zp_jsje;
+    @ViewById
+    EditText cp_jsje;
+
     @Click
     void nc_banyun()
     {
         ll_nobanyun.setVisibility(View.GONE);
         ll_banyun.setVisibility(View.VISIBLE);
     }
+
     @Click
     void kh_banyun()
     {
         ll_nobanyun.setVisibility(View.VISIBLE);
         ll_banyun.setVisibility(View.GONE);
     }
+
     @Click
     void wu_banyun()
     {
@@ -153,14 +171,26 @@ public class PG_JSD extends Activity
     @Click
     void btn_upload()
     {
+        SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
+        sellOrder_new_first.setQualityWaterWeight(zp_ds_zhong.getText().toString());
+        sellOrder_new_first.setQualityNetWeight(zp_bds_zhong.getText().toString());
+        sellOrder_new_first.setQualityBalance(zp_jsje.getText().toString());
+        sellOrder_new_first.setDefectWaterWeight(cp_ds_zhong.getText().toString());
+        sellOrder_new_first.setDefectNetWeight(cp_jingzhong.getText().toString());
+        sellOrder_new_first.setDefectBalance(cp_jsje.getText().toString());
 
-        int num = 0;
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"sellorderlistadd\": [");
+        builder.append(JSON.toJSONString(sellOrder_new_first));
+        builder.append("]} ");
+        newaddOrder(builder.toString());
+/*        int num = 0;
         for (int i = 0; i < curremt; i++)
         {
             int currems = curremt;
             num += Integer.valueOf(zhushus[i].getText().toString());
         }
-        allnum.setText(num + "");
+        allnum.setText(num + "");*/
 
     }
 
@@ -179,22 +209,22 @@ public class PG_JSD extends Activity
 /*        painqu.setId(curremt);
         painqu.setOnClickListener(toolsItemListener);
         TextView chengbaohu = (TextView) view.findViewById(R.id.chengbaohu);*/
-        Spinner provinceSpinner= (Spinner) view.findViewById(R.id.provinceSpinner);
+        Spinner provinceSpinner = (Spinner) view.findViewById(R.id.provinceSpinner);
 //        CustomArray_cbh_Adapter = new CustomArrayAdapter(PG_JSD.this, mDatas);
         customArray_cbh_adapter = new CustomArray_cbh_Adapter(PG_JSD.this, listdata);
         provinceSpinner.setAdapter(customArray_cbh_adapter);
         provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第0个值
 
-        areaId [curremt]=listdata.get(0).getAreaId();
-        contractId [curremt]=listdata.get(0).getid();
+        areaId[curremt] = listdata.get(0).getAreaId();
+        contractId[curremt] = listdata.get(0).getid();
         provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
 
-                areaId [curremt]=listdata.get(i).getAreaId();
-                contractId [curremt]=listdata.get(i).getid();
+                areaId[curremt] = listdata.get(i).getAreaId();
+                contractId[curremt] = listdata.get(i).getid();
             }
 
             @Override
@@ -537,24 +567,24 @@ public class PG_JSD extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                    listNewData = JSON.parseArray(result.getRows().toJSONString(), Park_AllCBH.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Park_AllCBH.class);
 
-                        for (int i=0;i<listNewData.size();i++)
+                        for (int i = 0; i < listNewData.size(); i++)
                         {
-                            for (int j=0;j<listNewData.get(i).getContractList().size();j++)
+                            for (int j = 0; j < listNewData.get(i).getContractList().size(); j++)
                             {
-                                contractTab contractTab=new contractTab();
-                                contractTab=listNewData.get(i).getContractList().get(j);
+                                contractTab contractTab = new contractTab();
+                                contractTab = listNewData.get(i).getContractList().get(j);
                                 contractTab.setparkName(listNewData.get(i).getParkName());
                                 contractTab.setareaName(listNewData.get(i).getAreaName());
                                 listdata.add(contractTab);
                             }
                         }
-                        int xxx=listdata.size();
-                        mDatas=new String [listdata.size()];
-                        for (int k=0;k<listdata.size();k++)
+                        int xxx = listdata.size();
+                        mDatas = new String[listdata.size()];
+                        for (int k = 0; k < listdata.size(); k++)
                         {
-                            mDatas[k]=listdata.get(k).getareaName()+"\n"+listdata.get(k).getContractNum();
+                            mDatas[k] = listdata.get(k).getareaName() + "\n" + listdata.get(k).getContractNum();
                         }
 //                        for (int i = 0; i < listNewData.size(); i++)
 //                        {
@@ -582,7 +612,49 @@ public class PG_JSD extends Activity
             }
         });
     }
+    private void newaddOrder( String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "createOrder");
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(PG_JSD.this, "ss！", Toast.LENGTH_SHORT).show();
 
+                    }
 
+                } else
+                {
+                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+            }
+        });
+    }
 
 }

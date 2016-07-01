@@ -25,6 +25,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
+import com.farm.ui.NCZ_DD_SH_Detail_;
 import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
@@ -75,6 +76,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
         public FrameLayout fl_dynamic;
         public Button btn_pizhun;
         public Button btn_bohui;
+        public Button chakan;
 
     }
 
@@ -128,12 +130,13 @@ public class NCZ_NeedAdapter extends BaseAdapter
             listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
             listItemView.btn_pizhun = (Button) convertView.findViewById(R.id.btn_pizhun);
             listItemView.btn_bohui = (Button) convertView.findViewById(R.id.btn_bohui);
+            listItemView.chakan = (Button) convertView.findViewById(R.id.chakan);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
             listItemView.tv_importance.setText(sellOrder.getMainPepName());
 
-            SpannableString content = new SpannableString(sellOrder.getBuyersName());
+            final SpannableString content = new SpannableString(sellOrder.getBuyersName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             listItemView.tv_buyer.setText(content);
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
@@ -165,14 +168,27 @@ public class NCZ_NeedAdapter extends BaseAdapter
             }else if (sellOrder.getFreeFinalPay().equals("0"))
             {
                 listItemView.tv_batchtime.setText("申请免付尾款");
-            }else if(sellOrder.getIsNeedAudit().equals("0"))
+            }else if(sellOrder.getIsNeedAudit().equals("0")&&sellOrder.getCreatorid().equals(""))
             {
-                listItemView.tv_batchtime.setText("价格，重量");
+                listItemView.tv_batchtime.setText("订单发生改变");
             }else
             {
-                listItemView.tv_batchtime.setText("订单审批");
+                listItemView.tv_batchtime.setText("自发订单审批");
             }
-            listItemView.btn_pizhun.setTag(R.id.tag_cash,sellOrder);
+            listItemView.chakan.setTag(R.id.tag_cash,sellOrder);
+            listItemView.chakan.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    SellOrder_New sellOrdesr=new SellOrder_New();
+                    sellOrdesr= (SellOrder_New) view.getTag(R.id.tag_cash);
+                    Intent intent=new Intent(context, NCZ_DD_SH_Detail_.class);
+                    intent.putExtra("SellOrder_New",sellOrdesr);
+                    context.startActivity(intent);
+                }
+            });
+/*            listItemView.btn_pizhun.setTag(R.id.tag_cash,sellOrder);
             listItemView.btn_pizhun.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -182,7 +198,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
                     sellOrdesr= (SellOrder_New) view.getTag(R.id.tag_cash);
                     showDeleteTip(sellOrdesr);
                 }
-            });
+            });*/
 
 //            listItemView.tv_buyer.setText(sellOrder.getBuyers());
             listItemView.tv_price.setText(sellOrder.getPrice());

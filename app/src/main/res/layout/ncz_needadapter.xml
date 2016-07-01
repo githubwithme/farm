@@ -233,6 +233,7 @@
                 android:layout_centerVertical="true">
 
                 <Button
+                    android:visibility="gone"
                     android:layout_marginTop="5dip"
                     android:id="@+id/btn_bohui"
                     android:layout_width="50dip"
@@ -244,16 +245,16 @@
                     android:textColor="@color/white"
                     android:textSize="11sp"/>
                 <Button
-                    android:visibility="gone"
                     android:id="@+id/chakan"
                     android:layout_width="50dip"
                     android:layout_height="30dip"
                     android:layout_centerVertical="true"
                     android:background="@drawable/round_red"
-                    android:text="驳回"
+                    android:text="查看"
                     android:textColor="@color/white"
                     android:textSize="11sp"/>
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/btn_pizhun"
                     android:layout_width="50dip"
                     android:layout_height="30dip"
