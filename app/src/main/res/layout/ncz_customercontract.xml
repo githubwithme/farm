@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/light_gray"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/color_topbar">
+
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="27dip"
+            android:layout_height="27dip"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_back"
+            android:gravity="center"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/btn_back"
+            android:text="客户合同"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"/>
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="27dip"
+            android:layout_height="27dip"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dip"
+            android:layout_toLeftOf="@+id/btn_add"
+            android:background="@drawable/ic_search"
+            android:gravity="center"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:layout_below="@+id/rl_titlebar"
+        android:background="@color/line_color"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/bg_white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:visibility="gone">
+
+
+        <EditText
+            android:id="@+id/et_goodsname"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_colum"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="50dip"
+            android:layout_span="3"
+            android:layout_toRightOf="@+id/namess"
+            android:hint="请输入物资名称"
+            android:paddingLeft="10dip"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <ImageButton
+            android:id="@+id/imgbtn"
+            android:layout_width="40dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dip"
+            android:background="@null"
+            android:src="@drawable/searchitem"/>
+    </RelativeLayout>
+
+
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:childDivider="@color/transparent"
+        android:dividerHeight="0dip"
+        android:groupIndicator="@null"/>
+</LinearLayout>
