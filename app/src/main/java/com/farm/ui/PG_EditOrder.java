@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.PeopelList;
@@ -51,16 +50,11 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by ${hmj} on 2016/1/20.
- */
-
-/**
- * 1
+ * Created by hasee on 2016/7/1.
  */
 @EActivity(R.layout.ncz_editorder)
-public class NCZ_EditOrder extends Activity
+public class PG_EditOrder extends Activity
 {
-
     MyDialog myDialog;
     CustomDialog_ListView customDialog_listView;
     String zzsl = "";
@@ -73,9 +67,9 @@ public class NCZ_EditOrder extends Activity
     List<SellOrderDetail_New> list_orderDetail;
     SellOrder_New sellOrder;
     Adapter_EditSellOrderDetail_NCZ adapter_editSellOrderDetail_ncz;
-    SellOrderDetail SellOrderDetail;
-/*    @ViewById
-    LinearLayout ll_flyl;*/
+    com.farm.bean.SellOrderDetail SellOrderDetail;
+    /*    @ViewById
+        LinearLayout ll_flyl;*/
     @ViewById
     ListView lv;
     @ViewById
@@ -121,6 +115,9 @@ public class NCZ_EditOrder extends Activity
     @ViewById
     TextView dd_time;
 
+    @ViewById
+    EditText chanpin;
+
     String cgId = "";
     String byId = "";
     String bzId = "";
@@ -129,24 +126,27 @@ public class NCZ_EditOrder extends Activity
     @Click
     void btn_addcg()
     {
-        Intent intent=new Intent(NCZ_EditOrder.this,Add_workPeopel_.class);
-        intent.putExtra("type","采购商");
+        Intent intent = new Intent(PG_EditOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "采购商");
         startActivity(intent);
     }
+
     @Click
     void btn_addby()
     {
-        Intent intent=new Intent(NCZ_EditOrder.this,Add_workPeopel_.class);
-        intent.putExtra("type","搬运工头");
+        Intent intent = new Intent(PG_EditOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "搬运工头");
         startActivity(intent);
     }
+
     @Click
     void btn_addbz()
     {
-        Intent intent=new Intent(NCZ_EditOrder.this,Add_workPeopel_.class);
-        intent.putExtra("type","包装工头");
+        Intent intent = new Intent(PG_EditOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "包装工头");
         startActivity(intent);
     }
+
     @Click
     void dd_fzr()
     {
@@ -159,7 +159,9 @@ public class NCZ_EditOrder extends Activity
         }
         showDialog_fzr(listdata, listid);
     }
-    @Click//采购商
+
+    @Click
+//采购商
     void et_name()
     {
         List<String> listdata = new ArrayList<String>();
@@ -171,6 +173,7 @@ public class NCZ_EditOrder extends Activity
         }
         showDialog_workday(listdata, listid);
     }
+
     @Click
     void dd_bz()//包装工
     {
@@ -184,7 +187,8 @@ public class NCZ_EditOrder extends Activity
         showDialog_bz(listdata, listid);
     }
 
-    @Click  //搬运工
+    @Click
+        //搬运工
     void dd_by()
     {
         List<String> listdata = new ArrayList<String>();
@@ -196,22 +200,24 @@ public class NCZ_EditOrder extends Activity
         }
         showDialog_by(listdata, listid);
     }
+
     @Click
     void btn_sure()
-    {        commembertab commembertab = AppContext.getUserInfo(NCZ_EditOrder.this);
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_EditOrder.this);
         if (dd_fzr.getText().toString().equals(""))
         {
-            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PG_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (dd_time.getText().toString().equals(""))
         {
-            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PG_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_name.getText().toString().equals(""))
         {
-            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PG_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
    /*     if (et_email.getText().toString().equals(""))
@@ -221,7 +227,7 @@ public class NCZ_EditOrder extends Activity
         }*/
         if (et_address.getText().toString().equals(""))
         {
-            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PG_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
   /*      if (et_phone.getText().toString().equals(""))
@@ -231,17 +237,17 @@ public class NCZ_EditOrder extends Activity
         }*/
         if (et_price.getText().toString().equals(""))
         {
-            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PG_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_weight.getText().toString().equals(""))
         {
-            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PG_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_values.getText().toString().equals(""))
         {
-            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PG_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         List<String> list_uuid = new ArrayList<>();
@@ -288,22 +294,21 @@ public class NCZ_EditOrder extends Activity
         }
 
         SellOrder_New sellOrders = new SellOrder_New();
-        sellOrders=sellOrder;
+        sellOrders= sellOrder;
         sellOrders.setid("");
         sellOrders.setUid(commembertab.getuId());
         sellOrders.setUuid(sellOrder.getUuid());
         sellOrders.setBatchTime(sellOrder.getBatchTime());
-        sellOrders.setSelltype("0");
         sellOrders.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrders.setBuyers(cgId);
         sellOrders.setAddress(et_address.getText().toString());
-
+        sellOrders.setIsNeedAudit("0");
         sellOrders.setEmail(et_email.getText().toString());
         sellOrders.setPhone(et_phone.getText().toString());
-        sellOrders.setPrice(et_price.getText().toString());
+
         sellOrders.setNumber(String.valueOf(countAllNumber()));
-        sellOrders.setWeight(et_weight.getText().toString());
+
         sellOrders.setSumvalues(et_values.getText().toString());
         sellOrders.setActualprice("");
         sellOrders.setActualweight("");
@@ -312,22 +317,25 @@ public class NCZ_EditOrder extends Activity
         sellOrders.setDeposit("0");
         sellOrders.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
-        sellOrders.setSaletime(dd_time.getText().toString());
+
         sellOrders.setYear(utils.getYear());
         sellOrders.setNote(et_note.getText().toString());
         sellOrders.setXxzt("0");
         sellOrders.setProducer(producer);
         sellOrders.setFinalpayment("0");
 
-        sellOrders.setMainPepole(fzrId);
         sellOrders.setPlateNumber(dd_cl.getText().toString());
         sellOrders.setContractorId(bzId);
         sellOrders.setPickId(byId);
-        sellOrders.setCarryPrice(by_danjia.getText().toString());
-        sellOrders.setPackPrice(bz_danjia.getText().toString());
+
         sellOrders.setPackPec(bz_guige.getText().toString());
         sellOrders.setWaitDeposit(dingjin.getText().toString());
 
+        sellOrders.setOldsaletime(dd_time.getText().toString());
+        sellOrders.setOldnumber(et_weight.getText().toString());//
+        sellOrders.setOldPrice(et_price.getText().toString());
+        sellOrders.setOldCarryPrice(by_danjia.getText().toString());
+        sellOrders.setOldPackPrice(bz_danjia.getText().toString());
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
         StringBuilder builder = new StringBuilder();
@@ -337,7 +345,7 @@ public class NCZ_EditOrder extends Activity
         newaddOrder(builder.toString());
     }
 
-    private void newaddOrder( String data)
+    private void newaddOrder(String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "editOrder");
@@ -362,19 +370,14 @@ public class NCZ_EditOrder extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        Toast.makeText(NCZ_EditOrder.this, "订单修改成功！", Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent();
-//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
-                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
-                        NCZ_EditOrder.this.sendBroadcast(intent);
+                        Toast.makeText(PG_EditOrder.this, "订单修改成功！", Toast.LENGTH_SHORT).show();
 
                         finish();
                     }
 
                 } else
                 {
-                    AppContext.makeToast(NCZ_EditOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_EditOrder.this, "error_connectDataBase");
                     return;
                 }
 
@@ -383,7 +386,7 @@ public class NCZ_EditOrder extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_EditOrder.this, "error_connectServer");
+                AppContext.makeToast(PG_EditOrder.this, "error_connectServer");
             }
         });
     }
@@ -437,11 +440,11 @@ public class NCZ_EditOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
-        cgId=sellOrder.getBuyersId();
-        byId=sellOrder.getPickId();
-        bzId=sellOrder.getContractorId();
+        cgId = sellOrder.getBuyers();
+        byId = sellOrder.getPickId();
+        bzId = sellOrder.getContractorId();
         tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
-        adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(NCZ_EditOrder.this);
+        adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(PG_EditOrder.this);
         lv.setAdapter(adapter_editSellOrderDetail_ncz);
         utils.setListViewHeight(lv);
 //        getListData();
@@ -475,44 +478,46 @@ public class NCZ_EditOrder extends Activity
         return allnumber;
     }
 
-/*    @ViewById
-    EditText by_danjia;
-    @ViewById
-    EditText bz_guige;
-    @ViewById
-    EditText bz_danjia;
-    @ViewById
-    EditText dingjin;
-    @ViewById
-    EditText dd_fzr;
-    @ViewById
-    EditText dd_cl;
-    @ViewById
-    EditText dd_tv;
-    @ViewById
-    EditText by_tv;*/
-@Click
-void dd_time()
-{
-    MyDatepicker myDatepicker = new MyDatepicker(NCZ_EditOrder.this, dd_time);
-    myDatepicker.getDialog().show();
-}
+    /*    @ViewById
+        EditText by_danjia;
+        @ViewById
+        EditText bz_guige;
+        @ViewById
+        EditText bz_danjia;
+        @ViewById
+        EditText dingjin;
+        @ViewById
+        EditText dd_fzr;
+        @ViewById
+        EditText dd_cl;
+        @ViewById
+        EditText dd_tv;
+        @ViewById
+        EditText by_tv;*/
+    @Click
+    void dd_time()
+    {
+        MyDatepicker myDatepicker = new MyDatepicker(PG_EditOrder.this, dd_time);
+        myDatepicker.getDialog().show();
+    }
+
     private void showData()
     {
-        et_name.setText(sellOrder.getBuyersName());
+        et_name.setText(sellOrder.getMainPepName());
         et_price.setText(sellOrder.getPrice());
         et_weight.setText(sellOrder.getWeight());
         et_values.setText(sellOrder.getSumvalues());
         by_danjia.setText(sellOrder.getCarryPrice());
         bz_guige.setText(sellOrder.getPackPec());
         bz_danjia.setText(sellOrder.getPackPrice());
-        dd_fzr.setText(sellOrder.getMainPepName());
+        dd_fzr.setText(sellOrder.getMainPepole());
         dd_cl.setText(sellOrder.getPlateNumber());
         dd_bz.setText(sellOrder.getContractorName());
         dd_by.setText(sellOrder.getPickName());
         et_address.setText(sellOrder.getAddress());
         dingjin.setText(sellOrder.getWaitDeposit());
-        dd_time.setText(sellOrder.getSaletime().substring(0,sellOrder.getSaletime().length()-8));
+        chanpin.setText(sellOrder.getGoodsname());
+        dd_time.setText(sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length() - 8));
 
 //        tv_planweight.setText(sellOrder.getWeight());
 //        tv_actualweight.setText(sellOrder.getBuyers());
@@ -552,13 +557,13 @@ void dd_time()
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        Toast.makeText(NCZ_EditOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PG_EditOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
                         finish();
                     }
 
                 } else
                 {
-                    AppContext.makeToast(NCZ_EditOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_EditOrder.this, "error_connectDataBase");
                     return;
                 }
 
@@ -567,7 +572,7 @@ void dd_time()
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_EditOrder.this, "error_connectServer");
+                AppContext.makeToast(PG_EditOrder.this, "error_connectServer");
             }
         });
     }
@@ -610,7 +615,7 @@ void dd_time()
                     finish();
                 } else
                 {
-                    Toast.makeText(NCZ_EditOrder.this, "修改失败！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PG_EditOrder.this, "修改失败！", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -618,7 +623,7 @@ void dd_time()
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_EditOrder.this, "error_connectServer");
+                AppContext.makeToast(PG_EditOrder.this, "error_connectServer");
             }
         });
     }
@@ -880,9 +885,10 @@ void dd_time()
             customDialog_editOrderDetaill.show();
         }
     }
+
     private void getpurchaser()
     {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_EditOrder.this);
+        commembertab commembertab = AppContext.getUserInfo(PG_EditOrder.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getpurchaser");//jobGetList1
@@ -917,7 +923,6 @@ void dd_time()
                             }
 
 
-
                         } else
                         {
                             listNewData = new ArrayList<Purchaser>();
@@ -930,7 +935,7 @@ void dd_time()
 
                 } else
                 {
-                    AppContext.makeToast(NCZ_EditOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_EditOrder.this, "error_connectDataBase");
                     return;
                 }
 
@@ -939,15 +944,16 @@ void dd_time()
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_EditOrder.this, "error_connectServer");
+                AppContext.makeToast(PG_EditOrder.this, "error_connectServer");
             }
         });
     }
+
     //采购商的弹窗
     public void showDialog_workday(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(NCZ_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        View dialog_layout = (RelativeLayout) PG_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(PG_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
@@ -961,11 +967,12 @@ void dd_time()
         });
         customDialog_listView.show();
     }
+
     //包装工
     public void showDialog_bz(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(NCZ_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        View dialog_layout = (RelativeLayout) PG_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(PG_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
@@ -983,8 +990,8 @@ void dd_time()
     //搬运工
     public void showDialog_by(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(NCZ_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        View dialog_layout = (RelativeLayout) PG_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(PG_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
@@ -998,11 +1005,12 @@ void dd_time()
         });
         customDialog_listView.show();
     }
+
     //负责人
     public void showDialog_fzr(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(NCZ_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        View dialog_layout = (RelativeLayout) PG_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(PG_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
@@ -1016,10 +1024,11 @@ void dd_time()
         });
         customDialog_listView.show();
     }
+
     //获取人员列表
     private void getlistdata()
     {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_EditOrder.this);
+        commembertab commembertab = AppContext.getUserInfo(PG_EditOrder.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("nlevel", "1,2");
@@ -1054,7 +1063,7 @@ void dd_time()
                     }
                 } else
                 {
-                    AppContext.makeToast(NCZ_EditOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_EditOrder.this, "error_connectDataBase");
 
                     return;
                 }
@@ -1065,7 +1074,7 @@ void dd_time()
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(NCZ_EditOrder.this, "error_connectServer");
+                AppContext.makeToast(PG_EditOrder.this, "error_connectServer");
 
             }
         });

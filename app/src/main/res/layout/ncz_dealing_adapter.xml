@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_margin="10dip"
               android:descendantFocusability="blocksDescendants"
               android:minHeight="100dip"
               android:orientation="horizontal">
-
     <FrameLayout
         android:id="@+id/fl_dynamic"
         android:layout_width="15dip"
@@ -46,15 +45,15 @@
         android:orientation="vertical">
 
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <FrameLayout
+                android:layout_centerVertical="true"
                 android:id="@+id/ddfzr"
                 android:layout_width="49dip"
                 android:layout_height="49dip"
-                android:layout_centerVertical="true"
                 >
 
                 <com.farm.widget.CircleImageView
@@ -83,15 +82,14 @@
                     android:textColor="@color/white"
                     android:textSize="13sp"/>
             </FrameLayout>
-
             <RelativeLayout
+                android:layout_toRightOf="@+id/ddfzr"
                 android:id="@+id/re_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="10dip"
-                android:layout_toRightOf="@+id/ddfzr"
                 android:orientation="horizontal">
 
                 <TextView
@@ -118,6 +116,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/tv_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -127,18 +126,16 @@
                     android:minWidth="60dip"
                     android:text="等待买家付款"
                     android:textColor="@color/red"
-                    android:textSize="14sp"
-                    android:visibility="gone"/>
+                    android:textSize="14sp"/>
             </RelativeLayout>
-
             <RelativeLayout
+                android:layout_toRightOf="@+id/ddfzr"
+                android:layout_below="@+id/rl_ab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/cs_qy"
                 android:layout_marginBottom="10dip"
                 android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_toRightOf="@+id/ddfzr">
+                android:layout_marginRight="10dip">
 
 
                 <TextView
@@ -163,6 +160,7 @@
                     android:textSize="13sp"/>
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/btn_cancleorder"
                     android:layout_width="wrap_content"
                     android:layout_height="20dip"
@@ -171,10 +169,10 @@
                     android:background="@drawable/round_red"
                     android:text="取消订单"
                     android:textColor="@color/white"
-                    android:textSize="11sp"
-                    android:visibility="gone"/>
+                    android:textSize="11sp"/>
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/btn_editorder"
                     android:layout_width="40dip"
                     android:layout_height="20dip"
@@ -184,19 +182,17 @@
                     android:background="@drawable/round_red"
                     android:text="调整"
                     android:textColor="@color/white"
-                    android:textSize="11sp"
-                    android:visibility="gone"/>
+                    android:textSize="11sp"/>
             </RelativeLayout>
-
             <RelativeLayout
-                android:id="@+id/cs_qy"
+                android:layout_toRightOf="@+id/ddfzr"
+                android:layout_below="@+id/re_tv"
+                android:id="@+id/rl_ab"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/re_tv"
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_toRightOf="@+id/ddfzr">
+                android:layout_marginTop="10dip">
 
 
                 <TextView
@@ -205,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="申请："
+                    android:text="采收产品："
                     android:textColor="@color/gray"
                     android:textSize="13sp"/>
 
@@ -214,7 +210,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="15dip"
                     android:layout_toRightOf="@+id/tv_batchtimetip"
                     android:gravity="left"
                     android:text="就绪"
@@ -223,47 +219,13 @@
 
 
             </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_marginRight="10dip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/dd_jsje"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true">
-
-                <Button
-                    android:visibility="gone"
-                    android:layout_marginTop="5dip"
-                    android:id="@+id/btn_bohui"
-                    android:layout_width="50dip"
-                    android:layout_height="30dip"
-                    android:layout_below="@+id/btn_pizhun"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/round_red"
-                    android:text="驳回"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"/>
-                <Button
-                    android:id="@+id/chakan"
-                    android:layout_width="50dip"
-                    android:layout_height="30dip"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/round_red"
-                    android:text="查看"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"/>
-                <Button
-                    android:visibility="gone"
-                    android:id="@+id/btn_pizhun"
-                    android:layout_width="50dip"
-                    android:layout_height="30dip"
-                    android:layout_marginRight="2dip"
-
-                    android:background="@drawable/round_red"
-                    android:text="批准"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"/>
-            </RelativeLayout>
+                android:text="结算金额:10000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -337,6 +299,10 @@
                 android:visibility="gone"/>
 
         </LinearLayout>
+
+
+
+
 
 
     </LinearLayout>

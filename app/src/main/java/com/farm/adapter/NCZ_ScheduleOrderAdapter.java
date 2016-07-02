@@ -141,7 +141,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             convertView.setTag(listItemView);
 
 
-            listItemView.tv_car.setText(sellOrder.getProducer());
+            listItemView.tv_car.setText(sellOrder.getProducer()+sellOrder.getGoodsname());
 //            SpannableString content = new SpannableString(sellOrder.getBuyers());
             SpannableString content = new SpannableString(sellOrder.getBuyersName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -155,16 +155,16 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                 }
             });
 //            listItemView.circle_img.setOnClickListener(this);
-            listItemView.circle_img.setTag(R.id.tag_kg, listItemView);
-            listItemView.circle_img.setTag(R.id.tag_hg, sellOrder);
-            listItemView.circle_img.setOnClickListener(new View.OnClickListener()
+            listItemView.btn_editorder.setTag(R.id.tag_kg, listItemView);
+            listItemView.btn_editorder.setTag(R.id.tag_hg, sellOrder);
+            listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
                 {
                     SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
                     ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name,sellOrders);
+                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name,sellOrders,"1");
                     myDatepicker.getDialog().show();
     /*                sellOrders.setSaletime(listItemView2.tv_name.getText().toString());
                     StringBuilder builder = new StringBuilder();
@@ -198,7 +198,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             {
                 listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
             }
-            listItemView.tv_state.setText(sellOrder.getMainPepole());
+            listItemView.tv_state.setText(sellOrder.getMainPepName());
 /*            if (sellOrder.getDeposit().equals("0"))
             {
                 listItemView.tv_state.setText("等待买家付定金");
@@ -223,7 +223,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
             });
-            listItemView.btn_editorder.setTag(R.id.tag_postion, position);
+/*            listItemView.btn_editorder.setTag(R.id.tag_postion, position);
             listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
             listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
             {
@@ -237,7 +237,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                     intent.putExtra("broadcast", broadcast);
                     context.startActivity(intent);
                 }
-            });
+            });*/
         } else
         {
             convertView = lmap.get(position);
