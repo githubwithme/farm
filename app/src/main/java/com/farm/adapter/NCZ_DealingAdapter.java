@@ -104,7 +104,7 @@ public class NCZ_DealingAdapter extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.listitem_dealing, null);
+            convertView = listContainer.inflate(R.layout.ncz_dealing_adapter, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.dd_jsje = (TextView) convertView.findViewById(R.id.dd_jsje);
@@ -131,7 +131,7 @@ public class NCZ_DealingAdapter extends BaseAdapter
             {
                 listItemView.tv_car.setText("没有选择区域");
             }
-            listItemView.tv_importance.setText(sellOrder.getMainPepole());
+            listItemView.tv_importance.setText(sellOrder.getMainPepName());
 //            listItemView.tv_car.setText(sellOrder.getProducer());
             SpannableString content = new SpannableString(sellOrder.getBuyersName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -145,7 +145,8 @@ public class NCZ_DealingAdapter extends BaseAdapter
                 }
             });
 
-            SpannableString spanStr_buyer = new SpannableString("就绪");
+            listItemView.tv_batchtime.setText(sellOrder.getGoodsname());
+/*            SpannableString spanStr_buyer = new SpannableString("就绪");
             spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
             listItemView.tv_batchtime.setText(spanStr_buyer);
             listItemView.tv_batchtime.setOnClickListener(new View.OnClickListener()
@@ -156,7 +157,7 @@ public class NCZ_DealingAdapter extends BaseAdapter
                     Intent intent = new Intent(context, RecoveryDetail_.class);
                     context.startActivity(intent);
                 }
-            });
+            });*/
 //            listItemView.tv_buyer.setText(sellOrder.getBuyers());
             listItemView.tv_price.setText(sellOrder.getPrice());
             listItemView.tv_from.setText(sellOrder.getProducer());

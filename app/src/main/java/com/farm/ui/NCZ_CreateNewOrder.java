@@ -37,6 +37,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.SellOrder_New_First;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
@@ -458,15 +459,28 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setPackPrice(bz_danjia.getText().toString());
         sellOrder.setPackPec(bz_guige.getText().toString());
         sellOrder.setWaitDeposit(dingjin.getText().toString());
-        sellOrder.setFreeFinalPay("2");
-        sellOrder.setFreeDeposit("2");
-        sellOrder.setIsNeedAudit("2");
+        sellOrder.setFreeFinalPay("1");
+        sellOrder.setFreeDeposit("1");
+        sellOrder.setIsNeedAudit("1");
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
+        SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
+        sellOrder_new_first.setSellOrderId(uuid);
+        sellOrder_new_first.setQualityWaterWeight("0");
+        sellOrder_new_first.setQualityNetWeight("0");
+        sellOrder_new_first.setQualityBalance("0");
+        sellOrder_new_first.setDefectWaterWeight("0");
+        sellOrder_new_first.setDefectNetWeight("0");
+        sellOrder_new_first.setDefectBalance("0");
+
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrderList\": ");
         builder.append(JSON.toJSONString(SellOrderList));
-        builder.append(", \"SellOrderDetailLists\": ");
+
+        builder.append(", \"sellorderlistadd\": [");
+        builder.append(JSON.toJSONString(sellOrder_new_first));
+
+        builder.append("], \"SellOrderDetailLists\": ");
         builder.append(JSON.toJSONString(list_uuid));
         builder.append("} ");
         addOrder(uuid, builder.toString());

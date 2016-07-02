@@ -10,7 +10,8 @@ import org.androidannotations.annotations.EActivity;
 /**
  * Created by hasee on 2016/6/24.
  */
-@EActivity(R.layout.pg_jsd_cbh)
+//@EActivity(R.layout.pg_jsd_cbh)
+@EActivity(R.layout.pg_jsd_add)
 public class PG_JSD_CBH extends Activity
 {
     @Override

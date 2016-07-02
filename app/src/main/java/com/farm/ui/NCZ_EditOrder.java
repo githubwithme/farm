@@ -288,6 +288,7 @@ public class NCZ_EditOrder extends Activity
         }
 
         SellOrder_New sellOrders = new SellOrder_New();
+        sellOrders=sellOrder;
         sellOrders.setid("");
         sellOrders.setUid(commembertab.getuId());
         sellOrders.setUuid(sellOrder.getUuid());
@@ -362,6 +363,11 @@ public class NCZ_EditOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         Toast.makeText(NCZ_EditOrder.this, "订单修改成功！", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent();
+//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
+                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                        NCZ_EditOrder.this.sendBroadcast(intent);
 
                         finish();
                     }
@@ -500,7 +506,7 @@ void dd_time()
         by_danjia.setText(sellOrder.getCarryPrice());
         bz_guige.setText(sellOrder.getPackPec());
         bz_danjia.setText(sellOrder.getPackPrice());
-        dd_fzr.setText(sellOrder.getMainPepole());
+        dd_fzr.setText(sellOrder.getMainPepName());
         dd_cl.setText(sellOrder.getPlateNumber());
         dd_bz.setText(sellOrder.getContractorName());
         dd_by.setText(sellOrder.getPickName());

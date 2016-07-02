@@ -115,6 +115,9 @@ public class PG_EditOrder extends Activity
     @ViewById
     TextView dd_time;
 
+    @ViewById
+    EditText chanpin;
+
     String cgId = "";
     String byId = "";
     String bzId = "";
@@ -123,24 +126,27 @@ public class PG_EditOrder extends Activity
     @Click
     void btn_addcg()
     {
-        Intent intent=new Intent(PG_EditOrder.this,Add_workPeopel_.class);
-        intent.putExtra("type","采购商");
+        Intent intent = new Intent(PG_EditOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "采购商");
         startActivity(intent);
     }
+
     @Click
     void btn_addby()
     {
-        Intent intent=new Intent(PG_EditOrder.this,Add_workPeopel_.class);
-        intent.putExtra("type","搬运工头");
+        Intent intent = new Intent(PG_EditOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "搬运工头");
         startActivity(intent);
     }
+
     @Click
     void btn_addbz()
     {
-        Intent intent=new Intent(PG_EditOrder.this,Add_workPeopel_.class);
-        intent.putExtra("type","包装工头");
+        Intent intent = new Intent(PG_EditOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "包装工头");
         startActivity(intent);
     }
+
     @Click
     void dd_fzr()
     {
@@ -153,7 +159,9 @@ public class PG_EditOrder extends Activity
         }
         showDialog_fzr(listdata, listid);
     }
-    @Click//采购商
+
+    @Click
+//采购商
     void et_name()
     {
         List<String> listdata = new ArrayList<String>();
@@ -165,6 +173,7 @@ public class PG_EditOrder extends Activity
         }
         showDialog_workday(listdata, listid);
     }
+
     @Click
     void dd_bz()//包装工
     {
@@ -178,7 +187,8 @@ public class PG_EditOrder extends Activity
         showDialog_bz(listdata, listid);
     }
 
-    @Click  //搬运工
+    @Click
+        //搬运工
     void dd_by()
     {
         List<String> listdata = new ArrayList<String>();
@@ -190,9 +200,11 @@ public class PG_EditOrder extends Activity
         }
         showDialog_by(listdata, listid);
     }
+
     @Click
     void btn_sure()
-    {        commembertab commembertab = AppContext.getUserInfo(PG_EditOrder.this);
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_EditOrder.this);
         if (dd_fzr.getText().toString().equals(""))
         {
             Toast.makeText(PG_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -282,21 +294,21 @@ public class PG_EditOrder extends Activity
         }
 
         SellOrder_New sellOrders = new SellOrder_New();
+        sellOrders= sellOrder;
         sellOrders.setid("");
         sellOrders.setUid(commembertab.getuId());
         sellOrders.setUuid(sellOrder.getUuid());
         sellOrders.setBatchTime(sellOrder.getBatchTime());
-        sellOrders.setSelltype("0");
         sellOrders.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrders.setBuyers(cgId);
         sellOrders.setAddress(et_address.getText().toString());
-
+        sellOrders.setIsNeedAudit("0");
         sellOrders.setEmail(et_email.getText().toString());
         sellOrders.setPhone(et_phone.getText().toString());
-        sellOrders.setPrice(et_price.getText().toString());
+
         sellOrders.setNumber(String.valueOf(countAllNumber()));
-        sellOrders.setWeight(et_weight.getText().toString());
+
         sellOrders.setSumvalues(et_values.getText().toString());
         sellOrders.setActualprice("");
         sellOrders.setActualweight("");
@@ -305,22 +317,25 @@ public class PG_EditOrder extends Activity
         sellOrders.setDeposit("0");
         sellOrders.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
-        sellOrders.setSaletime(dd_time.getText().toString());
+
         sellOrders.setYear(utils.getYear());
         sellOrders.setNote(et_note.getText().toString());
         sellOrders.setXxzt("0");
         sellOrders.setProducer(producer);
         sellOrders.setFinalpayment("0");
 
-        sellOrders.setMainPepole(fzrId);
         sellOrders.setPlateNumber(dd_cl.getText().toString());
         sellOrders.setContractorId(bzId);
         sellOrders.setPickId(byId);
-        sellOrders.setCarryPrice(by_danjia.getText().toString());
-        sellOrders.setPackPrice(bz_danjia.getText().toString());
+
         sellOrders.setPackPec(bz_guige.getText().toString());
         sellOrders.setWaitDeposit(dingjin.getText().toString());
 
+        sellOrders.setOldsaletime(dd_time.getText().toString());
+        sellOrders.setOldnumber(et_weight.getText().toString());//
+        sellOrders.setOldPrice(et_price.getText().toString());
+        sellOrders.setOldCarryPrice(by_danjia.getText().toString());
+        sellOrders.setOldPackPrice(bz_danjia.getText().toString());
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
         StringBuilder builder = new StringBuilder();
@@ -330,7 +345,7 @@ public class PG_EditOrder extends Activity
         newaddOrder(builder.toString());
     }
 
-    private void newaddOrder( String data)
+    private void newaddOrder(String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "editOrder");
@@ -425,9 +440,9 @@ public class PG_EditOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
-        cgId=sellOrder.getBuyers();
-        byId=sellOrder.getPickId();
-        bzId=sellOrder.getContractorId();
+        cgId = sellOrder.getBuyers();
+        byId = sellOrder.getPickId();
+        bzId = sellOrder.getContractorId();
         tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
         adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(PG_EditOrder.this);
         lv.setAdapter(adapter_editSellOrderDetail_ncz);
@@ -485,9 +500,10 @@ public class PG_EditOrder extends Activity
         MyDatepicker myDatepicker = new MyDatepicker(PG_EditOrder.this, dd_time);
         myDatepicker.getDialog().show();
     }
+
     private void showData()
     {
-        et_name.setText(sellOrder.getPurchaName());
+        et_name.setText(sellOrder.getMainPepName());
         et_price.setText(sellOrder.getPrice());
         et_weight.setText(sellOrder.getWeight());
         et_values.setText(sellOrder.getSumvalues());
@@ -500,7 +516,8 @@ public class PG_EditOrder extends Activity
         dd_by.setText(sellOrder.getPickName());
         et_address.setText(sellOrder.getAddress());
         dingjin.setText(sellOrder.getWaitDeposit());
-        dd_time.setText(sellOrder.getSaletime().substring(0,sellOrder.getSaletime().length()-8));
+        chanpin.setText(sellOrder.getGoodsname());
+        dd_time.setText(sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length() - 8));
 
 //        tv_planweight.setText(sellOrder.getWeight());
 //        tv_actualweight.setText(sellOrder.getBuyers());
@@ -868,6 +885,7 @@ public class PG_EditOrder extends Activity
             customDialog_editOrderDetaill.show();
         }
     }
+
     private void getpurchaser()
     {
         commembertab commembertab = AppContext.getUserInfo(PG_EditOrder.this);
@@ -905,7 +923,6 @@ public class PG_EditOrder extends Activity
                             }
 
 
-
                         } else
                         {
                             listNewData = new ArrayList<Purchaser>();
@@ -931,6 +948,7 @@ public class PG_EditOrder extends Activity
             }
         });
     }
+
     //采购商的弹窗
     public void showDialog_workday(List<String> listdata, List<String> listid)
     {
@@ -949,6 +967,7 @@ public class PG_EditOrder extends Activity
         });
         customDialog_listView.show();
     }
+
     //包装工
     public void showDialog_bz(List<String> listdata, List<String> listid)
     {
@@ -986,6 +1005,7 @@ public class PG_EditOrder extends Activity
         });
         customDialog_listView.show();
     }
+
     //负责人
     public void showDialog_fzr(List<String> listdata, List<String> listid)
     {
@@ -1004,6 +1024,7 @@ public class PG_EditOrder extends Activity
         });
         customDialog_listView.show();
     }
+
     //获取人员列表
     private void getlistdata()
     {

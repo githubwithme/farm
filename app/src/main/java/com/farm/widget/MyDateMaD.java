@@ -81,6 +81,7 @@ public class MyDateMaD
             sellOrders.setSaletime(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" ").toString());
         }else
         {
+            sellOrders.setBuyers(sellOrders.getBuyersId());
             sellOrders.setOldsaletime(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" ").toString());
             sellOrders.setIsNeedAudit("0");
         }

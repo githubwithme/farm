@@ -451,7 +451,15 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-
+                        Iterator<SellOrder_New> ita = listData.iterator();
+                        while (ita.hasNext())
+                        {
+                            String value = ita.next().getSelltype();
+                            if (value.equals("已完成"))
+                            {
+                                ita.remove();
+                            }
+                        }
 
                         if (!parkname.equals(""))
                         {
@@ -472,7 +480,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
                         if (!cgsname.equals(""))
                         {
 
-                            if (!cgsname.equals("不限采购商"))
+                            if (!cgsname.equals("全部采购商"))
                             {
                                 Iterator<SellOrder_New> its = listData.iterator();
                                 while (its.hasNext())
@@ -480,6 +488,24 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
                                     String value = its.next().getBuyersName();
 //                            if (!value.equals("已完成"))
                                     if (value.indexOf(cgsname) == -1)
+                                    {
+                                        its.remove();
+                                    }
+                                }
+                            }
+                        }
+
+                        if (!cpname.equals(""))
+                        {
+
+                            if (!cpname.equals("全部产品"))
+                            {
+                                Iterator<SellOrder_New> its = listData.iterator();
+                                while (its.hasNext())
+                                {
+                                    String value = its.next().getGoodsname();
+//                            if (!value.equals("已完成"))
+                                    if (value.indexOf(cpname) == -1)
                                     {
                                         its.remove();
                                     }
@@ -562,7 +588,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
                             listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
                             Purchaser purchaser = new Purchaser();
                             purchaser.setId("");
-                            purchaser.setName("不限采购商");
+                            purchaser.setName("全部采购商");
                             listData_CG.add(purchaser);
                             for (int i = 0; i < listNewData.size(); i++)
                             {
@@ -712,6 +738,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
                             {
 
                                 cpname = listdata_cp.get(i).getProductName();
+                                getAllOrdersname();
                     /*            secletchanpin = new ArrayList<SellOrder_New>();
                                 if (secletpark.size()==0)
                                 {

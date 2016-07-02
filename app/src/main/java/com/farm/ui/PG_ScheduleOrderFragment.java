@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -50,12 +51,12 @@ import java.util.List;
  * Created by hasee on 2016/7/1.
  */
 @EFragment
-public class PG_ScheduleOrderFragment  extends Fragment
+public class PG_ScheduleOrderFragment extends Fragment
 {
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
-//    private NCZ_ScheduleOrderAdapter listAdapter;
+    //    private NCZ_ScheduleOrderAdapter listAdapter;
     private PG_scheduleOrderAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
@@ -80,6 +81,10 @@ public class PG_ScheduleOrderFragment  extends Fragment
     Spinner citySpinner;
     @ViewById
     Spinner countySpinner;
+    @ViewById
+    FrameLayout fr_id;
+    @ViewById
+    View lins;
     CustomArrayAdapter provinceAdapter = null;  //省级适配器
     CustomArrayAdapter cityAdapter = null;    //地级适配器
     CustomArrayAdapter countyAdapter = null;    //县级适配器
@@ -89,9 +94,9 @@ public class PG_ScheduleOrderFragment  extends Fragment
     private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
 
 
-    String parkname="";
-    String cpname="";
-    String cgsname="";
+    String parkname = "";
+    String cpname = "";
+    String cgsname = "";
 
     @Override
     public void onResume()
@@ -102,12 +107,14 @@ public class PG_ScheduleOrderFragment  extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        lins.setVisibility(View.GONE);
+        fr_id.setVisibility(View.GONE);
         secletchanpin = new ArrayList<SellOrder_New>();
         secletcgs = new ArrayList<SellOrder_New>();
         secletpark = new ArrayList<SellOrder_New>();
-        getchanpin();
+        getchanpin();//产品
         getpurchaser();//采购商
-        getlistdata();//园区
+//        getlistdata();//园区
 //        getNewSaleList_test();
 //        setSpinner();
         getAllOrders();
@@ -161,10 +168,11 @@ public class PG_ScheduleOrderFragment  extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("userId", commembertab.getId());
-//        params.addQueryStringParameter("year", utils.getYear());
-//        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("action", "getOrderByPGOrCC");//jobGetList1
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("type", "0");
+        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
+//        params.addQueryStringParameter("action", "getOrderByPGOrCC");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -178,6 +186,7 @@ public class PG_ScheduleOrderFragment  extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
 
+                        commembertab commembertab = AppContext.getUserInfo(getActivity());
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         Iterator<SellOrder_New> it = listData.iterator();
                         while (it.hasNext())
@@ -188,7 +197,15 @@ public class PG_ScheduleOrderFragment  extends Fragment
                                 it.remove();
                             }
                         }
-
+                        Iterator<SellOrder_New> its = listData.iterator();
+                        while (its.hasNext())
+                        {
+                            String value = its.next().getMainPepole();
+                            if (!value.equals(commembertab.getId()))
+                            {
+                                its.remove();
+                            }
+                        }
                         listAdapter = new PG_scheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -309,8 +326,6 @@ public class PG_ScheduleOrderFragment  extends Fragment
     {
         super.onDestroyView();
     }
-
-
 
 
     //园区
@@ -446,34 +461,54 @@ public class PG_ScheduleOrderFragment  extends Fragment
                 {
                     if (result.getAffectedRows() != 0)
                     {
+                        commembertab commembertab = AppContext.getUserInfo(getActivity());
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
-
-                        if (!parkname.equals(""))
+                        Iterator<SellOrder_New> ist = listData.iterator();
+                        while (ist.hasNext())
                         {
-                            if (!parkname.equals("全部分场"))
+                            String value = ist.next().getMainPepole();
+                            if (!value.equals(commembertab.getId()))
                             {
-                                Iterator<SellOrder_New> it = listData.iterator();
-                                while (it.hasNext())
-                                {
-                                    String value = it.next().getProducer();
-//                            if (!value.equals("已完成"))
-                                    if (value.indexOf(parkname) == -1)
-                                    {
-                                        it.remove();
-                                    }
-                                }
+                                ist.remove();
                             }
                         }
+                        Iterator<SellOrder_New> it = listData.iterator();
+                        while (it.hasNext())
+                        {
+                            String value = it.next().getSelltype();
+                            if (value.equals("已完成"))
+                            {
+                                it.remove();
+                            }
+                        }
+
                         if (!cgsname.equals(""))
                         {
 
-                            if (!cgsname.equals("不限采购商"))
+                            if (!cgsname.equals("全部采购商"))
                             {
                                 Iterator<SellOrder_New> its = listData.iterator();
                                 while (its.hasNext())
                                 {
                                     String value = its.next().getBuyersName();
+//                            if (!value.equals("已完成"))
+                                    if (value.indexOf(cgsname) == -1)
+                                    {
+                                        its.remove();
+                                    }
+                                }
+                            }
+                        }
+                        if (!cpname.equals(""))
+                        {
+
+                            if (!cpname.equals("全部产品"))
+                            {
+                                Iterator<SellOrder_New> its = listData.iterator();
+                                while (its.hasNext())
+                                {
+                                    String value = its.next().getGoodsname();
 //                            if (!value.equals("已完成"))
                                     if (value.indexOf(cgsname) == -1)
                                     {
@@ -546,7 +581,7 @@ public class PG_ScheduleOrderFragment  extends Fragment
                             listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
                             Purchaser purchaser = new Purchaser();
                             purchaser.setId("");
-                            purchaser.setName("不限采购商");
+                            purchaser.setName("全部采购商");
                             listData_CG.add(purchaser);
                             for (int i = 0; i < listNewData.size(); i++)
                             {
@@ -686,7 +721,7 @@ public class PG_ScheduleOrderFragment  extends Fragment
                         {
                             park[i] = listdata_cp.get(i).getProductName();
                         }
-                        cityAdapter = new CustomArrayAdapter(getActivity(), mCitisDatasMap);
+                        cityAdapter = new CustomArrayAdapter(getActivity(), park);
                         citySpinner.setAdapter(cityAdapter);
                         citySpinner.setSelection(0, true);  //默认选中第0个
                         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -696,6 +731,7 @@ public class PG_ScheduleOrderFragment  extends Fragment
                             {
 
                                 cpname = listdata_cp.get(i).getProductName();
+                                getAllOrdersname();
                     /*            secletchanpin = new ArrayList<SellOrder_New>();
                                 if (secletpark.size()==0)
                                 {

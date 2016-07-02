@@ -15,6 +15,7 @@
         android:orientation="horizontal">
 
         <FrameLayout
+            android:id="@+id/fr_id"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -35,6 +36,7 @@
         </FrameLayout>
 
         <View
+            android:id="@+id/lins"
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="@color/gray"/>

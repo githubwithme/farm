@@ -111,7 +111,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.listitem_scheduleorder, null);
+            convertView = listContainer.inflate(R.layout.pg_sched_adapter, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
@@ -134,7 +134,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
 
             listItemView.tv_car.setText(sellOrder.getProducer());
 //            SpannableString content = new SpannableString(sellOrder.getBuyers());
-            SpannableString content = new SpannableString(sellOrder.getPurchaName());
+            SpannableString content = new SpannableString(sellOrder.getBuyersName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             listItemView.tv_buyer.setText(content);
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
@@ -146,9 +146,9 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
                 }
             });
 //            listItemView.circle_img.setOnClickListener(this);
-            listItemView.circle_img.setTag(R.id.tag_kg, listItemView);
-            listItemView.circle_img.setTag(R.id.tag_hg, sellOrder);
-            listItemView.circle_img.setOnClickListener(new View.OnClickListener()
+            listItemView.btn_editorder.setTag(R.id.tag_kg, listItemView);
+            listItemView.btn_editorder.setTag(R.id.tag_hg, sellOrder);
+            listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
@@ -189,7 +189,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
             {
                 listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
             }
-            listItemView.tv_state.setText(sellOrder.getMainPepole());
+            listItemView.tv_state.setText(sellOrder.getMainPepName());
 /*            if (sellOrder.getDeposit().equals("0"))
             {
                 listItemView.tv_state.setText("等待买家付定金");
@@ -214,7 +214,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
             });
-            listItemView.btn_editorder.setTag(R.id.tag_postion, position);
+/*            listItemView.btn_editorder.setTag(R.id.tag_postion, position);
             listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
             listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
             {
@@ -229,7 +229,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
                     intent.putExtra("broadcast", broadcast);
                     context.startActivity(intent);
                 }
-            });
+            });*/
         } else
         {
             convertView = lmap.get(position);

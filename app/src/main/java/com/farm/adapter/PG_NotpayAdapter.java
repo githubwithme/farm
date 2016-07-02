@@ -24,7 +24,8 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.ui.NCZ_EditOrder_;
-import com.farm.ui.RecoveryDetail_;
+import com.farm.ui.PG_EditOrder_;
+import com.farm.ui.PG_JSD_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
 import com.farm.widget.MyDialog;
@@ -39,9 +40,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by hasee on 2016/6/29.
+ * Created by hasee on 2016/7/2.
  */
-public class NCZ_NotpayAdapter  extends BaseAdapter
+public class PG_NotpayAdapter extends BaseAdapter
 {
     static String name = "";
     CustomDialog_CallTip custom_calltip;
@@ -69,7 +70,7 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
 
     }
 
-    public NCZ_NotpayAdapter(Context context, List<SellOrder_New> data,String broadcast)
+    public PG_NotpayAdapter(Context context, List<SellOrder_New> data,String broadcast)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -102,7 +103,7 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.ncz_notpay_adapter, null);
+            convertView = listContainer.inflate(R.layout.pg_notpay_adapter, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
@@ -198,8 +199,13 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
                 public void onClick(View v)
                 {
                     SellOrder_New sellOrder_new= (SellOrder_New) v.getTag(R.id.tag_cash);
-                    showDeleteTip(sellOrder_new.getUuid());
-//                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
+                    Intent intent = new Intent(context, PG_JSD_.class);
+                    intent.putExtra("bean", sellOrder_new);
+                    intent.putExtra("broadcast", broadcast);
+                    context.startActivity(intent);
+
+    /*                showDeleteTip(sellOrder_new.getUuid());
+//                    deleteSellOrderAndDetail(sellOrder_new.getUuid());*/
                 }
             });
             listItemView.btn_editorder.setTag(R.id.tag_postion, position);
@@ -211,7 +217,8 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
                 {
                     int pos = (int) v.getTag(R.id.tag_postion);
                     SellOrder_New sellOrder = (SellOrder_New) v.getTag(R.id.tag_bean);
-                    Intent intent = new Intent(context, NCZ_EditOrder_.class);
+//                    Intent intent = new Intent(context, NCZ_EditOrder_.class);
+                    Intent intent = new Intent(context, PG_EditOrder_.class);
                     intent.putExtra("bean", sellOrder);
                     intent.putExtra("broadcast", broadcast);
                     context.startActivity(intent);
@@ -369,5 +376,4 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
         });
         myDialog.show();
     }
-
 }

@@ -1,10 +1,13 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,8 +45,7 @@ public class NCZ_DD_SH_Detail extends Activity
     MyDialog myDialog;
     SellOrder_New sellOrder_new;
 
-    @ViewById
-    TextView ssq_nr;
+
     @ViewById
     TextView chanpin;
     @ViewById
@@ -87,32 +89,89 @@ public class NCZ_DD_SH_Detail extends Activity
     TextView et_note;
     @ViewById
     TextView old_weight;
+    @ViewById
+    TextView no_ncz;
+
+    @ViewById
+    RelativeLayout no_dingjin;
+    @ViewById
+    RelativeLayout no_weikuan;
 
 
+    @ViewById
+    ScrollView dd_edit;
     @AfterViews
     void afview()
     {
+        if (sellOrder_new.getPrice().equals("") && !sellOrder_new.getCreatorid().equals(""))
+        {
+            no_ncz.setText("新订单");
+        } else if (!sellOrder_new.getCreatorid().equals(""))
+        {
+            no_ncz.setText("自主生产订单有改变");
+        } else
+        {
+            no_ncz.setText("订单有改变");
+        }
+
+        if (sellOrder_new.getFreeDeposit().equals("0"))
+        {
+            no_dingjin.setVisibility(View.VISIBLE);
+        }
+        if (sellOrder_new.getFreeFinalPay().equals("0"))
+        {
+            no_weikuan.setVisibility(View.VISIBLE);
+        }
+
+        if (sellOrder_new.getIsNeedAudit().equals("0"))
+        {
+            dd_edit.setVisibility(View.VISIBLE);
+        }
+
         getData();
     }
 
+    //批准免付尾款
     @Click
-    void btn_sure()
+    void wk_pz()
     {
-        if(sellOrder_new.getFreeDeposit().equals("0")||sellOrder_new.getFreeFinalPay().equals("0"))
-        {
-            showList();
-        }else
-        {
-            showDeleteTip();
-        }
-
+        showWk();
 
     }
 
+    //驳回免付尾款
     @Click
-    void bohui()
+    void wk_bh()
     {
+        no_showWk();
+    }
 
+    //批准免付定金
+    @Click
+    void dj_pz()
+    {
+        showList();
+    }
+
+    //驳回免付定金
+    @Click
+    void dj_bh()
+    {
+        no_showList();
+    }
+
+    //订单申请的修改
+    @Click
+    void dd_pz()
+    {
+        showDeleteTip();
+    }
+
+    //订单申请的驳回
+    @Click
+    void dd_bh()
+    {
+        no_showDeleteTip();
     }
 
 
@@ -140,21 +199,6 @@ public class NCZ_DD_SH_Detail extends Activity
         bz_guige.setText(sellOrder_new.getPackPec());//包装规格
 
 
-        if(sellOrder_new.getFreeDeposit().equals("0"))
-        {
-            ssq_nr.setText("申请免付订金");
-        }else if (sellOrder_new.getFreeFinalPay().equals("0"))
-        {
-            ssq_nr.setText("申请免付尾款");
-        }else if(sellOrder_new.getIsNeedAudit().equals("0")&&sellOrder_new.getCreatorid().equals(""))
-        {
-            ssq_nr.setText("订单发生改变");
-        }else
-        {
-            ssq_nr.setText("自发订单审批");
-        }
-
-
         dd_time.setText(sellOrder_new.getSaletime().substring(5, sellOrder_new.getSaletime().length() - 8));
         if (!sellOrder_new.getOldsaletime().equals(""))
         {
@@ -164,7 +208,7 @@ public class NCZ_DD_SH_Detail extends Activity
             old_time.setText(sellOrder_new.getOldsaletime());
         }
         et_price.setText(sellOrder_new.getPrice());
-        et_price.setText(sellOrder_new.getOldPrice());
+        old_price.setText(sellOrder_new.getOldPrice());
 
         by_danjia.setText(sellOrder_new.getCarryPrice());
         old_danjia.setText(sellOrder_new.getOldCarryPrice());
@@ -243,7 +287,8 @@ public class NCZ_DD_SH_Detail extends Activity
         builder.append("]} ");
         newaddOrder(builder.toString());
     }
-    private void newaddOrder( String data)
+
+    private void newaddOrder(String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "editOrder");
@@ -269,7 +314,10 @@ public class NCZ_DD_SH_Detail extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         Toast.makeText(NCZ_DD_SH_Detail.this, "订单修改成功！", Toast.LENGTH_SHORT).show();
-
+                        Intent intent = new Intent();
+//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
+                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                        NCZ_DD_SH_Detail.this.sendBroadcast(intent);
                         finish();
                     }
 
@@ -289,11 +337,51 @@ public class NCZ_DD_SH_Detail extends Activity
         });
     }
 
+    private void showWk()
+    {
+
+        View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "订单申请免付尾款", "批准", "驳回", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        btnWk();
+                        myDialog.cancel();
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.cancel();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
+
+    private void btnWk()
+    {
+        SellOrder_New sellOrders = new SellOrder_New();
+        sellOrders = sellOrder_new;
+        if (sellOrders.getFreeFinalPay().equals("0"))
+        {
+            sellOrders.setFreeFinalPay("1");
+        }
+        sellOrders.setBuyers(sellOrders.getBuyersId());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"SellOrder_new\": [");
+        builder.append(JSON.toJSONString(sellOrders));
+        builder.append("]} ");
+        newaddOrder(builder.toString());
+    }
+
     private void showList()
     {
 
         View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "驳回", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "订单申请免付定金?", "批准", "驳回", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -312,6 +400,7 @@ public class NCZ_DD_SH_Detail extends Activity
         });
         myDialog.show();
     }
+
     private void btnSave()
     {
         SellOrder_New sellOrders = new SellOrder_New();
@@ -320,13 +409,148 @@ public class NCZ_DD_SH_Detail extends Activity
         {
             sellOrders.setFreeDeposit("1");
         }
-        if (!sellOrders.getFreeDeposit().equals("0")&&sellOrders.getFreeFinalPay().equals("0"))
-        {
-            sellOrders.setFreeFinalPay("1");
-        }
-
         sellOrders.setBuyers(sellOrders.getBuyersId());
-        sellOrders.setIsNeedAudit("1");
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"SellOrder_new\": [");
+        builder.append(JSON.toJSONString(sellOrders));
+        builder.append("]} ");
+        newaddOrder(builder.toString());
+    }
+
+    private void no_showDeleteTip()
+    {
+
+        View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "驳回", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        no_upAlldata();
+                        myDialog.cancel();
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.cancel();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
+
+    public void no_upAlldata()
+    {
+        SellOrder_New sellOrder = new SellOrder_New();
+
+        sellOrder = sellOrder_new;
+
+        if (!sellOrder.getOldCarryPrice().equals(""))
+        {
+            sellOrder.setOldCarryPrice("");
+        }
+        if (!sellOrder.getOldnumber().equals(""))
+        {
+            sellOrder.setOldnumber("");
+
+        }
+        if (!sellOrder.getOldPackPrice().equals(""))
+        {
+            sellOrder.setOldPackPrice("");
+
+        }
+        if (!sellOrder.getOldPrice().equals(""))
+        {
+            sellOrder.setOldPrice("");
+        }
+        if (!sellOrder.getOldsaletime().equals(""))
+        {
+            sellOrder.setOldsaletime("");
+        }
+        sellOrder.setBuyers(sellOrder.getBuyersId());
+        sellOrder.setIsNeedAudit("-1");
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"SellOrder_new\": [");
+        builder.append(JSON.toJSONString(sellOrder));
+        builder.append("]} ");
+        newaddOrder(builder.toString());
+    }
+
+    private void no_showWk()
+    {
+
+        View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "驳回", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        no_btnWk();
+                        myDialog.cancel();
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.cancel();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
+
+    private void no_btnWk()
+    {
+        SellOrder_New sellOrders = new SellOrder_New();
+        sellOrders = sellOrder_new;
+        if (sellOrders.getFreeFinalPay().equals("0"))
+        {
+            sellOrders.setFreeFinalPay("-1");
+        }
+        sellOrders.setBuyers(sellOrders.getBuyersId());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"SellOrder_new\": [");
+        builder.append(JSON.toJSONString(sellOrders));
+        builder.append("]} ");
+        newaddOrder(builder.toString());
+    }
+
+    private void no_showList()
+    {
+
+        View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "驳回", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        no_btnSave();
+                        myDialog.cancel();
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.cancel();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
+
+    private void no_btnSave()
+    {
+        SellOrder_New sellOrders = new SellOrder_New();
+        sellOrders = sellOrder_new;
+        if (sellOrders.getFreeDeposit().equals("0"))
+        {
+            sellOrders.setFreeDeposit("-1");
+        }
+        sellOrders.setBuyers(sellOrders.getBuyersId());
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrder_new\": [");
         builder.append(JSON.toJSONString(sellOrders));

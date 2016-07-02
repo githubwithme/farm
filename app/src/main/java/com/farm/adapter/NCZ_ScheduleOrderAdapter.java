@@ -155,9 +155,9 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                 }
             });
 //            listItemView.circle_img.setOnClickListener(this);
-            listItemView.circle_img.setTag(R.id.tag_kg, listItemView);
-            listItemView.circle_img.setTag(R.id.tag_hg, sellOrder);
-            listItemView.circle_img.setOnClickListener(new View.OnClickListener()
+            listItemView.btn_editorder.setTag(R.id.tag_kg, listItemView);
+            listItemView.btn_editorder.setTag(R.id.tag_hg, sellOrder);
+            listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
@@ -223,7 +223,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
             });
-            listItemView.btn_editorder.setTag(R.id.tag_postion, position);
+/*            listItemView.btn_editorder.setTag(R.id.tag_postion, position);
             listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
             listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
             {
@@ -237,7 +237,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                     intent.putExtra("broadcast", broadcast);
                     context.startActivity(intent);
                 }
-            });
+            });*/
         } else
         {
             convertView = lmap.get(position);

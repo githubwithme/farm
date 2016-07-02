@@ -26,6 +26,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Park_AllCBH;
 import com.farm.bean.Result;
+import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.bean.WZ_CRk;
 import com.farm.bean.Wz_Storehouse;
@@ -59,7 +60,8 @@ import java.util.List;
 @EActivity(R.layout.pg_jsd)
 public class PG_JSD extends Activity
 {
-
+    SellOrder_New sellOrder_new;
+    String broadcast;
     CustomArray_cbh_Adapter customArray_cbh_adapter;
     //    ArrayAdapter<String> CustomArray_cbh_Adapter = null;  //省级适配器
     private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
@@ -180,7 +182,7 @@ public class PG_JSD extends Activity
         sellOrder_new_first.setDefectBalance(cp_jsje.getText().toString());
 
         StringBuilder builder = new StringBuilder();
-        builder.append("{\"sellorderlistadd\": [");
+        builder.append("{\"createOrder \": [");
         builder.append(JSON.toJSONString(sellOrder_new_first));
         builder.append("]} ");
         newaddOrder(builder.toString());
@@ -276,6 +278,8 @@ public class PG_JSD extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        sellOrder_new=getIntent().getParcelableExtra("bean");
+        broadcast=getIntent().getStringExtra("broadcast");
         getActionBar().hide();
     }
 
@@ -615,7 +619,7 @@ public class PG_JSD extends Activity
     private void newaddOrder( String data)
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("action", "createOrder");
+        params.addQueryStringParameter("action", "sellorderlistadd");
         params.setContentType("application/json");
         try
         {

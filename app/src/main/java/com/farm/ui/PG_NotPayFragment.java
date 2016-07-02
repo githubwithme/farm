@@ -20,8 +20,8 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_DealingAdapter;
-import com.farm.adapter.NCZ_OrderAdapter;
+import com.farm.adapter.NCZ_NotpayAdapter;
+import com.farm.adapter.PG_NotpayAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -45,12 +45,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Created by hasee on 2016/7/2.
+ */
 @SuppressLint("NewApi")
 @EFragment
-public class NCZ_AllOrderFragment extends Fragment
+public class PG_NotPayFragment extends Fragment
 {
-//    private NCZ_OrderAdapter listAdapter;
-private NCZ_DealingAdapter listAdapter;
+
+    private PG_NotpayAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     private AppContext appContext;
@@ -75,9 +78,9 @@ private NCZ_DealingAdapter listAdapter;
     ArrayAdapter<String> cityAdapter = null;    //地级适配器
     ArrayAdapter<String> countyAdapter = null;    //县级适配器
     static int provincePosition = 3;
-    private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
-    private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
-    private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
+    private String[] mProvinceDatas=new String[]{"全部分场","乐丰分场","双桥分场"};
+    private String[] mCitisDatasMap=new String[]{"全部产品","香蕉","柑橘"};
+    private String[] mAreaDatasMap=new String[]{"不限采购商","李四","张三"};
 
     @Override
     public void onResume()
@@ -90,7 +93,8 @@ private NCZ_DealingAdapter listAdapter;
     {
 //        getNewSaleList_test();
         setSpinner();
-//        getAllOrders();
+        getAllOrders();
+
     }
 
 
@@ -99,8 +103,10 @@ private NCZ_DealingAdapter listAdapter;
     {
         View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
+//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENOTPAYORDER);
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
+
         return rootView;
     }
 
@@ -114,18 +120,21 @@ private NCZ_DealingAdapter listAdapter;
         }
     };
 
+
     private void getNewSaleList_test()
     {
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_DealingAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+            listAdapter = new PG_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
+                    commembertab commembertab = AppContext.getUserInfo(getActivity());
+                    AppContext.eventStatus(getActivity(), "8",  listData.get(position).getUuid(), commembertab.getId());
                     Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
                     intent.putExtra("bean", listData.get(position));
                     getActivity().startActivity(intent);
@@ -156,26 +165,24 @@ private NCZ_DealingAdapter listAdapter;
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        //已取消
                         Iterator<SellOrder_New> it = listData.iterator();
                         while (it.hasNext())
                         {
                             String value = it.next().getSelltype();
-                            if (!value.equals("已完成"))
+                            if (value.equals("已完成"))
                             {
                                 it.remove();
                             }
                         }
-                        listAdapter = new NCZ_DealingAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+
+
+                        listAdapter = new PG_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
-
-                                commembertab commembertab = AppContext.getUserInfo(getActivity());
-                                AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
                                 Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
@@ -203,7 +210,6 @@ private NCZ_DealingAdapter listAdapter;
             }
         });
     }
-
     /*
         * 设置下拉框
         */
@@ -229,13 +235,11 @@ private NCZ_DealingAdapter listAdapter;
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3)
             {
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0)
             {
-                
             }
 
         });
@@ -257,12 +261,10 @@ private NCZ_DealingAdapter listAdapter;
             }
         });
     }
-
     @Override
     public void onDestroyView()
     {
         super.onDestroyView();
     }
-
 
 }
