@@ -56,12 +56,12 @@ public class FarmManagerFragment extends Fragment
         getActivity().startActivity(intent);
     }
 
-    @Click
-    void ce_tq()//测试天气
-    {
-        Intent intent = new Intent(getActivity(), NC_Weater_.class);
-        getActivity().startActivity(intent);
-    }
+//    @Click
+//    void ce_tq()//测试天气
+//    {
+//        Intent intent = new Intent(getActivity(), NC_Weater_.class);
+//        getActivity().startActivity(intent);
+//    }
     @Click
     void ll_zl()
     {

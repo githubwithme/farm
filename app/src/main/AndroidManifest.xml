@@ -64,6 +64,7 @@
         <activity android:name=".ui.NCZ_CreateNewOrder_"/>
         <activity android:name=".ui.NCZ_BreakOffActivity_"/>
         <activity android:name=".ui.CZ_OrderManager_"/>
+        <activity android:name=".ui.PG_BreakOffActivity_"/>
         <activity android:name=".ui.NCZ_CustomerContract_"/>
         <activity android:name=".ui.NCZ_SaleModuleActivity_"/>
         <activity android:name=".ui.NCZ_FarmSaleData_"/>
@@ -74,7 +75,6 @@
         <activity android:name=".ui.CZ_MainActivity_New_"/>
         <activity android:name=".ui.PG_ListOfEvents_"/>
         <activity android:name=".ui.PG_GddList_"/>
-        <activity android:name=".ui.NCZ_CreateNewFarmOrder_"/>
         <activity android:name=".ui.PG_CKList_"/>
         <activity android:name=".ui.PQ_DLFragment_"/>
         <activity android:name=".ui.NCZ_CreateOrder_SelectProduct_"/>
