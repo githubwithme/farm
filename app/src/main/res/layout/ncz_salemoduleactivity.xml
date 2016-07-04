@@ -58,81 +58,84 @@
             android:layout_below="@+id/rl_titlebar"
             android:background="@color/line_color"/>
 
-        <LinearLayout
-            android:id="@+id/ll_topmenu"
-            android:layout_width="match_parent"
-            android:layout_height="40dip"
-            android:layout_below="@+id/line"
-            android:background="@color/white"
-            android:orientation="horizontal">
 
-
-            <FrameLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/tv_jobdoning"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="区域销售"
-                    android:textColor="@color/bg_text"
-                    android:textSize="@dimen/titlebar_textsize"/>
-
-                <View
-                    android:id="@+id/view_jobdoing"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dip"
-                    android:layout_gravity="bottom"
-                    android:background="@color/red"/>
-            </FrameLayout>
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line_color"/>
-
-            <FrameLayout
-                android:id="@+id/fl_jobcomplete"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/tv_jobcomplete"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="批次销售"
-                    android:textColor="@color/bg_text"
-                    android:textSize="@dimen/titlebar_textsize"/>
-
-                <View
-                    android:id="@+id/view_jobcomplete"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dip"
-                    android:layout_gravity="bottom"
-                    android:background="@color/red"
-                    android:visibility="gone"/>
-            </FrameLayout>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/line2"
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_below="@+id/ll_topmenu"
-            android:background="@color/line_color"/>
-
-        <FrameLayout
-            android:id="@+id/job_container"
+        <ScrollView
+            android:id="@+id/sl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/line2"
+            android:layout_below="@+id/line"
             android:layout_marginBottom="60dip"
-            android:divider="@null"/>
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dip"
+                        android:gravity="left|center_vertical"
+                        android:text="各区域销售情况"
+                        android:textColor="@color/bg_text"
+                        android:textSize="18sp"/>
+
+                    <com.farm.widget.CustomExpandableListView
+                        android:id="@+id/expandableListView_areasaledata"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:childDivider="@color/transparent"
+                        android:divider="@color/transparent"
+                        android:dividerHeight="0dip"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:groupIndicator="@null"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dip"
+                        android:gravity="left|center_vertical"
+                        android:text="各批次销售情况"
+                        android:textColor="@color/bg_text"
+                        android:textSize="18sp"/>
+
+                    <com.farm.widget.CustomExpandableListView
+                        android:id="@+id/expandableListView_batchtimesaledata"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:childDivider="@color/transparent"
+                        android:divider="@color/transparent"
+                        android:dividerHeight="0dip"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:groupIndicator="@null"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
 
         <LinearLayout
             android:id="@+id/ll_menu"

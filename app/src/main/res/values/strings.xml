@@ -95,6 +95,8 @@
     <item name="tag_dt" type="id"></item>
     <item name="tag_hg" type="id"></item>
     <item name="tag_parkname" type="id"></item>
+    <item name="tag_areaid" type="id"></item>
+    <item name="tag_areaname" type="id"></item>
     <item name="tag_kg" type="id"></item>
     <string name="title_activity_observation_record">ObservationRecordActivity</string>
 </resources>

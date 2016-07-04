@@ -20,6 +20,8 @@ import java.util.List;
 public class contractTab implements Parcelable // 与数据库不一致
 {
     public String id;
+    public String contractid;
+    public String contractname;
     public String contractNum;
     public String uId;
     public String regDate;
@@ -36,8 +38,40 @@ public class contractTab implements Parcelable // 与数据库不一致
     public String allsalein;
     public String allsalefor;
     public String allnewsale;
+    public String allnumber;
     public List<breakofftab> breakofftabList;
     public List<BreakOff_New> BreakOffList;
+
+
+    public String getContractid()
+    {
+        return contractid;
+    }
+
+    public void setContractid(String contractid)
+    {
+        this.contractid = contractid;
+    }
+
+    public String getContractname()
+    {
+        return contractname;
+    }
+
+    public void setContractname(String contractname)
+    {
+        this.contractname = contractname;
+    }
+
+    public String getAllnumber()
+    {
+        return allnumber;
+    }
+
+    public void setAllnumber(String allnumber)
+    {
+        this.allnumber = allnumber;
+    }
 
     public List<BreakOff_New> getBreakOffList() {
         return BreakOffList;
@@ -249,6 +283,8 @@ public class contractTab implements Parcelable // 与数据库不一致
             // 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错
             contractTab p = new contractTab();
             p.setid(source.readString());
+            p.setContractid(source.readString());
+            p.setContractname(source.readString());
             p.setContractNum(source.readString());
             p.setuId(source.readString());
             p.setregDate(source.readString());
@@ -265,6 +301,7 @@ public class contractTab implements Parcelable // 与数据库不一致
             p.setAllsalein(source.readString());
             p.setAllsalefor(source.readString());
             p.setAllnewsale(source.readString());
+            p.setAllnumber(source.readString());
             p.breakofftabList = source.readArrayList(breakofftab.class.getClassLoader());
             p.BreakOffList = source.readArrayList(breakofftab.class.getClassLoader());
             return p;
@@ -281,6 +318,8 @@ public class contractTab implements Parcelable // 与数据库不一致
     public void writeToParcel(Parcel p, int arg1)
     {
         p.writeString(id);
+        p.writeString(contractid);
+        p.writeString(contractname);
         p.writeString(contractNum);
         p.writeString(uId);
         p.writeString(regDate);
@@ -297,6 +336,7 @@ public class contractTab implements Parcelable // 与数据库不一致
         p.writeString(allsalein);
         p.writeString(allsalefor);
         p.writeString(allnewsale);
+        p.writeString(allnumber);
         p.writeList(breakofftabList);
         p.writeList(BreakOffList);
     }

@@ -1,19 +1,36 @@
 package com.farm.ui;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.ExpandableListView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.Adapter_AreaSaleFragment;
+import com.farm.adapter.Adapter_FarmSaleData;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
+import com.farm.bean.Result;
+import com.farm.bean.SellOrderDetail_New;
+import com.farm.bean.commembertab;
+import com.farm.bean.parktab;
+import com.farm.common.utils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ${hmj} on 2016/5/26.
@@ -21,37 +38,16 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.ncz_salemoduleactivity)
 public class NCZ_SaleModuleActivity extends Activity
 {
-    NCZ_SaleModuleFragment ncz_saleModuleFragment;
-    NCZ_AreaSaleFragment ncz_areaSaleFragment;
-    Fragment mContent = new Fragment();
+    List<Map<String, String>> uuids;
+    List<SellOrderDetail_New> list_sell;
+    Adapter_AreaSaleFragment adapter_areaSaleFragment;
+    Adapter_FarmSaleData adapter_farmSaleData_batchtime;
     @ViewById
-    TextView tv_jobdoning;
+    ExpandableListView expandableListView_areasaledata;
     @ViewById
-    TextView tv_jobcomplete;
-    @ViewById
-    View view_jobdoing;
-    @ViewById
-    View view_jobcomplete;
+    ExpandableListView expandableListView_batchtimesaledata;
 
-    @Click
-    void btn_back()
-    {
-        finish();
-    }
 
-    @Click
-    void tv_jobdoning()
-    {
-        setBackground(0);
-        switchContent(mContent, ncz_saleModuleFragment);
-    }
-
-    @Click
-    void tv_jobcomplete()
-    {
-        setBackground(1);
-        switchContent(mContent, ncz_areaSaleFragment);
-    }
     @Click
     void btn_createorders()
     {
@@ -74,14 +70,13 @@ public class NCZ_SaleModuleActivity extends Activity
         startActivity(intent);
     }
 
+
     @AfterViews
     void afterOncreate()
     {
         getActionBar().hide();
-        ncz_areaSaleFragment = new NCZ_AreaSaleFragment_();
-        ncz_saleModuleFragment = new NCZ_SaleModuleFragment_();
-        setBackground(0);
-        switchContent(mContent, ncz_saleModuleFragment);
+        getSaleDataOfArea();
+        getSaleDataOfBatchTime();
     }
 
     @Override
@@ -91,50 +86,103 @@ public class NCZ_SaleModuleActivity extends Activity
     }
 
 
-    private void setBackground(int pos)
+    private void getSaleDataOfBatchTime()
     {
-//        tv_jobdoning.setSelected(false);
-//        tv_jobcomplete.setSelected(false);
-
-//        tv_jobdoning.setBackgroundResource(R.color.white);
-//        tv_jobcomplete.setBackgroundResource(R.color.white);
-
-//        tv_jobdoning.setTextColor(getResources().getColor(R.color.menu_textcolor));
-//        tv_jobcomplete.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        switch (pos)
+        commembertab commembertab = AppContext.getUserInfo(NCZ_SaleModuleActivity.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "getBatchTimeByUid");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
-            case 0:
-//                tv_jobdoning.setSelected(false);
-//                tv_jobdoning.setTextColor(getResources().getColor(R.color.bg_blue));
-                view_jobcomplete.setVisibility(View.GONE);
-                view_jobdoing.setVisibility(View.VISIBLE);
-//                tv_jobdoning.setBackgroundResource(R.drawable.red_bottom);
-                break;
-            case 1:
-//                tv_jobcomplete.setSelected(false);
-//                tv_jobcomplete.setTextColor(getResources().getColor(R.color.bg_blue));
-//                tv_jobcomplete.setBackgroundResource(R.drawable.red_bottom);
-                view_jobcomplete.setVisibility(View.VISIBLE);
-                view_jobdoing.setVisibility(View.GONE);
-                break;
-        }
-
-    }
-
-    public void switchContent(Fragment from, Fragment to)
-    {
-        if (mContent != to)
-        {
-            mContent = to;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if (!to.isAdded())
-            { // 先判断是否被add过
-                transaction.hide(from).add(R.id.job_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
             {
-                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
-            }
-        }
-    }
+                String a = responseInfo.result;
+                List<parktab> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
+                        adapter_farmSaleData_batchtime = new Adapter_FarmSaleData(NCZ_SaleModuleActivity.this, listNewData, expandableListView_batchtimesaledata);
+                        expandableListView_batchtimesaledata.setAdapter(adapter_farmSaleData_batchtime);
+                        utils.setListViewHeight(expandableListView_batchtimesaledata);
+//                        for (int i = 0; i < listNewData.size(); i++)
+//                        {
+//                            expandableListView.expandGroup(i);//展开
+//                        }
 
+                    } else
+                    {
+                        listNewData = new ArrayList<parktab>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_SaleModuleActivity.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_SaleModuleActivity.this, "error_connectServer");
+            }
+        });
+    }
+    private void getSaleDataOfArea()
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_SaleModuleActivity.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "getAreaSaleData");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<parktab> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
+                        adapter_areaSaleFragment = new Adapter_AreaSaleFragment(NCZ_SaleModuleActivity.this, listNewData, expandableListView_areasaledata);
+                        expandableListView_areasaledata.setAdapter(adapter_areaSaleFragment);
+                        utils.setListViewHeight(expandableListView_areasaledata);
+
+//                        for (int i = 0; i < listNewData.size(); i++)
+//                        {
+//                            expandableListView.expandGroup(i);//展开
+//                        }
+
+                    } else
+                    {
+                        listNewData = new ArrayList<parktab>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_SaleModuleActivity.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_SaleModuleActivity.this, "error_connectServer");
+            }
+        });
+    }
 }

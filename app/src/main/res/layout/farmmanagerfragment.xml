@@ -258,7 +258,7 @@
                         android:layout_width="40dip"
                         android:layout_height="40dip"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/newicon_analysis"/>
+                        android:background="@drawable/newicon_googs"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -365,7 +365,7 @@
                             android:layout_width="40dip"
                             android:layout_height="40dip"
                             android:layout_gravity="center_horizontal"
-                            android:background="@drawable/newicon_sale"/>
+                            android:background="@drawable/newicon_sale1"/>
 
                         <TextView
                             android:layout_width="match_parent"

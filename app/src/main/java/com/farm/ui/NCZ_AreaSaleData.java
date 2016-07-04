@@ -66,7 +66,7 @@ public class NCZ_AreaSaleData extends Activity
         batchTime = getIntent().getStringExtra("batchTime");
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_FINISH);
         registerReceiver(receiver_update, intentfilter_update);
-        tv_note.setText(parkname + "***" + batchTime + "批次***" + "销售情况");
+        tv_note.setText(parkname + "        " + batchTime + "批次");
         getSaleDataOfArea();
     }
 

@@ -20,6 +20,7 @@ import java.util.List;
 public class areatab implements Parcelable // 与数据库不一致
 {
     public String id;
+    public String areaid;
     public String uId;
     public String regDate;
     public String areaName;
@@ -54,9 +55,31 @@ public class areatab implements Parcelable // 与数据库不一致
     public String allsalein;
     public String allsalefor;
     public String allnewsale;
+    public String allnumber;
     public List<contractTab> contractTabList;
     public List<SellOrderDetail_New> sellOrderDetail_NewList;
 
+    public String getAreaid()
+    {
+        return areaid;
+    }
+
+    public void setAreaid(String areaid)
+    {
+        this.areaid = areaid;
+    }
+
+
+
+    public String getAllnumber()
+    {
+        return allnumber;
+    }
+
+    public void setAllnumber(String allnumber)
+    {
+        this.allnumber = allnumber;
+    }
 
     public void setAllsaleout(String allsaleout)
     {
@@ -436,6 +459,8 @@ public class areatab implements Parcelable // 与数据库不一致
             // 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错
             areatab p = new areatab();
             p.setid(source.readString());
+            p.setAreaid(source.readString());
+            p.setid(source.readString());
             p.setuId(source.readString());
             p.setregDate(source.readString());
             p.setareaName(source.readString());
@@ -466,6 +491,7 @@ public class areatab implements Parcelable // 与数据库不一致
             p.setAllsalein(source.readString());
             p.setAllsalefor(source.readString());
             p.setAllnewsale(source.readString());
+            p.setAllnumber(source.readString());
             p.contractTabList = source.readArrayList(plantgrowthtab.class.getClassLoader());
             p.sellOrderDetail_NewList = source.readArrayList(plantgrowthtab.class.getClassLoader());
             return p;
@@ -482,6 +508,7 @@ public class areatab implements Parcelable // 与数据库不一致
     public void writeToParcel(Parcel p, int arg1)
     {
         p.writeString(id);
+        p.writeString(areaid);
         p.writeString(uId);
         p.writeString(regDate);
         p.writeString(areaName);
@@ -512,6 +539,7 @@ public class areatab implements Parcelable // 与数据库不一致
         p.writeString(allsalein);
         p.writeString(allsalefor);
         p.writeString(allnewsale);
+        p.writeString(allnumber);
         p.writeList(contractTabList);
         p.writeList(sellOrderDetail_NewList);
     }

@@ -58,6 +58,8 @@ public class ShowUserInfo extends Activity
     @ViewById
     TextView tv_area;
     @ViewById
+    TextView tv_park;
+    @ViewById
     TextView tv_userWX;
     @ViewById
     TextView tv_userQQ;
@@ -152,12 +154,28 @@ public class ShowUserInfo extends Activity
         {
             tv_zw.setText("片管");
         }
-        tv_area.setText(commembertab.getparkName() + "-" + commembertab.getareaName());
+        if (commembertab.getparkName() != null)
+        {
+            tv_park.setText(commembertab.getparkName());
+        }
+        if (commembertab.getareaName() != null)
+        {
+            tv_area.setText(commembertab.getareaName());
+        }
+        if (commembertab.getcontractName() != null)
+        {
+            tv_contractName.setText(commembertab.getcontractName());
+        }
+        if (commembertab.getuserWX() != null)
+        {
+            tv_userWX.setText(commembertab.getuserWX());
+        }
+        if (commembertab.getuserQQ() != null)
+        {
+            tv_userQQ.setText(commembertab.getuserQQ());
+        }
         tv_name.setText(commembertab.getrealName());
-        tv_userWX.setText(commembertab.getuserWX());
-        tv_userQQ.setText(commembertab.userQQ);
         tv_phone.setText(commembertab.getuserCell());
-        tv_contractName.setText(commembertab.getcontractName());
         BitmapHelper.setImageViewBackground(ShowUserInfo.this, circle_img, AppConfig.baseurl + commembertab.getimgurl());
     }
 
