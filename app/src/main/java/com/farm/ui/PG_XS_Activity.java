@@ -23,6 +23,13 @@ public class PG_XS_Activity extends Activity
     Button btn_createorders;
     @ViewById
     Button btn_orders;
+
+    @Click
+    void btn_createorders()
+    {
+        Intent intent=new Intent(this,PG_CreateOrder_.class);
+        startActivity(intent);
+    }
     @Click
     void btn_orders()
     {

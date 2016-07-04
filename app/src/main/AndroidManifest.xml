@@ -236,6 +236,8 @@
         <activity android:name=".ui.PG_XS_Activity_"/>
         <activity android:name=".ui.PG_OrderManager_"/>
         <activity android:name=".ui.PG_EditOrder_"/>
+        <activity android:name=".ui.PG_CreateOrder_"/>
+        <activity android:name=".ui.PG_CreateOrder_SelectBatchTime_"/>
         <!-- 共用UI -->
         <activity android:name=".chart.BarChartActivity_"/>
         <activity android:name=".ui.ObservationRecordActivity_"/>
