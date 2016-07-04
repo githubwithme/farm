@@ -1,0 +1,1102 @@
+package com.farm.ui;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.alibaba.fastjson.JSON;
+import com.farm.R;
+import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
+import com.farm.bean.AllType;
+import com.farm.bean.PeopelList;
+import com.farm.bean.Purchaser;
+import com.farm.bean.Result;
+import com.farm.bean.SellOrderDetail;
+import com.farm.bean.SellOrderDetail_New;
+import com.farm.bean.SellOrder_New;
+import com.farm.bean.SellOrder_New_First;
+import com.farm.bean.commembertab;
+import com.farm.common.utils;
+import com.farm.widget.CustomDialog_ListView;
+import com.farm.widget.MyDatepicker;
+import com.farm.widget.MyDialog;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+import org.apache.http.entity.StringEntity;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import javax.activation.DataHandler;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
+
+/**
+ * Created by hasee on 2016/7/4.
+ */
+@EActivity(R.layout.ncz_createneworder)
+public class PG_CreateOrder extends Activity
+{
+
+    String mail;
+    String telphone;
+    @ViewById
+    Button btn_addcg;
+    @ViewById
+    Button btn_addbz;
+    @ViewById
+    Button btn_addby;
+    List<PeopelList> listpeople = new ArrayList<PeopelList>();
+    @ViewById
+    EditText bz_danjia;
+    @ViewById
+    EditText dingjin;
+    @ViewById
+    EditText by_danjia;
+    @ViewById
+    EditText bz_guige;
+    @ViewById
+    EditText dd_cl;
+    @ViewById
+    TextView dd_time;
+    @ViewById
+    EditText dd_fzr;
+    @ViewById
+    TextView dd_bz;
+    @ViewById
+    TextView dd_by;
+    MyDialog myDialog;
+    CustomDialog_ListView customDialog_listView;
+    String zzsl = "";
+    String batchtime = "";
+    List<SellOrderDetail_New> list_SellOrderDetail;
+    Adapter_CreateSellOrderDetail_NCZ adapter_sellOrderDetail;
+    com.farm.bean.SellOrderDetail SellOrderDetail;
+    /*   @ViewById
+       LinearLayout ll_flyl;*/
+    @ViewById
+    ListView lv;
+    @ViewById
+    Button btn_sure;
+    @ViewById
+    TextView et_values;
+    @ViewById
+    TextView et_name;
+    @ViewById
+    EditText et_address;
+    @ViewById
+    EditText et_price;
+    @ViewById
+    EditText et_weight;
+    @ViewById
+    EditText et_phone;
+    @ViewById
+    EditText et_email;
+    @ViewById
+    EditText et_note;
+    @ViewById
+    TextView tv_allnumber;
+    @ViewById
+    TextView CR_chanpin;
+
+    String cgId = "";
+    String byId = "";
+    String bzId = "";
+    String fzrId = "";
+    String cpid="";
+    List<Purchaser> listData_CG = new ArrayList<Purchaser>();
+    List<Purchaser> listData_BY = new ArrayList<Purchaser>();
+    List<Purchaser> listData_BZ = new ArrayList<Purchaser>();
+    List<AllType> listAlltype = new ArrayList<AllType>();
+
+
+    @Click
+    void btn_addcg()
+    {
+        Intent intent = new Intent(PG_CreateOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "采购商");
+        startActivity(intent);
+    }
+
+    @Click
+    void btn_addby()
+    {
+        Intent intent = new Intent(PG_CreateOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "搬运工头");
+        startActivity(intent);
+    }
+
+    @Click
+    void btn_addbz()
+    {
+        Intent intent = new Intent(PG_CreateOrder.this, Add_workPeopel_.class);
+        intent.putExtra("type", "包装工头");
+        startActivity(intent);
+    }
+
+    @Click
+    void dd_time()
+    {
+        MyDatepicker myDatepicker = new MyDatepicker(PG_CreateOrder.this, dd_time);
+        myDatepicker.getDialog().show();
+    }
+
+    @Click
+    void CR_chanpin()
+    {
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listAlltype.size(); i++)
+        {
+            listdata.add(listAlltype.get(i).getProductName());
+            listid.add(listAlltype.get(i).getId());
+        }
+        showDialog_fcp(listdata, listid);
+    }
+    @Click
+    void dd_fzr()
+    {
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listpeople.size(); i++)
+        {
+            listdata.add(listpeople.get(i).getRealName());
+            listid.add(listpeople.get(i).getId());
+        }
+        showDialog_fzr(listdata, listid);
+    }
+
+    @Click
+    void et_name()
+    {
+
+//        listNewData = FileHelper.getAssetsData(NCZ_CreateNewOrder.this, "getPurchaser", Purchaser.class);
+
+//        JSONObject jsonObject = utils.parseJsonFile(NCZ_CreateNewOrder.this, "dictionary.json");
+//        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("Happen"));
+/*        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < listNewData.size(); i++)
+        {
+            list.add(listNewData.get(i).getName());
+        }*/
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listData_CG.size(); i++)
+        {
+            listdata.add(listData_CG.get(i).getName());
+            listid.add(listData_CG.get(i).getId());
+        }
+        showDialog_workday(listdata, listid);
+//        showDialog_workday(list, list);
+    }
+
+    @Click
+    void dd_bz()
+    {
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listData_BZ.size(); i++)
+        {
+            listdata.add(listData_BZ.get(i).getName());
+            listid.add(listData_BZ.get(i).getId());
+        }
+        showDialog_bz(listdata, listid);
+    }
+
+    @Click
+    void dd_by()
+    {
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listData_BY.size(); i++)
+        {
+            listdata.add(listData_BY.get(i).getName());
+            listid.add(listData_BY.get(i).getId());
+        }
+        showDialog_by(listdata, listid);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+//        getpurchaser("");
+        getNewSaleList();
+    }
+
+    @Click
+    void btn_addproduct()
+    {
+//        Intent intent = new Intent(PG_CreateOrder.this, NCZ_CreateOrder_SelectBatchTime_.class);
+        Intent intent = new Intent(PG_CreateOrder.this, PG_CreateOrder_SelectBatchTime_.class);
+        startActivity(intent);
+    }
+
+    @Click
+    void btn_back()
+    {
+        cancleOrder();
+    }
+
+    @Click
+    void btn_cancleorder()
+    {
+        cancleOrder();
+    }
+
+    @Click
+    void btn_sure()
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
+        if (CR_chanpin.getText().toString().equals(""))
+        {
+            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (dd_fzr.getText().toString().equals(""))
+        {
+            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (dd_time.getText().toString().equals(""))
+        {
+            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_name.getText().toString().equals(""))
+        {
+            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+   /*     if (et_email.getText().toString().equals(""))
+        {
+            Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }*/
+        if (et_address.getText().toString().equals(""))
+        {
+            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+  /*      if (et_phone.getText().toString().equals(""))
+        {
+            Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }*/
+        if (et_price.getText().toString().equals(""))
+        {
+            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_weight.getText().toString().equals(""))
+        {
+            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (et_values.getText().toString().equals(""))
+        {
+            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //
+/*        String phone = phoneEt.getText().toString();
+        String context = contextEt.getText().toString();
+        SmsManager manager = SmsManager.getDefault();
+        ArrayList<String> list = manager.divideMessage(context);  //因为一条短信有字数限制，因此要将长短信拆分
+        for(String text:list){
+            manager.sendTextMessage(phone, null, text, null, null);
+        }*/
+
+        //短信
+        SmsManager smsMessage = SmsManager.getDefault();
+//        List<String> divideContents = smsMessage.divideMessage(message);
+        smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元", null, null);
+        //
+//邮箱
+        new Thread(networkTask).start();
+/*        Intent data=new Intent(Intent.ACTION_SENDTO);
+        data.setData(Uri.parse(mail));
+        data.putExtra(Intent.EXTRA_SUBJECT, "订单");
+        data.putExtra(Intent.EXTRA_TEXT, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元");
+        startActivity(data);*/
+/*
+        Intent myIntent=new Intent(android.content.Intent.ACTION_SEND);
+        myIntent.setType("plain/text");//设置邮件格式
+
+        myIntent.putExtra(android.content.Intent.EXTRA_EMAIL, mail);
+        myIntent.putExtra(android.content.Intent.EXTRA_CC, "");//副本
+        myIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "订单");//主题
+        myIntent.putExtra(android.content.Intent.EXTRA_TEXT, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元");//内容
+        startActivity(Intent.createChooser(myIntent, "标题"));*/
+        List<String> list_uuid = new ArrayList<>();
+        String batchtime = "";
+        String producer = "";
+        List<String> list_batchtime = new ArrayList<>();
+        List<String> list_producer = new ArrayList<>();
+        for (int i = 0; i < list_SellOrderDetail.size(); i++)
+        {
+            list_uuid.add(list_SellOrderDetail.get(i).getUuid());
+            if (i == 0)
+            {
+                list_batchtime.add(list_SellOrderDetail.get(0).getBatchTime());
+                batchtime = batchtime + list_SellOrderDetail.get(0).getBatchTime() + ";";
+            }
+            if (i == 0)
+            {
+                list_producer.add(list_SellOrderDetail.get(0).getparkname());
+                producer = producer + list_SellOrderDetail.get(0).getparkname() + ";";
+            }
+            for (int j = 0; j < list_batchtime.size(); j++)
+            {
+                if (list_SellOrderDetail.get(i).getBatchTime().equals(list_batchtime.get(j)))
+                {
+                    break;
+                } else if (i == list_batchtime.size() - 1)
+                {
+                    list_batchtime.add(list_SellOrderDetail.get(i).getBatchTime());
+                    batchtime = batchtime + list_SellOrderDetail.get(i).getBatchTime() + ";";
+                }
+            }
+            for (int j = 0; j < list_producer.size(); j++)
+            {
+                if (list_SellOrderDetail.get(i).getparkname().equals(list_producer.get(j)))
+                {
+                    break;
+                } else if (i == list_producer.size() - 1)
+                {
+                    list_producer.add(list_SellOrderDetail.get(i).getparkname());
+                    producer = producer + list_SellOrderDetail.get(i).getparkname() + ";";
+                }
+            }
+
+        }
+        String uuid = java.util.UUID.randomUUID().toString();
+        SellOrder_New sellOrder = new SellOrder_New();
+        sellOrder.setCreatorid(commembertab.getId());
+        sellOrder.setid("");
+        sellOrder.setUid(commembertab.getuId());
+        sellOrder.setUuid(uuid);
+        sellOrder.setBatchTime(batchtime);
+        sellOrder.setSelltype("待付订金");
+        sellOrder.setStatus("0");
+//        sellOrder.setBuyers(et_name.getText().toString());
+        sellOrder.setBuyers(cgId);
+        sellOrder.setAddress(et_address.getText().toString());
+        sellOrder.setGoodsname(CR_chanpin.getText().toString());
+        sellOrder.setEmail(et_email.getText().toString());
+        sellOrder.setPhone(et_phone.getText().toString());
+        sellOrder.setPrice(et_price.getText().toString());
+        sellOrder.setNumber(String.valueOf(countAllNumber()));
+        sellOrder.setWeight(et_weight.getText().toString());
+        sellOrder.setSumvalues(et_values.getText().toString());
+        sellOrder.setActualprice("");
+        sellOrder.setActualweight("");
+        sellOrder.setActualnumber("");
+        sellOrder.setActualsumvalues("");
+        sellOrder.setDeposit("0");
+        sellOrder.setReg(utils.getTime());
+//        sellOrder.setSaletime(utils.getTime());
+        sellOrder.setSaletime(dd_time.getText().toString());
+        sellOrder.setYear(utils.getYear());
+        sellOrder.setNote(et_note.getText().toString());
+        sellOrder.setXxzt("0");
+        sellOrder.setProducer(producer);
+        sellOrder.setFinalpayment("0");
+
+        sellOrder.setMainPepole(fzrId);
+        sellOrder.setPlateNumber(dd_cl.getText().toString());
+        sellOrder.setContractorId(bzId);
+        sellOrder.setPickId(byId);
+        sellOrder.setCarryPrice(by_danjia.getText().toString());
+        sellOrder.setPackPrice(bz_danjia.getText().toString());
+        sellOrder.setPackPec(bz_guige.getText().toString());
+        sellOrder.setWaitDeposit(dingjin.getText().toString());
+        sellOrder.setFreeFinalPay("1");
+        sellOrder.setFreeDeposit("1");
+        sellOrder.setIsNeedAudit("0");
+        List<SellOrder_New> SellOrderList = new ArrayList<>();
+        SellOrderList.add(sellOrder);
+        SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
+        sellOrder_new_first.setSellOrderId(uuid);
+        sellOrder_new_first.setQualityWaterWeight("0");
+        sellOrder_new_first.setQualityNetWeight("0");
+        sellOrder_new_first.setQualityBalance("0");
+        sellOrder_new_first.setDefectWaterWeight("0");
+        sellOrder_new_first.setDefectNetWeight("0");
+        sellOrder_new_first.setDefectBalance("0");
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"SellOrderList\": ");
+        builder.append(JSON.toJSONString(SellOrderList));
+
+        builder.append(", \"sellorderlistadd\": [");
+        builder.append(JSON.toJSONString(sellOrder_new_first));
+
+        builder.append("], \"SellOrderDetailLists\": ");
+        builder.append(JSON.toJSONString(list_uuid));
+        builder.append("} ");
+        addOrder(uuid, builder.toString());
+    }
+
+    @AfterViews
+    void afterOncreate()
+    {
+/*        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String str = formatter.format(curDate);
+        dd_time.setText(str);*/
+        dd_bz.setInputType(InputType.TYPE_NULL);
+        dd_by.setInputType(InputType.TYPE_NULL);
+        dd_fzr.setInputType(InputType.TYPE_NULL);
+        getchanpin();
+        getlistdata();
+        deleNewSaleAddsalefor();
+        et_price.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                if (et_price.getText().toString().equals(""))
+                {
+//                    Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写单价", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (et_weight.getText().toString().equals(""))
+                {
+//                    Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写重量", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                double ss = Double.valueOf(et_price.getText().toString()) * Double.valueOf(et_weight.getText().toString());
+                et_values.setText(String.format("%.2f", ss));
+            }
+        });
+        et_weight.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                if (et_price.getText().toString().equals(""))
+                {
+//                    Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写单价", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (et_weight.getText().toString().equals(""))
+                {
+//                    Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写重量", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                double ss = Double.valueOf(et_price.getText().toString()) * Double.valueOf(et_weight.getText().toString());
+                et_values.setText(String.format("%.2f", ss));
+            }
+        });
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();
+//        list_SellOrderDetail = getIntent().getParcelableArrayListExtra("list");
+//        Bundle bundle = getIntent().getExtras();
+//        ArrayList arraylist = bundle.getParcelableArrayList("list_uuid");
+//        uuids = (List<HashMap<String, String>>) arraylist.get(0);
+    }
+
+    public int countAllNumber()
+    {
+        int allnumber = 0;
+        for (int i = 0; i < list_SellOrderDetail.size(); i++)
+        {
+            allnumber = allnumber + Integer.valueOf(list_SellOrderDetail.get(i).getplannumber());
+        }
+        return allnumber;
+    }
+
+    private void deleNewSaleAddsalefor()
+    {
+        commembertab commembertab = AppContext.getUserInfo(this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "deleNewSaleAddsalefor");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+               /* if (result.getAffectedRows() != 0)
+                {
+                    listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+
+                } else
+                {
+                    listData = new ArrayList<SellOrder_New>();
+                }*/
+
+                } else
+                {
+                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+
+            }
+        });
+    }
+
+    private void getNewSaleList()
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "getSellOrderDetailList");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        list_SellOrderDetail = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+                        adapter_sellOrderDetail = new Adapter_CreateSellOrderDetail_NCZ(PG_CreateOrder.this, list_SellOrderDetail);
+                        lv.setAdapter(adapter_sellOrderDetail);
+                        utils.setListViewHeight(lv);
+                        tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
+                    } else
+                    {
+                        list_SellOrderDetail = new ArrayList<SellOrderDetail_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void addOrder(String uuid, String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("saleid", uuid);
+        params.addQueryStringParameter("action", "createOrder");
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(PG_CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent();
+                        intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
+                        sendBroadcast(intent1);
+
+                        Intent intent2 = new Intent();
+                        intent2.setAction(AppContext.BROADCAST_FINISH);
+                        sendBroadcast(intent2);
+                        finish();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+            }
+        });
+    }
+
+    //采购商的弹窗
+    public void showDialog_workday(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                et_name.setText(zzsl);
+                cgId = bundle.getString("id");
+
+                for (int i = 0; i < listData_CG.size(); i++)
+                {
+                    if (listData_CG.get(i).getName().equals(zzsl))
+                    {
+                        telphone = listData_CG.get(i).getTelephone();
+                        mail = listData_CG.get(i).getMailbox();
+                    }
+                }
+
+
+            }
+        });
+        customDialog_listView.show();
+    }
+
+    //包装工
+    public void showDialog_bz(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                dd_bz.setText(zzsl);
+                bzId = bundle.getString("id");
+
+            }
+        });
+        customDialog_listView.show();
+    }
+
+    //搬运工
+    public void showDialog_by(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                dd_by.setText(zzsl);
+                byId = bundle.getString("id");
+
+            }
+        });
+        customDialog_listView.show();
+    }
+
+    //产品
+    public void showDialog_fcp(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                CR_chanpin.setText(zzsl);
+                cpid = bundle.getString("id");
+
+            }
+        });
+        customDialog_listView.show();
+    }
+    //负责人
+    public void showDialog_fzr(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                dd_fzr.setText(zzsl);
+                fzrId = bundle.getString("id");
+
+            }
+        });
+        customDialog_listView.show();
+    }
+
+    private void getpurchaser(String name)
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getpurchaser");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<Purchaser> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        if (result.getAffectedRows() != 0)
+                        {
+                            listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                if (listNewData.get(i).userType.equals("采购商"))
+                                {
+                                    listData_CG.add(listNewData.get(i));
+                                } else if (listNewData.get(i).userType.equals("包装工头"))
+                                {
+                                    listData_BZ.add(listNewData.get(i));
+                                } else
+                                {
+                                    listData_BY.add(listNewData.get(i));
+                                }
+                            }
+
+
+                  /*          String[] str = new String[listData_CG.size()];
+                            for (int i = 0; i < listData_CG.size(); i++)
+                            {
+                                str[i] = listData_CG.get(i).getName();
+                            }
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(NCZ_CreateNewOrder.this,
+                                    android.R.layout.simple_dropdown_item_1line, str);
+                            et_name.setAdapter(adapter);
+                            et_name.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                            {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                                {
+                                    Object obj = adapterView.getItemAtPosition(i);
+                                    String ss = obj.toString();
+                                    for (int j = 0; j < listData_CG.size(); j++)
+                                    {
+                                        if (listData_CG.get(j).getName().equals(ss))
+                                        {
+                                            et_phone.setText(listData_CG.get(j).getTelephone());
+                                            et_address.setText(listData_CG.get(j).getAddress());
+                                            et_email.setText(listData_CG.get(j).getMailbox());
+                                        }
+                                    }
+                                }
+                            });*/
+
+                        } else
+                        {
+                            listNewData = new ArrayList<Purchaser>();
+                        }
+
+                    } else
+                    {
+                        listNewData = new ArrayList<Purchaser>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void cancleOrder()
+    {
+        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, "取消订单", "取消订单吗？", "取消", "不取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+//                        myDialog.dismiss();
+                        deleNewSaleAddsalefor();
+
+                        Toast.makeText(PG_CreateOrder.this, "已取消", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent();
+                        intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
+                        sendBroadcast(intent1);
+
+                        finish();
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.dismiss();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            cancleOrder();
+        }
+        return false;
+
+    }
+
+    //获取人员列表
+    private void getlistdata()
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("nlevel", "1,2");
+        params.addQueryStringParameter("action", "getUserlisttByUID");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<PeopelList> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PeopelList.class);
+
+                        listpeople.addAll(listNewData);
+                        //方法一
+                     /*   List<String> list = new ArrayList<String>();
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            list.add(listNewData.get(i).getUserlevelName()+"-"+listNewData.get(i).getRealName());
+//                            list.add(jsonArray.getString(i));
+                        }
+                        showDialog_workday(list);*/
+                    } else
+                    {
+                        listNewData = new ArrayList<PeopelList>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+
+            }
+        });
+    }
+
+
+    public void sendEmail()
+    {
+
+
+    }
+
+    Runnable networkTask = new Runnable()
+    {
+
+        @Override
+        public void run()
+        {
+            Multipart multiPart;
+            String finalString = "";
+
+            Properties props = System.getProperties();
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.qq.com");
+            props.put("mail.smtp.user", "956935952@qq.com");
+            props.put("mail.smtp.password", "Fenf5201314.");
+            props.put("mail.smtp.port", "25");
+            props.put("mail.smtp.auth", "true");
+            Session session = Session.getDefaultInstance(props, null);
+            DataHandler handler = new DataHandler(new ByteArrayDataSource(finalString.getBytes(), "text/plain"));
+            MimeMessage message = new MimeMessage(session);
+
+            try
+            {
+                message.setFrom(new InternetAddress("956935952@qq.com"));
+                message.setDataHandler(handler);
+                Log.i("Check", "done sessions");
+
+                multiPart = new MimeMultipart();
+                InternetAddress toAddress;
+                toAddress = new InternetAddress("2580859001@qq.com");
+                message.addRecipient(Message.RecipientType.TO, toAddress);
+                message.setSubject("订单");
+                message.setContent(multiPart);
+                message.setText("测试");
+
+                Transport transport = session.getTransport("smtp");
+                transport.connect("smtp.qq.com", "956935952@qq.com", "Fenf5201314.");
+                transport.sendMessage(message, message.getAllRecipients());
+                transport.close();
+            } catch (MessagingException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private void getchanpin()
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getProduct");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<AllType> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), AllType.class);
+
+                        listAlltype.addAll(listNewData);
+
+                    } else
+                    {
+                        listNewData = new ArrayList<AllType>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+
+            }
+        });
+
+    }
+}
