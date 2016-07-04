@@ -44,6 +44,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "2.1.2"
+        multiDexEnabled true//方法id的数目不能够超过65536个，时候需要开启，否则报错
     }
     splits {
         abi {

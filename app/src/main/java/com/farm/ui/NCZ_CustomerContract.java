@@ -1,21 +1,17 @@
 package com.farm.ui;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_ContactsFragment;
+import com.farm.adapter.Adapter_Customercontract;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.ContactsBean;
+import com.farm.bean.CustomerContractBean;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
@@ -28,7 +24,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -36,11 +32,11 @@ import java.util.List;
 /**
  * Created by user on 2016/2/26.
  */
-@EFragment
-public class NCZ_ContactsFragment_New extends Fragment
+@EActivity(R.layout.ncz_customercontract)
+public class NCZ_CustomerContract extends Activity
 {
-    List<ContactsBean> listNewData = null;
-    Adapter_ContactsFragment adapter_contactsFragment;
+    List<CustomerContractBean> listNewData = null;
+    Adapter_Customercontract adapter_customercontract;
     String goodsName;
     @ViewById
     ExpandableListView expandableListView;
@@ -65,25 +61,25 @@ public class NCZ_ContactsFragment_New extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        getActionBar().hide();
         getBreakOffInfoOfContract();
 //        getNewSaleList_test();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_contactsfragment_new, container, false);
-        return rootView;
+        super.onCreate(savedInstanceState);
     }
 
     private void getNewSaleList_test()
     {
-        listNewData = FileHelper.getAssetsData(getActivity(), "getUserInfo", ContactsBean.class);
+        listNewData = FileHelper.getAssetsData(NCZ_CustomerContract.this, "getCustomerContract", CustomerContractBean.class);
         if (listNewData != null)
         {
-            adapter_contactsFragment = new Adapter_ContactsFragment(getActivity(), listNewData, expandableListView);
-            expandableListView.setAdapter(adapter_contactsFragment);
+            adapter_customercontract = new Adapter_Customercontract(NCZ_CustomerContract.this, listNewData, expandableListView);
+            expandableListView.setAdapter(adapter_customercontract);
 
             for (int i = 0; i < listNewData.size(); i++)
             {
@@ -95,10 +91,10 @@ public class NCZ_ContactsFragment_New extends Fragment
 
     private void getBreakOffInfoOfContract()
     {
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        commembertab commembertab = AppContext.getUserInfo(NCZ_CustomerContract.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getContactsData");
+        params.addQueryStringParameter("action", "getCustomerContactsData");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -109,9 +105,9 @@ public class NCZ_ContactsFragment_New extends Fragment
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    listNewData = JSON.parseArray(result.getRows().toJSONString(), ContactsBean.class);
-                    adapter_contactsFragment = new Adapter_ContactsFragment(getActivity(), listNewData, expandableListView);
-                    expandableListView.setAdapter(adapter_contactsFragment);
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), CustomerContractBean.class);
+                    adapter_customercontract = new Adapter_Customercontract(NCZ_CustomerContract.this, listNewData, expandableListView);
+                    expandableListView.setAdapter(adapter_customercontract);
 
                     for (int i = 0; i < listNewData.size(); i++)
                     {
@@ -120,7 +116,7 @@ public class NCZ_ContactsFragment_New extends Fragment
 
                 } else
                 {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    AppContext.makeToast(NCZ_CustomerContract.this, "error_connectDataBase");
                     return;
                 }
 
@@ -129,7 +125,7 @@ public class NCZ_ContactsFragment_New extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                AppContext.makeToast(NCZ_CustomerContract.this, "error_connectServer");
             }
         });
     }

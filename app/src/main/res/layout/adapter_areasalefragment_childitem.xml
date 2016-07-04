@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_orange"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/gray"/>
+
+        <TextView
+            android:id="@+id/tv_contractname"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="承包户"
+            android:textColor="@color/bg_text"
+            android:textSize="14sp"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/gray"/>
+
+        <TextView
+            android:id="@+id/tv_allsale"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="总量"
+            android:textColor="@color/bg_text"
+            android:textSize="14sp"/>
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/gray"/>
+        <TextView
+            android:id="@+id/tv_saleout"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="已售"
+            android:textColor="@color/bg_text"
+            android:textSize="14sp"/>
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/gray"/>
+        <TextView
+            android:id="@+id/tv_salein"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="售中"
+            android:textColor="@color/bg_text"
+            android:textSize="14sp"/>
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/gray"/>
+        <TextView
+            android:id="@+id/tv_salefor"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="待售"
+            android:textColor="@color/bg_text"
+            android:textSize="14sp"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/gray"/>
+    </LinearLayout>
+
+
+</LinearLayout>

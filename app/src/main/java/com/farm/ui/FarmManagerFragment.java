@@ -56,12 +56,12 @@ public class FarmManagerFragment extends Fragment
         getActivity().startActivity(intent);
     }
 
-    @Click
-    void ce_tq()//测试天气
-    {
-        Intent intent = new Intent(getActivity(), NC_Weater_.class);
-        getActivity().startActivity(intent);
-    }
+//    @Click
+//    void ce_tq()//测试天气
+//    {
+//        Intent intent = new Intent(getActivity(), NC_Weater_.class);
+//        getActivity().startActivity(intent);
+//    }
     @Click
     void ll_zl()
     {
@@ -103,7 +103,8 @@ public class FarmManagerFragment extends Fragment
 //        Intent intent = new Intent(getActivity(), NCZ_SaleChart_.class);
 //        getActivity().startActivity(intent);
 //        Intent intent = new Intent(getActivity(), NCZ_SaleInfor_.class);
-        Intent intent = new Intent(getActivity(), NCZ_FarmSaleData_.class);
+//        Intent intent = new Intent(getActivity(), NCZ_FarmSaleData_.class);
+        Intent intent = new Intent(getActivity(), NCZ_SaleModuleActivity_.class);
         getActivity().startActivity(intent);
     }
 
@@ -117,8 +118,8 @@ public class FarmManagerFragment extends Fragment
     @Click
     void ll_dl()
     {
-//        Intent intent = new Intent(getActivity(), NCZ_BreakOffActivity_.class);
-        Intent intent = new Intent(getActivity(), NCZ_DLdatail_.class);
+        Intent intent = new Intent(getActivity(), NCZ_BreakOffActivity_.class);
+//        Intent intent = new Intent(getActivity(), NCZ_DLdatail_.class);
         getActivity().startActivity(intent);
     }
 

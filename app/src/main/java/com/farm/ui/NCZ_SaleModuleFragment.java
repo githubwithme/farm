@@ -1,24 +1,24 @@
 package com.farm.ui;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_ContactsFragment;
+import com.farm.adapter.Adapter_FarmSaleData;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.ContactsBean;
 import com.farm.bean.Result;
+import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.commembertab;
-import com.farm.common.FileHelper;
+import com.farm.bean.parktab;
+import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -31,74 +31,72 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Created by user on 2016/2/26.
+ * Created by ${hmj} on 2016/6/57.
  */
 @EFragment
-public class NCZ_ContactsFragment_New extends Fragment
+public class NCZ_SaleModuleFragment extends Fragment
 {
-    List<ContactsBean> listNewData = null;
-    Adapter_ContactsFragment adapter_contactsFragment;
-    String goodsName;
+    List<Map<String, String>> uuids;
+    List<SellOrderDetail_New> list_sell;
+    Adapter_FarmSaleData adapter_farmSaleData;
     @ViewById
     ExpandableListView expandableListView;
     @ViewById
-    ImageButton imgbtn;
-    @ViewById
-    TextView et_goodsname;
+    TextView tv_note;
+
 
     @Click
-    void et_goodsname()
+    void btn_createorders()
     {
-        et_goodsname.setText("");
+        Intent intent = new Intent(getActivity(), NCZ_CreateNewOrder_.class);
+        startActivity(intent);
+    }
+
+
+    @Click
+    void btn_orders()
+    {
+        Intent intent = new Intent(getActivity(), NCZ_OrderManager_.class);
+        startActivity(intent);
     }
 
     @Click
-    void imgbtn()
+    void btn_customer()
     {
-        goodsName = et_goodsname.getText().toString();
-        getBreakOffInfoOfContract();
+//        Intent intent = new Intent(getActivity(), NCZ_OrderManager_.class);
+//        startActivity(intent);
     }
+
 
     @AfterViews
     void afterOncreate()
     {
-        getBreakOffInfoOfContract();
-//        getNewSaleList_test();
+        tv_note.setText("各分场批次销售情况");
+        getSaleDataOfArea();
     }
-
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_contactsfragment_new, container, false);
+        View rootView = inflater.inflate(R.layout.ncz_batchtimesalefragment, container, false);
         return rootView;
     }
 
-    private void getNewSaleList_test()
-    {
-        listNewData = FileHelper.getAssetsData(getActivity(), "getUserInfo", ContactsBean.class);
-        if (listNewData != null)
-        {
-            adapter_contactsFragment = new Adapter_ContactsFragment(getActivity(), listNewData, expandableListView);
-            expandableListView.setAdapter(adapter_contactsFragment);
 
-            for (int i = 0; i < listNewData.size(); i++)
-            {
-                expandableListView.expandGroup(i);//展开
-            }
-        }
 
-    }
 
-    private void getBreakOffInfoOfContract()
+
+    private void getSaleDataOfArea()
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getContactsData");
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "getBatchTimeByUid");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -106,16 +104,24 @@ public class NCZ_ContactsFragment_New extends Fragment
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
+                List<parktab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    listNewData = JSON.parseArray(result.getRows().toJSONString(), ContactsBean.class);
-                    adapter_contactsFragment = new Adapter_ContactsFragment(getActivity(), listNewData, expandableListView);
-                    expandableListView.setAdapter(adapter_contactsFragment);
-
-                    for (int i = 0; i < listNewData.size(); i++)
+                    if (result.getAffectedRows() != 0)
                     {
-                        expandableListView.expandGroup(i);//展开
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
+                        adapter_farmSaleData = new Adapter_FarmSaleData(getActivity(), listNewData, expandableListView);
+                        expandableListView.setAdapter(adapter_farmSaleData);
+                        utils.setListViewHeight(expandableListView);
+//                        for (int i = 0; i < listNewData.size(); i++)
+//                        {
+//                            expandableListView.expandGroup(i);//展开
+//                        }
+
+                    } else
+                    {
+                        listNewData = new ArrayList<parktab>();
                     }
 
                 } else

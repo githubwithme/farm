@@ -506,48 +506,48 @@ public class NCZ_BreakOffActivity extends Activity
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            View v = convertView;
-            if (v == null)
-            {
-                View[] views = new View[item_batchtimedata.length];
-                v = LayoutInflater.from(NCZ_BreakOffActivity.this).inflate(R.layout.breakoff_scrolladapter_item, null);
-                TextView item_titlev = (TextView) v.findViewById(R.id.item_titlev);
-                TextView item_total = (TextView) v.findViewById(R.id.item_total);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(screenWidth, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+//            View v = convertView;
+//            if (v == null)
+//            {
+            View[] views = new View[item_batchtimedata.length];
+            convertView = LayoutInflater.from(NCZ_BreakOffActivity.this).inflate(R.layout.breakoff_scrolladapter_item, null);
+            TextView item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+            TextView item_total = (TextView) convertView.findViewById(R.id.item_total);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(screenWidth, ViewGroup.LayoutParams.MATCH_PARENT, 1);
 //                lp.gravity = Gravity.CENTER;
 //                item_total.setLayoutParams(lp);
 //                item_titlev.setLayoutParams(lp);
-                item_titlev.getLayoutParams().width = (screenWidth);
-                item_total.getLayoutParams().width = (screenWidth);
-                LinearLayout ll_middle = (LinearLayout) v.findViewById(R.id.ll_middle);
-                item_titlev.setText(datas.get(position).get(item_batchtimedata[0]).toString());
-                int totalnumber = 0;
-                List<ParkDataBean> list = listData.get(position).getParklist();
-                for (int j = 0; j < list.size(); j++)
-                {
-                    totalnumber = totalnumber + Integer.valueOf(list.get(j).getNumber());
-                }
-                item_total.setText(String.valueOf(totalnumber));
+            item_titlev.getLayoutParams().width = (screenWidth);
+            item_total.getLayoutParams().width = (screenWidth);
+            LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
+            item_titlev.setText(datas.get(position).get(item_batchtimedata[0]).toString());
+            int totalnumber = 0;
+            List<ParkDataBean> list = listData.get(position).getParklist();
+            for (int j = 0; j < list.size(); j++)
+            {
+                totalnumber = totalnumber + Integer.valueOf(list.get(j).getNumber());
+            }
+            item_total.setText(String.valueOf(totalnumber));
 
 
-                for (int i = 0; i < item_batchtimedata.length - 1; i++)
-                {
-                    View view = LayoutInflater.from(NCZ_BreakOffActivity.this).inflate(R.layout.breakoff_dataitem, null);
-                    TextView tv_data = (TextView) view.findViewById(R.id.tv_data);
-                    tv_data.setText(datas.get(position).get(item_batchtimedata[i + 1]).toString());
+            for (int i = 0; i < item_batchtimedata.length - 1; i++)
+            {
+                View view = LayoutInflater.from(NCZ_BreakOffActivity.this).inflate(R.layout.breakoff_dataitem, null);
+                TextView tv_data = (TextView) view.findViewById(R.id.tv_data);
+                tv_data.setText(datas.get(position).get(item_batchtimedata[i + 1]).toString());
 //                    lp.gravity = Gravity.CENTER;
 //                    view.setLayoutParams(lp);
-                    tv_data.getLayoutParams().width = (screenWidth);
-                    ll_middle.addView(view);
+                tv_data.getLayoutParams().width = (screenWidth);
+                ll_middle.addView(view);
 
-                    tv_data.setOnClickListener(clickListener);
+                tv_data.setOnClickListener(clickListener);
 //                    tv_data.setTag(R.id.tag_kg, datas.get(position).get(item_parkid[i + 1]));
-                    tv_data.setTag(R.id.tag_hg, datas.get(position).get("batchtime"));
-                    tv_data.setTag(R.id.tag_parkname, listData.get(0).getParklist().get(i).getParkname());
-                    views[i] = tv_data;
-                }
-                // 第一次初始化的时候装进来
-                addHViews((CustomHorizontalScrollView_BreakOff) v.findViewById(R.id.item_chscroll_scroll));
+                tv_data.setTag(R.id.tag_hg, datas.get(position).get("batchtime"));
+                tv_data.setTag(R.id.tag_parkname, listData.get(0).getParklist().get(i).getParkname());
+                views[i] = tv_data;
+            }
+            // 第一次初始化的时候装进来
+            addHViews((CustomHorizontalScrollView_BreakOff) convertView.findViewById(R.id.item_chscroll_scroll));
 
 //                if (position == datas.size() - 1)
 //                {
@@ -579,28 +579,28 @@ public class NCZ_BreakOffActivity extends Activity
 
 
 //                View[] views = new View[to.length];
-                // 单元格点击事件
+            // 单元格点击事件
 //                for (int i = 0; i < to.length; i++)
 //                {
 //                    View tv = v.findViewById(to[i]);
 //                    tv.setOnClickListener(clickListener);
 //                    views[i] = tv;
 //                }
-                // 每行点击事件
+            // 每行点击事件
                 /*
                  * for(int i = 0 ; i < from.length; i++) { View tv =
 				 * v.findViewById(row_hlistview[i]); }
 				 */
-                //
-                v.setTag(views);
-            }
+            //
+            convertView.setTag(views);
+//            }
 //            View[] holders = (View[]) v.getTag();
 //            int len = holders.length;
 //            for (int i = 0; i < len; i++)
 //            {
 //                ((TextView) holders[i]).setText(this.datas.get(position).get(from[i]).toString());
 //            }
-            return v;
+            return convertView;
         }
     }
 

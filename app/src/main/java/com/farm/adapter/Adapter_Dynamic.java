@@ -120,7 +120,7 @@ public class Adapter_Dynamic extends BaseAdapter
                 listItemView.tv_note.setText("无");
             }
 
-            listItemView.circle_img.setBackgroundResource(R.drawable.temp1);
+            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_cmd);
         } else if (type.equals("GZ"))
         {
             listItemView.tv_title.setText("工作");
@@ -132,7 +132,7 @@ public class Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.temp2);
+            listItemView.circle_img.setBackgroundResource(R.drawable.logo1);
         } else if (type.equals("MQ"))
         {
             listItemView.tv_title.setText("苗情");
@@ -144,7 +144,7 @@ public class Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.icon_zz);
+            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_plant);
         } else if (type.equals("XS"))
         {
             listItemView.tv_title.setText("销售");
@@ -156,7 +156,7 @@ public class Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.icon_zl);
+            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_sale);
         } else if (type.equals("KC"))
         {
             listItemView.tv_title.setText("库存");
@@ -168,7 +168,7 @@ public class Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.temp4);
+            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_analysis);
         } else if (type.equals("SP"))
         {
             listItemView.tv_title.setText("审批");
@@ -180,7 +180,7 @@ public class Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.temp3);
+            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_money);
         } else if (type.equals("SJ"))
         {
             listItemView.tv_title.setText("事件");
@@ -192,7 +192,7 @@ public class Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.temp7);
+            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_event);
         } else if (type.equals("DL"))
         {
             listItemView.tv_title.setText("断蕾");
@@ -204,7 +204,7 @@ public class Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.icon_gz2);
+            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_plant);
         }
 
         if(dynamicBean.getListdata().size()>0)

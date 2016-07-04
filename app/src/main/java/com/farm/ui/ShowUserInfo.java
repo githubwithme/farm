@@ -40,6 +40,7 @@ import java.util.List;
 @EActivity(R.layout.showuserinfo)
 public class ShowUserInfo extends Activity
 {
+    String type;
     CustomDialog_CallTip custom_calltip;
     commembertab commembertab;
     @ViewById
@@ -77,8 +78,8 @@ public class ShowUserInfo extends Activity
     @AfterViews
     void afterOncreate()
     {
-//        getShowUserInfo(userid);
-        showData(commembertab);
+        getShowUserInfo(userid);
+//        showData(commembertab);
 //		getShowUserInfo(userid);
 //		BitmapHelper.setImageViewBackground(ShowUserInfo.this, circle_img, "http://img.popoho.com/UploadPic/2010-12/201012297441441.png");
     }
@@ -88,6 +89,7 @@ public class ShowUserInfo extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+        type = getIntent().getStringExtra("type");
         userid = getIntent().getStringExtra("userid");
         commembertab = AppContext.getUserInfo(ShowUserInfo.this);
     }
@@ -96,7 +98,8 @@ public class ShowUserInfo extends Activity
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userid", userid);
-        params.addQueryStringParameter("action", "getUserInfo");
+        params.addQueryStringParameter("type", type);
+        params.addQueryStringParameter("action", "getContactsDetailData");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
