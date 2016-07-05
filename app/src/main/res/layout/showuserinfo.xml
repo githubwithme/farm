@@ -69,7 +69,7 @@
                     android:layout_marginLeft="15dip"
                     android:layout_toRightOf="@+id/circle_img"
                     android:gravity="left|center_vertical"
-                    android:text="男"
+                    android:text="暂无数据"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_sp_16"/>
 
@@ -80,7 +80,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dip"
-                    android:text="场长"
+                    android:text="暂无数据"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_sp_16"/>
             </RelativeLayout>

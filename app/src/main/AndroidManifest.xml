@@ -61,6 +61,9 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.NCZ_JobActivity_"/>
 
+        <activity android:name=".ui.CZ_BreakOffActivity_"/>
+        <activity android:name=".ui.NCZ_ContractBreakOffActivity_"/>
+        <activity android:name=".ui.PG_SaleActivity_"/>
         <activity android:name=".ui.NCZ_ContractSaleActivity_"/>
         <activity android:name=".ui.NCZ_CreateNewOrder_"/>
         <activity android:name=".ui.NCZ_BreakOffActivity_"/>

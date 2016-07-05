@@ -13,7 +13,7 @@ import com.farm.bean.contractTab;
 import java.util.HashMap;
 import java.util.List;
 
-public class Adapter_ContractSale_NCZ extends BaseAdapter
+public class Adapter_ContractBreakOff_NCZ extends BaseAdapter
 {
     private Context context;// 运行上下文
     private List<contractTab> listItems;// 数据集合
@@ -22,14 +22,11 @@ public class Adapter_ContractSale_NCZ extends BaseAdapter
 
     static class ListItemView
     {
-        public TextView tv_salefor;
-        public TextView tv_salein;
-        public TextView tv_saleout;
         public TextView tv_allsale;
         public TextView tv_contractname;
     }
 
-    public Adapter_ContractSale_NCZ(Context context, List<contractTab> data)
+    public Adapter_ContractBreakOff_NCZ(Context context, List<contractTab> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -62,19 +59,16 @@ public class Adapter_ContractSale_NCZ extends BaseAdapter
             // 获取list_item布局文件的视图
             if (position == 0)
             {
-                convertView = listContainer.inflate(R.layout.adapter_contractsaletop, null);
+                convertView = listContainer.inflate(R.layout.adapter_contractbreakofftop, null);
             } else
             {
-                convertView = listContainer.inflate(R.layout.adapter_contractsale, null);
+                convertView = listContainer.inflate(R.layout.adapter_contractbreakoff, null);
             }
 
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);
             listItemView.tv_allsale = (TextView) convertView.findViewById(R.id.tv_allsale);
-            listItemView.tv_saleout = (TextView) convertView.findViewById(R.id.tv_saleout);
-            listItemView.tv_salein = (TextView) convertView.findViewById(R.id.tv_salein);
-            listItemView.tv_salefor = (TextView) convertView.findViewById(R.id.tv_salefor);
 
             // 设置控件集到convertView
             lmap.put(position, convertView);
@@ -88,9 +82,6 @@ public class Adapter_ContractSale_NCZ extends BaseAdapter
 
         listItemView.tv_contractname.setText(contractTab.getContractname());
         listItemView.tv_allsale.setText(contractTab.getAllnumber());
-        listItemView.tv_saleout.setText(contractTab.getAllsaleout());
-        listItemView.tv_salein.setText(contractTab.getAllsalein());
-        listItemView.tv_salefor.setText(contractTab.getAllsalefor());
         return convertView;
     }
 

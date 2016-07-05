@@ -63,6 +63,7 @@ import java.util.List;
 @EFragment
 public class IFragment extends Fragment
 {
+    commembertab commembertab;
     public static final int NOTIFICATIN_ID = 100;
     private Notification mNotification;
     private NotificationManager manager;
@@ -131,6 +132,8 @@ public class IFragment extends Fragment
     void rl_userinfo()
     {
         Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
+        intent.putExtra("type", "0");
+        intent.putExtra("userid", commembertab.getId());
         startActivity(intent);
     }
 
@@ -201,7 +204,7 @@ public class IFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        commembertab = AppContext.getUserInfo(getActivity());
 //        tv_username.setText(commembertab.getparkName() + commembertab.getareaName() + "-" + commembertab.getuserlevelName() + ":" + commembertab.getrealName());
     /*    if (commembertab.getnlevel().equals("0"))
         {

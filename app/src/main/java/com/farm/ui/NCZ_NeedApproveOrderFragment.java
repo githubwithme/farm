@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.NCZ_NeedAdapter;
-import com.farm.adapter.NCZ_OrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -73,7 +72,6 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
     ArrayAdapter<String> provinceAdapter = null;  //省级适配器
     ArrayAdapter<String> cityAdapter = null;    //地级适配器
     ArrayAdapter<String> countyAdapter = null;    //县级适配器
-    static int provincePosition = 3;
     private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
     private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
     private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};

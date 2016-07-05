@@ -155,6 +155,7 @@ public class CZ_FarmManagerFragment extends Fragment
     void ll_dl()
     {
         Intent intent = new Intent(getActivity(), CZ_DLFragment_.class);
+//        Intent intent = new Intent(getActivity(), CZ_BreakOffActivity_.class);
         getActivity().startActivity(intent);
     }
 

@@ -192,7 +192,7 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
         }
 
         tv_contractname.setText(listData.get(groupPosition).getareaName());
-        tv_salefor.setText(String.valueOf(allnumber));
+        tv_salefor.setText(areatab.getAllsalefor());
         tv_allsale.setText(String.valueOf(allnumber));
         tv_saleout.setText(areatab.getAllsaleout());
         tv_salein.setText(areatab.getAllsalein());
@@ -281,7 +281,7 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
                 }
                 view.tv_salein.setText(list.get(position).getAllsalein());
                 view.tv_saleout.setText(list.get(position).getAllsaleout());
-                view.tv_salefor.setText(String.valueOf(allnumber));
+                view.tv_salefor.setText(list.get(position).getAllsalefor());
                 view.tv_allsale.setText(String.valueOf(allnumber));
                 view.tv_contractname.setText(list.get(position).getContractNum());
                 if (contractTab.getAllsalefor().equals("0"))

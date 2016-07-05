@@ -266,12 +266,12 @@ public class Adapter_AreaSaleFragment extends BaseExpandableListAdapter
                         String areaname = (String) v.getTag(R.id.tag_areaname);
                         Intent intent = new Intent(context, NCZ_ContractSaleActivity_.class);
                         intent.putExtra("areaid", areaid);
-                        intent.putExtra("areaname", areaid);
+                        intent.putExtra("areaname", areaname);
                         context.startActivity(intent);
                     }
                 });
                 convertView.setTag(view);
-                convertView.setTag(R.id.tag_areaid, areatab.getid());
+                convertView.setTag(R.id.tag_areaid, areatab.getAreaid());
                 convertView.setTag(R.id.tag_areaname, areatab.getareaName());
             } else
             {
