@@ -23,7 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tv_note"
-            android:layout_marginBottom="60dip"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:layout_marginTop="10dip"
@@ -31,16 +30,34 @@
             android:focusableInTouchMode="false"
             android:orientation="vertical">
 
-            <com.farm.widget.CustomExpandableListView
-                android:id="@+id/expandableListView"
-                android:layout_width="match_parent"
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:childDivider="@color/transparent"
-                android:divider="@color/transparent"
-                android:dividerHeight="0dip"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:groupIndicator="@null"/>
+                android:orientation="vertical">
+
+                <com.farm.widget.CustomExpandableListView
+                    android:id="@+id/expandableListView_areasaledata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:childDivider="@color/transparent"
+                    android:divider="@color/transparent"
+                    android:dividerHeight="0dip"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:groupIndicator="@null"/>
+
+                <com.farm.widget.CustomExpandableListView
+                    android:id="@+id/expandableListView_batchtimesaledata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:childDivider="@color/transparent"
+                    android:divider="@color/transparent"
+                    android:dividerHeight="0dip"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:groupIndicator="@null"/>
+            </LinearLayout>
         </ScrollView>
 
 

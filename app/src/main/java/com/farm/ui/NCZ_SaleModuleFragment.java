@@ -43,9 +43,12 @@ public class NCZ_SaleModuleFragment extends Fragment
 {
     List<Map<String, String>> uuids;
     List<SellOrderDetail_New> list_sell;
-    Adapter_FarmSaleData adapter_farmSaleData;
+    Adapter_FarmSaleData adapter_farmSaleData_area;
+    Adapter_FarmSaleData adapter_farmSaleData_batchtime;
     @ViewById
-    ExpandableListView expandableListView;
+    ExpandableListView expandableListView_areasaledata;
+    @ViewById
+    ExpandableListView expandableListView_batchtimesaledata;
     @ViewById
     TextView tv_note;
 
@@ -96,7 +99,7 @@ public class NCZ_SaleModuleFragment extends Fragment
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "getBatchTimeByUid");//jobGetList1
+        params.addQueryStringParameter("action", "getAreaSaleData");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -111,9 +114,13 @@ public class NCZ_SaleModuleFragment extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
-                        adapter_farmSaleData = new Adapter_FarmSaleData(getActivity(), listNewData, expandableListView);
-                        expandableListView.setAdapter(adapter_farmSaleData);
-                        utils.setListViewHeight(expandableListView);
+                        adapter_farmSaleData_area = new Adapter_FarmSaleData(getActivity(), listNewData, expandableListView_areasaledata);
+                        expandableListView_areasaledata.setAdapter(adapter_farmSaleData_area);
+                        utils.setListViewHeight(expandableListView_areasaledata);
+
+                        adapter_farmSaleData_batchtime = new Adapter_FarmSaleData(getActivity(), listNewData, expandableListView_batchtimesaledata);
+                        expandableListView_batchtimesaledata.setAdapter(adapter_farmSaleData_batchtime);
+                        utils.setListViewHeight(expandableListView_batchtimesaledata);
 //                        for (int i = 0; i < listNewData.size(); i++)
 //                        {
 //                            expandableListView.expandGroup(i);//展开

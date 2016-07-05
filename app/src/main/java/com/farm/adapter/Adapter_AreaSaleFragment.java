@@ -17,7 +17,7 @@ import com.farm.bean.BatchTime;
 import com.farm.bean.areatab;
 import com.farm.bean.parktab;
 import com.farm.common.utils;
-import com.farm.ui.NCZ_AreaSaleData_;
+import com.farm.ui.NCZ_ContractSaleActivity_;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.CustomListView;
@@ -186,31 +186,12 @@ public class Adapter_AreaSaleFragment extends BaseExpandableListAdapter
         TextView tv_salefor = (TextView) convertView.findViewById(R.id.tv_salefor);
         TextView tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);
         parktab parktab = listData.get(groupPosition);
-        int percent = 0;
-        float allnumber = Integer.valueOf(parktab.getAllsaleout()) + Integer.valueOf(parktab.getAllsalein()) + Integer.valueOf(parktab.getAllnewsale()) + Integer.valueOf(parktab.getAllsalefor());
-        float salenumber = Integer.valueOf(parktab.getAllsaleout()) + Integer.valueOf(parktab.getAllsalein()) + Integer.valueOf(parktab.getAllnewsale());
-        if (allnumber != 0)
-        {
-            percent = (int) ((salenumber / allnumber) * 100);
-        }
 
         tv_contractname.setText(listData.get(groupPosition).getparkName());
-        tv_salefor.setText(String.valueOf(allnumber));
-        tv_allsale.setText(String.valueOf(allnumber));
+        tv_salefor.setText(parktab.getAllsalefor());
+        tv_allsale.setText(parktab.getAllnumber());
         tv_saleout.setText(parktab.getAllsaleout());
         tv_salein.setText(parktab.getAllsalein());
-        if (parktab.getAllsalefor().equals("0"))
-        {
-            if (salenumber != 0)
-            {
-//                tv_salefor.setText("售完");
-                tv_salefor.setText("0");
-            } else
-            {
-//                tv_allsale.setText("未上报");
-                tv_allsale.setText("0");
-            }
-        }
         return convertView;
     }
 
@@ -270,47 +251,28 @@ public class Adapter_AreaSaleFragment extends BaseExpandableListAdapter
                 convertView = View.inflate(context, R.layout.adapter_areasalefragment_childitem, null);
                 view = new Holder(convertView);
                 areatab areatab = list.get(position);
-                int percent = 0;
-                float allnumber = Integer.valueOf(areatab.getAllsaleout()) + Integer.valueOf(areatab.getAllsalein()) + Integer.valueOf(areatab.getAllnewsale()) + Integer.valueOf(areatab.getAllsalefor());
-                float salenumber = Integer.valueOf(areatab.getAllsaleout()) + Integer.valueOf(areatab.getAllsalein()) + Integer.valueOf(areatab.getAllnewsale());
-                if (allnumber != 0)
-                {
-                    percent = (int) ((salenumber / allnumber) * 100);
-                }
-                view.tv_salein.setText(list.get(position).getAllsalein());
-                view.tv_saleout.setText(list.get(position).getAllsaleout());
-                view.tv_salefor.setText(String.valueOf(allnumber));
-                view.tv_allsale.setText(String.valueOf(allnumber));
+                view.tv_salein.setText(areatab.getAllsalein());
+                view.tv_saleout.setText(areatab.getAllsaleout());
+                view.tv_salefor.setText(areatab.getAllsalefor());
+                view.tv_allsale.setText(areatab.getAllnumber());
                 view.tv_contractname.setText(list.get(position).getareaName());
-                if (areatab.getAllsalefor().equals("0"))
-                {
-                    if (salenumber != 0)
-                    {
-//                        view.tv_salefor.setText("售完");
-                        view.tv_salefor.setText("0");
-                    } else
-                    {
-//                        view.tv_allsale.setText("未上报");
-                        view.tv_allsale.setText("0");
-                    }
-                }
                 convertView.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v)
                     {
                         BatchTime batchTimes = (com.farm.bean.BatchTime) v.getTag(R.id.tag_batchtime);
-                        String parkname = (String) v.getTag(R.id.tag_parkname);
-                        Intent intent = new Intent(context, NCZ_AreaSaleData_.class);
-                        intent.putExtra("parkid", batchTimes.getParkId());
-                        intent.putExtra("parkname", parkname);
-                        intent.putExtra("batchTime", batchTimes.getBatchTime());
+                        String areaid = (String) v.getTag(R.id.tag_areaid);
+                        String areaname = (String) v.getTag(R.id.tag_areaname);
+                        Intent intent = new Intent(context, NCZ_ContractSaleActivity_.class);
+                        intent.putExtra("areaid", areaid);
+                        intent.putExtra("areaname", areaid);
                         context.startActivity(intent);
                     }
                 });
                 convertView.setTag(view);
-                convertView.setTag(R.id.tag_batchtime, areatab);
-                convertView.setTag(R.id.tag_parkname, parkname);
+                convertView.setTag(R.id.tag_areaid, areatab.getid());
+                convertView.setTag(R.id.tag_areaname, areatab.getareaName());
             } else
             {
                 view = (Holder) convertView.getTag();

@@ -237,12 +237,50 @@
 
 
                     <TextView
-                        android:id="@+id/tv_areatip"
-                        android:layout_width="60dip"
+                        android:id="@+id/tv_parktip"
+                        android:layout_width="80dip"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:gravity="left|center_vertical"
-                        android:text="区域"
+                        android:text="所属园区"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_sp_16"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_park"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dip"
+                        android:layout_toRightOf="@+id/tv_parktip"
+                        android:gravity="center"
+                        android:text="暂无数据"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/size_sp_16"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1px"
+                    android:layout_marginLeft="15sp"
+                    android:layout_marginRight="15sp"
+                    android:background="@color/line_color"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dip"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginRight="10dip">
+
+
+                    <TextView
+                        android:id="@+id/tv_areatip"
+                        android:layout_width="80dip"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="left|center_vertical"
+                        android:text="所属片区"
                         android:textColor="@color/bg_text"
                         android:textSize="@dimen/size_sp_16"/>
 
@@ -275,11 +313,11 @@
 
                     <TextView
                         android:id="@+id/tv_contractNametip"
-                        android:layout_width="60dip"
+                        android:layout_width="80dip"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:gravity="left|center_vertical"
-                        android:text="承包区"
+                        android:text="所属承包区"
                         android:textColor="@color/bg_text"
                         android:textSize="@dimen/size_sp_16"/>
 
