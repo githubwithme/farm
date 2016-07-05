@@ -42,7 +42,8 @@
         android:layout_marginRight="5dip"
         android:layout_marginTop="5dip"
         android:background="@drawable/round_white"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <FrameLayout
             android:layout_width="0dip"
@@ -121,7 +122,7 @@
         android:id="@+id/frame_listview_news"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/line_color"
-        android:dividerHeight="1px"/>
+        android:divider="@color/transparent"
+        android:dividerHeight="0dip"/>
 
 </LinearLayout>

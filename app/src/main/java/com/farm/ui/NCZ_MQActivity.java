@@ -274,6 +274,7 @@ public class NCZ_MQActivity extends Activity
                     {
                         lv.setTag(UIHelper.LISTVIEW_DATA_FULL);
                         adapter.notifyDataSetChanged();
+                        more.setVisibility(View.GONE);
                         more.setText(R.string.load_full);// 已经全部加载完毕
                     } else if (size == PAGESIZE)
                     {// 还有数据可以加载
@@ -351,7 +352,8 @@ public class NCZ_MQActivity extends Activity
                 if (PlantGcd == null) return;
                 commembertab commembertab = AppContext.getUserInfo(NCZ_MQActivity.this);
                 AppContext.updateStatus(NCZ_MQActivity.this, "0", PlantGcd.getId(), "3", commembertab.getId());
-                Intent intent = new Intent(NCZ_MQActivity.this, NCZ_todaymyDetail_.class);
+//                Intent intent = new Intent(NCZ_MQActivity.this, NCZ_todaymyDetail_.class);
+                Intent intent = new Intent(NCZ_MQActivity.this, NCZ_GCDDetailActivity_.class);
                 intent.putExtra("bean_gcd", PlantGcd); // 因为list中添加了头部,因此要去掉一个
 //                intent.putExtra("bean_areatab", areatab); // 因为list中添加了头部,因此要去掉一个
                 NCZ_MQActivity.this.startActivity(intent);

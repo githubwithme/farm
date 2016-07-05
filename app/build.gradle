@@ -20,6 +20,7 @@ def AAVersion = '3.2'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+//    provided fileTree(dir: 'libs', include: ['*.jar'])
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile 'com.android.support:appcompat-v7:23.1.1'
@@ -45,6 +46,10 @@ android {
         versionCode 1
         versionName "2.1.2"
         multiDexEnabled true//方法id的数目不能够超过65536个，时候需要开启，否则报错
+        dexOptions {//解决finished with non-zero exit value 1/2/3问题
+            incremental true
+            javaMaxHeapSize "4g"
+        }
     }
     splits {
         abi {
