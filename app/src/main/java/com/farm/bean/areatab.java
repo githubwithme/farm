@@ -40,6 +40,7 @@ public class areatab implements Parcelable // 与数据库不一致
     public String Apath;
     public String AYear;
     // 自定义
+    public String batchtime;//坚
     public String jobCount;
     public String plantCount;
     public String plantGrowCount;
@@ -56,7 +57,28 @@ public class areatab implements Parcelable // 与数据库不一致
     public String allnewsale;
     public List<contractTab> contractTabList;
     public List<SellOrderDetail_New> sellOrderDetail_NewList;
+    public List<SellOrderDetail_New> areatabList;
 
+
+    public String getBatchtime()
+    {
+        return batchtime;
+    }
+
+    public void setBatchtime(String batchtime)
+    {
+        this.batchtime = batchtime;
+    }
+
+    public List<SellOrderDetail_New> getAreatabList()
+    {
+        return areatabList;
+    }
+
+    public void setAreatabList(List<SellOrderDetail_New> areatabList)
+    {
+        this.areatabList = areatabList;
+    }
 
     public void setAllsaleout(String allsaleout)
     {
@@ -455,6 +477,7 @@ public class areatab implements Parcelable // 与数据库不一致
             p.sety(source.readString());
             p.setApath(source.readString());
             p.setAYear(source.readString());
+            p.setBatchtime(source.readString());
             p.setJobCount(source.readString());
             p.setPlantCount(source.readString());
             p.setPlantGrowCount(source.readString());
@@ -468,6 +491,7 @@ public class areatab implements Parcelable // 与数据库不一致
             p.setAllnewsale(source.readString());
             p.contractTabList = source.readArrayList(plantgrowthtab.class.getClassLoader());
             p.sellOrderDetail_NewList = source.readArrayList(plantgrowthtab.class.getClassLoader());
+            p.areatabList = source.readArrayList(plantgrowthtab.class.getClassLoader());
             return p;
         }
 
@@ -501,6 +525,7 @@ public class areatab implements Parcelable // 与数据库不一致
         p.writeString(y);
         p.writeString(Apath);
         p.writeString(AYear);
+        p.writeString(batchtime);
         p.writeString(jobCount);
         p.writeString(plantCount);
         p.writeString(plantGrowCount);
@@ -514,6 +539,7 @@ public class areatab implements Parcelable // 与数据库不一致
         p.writeString(allnewsale);
         p.writeList(contractTabList);
         p.writeList(sellOrderDetail_NewList);
+        p.writeList(areatabList);
     }
 
     @Override

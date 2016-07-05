@@ -87,7 +87,7 @@ import javax.mail.util.ByteArrayDataSource;
  */
 @EActivity(R.layout.ncz_createneworder)
 public class NCZ_CreateNewOrder extends Activity
-{
+    {
     String mail;
     String telphone;
     @ViewById
@@ -270,7 +270,7 @@ public class NCZ_CreateNewOrder extends Activity
     protected void onResume()
     {
         super.onResume();
-        getpurchaser("");
+
         getNewSaleList();
     }
 
@@ -496,6 +496,7 @@ public class NCZ_CreateNewOrder extends Activity
         dd_bz.setInputType(InputType.TYPE_NULL);
         dd_by.setInputType(InputType.TYPE_NULL);
         dd_fzr.setInputType(InputType.TYPE_NULL);
+        getpurchaser("");
         getchanpin();
         getlistdata();
         deleNewSaleAddsalefor();

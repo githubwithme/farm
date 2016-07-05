@@ -66,12 +66,11 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 /**
- * Created by hasee on 2016/7/4.
+ * Created by hasee on 2016/7/5.
  */
-@EActivity(R.layout.cz_pg_create_order)
-public class PG_CreateOrder extends Activity
+@EActivity(R.layout.ncz_createneworder)
+public class CZ_CreateOrder extends Activity
 {
-
     String mail;
     String telphone;
     @ViewById
@@ -93,7 +92,8 @@ public class PG_CreateOrder extends Activity
     EditText dd_cl;
     @ViewById
     TextView dd_time;
-
+    @ViewById
+    EditText dd_fzr;
     @ViewById
     TextView dd_bz;
     @ViewById
@@ -146,7 +146,7 @@ public class PG_CreateOrder extends Activity
     @Click
     void btn_addcg()
     {
-        Intent intent = new Intent(PG_CreateOrder.this, Add_workPeopel_.class);
+        Intent intent = new Intent(CZ_CreateOrder.this, Add_workPeopel_.class);
         intent.putExtra("type", "采购商");
         startActivity(intent);
     }
@@ -154,7 +154,7 @@ public class PG_CreateOrder extends Activity
     @Click
     void btn_addby()
     {
-        Intent intent = new Intent(PG_CreateOrder.this, Add_workPeopel_.class);
+        Intent intent = new Intent(CZ_CreateOrder.this, Add_workPeopel_.class);
         intent.putExtra("type", "搬运工头");
         startActivity(intent);
     }
@@ -162,7 +162,7 @@ public class PG_CreateOrder extends Activity
     @Click
     void btn_addbz()
     {
-        Intent intent = new Intent(PG_CreateOrder.this, Add_workPeopel_.class);
+        Intent intent = new Intent(CZ_CreateOrder.this, Add_workPeopel_.class);
         intent.putExtra("type", "包装工头");
         startActivity(intent);
     }
@@ -170,7 +170,7 @@ public class PG_CreateOrder extends Activity
     @Click
     void dd_time()
     {
-        MyDatepicker myDatepicker = new MyDatepicker(PG_CreateOrder.this, dd_time);
+        MyDatepicker myDatepicker = new MyDatepicker(CZ_CreateOrder.this, dd_time);
         myDatepicker.getDialog().show();
     }
 
@@ -186,7 +186,18 @@ public class PG_CreateOrder extends Activity
         }
         showDialog_fcp(listdata, listid);
     }
-
+    @Click
+    void dd_fzr()
+    {
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listpeople.size(); i++)
+        {
+            listdata.add(listpeople.get(i).getRealName());
+            listid.add(listpeople.get(i).getId());
+        }
+        showDialog_fzr(listdata, listid);
+    }
 
     @Click
     void et_name()
@@ -242,16 +253,15 @@ public class PG_CreateOrder extends Activity
     protected void onResume()
     {
         super.onResume();
-//        getpurchaser("");
+
         getNewSaleList();
     }
 
     @Click
     void btn_addproduct()
     {
-//        Intent intent = new Intent(PG_CreateOrder.this, NCZ_CreateOrder_SelectBatchTime_.class);
-//        Intent intent = new Intent(PG_CreateOrder.this, PG_CreateOrder_SelectBatchTime_.class);
-        Intent intent = new Intent(PG_CreateOrder.this, PG_CreateOrder_SelectProduct_.class);
+//        Intent intent = new Intent(CZ_CreateOrder.this, NCZ_CreateOrder_SelectBatchTime_.class);
+        Intent intent = new Intent(CZ_CreateOrder.this, CZ_CreateOrder_SelectBatchTime_.class);
         startActivity(intent);
     }
 
@@ -270,21 +280,25 @@ public class PG_CreateOrder extends Activity
     @Click
     void btn_sure()
     {
-        commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
+        commembertab commembertab = AppContext.getUserInfo(CZ_CreateOrder.this);
         if (CR_chanpin.getText().toString().equals(""))
         {
-            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        if (dd_fzr.getText().toString().equals(""))
+        {
+            Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (dd_time.getText().toString().equals(""))
         {
-            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_name.getText().toString().equals(""))
         {
-            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
    /*     if (et_email.getText().toString().equals(""))
@@ -294,7 +308,7 @@ public class PG_CreateOrder extends Activity
         }*/
         if (et_address.getText().toString().equals(""))
         {
-            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
   /*      if (et_phone.getText().toString().equals(""))
@@ -304,17 +318,17 @@ public class PG_CreateOrder extends Activity
         }*/
         if (et_price.getText().toString().equals(""))
         {
-            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_weight.getText().toString().equals(""))
         {
-            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         if (et_values.getText().toString().equals(""))
         {
-            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
         //
@@ -391,12 +405,11 @@ public class PG_CreateOrder extends Activity
         }
         String uuid = java.util.UUID.randomUUID().toString();
         SellOrder_New sellOrder = new SellOrder_New();
-        sellOrder.setCreatorid(commembertab.getId());
         sellOrder.setid("");
         sellOrder.setUid(commembertab.getuId());
         sellOrder.setUuid(uuid);
         sellOrder.setBatchTime(batchtime);
-        sellOrder.setSelltype("待审批");
+        sellOrder.setSelltype("待付订金");
         sellOrder.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrder.setBuyers(cgId);
@@ -404,8 +417,8 @@ public class PG_CreateOrder extends Activity
         sellOrder.setGoodsname(CR_chanpin.getText().toString());
         sellOrder.setEmail(et_email.getText().toString());
         sellOrder.setPhone(et_phone.getText().toString());
-
-
+        sellOrder.setPrice(et_price.getText().toString());
+        sellOrder.setNumber(String.valueOf(countAllNumber()));
         sellOrder.setWeight(et_weight.getText().toString());
         sellOrder.setSumvalues(et_values.getText().toString());
         sellOrder.setActualprice("");
@@ -415,34 +428,24 @@ public class PG_CreateOrder extends Activity
         sellOrder.setDeposit("0");
         sellOrder.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
+        sellOrder.setSaletime(dd_time.getText().toString());
         sellOrder.setYear(utils.getYear());
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
         sellOrder.setProducer(producer);
         sellOrder.setFinalpayment("0");
 
-    /*    sellOrder.setSaletime(dd_time.getText().toString());
-        sellOrder.setPrice(et_price.getText().toString());
-        sellOrder.setCarryPrice(by_danjia.getText().toString());
-        sellOrder.setPackPrice(bz_danjia.getText().toString());
-        sellOrder.setNumber(String.valueOf(countAllNumber()));*/
-        sellOrder.setOldsaletime(dd_time.getText().toString());
-        sellOrder.setOldPrice(et_price.getText().toString());
-        sellOrder.setOldCarryPrice(by_danjia.getText().toString());
-        sellOrder.setOldPackPrice(bz_danjia.getText().toString());
-        sellOrder.setOldnumber(String.valueOf(countAllNumber()));
-
-
-
-        sellOrder.setMainPepole(commembertab.getId());
+        sellOrder.setMainPepole(fzrId);
         sellOrder.setPlateNumber(dd_cl.getText().toString());
         sellOrder.setContractorId(bzId);
         sellOrder.setPickId(byId);
+        sellOrder.setCarryPrice(by_danjia.getText().toString());
+        sellOrder.setPackPrice(bz_danjia.getText().toString());
         sellOrder.setPackPec(bz_guige.getText().toString());
         sellOrder.setWaitDeposit(dingjin.getText().toString());
-        sellOrder.setFreeFinalPay("2");
-        sellOrder.setFreeDeposit("2");
-        sellOrder.setIsNeedAudit("2");
+        sellOrder.setFreeFinalPay("1");
+        sellOrder.setFreeDeposit("1");
+        sellOrder.setIsNeedAudit("1");
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
@@ -476,9 +479,10 @@ public class PG_CreateOrder extends Activity
         dd_time.setText(str);*/
         dd_bz.setInputType(InputType.TYPE_NULL);
         dd_by.setInputType(InputType.TYPE_NULL);
+        dd_fzr.setInputType(InputType.TYPE_NULL);
         getpurchaser("");
         getchanpin();
-//        getlistdata();
+        getlistdata();
         deleNewSaleAddsalefor();
         et_price.addTextChangedListener(new TextWatcher()
         {
@@ -593,7 +597,7 @@ public class PG_CreateOrder extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(CZ_CreateOrder.this, "error_connectDataBase");
                     return;
                 }
 
@@ -602,7 +606,7 @@ public class PG_CreateOrder extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+                AppContext.makeToast(CZ_CreateOrder.this, "error_connectServer");
 
             }
         });
@@ -610,7 +614,7 @@ public class PG_CreateOrder extends Activity
 
     private void getNewSaleList()
     {
-        commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
+        commembertab commembertab = AppContext.getUserInfo(CZ_CreateOrder.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
@@ -628,7 +632,7 @@ public class PG_CreateOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         list_SellOrderDetail = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        adapter_sellOrderDetail = new Adapter_CreateSellOrderDetail_NCZ(PG_CreateOrder.this, list_SellOrderDetail);
+                        adapter_sellOrderDetail = new Adapter_CreateSellOrderDetail_NCZ(CZ_CreateOrder.this, list_SellOrderDetail);
                         lv.setAdapter(adapter_sellOrderDetail);
                         utils.setListViewHeight(lv);
                         tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
@@ -639,7 +643,7 @@ public class PG_CreateOrder extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(CZ_CreateOrder.this, "error_connectDataBase");
                     return;
                 }
 
@@ -648,7 +652,7 @@ public class PG_CreateOrder extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+                AppContext.makeToast(CZ_CreateOrder.this, "error_connectServer");
             }
         });
     }
@@ -679,7 +683,7 @@ public class PG_CreateOrder extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        Toast.makeText(PG_CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CZ_CreateOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent();
                         intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
                         sendBroadcast(intent1);
@@ -692,7 +696,7 @@ public class PG_CreateOrder extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(CZ_CreateOrder.this, "error_connectDataBase");
                     return;
                 }
 
@@ -701,7 +705,7 @@ public class PG_CreateOrder extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+                AppContext.makeToast(CZ_CreateOrder.this, "error_connectServer");
             }
         });
     }
@@ -709,8 +713,8 @@ public class PG_CreateOrder extends Activity
     //采购商的弹窗
     public void showDialog_workday(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        View dialog_layout = (RelativeLayout) CZ_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(CZ_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
@@ -738,8 +742,8 @@ public class PG_CreateOrder extends Activity
     //包装工
     public void showDialog_bz(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        View dialog_layout = (RelativeLayout) CZ_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(CZ_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
@@ -757,8 +761,8 @@ public class PG_CreateOrder extends Activity
     //搬运工
     public void showDialog_by(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        View dialog_layout = (RelativeLayout) CZ_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(CZ_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
@@ -776,8 +780,8 @@ public class PG_CreateOrder extends Activity
     //产品
     public void showDialog_fcp(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        View dialog_layout = (RelativeLayout) CZ_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(CZ_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
@@ -791,11 +795,28 @@ public class PG_CreateOrder extends Activity
         });
         customDialog_listView.show();
     }
+    //负责人
+    public void showDialog_fzr(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) CZ_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(CZ_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                dd_fzr.setText(zzsl);
+                fzrId = bundle.getString("id");
 
+            }
+        });
+        customDialog_listView.show();
+    }
 
     private void getpurchaser(String name)
     {
-        commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
+        commembertab commembertab = AppContext.getUserInfo(CZ_CreateOrder.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getpurchaser");//jobGetList1
@@ -869,7 +890,7 @@ public class PG_CreateOrder extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(CZ_CreateOrder.this, "error_connectDataBase");
                     return;
                 }
 
@@ -878,7 +899,7 @@ public class PG_CreateOrder extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+                AppContext.makeToast(CZ_CreateOrder.this, "error_connectServer");
             }
         });
     }
@@ -886,7 +907,7 @@ public class PG_CreateOrder extends Activity
     private void cancleOrder()
     {
         View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, "取消订单", "取消订单吗？", "取消", "不取消", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(CZ_CreateOrder.this, R.style.MyDialog, dialog_layout, "取消订单", "取消订单吗？", "取消", "不取消", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -897,7 +918,7 @@ public class PG_CreateOrder extends Activity
 //                        myDialog.dismiss();
                         deleNewSaleAddsalefor();
 
-                        Toast.makeText(PG_CreateOrder.this, "已取消", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CZ_CreateOrder.this, "已取消", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent();
                         intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
                         sendBroadcast(intent1);
@@ -927,13 +948,11 @@ public class PG_CreateOrder extends Activity
     //获取人员列表
     private void getlistdata()
     {
-        commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
+        commembertab commembertab = AppContext.getUserInfo(CZ_CreateOrder.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("parkid", commembertab.getparkId());
-        params.addQueryStringParameter("areaid", commembertab.getareaId());
-        params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "getSaleDataOfArea2");
+        params.addQueryStringParameter("nlevel", "1,2");
+        params.addQueryStringParameter("action", "getUserlisttByUID");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -947,14 +966,24 @@ public class PG_CreateOrder extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PeopelList.class);
 
+                        listpeople.addAll(listNewData);
+                        //方法一
+                     /*   List<String> list = new ArrayList<String>();
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            list.add(listNewData.get(i).getUserlevelName()+"-"+listNewData.get(i).getRealName());
+//                            list.add(jsonArray.getString(i));
+                        }
+                        showDialog_workday(list);*/
                     } else
                     {
                         listNewData = new ArrayList<PeopelList>();
                     }
                 } else
                 {
-                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(CZ_CreateOrder.this, "error_connectDataBase");
 
                     return;
                 }
@@ -965,7 +994,7 @@ public class PG_CreateOrder extends Activity
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+                AppContext.makeToast(CZ_CreateOrder.this, "error_connectServer");
 
             }
         });
@@ -1025,7 +1054,7 @@ public class PG_CreateOrder extends Activity
 
     private void getchanpin()
     {
-        commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
+        commembertab commembertab = AppContext.getUserInfo(CZ_CreateOrder.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getProduct");
@@ -1052,7 +1081,7 @@ public class PG_CreateOrder extends Activity
                     }
                 } else
                 {
-                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    AppContext.makeToast(CZ_CreateOrder.this, "error_connectDataBase");
 
                     return;
                 }
@@ -1063,7 +1092,7 @@ public class PG_CreateOrder extends Activity
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+                AppContext.makeToast(CZ_CreateOrder.this, "error_connectServer");
 
             }
         });

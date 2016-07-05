@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -21,21 +22,25 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.CustomArray_cbh_Adapter;
+import com.farm.adapter.PG_JSD_Adapter;
 import com.farm.adapter.WZ_RKExecute_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Park_AllCBH;
 import com.farm.bean.Result;
+import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.bean.WZ_CRk;
 import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
+import com.farm.common.utils;
 import com.farm.widget.CustomArrayAdapter;
 import com.farm.widget.CustomDialog_Expandlistview;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDialog;
+import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -60,6 +65,8 @@ import java.util.List;
 @EActivity(R.layout.pg_jsd)
 public class PG_JSD extends Activity
 {
+
+    PG_JSD_Adapter pg_jsd_adapter;
     SellOrder_New sellOrder_new;
     String broadcast;
     CustomArray_cbh_Adapter customArray_cbh_adapter;
@@ -67,13 +74,13 @@ public class PG_JSD extends Activity
     private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
     private String[] mDatas;
     @ViewById
-    RadioButton rb_nc_chose;
+    RadioButton rb_nc_chose;  //包装费农场请人
     @ViewById
-    RadioButton rb_kh_chose;
+    RadioButton rb_kh_chose; //客户自带
     @ViewById
-    RadioButton nc_banyun;
+    RadioButton nc_banyun;   //搬运  农场
     @ViewById
-    RadioButton kh_banyun;
+    RadioButton kh_banyun;//客户
     @ViewById
     RadioButton wu_banyun;
 
@@ -123,17 +130,54 @@ public class PG_JSD extends Activity
     LinearLayout pg_dts;
 
     @ViewById
-    EditText zp_ds_zhong;
+    EditText bz_khnote; //包装客户自带说明
     @ViewById
-    EditText cp_ds_zhong;
+    EditText bz_nc_danjia;//包装农场  包装单价
     @ViewById
-    EditText zp_bds_zhong;
+    EditText bz_fzrid;//包装负责人Id
+
     @ViewById
-    EditText cp_jingzhong;
+    EditText by_khnote; //搬运客户自带说明
     @ViewById
-    EditText zp_jsje;
+    EditText by_nc_danjia;//搬运农场  搬运单价
     @ViewById
-    EditText cp_jsje;
+    EditText by_fzrid;//搬运负责人Id
+
+    @ViewById
+    EditText jsd_zongjianshu;//总件数
+    @ViewById
+    EditText jsd_zongjingzhong;//总净重
+    @ViewById
+    EditText jsd_zpjz;//正品总净重
+    @ViewById
+    EditText jsd_cpzjs;//次品总净重
+    @ViewById
+    EditText jsd_zpprice;//正品单价
+    @ViewById
+    EditText jsd_cpprice;//次品单价
+    @ViewById
+    EditText zp_jianshu;//正品件数
+    @ViewById
+    EditText cp_jianshu;//次品件数
+
+    @ViewById
+    EditText zp_ds_zhong;//正品带水重
+    @ViewById
+    EditText cp_ds_zhong;//次品带水重
+    @ViewById
+    EditText zp_bds_zhong;  //正品净重
+    @ViewById
+    EditText cp_jingzhong;   //次品净重
+    @ViewById
+    EditText zp_jsje;       //正品结算金额
+    @ViewById
+    EditText cp_jsje;      //次品 结算金额
+
+   /* @ViewById
+    ListView pg_sale;*/
+
+    @ViewById
+    PullToRefreshListView frame_listview_news;
 
     @Click
     void nc_banyun()
@@ -170,10 +214,56 @@ public class PG_JSD extends Activity
         nc_baozhuang.setVisibility(View.GONE);
     }
 
+
     @Click
     void btn_upload()
     {
+        SellOrder_New sellOrder = new SellOrder_New();
+//        sellOrder=sellOrder_new;
+        sellOrder.setid("");
+        sellOrder.setUid(sellOrder_new.getUid());
+        sellOrder.setUuid(sellOrder_new.getUuid());
+        sellOrder.setBatchTime(sellOrder_new.getBatchTime());
+        sellOrder.setSelltype("0");
+        sellOrder.setStatus("0");
+//        sellOrder.setBuyers(et_name.getText().toString());
+        sellOrder.setBuyers(sellOrder_new.getBuyersId());
+
+        sellOrder.setPrice(sellOrder_new.getPrice());
+        sellOrder.setWeight(sellOrder_new.getWeight());
+        sellOrder.setSumvalues(sellOrder_new.getSumvalues());
+        sellOrder.setActualprice("");
+        sellOrder.setActualweight("");
+        sellOrder.setActualnumber("");
+        sellOrder.setActualsumvalues("");
+        sellOrder.setDeposit("0");
+        sellOrder.setReg(utils.getTime());
+//        sellOrder.setSaletime(utils.getTime());
+        sellOrder.setSaletime(sellOrder_new.getSaletime());
+        sellOrder.setYear(utils.getYear());
+        sellOrder.setXxzt("0");
+        sellOrder.setProducer(sellOrder_new.getProducer());
+        sellOrder.setFinalpayment("0");
+
+        sellOrder.setMainPepole(sellOrder_new.getMainPepole());
+        sellOrder.setPlateNumber(sellOrder_new.getPlateNumber());
+        sellOrder.setContractorId(sellOrder_new.getPactId());
+        sellOrder.setPickId(sellOrder_new.getCreatorid());
+        sellOrder.setCarryPrice(sellOrder_new.getCarryPrice());
+        sellOrder.setPackPrice(sellOrder_new.getPackPrice());
+        sellOrder.setPackPec(sellOrder_new.getPackPec());
+        sellOrder.setWaitDeposit(sellOrder_new.getWaitDeposit());
+                //
+        sellOrder.setActualprice(jsd_zpprice.getText().toString());//  正品单价
+        sellOrder.setDefectPrice(jsd_cpprice.getText().toString());//  次品单价
+        sellOrder.setActualweight(jsd_zpjz.getText().toString());//  正品总净重
+        sellOrder.setDefectNum(jsd_cpzjs.getText().toString());//  次品总净重
+
+
+
+        //附表2
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
+        sellOrder_new_first.setSellOrderId(sellOrder_new.getUuid());
         sellOrder_new_first.setQualityWaterWeight(zp_ds_zhong.getText().toString());
         sellOrder_new_first.setQualityNetWeight(zp_bds_zhong.getText().toString());
         sellOrder_new_first.setQualityBalance(zp_jsje.getText().toString());
@@ -181,19 +271,14 @@ public class PG_JSD extends Activity
         sellOrder_new_first.setDefectNetWeight(cp_jingzhong.getText().toString());
         sellOrder_new_first.setDefectBalance(cp_jsje.getText().toString());
 
+
         StringBuilder builder = new StringBuilder();
-        builder.append("{\"createOrder \": [");
+        builder.append("{\"SellOrder_new\":[ ");
+        builder.append(JSON.toJSONString(sellOrder));
+        builder.append("], \"sellorderlistadd\": [");
         builder.append(JSON.toJSONString(sellOrder_new_first));
         builder.append("]} ");
         newaddOrder(builder.toString());
-/*        int num = 0;
-        for (int i = 0; i < curremt; i++)
-        {
-            int currems = curremt;
-            num += Integer.valueOf(zhushus[i].getText().toString());
-        }
-        allnum.setText(num + "");*/
-
     }
 
     @Click
@@ -205,61 +290,26 @@ public class PG_JSD extends Activity
 
     private void addView()
     {
-        View view = inflater.inflate(R.layout.pg_dtcbh, null);
+//        View view = inflater.inflate(R.layout.pg_dtcbh, null);
+        View view = inflater.inflate(R.layout.pg_jsd_adapter, null);
         view.setId(curremt);
-//        TextView painqu = (TextView) view.findViewById(R.id.painqu);
-/*        painqu.setId(curremt);
-        painqu.setOnClickListener(toolsItemListener);
-        TextView chengbaohu = (TextView) view.findViewById(R.id.chengbaohu);*/
-        Spinner provinceSpinner = (Spinner) view.findViewById(R.id.provinceSpinner);
-//        CustomArray_cbh_Adapter = new CustomArrayAdapter(PG_JSD.this, mDatas);
-        customArray_cbh_adapter = new CustomArray_cbh_Adapter(PG_JSD.this, listdata);
-        provinceSpinner.setAdapter(customArray_cbh_adapter);
-        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第0个值
-
-        areaId[curremt] = listdata.get(0).getAreaId();
-        contractId[curremt] = listdata.get(0).getid();
-        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-            {
-
-                areaId[curremt] = listdata.get(i).getAreaId();
-                contractId[curremt] = listdata.get(i).getid();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
-
-            }
-        });
-
-        EditText zhushu = (EditText) view.findViewById(R.id.zhushu);
-        zhushu.addTextChangedListener(onclickText);
-        EditText zhengpin = (EditText) view.findViewById(R.id.zhengpin);
-        zhengpin.addTextChangedListener(onzhengpin);
-
-        EditText cipin = (EditText) view.findViewById(R.id.cipin);
+        TextView all_cbh= (TextView) findViewById(R.id.all_cbh);
+/*        EditText cipin = (EditText) view.findViewById(R.id.cipin);
         cipin.addTextChangedListener(oncigpin);
         EditText jinzhong = (EditText) view.findViewById(R.id.jinzhong);
-        jinzhong.addTextChangedListener(onjinzhong);
+        jinzhong.addTextChangedListener(onjinzhong);*/
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         lp.setMargins(0, 0, 0, 0);
-//        painqu.setLayoutParams(lp);
-//        chengbaohu.setLayoutParams(lp);
-        zhushu.setLayoutParams(lp);
+        all_cbh.setLayoutParams(lp);
+/*        zhushu.setLayoutParams(lp);
         zhengpin.setLayoutParams(lp);
         cipin.setLayoutParams(lp);
         jinzhong.setLayoutParams(lp);
         pg_dts.addView(view);
-//        pianqus[curremt] = painqu;
-//        chengbaohus[curremt] = chengbaohu;
         zhushus[curremt] = zhushu;
         zhengpins[curremt] = zhengpin;
         cipins[curremt] = cipin;
-        zhongliangs[curremt] = jinzhong;
+        zhongliangs[curremt] = jinzhong;*/
 
         views[curremt] = view;
     }
@@ -268,18 +318,25 @@ public class PG_JSD extends Activity
     void after()
     {
 
+        showData();
+        getsellOrderDetailBySaleId();
         getchengbaohu();
 //        getBreakOffInfoOfContract();
         inflater = LayoutInflater.from(PG_JSD.this);
 
     }
 
+    private void showData()
+    {
+        jsd_zpprice.setText(sellOrder_new.getPrice());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        sellOrder_new=getIntent().getParcelableExtra("bean");
-        broadcast=getIntent().getStringExtra("broadcast");
+        sellOrder_new = getIntent().getParcelableExtra("bean");
+        broadcast = getIntent().getStringExtra("broadcast");
         getActionBar().hide();
     }
 
@@ -616,10 +673,59 @@ public class PG_JSD extends Activity
             }
         });
     }
+
+
+
+
+    private void getsellOrderDetailBySaleId()
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("saleId", sellOrder_new.getUuid());
+        params.addQueryStringParameter("action", "getsellOrderDetailBySaleId");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<SellOrderDetail_New> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+                        pg_jsd_adapter = new PG_JSD_Adapter(PG_JSD.this, listNewData);
+                        frame_listview_news.setAdapter(pg_jsd_adapter);
+                        utils.setListViewHeight(frame_listview_news);
+
+                    } else
+                    {
+                        listNewData = new ArrayList<SellOrderDetail_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+            }
+        });
+    }
+
     private void newaddOrder( String data)
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("action", "sellorderlistadd");
+        params.addQueryStringParameter("action", "editOrder");
         params.setContentType("application/json");
         try
         {
@@ -641,8 +747,14 @@ public class PG_JSD extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        Toast.makeText(PG_JSD.this, "ss！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PG_JSD.this, "订单修改成功！", Toast.LENGTH_SHORT).show();
 
+                        Intent intent = new Intent();
+//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
+                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                        PG_JSD.this.sendBroadcast(intent);
+
+                        finish();
                     }
 
                 } else
@@ -660,5 +772,4 @@ public class PG_JSD extends Activity
             }
         });
     }
-
 }
