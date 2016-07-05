@@ -252,6 +252,18 @@ public class NCZ_DD_SH_Detail extends Activity
 
         sellOrder = sellOrder_new;
 
+        if (sellOrder.getIsNeedAudit().equals("2"))
+        {
+            sellOrder.setIsNeedAudit("1");
+        }
+        if (sellOrder.getFreeFinalPay().equals("2"))
+        {
+            sellOrder.setFreeFinalPay("1");
+        }
+        if (sellOrder.getFreeDeposit().equals("2"))
+        {
+            sellOrder.setFreeDeposit("1");
+        }
         if (!sellOrder.getOldCarryPrice().equals(""))
         {
             sellOrder.setCarryPrice(sellOrder.getOldCarryPrice());

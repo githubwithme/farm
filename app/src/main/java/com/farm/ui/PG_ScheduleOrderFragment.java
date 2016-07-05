@@ -129,8 +129,6 @@ public class PG_ScheduleOrderFragment extends Fragment
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
         return rootView;
-
-
     }
 
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息

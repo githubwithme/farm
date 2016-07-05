@@ -3,6 +3,7 @@ package com.farm.ui;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -32,6 +33,14 @@ public class CZ_OrderManager extends Activity
     {
         finish();
     }
+
+    @Click
+    void btn_createorders()
+    {
+        Intent intent=new Intent(CZ_OrderManager.this,CZ_CreateOrder_.class);
+        startActivity(intent);
+    }
+
 
     @Click
     void tv_allorder()
@@ -73,7 +82,7 @@ public class CZ_OrderManager extends Activity
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             if (!to.isAdded())
             { // 先判断是否被add过
-                transaction.hide(from).add(R.id.fl_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+                transaction.hide(from).add(R.id.job_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
             } else
             {
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个

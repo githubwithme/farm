@@ -164,7 +164,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                 {
                     SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
                     ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name,sellOrders,"1");
+                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name, sellOrders, "1");
                     myDatepicker.getDialog().show();
     /*                sellOrders.setSaletime(listItemView2.tv_name.getText().toString());
                     StringBuilder builder = new StringBuilder();
@@ -176,6 +176,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             });
 
             SpannableString spanStr_buyer = new SpannableString("就绪");
+
             spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
             listItemView.tv_batchtime.setText(spanStr_buyer);
             listItemView.tv_batchtime.setOnClickListener(new View.OnClickListener()
@@ -187,8 +188,16 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                     context.startActivity(intent);
                 }
             });
-            listItemView.tv_name.setText(sellOrder.getSaletime().substring(5, sellOrder.getSaletime().length() - 8));//时间
-            listItemView.tv_price.setText(sellOrder.getPrice());
+            if (sellOrder.getSaletime().equals(""))
+            {
+                listItemView.tv_name.setText(sellOrder.getOldsaletime().substring(5, sellOrder.getOldsaletime().length() - 8));//时间
+            }else
+            {
+                listItemView.tv_name.setText(sellOrder.getSaletime().substring(5, sellOrder.getSaletime().length() - 8));//时间
+
+            }
+
+//            listItemView.tv_price.setText(sellOrder.getPrice());
             listItemView.tv_from.setText(sellOrder.getProducer());
 //            listItemView.tv_batchtime.setText(sellOrder.getBatchTime());
             if (sellOrder.getActualsumvalues().equals(""))
