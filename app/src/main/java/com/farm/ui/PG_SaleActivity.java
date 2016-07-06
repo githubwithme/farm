@@ -50,16 +50,12 @@ import java.util.Map;
 public class PG_SaleActivity extends Activity
 {
     List<BatchTime> listData = null;
-
     private ListView mListView;
     public HorizontalScrollView mTouchView;
     protected List<CustomHorizontalScrollView_PGSale> mHScrollViews = new ArrayList<CustomHorizontalScrollView_PGSale>();
     private ScrollAdapter mAdapter;
-    //    String[] item_batchtimedata;
-//    String[] item_parkid;
     int screenWidth = 0;
     int allnumber = 0;
-    //    List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
     @ViewById
     LinearLayout ll_park;
     @ViewById

@@ -119,8 +119,8 @@ public class PG_FarmManagerFragment extends Fragment
     @Click
     void ll_dl()
     {
-        Intent intent = new Intent(getActivity(), PQ_DLFragment_.class);
-//        Intent intent = new Intent(getActivity(), PG_BreakOffActivity_.class);
+//        Intent intent = new Intent(getActivity(), PQ_DLFragment_.class);
+        Intent intent = new Intent(getActivity(), PG_BreakOffActivity_.class);
         getActivity().startActivity(intent);
     }
 
