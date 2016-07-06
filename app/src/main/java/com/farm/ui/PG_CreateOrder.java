@@ -406,7 +406,7 @@ public class PG_CreateOrder extends Activity
         sellOrder.setPhone(et_phone.getText().toString());
 
 
-        sellOrder.setWeight(et_weight.getText().toString());
+
         sellOrder.setSumvalues(et_values.getText().toString());
         sellOrder.setActualprice("");
         sellOrder.setActualweight("");
@@ -430,9 +430,9 @@ public class PG_CreateOrder extends Activity
         sellOrder.setOldPrice(et_price.getText().toString());
         sellOrder.setOldCarryPrice(by_danjia.getText().toString());
         sellOrder.setOldPackPrice(bz_danjia.getText().toString());
-        sellOrder.setOldnumber(String.valueOf(countAllNumber()));
+        sellOrder.setNumber(String.valueOf(countAllNumber()));//株数
 
-
+        sellOrder.setOldnumber(et_weight.getText().toString());
 
         sellOrder.setMainPepole(commembertab.getId());
         sellOrder.setPlateNumber(dd_cl.getText().toString());

@@ -55,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
@@ -65,7 +66,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dip"
                     android:gravity="center|left"
-                    android:text="二、结算"/>
+                    android:text="一、结算"/>
             </LinearLayout>
 
             <View
@@ -122,12 +123,12 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
-                    android:numeric="decimal"
                     android:id="@+id/jsd_zongjingzhong"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:numeric="decimal"
                     android:text=""
                     android:textSize="14dip"/>
 
@@ -683,6 +684,42 @@
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:padding="10dip"
+                    android:gravity="center|left"
+                    android:text="包装规格"
+
+                    android:textColor="@color/bg_text"
+                    android:textSize="@dimen/size_15"/>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/bg_main"/>
+
+
+                <EditText
+                    android:id="@+id/packPec"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bg_main"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="搬运费"
                     android:textColor="@color/bg_text"
@@ -856,6 +893,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:id="@+id/packFee"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -882,6 +920,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:id="@+id/carryFee"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -915,6 +954,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:id="@+id/totalFee"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -942,6 +982,7 @@
 
 
                 <TextView
+
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -955,6 +996,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:id="@+id/actualMoney"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -970,9 +1012,9 @@
                 android:background="@color/bg_main"/>
 
             <View
-                android:layout_marginTop="40dip"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
+                android:layout_marginTop="40dip"
                 android:background="@color/bg_main"/>
 
             <TextView
@@ -980,7 +1022,7 @@
                 android:layout_height="40dip"
                 android:layout_marginLeft="20dip"
                 android:gravity="center|left"
-                android:text="一、承包户产量"
+                android:text="二、承包户产量"
                 android:textSize="15dip"/>
 
             <View
@@ -1003,7 +1045,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dip">
+                android:layout_height="40dip"
+                android:visibility="gone">
 
 
                 <View
@@ -1102,7 +1145,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dip">
+                android:layout_height="40dip"
+                android:visibility="gone">
 
 
                 <TextView
@@ -1191,9 +1235,9 @@
                 android:background="@color/bg_main"/>
 
             <LinearLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="30dip">
+                android:layout_height="30dip"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/btn_save"

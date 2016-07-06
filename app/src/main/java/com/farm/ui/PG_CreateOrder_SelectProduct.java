@@ -56,7 +56,7 @@ import java.util.Map;
 public class PG_CreateOrder_SelectProduct extends Activity
 {
 
-    PG_Create_ExpandableAdapter  pg_create_expandableAdapter;
+    PG_Create_ExpandableAdapter pg_create_expandableAdapter;
     int number_select = 0;
     MyDialog myDialog;
     int allnumber = 0;
@@ -66,7 +66,7 @@ public class PG_CreateOrder_SelectProduct extends Activity
     String parkname;
     List<Map<String, String>> uuids;
     List<SellOrderDetail_New> list_sell;
-//    Adapter_SelectProduct adapter_selectProduct;
+    //    Adapter_SelectProduct adapter_selectProduct;
     @ViewById
     ExpandableListView expandableListView;
     @ViewById
@@ -120,25 +120,6 @@ public class PG_CreateOrder_SelectProduct extends Activity
             CreateOrder(builder.toString());
         }
 
-//        if (allnumber == 0)
-//        {
-//            Toast.makeText(NCZ_CreateOrder_SelectProduct.this, "请先选择产品", Toast.LENGTH_SHORT).show();
-//        } else if (number_select == 0)
-//        {
-//            Intent intent = new Intent(NCZ_CreateOrder_SelectProduct.this, NCZ_CreateMoreOrder_.class);
-//            startActivity(intent);
-//        } else
-//        {
-//            pb_upload.setVisibility(View.VISIBLE);
-//            setData();
-//            StringBuilder builder = new StringBuilder();
-//            builder.append("{\"SellOrderDetailList\": ");
-//            builder.append(JSON.toJSONString(list_sell));
-//            builder.append(", \"uuids\": ");
-//            builder.append(JSON.toJSONString(uuids));
-//            builder.append("} ");
-//            CreateOrder(builder.toString());
-//        }
 
     }
 
@@ -217,60 +198,62 @@ public class PG_CreateOrder_SelectProduct extends Activity
             for (int j = 0; j < childrenCount; j++)
             {
                 LinearLayout linearlayout = (LinearLayout) pg_create_expandableAdapter.getChildView(i, j, false, null, null);
-                LinearLayout ll = (LinearLayout) linearlayout.getChildAt(j);
-                CheckBox cb_selectall = (CheckBox) ll.findViewById(R.id.cb_selectall);
-                Button btn_number = (Button) ll.findViewById(R.id.btn_number);
+//                LinearLayout ll = (LinearLayout) linearlayout.getChildAt(j);
+                CheckBox cb_selectall = (CheckBox) linearlayout.findViewById(R.id.cb_selectall);
+                Button btn_number = (Button) linearlayout.findViewById(R.id.btn_number);
 
+                if (cb_selectall.isChecked())
+                {
+                    Bundle bundle = (Bundle) cb_selectall.getTag(R.id.tag_view);
+//                        contractTab contractTab = bundle.getParcelable("bean");
+                    SellOrderDetail_New sellOrderDetail_new = bundle.getParcelable("bean");
+                    String number_newsale = btn_number.getText().toString();
+//                        String number_salefor = contractTab.getAllsalefor();
+                    String number_salefor = sellOrderDetail_new.getplannumber();
+                    String number_left = String.valueOf(Integer.valueOf(number_salefor) - Integer.valueOf(number_newsale));
+                    HashMap hashMap = new HashMap();
+//                        hashMap.put("contractid", contractTab.getid());
+                    hashMap.put("contractid", sellOrderDetail_new.getcontractid());
+                    hashMap.put("year", utils.getYear());
+                    hashMap.put("batchTime", sellOrderDetail_new.getBatchTime());
+                    hashMap.put("number_difference", number_left);
+                    uuids.add(hashMap);
 
-                    if (cb_selectall.isChecked())
-                    {
-                        Bundle bundle = (Bundle) cb_selectall.getTag(R.id.tag_view);
-                        contractTab contractTab = bundle.getParcelable("bean");
-                        String number_newsale = btn_number.getText().toString();
-                        String number_salefor = contractTab.getAllsalefor();
-                        String number_left = String.valueOf(Integer.valueOf(number_salefor) - Integer.valueOf(number_newsale));
-                        HashMap hashMap = new HashMap();
-                        hashMap.put("contractid", contractTab.getid());
-                        hashMap.put("year", utils.getYear());
-                        hashMap.put("batchTime", batchTime);
-                        hashMap.put("number_difference", number_left);
-                        uuids.add(hashMap);
-
-                        String uuid = java.util.UUID.randomUUID().toString();
-                        SellOrderDetail_New sellorderdetail_newsale = new SellOrderDetail_New();
-                        sellorderdetail_newsale.setuid(contractTab.getuId());
-                        sellorderdetail_newsale.setUuid(uuid);
-                        sellorderdetail_newsale.setactuallat("");
-                        sellorderdetail_newsale.setactuallatlngsize("");
-                        sellorderdetail_newsale.setactuallng("");
-                        sellorderdetail_newsale.setactualnote("");
-                        sellorderdetail_newsale.setactualnumber("");
-                        sellorderdetail_newsale.setactualprice("");
-                        sellorderdetail_newsale.setactualweight("");
-                        sellorderdetail_newsale.setareaid(contractTab.getAreaId());
-                        sellorderdetail_newsale.setareaname(contractTab.getareaName());
-                        sellorderdetail_newsale.setBatchTime(batchTime);
-                        sellorderdetail_newsale.setcontractid(contractTab.getid());
-                        sellorderdetail_newsale.setcontractname(contractTab.getContractNum());
-                        sellorderdetail_newsale.setisSoldOut("0");
-                        sellorderdetail_newsale.setparkid(contractTab.getparkId());
-                        sellorderdetail_newsale.setparkname(contractTab.getparkName());
-                        sellorderdetail_newsale.setPlanlat("");
-                        sellorderdetail_newsale.setplanlng("");
-                        sellorderdetail_newsale.setplanlatlngsize("");
-                        sellorderdetail_newsale.setplannote("");
-                        sellorderdetail_newsale.setplannumber(number_newsale);
-                        sellorderdetail_newsale.setplanprice("");
-                        sellorderdetail_newsale.setplanweight("");
-                        sellorderdetail_newsale.setreg(utils.getTime());
-                        sellorderdetail_newsale.setstatus("0");
-                        sellorderdetail_newsale.setType("newsale");
-                        sellorderdetail_newsale.setsaleid("");
-                        sellorderdetail_newsale.setXxzt("0");
-                        sellorderdetail_newsale.setYear(utils.getYear());
-                        list_sell.add(sellorderdetail_newsale);
-
+                    String uuid = java.util.UUID.randomUUID().toString();
+                    SellOrderDetail_New sellorderdetail_newsale = new SellOrderDetail_New();
+                    sellorderdetail_newsale.setuid(sellOrderDetail_new.getuid());
+                    sellorderdetail_newsale.setUuid(uuid);
+                    sellorderdetail_newsale.setactuallat("");
+                    sellorderdetail_newsale.setactuallatlngsize("");
+                    sellorderdetail_newsale.setactuallng("");
+                    sellorderdetail_newsale.setactualnote("");
+                    sellorderdetail_newsale.setactualnumber("");
+                    sellorderdetail_newsale.setactualprice("");
+                    sellorderdetail_newsale.setactualweight("");
+                    sellorderdetail_newsale.setareaid(sellOrderDetail_new.getareaid());
+                    sellorderdetail_newsale.setareaname(sellOrderDetail_new.getareaname());
+                    sellorderdetail_newsale.setBatchTime(sellOrderDetail_new.getBatchTime());
+                    sellorderdetail_newsale.setcontractid(sellOrderDetail_new.getcontractid());
+                    sellorderdetail_newsale.setcontractname(sellOrderDetail_new.getcontractname());
+                    sellorderdetail_newsale.setisSoldOut("0");
+                    sellorderdetail_newsale.setparkid(sellOrderDetail_new.getparkid());
+                    sellorderdetail_newsale.setparkname(sellOrderDetail_new.getparkname());
+                    sellorderdetail_newsale.setPlanlat("");
+                    sellorderdetail_newsale.setplanlng("");
+                    sellorderdetail_newsale.setplanlatlngsize("");
+                    sellorderdetail_newsale.setplannote("");
+                    sellorderdetail_newsale.setplannumber(number_newsale);
+                    sellorderdetail_newsale.setplanprice("");
+                    sellorderdetail_newsale.setplanweight("");
+                    sellorderdetail_newsale.setreg(utils.getTime());
+                    sellorderdetail_newsale.setstatus("0");
+                    sellorderdetail_newsale.setType("newsale");
+                    sellorderdetail_newsale.setsaleid("");
+                    sellorderdetail_newsale.setXxzt("0");
+                    sellorderdetail_newsale.setYear(utils.getYear());
+                    list_sell.add(sellorderdetail_newsale);
                 }
+
             }
         }
     }
@@ -288,28 +271,22 @@ public class PG_CreateOrder_SelectProduct extends Activity
             for (int j = 0; j < childrenCount; j++)
             {
                 LinearLayout linearlayout = (LinearLayout) pg_create_expandableAdapter.getChildView(i, j, false, null, null);
-                CustomListView lv = (CustomListView) linearlayout.findViewById(R.id.lv);
-                int childCount = lv.getChildCount();
-                for (int k = 0; k < childCount; k++)
+//                LinearLayout ll = (LinearLayout) linearlayout.getChildAt(j);
+                CheckBox cb_selectall = (CheckBox) linearlayout.findViewById(R.id.cb_selectall);
+                Button btn_number = (Button) linearlayout.findViewById(R.id.btn_number);
+                if (cb_selectall.isChecked())
                 {
-                    LinearLayout ll = (LinearLayout) lv.getChildAt(k);
-                    CheckBox cb_selectall = (CheckBox) ll.findViewById(R.id.cb_selectall);
-                    Button btn_number = (Button) ll.findViewById(R.id.btn_number);
-                    if (cb_selectall.isChecked())
-                    {
-                        Bundle bundle = (Bundle) cb_selectall.getTag(R.id.tag_view);
-                        contractTab contractTab = bundle.getParcelable("bean");
-                        number_select = number_select + Integer.valueOf(btn_number.getText().toString());
-                    }
-                    allnumber = newsalenumber + number_select;
-                    tv_salenumber.setText(allnumber + "株");
+                    Bundle bundle = (Bundle) cb_selectall.getTag(R.id.tag_view);
+//                        contractTab contractTab = bundle.getParcelable("bean");
+                    SellOrderDetail_New sellOrderDetail_new = bundle.getParcelable("bean");
+                    number_select = number_select + Integer.valueOf(btn_number.getText().toString());
                 }
+                allnumber = newsalenumber + number_select;
+                tv_salenumber.setText(allnumber + "株");
+
             }
         }
     }
-
-
-
 
 
     private void getNewSalelList()
