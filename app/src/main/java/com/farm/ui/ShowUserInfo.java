@@ -80,6 +80,9 @@ public class ShowUserInfo extends Activity
     @AfterViews
     void afterOncreate()
     {
+        type = getIntent().getStringExtra("type");
+        userid = getIntent().getStringExtra("userid");
+        commembertab = AppContext.getUserInfo(ShowUserInfo.this);
         getShowUserInfo(userid);
 //        showData(commembertab);
 //		getShowUserInfo(userid);
@@ -91,9 +94,6 @@ public class ShowUserInfo extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        type = getIntent().getStringExtra("type");
-        userid = getIntent().getStringExtra("userid");
-        commembertab = AppContext.getUserInfo(ShowUserInfo.this);
     }
 
     private void getShowUserInfo(String userid)
@@ -144,16 +144,20 @@ public class ShowUserInfo extends Activity
 
     private void showData(commembertab commembertab)
     {
-        if (commembertab.getnlevel().equals("0"))
+        if (commembertab.getnlevel() != null)
         {
-            tv_zw.setText("农场主");
-        } else if (commembertab.getnlevel().equals("1"))
-        {
-            tv_zw.setText("场长");
-        } else
-        {
-            tv_zw.setText("片管");
+            if (commembertab.getnlevel().equals("0"))
+            {
+                tv_zw.setText("农场主");
+            } else if (commembertab.getnlevel().equals("1"))
+            {
+                tv_zw.setText("场长");
+            } else
+            {
+                tv_zw.setText("片管");
+            }
         }
+
         if (commembertab.getparkName() != null)
         {
             tv_park.setText(commembertab.getparkName());

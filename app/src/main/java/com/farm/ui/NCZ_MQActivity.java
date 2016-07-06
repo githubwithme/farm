@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -22,6 +24,7 @@ import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
+import com.farm.widget.CustomArrayAdapter;
 import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -58,7 +61,18 @@ public class NCZ_MQActivity extends Activity
     View line;
     @ViewById
     PullToRefreshListView frame_listview_news;
-
+    @ViewById
+    Spinner provinceSpinner;
+    @ViewById
+    Spinner citySpinner;
+    @ViewById
+    Spinner countySpinner;
+    ArrayAdapter<String> provinceAdapter = null;  //省级适配器
+    ArrayAdapter<String> cityAdapter = null;    //地级适配器
+    ArrayAdapter<String> countyAdapter = null;    //县级适配器
+    private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
+    private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
+    private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
     @AfterViews
     void afterOncreate()
     {
@@ -76,7 +90,57 @@ public class NCZ_MQActivity extends Activity
         getActionBar().hide();
     }
 
+    /*
+          * 设置下拉框
+          */
+    private void setSpinner()
+    {
+        //绑定适配器和值
+        provinceAdapter = new CustomArrayAdapter(NCZ_MQActivity.this, mProvinceDatas);
+        provinceSpinner.setAdapter(provinceAdapter);
+        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
 
+        cityAdapter = new CustomArrayAdapter(NCZ_MQActivity.this, mCitisDatasMap);
+        citySpinner.setAdapter(cityAdapter);
+        citySpinner.setSelection(0, true);  //默认选中第0个
+
+        countyAdapter = new CustomArrayAdapter(NCZ_MQActivity.this, mAreaDatasMap);
+        countySpinner.setAdapter(countyAdapter);
+        countySpinner.setSelection(0, true);
+
+        //省级下拉框监听
+        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            // 表示选项被改变的时候触发此方法，主要实现办法：动态改变地级适配器的绑定值
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3)
+            {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0)
+            {
+            }
+
+        });
+
+
+        //地级下拉监听
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3)
+            {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0)
+            {
+
+            }
+        });
+    }
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_MQActivity.this);
@@ -210,6 +274,7 @@ public class NCZ_MQActivity extends Activity
                     {
                         lv.setTag(UIHelper.LISTVIEW_DATA_FULL);
                         adapter.notifyDataSetChanged();
+                        more.setVisibility(View.GONE);
                         more.setText(R.string.load_full);// 已经全部加载完毕
                     } else if (size == PAGESIZE)
                     {// 还有数据可以加载
@@ -287,7 +352,8 @@ public class NCZ_MQActivity extends Activity
                 if (PlantGcd == null) return;
                 commembertab commembertab = AppContext.getUserInfo(NCZ_MQActivity.this);
                 AppContext.updateStatus(NCZ_MQActivity.this, "0", PlantGcd.getId(), "3", commembertab.getId());
-                Intent intent = new Intent(NCZ_MQActivity.this, NCZ_todaymyDetail_.class);
+//                Intent intent = new Intent(NCZ_MQActivity.this, NCZ_todaymyDetail_.class);
+                Intent intent = new Intent(NCZ_MQActivity.this, NCZ_GCDDetailActivity_.class);
                 intent.putExtra("bean_gcd", PlantGcd); // 因为list中添加了头部,因此要去掉一个
 //                intent.putExtra("bean_areatab", areatab); // 因为list中添加了头部,因此要去掉一个
                 NCZ_MQActivity.this.startActivity(intent);

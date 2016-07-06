@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_ContractSale_NCZ;
+import com.farm.adapter.Adapter_ContractBreakOff_NCZ;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -30,16 +30,17 @@ import java.util.List;
 /**
  * Created by ${hmj} on 2016/7/4.
  */
-@EActivity(R.layout.ncz_contractsaleactivity)
-public class NCZ_ContractSaleActivity extends Activity
+@EActivity(R.layout.ncz_contractbreakoffactivity)
+public class NCZ_ContractBreakOffActivity extends Activity
 {
     String areaid;
     String areaname;
+    String batchTime;
     @ViewById
     ListView lv;
     @ViewById
     TextView tv_note;
-    Adapter_ContractSale_NCZ adapter_contractSale_ncz;
+    Adapter_ContractBreakOff_NCZ adapter_contractBreakOff_ncz;
 
     @AfterViews
     void afterOncreate()
@@ -47,7 +48,8 @@ public class NCZ_ContractSaleActivity extends Activity
         getActionBar().hide();
         areaid = getIntent().getStringExtra("areaid");
         areaname = getIntent().getStringExtra("areaname");
-        tv_note.setText(areaname + "的承包区销售情况");
+        batchTime = getIntent().getStringExtra("batchTime");
+        tv_note.setText(areaname + batchTime + "批次的承包区断蕾情况");
         getSaleDataOfArea();
     }
 
@@ -61,8 +63,9 @@ public class NCZ_ContractSaleActivity extends Activity
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("areaid", areaid);
+        params.addQueryStringParameter("batchtime", batchTime);
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "getContractSaleData");//jobGetList1
+        params.addQueryStringParameter("action", "NCZ_getAreaBatchtimeBreakOffData");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -77,8 +80,8 @@ public class NCZ_ContractSaleActivity extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
-                        adapter_contractSale_ncz = new Adapter_ContractSale_NCZ(NCZ_ContractSaleActivity.this, listNewData);
-                        lv.setAdapter(adapter_contractSale_ncz);
+                        adapter_contractBreakOff_ncz = new Adapter_ContractBreakOff_NCZ(NCZ_ContractBreakOffActivity.this, listNewData);
+                        lv.setAdapter(adapter_contractBreakOff_ncz);
                     } else
                     {
                         listNewData = new ArrayList<contractTab>();
@@ -86,7 +89,7 @@ public class NCZ_ContractSaleActivity extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(NCZ_ContractSaleActivity.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_ContractBreakOffActivity.this, "error_connectDataBase");
                     return;
                 }
 
@@ -95,7 +98,7 @@ public class NCZ_ContractSaleActivity extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_ContractSaleActivity.this, "error_connectServer");
+                AppContext.makeToast(NCZ_ContractBreakOffActivity.this, "error_connectServer");
             }
         });
     }

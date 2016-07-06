@@ -28,11 +28,33 @@ public class BatchTime implements Parcelable // 与数据库不一致
     public String year;
 //    public List<BreakOff_New> breakOff_newList;
     public List<BreakOff_New> breakOffList;
+    public List<contractTab> contracttabList;
+    public List<areatab> areatabList;
     public String allsaleout;
     public String allsalein;
     public String allsalefor;
     public String allnewsale;
     public String flashStr;  //c
+
+    public List<areatab> getAreatabList()
+    {
+        return areatabList;
+    }
+
+    public void setAreatabList(List<areatab> areatabList)
+    {
+        this.areatabList = areatabList;
+    }
+
+    public List<contractTab> getContracttabList()
+    {
+        return contracttabList;
+    }
+
+    public void setContracttabList(List<contractTab> contracttabList)
+    {
+        this.contracttabList = contracttabList;
+    }
 
     public String getFlashStr()
     {
@@ -193,6 +215,8 @@ public class BatchTime implements Parcelable // 与数据库不一致
             p.setYear(source.readString());
 //            p.breakOff_newList = source.readArrayList(plantgrowthtab.class.getClassLoader());
             p.breakOffList = source.readArrayList(BreakOff_New.class.getClassLoader());
+            p.contracttabList = source.readArrayList(contractTab.class.getClassLoader());
+            p.areatabList = source.readArrayList(contractTab.class.getClassLoader());
             p.setAllsaleout(source.readString());
             p.setAllsalein(source.readString());
             p.setAllsalefor(source.readString());
@@ -220,6 +244,8 @@ public class BatchTime implements Parcelable // 与数据库不一致
         p.writeString(year);
 //        p.writeList(breakOff_newList);
         p.writeList(breakOffList);
+        p.writeList(contracttabList);
+        p.writeList(areatabList);
         p.writeString(allsaleout);
         p.writeString(allsalein);
         p.writeString(allsalefor);

@@ -45,7 +45,8 @@ import java.util.List;
 @EActivity(R.layout.pg_mainactivity_new)
 public class PG_MainActivity_New extends Activity
 {
-    NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
+    NCZ_ContactsFragment_New ncz_contactsFragment;
+//    NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
     MyDialog myDialog;
     Fragment mContent = new Fragment();
     PG_DynamicFragment pg_dynamicFragment;//动态fragment
@@ -203,7 +204,7 @@ public class PG_MainActivity_New extends Activity
         pg_dynamicFragment = new PG_DynamicFragment_();
         pg_jobFragment = new PG_JobFragment_();
         pg_farmManagerFragment = new PG_FarmManagerFragment_();
-        ncz_contactsFragment = new NCZ_ContactsFragment_();
+        ncz_contactsFragment = new NCZ_ContactsFragment_New_();
         iFragment = new IFragment_();
 //        List<Integer> guideResourceId = new ArrayList<Integer>();
 //        guideResourceId.add(R.drawable.yd666);

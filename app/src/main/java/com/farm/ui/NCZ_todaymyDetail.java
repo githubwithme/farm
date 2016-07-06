@@ -59,6 +59,16 @@ public class NCZ_todaymyDetail extends FragmentActivity
     @AfterViews
     void afterOncreate()
     {
+        Bundle bundle = new Bundle();
+        plantGcd = getIntent().getParcelableExtra("bean_gcd");
+        bundle.putParcelable("bean_gcd", plantGcd);
+
+        commembertab = AppContext.getUserInfo(NCZ_todaymyDetail.this);
+        fragmentList = new ArrayList<>();
+        ncz_todayDetail_zz = new NCZ_todayDetail_zz_();
+
+        ncz_todayDetail_zz.setArguments(bundle);
+        fragmentList.add(ncz_todayDetail_zz);
         setBackground(0);
         vPager.setOffscreenPageLimit(1);
         vPager.setIsScrollable(true);
@@ -95,16 +105,6 @@ public class NCZ_todaymyDetail extends FragmentActivity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        Bundle bundle = new Bundle();
-        plantGcd = getIntent().getParcelableExtra("bean_gcd");
-        bundle.putParcelable("bean_gcd", plantGcd);
-
-        commembertab = AppContext.getUserInfo(NCZ_todaymyDetail.this);
-        fragmentList = new ArrayList<>();
-        ncz_todayDetail_zz = new NCZ_todayDetail_zz_();
-
-        ncz_todayDetail_zz.setArguments(bundle);
-        fragmentList.add(ncz_todayDetail_zz);
     }
 
 }

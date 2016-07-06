@@ -64,13 +64,14 @@ public class PG_FarmManagerFragment extends Fragment
 //        PG_Workplan
     }
 
-    @Click
-    void gongdan()
-    {
+//    @Click
+//    void gongdan()
+//    {
 //        Intent intent = new Intent(getActivity(), PG_WorkOrder_.class);
-        Intent intent = new Intent(getActivity(), PG_XS_Activity_.class);
-        getActivity().startActivity(intent);
-    }
+//        Intent intent = new Intent(getActivity(), PG_XS_Activity_.class);
+//        Intent intent = new Intent(getActivity(), PG_SaleActivity_.class);
+//        getActivity().startActivity(intent);
+//    }
 
     @Click
     void btn_search()
@@ -104,7 +105,7 @@ public class PG_FarmManagerFragment extends Fragment
     @Click
     void ll_xs()
     {
-        Intent intent = new Intent(getActivity(), NCZ_SaleChart_.class);
+        Intent intent = new Intent(getActivity(), PG_SaleActivity_.class);
         getActivity().startActivity(intent);
     }
 
@@ -118,8 +119,8 @@ public class PG_FarmManagerFragment extends Fragment
     @Click
     void ll_dl()
     {
-//        Intent intent = new Intent(getActivity(), PQ_DLFragment_.class);
-        Intent intent = new Intent(getActivity(), PG_BreakOffActivity_.class);
+        Intent intent = new Intent(getActivity(), PQ_DLFragment_.class);
+//        Intent intent = new Intent(getActivity(), PG_BreakOffActivity_.class);
         getActivity().startActivity(intent);
     }
 

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.farm.R;
 import com.farm.bean.BatchTime;
@@ -128,14 +129,17 @@ public class Adapter_FarmSaleData extends BaseExpandableListAdapter
     public void onGroupCollapsed(int groupPosition)
     {
         super.onGroupCollapsed(groupPosition);
-
+        if (listData.get(groupPosition).getBatchTimeList().size() == 0)
+        {
+            Toast.makeText(context,"该园区暂无批次",Toast.LENGTH_SHORT).show();
+        }
     }
 
     //获取当前父item下的子item的个数
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getBatchTimeList() == null)
+        if (listData.get(groupPosition).getBatchTimeList().size() == 0)
         {
             return 0;
         }
@@ -194,7 +198,7 @@ public class Adapter_FarmSaleData extends BaseExpandableListAdapter
         }
 
         tv_contractname.setText(listData.get(groupPosition).getparkName());
-        tv_salefor.setText(String.valueOf(allnumber));
+        tv_salefor.setText(parktab.getAllsalefor());
         tv_allsale.setText(String.valueOf(allnumber));
         tv_saleout.setText(parktab.getAllsaleout());
         tv_salein.setText(parktab.getAllsalein());
@@ -278,7 +282,7 @@ public class Adapter_FarmSaleData extends BaseExpandableListAdapter
                 }
                 view.tv_salein.setText(list.get(position).getAllsalein());
                 view.tv_saleout.setText(list.get(position).getAllsaleout());
-                view.tv_salefor.setText(String.valueOf(allnumber));
+                view.tv_salefor.setText(list.get(position).getAllsalefor());
                 view.tv_allsale.setText(String.valueOf(allnumber));
                 view.tv_contractname.setText(list.get(position).getBatchTime());
                 if (BatchTime.getAllsalefor().equals("0"))

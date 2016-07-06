@@ -61,6 +61,9 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.NCZ_JobActivity_"/>
 
+        <activity android:name=".ui.CZ_BreakOffActivity_"/>
+        <activity android:name=".ui.NCZ_ContractBreakOffActivity_"/>
+        <activity android:name=".ui.PG_SaleActivity_"/>
         <activity android:name=".ui.NCZ_ContractSaleActivity_"/>
         <activity android:name=".ui.NCZ_CreateNewOrder_"/>
         <activity android:name=".ui.NCZ_BreakOffActivity_"/>
@@ -191,6 +194,7 @@
         <activity android:name=".ui.NCZ_todaymyDetail_"/>
         <activity android:name=".ui.NCZ_Todayjob_Common_"/>
         <activity android:name=".ui.NCZ_Statistics_"/>
+        <activity android:name=".ui.NCZ_GCDDetailActivity_"/>
         <activity android:name=".ui.NCZ_StatisticsDetail_"/>
         <activity android:name=".ui.NCZ_EventDatails_"/>
         <activity android:name=".ui.NCZ_DLdatail_"/>
