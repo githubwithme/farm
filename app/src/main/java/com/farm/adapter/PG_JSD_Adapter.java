@@ -1,6 +1,8 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +38,9 @@ public class PG_JSD_Adapter extends BaseAdapter
     private List<SellOrderDetail_New> listItems;
     private LayoutInflater listContainer;
     SellOrderDetail_New sellOrderDetail_new;
+    String zpzl;
+    String cpzl;
+
 
     class ListItemView
     {
@@ -48,11 +53,14 @@ public class PG_JSD_Adapter extends BaseAdapter
         public Button bianjie;
     }
 
-    public PG_JSD_Adapter(Context context, List<SellOrderDetail_New> data)
+    public PG_JSD_Adapter(Context context, List<SellOrderDetail_New> data,String zpzl,String cpzl)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context);
         this.listItems = data;
+        this.zpzl=zpzl;
+        this.cpzl=cpzl;
+
     }
 
     HashMap<Integer, View> lmap = new HashMap<Integer, View>();
@@ -81,6 +89,29 @@ public class PG_JSD_Adapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
+
+        listItemView.zhengpin.setTag(R.id.tag_bean,listItemView);
+        listItemView.zhengpin.addTextChangedListener(new TextWatcher()
+        {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+
+            }
+        });
 
         listItemView.zhushu.setText(sellOrderDetail_new.getactualnumber());
         listItemView.zhengpin.setText(sellOrderDetail_new.getplanprice());

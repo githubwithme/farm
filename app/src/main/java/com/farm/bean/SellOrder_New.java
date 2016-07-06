@@ -61,14 +61,14 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String pickId ;      //  挑工头
     public String carryPrice ;  // 搬运单价
     public String packPrice ;   // 包装单价
-    public String defectPrice ;   //次品单价
-    public String defectNum ;   // 次品数量
-    public String packPec ;   // 包装规格
+    public String defectPrice;   //次品单价
+    public String defectNum;   // 次品数量
+    public String packPec;   // 包装规格
     public String waitDeposit ;   // 要付订金
 
-    public String buyersId ;   // 采购商id
-    public String buyersName ;   // 采购商名
-    public String contractorName ;   //  包工头名
+    public String buyersId;   // 采购商id
+    public String buyersName;   // 采购商名
+    public String contractorName;   //  包工头名
     public String pickName ;   //  搬运工名
     public String purchaName ;   // 片管获取采购商名字
     public String purchaTel ;   //采购商电话
@@ -84,7 +84,172 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String oldsaletime;     //旧的数量
     public String creatorid;    //创建者id
     public String goodsname;     //物资名字
+    //另外一个表
+    public String qualityWaterWeight;     //正品带水重
+    public String qualityNetWeight;//正品净重
+    public String qualityBalance;// 正品结算金额
+    public String defectWaterWeight;//次品带水重
+    public String defectNetWeight;//次品净重
+    public String defectBalance;//次品结算金额
+    public String total ;//总件数
+    public String qualityTotalWeight;//正品总净重
+    public String defectTotalWeight;//次品重净重
+    public String TotalWeight;//总净重
+    public String packFee;//总包装费
+    public String carryFee;//总搬运费
+    public String totalFee;//总合计金额
+    public String personNote;//搬运说明
+    public String actualMoney;//实际金额
 
+    public String getQualityWaterWeight()
+    {
+        return qualityWaterWeight;
+    }
+
+    public void setQualityWaterWeight(String qualityWaterWeight)
+    {
+        this.qualityWaterWeight = qualityWaterWeight;
+    }
+
+    public String getQualityNetWeight()
+    {
+        return qualityNetWeight;
+    }
+
+    public void setQualityNetWeight(String qualityNetWeight)
+    {
+        this.qualityNetWeight = qualityNetWeight;
+    }
+
+    public String getQualityBalance()
+    {
+        return qualityBalance;
+    }
+
+    public void setQualityBalance(String qualityBalance)
+    {
+        this.qualityBalance = qualityBalance;
+    }
+
+    public String getDefectWaterWeight()
+    {
+        return defectWaterWeight;
+    }
+
+    public void setDefectWaterWeight(String defectWaterWeight)
+    {
+        this.defectWaterWeight = defectWaterWeight;
+    }
+
+    public String getDefectNetWeight()
+    {
+        return defectNetWeight;
+    }
+
+    public void setDefectNetWeight(String defectNetWeight)
+    {
+        this.defectNetWeight = defectNetWeight;
+    }
+
+    public String getDefectBalance()
+    {
+        return defectBalance;
+    }
+
+    public void setDefectBalance(String defectBalance)
+    {
+        this.defectBalance = defectBalance;
+    }
+
+    public String getTotal()
+    {
+        return total;
+    }
+
+    public void setTotal(String total)
+    {
+        this.total = total;
+    }
+
+    public String getQualityTotalWeight()
+    {
+        return qualityTotalWeight;
+    }
+
+    public void setQualityTotalWeight(String qualityTotalWeight)
+    {
+        this.qualityTotalWeight = qualityTotalWeight;
+    }
+
+    public String getDefectTotalWeight()
+    {
+        return defectTotalWeight;
+    }
+
+    public void setDefectTotalWeight(String defectTotalWeight)
+    {
+        this.defectTotalWeight = defectTotalWeight;
+    }
+
+    public String getTotalWeight()
+    {
+        return TotalWeight;
+    }
+
+    public void setTotalWeight(String totalWeight)
+    {
+        TotalWeight = totalWeight;
+    }
+
+    public String getPackFee()
+    {
+        return packFee;
+    }
+
+    public void setPackFee(String packFee)
+    {
+        this.packFee = packFee;
+    }
+
+    public String getCarryFee()
+    {
+        return carryFee;
+    }
+
+    public void setCarryFee(String carryFee)
+    {
+        this.carryFee = carryFee;
+    }
+
+    public String getTotalFee()
+    {
+        return totalFee;
+    }
+
+    public void setTotalFee(String totalFee)
+    {
+        this.totalFee = totalFee;
+    }
+
+    public String getPersonNote()
+    {
+        return personNote;
+    }
+
+    public void setPersonNote(String personNote)
+    {
+        this.personNote = personNote;
+    }
+
+    public String getActualMoney()
+    {
+        return actualMoney;
+    }
+
+    public void setActualMoney(String actualMoney)
+    {
+        this.actualMoney = actualMoney;
+    }
 
     public String getPurchaName()
     {
@@ -732,6 +897,10 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setPickId(source.readString());
             p.setCarryPrice(source.readString());
             p.setPackPrice(source.readString());
+            p.setDefectPrice(source.readString());
+            p.setDefectNum(source.readString());
+
+
             p.setPackPec(source.readString());
             p.setWaitDeposit(source.readString());
             p.setBuyersId(source.readString());
@@ -751,6 +920,22 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setOldsaletime(source.readString());
             p.setCreatorid(source.readString());
             p.setGoodsname(source.readString());
+
+            p.setQualityWaterWeight(source.readString());
+            p.setQualityNetWeight(source.readString());
+            p.setQualityBalance(source.readString());
+            p.setDefectWaterWeight(source.readString());
+            p.setDefectNetWeight(source.readString());
+            p.setDefectBalance(source.readString());
+            p.setTotal(source.readString());
+            p.setQualityTotalWeight(source.readString());
+            p.setDefectTotalWeight(source.readString());
+            p.setTotalWeight(source.readString());
+            p.setPackFee(source.readString());
+            p.setCarryFee(source.readString());
+            p.setTotalFee(source.readString());
+            p.setPersonNote(source.readString());
+            p.setActualMoney(source.readString());
             return p;
 
 
@@ -804,6 +989,8 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(pickId);
         p.writeString(carryPrice);
         p.writeString(packPrice);
+        p.writeString(defectPrice);
+        p.writeString(defectNum);
         p.writeString(packPec);
         p.writeString(waitDeposit);
         p.writeString(buyersId);
@@ -823,6 +1010,22 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(oldsaletime);
         p.writeString(creatorid);
         p.writeString(goodsname);
+
+        p.writeString(qualityWaterWeight);
+        p.writeString(qualityNetWeight);
+        p.writeString(qualityBalance);
+        p.writeString(defectWaterWeight);
+        p.writeString(defectNetWeight);
+        p.writeString(defectBalance);
+        p.writeString(total);
+        p.writeString(qualityTotalWeight);
+        p.writeString(defectTotalWeight);
+        p.writeString(TotalWeight);
+        p.writeString(packFee);
+        p.writeString(carryFee);
+        p.writeString(totalFee);
+        p.writeString(personNote);
+        p.writeString(actualMoney);
     }
 
     @Override

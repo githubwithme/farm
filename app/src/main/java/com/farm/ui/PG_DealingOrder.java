@@ -20,8 +20,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_NotpayAdapter;
-import com.farm.adapter.PG_NotpayAdapter;
+import com.farm.adapter.NCZ_DealingAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -46,14 +45,13 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by hasee on 2016/7/2.
+ * Created by hasee on 2016/7/5.
  */
 @SuppressLint("NewApi")
 @EFragment
-public class PG_NotPayFragment extends Fragment
+public class PG_DealingOrder extends Fragment
 {
-
-    private PG_NotpayAdapter listAdapter;
+    private NCZ_DealingAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     private AppContext appContext;
@@ -94,7 +92,6 @@ public class PG_NotPayFragment extends Fragment
 //        getNewSaleList_test();
         setSpinner();
         getAllOrders();
-
     }
 
 
@@ -103,10 +100,8 @@ public class PG_NotPayFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
-//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENOTPAYORDER);
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEDEALINGORDER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
-
         return rootView;
     }
 
@@ -120,13 +115,12 @@ public class PG_NotPayFragment extends Fragment
         }
     };
 
-
     private void getNewSaleList_test()
     {
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new PG_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+            listAdapter = new NCZ_DealingAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEDEALINGORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -134,7 +128,7 @@ public class PG_NotPayFragment extends Fragment
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
                     commembertab commembertab = AppContext.getUserInfo(getActivity());
-                    AppContext.eventStatus(getActivity(), "8",  listData.get(position).getUuid(), commembertab.getId());
+                    AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
                     Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
                     intent.putExtra("bean", listData.get(position));
                     getActivity().startActivity(intent);
@@ -170,11 +164,12 @@ public class PG_NotPayFragment extends Fragment
                         while (it.hasNext())
                         {
                             String value = it.next().getSelltype();
-                            if (value.equals("已完成"))
+                            if (!value.equals("已完成"))
                             {
                                 it.remove();
                             }
                         }
+
                         Iterator<SellOrder_New> its = listData.iterator();
                         while (its.hasNext())
                         {
@@ -184,8 +179,7 @@ public class PG_NotPayFragment extends Fragment
                                 its.remove();
                             }
                         }
-
-                        listAdapter = new PG_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+                        listAdapter = new NCZ_DealingAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEDEALINGORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
@@ -275,5 +269,4 @@ public class PG_NotPayFragment extends Fragment
     {
         super.onDestroyView();
     }
-
 }

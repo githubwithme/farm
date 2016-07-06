@@ -209,7 +209,7 @@
                         android:layout_height="match_parent"
                         android:background="@null"
                         android:gravity="center"
-                        android:hint="sssdd"
+                        android:hint=""
                         android:numeric="decimal"
                         android:textSize="14dip"/>
                 </LinearLayout>

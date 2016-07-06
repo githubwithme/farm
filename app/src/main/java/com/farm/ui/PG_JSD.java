@@ -173,6 +173,17 @@ public class PG_JSD extends Activity
     @ViewById
     EditText cp_jsje;      //次品 结算金额
 
+    @ViewById
+    EditText carryFee; //总搬运费
+    @ViewById
+    EditText packFee;// 总包装费
+    @ViewById
+    EditText totalFee;// 合计金额
+    @ViewById
+    EditText actualMoney;//实际金额
+
+    @ViewById
+    EditText packPec;
    /* @ViewById
     ListView pg_sale;*/
 
@@ -224,7 +235,7 @@ public class PG_JSD extends Activity
         sellOrder.setUid(sellOrder_new.getUid());
         sellOrder.setUuid(sellOrder_new.getUuid());
         sellOrder.setBatchTime(sellOrder_new.getBatchTime());
-        sellOrder.setSelltype("0");
+        sellOrder.setSelltype("交易中");//
         sellOrder.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrder.setBuyers(sellOrder_new.getBuyersId());
@@ -256,11 +267,20 @@ public class PG_JSD extends Activity
                 //
         sellOrder.setActualprice(jsd_zpprice.getText().toString());//  正品单价
         sellOrder.setDefectPrice(jsd_cpprice.getText().toString());//  次品单价
-        sellOrder.setActualweight(jsd_zpjz.getText().toString());//  正品总净重
-        sellOrder.setDefectNum(jsd_cpzjs.getText().toString());//  次品总净重
+        sellOrder.setActualweight(zp_jianshu.getText().toString());//  正品件数
+        sellOrder.setDefectNum(cp_jianshu.getText().toString());//  次品件数
+        sellOrder.setPackPec(packPec.getText().toString());//  包装规格
 
 
-
+/*        public String total ;//总件数
+        public String qualityTotalWeight;//正品总净重
+        public String defectTotalWeight;//次品重净重
+        public String TotalWeight;//总净重
+        public String packFee;//总包装费
+        public String carryFee;//总搬运费
+        public String totalFee;//总合计金额
+           public String personNote;//搬运说明
+    public String actualMoney;//实际金额*/
         //附表2
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         sellOrder_new_first.setSellOrderId(sellOrder_new.getUuid());
@@ -271,6 +291,18 @@ public class PG_JSD extends Activity
         sellOrder_new_first.setDefectNetWeight(cp_jingzhong.getText().toString());
         sellOrder_new_first.setDefectBalance(cp_jsje.getText().toString());
 
+        sellOrder_new_first.setTotal(jsd_zongjianshu.getText().toString());
+
+        sellOrder_new_first.setQualityTotalWeight(jsd_zpjz.getText().toString());
+        sellOrder_new_first.setDefectTotalWeight(jsd_cpzjs.getText().toString());
+
+        sellOrder_new_first.setTotalWeight(jsd_zongjingzhong.getText().toString());
+        sellOrder_new_first.setPackFee(packFee.getText().toString());
+        sellOrder_new_first.setCarryFee(carryFee.getText().toString());
+        sellOrder_new_first.setTotalFee(totalFee.getText().toString());
+
+        sellOrder_new_first.setActualMoney(actualMoney.getText().toString());
+//        sellOrder_new_first.setPersonNote(totalFee.getText().toString());
 
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrder_new\":[ ");
@@ -328,7 +360,31 @@ public class PG_JSD extends Activity
 
     private void showData()
     {
+        bz_nc_danjia.setText(sellOrder_new.getPackPrice());
+        by_nc_danjia.setText(sellOrder_new.getCarryPrice());
+        by_fzrid.setText(sellOrder_new.getContractorName());
+        bz_fzrid.setText(sellOrder_new.getPickName());
         jsd_zpprice.setText(sellOrder_new.getPrice());
+        actualMoney.setText(sellOrder_new.getActualMoney());
+        packPec.setText(sellOrder_new.getPackPec());
+
+        packFee.setText(sellOrder_new.getPackFee());
+        carryFee.setText(sellOrder_new.getCarryFee());
+        cp_jsje.setText(sellOrder_new.getDefectBalance());
+        zp_jsje.setText(sellOrder_new.getQualityBalance());
+        cp_jingzhong.setText(sellOrder_new.getDefectNetWeight());
+        zp_bds_zhong.setText(sellOrder_new.getQualityNetWeight());
+        cp_ds_zhong.setText(sellOrder_new.getDefectWaterWeight());
+        zp_ds_zhong.setText(sellOrder_new.getQualityWaterWeight());
+        cp_jianshu.setText(sellOrder_new.getDefectNum());
+        zp_jianshu.setText(sellOrder_new.getActualweight());
+        jsd_cpprice.setText(sellOrder_new.getDefectPrice());
+        jsd_zpprice.setText(sellOrder_new.getActualprice());
+        jsd_cpzjs.setText(sellOrder_new.getDefectTotalWeight());
+        jsd_zpjz.setText(sellOrder_new.getQualityTotalWeight());
+        jsd_zongjingzhong.setText(sellOrder_new.getTotalWeight());
+        jsd_zongjianshu.setText(sellOrder_new.getTotal());
+        totalFee.setText(sellOrder_new.getTotalFee());
     }
 
     @Override
@@ -359,30 +415,7 @@ public class PG_JSD extends Activity
         @Override
         public void afterTextChanged(Editable editable)
         {
-/*            zp_jingzhong
-                    cp_jingzhong
-            all_zhongpin
-                    allcipin*/
-            double num = 0;
-            if (!zp_jingzhong.equals("") && !cp_jingzhong.equals(""))
-            {
 
-                if (!all_zhengpin.equals(""))
-                {
-                    num += Double.valueOf(all_zhengpin.getText().toString());
-                }
-            }
-
-            for (int i = 0; i < curremt; i++)
-            {
-                if (!zhongliangs[i].getText().toString().equals(""))
-                {
-                    num += Double.valueOf(zhongliangs[i].getText().toString());
-                }
-
-
-            }
-            all_jinzhong.setText(num + "");
         }
     };
     //全部净重手动
@@ -405,17 +438,7 @@ public class PG_JSD extends Activity
         {
 
 
-            double num = 0;
-            for (int i = 0; i < curremt; i++)
-            {
-                if (!zhongliangs[i].getText().toString().equals(""))
-                {
-                    num += Double.valueOf(zhongliangs[i].getText().toString());
-                }
 
-
-            }
-            all_jinzhong.setText(num + "");
         }
     };
     //次品个数
@@ -436,17 +459,7 @@ public class PG_JSD extends Activity
         @Override
         public void afterTextChanged(Editable editable)
         {
-            float num = 0;
-            for (int i = 0; i < curremt; i++)
-            {
-                if (!cipins[i].getText().toString().equals(""))
-                {
-                    num += Float.valueOf(cipins[i].getText().toString());
-                }
 
-
-            }
-            allcipin.setText(num + "");
         }
     };
 
@@ -468,16 +481,6 @@ public class PG_JSD extends Activity
         @Override
         public void afterTextChanged(Editable editable)
         {
-            float num = 0;
-            for (int i = 0; i < curremt; i++)
-            {
-                if (!zhengpins[i].getText().toString().equals(""))
-                {
-                    num += Float.valueOf(zhengpins[i].getText().toString());
-                }
-            }
-            all_zhengpin.setText(num + "");
-
 
         }
     };
@@ -679,6 +682,9 @@ public class PG_JSD extends Activity
 
     private void getsellOrderDetailBySaleId()
     {
+
+
+
         commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("saleId", sellOrder_new.getUuid());
@@ -696,8 +702,10 @@ public class PG_JSD extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
+
+
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        pg_jsd_adapter = new PG_JSD_Adapter(PG_JSD.this, listNewData);
+                        pg_jsd_adapter = new PG_JSD_Adapter(PG_JSD.this, listNewData, sellOrder_new.getQualityNetWeight(),sellOrder_new.getDefectNetWeight());
                         frame_listview_news.setAdapter(pg_jsd_adapter);
                         utils.setListViewHeight(frame_listview_news);
 

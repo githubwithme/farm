@@ -19,6 +19,95 @@ public class SellOrder_New_First implements Parcelable
     public String defectWaterWeight;//次品带水重
     public String defectNetWeight;//次品净重
     public String defectBalance;//次品结算金额
+    public String total ;//总件数
+    public String qualityTotalWeight;//正品总净重
+    public String defectTotalWeight;//次品重净重
+    public String TotalWeight;//总净重
+    public String packFee;//总包装费
+    public String carryFee;//总搬运费
+    public String totalFee;//总合计金额
+    public String personNote;//搬运说明
+    public String actualMoney;//实际金额
+
+    public String getActualMoney()
+    {
+        return actualMoney;
+    }
+
+    public void setActualMoney(String actualMoney)
+    {
+        this.actualMoney = actualMoney;
+    }
+
+    public String getPersonNote()
+    {
+        return personNote;
+    }
+
+    public void setPersonNote(String personNote)
+    {
+        this.personNote = personNote;
+    }
+
+    public String getQualityTotalWeight()
+    {
+        return qualityTotalWeight;
+    }
+
+    public void setQualityTotalWeight(String qualityTotalWeight)
+    {
+        this.qualityTotalWeight = qualityTotalWeight;
+    }
+
+    public String getDefectTotalWeight()
+    {
+        return defectTotalWeight;
+    }
+
+    public void setDefectTotalWeight(String defectTotalWeight)
+    {
+        this.defectTotalWeight = defectTotalWeight;
+    }
+
+    public String getTotalWeight()
+    {
+        return TotalWeight;
+    }
+
+    public void setTotalWeight(String totalWeight)
+    {
+        TotalWeight = totalWeight;
+    }
+
+    public String getPackFee()
+    {
+        return packFee;
+    }
+
+    public void setPackFee(String packFee)
+    {
+        this.packFee = packFee;
+    }
+
+    public String getCarryFee()
+    {
+        return carryFee;
+    }
+
+    public void setCarryFee(String carryFee)
+    {
+        this.carryFee = carryFee;
+    }
+
+    public String getTotalFee()
+    {
+        return totalFee;
+    }
+
+    public void setTotalFee(String totalFee)
+    {
+        this.totalFee = totalFee;
+    }
 
     public String getId()
     {
@@ -58,6 +147,16 @@ public class SellOrder_New_First implements Parcelable
     public void setQualityNetWeight(String qualityNetWeight)
     {
         this.qualityNetWeight = qualityNetWeight;
+    }
+
+    public String getTotal()
+    {
+        return total;
+    }
+
+    public void setTotal(String total)
+    {
+        this.total = total;
     }
 
     public String getQualityBalance()
@@ -117,6 +216,15 @@ public class SellOrder_New_First implements Parcelable
             p.setDefectWaterWeight(source.readString());
             p.setDefectNetWeight(source.readString());
             p.setDefectBalance(source.readString());
+            p.setTotal(source.readString());
+            p.setQualityTotalWeight(source.readString());
+            p.setDefectTotalWeight(source.readString());
+            p.setTotalWeight(source.readString());
+            p.setPackFee(source.readString());
+            p.setCarryFee(source.readString());
+            p.setTotalFee(source.readString());
+            p.setPersonNote(source.readString());
+            p.setActualMoney(source.readString());
 
 
             return  p;
@@ -128,6 +236,9 @@ public class SellOrder_New_First implements Parcelable
             return new SellOrder_New_First[size];
         }
     };
+
+
+
     @Override
     public void writeToParcel(Parcel p, int arg1)
     {
@@ -139,6 +250,15 @@ public class SellOrder_New_First implements Parcelable
         p.writeString(defectWaterWeight);
         p.writeString(defectNetWeight);
         p.writeString(defectBalance);
+        p.writeString(total);
+        p.writeString(qualityTotalWeight);
+        p.writeString(defectTotalWeight);
+        p.writeString(TotalWeight);
+        p.writeString(packFee);
+        p.writeString(carryFee);
+        p.writeString(totalFee);
+        p.writeString(personNote);
+        p.writeString(actualMoney);
 
 
     }

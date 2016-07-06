@@ -1,20 +1,30 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.farm.R;
+import com.farm.app.AppContext;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.areatab;
 import com.farm.bean.contractTab;
 import com.farm.common.utils;
+import com.farm.widget.CustomDialog_EditSaleInInfo;
+import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.CustomListView;
 
 import java.util.HashMap;
@@ -25,12 +35,17 @@ import java.util.List;
  */
 public class PG_Create_ExpandableAdapter extends BaseExpandableListAdapter
 {
+    GridViewAdapter_SellOrDetail_NCZ gridViewAdapter_sellOrDetail_ncz;
+    TextView currentTextView;
+    CustomDialog_ListView customDialog_listView;
     ExpandableListView mainlistview;
     private Context context;// 运行上下文
     int currentChildsize = 0;
     private GoodsAdapter adapter;
     List<areatab> listData;
     ListView list;
+    EditText et_number;
+    CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
 
     public PG_Create_ExpandableAdapter(Context context, List<areatab> listData, ExpandableListView mainlistview)
     {
@@ -54,7 +69,7 @@ public class PG_Create_ExpandableAdapter extends BaseExpandableListAdapter
     {
         public TextView tv_areaname;
         public TextView tv_number;
-        public TextView btn_number;
+        public Button btn_number;
         public CheckBox cb_selectall;
     }
 
@@ -71,10 +86,11 @@ public class PG_Create_ExpandableAdapter extends BaseExpandableListAdapter
 
     //设置子item的组件
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<SellOrderDetail_New> childData = listData.get(groupPosition).getAreatabList();
+        final List<SellOrderDetail_New> childData = listData.get(groupPosition).getAreatabList();
+
         final SellOrderDetail_New sellOrderDetail_new = childData.get(childPosition);
 
         View v = null;
@@ -92,8 +108,46 @@ public class PG_Create_ExpandableAdapter extends BaseExpandableListAdapter
             // 获取控件对象
             listItemView.tv_areaname = (TextView) convertView.findViewById(R.id.tv_areaname);
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
-            listItemView.btn_number = (TextView) convertView.findViewById(R.id.btn_number);
+            listItemView.btn_number = (Button) convertView.findViewById(R.id.btn_number);
+            listItemView.cb_selectall = (CheckBox) convertView.findViewById(R.id.cb_selectall);
+            listItemView.btn_number.setTag(R.id.tag_checkbox, listItemView.cb_selectall);
 
+            listItemView.btn_number.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    showDialog_editBreakoffinfo(childData.get(childPosition), (Button) view);
+                }
+            });
+
+
+            listItemView.cb_selectall.setTag(R.id.tag_cash, listItemView.btn_number);
+            listItemView.cb_selectall.setTag(R.id.tag_rk, childPosition);
+            listItemView.cb_selectall.setTag(R.id.tag_danxuan, Integer.valueOf(sellOrderDetail_new.getplannumber()));
+            listItemView.cb_selectall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+            {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+                {
+                    int pos = (int) compoundButton.getTag(R.id.tag_rk);
+                    int salefornumber = (int) compoundButton.getTag(R.id.tag_danxuan);
+                    Button btn_number = (Button) compoundButton.getTag(R.id.tag_cash);
+                    if (b)
+                    {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("bean", childData.get(pos));
+                        compoundButton.setTag(R.id.tag_view, bundle);
+                    } else
+                    {
+                        compoundButton.setTag(R.id.tag_view, null);
+                        btn_number.setText(String.valueOf(salefornumber));
+                    }
+                    Intent intent = new Intent();
+                    intent.setAction(AppContext.BROADCAST_UPDATESALENUMBER);
+                    context.sendBroadcast(intent);
+                }
+            });
             map.put(childPosition, convertView);
             lmap.put(groupPosition, map);
             if (isLastChild)
@@ -103,7 +157,6 @@ public class PG_Create_ExpandableAdapter extends BaseExpandableListAdapter
             listItemView.tv_areaname.setText(sellOrderDetail_new.getcontractname());
             listItemView.tv_number.setText(sellOrderDetail_new.getplannumber());
             listItemView.btn_number.setText(sellOrderDetail_new.getplannumber());
-//            listItemView.tv_batchtime.setText(batchTime.getBatchTime() + "  " + batchTime.getBatchColor() + "  " + "已售:" + numberofsaleout + "售中:" + numberofselein + "拟售:" + numberofsalefor + "待售:" + numberofnewsale);
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -172,12 +225,12 @@ public class PG_Create_ExpandableAdapter extends BaseExpandableListAdapter
 
         batchtime.setText(listData.get(groupPosition).getBatchtime());
 //        tv_areaname.setText(listData.get(groupPosition).getareaName());
-        int num=0;
-        for (int i=0;i<listData.get(groupPosition).getAreatabList().size();i++)
+        int num = 0;
+        for (int i = 0; i < listData.get(groupPosition).getAreatabList().size(); i++)
         {
-            num+=Integer.valueOf(listData.get(groupPosition).getAreatabList().get(i).getplannumber());
+            num += Integer.valueOf(listData.get(groupPosition).getAreatabList().get(i).getplannumber());
         }
-        tv_number.setText(num+"");
+        tv_number.setText(num + "");
         return convertView;
     }
 
@@ -191,5 +244,53 @@ public class PG_Create_ExpandableAdapter extends BaseExpandableListAdapter
     public boolean isChildSelectable(int groupPosition, int childPosition)
     {
         return true;
+    }
+
+
+    public void showDialog_editBreakoffinfo(final SellOrderDetail_New sellOrderDetail_new, final Button button)
+    {
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editcontractsale, null);
+        customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
+        et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
+        et_number.setText(sellOrderDetail_new.getplannumber());
+        Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
+        Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                int leftnumber = Integer.valueOf(sellOrderDetail_new.getplannumber()) - Integer.valueOf(et_number.getText().toString());
+                if (leftnumber < 0)
+                {
+                    Toast.makeText(context, "剩余量不足", Toast.LENGTH_SHORT).show();
+                } else
+                {
+                    customDialog_editSaleInInfo.dismiss();
+                    button.setText(et_number.getText().toString());
+                    CheckBox checkBox = (CheckBox) button.getTag(R.id.tag_checkbox);
+                    if (checkBox.isChecked())
+                    {
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.BROADCAST_UPDATESALENUMBER);
+                        context.sendBroadcast(intent);
+                    } else
+                    {
+                        checkBox.setChecked(true);
+                    }
+
+                }
+
+            }
+        });
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                customDialog_editSaleInInfo.dismiss();
+            }
+        });
+        customDialog_editSaleInInfo.show();
     }
 }
