@@ -7,7 +7,6 @@ import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +26,6 @@ import com.farm.bean.AllType;
 import com.farm.bean.PeopelList;
 import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
-import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
@@ -52,18 +50,8 @@ import org.apache.http.entity.StringEntity;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
-import javax.activation.DataHandler;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
+
 
 /**
  * Created by hasee on 2016/7/5.
@@ -136,7 +124,7 @@ public class CZ_CreateOrder extends Activity
     String byId = "";
     String bzId = "";
     String fzrId = "";
-    String cpid="";
+    String cpid = "";
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Purchaser> listData_BY = new ArrayList<Purchaser>();
     List<Purchaser> listData_BZ = new ArrayList<Purchaser>();
@@ -186,6 +174,7 @@ public class CZ_CreateOrder extends Activity
         }
         showDialog_fcp(listdata, listid);
     }
+
     @Click
     void dd_fzr()
     {
@@ -346,7 +335,7 @@ public class CZ_CreateOrder extends Activity
         smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元", null, null);
         //
 //邮箱
-        new Thread(networkTask).start();
+//        new Thread(networkTask).start();
 /*        Intent data=new Intent(Intent.ACTION_SENDTO);
         data.setData(Uri.parse(mail));
         data.putExtra(Intent.EXTRA_SUBJECT, "订单");
@@ -795,6 +784,7 @@ public class CZ_CreateOrder extends Activity
         });
         customDialog_listView.show();
     }
+
     //负责人
     public void showDialog_fzr(List<String> listdata, List<String> listid)
     {
@@ -1007,50 +997,7 @@ public class CZ_CreateOrder extends Activity
 
     }
 
-    Runnable networkTask = new Runnable()
-    {
 
-        @Override
-        public void run()
-        {
-            Multipart multiPart;
-            String finalString = "";
-
-            Properties props = System.getProperties();
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.host", "smtp.qq.com");
-            props.put("mail.smtp.user", "956935952@qq.com");
-            props.put("mail.smtp.password", "Fenf5201314.");
-            props.put("mail.smtp.port", "25");
-            props.put("mail.smtp.auth", "true");
-            Session session = Session.getDefaultInstance(props, null);
-            DataHandler handler = new DataHandler(new ByteArrayDataSource(finalString.getBytes(), "text/plain"));
-            MimeMessage message = new MimeMessage(session);
-
-            try
-            {
-                message.setFrom(new InternetAddress("956935952@qq.com"));
-                message.setDataHandler(handler);
-                Log.i("Check", "done sessions");
-
-                multiPart = new MimeMultipart();
-                InternetAddress toAddress;
-                toAddress = new InternetAddress("2580859001@qq.com");
-                message.addRecipient(Message.RecipientType.TO, toAddress);
-                message.setSubject("订单");
-                message.setContent(multiPart);
-                message.setText("测试");
-
-                Transport transport = session.getTransport("smtp");
-                transport.connect("smtp.qq.com", "956935952@qq.com", "Fenf5201314.");
-                transport.sendMessage(message, message.getAllRecipients());
-                transport.close();
-            } catch (MessagingException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    };
 
     private void getchanpin()
     {
