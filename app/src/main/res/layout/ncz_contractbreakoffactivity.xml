@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
-            android:text="销售详情"
+            android:text="断蕾详情"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 

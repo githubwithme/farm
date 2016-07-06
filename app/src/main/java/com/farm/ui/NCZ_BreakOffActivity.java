@@ -46,7 +46,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,10 +60,10 @@ public class NCZ_BreakOffActivity extends Activity
     public HorizontalScrollView mTouchView;
     protected List<CustomHorizontalScrollView_BreakOff> mHScrollViews = new ArrayList<CustomHorizontalScrollView_BreakOff>();
     private ScrollAdapter mAdapter;
-    String[] item_batchtimedata;
+    //    String[] item_batchtimedata;
     //    String[] item_parkid;
     int screenWidth = 0;
-    List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
+    //    List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
     @ViewById
     LinearLayout ll_park;
     @ViewById
@@ -101,16 +100,16 @@ public class NCZ_BreakOffActivity extends Activity
     TextView tv_timelimit;
     @ViewById
     RelativeLayout rl_view;
-    @ViewById
-    TextView shuaxin;
+//    @ViewById
+//    TextView shuaxin;
     @ViewById
     RelativeLayout rl_tab;
 
-    @Click
-    void shuaxin()
-    {
-        if (!id.equals("")) getIsStartBreakOff(id);
-    }
+//    @Click
+//    void shuaxin()
+//    {
+//        if (!id.equals("")) getIsStartBreakOff(id);
+//    }
 
     @Click
     void btn_back()
@@ -235,7 +234,7 @@ public class NCZ_BreakOffActivity extends Activity
     }
 
     public void showPop_title()
-    {//LAYOUT_INFLATER_SERVICE
+    {
         LayoutInflater layoutInflater = (LayoutInflater) NCZ_BreakOffActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         pv_tab = layoutInflater.inflate(R.layout.popup_yq, null);// 外层
         pv_tab.setOnKeyListener(new View.OnKeyListener()
@@ -266,7 +265,7 @@ public class NCZ_BreakOffActivity extends Activity
             }
         });
         pw_tab = new PopupWindow(pv_tab, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-        pw_tab.showAsDropDown(line, 0, 0);
+        pw_tab.showAsDropDown(rl_tab, 0, 0);
         pw_tab.setOutsideTouchable(true);
 
 
@@ -281,7 +280,6 @@ public class NCZ_BreakOffActivity extends Activity
                 id = listpeople.get(postion).getId();
                 name = listpeople.get(postion).getParkName();
                 pw_tab.dismiss();
-//                iv_dowm_tab.setImageResource(R.drawable.ic_down);
                 tv_title.setText(listpeople.get(postion).getParkName());
                 getIsStartBreakOff(listpeople.get(postion).getId());
 
@@ -289,32 +287,7 @@ public class NCZ_BreakOffActivity extends Activity
         });
     }
 
-    //    private void getNewSaleList_test()
-//    {
-//        listData = FileHelper.getAssetsData(NCZ_BreakOffActivity.this, "getsaledata", SaleDataBean.class);
-//        if (listData != null)
-//        {
-//            DensityUtil densityUtil = new DensityUtil(NCZ_BreakOffActivity.this);
-//            screenWidth = densityUtil.getScreenWidth();
-//            int size = listData.get(0).getAreatabList().size();
-//            if (size == 1)
-//            {
-//                screenWidth = screenWidth / 3;
-//            } else if (size == 2)
-//            {
-//                screenWidth = screenWidth / 4;
-//            } else
-//            {
-//                screenWidth = screenWidth / 5;
-//            }
-//            tv_top_left.getLayoutParams().width = (screenWidth);
-//            tv_top_right.getLayoutParams().width = (screenWidth);
-//            tv_bottom_left.getLayoutParams().width = (screenWidth);
-//            alltoatal.getLayoutParams().width = (screenWidth);
-//            initViews();
-//        }
-//
-//    }
+
     public void getBatchTimeOfPark(String parkid)
     {
         RequestParams params = new RequestParams();
@@ -381,23 +354,9 @@ public class NCZ_BreakOffActivity extends Activity
     {
         int allnumber = 0;
         LayoutInflater inflater = (LayoutInflater) NCZ_BreakOffActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-
-        item_batchtimedata = new String[listData.get(0).getAreatabList().size() + 1];//batchtime占了一位
-//        item_parkid = new String[listData.get(0).getAreatabList().size() + 1];//batchtime占了一位
-        item_batchtimedata[0] = "batchtime";
-//        item_parkid[0] = "parkid";
-        for (int i = 0; i < item_batchtimedata.length - 1; i++)
-        {
-            //顶部园区控件
-            item_batchtimedata[i + 1] = "data_" + i;
-//            item_parkid[i + 1] = "parkid_" + i;
-        }
         for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
         {
             View view = inflater.inflate(R.layout.breakoff_parkitem, null);
-//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(screenWidth /5, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-//            lp.gravity = Gravity.CENTER;
-//            view.setLayoutParams(lp);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
             tv_parkname.setText(listData.get(0).getAreatabList().get(i).getareaName());
@@ -406,9 +365,6 @@ public class NCZ_BreakOffActivity extends Activity
         for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
         {
             View view = inflater.inflate(R.layout.breakoff_totalitem, null);
-//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(screenWidth /5, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-//            lp.gravity = Gravity.CENTER;
-//            view.setLayoutParams(lp);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
             tv_total.getLayoutParams().width = (screenWidth);
             int totalnumber = 0;
@@ -429,17 +385,6 @@ public class NCZ_BreakOffActivity extends Activity
         mHScrollViews.add(headerScroll);
         mHScrollViews.add(totalScroll);
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
-        for (int i = 0; i < listData.size(); i++)
-        {
-            data = new HashMap<String, String>();
-            data.put("batchtime", listData.get(i).getBatchTime());
-            for (int j = 0; j < item_batchtimedata.length - 1; j++)
-            {
-                data.put("data_" + (j), listData.get(i).getAreatabList().get(j).getAllnumber());
-//                data.put("parkid_" + (j), listData.get(i).getAreatabList().get(j).getParkid());
-            }
-            datas.add(data);
-        }
         mAdapter = new ScrollAdapter();
         mListView.setAdapter(mAdapter);
     }
@@ -485,10 +430,19 @@ public class NCZ_BreakOffActivity extends Activity
 
         }
 
+        ListItemView listItemView = null;
+
+        class ListItemView
+        {
+            public TextView item_titlev;
+            public TextView item_total;
+            public TextView tv_data;
+        }
+
         @Override
         public int getCount()
         {
-            return datas.size();
+            return listData.size();
         }
 
         @Override
@@ -506,50 +460,39 @@ public class NCZ_BreakOffActivity extends Activity
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-//            View v = convertView;
-//            if (v == null)
-//            {
-            View[] views = new View[item_batchtimedata.length];
             convertView = LayoutInflater.from(NCZ_BreakOffActivity.this).inflate(R.layout.breakoff_scrolladapter_item, null);
-            TextView item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-            TextView item_total = (TextView) convertView.findViewById(R.id.item_total);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(screenWidth, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-//                lp.gravity = Gravity.CENTER;
-//                item_total.setLayoutParams(lp);
-//                item_titlev.setLayoutParams(lp);
-            item_titlev.getLayoutParams().width = (screenWidth);
-            item_total.getLayoutParams().width = (screenWidth);
+            listItemView = new ListItemView();
+            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+            listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            item_titlev.setText(datas.get(position).get(item_batchtimedata[0]).toString());
+            listItemView.item_titlev.setText(listData.get(position).getBatchTime());
             int totalnumber = 0;
             List<areatab> list = listData.get(position).getAreatabList();
             for (int j = 0; j < list.size(); j++)
             {
                 totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
             }
-            item_total.setText(String.valueOf(totalnumber));
+            listItemView.item_total.setText(String.valueOf(totalnumber));
 
-
-            for (int i = 0; i < item_batchtimedata.length - 1; i++)
+            for (int i = 0; i < listData.get(position).getAreatabList().size(); i++)
             {
                 View view = LayoutInflater.from(NCZ_BreakOffActivity.this).inflate(R.layout.breakoff_dataitem, null);
-                TextView tv_data = (TextView) view.findViewById(R.id.tv_data);
-                tv_data.setText(datas.get(position).get(item_batchtimedata[i + 1]).toString());
-//                    lp.gravity = Gravity.CENTER;
-//                    view.setLayoutParams(lp);
-                tv_data.getLayoutParams().width = (screenWidth);
+                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
+                listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllnumber());
+                listItemView.tv_data.getLayoutParams().width = (screenWidth);
                 ll_middle.addView(view);
 
-                tv_data.setOnClickListener(clickListener);
-                tv_data.setTag(R.id.tag_areaid, listData.get(0).getAreatabList().get(i).getAreaid());
-                tv_data.setTag(R.id.tag_batchtime, datas.get(position).get("batchtime"));
-                tv_data.setTag(R.id.tag_areaname, listData.get(0).getAreatabList().get(i).getareaName());
-                views[i] = tv_data;
+                listItemView.tv_data.requestFocusFromTouch();
+                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
+                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getareaName());
+                listItemView.tv_data.setOnClickListener(clickListener);
+
             }
             // 第一次初始化的时候装进来
             addHViews((CustomHorizontalScrollView_BreakOff) convertView.findViewById(R.id.item_chscroll_scroll));
-            convertView.setTag(views);
-
             return convertView;
         }
     }

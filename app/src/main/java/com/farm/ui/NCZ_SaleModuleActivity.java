@@ -135,6 +135,7 @@ public class NCZ_SaleModuleActivity extends Activity
             }
         });
     }
+
     private void getSaleDataOfArea()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_SaleModuleActivity.this);
