@@ -41,6 +41,7 @@ import java.util.List;
 public class ShowUserInfo extends Activity
 {
     String type;
+    String phone = "";
     CustomDialog_CallTip custom_calltip;
     commembertab commembertab;
     @ViewById
@@ -74,7 +75,15 @@ public class ShowUserInfo extends Activity
     @Click
     void btn_call()
     {
-        showDialog_addsaleinfo(commembertab.getuserCell());
+        if (phone.equals(""))
+        {
+            Toast.makeText(ShowUserInfo.this, "暂无电话", Toast.LENGTH_SHORT).show();
+        } else
+        {
+            showDialog_addsaleinfo(phone);
+
+        }
+
     }
 
     @AfterViews
@@ -122,6 +131,7 @@ public class ShowUserInfo extends Activity
                         } else
                         {
                             showData(listData.get(0));
+                            phone = listData.get(0).getuserCell();
                         }
                     } else
                     {

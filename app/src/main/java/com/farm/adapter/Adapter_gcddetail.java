@@ -1,6 +1,7 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,13 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.farm.R;
+import com.farm.bean.BatchTime;
 import com.farm.bean.areatab;
-import com.farm.bean.contractTab;
+import com.farm.bean.parktab;
 import com.farm.common.utils;
+import com.farm.ui.NCZ_ContractSaleActivity_;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.CustomListView;
@@ -26,7 +28,7 @@ import java.util.List;
 /**
  * Created by user on 2016/4/25.
  */
-public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
+public class Adapter_gcddetail extends BaseExpandableListAdapter
 {
     GridViewAdapter_SellOrDetail_NCZ gridViewAdapter_sellOrDetail_ncz;
     TextView currentTextView;
@@ -36,10 +38,10 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
     private Context context;// 运行上下文
     int currentChildsize = 0;
     private GoodsAdapter adapter;
-    List<areatab> listData;
+    List<parktab> listData;
     ListView list;
 
-    public NCZ_AreaSaleData_Adapter(Context context, List<areatab> listData, ExpandableListView mainlistview)
+    public Adapter_gcddetail(Context context, List<parktab> listData, ExpandableListView mainlistview)
     {
         this.mainlistview = mainlistview;
         this.listData = listData;
@@ -50,11 +52,11 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        if (listData.get(groupPosition).getContractTabList() == null)
+        if (listData.get(groupPosition).getAreatabList() == null)
         {
             return null;
         }
-        return listData.get(groupPosition).getContractTabList().get(childPosition);
+        return listData.get(groupPosition).getAreatabList().get(childPosition);
     }
 
     static class ListItemView
@@ -80,8 +82,8 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<contractTab> childData = listData.get(groupPosition).getContractTabList();
-        final contractTab contractTab = childData.get(childPosition);
+        List<areatab> childData = listData.get(groupPosition).getAreatabList();
+        final areatab areatab = childData.get(childPosition);
 
         View v = null;
         if (lmap.get(groupPosition) != null)
@@ -92,7 +94,7 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.ncz_areasaledata_child, null);//ncz_pc_todayjobadater-ncz_pc_todayjobadater
+            convertView = inflater.inflate(R.layout.adapter_areasalefragment_child, null);//ncz_pc_todayjobadater-ncz_pc_todayjobadater
             listItemView = new ListItemView();
 
             // 获取控件对象
@@ -103,7 +105,7 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
             {
                 map = new HashMap<>();
             }
-            gridViewAdapter_sellOrDetail_ncz = new GridViewAdapter_SellOrDetail_NCZ(context, childData);
+            gridViewAdapter_sellOrDetail_ncz = new GridViewAdapter_SellOrDetail_NCZ(context, childData, listData.get(groupPosition).getparkName());
             listItemView.lv.setAdapter(gridViewAdapter_sellOrDetail_ncz);
             utils.setListViewHeight(listItemView.lv);
         } else
@@ -134,9 +136,8 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getContractTabList().size()==0)
+        if (listData.get(groupPosition).getAreatabList() == null)
         {
-            Toast.makeText(context, "暂无数据！", Toast.LENGTH_SHORT).show();
             return 0;
         }
         return 1;
@@ -167,16 +168,8 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
     {
         if (convertView == null)
         {
-            if (groupPosition == 0)
-            {
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.ncz_areasaledata_parenttopitem, null);
-            } else
-            {
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.ncz_areasaledata_parentitem, null);
-            }
-
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.adapter_gcddetail_parent, null);
         }
 
         TextView tv_salein = (TextView) convertView.findViewById(R.id.tv_salein);
@@ -184,32 +177,13 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
         TextView tv_allsale = (TextView) convertView.findViewById(R.id.tv_allsale);
         TextView tv_salefor = (TextView) convertView.findViewById(R.id.tv_salefor);
         TextView tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);
-        areatab areatab = listData.get(groupPosition);
-        int percent = 0;
-        float allnumber = Integer.valueOf(areatab.getAllsaleout()) + Integer.valueOf(areatab.getAllsalein()) + Integer.valueOf(areatab.getAllnewsale()) + Integer.valueOf(areatab.getAllsalefor());
-        float salenumber = Integer.valueOf(areatab.getAllsaleout()) + Integer.valueOf(areatab.getAllsalein()) + Integer.valueOf(areatab.getAllnewsale());
-        if (allnumber != 0)
-        {
-            percent = (int) ((salenumber / allnumber) * 100);
-        }
+        parktab parktab = listData.get(groupPosition);
 
-        tv_contractname.setText(listData.get(groupPosition).getareaName());
-        tv_salefor.setText(areatab.getAllsalefor());
-        tv_allsale.setText(String.valueOf(allnumber));
-        tv_saleout.setText(areatab.getAllsaleout());
-        tv_salein.setText(areatab.getAllsalein());
-        if (areatab.getAllsalefor().equals("0"))
-        {
-            if (salenumber != 0)
-            {
-//                tv_salefor.setText("售完");
-                tv_salefor.setText("0");
-            } else
-            {
-//                tv_allsale.setText("未上报");
-                tv_allsale.setText("0");
-            }
-        }
+        tv_contractname.setText(listData.get(groupPosition).getparkName());
+        tv_salefor.setText(parktab.getAllsalefor());
+        tv_allsale.setText(parktab.getAllnumber());
+        tv_saleout.setText(parktab.getAllsaleout());
+        tv_salein.setText(parktab.getAllsalein());
         return convertView;
     }
 
@@ -228,14 +202,16 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
 
     public class GridViewAdapter_SellOrDetail_NCZ extends BaseAdapter
     {
-        List<contractTab> list;
+        List<areatab> list;
         EditText et_number;
         CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
         private Context context;
         Holder view;
+        String parkname;
 
-        public GridViewAdapter_SellOrDetail_NCZ(Context context, List<contractTab> list)
+        public GridViewAdapter_SellOrDetail_NCZ(Context context, List<areatab> list, String parkname)
         {
+            this.parkname = parkname;
             this.list = list;
             this.context = context;
         }
@@ -264,42 +240,31 @@ public class NCZ_AreaSaleData_Adapter extends BaseExpandableListAdapter
         {
             if (convertView == null)
             {
-//                if (position == 0)
-//                {
-//                    convertView = View.inflate(context, R.layout.ncz_areasaledata_childtopitem, null);
-//                } else
-//                {
-//                    convertView = View.inflate(context, R.layout.ncz_areasaledata_childitem, null);
-//                }
-                convertView = View.inflate(context, R.layout.ncz_areasaledata_childitem, null);
+                convertView = View.inflate(context, R.layout.adapter_areasalefragment_childitem, null);
                 view = new Holder(convertView);
-                contractTab contractTab = list.get(position);
-                int percent = 0;
-                float allnumber = Integer.valueOf(contractTab.getAllsaleout()) + Integer.valueOf(contractTab.getAllsalein()) + Integer.valueOf(contractTab.getAllnewsale()) + Integer.valueOf(contractTab.getAllsalefor());
-                float salenumber = Integer.valueOf(contractTab.getAllsaleout()) + Integer.valueOf(contractTab.getAllsalein()) + Integer.valueOf(contractTab.getAllnewsale());
-                if (allnumber != 0)
+                areatab areatab = list.get(position);
+                view.tv_salein.setText(areatab.getAllsalein());
+                view.tv_saleout.setText(areatab.getAllsaleout());
+                view.tv_salefor.setText(areatab.getAllsalefor());
+                view.tv_allsale.setText(areatab.getAllnumber());
+                view.tv_contractname.setText(list.get(position).getareaName());
+                convertView.setOnClickListener(new View.OnClickListener()
                 {
-                    percent = (int) ((salenumber / allnumber) * 100);
-                }
-                view.tv_salein.setText(list.get(position).getAllsalein());
-                view.tv_saleout.setText(list.get(position).getAllsaleout());
-                view.tv_salefor.setText(list.get(position).getAllsalefor());
-                view.tv_allsale.setText(String.valueOf(allnumber));
-                view.tv_contractname.setText(list.get(position).getContractNum());
-                if (contractTab.getAllsalefor().equals("0"))
-                {
-                    if (salenumber != 0)
+                    @Override
+                    public void onClick(View v)
                     {
-//                        view.tv_salefor.setText("售完");
-                        view.tv_salefor.setText("0");
-                    } else
-                    {
-//                        view.tv_allsale.setText("未上报");
-                        view.tv_allsale.setText("0");
+                        BatchTime batchTimes = (BatchTime) v.getTag(R.id.tag_batchtime);
+                        String areaid = (String) v.getTag(R.id.tag_areaid);
+                        String areaname = (String) v.getTag(R.id.tag_areaname);
+                        Intent intent = new Intent(context, NCZ_ContractSaleActivity_.class);
+                        intent.putExtra("areaid", areaid);
+                        intent.putExtra("areaname", areaname);
+                        context.startActivity(intent);
                     }
-                }
-
+                });
                 convertView.setTag(view);
+                convertView.setTag(R.id.tag_areaid, areatab.getAreaid());
+                convertView.setTag(R.id.tag_areaname, areatab.getareaName());
             } else
             {
                 view = (Holder) convertView.getTag();

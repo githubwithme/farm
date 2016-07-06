@@ -2,19 +2,13 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -24,8 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
@@ -39,9 +31,7 @@ import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.bean.commembertab;
-import com.farm.common.FileHelper;
 import com.farm.common.utils;
-import com.farm.widget.CustomArrayAdapter;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDatepicker;
 import com.farm.widget.MyDialog;
@@ -55,28 +45,14 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.LongClick;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
-import javax.activation.DataHandler;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
+
 
 /**
  * Created by ${hmj} on 2016/1/20.
@@ -362,7 +338,7 @@ public class NCZ_CreateNewOrder extends Activity
         smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元", null, null);
         //
 //邮箱
-        new Thread(networkTask).start();
+//        new Thread(networkTask).start();
 /*        Intent data=new Intent(Intent.ACTION_SENDTO);
         data.setData(Uri.parse(mail));
         data.putExtra(Intent.EXTRA_SUBJECT, "订单");
@@ -1023,50 +999,7 @@ public class NCZ_CreateNewOrder extends Activity
 
     }
 
-    Runnable networkTask = new Runnable()
-    {
 
-        @Override
-        public void run()
-        {
-            Multipart multiPart;
-            String finalString = "";
-
-            Properties props = System.getProperties();
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.host", "smtp.qq.com");
-            props.put("mail.smtp.user", "956935952@qq.com");
-            props.put("mail.smtp.password", "Fenf5201314.");
-            props.put("mail.smtp.port", "25");
-            props.put("mail.smtp.auth", "true");
-            Session session = Session.getDefaultInstance(props, null);
-            DataHandler handler = new DataHandler(new ByteArrayDataSource(finalString.getBytes(), "text/plain"));
-            MimeMessage message = new MimeMessage(session);
-
-            try
-            {
-                message.setFrom(new InternetAddress("956935952@qq.com"));
-                message.setDataHandler(handler);
-                Log.i("Check", "done sessions");
-
-                multiPart = new MimeMultipart();
-                InternetAddress toAddress;
-                toAddress = new InternetAddress("2580859001@qq.com");
-                message.addRecipient(Message.RecipientType.TO, toAddress);
-                message.setSubject("订单");
-                message.setContent(multiPart);
-                message.setText("测试");
-
-                Transport transport = session.getTransport("smtp");
-                transport.connect("smtp.qq.com", "956935952@qq.com", "Fenf5201314.");
-                transport.sendMessage(message, message.getAllRecipients());
-                transport.close();
-            } catch (MessagingException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    };
 
     private void getchanpin()
     {
