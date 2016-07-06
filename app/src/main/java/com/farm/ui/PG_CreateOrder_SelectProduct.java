@@ -217,13 +217,11 @@ public class PG_CreateOrder_SelectProduct extends Activity
             for (int j = 0; j < childrenCount; j++)
             {
                 LinearLayout linearlayout = (LinearLayout) pg_create_expandableAdapter.getChildView(i, j, false, null, null);
-                CustomListView lv = (CustomListView) linearlayout.findViewById(R.id.lv);
-                int childCount = lv.getChildCount();
-                for (int k = 0; k < childCount; k++)
-                {
-                    LinearLayout ll = (LinearLayout) lv.getChildAt(k);
-                    CheckBox cb_selectall = (CheckBox) ll.findViewById(R.id.cb_selectall);
-                    Button btn_number = (Button) ll.findViewById(R.id.btn_number);
+                LinearLayout ll = (LinearLayout) linearlayout.getChildAt(j);
+                CheckBox cb_selectall = (CheckBox) ll.findViewById(R.id.cb_selectall);
+                Button btn_number = (Button) ll.findViewById(R.id.btn_number);
+
+
                     if (cb_selectall.isChecked())
                     {
                         Bundle bundle = (Bundle) cb_selectall.getTag(R.id.tag_view);
@@ -271,7 +269,7 @@ public class PG_CreateOrder_SelectProduct extends Activity
                         sellorderdetail_newsale.setXxzt("0");
                         sellorderdetail_newsale.setYear(utils.getYear());
                         list_sell.add(sellorderdetail_newsale);
-                    }
+
                 }
             }
         }
@@ -491,7 +489,7 @@ public class PG_CreateOrder_SelectProduct extends Activity
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), areatab.class);
                         List<areatab> list = new ArrayList<>();
-                        for (int i = 0; i < listNewData.size(); i++)
+    /*                    for (int i = 0; i < listNewData.size(); i++)
                         {
                             areatab areatab = listNewData.get(i);
                             if (!areatab.getAllsalefor().equals("0"))
@@ -509,8 +507,8 @@ public class PG_CreateOrder_SelectProduct extends Activity
                                 areatab.setContractTabList(list_newcontractTab);
                                 list.add(areatab);
                             }
-                        }
-                        pg_create_expandableAdapter = new PG_Create_ExpandableAdapter(PG_CreateOrder_SelectProduct.this, list, expandableListView);
+                        }*/
+                        pg_create_expandableAdapter = new PG_Create_ExpandableAdapter(PG_CreateOrder_SelectProduct.this, listNewData, expandableListView);
                         expandableListView.setAdapter(pg_create_expandableAdapter);
                         utils.setListViewHeight(expandableListView);
 //                        for (int i = 0; i < listNewData.size(); i++)

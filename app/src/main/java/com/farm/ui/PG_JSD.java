@@ -359,30 +359,7 @@ public class PG_JSD extends Activity
         @Override
         public void afterTextChanged(Editable editable)
         {
-/*            zp_jingzhong
-                    cp_jingzhong
-            all_zhongpin
-                    allcipin*/
-            double num = 0;
-            if (!zp_jingzhong.equals("") && !cp_jingzhong.equals(""))
-            {
 
-                if (!all_zhengpin.equals(""))
-                {
-                    num += Double.valueOf(all_zhengpin.getText().toString());
-                }
-            }
-
-            for (int i = 0; i < curremt; i++)
-            {
-                if (!zhongliangs[i].getText().toString().equals(""))
-                {
-                    num += Double.valueOf(zhongliangs[i].getText().toString());
-                }
-
-
-            }
-            all_jinzhong.setText(num + "");
         }
     };
     //全部净重手动
@@ -405,17 +382,7 @@ public class PG_JSD extends Activity
         {
 
 
-            double num = 0;
-            for (int i = 0; i < curremt; i++)
-            {
-                if (!zhongliangs[i].getText().toString().equals(""))
-                {
-                    num += Double.valueOf(zhongliangs[i].getText().toString());
-                }
 
-
-            }
-            all_jinzhong.setText(num + "");
         }
     };
     //次品个数
@@ -436,17 +403,7 @@ public class PG_JSD extends Activity
         @Override
         public void afterTextChanged(Editable editable)
         {
-            float num = 0;
-            for (int i = 0; i < curremt; i++)
-            {
-                if (!cipins[i].getText().toString().equals(""))
-                {
-                    num += Float.valueOf(cipins[i].getText().toString());
-                }
 
-
-            }
-            allcipin.setText(num + "");
         }
     };
 
@@ -468,16 +425,6 @@ public class PG_JSD extends Activity
         @Override
         public void afterTextChanged(Editable editable)
         {
-            float num = 0;
-            for (int i = 0; i < curremt; i++)
-            {
-                if (!zhengpins[i].getText().toString().equals(""))
-                {
-                    num += Float.valueOf(zhengpins[i].getText().toString());
-                }
-            }
-            all_zhengpin.setText(num + "");
-
 
         }
     };

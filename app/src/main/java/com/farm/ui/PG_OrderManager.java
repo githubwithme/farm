@@ -20,6 +20,7 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.pg_ordermanager)
 public class PG_OrderManager extends Activity
 {
+    PG_DealingOrder pg_dealingOrder;
     PG_NeedApproveOrderFragment pg_needApproveOrderFragment;
     PG_ScheduleOrderFragment pg_scheduleOrderFragment;//排单
     PG_NotPayFragment pg_notPayFragment;//交易中
@@ -62,7 +63,7 @@ public class PG_OrderManager extends Activity
     void tv_dealing()
     {
         setBackground(3);
-//        switchContent(mContent, ncz_dealingOrderFragment);
+        switchContent(mContent, pg_dealingOrder);
     }
 
     @Click
@@ -93,6 +94,7 @@ public class PG_OrderManager extends Activity
         pg_scheduleOrderFragment=new PG_ScheduleOrderFragment_();
         pg_notPayFragment=new PG_NotPayFragment_();
         pg_needApproveOrderFragment=new PG_NeedApproveOrderFragment_();
+        pg_dealingOrder=new PG_DealingOrder_();
     }
 
     public void switchContent(Fragment from, Fragment to)
