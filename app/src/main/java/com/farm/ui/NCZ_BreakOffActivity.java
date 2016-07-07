@@ -47,7 +47,6 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ${hmj} on 2016/6/57.
@@ -58,7 +57,7 @@ public class NCZ_BreakOffActivity extends Activity
     List<BatchTime> listData = null;
     private ListView mListView;
     public HorizontalScrollView mTouchView;
-    protected List<CustomHorizontalScrollView_BreakOff> mHScrollViews = new ArrayList<CustomHorizontalScrollView_BreakOff>();
+    protected List<CustomHorizontalScrollView_BreakOff> mHScrollViews=null;
     private ScrollAdapter mAdapter;
     //    String[] item_batchtimedata;
     //    String[] item_parkid;
@@ -352,6 +351,10 @@ public class NCZ_BreakOffActivity extends Activity
 
     private void initViews()
     {
+        //初始化控件及数据
+        mHScrollViews = new ArrayList<CustomHorizontalScrollView_BreakOff>();
+        ll_total.removeAllViews();
+        ll_park.removeAllViews();
         int allnumber = 0;
         LayoutInflater inflater = (LayoutInflater) NCZ_BreakOffActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
@@ -378,7 +381,6 @@ public class NCZ_BreakOffActivity extends Activity
         }
         alltoatal.setText(String.valueOf(allnumber));
 
-        Map<String, String> data = null;
         CustomHorizontalScrollView_BreakOff headerScroll = (CustomHorizontalScrollView_BreakOff) findViewById(R.id.item_scroll_title);
         CustomHorizontalScrollView_BreakOff totalScroll = (CustomHorizontalScrollView_BreakOff) findViewById(R.id.totalScroll);
         // 添加头滑动事件

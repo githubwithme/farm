@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/line_color">
+                android:layout_height="match_parent">
 
 
     <RelativeLayout
@@ -41,20 +40,50 @@
         android:background="@color/line_color"/>
 
     <RelativeLayout
+        android:id="@+id/rl_dl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/line"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="断蕾时候未到，请等待场长指令！"
+            android:textSize="20dip"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/rl_note"
         android:layout_width="match_parent"
         android:layout_height="30dip"
-        android:layout_below="@+id/line"
-        android:layout_marginTop="10dip">
+        android:layout_below="@+id/rl_dl"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="10dip"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="30dip"
-            android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="农场各分场各批次产品库存量"
+            android:text="片区各承包区断蕾情况"
             android:textColor="@color/bg_text"
-            android:textSize="15sp"/>
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="5dip"
+            android:gravity="center"
+            android:text="单位：株"
+            android:textColor="@color/gray"
+            android:textSize="13sp"/>
 
     </RelativeLayout>
 
@@ -64,7 +93,7 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/rl_note"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dip"
+        android:layout_marginBottom="40dip"
         android:layout_marginLeft="5dip"
         android:layout_marginRight="5dip"
         android:layout_marginTop="2dip"
@@ -228,4 +257,15 @@
             android:background="@color/gray"/>
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:gravity="center"
+        android:layout_marginRight="10dip"
+        android:text="注：点击单元格可以编辑数据"
+        android:textColor="@color/gray"
+        android:textSize="13sp"/>
 </RelativeLayout>

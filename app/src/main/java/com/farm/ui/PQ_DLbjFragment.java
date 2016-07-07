@@ -3,23 +3,19 @@ package com.farm.ui;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.pq_dlbjGV_adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.BreakOff;
-import com.farm.bean.BreakOff_New;
 import com.farm.bean.Result;
+import com.farm.bean.commembertab;
+import com.farm.bean.contractTab;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -32,20 +28,15 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-import org.apache.http.entity.StringEntity;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
-
-import com.farm.bean.contractTab;
-import com.farm.bean.commembertab;
 
 /**
  * Created by user on 2016/5/1.
  */
 @EActivity(R.layout.pq_dlbjfragment)
-public class PQ_DLbjFragment extends Activity {
+public class PQ_DLbjFragment extends Activity
+{
     List<contractTab> list_contractTab = null;
     commembertab commembertab;
     pq_dlbjGV_adapter pq_dLbjGV_adapter;
@@ -61,7 +52,8 @@ public class PQ_DLbjFragment extends Activity {
     RelativeLayout rl_color;
 
     @Click
-    void imgbtn_back() {
+    void imgbtn_back()
+    {
         finish();
     }
 
@@ -120,15 +112,17 @@ public class PQ_DLbjFragment extends Activity {
 //        saveBreakOffList(builder.toString());
 //    }
     @AfterViews
-    void afterview() {
+    void afterview()
+    {
         setBackground(batchcolor);
-        tv_title.setText(batchtime );
+        tv_title.setText(batchtime);
 //        tv_title.setText(batchtime + "-" + batchcolor);
         getContractList();
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(PQ_DLbjFragment.this);
@@ -136,28 +130,33 @@ public class PQ_DLbjFragment extends Activity {
         batchcolor = getIntent().getStringExtra("batchcolor");
     }
 
-    public void getContractList() {
+    public void getContractList()
+    {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("areaid", commembertab.getareaId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("batchTime", batchtime);
         params.addQueryStringParameter("action", "getAllBreakOffByAreaId");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
 
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         list_contractTab = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
                         pq_dLbjGV_adapter = new pq_dlbjGV_adapter(PQ_DLbjFragment.this, list_contractTab, batchtime, batchcolor);
                         gv_breakoff.setAdapter(pq_dLbjGV_adapter);
                     }
 
-                } else {
+                } else
+                {
                     AppContext.makeToast(PQ_DLbjFragment.this, "error_connectDataBase");
                     return;
                 }
@@ -165,7 +164,8 @@ public class PQ_DLbjFragment extends Activity {
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 AppContext.makeToast(PQ_DLbjFragment.this, "error_connectServer");
             }
         });
@@ -212,20 +212,25 @@ public class PQ_DLbjFragment extends Activity {
 //        }
 //    });
 //}
-    private void setBackground(String pos) {
+    private void setBackground(String pos)
+    {
 
 
-        if (pos.equals("红色")) {
+        if (pos.equals("红色"))
+        {
 //            view.setBackgroundColor(Color.parseColor("#365663"));
 //            rl_color.setBackground(R.color.red);
             rl_color.setBackgroundColor(Color.parseColor("#ff4444"));
-        } else if (pos.equals("蓝色")) {
+        } else if (pos.equals("蓝色"))
+        {
 
             rl_color.setBackgroundColor(Color.parseColor("#add8e6"));
-        } else if (pos.equals("绿色")) {
+        } else if (pos.equals("绿色"))
+        {
 
             rl_color.setBackgroundColor(Color.parseColor("#90ee90"));
-        } else {
+        } else
+        {
 
             rl_color.setBackgroundColor(Color.parseColor("#d8bfd8"));
         }

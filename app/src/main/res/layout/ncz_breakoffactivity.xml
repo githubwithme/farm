@@ -72,6 +72,18 @@
             />
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="10dip"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="农场断蕾情况"
+        android:visibility="gone"
+        android:textColor="@color/bg_text"
+        android:textSize="16sp"/>
 
     <RelativeLayout
         android:id="@+id/rl_tab"
@@ -89,7 +101,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="断蕾情况"
+            android:text="请选择园区"
             android:textColor="@color/bg_text"
             android:textSize="@dimen/titlebar_textsize"/>
 
@@ -166,7 +178,7 @@
                 android:layout_height="fill_parent"
                 android:background="@color/white"
                 android:gravity="center"
-                android:text="批次/分场"
+                android:text="批次/片区"
                 android:textColor="@color/bg_text"
                 android:textSize="15sp"/>
 
