@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -57,7 +58,7 @@ public class NCZ_BreakOffActivity extends Activity
     List<BatchTime> listData = null;
     private ListView mListView;
     public HorizontalScrollView mTouchView;
-    protected List<CustomHorizontalScrollView_BreakOff> mHScrollViews=null;
+    protected List<CustomHorizontalScrollView_BreakOff> mHScrollViews = null;
     private ScrollAdapter mAdapter;
     //    String[] item_batchtimedata;
     //    String[] item_parkid;
@@ -99,7 +100,7 @@ public class NCZ_BreakOffActivity extends Activity
     TextView tv_timelimit;
     @ViewById
     RelativeLayout rl_view;
-//    @ViewById
+    //    @ViewById
 //    TextView shuaxin;
     @ViewById
     RelativeLayout rl_tab;
@@ -489,6 +490,7 @@ public class NCZ_BreakOffActivity extends Activity
                 listItemView.tv_data.requestFocusFromTouch();
                 listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
                 listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllnumber());
                 listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getareaName());
                 listItemView.tv_data.setOnClickListener(clickListener);
 
@@ -506,14 +508,22 @@ public class NCZ_BreakOffActivity extends Activity
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
+            String number = (String) v.getTag(R.id.tag_number);
             String batchTimes = (String) v.getTag(R.id.tag_batchtime);
             String areaid = (String) v.getTag(R.id.tag_areaid);
             String areaname = (String) v.getTag(R.id.tag_areaname);
-            Intent intent = new Intent(NCZ_BreakOffActivity.this, NCZ_ContractBreakOffActivity_.class);
-            intent.putExtra("areaid", areaid);
-            intent.putExtra("areaname", areaname);
-            intent.putExtra("batchTime", batchTimes);
-            NCZ_BreakOffActivity.this.startActivity(intent);
+            if (number.equals("0"))
+            {
+                Toast.makeText(NCZ_BreakOffActivity.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
+            } else
+            {
+                Intent intent = new Intent(NCZ_BreakOffActivity.this, NCZ_ContractBreakOffActivity_.class);
+                intent.putExtra("areaid", areaid);
+                intent.putExtra("areaname", areaname);
+                intent.putExtra("batchTime", batchTimes);
+                NCZ_BreakOffActivity.this.startActivity(intent);
+            }
+
         }
     };
 }

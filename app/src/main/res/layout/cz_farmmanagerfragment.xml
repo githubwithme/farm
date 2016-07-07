@@ -146,6 +146,10 @@
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="2px"
+                        android:layout_height="match_parent"
+                        android:background="@color/light_gray"/>
 
                     <LinearLayout
                         android:id="@+id/ll_gz"
@@ -343,27 +347,13 @@
                     android:background="@color/light_gray"/>
 
                 <LinearLayout
-                    android:id="@+id/ll_kc"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dip"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="40dip"
-                        android:layout_height="40dip"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/newicon_googs"/>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dip"
-                        android:gravity="center"
-                        android:text="物资"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_14"/>
                 </LinearLayout>
 
 
@@ -392,6 +382,11 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/light_gray"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -405,7 +400,7 @@
                     android:background="@color/white"
                     android:gravity="left|center_vertical"
                     android:paddingLeft="10dip"
-                    android:text="农场进销存"
+                    android:text="更多"
                     android:textColor="@color/bg_text"
                     android:textSize="16sp"/>
 
@@ -420,8 +415,9 @@
                     android:background="@color/white"
                     android:orientation="horizontal">
 
+
                     <LinearLayout
-                        android:id="@+id/ll_cw"
+                        android:id="@+id/ll_kc"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dip"
@@ -432,14 +428,14 @@
                             android:layout_width="40dip"
                             android:layout_height="40dip"
                             android:layout_gravity="center_horizontal"
-                            android:background="@drawable/newicon_money"/>
+                            android:background="@drawable/newicon_googs"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dip"
                             android:gravity="center"
-                            android:text="财务"
+                            android:text="物资"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
                     </LinearLayout>
@@ -479,64 +475,6 @@
                         android:background="@color/light_gray"/>
 
                     <LinearLayout
-                        android:id="@+id/ll_tj"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dip"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="40dip"
-                            android:layout_height="40dip"
-                            android:layout_gravity="center_horizontal"
-                            android:background="@drawable/newicon_analysis"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dip"
-                            android:gravity="center"
-                            android:text="统计分析"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-                    </LinearLayout>
-
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="45dip"
-                    android:background="@color/white"
-                    android:gravity="left|center_vertical"
-                    android:paddingLeft="10dip"
-                    android:text="更多"
-                    android:textColor="@color/bg_text"
-                    android:textSize="16sp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:background="@color/light_gray"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="90dip"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
-
-
-                    <LinearLayout
                         android:id="@+id/ll_tq"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -559,66 +497,7 @@
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="2px"
-                        android:layout_height="match_parent"
-                        android:background="@color/light_gray"/>
-
-                    <LinearLayout
-                        android:id="@+id/ll_sk"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dip"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="40dip"
-                            android:layout_height="40dip"
-                            android:layout_gravity="center_horizontal"
-                            android:background="@drawable/logo1"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dip"
-                            android:gravity="center"
-                            android:text="农场实况"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="2px"
-                        android:layout_height="match_parent"
-                        android:background="@color/light_gray"/>
-
-                    <LinearLayout
-                        android:id="@+id/ll_more"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dip"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="40dip"
-                            android:layout_height="40dip"
-                            android:layout_gravity="center_horizontal"
-                            android:background="@drawable/newicon_map"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dip"
-                            android:gravity="center"
-                            android:text="地图应用"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-                    </LinearLayout>
                 </LinearLayout>
-
             </LinearLayout>
 
 

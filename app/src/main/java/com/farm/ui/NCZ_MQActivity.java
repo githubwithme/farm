@@ -73,6 +73,7 @@ public class NCZ_MQActivity extends Activity
     private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
     private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
     private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
+
     @AfterViews
     void afterOncreate()
     {
@@ -354,8 +355,7 @@ public class NCZ_MQActivity extends Activity
                 AppContext.updateStatus(NCZ_MQActivity.this, "0", PlantGcd.getId(), "3", commembertab.getId());
 //                Intent intent = new Intent(NCZ_MQActivity.this, NCZ_todaymyDetail_.class);
                 Intent intent = new Intent(NCZ_MQActivity.this, NCZ_GCDDetailActivity_.class);
-                intent.putExtra("bean_gcd", PlantGcd); // 因为list中添加了头部,因此要去掉一个
-//                intent.putExtra("bean_areatab", areatab); // 因为list中添加了头部,因此要去掉一个
+                intent.putExtra("bean_gcd", PlantGcd);
                 NCZ_MQActivity.this.startActivity(intent);
             }
         });

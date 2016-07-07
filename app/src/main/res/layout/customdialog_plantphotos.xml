@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/background_view_rounded_single"
+              android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:gravity="center"
+        android:text="观察点情况"
+        android:textColor="@color/bg_text"/>
+
+    <FrameLayout
+        android:id="@+id/menu_container"
+        android:layout_width="240dip"
+        android:layout_height="240dip"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btn_cancle"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:background="@null"
+        android:gravity="center"
+        android:text="关闭"
+        android:textColor="@color/bg_text"/>
+</LinearLayout>

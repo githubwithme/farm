@@ -2,17 +2,20 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
+import com.farm.adapter.Adapter_PGGcd;
 import com.farm.adapter.PG_PlantGcdListAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
@@ -51,6 +55,10 @@ import java.util.List;
 @EActivity(R.layout.pg_plantgcdlist)
 public class PG_GddList extends Activity
 {
+    String type_add = "";
+    PopupWindow pw_command;
+    View pv_command;
+    List<PlantGcd> listNewData = null;
     boolean ishidding = false;
     Dictionary dictionary;
     TimeThread timethread;
@@ -72,16 +80,29 @@ public class PG_GddList extends Activity
     @ViewById
     View line;
     @ViewById
-    ImageButton btn_add;
-    @ViewById
-    ImageButton btn_search;
+    TextView tv_add;
+
     @ViewById
     PullToRefreshListView frame_listview_news;
 
     String areaid;
 
     @Click
-    void btn_add()
+    void tv_observate()
+    {
+        type_add = "addgc";
+        showPop_user();
+    }
+
+    @Click
+    void tv_addplant()
+    {
+        type_add = "addplant";
+        showPop_user();
+    }
+
+    @Click
+    void tv_add()
     {
         Intent intent = new Intent(PG_GddList.this, AddGcd_.class);
         PG_GddList.this.startActivity(intent);
@@ -120,7 +141,7 @@ public class PG_GddList extends Activity
         timethread.start();
         if (commembertab.getnlevel().toString().equals("0"))
         {
-            btn_add.setVisibility(View.GONE);
+            tv_add.setVisibility(View.GONE);
         }
         initAnimalListView();
     }
@@ -143,21 +164,21 @@ public class PG_GddList extends Activity
         }
     };*/
 
-    public void switchContent(Fragment from, Fragment to)
-    {
-        if (mContent != to)
-        {
-            mContent = to;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if (!to.isAdded())
-            { // 先判断是否被add过
-                transaction.hide(from).add(R.id.top_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else
-            {
-                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
-            }
-        }
-    }
+//    public void switchContent(Fragment from, Fragment to)
+//    {
+//        if (mContent != to)
+//        {
+//            mContent = to;
+//            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//            if (!to.isAdded())
+//            { // 先判断是否被add过
+//                transaction.hide(from).add(R.id.top_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+//            } else
+//            {
+//                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+//            }
+//        }
+//    }
 
     private void getTestData(String from)
     {
@@ -185,8 +206,6 @@ public class PG_GddList extends Activity
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
-                String a = responseInfo.result;
-                List<PlantGcd> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
@@ -396,7 +415,8 @@ public class PG_GddList extends Activity
                 areatab.setparkName(commembertab.getparkName());
                 areatab.setareaName(commembertab.getareaName());
                 areatab.setid(commembertab.getareaId());
-                Intent intent = new Intent(PG_GddList.this, GcdDetail_.class);
+//                Intent intent = new Intent(PG_GddList.this, GcdDetail_.class);
+                Intent intent = new Intent(PG_GddList.this, NCZ_GCDDetailActivity_.class);
                 intent.putExtra("bean_gcd", PlantGcd);  // 因为list中添加了头部,因此要去掉一个
                 intent.putExtra("bean_areatab", areatab);  // 因为list中添加了头部,因此要去掉一个
                 PG_GddList.this.startActivity(intent);
@@ -554,6 +574,76 @@ public class PG_GddList extends Activity
         {
             this.stop = stop;
         }
+    }
+
+    public void showPop_user()
+    {
+        LayoutInflater layoutInflater = (LayoutInflater) PG_GddList.this.getSystemService(PG_GddList.this.LAYOUT_INFLATER_SERVICE);
+        pv_command = layoutInflater.inflate(R.layout.pop_attendance, null);// 外层
+        pv_command.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
+                {
+                    pw_command.dismiss();
+                    WindowManager.LayoutParams lp = PG_GddList.this.getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    PG_GddList.this.getWindow().setAttributes(lp);
+                    return true;
+                }
+                return false;
+            }
+        });
+        pv_command.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_command.isShowing())
+                {
+                    pw_command.dismiss();
+                    WindowManager.LayoutParams lp = PG_GddList.this.getWindow().getAttributes();
+                    lp.alpha = 1f;
+                    PG_GddList.this.getWindow().setAttributes(lp);
+                }
+                return false;
+            }
+        });
+        pw_command = new PopupWindow(pv_command, LinearLayout.LayoutParams.MATCH_PARENT, 600, true);
+        pw_command.showAsDropDown(line, 0, 0);
+        pw_command.setOutsideTouchable(true);
+        ListView lv = (ListView) pv_command.findViewById(R.id.lv);
+        Adapter_PGGcd adapter_pgGcd = new Adapter_PGGcd(PG_GddList.this, listData);
+        lv.setAdapter(adapter_pgGcd);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                pw_command.dismiss();
+                WindowManager.LayoutParams lp = PG_GddList.this.getWindow().getAttributes();
+                lp.alpha = 1f;
+                PG_GddList.this.getWindow().setAttributes(lp);
+                PlantGcd plantgcd = listData.get(position);
+                if (type_add.equals("addgc"))
+                {
+                    Intent intent = new Intent(PG_GddList.this, AddPlantObservation_.class);
+                    intent.putExtra("gcdid", plantgcd.getId());
+                    startActivity(intent);
+                } else if (type_add.equals("addplant"))
+                {
+                    Intent intent = new Intent(PG_GddList.this, AddPlant_.class);
+                    intent.putExtra("gcdid", plantgcd.getId());
+                    intent.putExtra("gcdName", plantgcd.getPlantgcdName());
+                    PG_GddList.this.startActivity(intent);
+                }
+            }
+        });
+        WindowManager.LayoutParams lp = PG_GddList.this.getWindow().getAttributes();
+        lp.alpha = 0.7f;
+        PG_GddList.this.getWindow().setAttributes(lp);
     }
 
     @Override
