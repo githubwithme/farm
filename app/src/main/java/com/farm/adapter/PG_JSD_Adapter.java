@@ -92,6 +92,7 @@ public class PG_JSD_Adapter extends BaseAdapter
 
 
 
+        listItemView.jinzhong.setText(sellOrderDetail_new.getactualweight());
         listItemView.zhushu.setText(sellOrderDetail_new.getactualnumber());
         listItemView.zhengpin.setText(sellOrderDetail_new.getplanprice());
         listItemView.cipin.setText(sellOrderDetail_new.getactualprice());

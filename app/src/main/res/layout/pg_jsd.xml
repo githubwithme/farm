@@ -628,6 +628,7 @@
 
 
                     <EditText
+                        android:textSize="14dip"
                         android:id="@+id/bz_fzrid"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -647,7 +648,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="包装单价（件）"
+                        android:text="包装单价（元/件）"
                         android:textColor="@color/bg_text"
                         android:textSize="@dimen/size_15"/>
 
@@ -686,7 +687,7 @@
                     android:layout_weight="1"
                     android:padding="10dip"
                     android:gravity="center|left"
-                    android:text="包装规格"
+                    android:text="包装规格(斤/件)"
 
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
@@ -828,6 +829,7 @@
 
 
                     <EditText
+                        android:textSize="14dip"
                         android:id="@+id/by_fzrid"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -847,7 +849,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="搬运单价(斤)"
+                        android:text="搬运单价(元/斤)"
                         android:textColor="@color/bg_text"
                         android:textSize="@dimen/size_15"/>
 
@@ -954,6 +956,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:numeric="decimal"
                     android:id="@+id/totalFee"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
@@ -996,6 +999,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:numeric="decimal"
                     android:id="@+id/actualMoney"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"

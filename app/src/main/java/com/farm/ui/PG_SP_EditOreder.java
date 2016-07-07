@@ -24,6 +24,7 @@ import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.SellOrder_New_First;
 import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditOrderDetail;
@@ -51,7 +52,7 @@ import java.util.List;
 /**
  * Created by hasee on 2016/7/5.
  */
-@EActivity(R.layout.ncz_editorder)
+@EActivity(R.layout.pg_editorder)
 public class PG_SP_EditOreder  extends Activity
 {
     MyDialog myDialog;
@@ -204,11 +205,11 @@ public class PG_SP_EditOreder  extends Activity
     void btn_sure()
     {
         commembertab commembertab = AppContext.getUserInfo(PG_SP_EditOreder.this);
-        if (dd_fzr.getText().toString().equals(""))
+  /*      if (dd_fzr.getText().toString().equals(""))
         {
             Toast.makeText(PG_SP_EditOreder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
         if (dd_time.getText().toString().equals(""))
         {
             Toast.makeText(PG_SP_EditOreder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -330,16 +331,76 @@ public class PG_SP_EditOreder  extends Activity
         sellOrders.setPackPec(bz_guige.getText().toString());
         sellOrders.setWaitDeposit(dingjin.getText().toString());
 
-        sellOrders.setOldsaletime(dd_time.getText().toString());
-        sellOrders.setOldnumber(et_weight.getText().toString());//
-        sellOrders.setOldPrice(et_price.getText().toString());
-        sellOrders.setOldCarryPrice(by_danjia.getText().toString());
-        sellOrders.setOldPackPrice(bz_danjia.getText().toString());
+        if (! sellOrders.getSaletime().equals(""))
+        {
+            if (!sellOrders.getSaletime().equals(dd_time.getText().toString()))
+            {
+                sellOrders.setOldsaletime(dd_time.getText().toString());
+            }
+        }else
+        {
+            sellOrders.setOldsaletime(dd_time.getText().toString());
+        }
+
+        if (! sellOrders.getWeight().equals(""))
+        {
+            if (!sellOrders.getWeight().equals(et_weight.getText().toString()))
+            {
+                sellOrders.setOldnumber(et_weight.getText().toString());//
+            }
+        }else
+        {
+            sellOrders.setOldnumber(et_weight.getText().toString());//
+        }
+        if (! sellOrders.getPrice().equals(""))
+        {
+            if (!sellOrders.getPrice().equals(et_price.getText().toString()))
+            {
+                sellOrders.setOldPrice(et_price.getText().toString());
+            }
+        }else
+        {
+            sellOrders.setOldPrice(et_price.getText().toString());
+        }
+        if (! sellOrders.getCarryPrice().equals(""))
+        {
+            if (!sellOrders.getCarryPrice().equals(by_danjia.getText().toString()))
+            {
+                sellOrders.setOldCarryPrice(by_danjia.getText().toString());
+            }
+        }else
+        {
+            sellOrders.setOldCarryPrice(by_danjia.getText().toString());
+        }
+        if (! sellOrders.getPackPrice().equals(""))
+        {
+            if (!sellOrders.getPackPrice().equals(bz_danjia.getText().toString()))
+            {
+                sellOrders.setOldPackPrice(bz_danjia.getText().toString());
+            }
+        }else
+        {
+            sellOrders.setOldPackPrice(bz_danjia.getText().toString());
+
+        }
+
+
+
+
+
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
-        StringBuilder builder = new StringBuilder();
+/*        StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrder_new\": [");
         builder.append(JSON.toJSONString(sellOrders));
+        builder.append("]} ");*/
+
+        SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"SellOrder_new\":[ ");
+        builder.append(JSON.toJSONString(sellOrders));
+        builder.append("], \"sellorderlistadd\": [");
+        builder.append(JSON.toJSONString(sellOrder_new_first));
         builder.append("]} ");
         newaddOrder(builder.toString());
     }
@@ -439,7 +500,7 @@ public class PG_SP_EditOreder  extends Activity
     @AfterViews
     void afterOncreate()
     {
-        cgId = sellOrder.getBuyers();
+        cgId = sellOrder.getBuyersId();
         byId = sellOrder.getPickId();
         bzId = sellOrder.getContractorId();
         tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
@@ -502,7 +563,7 @@ public class PG_SP_EditOreder  extends Activity
 
     private void showData()
     {
-        et_name.setText(sellOrder.getMainPepName());
+        et_name.setText(sellOrder.getBuyersName());
         bz_guige.setText(sellOrder.getPackPec());
 
        /* et_price.setText(sellOrder.getPrice());
@@ -512,7 +573,7 @@ public class PG_SP_EditOreder  extends Activity
         bz_danjia.setText(sellOrder.getPackPrice());*/
         et_price.setText(sellOrder.getOldPrice());
         et_weight.setText(sellOrder.getOldnumber());
-        dd_time.setText(sellOrder.getOldsaletime().substring(0, sellOrder.getSaletime().length() - 8));
+        dd_time.setText(sellOrder.getOldsaletime().substring(0, sellOrder.getOldsaletime().length() - 8));
         by_danjia.setText(sellOrder.getOldCarryPrice());
         bz_danjia.setText(sellOrder.getOldPackPrice());
 //        dd_fzr.setText(sellOrder.getMainPepole());
@@ -648,6 +709,7 @@ public class PG_SP_EditOreder  extends Activity
 
         class ListItemView
         {
+            public TextView tv_batchtime;
             public TextView tv_area;
             public TextView tv_plannumber;
             public Button btn_editorderdetail;
@@ -691,6 +753,7 @@ public class PG_SP_EditOreder  extends Activity
                 convertView = listContainer.inflate(R.layout.adapter_editsellorderdetail_ncz, null);
                 listItemView = new ListItemView();
                 // 获取控件对象
+                listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
                 listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
                 listItemView.tv_plannumber = (TextView) convertView.findViewById(R.id.tv_plannumber);
                 listItemView.btn_editorderdetail = (Button) convertView.findViewById(R.id.btn_editorderdetail);
@@ -726,6 +789,7 @@ public class PG_SP_EditOreder  extends Activity
                 listItemView = (ListItemView) convertView.getTag();
             }
             // 设置文字和图片
+            listItemView.tv_batchtime.setText(SellOrderDetail.getBatchTime());
             listItemView.tv_plannumber.setText(SellOrderDetail.getplannumber());
             listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
             return convertView;

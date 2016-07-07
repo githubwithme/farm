@@ -255,15 +255,16 @@ public class PG_JSD extends Activity
         sellOrder.setXxzt("0");
         sellOrder.setProducer(sellOrder_new.getProducer());
         sellOrder.setFinalpayment("0");
-
+        sellOrder.setGoodsname(sellOrder_new.getGoodsname());
         sellOrder.setMainPepole(sellOrder_new.getMainPepole());
         sellOrder.setPlateNumber(sellOrder_new.getPlateNumber());
-        sellOrder.setContractorId(sellOrder_new.getPactId());
-        sellOrder.setPickId(sellOrder_new.getCreatorid());
+        sellOrder.setContractorId(sellOrder_new.getContractorId());
+        sellOrder.setPickId(sellOrder_new.getPickId());
         sellOrder.setCarryPrice(sellOrder_new.getCarryPrice());
         sellOrder.setPackPrice(sellOrder_new.getPackPrice());
         sellOrder.setPackPec(sellOrder_new.getPackPec());
         sellOrder.setWaitDeposit(sellOrder_new.getWaitDeposit());
+        sellOrder.setAddress(sellOrder_new.getAddress());
                 //
         sellOrder.setActualprice(jsd_zpprice.getText().toString());//  正品单价
         sellOrder.setDefectPrice(jsd_cpprice.getText().toString());//  次品单价
@@ -379,7 +380,7 @@ public class PG_JSD extends Activity
         cp_jianshu.setText(sellOrder_new.getDefectNum());
         zp_jianshu.setText(sellOrder_new.getActualweight());
         jsd_cpprice.setText(sellOrder_new.getDefectPrice());
-        jsd_zpprice.setText(sellOrder_new.getActualprice());
+//        jsd_zpprice.setText(sellOrder_new.getActualprice());
         jsd_cpzjs.setText(sellOrder_new.getDefectTotalWeight());
         jsd_zpjz.setText(sellOrder_new.getQualityTotalWeight());
         jsd_zongjingzhong.setText(sellOrder_new.getTotalWeight());

@@ -414,9 +414,10 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setWeight(et_weight.getText().toString());
         sellOrder.setSumvalues(et_values.getText().toString());
         sellOrder.setActualprice("");
-        sellOrder.setActualweight("");
         sellOrder.setActualnumber("");
         sellOrder.setActualsumvalues("");
+        sellOrder.setActualweight("0");
+        sellOrder.setDefectNum("0");
         sellOrder.setDeposit("0");
         sellOrder.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
@@ -425,7 +426,7 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
         sellOrder.setProducer(producer);
-        sellOrder.setFinalpayment("0");
+        sellOrder.setFinalpayment("");
 
         sellOrder.setMainPepole(fzrId);
         sellOrder.setPlateNumber(dd_cl.getText().toString());

@@ -55,7 +55,8 @@ public class PG_ScheduleOrderFragment extends Fragment
 {
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
-    List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
+    String cpname = "";
+    String cgsname = "";
     //    private NCZ_ScheduleOrderAdapter listAdapter;
     private PG_scheduleOrderAdapter listAdapter;
     private int listSumData;
@@ -81,10 +82,10 @@ public class PG_ScheduleOrderFragment extends Fragment
     Spinner citySpinner;
     @ViewById
     Spinner countySpinner;
-    @ViewById
+/*    @ViewById
     FrameLayout fr_id;
     @ViewById
-    View lins;
+    View lins;*/
     CustomArrayAdapter provinceAdapter = null;  //省级适配器
     CustomArrayAdapter cityAdapter = null;    //地级适配器
     CustomArrayAdapter countyAdapter = null;    //县级适配器
@@ -94,9 +95,7 @@ public class PG_ScheduleOrderFragment extends Fragment
     private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
 
 
-    String parkname = "";
-    String cpname = "";
-    String cgsname = "";
+
 
     @Override
     public void onResume()
@@ -107,11 +106,9 @@ public class PG_ScheduleOrderFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
-        lins.setVisibility(View.GONE);
-        fr_id.setVisibility(View.GONE);
-        secletchanpin = new ArrayList<SellOrder_New>();
-        secletcgs = new ArrayList<SellOrder_New>();
-        secletpark = new ArrayList<SellOrder_New>();
+       /* lins.setVisibility(View.GONE);
+        fr_id.setVisibility(View.GONE);*/
+
         getchanpin();//产品
         getpurchaser();//采购商
 //        getlistdata();//园区
@@ -124,7 +121,7 @@ public class PG_ScheduleOrderFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_scheduleorderfragment, container, false);
+        View rootView = inflater.inflate(R.layout.cz_allorderfarment, container, false);
         appContext = (AppContext) getActivity().getApplication();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
@@ -185,7 +182,7 @@ public class PG_ScheduleOrderFragment extends Fragment
                     {
 
                         commembertab commembertab = AppContext.getUserInfo(getActivity());
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         Iterator<SellOrder_New> it = listData.iterator();
                         while (it.hasNext())
                         {
@@ -214,7 +211,8 @@ public class PG_ScheduleOrderFragment extends Fragment
 
                                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                                 AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }
@@ -247,16 +245,10 @@ public class PG_ScheduleOrderFragment extends Fragment
      */
     private void setSpinner()
     {
-        String park[] = new String[listpark.size()];
-        for (int i = 0; i < listpark.size(); i++)
-        {
-            park[i] = listpark.get(i).getParkName();
-        }
+
 
         //绑定适配器和值
-        int a = park.length;
-//        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
-        provinceAdapter = new CustomArrayAdapter(getActivity(), park);
+        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
         provinceSpinner.setAdapter(provinceAdapter);
         provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
         provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -296,6 +288,7 @@ public class PG_ScheduleOrderFragment extends Fragment
             @Override
             public void onNothingSelected(AdapterView<?> arg0)
             {
+
             }
 
         });
@@ -326,118 +319,7 @@ public class PG_ScheduleOrderFragment extends Fragment
     }
 
 
-    //园区
-    private void getlistdata()
-    {
-        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(getActivity());
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("parkId", "16");
-//        params.addQueryStringParameter("action", "getGoodsByUid");
-        params.addQueryStringParameter("action", "getcontractByUid");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<Wz_Storehouse> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        Wz_Storehouse wz_storehouses = new Wz_Storehouse();
-                        wz_storehouses.setParkId("");
-                        wz_storehouses.setParkName("全部分场");
-                        listpark.add(wz_storehouses);
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
-                        listpark.addAll(listNewData);
 
-
-                        String park[] = new String[listpark.size()];
-                        for (int i = 0; i < listpark.size(); i++)
-                        {
-                            park[i] = listpark.get(i).getParkName();
-                        }
-
-                        //绑定适配器和值
-//        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
-                        provinceAdapter = new CustomArrayAdapter(getActivity(), park);
-                        provinceSpinner.setAdapter(provinceAdapter);
-                        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
-                        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-                        {
-                            @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-                            {
-
-                                parkname = listpark.get(i).getParkName();
-                                getAllOrdersname();
-             /*                   secletpark = new ArrayList<SellOrder_New>();
-                                secletpark.addAll(listData);
-//                                getAllOrdersname("分场", listpark.get(i).getParkName());
-                                if (!listpark.get(i).getParkName().equals("全部分场"))
-                                {
-                                    Iterator<SellOrder_New> it = secletpark.iterator();
-                                    while (it.hasNext())
-                                    {
-                                        String value = it.next().getProducer();
-//                            if (!value.equals("已完成"))
-                                        if (value.indexOf(listpark.get(i).getParkName()) == -1)
-                                        {
-                                            it.remove();
-                                        }
-                                    }
-                                }
-
-                                listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), secletpark, AppContext.BROADCAST_UPDATEAllORDER, mCallback);
-                                lv.setAdapter(listAdapter);
-                                lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                                {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                                    {
-
-                                        commembertab commembertab = AppContext.getUserInfo(getActivity());
-                                        AppContext.eventStatus(getActivity(), "8", secletpark.get(position).getUuid(), commembertab.getId());
-                                        Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                                        intent.putExtra("bean", secletpark.get(position));
-                                        getActivity().startActivity(intent);
-                                    }
-                                });*/
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> adapterView)
-                            {
-
-                            }
-                        });
-                    } else
-                    {
-                        listNewData = new ArrayList<Wz_Storehouse>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
-
-            }
-        });
-
-    }
 
     private void getAllOrdersname()
     {
@@ -508,7 +390,7 @@ public class PG_ScheduleOrderFragment extends Fragment
                                 {
                                     String value = its.next().getGoodsname();
 //                            if (!value.equals("已完成"))
-                                    if (value.indexOf(cgsname) == -1)
+                                    if (value.indexOf(cpname) == -1)
                                     {
                                         its.remove();
                                     }
@@ -526,7 +408,8 @@ public class PG_ScheduleOrderFragment extends Fragment
 
                                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                                 AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }
@@ -714,7 +597,7 @@ public class PG_ScheduleOrderFragment extends Fragment
                         listdata_cp.addAll(listNewData);
 
 
-                        String park[] = new String[listdata_cp.size()];
+                         String park[] = new String[listdata_cp.size()];
                         for (int i = 0; i < listdata_cp.size(); i++)
                         {
                             park[i] = listdata_cp.get(i).getProductName();
@@ -730,47 +613,6 @@ public class PG_ScheduleOrderFragment extends Fragment
 
                                 cpname = listdata_cp.get(i).getProductName();
                                 getAllOrdersname();
-                    /*            secletchanpin = new ArrayList<SellOrder_New>();
-                                if (secletpark.size()==0)
-                                {
-                                    secletchanpin.addAll(listData);
-                                }else
-                                {
-                                    secletchanpin.addAll(secletpark);
-
-                                }*/
-
-       /*                         if (!listpark.get(i).getParkName().equals("全部分场"))
-                                {
-                                    Iterator<SellOrder_New> it = secletpark.iterator();
-                                    while (it.hasNext())
-                                    {
-                                        String value = it.next().getProducer();
-//                            if (!value.equals("已完成"))
-                                        if (value.indexOf(listpark.get(i).getParkName()) == -1)
-                                        {
-                                            it.remove();
-                                        }
-                                    }
-                                }*/
-
-
-                     /*           listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), secletchanpin, AppContext.BROADCAST_UPDATEAllORDER, mCallback);
-                                lv.setAdapter(listAdapter);
-                                lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                                {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                                    {
-
-                                        commembertab commembertab = AppContext.getUserInfo(getActivity());
-                                        AppContext.eventStatus(getActivity(), "8", secletchanpin.get(position).getUuid(), commembertab.getId());
-                                        Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                                        intent.putExtra("bean", secletchanpin.get(position));
-                                        getActivity().startActivity(intent);
-                                    }
-                                });*/
-
 
                             }
 

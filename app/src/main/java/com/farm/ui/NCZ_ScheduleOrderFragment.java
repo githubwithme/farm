@@ -198,7 +198,8 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
 
                                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                                 AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }
@@ -535,7 +536,8 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
 
                                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                                 AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }

@@ -186,8 +186,9 @@ public class PG_NeedAdapter extends BaseAdapter
                 public void onClick(View view)
                 {
                     SellOrder_New sellOrdesr = new SellOrder_New();
-                    sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_cash);
+                    sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_danxuan);
                     Intent intent=new Intent(context, PG_SP_EditOreder_.class);
+                    intent.putExtra("bean", sellOrdesr);
                     context.startActivity(intent);
                 }
             });

@@ -165,8 +165,8 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
 //                    newaddOrder(builder.toString());
                 }
             });
-
-            SpannableString spanStr_buyer = new SpannableString("就绪");
+            listItemView.tv_batchtime.setText(sellOrder.getGoodsname());
+/*            SpannableString spanStr_buyer = new SpannableString("就绪");
             spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
             listItemView.tv_batchtime.setText(spanStr_buyer);
             listItemView.tv_batchtime.setOnClickListener(new View.OnClickListener()
@@ -177,7 +177,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
                     Intent intent = new Intent(context, RecoveryDetail_.class);
                     context.startActivity(intent);
                 }
-            });
+            });*/
             if (sellOrder.getSaletime().length()>0)
             {
                 listItemView.tv_name.setText(sellOrder.getSaletime().substring(5, sellOrder.getSaletime().length() - 8));//时间
