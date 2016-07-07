@@ -59,7 +59,8 @@ public class PG_FarmManagerFragment extends Fragment
     void ll_jsd()
     {
 //        Intent intent = new Intent(getActivity(), PG_JSD_.class);
-        Intent intent = new Intent(getActivity(), PG_JSD_CBH_.class);
+//        Intent intent = new Intent(getActivity(), PG_JSD_CBH_.class);
+        Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
         getActivity().startActivity(intent);
 //        PG_Workplan
     }

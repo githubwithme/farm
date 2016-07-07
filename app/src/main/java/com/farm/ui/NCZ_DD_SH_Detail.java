@@ -202,7 +202,7 @@ public class NCZ_DD_SH_Detail extends Activity
     private void getData()
     {
 
-
+        dd_cl.setText(sellOrder_new.getPlateNumber());
         chanpin.setText(sellOrder_new.getGoodsname());
         et_name.setText(sellOrder_new.getBuyersName());
         et_note.setText(sellOrder_new.getNote());
@@ -345,7 +345,7 @@ public class NCZ_DD_SH_Detail extends Activity
         }
         if (!sellOrder.getOldnumber().equals(""))
         {
-            sellOrder.setNumber(sellOrder.getOldnumber());
+            sellOrder.setWeight(sellOrder.getOldnumber());
             sellOrder.setOldnumber("");
 
         }

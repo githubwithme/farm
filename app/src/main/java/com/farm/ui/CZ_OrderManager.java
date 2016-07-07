@@ -28,6 +28,14 @@ public class CZ_OrderManager extends Activity
     @ViewById
     TextView tv_needfeedback;
 
+
+    @Click
+    void btn_orders()
+    {
+
+        Intent intent=new Intent(CZ_OrderManager.this,CZ_OrderManager_New_.class);
+        startActivity(intent);
+    }
     @Click
     void btn_back()
     {

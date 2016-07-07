@@ -90,29 +90,9 @@ public class PG_JSD_Adapter extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
 
-        listItemView.zhengpin.setTag(R.id.tag_bean,listItemView);
-        listItemView.zhengpin.addTextChangedListener(new TextWatcher()
-        {
 
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
-            {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-            {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable)
-            {
-
-            }
-        });
-
+        listItemView.jinzhong.setText(sellOrderDetail_new.getactualweight());
         listItemView.zhushu.setText(sellOrderDetail_new.getactualnumber());
         listItemView.zhengpin.setText(sellOrderDetail_new.getplanprice());
         listItemView.cipin.setText(sellOrderDetail_new.getactualprice());

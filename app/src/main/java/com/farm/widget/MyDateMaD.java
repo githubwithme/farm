@@ -15,6 +15,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.SellOrder_New_First;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -74,9 +75,10 @@ public class MyDateMaD
     // updates the date we display in the TextView
     public void updateDisplay(TextView textView)
     {
-        textView.setText(new StringBuilder().append(mMonth + 1).append("/").append(mDay).append(" "));
+
         if (type.equals("1"))
         {
+            textView.setText(new StringBuilder().append(mMonth + 1).append("/").append(mDay).append(" "));
             sellOrders.setBuyers(sellOrders.getBuyersId());
             sellOrders.setSaletime(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" ").toString());
         }else
@@ -86,9 +88,16 @@ public class MyDateMaD
             sellOrders.setIsNeedAudit("0");
         }
 
-        StringBuilder builder = new StringBuilder();
+      /*  StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrder_new\": [");
         builder.append(JSON.toJSONString(sellOrders));
+        builder.append("]} ");*/
+        SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"SellOrder_new\":[ ");
+        builder.append(JSON.toJSONString(sellOrders));
+        builder.append("], \"sellorderlistadd\": [");
+        builder.append(JSON.toJSONString(sellOrder_new_first));
         builder.append("]} ");
                     newaddOrder(builder.toString());
     }

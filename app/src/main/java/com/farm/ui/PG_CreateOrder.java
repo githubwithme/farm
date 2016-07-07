@@ -397,7 +397,8 @@ public class PG_CreateOrder extends Activity
 
         sellOrder.setSumvalues(et_values.getText().toString());
         sellOrder.setActualprice("");
-        sellOrder.setActualweight("");
+        sellOrder.setActualweight("0");
+        sellOrder.setDefectNum("0");
         sellOrder.setActualnumber("");
         sellOrder.setActualsumvalues("");
         sellOrder.setDeposit("0");
@@ -435,12 +436,12 @@ public class PG_CreateOrder extends Activity
         SellOrderList.add(sellOrder);
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         sellOrder_new_first.setSellOrderId(uuid);
-        sellOrder_new_first.setQualityWaterWeight("0");
+ /*       sellOrder_new_first.setQualityWaterWeight("0");
         sellOrder_new_first.setQualityNetWeight("0");
         sellOrder_new_first.setQualityBalance("0");
         sellOrder_new_first.setDefectWaterWeight("0");
         sellOrder_new_first.setDefectNetWeight("0");
-        sellOrder_new_first.setDefectBalance("0");
+        sellOrder_new_first.setDefectBalance("0");*/
 
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrderList\": ");

@@ -25,6 +25,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.SellOrder_New_First;
 import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditOrderDetail;
@@ -52,7 +53,7 @@ import java.util.List;
 /**
  * Created by hasee on 2016/7/1.
  */
-@EActivity(R.layout.ncz_editorder)
+@EActivity(R.layout.pg_editorder)
 public class PG_EditOrder extends Activity
 {
     MyDialog myDialog;
@@ -330,18 +331,78 @@ public class PG_EditOrder extends Activity
 
         sellOrders.setPackPec(bz_guige.getText().toString());
         sellOrders.setWaitDeposit(dingjin.getText().toString());
+        if (! sellOrders.getSaletime().equals(""))
+        {
+            if (!sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length() - 8).equals(dd_time.getText().toString()))
+            {
+                sellOrders.setOldsaletime(dd_time.getText().toString());
+            }
+        }else
+        {
+            sellOrders.setOldsaletime(dd_time.getText().toString());
+        }
 
-        sellOrders.setOldsaletime(dd_time.getText().toString());
-        sellOrders.setOldnumber(et_weight.getText().toString());//
+        if (! sellOrders.getWeight().equals(""))
+        {
+            if (!sellOrders.getWeight().equals(et_weight.getText().toString()))
+            {
+                sellOrders.setOldnumber(et_weight.getText().toString());//
+            }
+        }else
+        {
+            sellOrders.setOldnumber(et_weight.getText().toString());//
+        }
+        if (! sellOrders.getPrice().equals(""))
+        {
+            if (!sellOrders.getPrice().equals(et_price.getText().toString()))
+            {
+                sellOrders.setOldPrice(et_price.getText().toString());
+            }
+        }else
+        {
+            sellOrders.setOldPrice(et_price.getText().toString());
+        }
+        if (! sellOrders.getCarryPrice().equals(""))
+        {
+            if (!sellOrders.getCarryPrice().equals(by_danjia.getText().toString()))
+            {
+                sellOrders.setOldCarryPrice(by_danjia.getText().toString());
+            }
+        }else
+        {
+            sellOrders.setOldCarryPrice(by_danjia.getText().toString());
+        }
+        if (! sellOrders.getPackPrice().equals(""))
+        {
+            if (!sellOrders.getPackPrice().equals(bz_danjia.getText().toString()))
+            {
+                sellOrders.setOldPackPrice(bz_danjia.getText().toString());
+            }
+        }else
+        {
+            sellOrders.setOldPackPrice(bz_danjia.getText().toString());
+
+        }
+
+     /*   sellOrders.setOldnumber(et_weight.getText().toString());//
         sellOrders.setOldPrice(et_price.getText().toString());
         sellOrders.setOldCarryPrice(by_danjia.getText().toString());
         sellOrders.setOldPackPrice(bz_danjia.getText().toString());
+        sellOrders.setOldsaletime(dd_time.getText().toString());*/
+
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
+        SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         StringBuilder builder = new StringBuilder();
+        builder.append("{\"SellOrder_new\":[ ");
+        builder.append(JSON.toJSONString(sellOrders));
+        builder.append("], \"sellorderlistadd\": [");
+        builder.append(JSON.toJSONString(sellOrder_new_first));
+        builder.append("]} ");
+   /*     StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrder_new\": [");
         builder.append(JSON.toJSONString(sellOrders));
-        builder.append("]} ");
+        builder.append("]} ");*/
         newaddOrder(builder.toString());
     }
 
@@ -440,7 +501,7 @@ public class PG_EditOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
-        cgId = sellOrder.getBuyers();
+        cgId = sellOrder.getBuyersId();
         byId = sellOrder.getPickId();
         bzId = sellOrder.getContractorId();
         tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
@@ -503,7 +564,7 @@ public class PG_EditOrder extends Activity
 
     private void showData()
     {
-        et_name.setText(sellOrder.getMainPepName());
+        et_name.setText(sellOrder.getBuyersName());
         et_price.setText(sellOrder.getPrice());
         et_weight.setText(sellOrder.getWeight());
         et_values.setText(sellOrder.getSumvalues());

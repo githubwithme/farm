@@ -202,6 +202,7 @@
         <activity android:name=".ui.AddNotStd_Cmd_new_"/>
         <activity android:name=".ui.NCZ_CreateNewFarmOrder_"/>
         <activity android:name=".ui.NCZ_DD_SH_Detail_"/>
+        <activity android:name=".ui.NCZ_NewOrderDetail_"/>
 
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
@@ -221,6 +222,7 @@
         <activity android:name=".ui.CZ_MQActivity_"/>
         <activity android:name=".ui.CZ_CreateOrder_"/>
         <activity android:name=".ui.CZ_CreateOrder_SelectBatchTime_"/>
+        <activity android:name=".ui.CZ_OrderManager_New_"/>
         <!-- 片管UI -->
         <activity android:name=".ui.PG_MainActivity_"/>
         <activity android:name=".ui.PG_PlantList_"/>
