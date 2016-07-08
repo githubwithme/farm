@@ -40,275 +40,341 @@
         android:layout_below="@id/rl_titlebar"
         android:background="@color/line_color"/>
 
-    <ScrollView
-        android:id="@+id/sl"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/line"
+        android:layout_below="@id/line"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:layout_marginTop="10dip"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:id="@+id/rl_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/pb_upload"
+                android:layout_width="60dip"
+                android:layout_height="45dip"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dip"
+                android:background="@null"
+                android:gravity="center"
+                android:text="上传"
+                android:textColor="@color/white"
+                android:textSize="@dimen/titlebar_textsize"
+                />
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/cz_startdl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:background="@color/white"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <RelativeLayout
+                <TextView
+                    android:layout_width="@dimen/width_colum"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center_vertical"
+                    android:text="开始时间"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/size_20"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_timelimit"
                     android:layout_width="match_parent"
-                    android:layout_height="45dip">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="left|center_vertical"
-                        android:text="各区域断蕾情况"
-                        android:textColor="@color/bg_text"
-                        android:textSize="16sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dip"
-                        android:gravity="left|center_vertical"
-                        android:text="单位：株"
-                        android:textColor="@color/gray"
-                        android:textSize="13sp"/>
-                </RelativeLayout>
-
-
-                <com.farm.widget.CustomExpandableListView
-                    android:id="@+id/expandableListView_areasaledata"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dip"
-                    android:layout_marginTop="5dip"
-                    android:childDivider="@color/transparent"
-                    android:divider="@color/transparent"
-                    android:dividerHeight="0dip"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:groupIndicator="@null"/>
+                    android:layout_height="@dimen/height_colum"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="开始时间"
+                    android:textSize="@dimen/size_20"/>
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/startdl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:background="@color/white"
-                android:orientation="vertical">
+                android:layout_height="50dip"
+                android:gravity="center"
+                android:text="开始断蕾"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dip">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="left|center_vertical"
-                        android:text="各批次断蕾情况"
-                        android:textColor="@color/bg_text"
-                        android:textSize="16sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dip"
-                        android:gravity="left|center_vertical"
-                        android:text="单位：株"
-                        android:textColor="@color/gray"
-                        android:textSize="13sp"/>
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_below="@+id/rl_note"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dip"
-                    android:layout_marginBottom="10dip"
-                    android:background="@drawable/round_white"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/ll_top"
-                        android:layout_width="fill_parent"
-                        android:layout_height="41dip"
-                        android:layout_marginLeft="1px"
-                        android:layout_marginRight="1px"
-                        android:layout_marginTop="1px"
-                        android:minHeight="41dip"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tv_top_left"
-                            android:layout_width="60dip"
-                            android:layout_height="fill_parent"
-                            android:background="@color/white"
-                            android:gravity="center"
-                            android:text="批次/片区"
-                            android:textColor="@color/bg_text"
-                            android:textSize="15sp"/>
-
-                        <View
-                            android:layout_width="1px"
-                            android:layout_height="match_parent"
-                            android:background="@color/gray"/>
-
-                        <com.farm.widget.CustomHorizontalScrollView_CZBreakOff
-                            android:id="@+id/item_scroll_title"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:scrollbars="none">
-
-                            <LinearLayout
-                                android:id="@+id/ll_park"
-                                android:layout_width="fill_parent"
-                                android:layout_height="40dip"
-                                android:orientation="horizontal">
-
-
-                            </LinearLayout>
-                        </com.farm.widget.CustomHorizontalScrollView_CZBreakOff>
-
-                        <View
-                            android:layout_width="1px"
-                            android:layout_height="match_parent"
-                            android:background="@color/gray"/>
-
-                        <TextView
-                            android:id="@+id/tv_top_right"
-                            android:layout_width="60dip"
-                            android:layout_height="fill_parent"
-                            android:background="@color/white"
-                            android:gravity="center"
-                            android:text="合计"
-                            android:textColor="@color/bg_text"
-                            android:textSize="15sp"/>
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/line_middle"
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_below="@+id/ll_top"
-                        android:background="@color/gray"/>
-
-                    <ListView
-                        android:id="@+id/hlistview_scroll_list"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/line_middle"
-                        android:layout_marginBottom="42dip"
-                        android:layout_marginLeft="1px"
-                        android:layout_marginRight="1px"
-                        android:cacheColorHint="@android:color/transparent"
-                        android:divider="@color/transparent"
-                        android:dividerHeight="0px"
-                        android:fadingEdge="none"
-                        android:scrollbars="none">
-                    </ListView>
-
-                    <LinearLayout
-                        android:id="@+id/ll_bottom"
-                        android:layout_width="fill_parent"
-                        android:layout_height="40dip"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="1px"
-                        android:layout_marginRight="1px"
-                        android:layout_marginTop="1px"
-                        android:minHeight="41dip"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tv_bottom_left"
-                            android:layout_width="60dip"
-                            android:layout_height="fill_parent"
-                            android:background="@color/white"
-                            android:gravity="center"
-                            android:text="合计"
-                            android:textColor="@color/bg_text"
-                            android:textSize="15sp"/>
-
-                        <View
-                            android:layout_width="1px"
-                            android:layout_height="match_parent"
-                            android:background="@color/gray"/>
-
-                        <com.farm.widget.CustomHorizontalScrollView_CZBreakOff
-                            android:id="@+id/totalScroll"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:scrollbars="none">
-
-                            <LinearLayout
-                                android:id="@+id/ll_total"
-                                android:layout_width="fill_parent"
-                                android:layout_height="40dip"
-                                android:orientation="horizontal">
-
-
-                            </LinearLayout>
-                        </com.farm.widget.CustomHorizontalScrollView_CZBreakOff>
-
-                        <View
-                            android:layout_width="1px"
-                            android:layout_height="match_parent"
-                            android:background="@color/gray"/>
-
-                        <TextView
-                            android:id="@+id/alltoatal"
-                            android:layout_width="60dip"
-                            android:layout_height="fill_parent"
-                            android:background="@color/white"
-                            android:gravity="center"
-                            android:text="总量"
-                            android:textColor="@color/red"
-                            android:textSize="15sp"/>
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/line_bottom"
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_above="@+id/ll_bottom"
-                        android:background="@color/gray"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/gray"/>
-                </RelativeLayout>
-
-            </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+
+        <ScrollView
+            android:id="@+id/sl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dip">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="各区域断蕾情况"
+                            android:textColor="@color/bg_text"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dip"
+                            android:gravity="left|center_vertical"
+                            android:text="单位：株"
+                            android:textColor="@color/gray"
+                            android:textSize="13sp"/>
+                    </RelativeLayout>
+
+
+                    <com.farm.widget.CustomExpandableListView
+                        android:id="@+id/expandableListView_areasaledata"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dip"
+                        android:layout_marginTop="5dip"
+                        android:childDivider="@color/transparent"
+                        android:divider="@color/transparent"
+                        android:dividerHeight="0dip"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:groupIndicator="@null"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dip">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left|center_vertical"
+                            android:text="各批次断蕾情况"
+                            android:textColor="@color/bg_text"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dip"
+                            android:gravity="left|center_vertical"
+                            android:text="单位：株"
+                            android:textColor="@color/gray"
+                            android:textSize="13sp"/>
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_below="@+id/rl_note"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="10dip"
+                        android:layout_marginTop="5dip"
+                        android:background="@drawable/round_white"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/ll_top"
+                            android:layout_width="fill_parent"
+                            android:layout_height="41dip"
+                            android:layout_marginLeft="1px"
+                            android:layout_marginRight="1px"
+                            android:layout_marginTop="1px"
+                            android:minHeight="41dip"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_top_left"
+                                android:layout_width="60dip"
+                                android:layout_height="fill_parent"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:text="批次/片区"
+                                android:textColor="@color/bg_text"
+                                android:textSize="15sp"/>
+
+                            <View
+                                android:layout_width="1px"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray"/>
+
+                            <com.farm.widget.CustomHorizontalScrollView_CZBreakOff
+                                android:id="@+id/item_scroll_title"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:scrollbars="none">
+
+                                <LinearLayout
+                                    android:id="@+id/ll_park"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="40dip"
+                                    android:orientation="horizontal">
+
+
+                                </LinearLayout>
+                            </com.farm.widget.CustomHorizontalScrollView_CZBreakOff>
+
+                            <View
+                                android:layout_width="1px"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray"/>
+
+                            <TextView
+                                android:id="@+id/tv_top_right"
+                                android:layout_width="60dip"
+                                android:layout_height="fill_parent"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:text="合计"
+                                android:textColor="@color/bg_text"
+                                android:textSize="15sp"/>
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/line_middle"
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_below="@+id/ll_top"
+                            android:background="@color/gray"/>
+
+                        <ListView
+                            android:id="@+id/hlistview_scroll_list"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/line_middle"
+                            android:layout_marginBottom="42dip"
+                            android:layout_marginLeft="1px"
+                            android:layout_marginRight="1px"
+                            android:cacheColorHint="@android:color/transparent"
+                            android:divider="@color/transparent"
+                            android:dividerHeight="0px"
+                            android:fadingEdge="none"
+                            android:scrollbars="none">
+                        </ListView>
+
+                        <LinearLayout
+                            android:id="@+id/ll_bottom"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dip"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="1px"
+                            android:layout_marginRight="1px"
+                            android:layout_marginTop="1px"
+                            android:minHeight="41dip"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_bottom_left"
+                                android:layout_width="60dip"
+                                android:layout_height="fill_parent"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:text="合计"
+                                android:textColor="@color/bg_text"
+                                android:textSize="15sp"/>
+
+                            <View
+                                android:layout_width="1px"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray"/>
+
+                            <com.farm.widget.CustomHorizontalScrollView_CZBreakOff
+                                android:id="@+id/totalScroll"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:scrollbars="none">
+
+                                <LinearLayout
+                                    android:id="@+id/ll_total"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="40dip"
+                                    android:orientation="horizontal">
+
+
+                                </LinearLayout>
+                            </com.farm.widget.CustomHorizontalScrollView_CZBreakOff>
+
+                            <View
+                                android:layout_width="1px"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray"/>
+
+                            <TextView
+                                android:id="@+id/alltoatal"
+                                android:layout_width="60dip"
+                                android:layout_height="fill_parent"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:text="总量"
+                                android:textColor="@color/red"
+                                android:textSize="15sp"/>
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/line_bottom"
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_above="@+id/ll_bottom"
+                            android:background="@color/gray"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/gray"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
 
 </RelativeLayout>

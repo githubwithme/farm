@@ -19,6 +19,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.PlantGcd;
 import com.farm.bean.Result;
+import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
 import com.farm.common.StringUtils;
 import com.farm.common.UIHelper;
@@ -291,9 +292,24 @@ public class CZ_MQActivity extends Activity
                 if (PlantGcd == null) return;
                 commembertab commembertab = AppContext.getUserInfo(CZ_MQActivity.this);
                 AppContext.updateStatus(CZ_MQActivity.this, "0", PlantGcd.getId(), "3", commembertab.getId());
-                Intent intent = new Intent(CZ_MQActivity.this, NCZ_todaymyDetail_.class);
-                intent.putExtra("bean_gcd", PlantGcd); // 因为list中添加了头部,因此要去掉一个
+
+
+//                Intent intent = new Intent(CZ_MQActivity.this, NCZ_todaymyDetail_.class);
+//                intent.putExtra("bean_gcd", PlantGcd); // 因为list中添加了头部,因此要去掉一个
 //                intent.putExtra("bean_areatab", areatab); // 因为list中添加了头部,因此要去掉一个
+//                CZ_MQActivity.this.startActivity(intent);
+
+
+                areatab areatab = new areatab();
+                areatab.setWorkuserid(commembertab.getId());
+                areatab.setRealName(commembertab.getrealName());
+                areatab.setparkId(commembertab.getparkId());
+                areatab.setparkName(commembertab.getparkName());
+                areatab.setareaName(commembertab.getareaName());
+                areatab.setid(commembertab.getareaId());
+                Intent intent = new Intent(CZ_MQActivity.this, NCZ_GCDDetailActivity_.class);
+                intent.putExtra("bean_gcd", PlantGcd);  // 因为list中添加了头部,因此要去掉一个
+                intent.putExtra("bean_areatab", areatab);  // 因为list中添加了头部,因此要去掉一个
                 CZ_MQActivity.this.startActivity(intent);
             }
         });

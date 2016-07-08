@@ -1,7 +1,6 @@
 package com.farm.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.BatchTime;
 import com.farm.bean.areatab;
-import com.farm.bean.parktab;
+import com.farm.bean.contractTab;
 import com.farm.common.utils;
-import com.farm.ui.NCZ_ContractSaleActivity_;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.CustomListView;
@@ -38,10 +35,10 @@ public class Adapter_AreaSale_CZ extends BaseExpandableListAdapter
     private Context context;// 运行上下文
     int currentChildsize = 0;
     private GoodsAdapter adapter;
-    List<parktab> listData;
+    List<areatab> listData;
     ListView list;
 
-    public Adapter_AreaSale_CZ(Context context, List<parktab> listData, ExpandableListView mainlistview)
+    public Adapter_AreaSale_CZ(Context context, List<areatab> listData, ExpandableListView mainlistview)
     {
         this.mainlistview = mainlistview;
         this.listData = listData;
@@ -82,8 +79,8 @@ public class Adapter_AreaSale_CZ extends BaseExpandableListAdapter
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<areatab> childData = listData.get(groupPosition).getAreatabList();
-        final areatab areatab = childData.get(childPosition);
+        List<contractTab> childData = listData.get(groupPosition).getContractTabList();
+        final contractTab contractTab = childData.get(childPosition);
 
         View v = null;
         if (lmap.get(groupPosition) != null)
@@ -94,7 +91,7 @@ public class Adapter_AreaSale_CZ extends BaseExpandableListAdapter
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.adapter_areasalefragment_child, null);//ncz_pc_todayjobadater-ncz_pc_todayjobadater
+            convertView = inflater.inflate(R.layout.adapter_czareasale_child, null);//ncz_pc_todayjobadater-ncz_pc_todayjobadater
             listItemView = new ListItemView();
 
             // 获取控件对象
@@ -136,7 +133,7 @@ public class Adapter_AreaSale_CZ extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getAreatabList() == null)
+        if (listData.get(groupPosition).getContractTabList().size()==0)
         {
             return 0;
         }
@@ -171,11 +168,11 @@ public class Adapter_AreaSale_CZ extends BaseExpandableListAdapter
             if (groupPosition == 0)
             {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.adapter_areasalefragment_parenttopitem, null);
+                convertView = inflater.inflate(R.layout.adapter_czareasale_parenttopitem, null);
             } else
             {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.adapter_areasalefragment_parent, null);
+                convertView = inflater.inflate(R.layout.adapter_czareasale_parent, null);
             }
 
         }
@@ -185,13 +182,13 @@ public class Adapter_AreaSale_CZ extends BaseExpandableListAdapter
         TextView tv_allsale = (TextView) convertView.findViewById(R.id.tv_allsale);
         TextView tv_salefor = (TextView) convertView.findViewById(R.id.tv_salefor);
         TextView tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);
-        parktab parktab = listData.get(groupPosition);
+        areatab areatab = listData.get(groupPosition);
 
-        tv_contractname.setText(listData.get(groupPosition).getparkName());
-        tv_salefor.setText(parktab.getAllsalefor());
-        tv_allsale.setText(parktab.getAllnumber());
-        tv_saleout.setText(parktab.getAllsaleout());
-        tv_salein.setText(parktab.getAllsalein());
+        tv_contractname.setText(listData.get(groupPosition).getareaName());
+        tv_salefor.setText(areatab.getAllsalefor());
+        tv_allsale.setText(areatab.getAllnumber());
+        tv_saleout.setText(areatab.getAllsaleout());
+        tv_salein.setText(areatab.getAllsalein());
         return convertView;
     }
 
@@ -210,14 +207,14 @@ public class Adapter_AreaSale_CZ extends BaseExpandableListAdapter
 
     public class GridViewAdapter_SellOrDetail_NCZ extends BaseAdapter
     {
-        List<areatab> list;
+        List<contractTab> list;
         EditText et_number;
         CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
         private Context context;
         Holder view;
         String parkname;
 
-        public GridViewAdapter_SellOrDetail_NCZ(Context context, List<areatab> list, String parkname)
+        public GridViewAdapter_SellOrDetail_NCZ(Context context, List<contractTab> list, String parkname)
         {
             this.parkname = parkname;
             this.list = list;
@@ -248,31 +245,31 @@ public class Adapter_AreaSale_CZ extends BaseExpandableListAdapter
         {
             if (convertView == null)
             {
-                convertView = View.inflate(context, R.layout.adapter_areasalefragment_childitem, null);
+                convertView = View.inflate(context, R.layout.adapter_czareasale_childitem, null);
                 view = new Holder(convertView);
-                areatab areatab = list.get(position);
-                view.tv_salein.setText(areatab.getAllsalein());
-                view.tv_saleout.setText(areatab.getAllsaleout());
-                view.tv_salefor.setText(areatab.getAllsalefor());
-                view.tv_allsale.setText(areatab.getAllnumber());
-                view.tv_contractname.setText(list.get(position).getareaName());
+                contractTab contractTab = list.get(position);
+                view.tv_salein.setText(contractTab.getAllsalein());
+                view.tv_saleout.setText(contractTab.getAllsaleout());
+                view.tv_salefor.setText(contractTab.getAllsalefor());
+                view.tv_allsale.setText(contractTab.getAllnumber());
+                view.tv_contractname.setText(contractTab.getContractname());
                 convertView.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v)
                     {
-                        BatchTime batchTimes = (BatchTime) v.getTag(R.id.tag_batchtime);
-                        String areaid = (String) v.getTag(R.id.tag_areaid);
-                        String areaname = (String) v.getTag(R.id.tag_areaname);
-                        Intent intent = new Intent(context, NCZ_ContractSaleActivity_.class);
-                        intent.putExtra("areaid", areaid);
-                        intent.putExtra("areaname", areaname);
-                        context.startActivity(intent);
+//                        BatchTime batchTimes = (BatchTime) v.getTag(R.id.tag_batchtime);
+//                        String areaid = (String) v.getTag(R.id.tag_areaid);
+//                        String areaname = (String) v.getTag(R.id.tag_areaname);
+//                        Intent intent = new Intent(context, NCZ_ContractSaleActivity_.class);
+//                        intent.putExtra("areaid", areaid);
+//                        intent.putExtra("areaname", areaname);
+//                        context.startActivity(intent);
                     }
                 });
                 convertView.setTag(view);
-                convertView.setTag(R.id.tag_areaid, areatab.getAreaid());
-                convertView.setTag(R.id.tag_areaname, areatab.getareaName());
+                convertView.setTag(R.id.tag_areaid, contractTab.getContractid());
+                convertView.setTag(R.id.tag_areaname, contractTab.getContractname());
             } else
             {
                 view = (Holder) convertView.getTag();

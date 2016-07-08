@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_AreaBatchtimeBreakOff;
+import com.farm.adapter.Adapter_ContractBatchtimeSale;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -30,26 +30,26 @@ import java.util.List;
 /**
  * Created by ${hmj} on 2016/7/4.
  */
-@EActivity(R.layout.cz_areabatchtimebreakoff)
-public class CZ_AreaBatchTimeBreakOff extends Activity
+@EActivity(R.layout.ncz_contractbatchtimesale)
+public class CZ_ContractBatchTimeSale extends Activity
 {
-    String batchtime;
     String areaid;
+    String batchtime;
     String areaname;
     @ViewById
     ListView lv;
     @ViewById
     TextView tv_note;
-    Adapter_AreaBatchtimeBreakOff adapter_areaBatchtimeBreakOff;
+    Adapter_ContractBatchtimeSale adapter_contractBatchtimeSale;
 
     @AfterViews
     void afterOncreate()
     {
         getActionBar().hide();
-        batchtime = getIntent().getStringExtra("batchTime");//注意要区分大小写
         areaid = getIntent().getStringExtra("areaid");
+        batchtime = getIntent().getStringExtra("batchtime");
         areaname = getIntent().getStringExtra("areaname");
-        tv_note.setText(areaname +"     "+batchtime+ "批次的断蕾情况");
+        tv_note.setText(areaname + "    " + batchtime + "的销售情况");
         getSaleDataOfArea();
     }
 
@@ -65,7 +65,7 @@ public class CZ_AreaBatchTimeBreakOff extends Activity
         params.addQueryStringParameter("areaid", areaid);
         params.addQueryStringParameter("batchtime", batchtime);
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "CZ_getAreaBatchtimeBreakOffData");//jobGetList1
+        params.addQueryStringParameter("action", "CZ_getAreaBatchtimeSaleData");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -80,8 +80,8 @@ public class CZ_AreaBatchTimeBreakOff extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
-                        adapter_areaBatchtimeBreakOff = new Adapter_AreaBatchtimeBreakOff(CZ_AreaBatchTimeBreakOff.this, listNewData);
-                        lv.setAdapter(adapter_areaBatchtimeBreakOff);
+                        adapter_contractBatchtimeSale = new Adapter_ContractBatchtimeSale(CZ_ContractBatchTimeSale.this, listNewData);
+                        lv.setAdapter(adapter_contractBatchtimeSale);
                     } else
                     {
                         listNewData = new ArrayList<contractTab>();
@@ -89,7 +89,7 @@ public class CZ_AreaBatchTimeBreakOff extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(CZ_AreaBatchTimeBreakOff.this, "error_connectDataBase");
+                    AppContext.makeToast(CZ_ContractBatchTimeSale.this, "error_connectDataBase");
                     return;
                 }
 
@@ -98,7 +98,7 @@ public class CZ_AreaBatchTimeBreakOff extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(CZ_AreaBatchTimeBreakOff.this, "error_connectServer");
+                AppContext.makeToast(CZ_ContractBatchTimeSale.this, "error_connectServer");
             }
         });
     }

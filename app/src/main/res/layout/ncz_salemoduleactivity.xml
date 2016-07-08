@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/line"
-            android:layout_marginBottom="80dip"
+            android:layout_marginBottom="60dip"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:layout_marginTop="5dip"
@@ -230,6 +230,17 @@
                 android:textSize="@dimen/size_sp_14"/>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ll_menu"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:visibility="gone"
+            android:text="注：向左滑动可以加载更多数据"
+            android:textColor="@color/gray"
+            android:textSize="13sp"/>
 
     </RelativeLayout>
 

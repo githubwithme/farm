@@ -12,7 +12,9 @@ import android.widget.ExpandableListView;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -26,6 +28,7 @@ import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomHorizontalScrollView_CZBreakOff;
+import com.farm.widget.MyDialog;
 import com.guide.DensityUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -39,7 +42,9 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +55,8 @@ import java.util.Map;
 @EActivity(R.layout.cz_breakoffactivity)
 public class CZ_BreakOffActivity extends Activity
 {
+    commembertab commembertab;
+    MyDialog myDialog;
     Adapter_CZBreakOff adapter_czBreakOff;
     @ViewById
     ExpandableListView expandableListView_areasaledata;
@@ -76,14 +83,52 @@ public class CZ_BreakOffActivity extends Activity
     TextView tv_top_right;
     @ViewById
     TextView tv_bottom_left;
+    @ViewById
+    TextView tv_title;
+    @ViewById
+    LinearLayout cz_startdl;
+    @ViewById
+    TextView startdl;
+    @ViewById
+    TextView tv_timelimit;
+    @ViewById
+    RelativeLayout rl_view;
+
+    @Click
+    void startdl()
+    {
+        View dialog_layout = (LinearLayout) CZ_BreakOffActivity.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(CZ_BreakOffActivity.this, R.style.MyDialog, dialog_layout, "断蕾", "是否选择" + tv_timelimit.getText().toString() + "这个时间为开始断蕾时间？", "确认", "取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        getcreateBatchTime();
+                        myDialog.dismiss();
+                        break;
+                    case R.id.btn_cancle:
+
+                        myDialog.dismiss();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
 
     @AfterViews
     void afterOncreate()
     {
         getActionBar().hide();
-        getBatchTimeBreakoffData();
-        getAreaBreakoffData();
-//        getNewSaleList_test();
+        commembertab = AppContext.getUserInfo(CZ_BreakOffActivity.this);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String str = formatter.format(curDate);
+        tv_timelimit.setText(str);
+        getIsStartBreakOff();
     }
 
     @Click
@@ -141,6 +186,104 @@ public class CZ_BreakOffActivity extends Activity
         }
 
     }
+
+    public void getIsStartBreakOff()
+    {
+        commembertab = AppContext.getUserInfo(CZ_BreakOffActivity.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "IsStartBreakOff");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<BatchTime> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() > 0)
+                    {
+                        rl_view.setVisibility(View.GONE);
+                        cz_startdl.setVisibility(View.GONE);
+                        getBatchTimeBreakoffData();
+                        getAreaBreakoffData();
+                    } else
+                    {
+                        rl_view.setVisibility(View.GONE);
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(CZ_BreakOffActivity.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(CZ_BreakOffActivity.this, "error_connectServer");
+            }
+        });
+    }
+
+    public void getcreateBatchTime()
+    {
+
+  /*     SimpleDateFormat formatter = new SimpleDateFormat ("yyyy");
+       Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+       String str = formatter.format(curDate);*/
+        commembertab commembertab = AppContext.getUserInfo(CZ_BreakOffActivity.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("startday", tv_timelimit.getText().toString());
+        params.addQueryStringParameter("action", "createBatchTime");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<BatchTime> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() > 0)
+                    {
+                        cz_startdl.setVisibility(View.GONE);
+                        getBatchTimeBreakoffData();
+                        getAreaBreakoffData();
+
+                    } else
+                    {
+                        listNewData = new ArrayList<BatchTime>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(CZ_BreakOffActivity.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(CZ_BreakOffActivity.this, "error_connectServer");
+            }
+        });
+    }
+
     private void getAreaBreakoffData()
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_BreakOffActivity.this);
@@ -209,7 +352,7 @@ public class CZ_BreakOffActivity extends Activity
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() !=0)
+                    if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                         DensityUtil densityUtil = new DensityUtil(CZ_BreakOffActivity.this);
@@ -395,6 +538,7 @@ public class CZ_BreakOffActivity extends Activity
                 listItemView.btn_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
                 listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
                 listItemView.btn_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getareaName());
+                listItemView.btn_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllnumber());
                 listItemView.btn_data.setOnClickListener(clickListener);
 
             }
@@ -421,13 +565,20 @@ public class CZ_BreakOffActivity extends Activity
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
             String batchTimes = (String) v.getTag(R.id.tag_batchtime);
+            String number = (String) v.getTag(R.id.tag_number);
             String areaid = (String) v.getTag(R.id.tag_areaid);
             String areaname = (String) v.getTag(R.id.tag_areaname);
-            Intent intent = new Intent(CZ_BreakOffActivity.this, CZ_AreaBatchTimeBreakOff_.class);
-            intent.putExtra("areaid", areaid);
-            intent.putExtra("areaname", areaname);
-            intent.putExtra("batchTime", batchTimes);
-            CZ_BreakOffActivity.this.startActivity(intent);
+            if (number.equals("0"))
+            {
+                Toast.makeText(CZ_BreakOffActivity.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
+            } else
+            {
+                Intent intent = new Intent(CZ_BreakOffActivity.this, CZ_AreaBatchTimeBreakOff_.class);
+                intent.putExtra("areaid", areaid);
+                intent.putExtra("areaname", areaname);
+                intent.putExtra("batchTime", batchTimes);
+                CZ_BreakOffActivity.this.startActivity(intent);
+            }
         }
     };
 }
