@@ -24,7 +24,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.Adapter_PGGcd;
-import com.farm.adapter.PG_PlantGcdListAdapter;
+import com.farm.adapter.NCZ_PlantGcdListAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Dictionary;
@@ -64,7 +64,8 @@ public class PG_GddList extends Activity
     TimeThread timethread;
     //    SelectorFragment selectorUi;
     Fragment mContent = new Fragment();
-    private PG_PlantGcdListAdapter listAdapter;
+//    private PG_PlantGcdListAdapter listAdapter;
+    private NCZ_PlantGcdListAdapter listAdapter;
     private int listSumData;
     private List<PlantGcd> listData = new ArrayList<PlantGcd>();
     private AppContext appContext;
@@ -377,7 +378,8 @@ public class PG_GddList extends Activity
 
     private void initAnimalListView()
     {
-        listAdapter = new PG_PlantGcdListAdapter(PG_GddList.this, listData);
+//        listAdapter = new PG_PlantGcdListAdapter(PG_GddList.this, listData);
+        listAdapter = new NCZ_PlantGcdListAdapter(PG_GddList.this, listData);
         list_footer = PG_GddList.this.getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);

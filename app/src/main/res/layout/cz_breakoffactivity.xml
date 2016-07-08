@@ -12,8 +12,9 @@
 
         <ImageButton
             android:id="@+id/btn_back"
-            android:layout_width="30dip"
-            android:layout_height="@dimen/titlebar_height"
+            android:layout_width="15dip"
+            android:layout_height="15dip"
+            android:layout_centerVertical="true"
             android:background="@null"
             android:contentDescription=""
             android:src="@drawable/ic_back"/>
@@ -21,13 +22,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="30dip"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
             android:text="断蕾"
             android:textColor="@color/white"
-            android:textSize="@dimen/size_sp_18"/>
+            android:textSize="@dimen/size_sp_16"/>
 
 
     </RelativeLayout>
@@ -60,16 +61,82 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dip"
-                    android:gravity="left|center_vertical"
-                    android:text="各批次断蕾情况"
-                    android:textColor="@color/bg_text"
-                    android:textSize="18sp"/>
+                    android:layout_height="45dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="left|center_vertical"
+                        android:text="各区域断蕾情况"
+                        android:textColor="@color/bg_text"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dip"
+                        android:gravity="left|center_vertical"
+                        android:text="单位：株"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp"/>
+                </RelativeLayout>
+
+
+                <com.farm.widget.CustomExpandableListView
+                    android:id="@+id/expandableListView_areasaledata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="5dip"
+                    android:childDivider="@color/transparent"
+                    android:divider="@color/transparent"
+                    android:dividerHeight="0dip"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:groupIndicator="@null"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="left|center_vertical"
+                        android:text="各批次断蕾情况"
+                        android:textColor="@color/bg_text"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dip"
+                        android:gravity="left|center_vertical"
+                        android:text="单位：株"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp"/>
+                </RelativeLayout>
+
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
@@ -77,6 +144,7 @@
                     android:layout_below="@+id/rl_note"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dip"
+                    android:layout_marginBottom="10dip"
                     android:background="@drawable/round_white"
                     android:orientation="vertical">
 
@@ -238,35 +306,6 @@
                 </RelativeLayout>
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dip"
-                    android:gravity="left|center_vertical"
-                    android:text="各区域断蕾情况"
-                    android:textColor="@color/bg_text"
-                    android:textSize="18sp"/>
-
-                <com.farm.widget.CustomExpandableListView
-                    android:id="@+id/expandableListView_areasaledata"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dip"
-                    android:childDivider="@color/transparent"
-                    android:divider="@color/transparent"
-                    android:dividerHeight="0dip"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:groupIndicator="@null"/>
-            </LinearLayout>
-
 
         </LinearLayout>
     </ScrollView>

@@ -34,7 +34,18 @@ public class BatchTime implements Parcelable // 与数据库不一致
     public String allsalein;
     public String allsalefor;
     public String allnewsale;
+    public String allnumber;
     public String flashStr;  //c
+
+    public String getAllnumber()
+    {
+        return allnumber;
+    }
+
+    public void setAllnumber(String allnumber)
+    {
+        this.allnumber = allnumber;
+    }
 
     public List<areatab> getAreatabList()
     {
@@ -221,6 +232,7 @@ public class BatchTime implements Parcelable // 与数据库不一致
             p.setAllsalein(source.readString());
             p.setAllsalefor(source.readString());
             p.setAllnewsale(source.readString());
+            p.setAllnumber(source.readString());
             p.setFlashStr(source.readString());
             return p;
         }
@@ -250,6 +262,7 @@ public class BatchTime implements Parcelable // 与数据库不一致
         p.writeString(allsalein);
         p.writeString(allsalefor);
         p.writeString(allnewsale);
+        p.writeString(allnumber);
         p.writeString(flashStr);
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -21,6 +22,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.media.HomeFragmentActivity;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -30,6 +32,8 @@ public class AddPlant extends Activity
 {
     @ViewById
     Button btn_upload;
+    @ViewById
+    TextView tv_gcdname;
     @ViewById
     EditText et_plantName;
     @ViewById
@@ -44,6 +48,7 @@ public class AddPlant extends Activity
     {
         finish();
     }
+
     @Click
     void imgbtn_addpicture()
     {
@@ -57,6 +62,12 @@ public class AddPlant extends Activity
     void btn_upload()
     {
         AddData();
+    }
+
+    @AfterViews
+    void AfterOncreate()
+    {
+        tv_gcdname.setText("当前观察点：" + gcdName);
     }
 
     @Override

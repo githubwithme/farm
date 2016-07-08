@@ -154,8 +154,8 @@ public class CZ_FarmManagerFragment extends Fragment
     @Click
     void ll_dl()
     {
-        Intent intent = new Intent(getActivity(), CZ_DLFragment_.class);
-//        Intent intent = new Intent(getActivity(), CZ_BreakOffActivity_.class);
+//        Intent intent = new Intent(getActivity(), CZ_DLFragment_.class);
+        Intent intent = new Intent(getActivity(), CZ_BreakOffActivity_.class);
         getActivity().startActivity(intent);
     }
 
@@ -183,6 +183,11 @@ public class CZ_FarmManagerFragment extends Fragment
     }
 
     @Click
+    void ll_jobself()
+    {
+        Intent intent = new Intent(getActivity(), CZ_JobFragment_.class);
+        getActivity().startActivity(intent);
+    }    @Click
     void ll_sk()
     {
         Intent intent = new Intent(getActivity(), NCZ_FarmMapActivity_.class);

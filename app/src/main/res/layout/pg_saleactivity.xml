@@ -43,23 +43,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/line"
-        android:background="@color/white"
+        android:layout_marginBottom="80dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
         android:layout_marginTop="10dip"
         android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/rl_note"
             android:layout_width="match_parent"
-            android:layout_height="30dip">
+            android:layout_height="45dip"
+            android:background="@color/white">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="30dip"
-                android:layout_centerInParent="true"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:gravity="center"
                 android:text="片区各批次产品库存量"
                 android:textColor="@color/bg_text"
-                android:textSize="15sp"/>
+                android:textSize="16sp"/>
+
 
         </RelativeLayout>
 
@@ -69,10 +73,7 @@
             android:layout_height="fill_parent"
             android:layout_below="@+id/rl_note"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="60dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
-            android:layout_marginTop="2dip"
+            android:layout_marginTop="5dip"
             android:background="@drawable/round_white"
             android:orientation="vertical">
 
@@ -287,10 +288,22 @@
             android:layout_weight="1"
             android:background="@null"
             android:gravity="center"
-            android:visibility="gone"
             android:text="客户合同"
             android:textColor="@color/white"
-            android:textSize="@dimen/size_sp_14"/>
+            android:textSize="@dimen/size_sp_14"
+            android:visibility="gone"/>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/ll_menu"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:gravity="center"
+        android:text="注：向左滑动表格加载更多数据    单位：株"
+        android:textColor="@color/gray"
+        android:textSize="13sp"/>
 </RelativeLayout>

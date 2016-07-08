@@ -34,7 +34,84 @@ public class PlantGcd implements Parcelable
     public String growthCount;
     public String growthvidioCount;
     public String plants;
+    public String average_hnum;//观测点下最新一次观测记录，hnum平均值
+    public String average_wnum;
+    public String average_ynum;
+    public String average_xnum;
+    public String cdate;//观测点下最新一次观测记录，cdate=1的个数
+    public String zdate;//观测点下最新一次观测记录，zdate=1的个数
+    public String planttype;//观测点下最新一次观测记录，planttype=1的个数
 
+
+    public String getAverage_hnum()
+    {
+        return average_hnum;
+    }
+
+    public void setAverage_hnum(String average_hnum)
+    {
+        this.average_hnum = average_hnum;
+    }
+
+    public String getAverage_wnum()
+    {
+        return average_wnum;
+    }
+
+    public void setAverage_wnum(String average_wnum)
+    {
+        this.average_wnum = average_wnum;
+    }
+
+    public String getAverage_ynum()
+    {
+        return average_ynum;
+    }
+
+    public void setAverage_ynum(String average_ynum)
+    {
+        this.average_ynum = average_ynum;
+    }
+
+    public String getAverage_xnum()
+    {
+        return average_xnum;
+    }
+
+    public void setAverage_xnum(String average_xnum)
+    {
+        this.average_xnum = average_xnum;
+    }
+
+    public String getCdate()
+    {
+        return cdate;
+    }
+
+    public void setCdate(String cdate)
+    {
+        this.cdate = cdate;
+    }
+
+    public String getZdate()
+    {
+        return zdate;
+    }
+
+    public void setZdate(String zdate)
+    {
+        this.zdate = zdate;
+    }
+
+    public String getPlanttype()
+    {
+        return planttype;
+    }
+
+    public void setPlanttype(String planttype)
+    {
+        this.planttype = planttype;
+    }
 
     public String getPlants()
     {
@@ -219,6 +296,13 @@ public class PlantGcd implements Parcelable
             p.setGrowthCount(source.readString());
             p.setGrowthvidioCount(source.readString());
             p.setPlants(source.readString());
+            p.setAverage_hnum(source.readString());
+            p.setAverage_wnum(source.readString());
+            p.setAverage_ynum(source.readString());
+            p.setAverage_xnum(source.readString());
+            p.setCdate(source.readString());
+            p.setZdate(source.readString());
+            p.setPlanttype(source.readString());
             return p;
         }
 
@@ -247,6 +331,13 @@ public class PlantGcd implements Parcelable
         p.writeString(growthCount);
         p.writeString(growthvidioCount);
         p.writeString(plants);
+        p.writeString(average_hnum);
+        p.writeString(average_wnum);
+        p.writeString(average_ynum);
+        p.writeString(average_xnum);
+        p.writeString(cdate);
+        p.writeString(zdate);
+        p.writeString(planttype);
     }
 
     @Override

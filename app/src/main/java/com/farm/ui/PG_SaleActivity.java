@@ -12,7 +12,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -369,7 +368,6 @@ public class PG_SaleActivity extends Activity
 //            intent.putExtra("batchTime", batchTimes);
 //            PG_SaleActivity.this.startActivity(intent);
 
-            Toast.makeText(PG_SaleActivity.this, parkid + "/" + batchTimes, Toast.LENGTH_SHORT).show();
         }
     };
 }

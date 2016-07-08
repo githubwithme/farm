@@ -55,7 +55,7 @@ public class CZ_MainActivity_New extends Activity
     MyDialog myDialog;
     Fragment mContent = new Fragment();
     CZ_DynamicFragment cz_dynamicFragment;//动态fragment
-    CZ_JobFragment cz_jobFragment;//工作fragment
+//    CZ_JobFragment cz_jobFragment;//工作fragment
     CZ_FarmManagerFragment cz_farmManagerFragment;//农场工作fragment
     IFragment iFragment;//个人信息fragment
     @ViewById
@@ -120,22 +120,22 @@ public class CZ_MainActivity_New extends Activity
         switchContent(mContent, cz_dynamicFragment);
     }
 
-    @Click
-    void tl_farmlive()
-    {
-        tv_farmlive.setTextColor(getResources().getColor(R.color.blue));
-        tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
-
-        tl_farmlive.setSelected(true);
-        tl_home.setSelected(false);
-        tl_me.setSelected(false);
-        tl_product.setSelected(false);
-        tl_sale.setSelected(false);
-        switchContent(mContent, cz_jobFragment);
-    }
+//    @Click
+//    void tl_farmlive()
+//    {
+//        tv_farmlive.setTextColor(getResources().getColor(R.color.blue));
+//        tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//
+//        tl_farmlive.setSelected(true);
+//        tl_home.setSelected(false);
+//        tl_me.setSelected(false);
+//        tl_product.setSelected(false);
+//        tl_sale.setSelected(false);
+//        switchContent(mContent, cz_jobFragment);
+//    }
 
     @Click
     void tl_product()
@@ -211,7 +211,7 @@ public class CZ_MainActivity_New extends Activity
 
         AppManager.getAppManager().addActivity(CZ_MainActivity_New.this);
         cz_dynamicFragment = new CZ_DynamicFragment_();
-        cz_jobFragment = new CZ_JobFragment_();
+//        cz_jobFragment = new CZ_JobFragment_();
         cz_farmManagerFragment = new CZ_FarmManagerFragment_();
         ncz_contactsFragment = new NCZ_ContactsFragment_New_();
         iFragment = new IFragment_();

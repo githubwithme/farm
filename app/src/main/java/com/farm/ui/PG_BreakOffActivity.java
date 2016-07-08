@@ -321,7 +321,7 @@ public class PG_BreakOffActivity extends Activity
                 listItemView.btn_data.requestFocusFromTouch();
                 listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
                 listItemView.btn_data.setTag(R.id.tag_batchcolor, listData.get(position).getBatchColor());
-                listItemView.btn_data.setTag(R.id.tag_number,listData.get(position).getContractTabList().get(i).getAllnumber());
+                listItemView.btn_data.setTag(R.id.tag_number, listData.get(position).getContractTabList().get(i).getAllnumber());
                 listItemView.btn_data.setTag(R.id.tag_breakoff, listData.get(position).getContractTabList().get(i));
                 listItemView.btn_data.setOnClickListener(clickListener);
 
@@ -351,12 +351,12 @@ public class PG_BreakOffActivity extends Activity
             String batchTimes = (String) v.getTag(R.id.tag_batchtime);
             String batchcolor = (String) v.getTag(R.id.tag_batchcolor);
             String oldNumber = (String) v.getTag(R.id.tag_number);
-            BreakOff_New breakOff_new= (BreakOff_New) v.getTag(R.id.tag_breakoff);
-            showDialog_editBreakoffinfo(breakOff_new,batchTimes,batchcolor,oldNumber);
+            BreakOff_New breakOff_new = (BreakOff_New) v.getTag(R.id.tag_breakoff);
+            showDialog_editBreakoffinfo(breakOff_new, batchTimes, batchcolor, oldNumber);
         }
     };
 
-    public void showDialog_editBreakoffinfo(final BreakOff_New breakOff_new, final String batchtime,  final String batchcolor, final String oldNumber)
+    public void showDialog_editBreakoffinfo(final BreakOff_New breakOff_new, final String batchtime, final String batchcolor, final String oldNumber)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(PG_BreakOffActivity.this).inflate(R.layout.customdialog_editcontractsale, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(PG_BreakOffActivity.this, R.style.MyDialog, dialog_layout);
@@ -374,7 +374,7 @@ public class PG_BreakOffActivity extends Activity
                     Toast.makeText(PG_BreakOffActivity.this, "请先填写数量", Toast.LENGTH_SHORT).show();
                 } else if (oldNumber.equals("0"))//第一次添加
                 {
-                    addNewData(breakOff_new,et_number.getText().toString(),batchcolor,batchtime);
+                    addNewData(breakOff_new, et_number.getText().toString(), batchcolor, batchtime);
                 } else//修改数据
                 {
                     updateBreakOff(breakOff_new.getUuid(), oldNumber, et_number.getText().toString());
@@ -408,7 +408,7 @@ public class PG_BreakOffActivity extends Activity
         breakoff.setBatchColor(batchcolor);
         breakoff.setBatchTime(batchtime);
         breakoff.setBreakofftime(utils.getTime());
-        breakoff.setcontractid(breakOff_new.getid());
+        breakoff.setcontractid(breakOff_new.getcontractid());
         breakoff.setcontractname(breakOff_new.getcontractname());
         breakoff.setLat("");
         breakoff.setLatlngsize("");
@@ -433,7 +433,7 @@ public class PG_BreakOffActivity extends Activity
         sellorderdetail.setactualweight("");
         sellorderdetail.setareaid(breakOff_new.getareaid());
         sellorderdetail.setareaname(breakOff_new.getareaname());
-        sellorderdetail.setcontractid(breakOff_new.getid());
+        sellorderdetail.setcontractid(breakOff_new.getcontractid());
         sellorderdetail.setcontractname(breakOff_new.getcontractname());
         sellorderdetail.setBatchTime(batchtime);
         sellorderdetail.setisSoldOut("");
@@ -464,6 +464,7 @@ public class PG_BreakOffActivity extends Activity
         builder.append("} ");
         saveBreakOffList(builder.toString());
     }
+
     private void saveBreakOffList(String data)
     {
         RequestParams params = new RequestParams();

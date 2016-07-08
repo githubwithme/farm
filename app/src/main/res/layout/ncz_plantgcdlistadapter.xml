@@ -45,7 +45,7 @@
                 android:gravity="center"
                 android:text="正常"
                 android:textColor="@color/red"
-                android:textSize="16sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/tv_statustip"
@@ -54,9 +54,9 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/tv_status"
                 android:gravity="center"
-                android:text="状态："
+                android:text="最新状态："
                 android:textColor="@color/bg_text"
-                android:textSize="16sp"/>
+                android:textSize="14sp"/>
 
             <FrameLayout
                 android:id="@+id/fl_new_item"
@@ -114,6 +114,7 @@
                     android:textSize="13sp"/>
 
                 <TextView
+                    android:id="@+id/tv_average_zg"
                     android:layout_width="50dip"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
@@ -130,6 +131,7 @@
                     android:textSize="13sp"/>
 
                 <TextView
+                    android:id="@+id/tv_average_wj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
@@ -152,6 +154,7 @@
                     android:textSize="13sp"/>
 
                 <TextView
+                    android:id="@+id/tv_average_ys"
                     android:layout_width="50dip"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
@@ -169,6 +172,7 @@
                     android:textSize="13sp"/>
 
                 <TextView
+                    android:id="@+id/tv_average_lys"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"

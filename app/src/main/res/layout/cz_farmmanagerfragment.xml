@@ -64,7 +64,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
+                android:layout_marginTop="5dip"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -88,6 +88,36 @@
                     android:layout_height="90dip"
                     android:background="@color/white"
                     android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_jobself"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dip"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/logo1"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dip"
+                            android:gravity="center"
+                            android:text="自身工作"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="2px"
+                        android:layout_height="match_parent"
+                        android:background="@color/light_gray"/>
+
 
                     <LinearLayout
                         android:id="@+id/ll_zl"
@@ -140,7 +170,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="片区指令"
+                            android:text="员工指令"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
@@ -204,71 +234,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="片区工作"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="2px"
-                        android:layout_height="match_parent"
-                        android:background="@color/light_gray"/>
-
-
-                    <LinearLayout
-                        android:id="@+id/ll_mq"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dip"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <RelativeLayout
-                            android:layout_width="40dip"
-                            android:layout_height="40dip"
-                            android:layout_gravity="center_horizontal">
-
-
-                            <ImageView
-                                android:layout_width="40dip"
-                                android:layout_height="40dip"
-                                android:layout_gravity="center_horizontal"
-                                android:background="@drawable/newicon_plant"/>
-
-                            <FrameLayout
-                                android:id="@+id/fl_plantnumber_new"
-                                android:layout_width="20dip"
-                                android:layout_height="20dip"
-                                android:layout_alignParentRight="true"
-                                android:visibility="gone">
-
-                                <com.farm.widget.CircleImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:src="@color/red"
-                                    app:border_color="@color/red"
-                                    app:border_width="0dp"/>
-
-                                <TextView
-                                    android:id="@+id/tv_plantnumber_new"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:text=""
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/size_10"/>
-                            </FrameLayout>
-
-                        </RelativeLayout>
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="片区苗情"
+                            android:text="员工工作"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
                     </LinearLayout>
@@ -288,29 +254,65 @@
                 android:background="@color/white"
                 android:orientation="horizontal">
 
+
                 <LinearLayout
-                    android:id="@+id/ll_sj"
+                    android:id="@+id/ll_mq"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dip"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <RelativeLayout
                         android:layout_width="40dip"
                         android:layout_height="40dip"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/newicon_event"/>
+                        android:layout_gravity="center_horizontal">
+
+
+                        <ImageView
+                            android:layout_width="40dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/newicon_plant"/>
+
+                        <FrameLayout
+                            android:id="@+id/fl_plantnumber_new"
+                            android:layout_width="20dip"
+                            android:layout_height="20dip"
+                            android:layout_alignParentRight="true"
+                            android:visibility="gone">
+
+                            <com.farm.widget.CircleImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:src="@color/red"
+                                app:border_color="@color/red"
+                                app:border_width="0dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_plantnumber_new"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_10"/>
+                        </FrameLayout>
+
+                    </RelativeLayout>
+
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dip"
                         android:gravity="center"
-                        android:text="事件"
+                        android:text="苗情"
                         android:textColor="@color/bg_text"
                         android:textSize="@dimen/size_14"/>
                 </LinearLayout>
+
 
                 <View
                     android:layout_width="2px"
@@ -347,14 +349,34 @@
                     android:background="@color/light_gray"/>
 
                 <LinearLayout
+                    android:id="@+id/ll_sj"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dip"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="40dip"
+                        android:layout_height="40dip"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/newicon_event"/>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dip"
+                        android:gravity="center"
+                        android:text="事件"
+                        android:textColor="@color/bg_text"
+                        android:textSize="@dimen/size_14"/>
                 </LinearLayout>
+
+
+                <View
+                    android:layout_width="2px"
+                    android:layout_height="match_parent"
+                    android:background="@color/light_gray"/>
 
 
                 <LinearLayout

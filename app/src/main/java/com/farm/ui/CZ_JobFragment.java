@@ -1,6 +1,6 @@
 package com.farm.ui;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -8,7 +8,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -41,15 +40,15 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@EFragment
-public class CZ_JobFragment extends Fragment implements View.OnClickListener
+@EActivity(R.layout.cz_jobfragment)
+public class CZ_JobFragment extends Activity implements View.OnClickListener
 {
     boolean ishidding = false;
     PopupWindow pw_command;
@@ -90,7 +89,7 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
 
         if (commembertab.getnlevel().equals("1"))
         {
-            Intent intent = new Intent(getActivity(), AddNotProductCommand_CZ_.class);
+            Intent intent = new Intent(CZ_JobFragment.this, AddNotProductCommand_CZ_.class);
             intent.putExtra("level", "0");
             startActivity(intent);
         } else
@@ -103,7 +102,7 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
     @Click
     void iv_more()
     {
-        Intent intent = new Intent(getActivity(), Common_MoreJob_.class);
+        Intent intent = new Intent(CZ_JobFragment.this, Common_MoreJob_.class);
         intent.putExtra("workuserid", workuserid);
         startActivity(intent);
     }
@@ -112,7 +111,7 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
     void btn_cmd()
     {
 
-        Intent intent = new Intent(getActivity(), SelectorCommand_.class);
+        Intent intent = new Intent(CZ_JobFragment.this, SelectorCommand_.class);
         intent.putParcelableArrayListExtra("jobtablist", (ArrayList<? extends Parcelable>) listData);
         startActivity(intent);
     }
@@ -120,26 +119,26 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
     @Click
     void tv_more()
     {
-        Intent intent = new Intent(getActivity(), Common_MoreJob_.class);
+        Intent intent = new Intent(CZ_JobFragment.this, Common_MoreJob_.class);
         intent.putExtra("workuserid", workuserid);
         startActivity(intent);
     }
 
-    public void setThreadStatus(boolean hidden)
-    {
-        ishidding = hidden;
-        super.onHiddenChanged(hidden);//true
-        if (hidden == true)
-        {
-            timethread.setSleep(true);
-        } else
-        {
-            timethread = new TimeThread();
-            timethread.setStop(false);
-            timethread.setSleep(false);
-            timethread.start();
-        }
-    }
+//    public void setThreadStatus(boolean hidden)
+//    {
+//        ishidding = hidden;
+//        super.onHiddenChanged(hidden);//true
+//        if (hidden == true)
+//        {
+//            timethread.setSleep(true);
+//        } else
+//        {
+//            timethread = new TimeThread();
+//            timethread.setStop(false);
+//            timethread.setSleep(false);
+//            timethread.start();
+//        }
+//    }
 //    @Override
 //    public void onHiddenChanged(boolean hidden)
 //    {
@@ -173,9 +172,8 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
     @AfterViews
     void afterOncreate()
     {
-
-        appContext = (AppContext) getActivity().getApplication();
-        commembertab = AppContext.getUserInfo(getActivity());
+        appContext = (AppContext) CZ_JobFragment.this.getApplication();
+        commembertab = AppContext.getUserInfo(CZ_JobFragment.this);
         workuserid = commembertab.getId();
         initAnimalListView();
         getCmdNum();
@@ -200,11 +198,12 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.cz_jobfragment, container, false);
-        return rootView;
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();
     }
+
 
     private void getCmdNum()
     {
@@ -238,7 +237,7 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
                     }
                 } else
                 {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    AppContext.makeToast(CZ_JobFragment.this, "error_connectDataBase");
                     if (!ishidding && timethread != null)
                     {
                         timethread.setSleep(false);
@@ -257,9 +256,9 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                if (getActivity() != null)
+                if (CZ_JobFragment.this != null)
                 {
-                    AppContext.makeToast(getActivity(), "error_connectServer");
+                    AppContext.makeToast(CZ_JobFragment.this, "error_connectServer");
                 }
                 if (!ishidding && timethread != null)
                 {
@@ -272,7 +271,7 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
 
     private void getListData(final int actiontype, final int objtype, final PullToRefreshListView lv, final BaseAdapter adapter, final TextView more, final ProgressBar progressBar, final int PAGESIZE, int PAGEINDEX)
     {
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        commembertab commembertab = AppContext.getUserInfo(CZ_JobFragment.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("workuserid", workuserid);
         params.addQueryStringParameter("userid", commembertab.getId());
@@ -308,7 +307,7 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
                     }
                 } else
                 {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    AppContext.makeToast(CZ_JobFragment.this, "error_connectDataBase");
                     return;
                 }
 
@@ -359,14 +358,14 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
                             // 提示新加载数据
                             if (newdata > 0)
                             {
-                                if (isAdded())
-                                {
-                                    NewDataToast.makeText(getActivity(), getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
-                                }
+//                                if (isAdded())
+//                                {
+                                NewDataToast.makeText(CZ_JobFragment.this, getString(R.string.new_data_toast_message, newdata), appContext.isAppSound(), R.raw.newdatatoast).show();
+//                                }
 
                             } else
                             {
-                                // NewDataToast.makeText(getActivity(),
+                                // NewDataToast.makeText(CZ_JobFragment.this,
                                 // getString(R.string.new_data_toast_none), false,
                                 // R.raw.newdatatoast).show();
                             }
@@ -422,7 +421,7 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
                     // 有异常--显示加载出错 & 弹出错误消息
                     lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
                     more.setText(R.string.load_error);
-                    AppContext.makeToast(getActivity(), "load_error");
+                    AppContext.makeToast(CZ_JobFragment.this, "load_error");
                 }
                 if (adapter.getCount() == 0)
                 {
@@ -433,11 +432,11 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
                 // main_head_progress.setVisibility(ProgressBar.GONE);
                 if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH)
                 {
-                    if (isAdded())
-                    {
-                        lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
-                        lv.setSelection(0);
-                    }
+//                    if (isAdded())
+//                    {
+                    lv.onRefreshComplete(getString(R.string.pull_to_refresh_update) + new Date().toLocaleString());
+                    lv.setSelection(0);
+//                    }
                 } else if (actiontype == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG)
                 {
                     lv.onRefreshComplete();
@@ -449,15 +448,15 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
+                AppContext.makeToast(CZ_JobFragment.this, "error_connectServer");
             }
         });
     }
 
     private void initAnimalListView()
     {
-        listAdapter = new Common_TodayJobAdapter(getActivity(), listData);
-        list_footer = getActivity().getLayoutInflater().inflate(R.layout.listview_footer, null);
+        listAdapter = new Common_TodayJobAdapter(CZ_JobFragment.this, listData);
+        list_footer = CZ_JobFragment.this.getLayoutInflater().inflate(R.layout.listview_footer, null);
         list_foot_more = (TextView) list_footer.findViewById(R.id.listview_foot_more);
         list_foot_progress = (ProgressBar) list_footer.findViewById(R.id.listview_foot_progress);
         frame_listview_news.addFooterView(list_footer);// 添加底部视图 必须在setAdapter前
@@ -483,7 +482,7 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
                 // return;
                 jobtab jobtab = listData.get(position - 1);
                 if (jobtab == null) return;
-                Intent intent = new Intent(getActivity(), Common_JobDetail_.class);
+                Intent intent = new Intent(CZ_JobFragment.this, Common_JobDetail_.class);
                 intent.putExtra("bean", jobtab);// 因为list中添加了头部,因此要去掉一个
                 startActivity(intent);
             }
@@ -556,26 +555,26 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
         switch (v.getId())
         {
             case R.id.btn_standardprocommand:
-                intent = new Intent(getActivity(), AddStd_Cmd_Self_.class);
+                intent = new Intent(CZ_JobFragment.this, AddStd_Cmd_Self_.class);
                 intent.putExtra("level", "0");
                 startActivity(intent);
                 pw_command.dismiss();
-                lp = getActivity().getWindow().getAttributes();
+                lp = CZ_JobFragment.this.getWindow().getAttributes();
                 lp.alpha = 1f;
-                getActivity().getWindow().setAttributes(lp);
+                CZ_JobFragment.this.getWindow().setAttributes(lp);
                 break;
             case R.id.btn_nonstandardprocommand:
-//                intent = new Intent(getActivity(), AddNotStd_Cmd_Self_.class);
-                intent = new Intent(getActivity(), AddNotStd_Cmd_Self_new_.class);
+//                intent = new Intent(CZ_JobFragment.this, AddNotStd_Cmd_Self_.class);
+                intent = new Intent(CZ_JobFragment.this, AddNotStd_Cmd_Self_new_.class);
                 intent.putExtra("level", "0");
                 startActivity(intent);
                 pw_command.dismiss();
-                lp = getActivity().getWindow().getAttributes();
+                lp = CZ_JobFragment.this.getWindow().getAttributes();
                 lp.alpha = 1f;
-                getActivity().getWindow().setAttributes(lp);
+                CZ_JobFragment.this.getWindow().setAttributes(lp);
                 break;
             case R.id.btn_nonprocommand:
-                intent = new Intent(getActivity(), AddNotProductCommand_CZ_.class);
+                intent = new Intent(CZ_JobFragment.this, AddNotProductCommand_CZ_.class);
                 if (commembertab.getnlevel().equals("1"))//园区
                 {
                     intent.putExtra("level", "0");
@@ -586,9 +585,9 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
 
                 startActivity(intent);
                 pw_command.dismiss();
-                lp = getActivity().getWindow().getAttributes();
+                lp = CZ_JobFragment.this.getWindow().getAttributes();
                 lp.alpha = 1f;
-                getActivity().getWindow().setAttributes(lp);
+                CZ_JobFragment.this.getWindow().setAttributes(lp);
                 break;
 
             default:
@@ -637,7 +636,7 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
 
     public void showPop_addcommand()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) CZ_JobFragment.this.getSystemService(CZ_JobFragment.this.LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {
@@ -647,9 +646,9 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
                 if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
                 {
                     pw_command.dismiss();
-                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                    WindowManager.LayoutParams lp = CZ_JobFragment.this.getWindow().getAttributes();
                     lp.alpha = 1f;
-                    getActivity().getWindow().setAttributes(lp);
+                    CZ_JobFragment.this.getWindow().setAttributes(lp);
                     return true;
                 }
                 return false;
@@ -663,9 +662,9 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
                 if (pw_command.isShowing())
                 {
                     pw_command.dismiss();
-                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                    WindowManager.LayoutParams lp = CZ_JobFragment.this.getWindow().getAttributes();
                     lp.alpha = 1f;
-                    getActivity().getWindow().setAttributes(lp);
+                    CZ_JobFragment.this.getWindow().setAttributes(lp);
                 }
                 return false;
             }
@@ -673,21 +672,18 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
         pw_command = new PopupWindow(pv_command, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
         pw_command.showAsDropDown(line, 0, 0);
         pw_command.setOutsideTouchable(true);
-        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        WindowManager.LayoutParams lp = CZ_JobFragment.this.getWindow().getAttributes();
         lp.alpha = 0.7f;
-        getActivity().getWindow().setAttributes(lp);
+        CZ_JobFragment.this.getWindow().setAttributes(lp);
         pv_command.findViewById(R.id.btn_standardprocommand).setOnClickListener(this);
         pv_command.findViewById(R.id.btn_nonstandardprocommand).setOnClickListener(this);
         pv_command.findViewById(R.id.btn_nonprocommand).setOnClickListener(this);
     }
 
     @Override
-    public void onDestroyView()
+    protected void onDestroy()
     {
-        super.onDestroyView();
- /*       timethread.setStop(true);
-        timethread.interrupt();
-        timethread = null;*/
+        super.onDestroy();
         if (timethread != null && timethread.isAlive())
         {
             timethread.setStop(true);
@@ -695,4 +691,6 @@ public class CZ_JobFragment extends Fragment implements View.OnClickListener
             timethread = null;
         }
     }
+
+
 }
