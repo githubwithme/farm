@@ -8,8 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="10dip"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -27,7 +25,20 @@
             android:text="植株"
             android:textColor="@color/bg_text"
             android:textSize="14sp"/>
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/gray"/>
 
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="1000"
+            android:textColor="@color/bg_text"
+            android:textSize="14sp"/>
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"

@@ -1,52 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-    >
+              android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
-        android:background="@color/white"
-        >
+        android:background="@color/color_topbar">
 
         <ImageButton
-            android:id="@+id/imgbtn_back"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_back"
+            android:layout_width="30dip"
             android:layout_height="@dimen/titlebar_height"
-            android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
-            android:src="@drawable/back"/>
-
+            android:src="@drawable/ic_back"/>
 
         <TextView
-            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="15dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dip"
             android:gravity="center"
             android:text="图片详情"
-            android:textColor="@color/textcolor_titlebar"
-            android:textSize="@dimen/size_sp_16"/>
-
-
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_sp_18"/>
 
 
     </RelativeLayout>
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_below="@id/rl_titlebar"
         android:background="@color/line_color"/>
+
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/noimg"
-        android:id="@+id/imageView"
         android:scaleType="matrix"
-        />  <!-- 指定为matrix类型 -->
+        android:src="@drawable/noimg"
+        />
+    <!-- 指定为matrix类型 -->
 </LinearLayout>

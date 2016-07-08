@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/light_gray"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/light_gray"
+                android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
         android:background="@color/color_topbar">
@@ -30,21 +31,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="观测点"
+                android:text="苗情—观测点"
                 android:textColor="@color/white"
-                android:textSize="@dimen/titlebar_textsize"/>
+                android:textSize="16sp"/>
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btn_search"
-            android:layout_width="40dip"
-            android:layout_height="40dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:contentDescription=""
-            android:src="@drawable/search"
-            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -52,17 +43,15 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1px"
+        android:layout_below="@+id/rl_titlebar"
         android:background="@color/line_color"/>
 
-    <FrameLayout
-        android:id="@+id/top_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/line"
+        android:layout_marginBottom="45dip">
 
         <com.farm.widget.PullToRefreshListView
             android:id="@+id/frame_listview_news"
@@ -70,15 +59,58 @@
             android:divider="@color/line_color"
             android:dividerHeight="1px"/>
 
-        <ImageButton
-            android:id="@+id/btn_add"
-            android:layout_width="45dip"
-            android:layout_height="45dip"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="10dip"
-            android:layout_marginRight="10dip"
-            android:background="@drawable/speedy"/>
 
     </FrameLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:background="@color/red"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="添加观测点"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+        <TextView
+            android:id="@+id/tv_addplant"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="添加植株"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+        <TextView
+            android:id="@+id/tv_observate"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="我要观测"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+</RelativeLayout>

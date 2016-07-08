@@ -44,7 +44,18 @@ public class BreakOff_New implements Parcelable
 	public String batchColor  ;//批次颜色
 	public String xxzt;
 	public String Year;
+	public String allnumber;
 	public List<CoordinatesBean> coordinatesBeanList;
+
+	public String getAllnumber()
+	{
+		return allnumber;
+	}
+
+	public void setAllnumber(String allnumber)
+	{
+		this.allnumber = allnumber;
+	}
 
 	public void setCoordinatesBeanList(List<CoordinatesBean> coordinatesBeanList)
 	{
@@ -311,6 +322,7 @@ public class BreakOff_New implements Parcelable
 			p.setBatchColor(source.readString());
 			p.setXxzt(source.readString());
 			p.setYear(source.readString());
+			p.setAllnumber(source.readString());
 			p.coordinatesBeanList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
 			return p;
 		}
@@ -346,6 +358,7 @@ public class BreakOff_New implements Parcelable
 		p.writeString(batchColor);
 		p.writeString(xxzt);
 		p.writeString(Year);
+		p.writeString(allnumber);
 		p.writeList(coordinatesBeanList);
 	}
 	@Override

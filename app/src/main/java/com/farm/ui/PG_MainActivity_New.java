@@ -50,7 +50,7 @@ public class PG_MainActivity_New extends Activity
     MyDialog myDialog;
     Fragment mContent = new Fragment();
     PG_DynamicFragment pg_dynamicFragment;//动态fragment
-    PG_JobFragment pg_jobFragment;
+//    PG_JobFragment pg_jobFragment;
     PG_FarmManagerFragment pg_farmManagerFragment;//农场工作fragment
     IFragment iFragment;//个人信息fragment
     @ViewById
@@ -111,22 +111,22 @@ public class PG_MainActivity_New extends Activity
         switchContent(mContent, pg_dynamicFragment);
     }
 
-    @Click
-    void tl_farmlive()
-    {
-        tv_farmlive.setTextColor(getResources().getColor(R.color.blue));
-        tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
-
-        tl_farmlive.setSelected(true);
-        tl_home.setSelected(false);
-        tl_me.setSelected(false);
-        tl_product.setSelected(false);
-        tl_sale.setSelected(false);
-        switchContent(mContent, pg_jobFragment);
-    }
+//    @Click
+//    void tl_farmlive()
+//    {
+//        tv_farmlive.setTextColor(getResources().getColor(R.color.blue));
+//        tv_home.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_me.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_product.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//        tv_sale.setTextColor(getResources().getColor(R.color.menu_textcolor));
+//
+//        tl_farmlive.setSelected(true);
+//        tl_home.setSelected(false);
+//        tl_me.setSelected(false);
+//        tl_product.setSelected(false);
+//        tl_sale.setSelected(false);
+//        switchContent(mContent, pg_jobFragment);
+//    }
 
     @Click
     void tl_product()
@@ -202,7 +202,7 @@ public class PG_MainActivity_New extends Activity
 
         AppManager.getAppManager().addActivity(PG_MainActivity_New.this);
         pg_dynamicFragment = new PG_DynamicFragment_();
-        pg_jobFragment = new PG_JobFragment_();
+//        pg_jobFragment = new PG_JobFragment_();
         pg_farmManagerFragment = new PG_FarmManagerFragment_();
         ncz_contactsFragment = new NCZ_ContactsFragment_New_();
         iFragment = new IFragment_();

@@ -26,6 +26,7 @@ public class Adapter_PlantLastObserve extends BaseAdapter
         public TextView tv_zg;
         public TextView tv_wj;
         public TextView tv_ys;
+        public TextView tv_date;
         public TextView tv_lys;
     }
 
@@ -74,6 +75,7 @@ public class Adapter_PlantLastObserve extends BaseAdapter
             listItemView.tv_zg = (TextView) convertView.findViewById(R.id.tv_zg);
             listItemView.tv_wj = (TextView) convertView.findViewById(R.id.tv_wj);
             listItemView.tv_ys = (TextView) convertView.findViewById(R.id.tv_ys);
+            listItemView.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
             listItemView.tv_lys = (TextView) convertView.findViewById(R.id.tv_lys);
 
             // 设置控件集到convertView
@@ -87,6 +89,7 @@ public class Adapter_PlantLastObserve extends BaseAdapter
         // 设置文字和图片
 
         listItemView.tv_plantname.setText(plantgrowthtab.getplantName());
+        listItemView.tv_date.setText(plantgrowthtab.getcjDate().substring(0,plantgrowthtab.getcjDate().lastIndexOf(" ")));
         listItemView.tv_zg.setText(plantgrowthtab.gethNum());
         listItemView.tv_wj.setText(plantgrowthtab.getwNum());
         listItemView.tv_ys.setText(plantgrowthtab.getyNum());

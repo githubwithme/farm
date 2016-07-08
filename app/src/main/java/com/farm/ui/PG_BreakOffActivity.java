@@ -19,10 +19,11 @@ import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.BatchTime;
+import com.farm.bean.BreakOff_New;
+import com.farm.bean.ContractBatchTimeBean;
 import com.farm.bean.Result;
+import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.commembertab;
-import com.farm.bean.contractTab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
@@ -38,7 +39,9 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.apache.http.entity.StringEntity;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +54,7 @@ import java.util.Map;
 public class PG_BreakOffActivity extends Activity
 {
     EditText et_number;
-    List<BatchTime> listData = null;
+    List<ContractBatchTimeBean> listData = null;
     CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
     private ListView mListView;
     public HorizontalScrollView mTouchView;
@@ -91,12 +94,12 @@ public class PG_BreakOffActivity extends Activity
 
     private void getNewSaleList_test()
     {
-        listData = FileHelper.getAssetsData(PG_BreakOffActivity.this, "getsaledata", BatchTime.class);
+        listData = FileHelper.getAssetsData(PG_BreakOffActivity.this, "getsaledata", ContractBatchTimeBean.class);
         if (listData != null)
         {
             DensityUtil densityUtil = new DensityUtil(PG_BreakOffActivity.this);
             screenWidth = densityUtil.getScreenWidth();
-            int size = listData.get(0).getContracttabList().size();
+            int size = listData.get(0).getContractTabList().size();
             if (size == 1)
             {
                 screenWidth = screenWidth / 3;
@@ -136,10 +139,10 @@ public class PG_BreakOffActivity extends Activity
                     if (result.getAffectedRows() > 0)
                     {
                         rl_dl.setVisibility(View.GONE);
-                        listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
+                        listData = JSON.parseArray(result.getRows().toJSONString(), ContractBatchTimeBean.class);
                         DensityUtil densityUtil = new DensityUtil(PG_BreakOffActivity.this);
                         screenWidth = densityUtil.getScreenWidth();
-                        int size = listData.get(0).getContracttabList().size();
+                        int size = listData.get(0).getContractTabList().size();
                         if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
@@ -157,7 +160,7 @@ public class PG_BreakOffActivity extends Activity
                         initViews();
                     } else
                     {
-                        listData = new ArrayList<BatchTime>();
+                        listData = new ArrayList<ContractBatchTimeBean>();
                     }
 
                 } else
@@ -179,15 +182,15 @@ public class PG_BreakOffActivity extends Activity
     private void initViews()
     {
         LayoutInflater inflater = (LayoutInflater) PG_BreakOffActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        for (int i = 0; i < listData.get(0).getContracttabList().size(); i++)
+        for (int i = 0; i < listData.get(0).getContractTabList().size(); i++)
         {
             View view = inflater.inflate(R.layout.pg_breakoff_contractitem, null);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
-            tv_parkname.setText(listData.get(0).getContracttabList().get(i).getContractname());
+            tv_parkname.setText(listData.get(0).getContractTabList().get(i).getcontractname());
             ll_park.addView(view);
         }
-        for (int i = 0; i < listData.get(0).getContracttabList().size(); i++)
+        for (int i = 0; i < listData.get(0).getContractTabList().size(); i++)
         {
             View view = inflater.inflate(R.layout.pg_breakoff_totalitem, null);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
@@ -195,7 +198,7 @@ public class PG_BreakOffActivity extends Activity
             int totalnumber = 0;
             for (int j = 0; j < listData.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getContracttabList().get(i).getAllnumber());
+                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getContractTabList().get(i).getAllnumber());
             }
             tv_total.setText(String.valueOf(totalnumber));
             ll_total.addView(view);
@@ -300,25 +303,26 @@ public class PG_BreakOffActivity extends Activity
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
             listItemView.item_titlev.setText(listData.get(position).getBatchTime());
             int totalnumber = 0;
-            List<contractTab> list = listData.get(position).getContracttabList();
+            List<BreakOff_New> list = listData.get(position).getContractTabList();
             for (int j = 0; j < list.size(); j++)
             {
                 totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
             }
             listItemView.item_total.setText(String.valueOf(totalnumber));
 
-            for (int i = 0; i < listData.get(position).getContracttabList().size(); i++)
+            for (int i = 0; i < listData.get(position).getContractTabList().size(); i++)
             {
                 View view = LayoutInflater.from(PG_BreakOffActivity.this).inflate(R.layout.pg_breakoff_dataitem, null);
                 listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
-                listItemView.btn_data.setText(listData.get(position).getContracttabList().get(i).getAllnumber());
+                listItemView.btn_data.setText(listData.get(position).getContractTabList().get(i).getAllnumber());
                 listItemView.btn_data.getLayoutParams().width = (screenWidth);
                 ll_middle.addView(view);
 
                 listItemView.btn_data.requestFocusFromTouch();
-                listItemView.btn_data.setTag(R.id.tag_kg, listData.get(position).getContracttabList().get(i).getContractid());
-                listItemView.btn_data.setTag(R.id.tag_hg, listData.get(position).getBatchTime());
-                listItemView.btn_data.setTag(R.id.tag_parkname, listData.get(position).getContracttabList().get(i).getContractname());
+                listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                listItemView.btn_data.setTag(R.id.tag_batchcolor, listData.get(position).getBatchColor());
+                listItemView.btn_data.setTag(R.id.tag_number, listData.get(position).getContractTabList().get(i).getAllnumber());
+                listItemView.btn_data.setTag(R.id.tag_breakoff, listData.get(position).getContractTabList().get(i));
                 listItemView.btn_data.setOnClickListener(clickListener);
 
             }
@@ -344,18 +348,19 @@ public class PG_BreakOffActivity extends Activity
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            String batchTimes = (String) v.getTag(R.id.tag_hg);
-            String contractid = (String) v.getTag(R.id.tag_kg);
-            String contractname = (String) v.getTag(R.id.tag_parkname);
+            String batchTimes = (String) v.getTag(R.id.tag_batchtime);
+            String batchcolor = (String) v.getTag(R.id.tag_batchcolor);
+            String oldNumber = (String) v.getTag(R.id.tag_number);
+            BreakOff_New breakOff_new = (BreakOff_New) v.getTag(R.id.tag_breakoff);
+            showDialog_editBreakoffinfo(breakOff_new, batchTimes, batchcolor, oldNumber);
         }
     };
 
-    public void showDialog_editBreakoffinfo(final contractTab contractTab, final Button button, final String oldNumber)
+    public void showDialog_editBreakoffinfo(final BreakOff_New breakOff_new, final String batchtime, final String batchcolor, final String oldNumber)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(PG_BreakOffActivity.this).inflate(R.layout.customdialog_editcontractsale, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(PG_BreakOffActivity.this, R.style.MyDialog, dialog_layout);
         et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
-        et_number.setText(contractTab.getAllsalefor());
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
         btn_sure.setOnClickListener(new View.OnClickListener()
@@ -363,16 +368,16 @@ public class PG_BreakOffActivity extends Activity
             @Override
             public void onClick(View v)
             {
-
+                customDialog_editSaleInInfo.dismiss();
                 if (et_number.getText().toString().equals(""))
                 {
                     Toast.makeText(PG_BreakOffActivity.this, "请先填写数量", Toast.LENGTH_SHORT).show();
                 } else if (oldNumber.equals("0"))//第一次添加
                 {
-//                    addNewData();
+                    addNewData(breakOff_new, et_number.getText().toString(), batchcolor, batchtime);
                 } else//修改数据
                 {
-//                    updateData();
+                    updateBreakOff(breakOff_new.getUuid(), oldNumber, et_number.getText().toString());
                 }
 
             }
@@ -388,82 +393,167 @@ public class PG_BreakOffActivity extends Activity
         customDialog_editSaleInInfo.show();
     }
 
-//    public void updateData(contractTab contracttab, String number)
-//    {
-//        String difference = list_BreakOff_New.get(0).getnumberofbreakoff();
-//        updateBreakOff(list_BreakOff_New.get(0).getUuid(), difference, number);
-//        list_BreakOff_New.get(0).setnumberofbreakoff(number);
-//    }
-//
-//    public void addNewData(contractTab contracttab, String number)
-//    {
-//        String uuid = java.util.UUID.randomUUID().toString();
-//        BreakOff_New breakoff = new BreakOff_New();
-//        breakoff.setUuid(uuid);
-//        breakoff.setuid(contracttab.getuId());
-//        breakoff.setareaid(contracttab.getAreaId());
-//        breakoff.setYear(utils.getYear());
-//        breakoff.setparkid(contracttab.getparkId());
-//        breakoff.setparkname(contracttab.getparkName());
-//        breakoff.setareaname(contracttab.getareaName());
-//        breakoff.setBatchColor(batchcolor);
-//        breakoff.setBatchTime(batchtime);
-//        breakoff.setBreakofftime(utils.getTime());
-//        breakoff.setcontractid(contracttab.getid());
-//        breakoff.setcontractname(contracttab.getContractNum());
-//        breakoff.setLat("");
-//        breakoff.setLatlngsize("");
-//        breakoff.setLng("");
-//        breakoff.setnumberofbreakoff(number);
-//        breakoff.setregdate(utils.getTime());
-//        breakoff.setStatus("0");
-//        breakoff.setWeight("0");
-//        breakoff.setXxzt("0");
-//        list_BreakOff_New.add(breakoff);
-//
-//
-//        SellOrderDetail_New sellorderdetail = new SellOrderDetail_New();
-//        sellorderdetail.setYear(utils.getYear());
-//        sellorderdetail.setXxzt("0");
-//        sellorderdetail.setuid(contracttab.getuId());
-//        sellorderdetail.setactuallat("");
-//        sellorderdetail.setactuallatlngsize("");
-//        sellorderdetail.setactuallng("");
-//        sellorderdetail.setactualnote("");
-//        sellorderdetail.setactualnumber("");
-//        sellorderdetail.setactualprice("");
-//        sellorderdetail.setactualweight("");
-//        sellorderdetail.setareaid(contracttab.getAreaId());
-//        sellorderdetail.setareaname(contracttab.getareaName());
-//        sellorderdetail.setcontractid(contracttab.getid());
-//        sellorderdetail.setcontractname(contracttab.getContractNum());
-//        sellorderdetail.setBatchTime(batchtime);
-//        sellorderdetail.setisSoldOut("");
-//        sellorderdetail.setparkid(contracttab.getparkId());
-//        sellorderdetail.setparkname(contracttab.getparkName());
-//        sellorderdetail.setPlanlat("");
-//        sellorderdetail.setplanlatlngsize("");
-//        sellorderdetail.setplanlng("");
-//        sellorderdetail.setplannote("");
-//        sellorderdetail.setplanprice("");
-//        sellorderdetail.setplanweight("");
-//        sellorderdetail.setplannumber(number);
-//        sellorderdetail.setreg(utils.getTime());
-//        sellorderdetail.setreg(utils.getTime());
-//        sellorderdetail.setType("salefor");
-//        sellorderdetail.setXxzt("0");
-//        sellorderdetail.setstatus("0");
-//        sellorderdetail.setUuid(uuid);
-//        sellorderdetail.setYear(utils.getYear());
-//        sellorderdetail.setsaleid("");
-//
-//        StringBuilder builder = new StringBuilder();
-//        builder.append("{\"breakoff\": [");
-//        builder.append(JSON.toJSONString(breakoff));
-//        builder.append("],\"sellorderdetail\": [");
-//        builder.append(JSON.toJSONString(sellorderdetail));
-//        builder.append("]");
-//        builder.append("} ");
-//        saveBreakOffList(builder.toString());
-//    }
+
+    public void addNewData(BreakOff_New breakOff_new, String number, String batchcolor, String batchtime)
+    {
+        String uuid = java.util.UUID.randomUUID().toString();
+        BreakOff_New breakoff = new BreakOff_New();
+        breakoff.setUuid(uuid);
+        breakoff.setuid(breakOff_new.getuid());
+        breakoff.setareaid(breakOff_new.getareaid());
+        breakoff.setYear(utils.getYear());
+        breakoff.setparkid(breakOff_new.getparkid());
+        breakoff.setparkname(breakOff_new.getparkname());
+        breakoff.setareaname(breakOff_new.getareaname());
+        breakoff.setBatchColor(batchcolor);
+        breakoff.setBatchTime(batchtime);
+        breakoff.setBreakofftime(utils.getTime());
+        breakoff.setcontractid(breakOff_new.getcontractid());
+        breakoff.setcontractname(breakOff_new.getcontractname());
+        breakoff.setLat("");
+        breakoff.setLatlngsize("");
+        breakoff.setLng("");
+        breakoff.setnumberofbreakoff(number);
+        breakoff.setregdate(utils.getTime());
+        breakoff.setStatus("0");
+        breakoff.setWeight("0");
+        breakoff.setXxzt("0");
+
+
+        SellOrderDetail_New sellorderdetail = new SellOrderDetail_New();
+        sellorderdetail.setYear(utils.getYear());
+        sellorderdetail.setXxzt("0");
+        sellorderdetail.setuid(breakOff_new.getuid());
+        sellorderdetail.setactuallat("");
+        sellorderdetail.setactuallatlngsize("");
+        sellorderdetail.setactuallng("");
+        sellorderdetail.setactualnote("");
+        sellorderdetail.setactualnumber("");
+        sellorderdetail.setactualprice("");
+        sellorderdetail.setactualweight("");
+        sellorderdetail.setareaid(breakOff_new.getareaid());
+        sellorderdetail.setareaname(breakOff_new.getareaname());
+        sellorderdetail.setcontractid(breakOff_new.getcontractid());
+        sellorderdetail.setcontractname(breakOff_new.getcontractname());
+        sellorderdetail.setBatchTime(batchtime);
+        sellorderdetail.setisSoldOut("");
+        sellorderdetail.setparkid(breakOff_new.getparkid());
+        sellorderdetail.setparkname(breakOff_new.getparkname());
+        sellorderdetail.setPlanlat("");
+        sellorderdetail.setplanlatlngsize("");
+        sellorderdetail.setplanlng("");
+        sellorderdetail.setplannote("");
+        sellorderdetail.setplanprice("");
+        sellorderdetail.setplanweight("");
+        sellorderdetail.setplannumber(number);
+        sellorderdetail.setreg(utils.getTime());
+        sellorderdetail.setreg(utils.getTime());
+        sellorderdetail.setType("salefor");
+        sellorderdetail.setXxzt("0");
+        sellorderdetail.setstatus("0");
+        sellorderdetail.setUuid(uuid);
+        sellorderdetail.setYear(utils.getYear());
+        sellorderdetail.setsaleid("");
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"breakoff\": [");
+        builder.append(JSON.toJSONString(breakoff));
+        builder.append("],\"sellorderdetail\": [");
+        builder.append(JSON.toJSONString(sellorderdetail));
+        builder.append("]");
+        builder.append("} ");
+        saveBreakOffList(builder.toString());
+    }
+
+    private void saveBreakOffList(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        params.addQueryStringParameter("action", "saveBreakOff");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(PG_BreakOffActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                    } else
+                    {
+                        Toast.makeText(PG_BreakOffActivity.this, "保存失败", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_BreakOffActivity.this, "error_connectDataBase");
+                    Toast.makeText(PG_BreakOffActivity.this, "保存失败，请重试！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_BreakOffActivity.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void updateBreakOff(String uuid, String oldnumber, String newnumber)
+    {
+
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uuid", uuid);
+        params.addQueryStringParameter("numberofbreakoff", newnumber);
+        params.addQueryStringParameter("number_difference", oldnumber);
+        params.addQueryStringParameter("action", "updateBreakOff");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(PG_BreakOffActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                    } else
+                    {
+                        Toast.makeText(PG_BreakOffActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_BreakOffActivity.this, "error_connectDataBase");
+                    Toast.makeText(PG_BreakOffActivity.this, "修改失败，请重试！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_BreakOffActivity.this, "error_connectServer");
+            }
+        });
+    }
 }

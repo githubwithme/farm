@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -20,11 +21,15 @@ import com.farm.R;
 import com.farm.adapter.Adapter_PlantLastObserve;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.PlantGcd;
 import com.farm.bean.Result;
-import com.farm.bean.commembertab;
 import com.farm.bean.plantgrowthtab;
+import com.farm.bean.planttab;
+import com.farm.common.BitmapHelper;
 import com.farm.common.FileHelper;
+import com.farm.common.utils;
 import com.farm.widget.CustomArrayAdapter;
+import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomHorizontalScrollView_PlantObserve;
 import com.guide.DensityUtil;
 import com.lidroid.xutils.HttpUtils;
@@ -48,6 +53,10 @@ import java.util.List;
 @EActivity(R.layout.ncz_gcddetailactivity)
 public class NCZ_GCDDetailActivity extends Activity
 {
+    CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
+    PlantGcd plantgcd;
+    List<planttab> list_plants;
+    String[] mDatas;
     Adapter_PlantLastObserve adapter_plantLastObserve = null;
     List<plantgrowthtab> listData = null;
     private ListView mListView;
@@ -71,15 +80,43 @@ public class NCZ_GCDDetailActivity extends Activity
     @ViewById
     TextView tv_zg;
     @ViewById
+    TextView tv_average_zg;
+    @ViewById
+    TextView tv_average_wj;
+    @ViewById
+    TextView tv_average_ys;
+    @ViewById
+    TextView tv_average_lys;
+    @ViewById
+    TextView tv_zs;
+    @ViewById
+    TextView tv_nodatatip;
+    @ViewById
     ListView lv;
     @ViewById
     Spinner spinner;
     ArrayAdapter<String> provinceAdapter = null;
-    private String[] mProvinceDatas = new String[]{"植株一", "植株二", "植株三"};
 
+    //    @Click
+//    void tv_observate()
+//    {
+//        Intent intent = new Intent(NCZ_GCDDetailActivity.this, AddPlantObservation_.class);
+//        intent.putExtra("gcdid", plantgcd.getId());
+//        startActivity(intent);
+//    }
+//
+//    @Click
+//    void tv_addplant()
+//    {
+//        Intent intent = new Intent(NCZ_GCDDetailActivity.this, AddPlant_.class);
+//        intent.putExtra("gcdid", plantgcd.getId());
+//        intent.putExtra("gcdName", plantgcd.getPlantgcdName());
+//        NCZ_GCDDetailActivity.this.startActivity(intent);
+//    }
     @AfterViews
     void afterOncreate()
     {
+        plantgcd = getIntent().getParcelableExtra("bean_gcd");
         getActionBar().hide();
         DensityUtil densityUtil = new DensityUtil(NCZ_GCDDetailActivity.this);
         screenWidth = densityUtil.getScreenWidth() / 5;
@@ -90,10 +127,8 @@ public class NCZ_GCDDetailActivity extends Activity
         tv_ys.getLayoutParams().width = (screenWidth);
         tv_wj.getLayoutParams().width = (screenWidth);
         tv_zg.getLayoutParams().width = (screenWidth);
-//        getfarmSalesData();
-        setSpinner();
-        getNewSaleList_test();
-        getPlantObservData();
+        getAllPlants();
+        //getNewSaleList_test();
     }
 
 
@@ -106,8 +141,13 @@ public class NCZ_GCDDetailActivity extends Activity
 
     private void setSpinner()
     {
+        mDatas = new String[list_plants.size()];
+        for (int i = 0; i < list_plants.size(); i++)
+        {
+            mDatas[i] = list_plants.get(i).getplantName();
+        }
         //绑定适配器和值
-        provinceAdapter = new CustomArrayAdapter(NCZ_GCDDetailActivity.this, mProvinceDatas);
+        provinceAdapter = new CustomArrayAdapter(NCZ_GCDDetailActivity.this, mDatas);
         spinner.setAdapter(provinceAdapter);
         spinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
 
@@ -119,6 +159,7 @@ public class NCZ_GCDDetailActivity extends Activity
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3)
             {
+                getPlantAllObserveData(list_plants.get(position).getId().toString());
             }
 
             @Override
@@ -140,12 +181,12 @@ public class NCZ_GCDDetailActivity extends Activity
 
     }
 
-    private void getfarmSalesData()
+    private void getPlantAllObserveData(String plantid)
     {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_GCDDetailActivity.this);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getfarmSalesData");//jobGetList1
+        params.addQueryStringParameter("plantid", plantid);
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "NCZ_getPlantAllObserveData");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -156,13 +197,14 @@ public class NCZ_GCDDetailActivity extends Activity
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() == 0)
+                    if (result.getAffectedRows() > 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), plantgrowthtab.class);
                         initViews();
                     } else
                     {
                         listData = new ArrayList<plantgrowthtab>();
+                        initViews();
                     }
 
                 } else
@@ -181,11 +223,55 @@ public class NCZ_GCDDetailActivity extends Activity
         });
     }
 
-    private void getPlantObservData()
+    private void getAllPlants()
     {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_GCDDetailActivity.this);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("gcdid", plantgcd.getId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "NCZ_getPlantsByGcd");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() > 0)
+                    {
+                        list_plants = JSON.parseArray(result.getRows().toJSONString(), planttab.class);
+                        setSpinner();
+                        getPlantAllObserveData(list_plants.get(0).getId().toString());
+                        getPlantLastObserve();
+                    } else
+                    {
+                        tv_nodatatip.setVisibility(View.VISIBLE);
+                        list_plants = new ArrayList<planttab>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_GCDDetailActivity.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_GCDDetailActivity.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void getPlantLastObserve()
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("gcdid", plantgcd.getId());
+        params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("action", "NCZ_getPlantLastObserve");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -198,11 +284,28 @@ public class NCZ_GCDDetailActivity extends Activity
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() == 0)
+                    if (result.getAffectedRows() > 0)
                     {
                         list_lastObserveData = JSON.parseArray(result.getRows().toJSONString(), plantgrowthtab.class);
                         adapter_plantLastObserve = new Adapter_PlantLastObserve(NCZ_GCDDetailActivity.this, list_lastObserveData);
                         lv.setAdapter(adapter_plantLastObserve);
+                        int size = list_lastObserveData.size();
+                        int zg = 0;
+                        int wj = 0;
+                        int ys = 0;
+                        int lys = 0;
+                        for (int i = 0; i < list_lastObserveData.size(); i++)
+                        {
+                            zg = zg + Integer.valueOf(list_lastObserveData.get(i).gethNum());
+                            wj = wj + Integer.valueOf(list_lastObserveData.get(i).getwNum());
+                            ys = ys + Integer.valueOf(list_lastObserveData.get(i).getyNum());
+                            lys = lys + Integer.valueOf(list_lastObserveData.get(i).getxNum());
+                        }
+                        tv_average_zg.setText(String.valueOf(zg / size) + "m");
+                        tv_average_wj.setText(String.valueOf(wj / size) + "cm");
+                        tv_average_ys.setText(String.valueOf(ys / size) + "张");
+                        tv_average_lys.setText(String.valueOf(lys / size) + "张");
+                        tv_zs.setText(String.valueOf(size) + "株");
                     } else
                     {
                         list_lastObserveData = new ArrayList<plantgrowthtab>();
@@ -226,6 +329,7 @@ public class NCZ_GCDDetailActivity extends Activity
 
     private void initViews()
     {
+        mHScrollViews.clear();
         CustomHorizontalScrollView_PlantObserve headerScroll = (CustomHorizontalScrollView_PlantObserve) findViewById(R.id.item_scroll_title);
         // 添加头滑动事件
         mHScrollViews.add(headerScroll);
@@ -281,6 +385,8 @@ public class NCZ_GCDDetailActivity extends Activity
         {
             public TextView item_titlev;
             public Button btn_data;
+            public ImageView iv;
+            public TextView tv_tip;
         }
 
         @Override
@@ -315,44 +421,71 @@ public class NCZ_GCDDetailActivity extends Activity
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            listItemView.item_titlev.setText(listData.get(position).getcjDate());
+            listItemView.item_titlev.setText(listData.get(position).getcjDate().substring(0, listData.get(position).getcjDate().lastIndexOf(" ")));
             View view = null;
 
+            //注意下列顺序
+            //0
+            view = LayoutInflater.from(NCZ_GCDDetailActivity.this).inflate(R.layout.plantobserve_dataitem, null);
+            listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
+            String status = "";
+            if (listData.get(position).getplantType().equals("1"))
+            {
+                status = status + "变异";
+            } else
+            {
+                status = "正常";
+            }
+            if (listData.get(position).getcDate().equals("1"))
+            {
+                status = status + "|已抽蕾";
+            } else if (listData.get(position).getzDate().equals("1"))
+            {
+                status = status + "|已留芽";
+            }
+            listItemView.btn_data.setText(status);
+            listItemView.btn_data.getLayoutParams().width = (screenWidth);
+            ll_middle.addView(view);
+            //1
+            view = LayoutInflater.from(NCZ_GCDDetailActivity.this).inflate(R.layout.plantobserve_dataitem_photos, null);
+            listItemView.iv = (ImageView) view.findViewById(R.id.iv);
+            listItemView.tv_tip = (TextView) view.findViewById(R.id.tv_tip);
+            List<String> urls = listData.get(position).getImgUrl();
+            if (urls.size() != 0)
+            {
+                BitmapHelper.setImageViewBackground(NCZ_GCDDetailActivity.this, listItemView.iv, AppConfig.baseurl + urls.get(0));
+            }
+            listItemView.tv_tip.setText(urls.size() + "张");
+            listItemView.iv.getLayoutParams().width = (screenWidth);
+            listItemView.iv.setTag(urls);
+            listItemView.iv.setOnClickListener(clickListener);
+            ll_middle.addView(view);
+            //2
             view = LayoutInflater.from(NCZ_GCDDetailActivity.this).inflate(R.layout.plantobserve_dataitem, null);
             listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
             listItemView.btn_data.setText(listData.get(position).gethNum());
             listItemView.btn_data.getLayoutParams().width = (screenWidth);
             ll_middle.addView(view);
 
+            //3
             view = LayoutInflater.from(NCZ_GCDDetailActivity.this).inflate(R.layout.plantobserve_dataitem, null);
             listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
             listItemView.btn_data.setText(listData.get(position).getwNum());
             listItemView.btn_data.getLayoutParams().width = (screenWidth);
             ll_middle.addView(view);
-
+            //4
             view = LayoutInflater.from(NCZ_GCDDetailActivity.this).inflate(R.layout.plantobserve_dataitem, null);
             listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
             listItemView.btn_data.setText(listData.get(position).getyNum());
             listItemView.btn_data.getLayoutParams().width = (screenWidth);
             ll_middle.addView(view);
-
+            //5
             view = LayoutInflater.from(NCZ_GCDDetailActivity.this).inflate(R.layout.plantobserve_dataitem, null);
             listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
             listItemView.btn_data.setText(listData.get(position).getxNum());
             listItemView.btn_data.getLayoutParams().width = (screenWidth);
             ll_middle.addView(view);
 
-            view = LayoutInflater.from(NCZ_GCDDetailActivity.this).inflate(R.layout.plantobserve_dataitem, null);
-            listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
-            listItemView.btn_data.setText(listData.get(position).getplantGrowthNote());
-            listItemView.btn_data.getLayoutParams().width = (screenWidth);
-            ll_middle.addView(view);
-
-            view = LayoutInflater.from(NCZ_GCDDetailActivity.this).inflate(R.layout.plantobserve_dataitem, null);
-            listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
-            listItemView.btn_data.setText(listData.get(position).getplantGrowthNote());
-            listItemView.btn_data.getLayoutParams().width = (screenWidth);
-            ll_middle.addView(view);
 
             // 第一次初始化的时候装进来
             addHViews((CustomHorizontalScrollView_PlantObserve) convertView.findViewById(R.id.item_chscroll_scroll));
@@ -376,7 +509,14 @@ public class NCZ_GCDDetailActivity extends Activity
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-//            String batchTimes = (String) v.getTag(R.id.tag_hg);
+            List<String> urls = (List<String>) v.getTag();
+            PictureScrollFragment_DialogFragment dialog = new PictureScrollFragment_DialogFragment();
+            Bundle bundle1 = new Bundle();
+            bundle1.putStringArrayList("imgurl", (ArrayList<String>) urls);
+            dialog.setArguments(bundle1);
+            dialog.show(getFragmentManager(), "EditNameDialog");
+
+//            showDialog_photos(urls);
 //            String parkid = (String) v.getTag(R.id.tag_kg);
 //            String parkname = (String) v.getTag(R.id.tag_parkname);
 //            Intent intent = new Intent(NCZ_GCDDetailActivity.this, NCZ_AreaSaleData_.class);
@@ -386,4 +526,26 @@ public class NCZ_GCDDetailActivity extends Activity
 //            NCZ_GCDDetailActivity.this.startActivity(intent);
         }
     };
+
+//    public void showDialog_photos(final List<String> urls)
+//    {
+//        final View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_GCDDetailActivity.this).inflate(R.layout.customdialog_plantphotos, null);
+//        customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(NCZ_GCDDetailActivity.this, R.style.MyDialog, dialog_layout);
+//        FrameLayout menu_container = (FrameLayout) dialog_layout.findViewById(R.id.menu_container);
+//        Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
+//        PictureScrollFragment pictureScrollFragment = new PictureScrollFragment();
+//        Bundle bundle1 = new Bundle();
+//        bundle1.putStringArrayList("imgurl", (ArrayList<String>) urls);
+//        pictureScrollFragment.setArguments(bundle1);
+//        getFragmentManager().beginTransaction().replace(R.id.menu_container, pictureScrollFragment).commit();
+//        btn_cancle.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                customDialog_editSaleInInfo.dismiss();
+//            }
+//        });
+//        customDialog_editSaleInInfo.show();
+//    }
 }

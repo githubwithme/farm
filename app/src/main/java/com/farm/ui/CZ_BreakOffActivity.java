@@ -13,18 +13,16 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_AreaSaleFragment;
+import com.farm.adapter.Adapter_CZBreakOff;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.ParkDataBean;
+import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
-import com.farm.bean.SaleDataBean;
+import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
-import com.farm.bean.parktab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomHorizontalScrollView_CZBreakOff;
@@ -52,10 +50,10 @@ import java.util.Map;
 @EActivity(R.layout.cz_breakoffactivity)
 public class CZ_BreakOffActivity extends Activity
 {
-    Adapter_AreaSaleFragment adapter_areaSaleFragment;
+    Adapter_CZBreakOff adapter_czBreakOff;
     @ViewById
     ExpandableListView expandableListView_areasaledata;
-    List<SaleDataBean> listData = null;
+    List<BatchTime> listData = null;
 
     private ListView mListView;
     public HorizontalScrollView mTouchView;
@@ -83,7 +81,7 @@ public class CZ_BreakOffActivity extends Activity
     void afterOncreate()
     {
         getActionBar().hide();
-        getfarmSalesData();
+        getBatchTimeBreakoffData();
         getAreaBreakoffData();
 //        getNewSaleList_test();
     }
@@ -119,12 +117,12 @@ public class CZ_BreakOffActivity extends Activity
 
     private void getNewSaleList_test()
     {
-        listData = FileHelper.getAssetsData(CZ_BreakOffActivity.this, "getsaledata", SaleDataBean.class);
+        listData = FileHelper.getAssetsData(CZ_BreakOffActivity.this, "getsaledata", BatchTime.class);
         if (listData != null)
         {
             DensityUtil densityUtil = new DensityUtil(CZ_BreakOffActivity.this);
             screenWidth = densityUtil.getScreenWidth();
-            int size = listData.get(0).getParklist().size();
+            int size = listData.get(0).getAreatabList().size();
             if (size == 1)
             {
                 screenWidth = screenWidth / 3;
@@ -147,9 +145,9 @@ public class CZ_BreakOffActivity extends Activity
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_BreakOffActivity.this);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "getAreaSaleData");//jobGetList1
+        params.addQueryStringParameter("action", "CZ_getAreaBreakoffData");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -157,15 +155,15 @@ public class CZ_BreakOffActivity extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<parktab> listNewData = null;
+                List<areatab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
-                        adapter_areaSaleFragment = new Adapter_AreaSaleFragment(CZ_BreakOffActivity.this, listNewData, expandableListView_areasaledata);
-                        expandableListView_areasaledata.setAdapter(adapter_areaSaleFragment);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), areatab.class);
+                        adapter_czBreakOff = new Adapter_CZBreakOff(CZ_BreakOffActivity.this, listNewData, expandableListView_areasaledata);
+                        expandableListView_areasaledata.setAdapter(adapter_czBreakOff);
                         utils.setListViewHeight(expandableListView_areasaledata);
 
 //                        for (int i = 0; i < listNewData.size(); i++)
@@ -175,7 +173,7 @@ public class CZ_BreakOffActivity extends Activity
 
                     } else
                     {
-                        listNewData = new ArrayList<parktab>();
+                        listNewData = new ArrayList<areatab>();
                     }
 
                 } else
@@ -194,12 +192,13 @@ public class CZ_BreakOffActivity extends Activity
         });
     }
 
-    private void getfarmSalesData()
+    private void getBatchTimeBreakoffData()
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_BreakOffActivity.this);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getfarmSalesData");//jobGetList1
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "CZ_getBatchTimeBreakoffData");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -210,12 +209,12 @@ public class CZ_BreakOffActivity extends Activity
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() == 0)
+                    if (result.getAffectedRows() !=0)
                     {
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SaleDataBean.class);
+                        listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                         DensityUtil densityUtil = new DensityUtil(CZ_BreakOffActivity.this);
                         screenWidth = densityUtil.getScreenWidth();
-                        int size = listData.get(0).getParklist().size();
+                        int size = listData.get(0).getAreatabList().size();
                         if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
@@ -233,7 +232,7 @@ public class CZ_BreakOffActivity extends Activity
                         initViews();
                     } else
                     {
-                        listData = new ArrayList<SaleDataBean>();
+                        listData = new ArrayList<BatchTime>();
                     }
 
                 } else
@@ -255,15 +254,15 @@ public class CZ_BreakOffActivity extends Activity
     private void initViews()
     {
         LayoutInflater inflater = (LayoutInflater) CZ_BreakOffActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        for (int i = 0; i < listData.get(0).getParklist().size(); i++)
+        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
         {
             View view = inflater.inflate(R.layout.cz_breakoff_areaitem, null);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
-            tv_parkname.setText(listData.get(0).getParklist().get(i).getParkname());
+            tv_parkname.setText(listData.get(0).getAreatabList().get(i).getareaName());
             ll_park.addView(view);
         }
-        for (int i = 0; i < listData.get(0).getParklist().size(); i++)
+        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
         {
             View view = inflater.inflate(R.layout.cz_breakoff_totalitem, null);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
@@ -271,7 +270,7 @@ public class CZ_BreakOffActivity extends Activity
             int totalnumber = 0;
             for (int j = 0; j < listData.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getParklist().get(i).getNumber());
+                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllnumber());
             }
             tv_total.setText(String.valueOf(totalnumber));
             ll_total.addView(view);
@@ -375,27 +374,27 @@ public class CZ_BreakOffActivity extends Activity
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
             listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            listItemView.item_titlev.setText(listData.get(position).getBatchtime());
+            listItemView.item_titlev.setText(listData.get(position).getBatchTime());
             int totalnumber = 0;
-            List<ParkDataBean> list = listData.get(position).getParklist();
+            List<areatab> list = listData.get(position).getAreatabList();
             for (int j = 0; j < list.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(list.get(j).getNumber());
+                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
             }
             listItemView.item_total.setText(String.valueOf(totalnumber));
 
-            for (int i = 0; i < listData.get(position).getParklist().size(); i++)
+            for (int i = 0; i < listData.get(position).getAreatabList().size(); i++)
             {
                 View view = LayoutInflater.from(CZ_BreakOffActivity.this).inflate(R.layout.cz_breakoff_dataitem, null);
                 listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
-                listItemView.btn_data.setText(listData.get(position).getParklist().get(i).getNumber());
+                listItemView.btn_data.setText(listData.get(position).getAreatabList().get(i).getAllnumber());
                 listItemView.btn_data.getLayoutParams().width = (screenWidth);
                 ll_middle.addView(view);
 
                 listItemView.btn_data.requestFocusFromTouch();
-                listItemView.btn_data.setTag(R.id.tag_kg, listData.get(position).getParklist().get(i).getParkid());
-                listItemView.btn_data.setTag(R.id.tag_hg, listData.get(position).getBatchtime());
-                listItemView.btn_data.setTag(R.id.tag_parkname, listData.get(position).getParklist().get(i).getParkname());
+                listItemView.btn_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
+                listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                listItemView.btn_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getareaName());
                 listItemView.btn_data.setOnClickListener(clickListener);
 
             }
@@ -421,16 +420,14 @@ public class CZ_BreakOffActivity extends Activity
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            String batchTimes = (String) v.getTag(R.id.tag_hg);
-            String parkid = (String) v.getTag(R.id.tag_kg);
-            String parkname = (String) v.getTag(R.id.tag_parkname);
-//            Intent intent = new Intent(CZ_BreakOffActivity.this, NCZ_AreaSaleData_.class);
-//            intent.putExtra("parkid", parkid);
-//            intent.putExtra("parkname", parkname);
-//            intent.putExtra("batchTime", batchTimes);
-//            CZ_BreakOffActivity.this.startActivity(intent);
-
-            Toast.makeText(CZ_BreakOffActivity.this, parkid + "/" + batchTimes, Toast.LENGTH_SHORT).show();
+            String batchTimes = (String) v.getTag(R.id.tag_batchtime);
+            String areaid = (String) v.getTag(R.id.tag_areaid);
+            String areaname = (String) v.getTag(R.id.tag_areaname);
+            Intent intent = new Intent(CZ_BreakOffActivity.this, CZ_AreaBatchTimeBreakOff_.class);
+            intent.putExtra("areaid", areaid);
+            intent.putExtra("areaname", areaname);
+            intent.putExtra("batchTime", batchTimes);
+            CZ_BreakOffActivity.this.startActivity(intent);
         }
     };
 }

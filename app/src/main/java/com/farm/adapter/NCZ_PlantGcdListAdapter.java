@@ -34,15 +34,20 @@ public class NCZ_PlantGcdListAdapter extends BaseAdapter
 
     static class ListItemView
     { // 自定义控件集合
-//        public ImageView img;
+        //        public ImageView img;
 //        public Button btn_plantlist;
         public TextView tv_plantname;
         public TextView tv_time;
-//        public TextView tv_type;
+        //        public TextView tv_type;
         public FrameLayout fl_new;
         public FrameLayout fl_new_item;
         public TextView tv_new;
         public TextView tv_area;
+        public TextView tv_average_zg;
+        public TextView tv_average_wj;
+        public TextView tv_average_ys;
+        public TextView tv_average_lys;
+        public TextView tv_status;
         public ImageView iv_record;
     }
 
@@ -99,6 +104,11 @@ public class NCZ_PlantGcdListAdapter extends BaseAdapter
 //            listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
             listItemView.tv_plantname = (TextView) convertView.findViewById(R.id.tv_plantname);
             listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+            listItemView.tv_average_zg = (TextView) convertView.findViewById(R.id.tv_average_zg);
+            listItemView.tv_average_wj = (TextView) convertView.findViewById(R.id.tv_average_wj);
+            listItemView.tv_average_ys = (TextView) convertView.findViewById(R.id.tv_average_ys);
+            listItemView.tv_average_lys = (TextView) convertView.findViewById(R.id.tv_average_lys);
+            listItemView.tv_status = (TextView) convertView.findViewById(R.id.tv_status);
 //            listItemView.img = (ImageView) convertView.findViewById(R.id.img);
 //            listItemView.btn_plantlist = (Button) convertView.findViewById(R.id.btn_plantlist);
 //            listItemView.btn_plantlist.setId(position);
@@ -163,6 +173,59 @@ public class NCZ_PlantGcdListAdapter extends BaseAdapter
         {
             listItemView.fl_new.setVisibility(View.GONE);
         }
+        String status = "";
+        if (!PlantGcd.getPlanttype().equals("0"))
+        {
+            status = status + PlantGcd.getPlanttype() + "株异常";
+        } else
+        {
+            status = status + "正常";
+        }
+        if (!PlantGcd.getCdate().equals("0"))
+        {
+            status = status + "|" + PlantGcd.getPlanttype() + "株抽蕾";
+        }
+        if (!PlantGcd.getZdate().equals("0"))
+        {
+            status = status + "|" + PlantGcd.getPlanttype() + "株留芽";
+        }
+        listItemView.tv_status.setText(status);
+
+        if (PlantGcd.getAverage_hnum().contains("."))
+        {
+            listItemView.tv_average_zg.setText(PlantGcd.getAverage_hnum().substring(0, PlantGcd.getAverage_hnum().lastIndexOf(".")) + "m");
+        } else
+        {
+            listItemView.tv_average_zg.setText(PlantGcd.getAverage_hnum() + "m");
+        }
+
+
+        if (PlantGcd.getAverage_wnum().contains("."))
+        {
+            listItemView.tv_average_wj.setText(PlantGcd.getAverage_wnum().substring(0, PlantGcd.getAverage_wnum().lastIndexOf(".")) + "cm");
+        } else
+        {
+            listItemView.tv_average_wj.setText(PlantGcd.getAverage_wnum() + "cm");
+        }
+
+
+        if (PlantGcd.getAverage_ynum().contains("."))
+        {
+            listItemView.tv_average_ys.setText(PlantGcd.getAverage_ynum().substring(0, PlantGcd.getAverage_ynum().lastIndexOf(".")) + "张");
+        } else
+        {
+            listItemView.tv_average_ys.setText(PlantGcd.getAverage_ynum() + "张");
+        }
+
+
+        if (PlantGcd.getAverage_xnum().contains("."))
+        {
+            listItemView.tv_average_lys.setText(PlantGcd.getAverage_xnum().substring(0, PlantGcd.getAverage_xnum().lastIndexOf(".")) + "张");
+        } else
+        {
+            listItemView.tv_average_lys.setText(PlantGcd.getAverage_xnum() + "张");
+        }
+
         listItemView.tv_area.setText(PlantGcd.getparkName() + PlantGcd.getareaName());
         listItemView.tv_plantname.setText(PlantGcd.getPlantgcdName());
         listItemView.tv_time.setText(PlantGcd.getregDate().substring(5, PlantGcd.getregDate().lastIndexOf(":")));
