@@ -136,23 +136,30 @@ public class PG_NeedAdapter extends BaseAdapter
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
-            listItemView.tv_importance.setText(sellOrder.getMainPepName());
 
-            final SpannableString content = new SpannableString(sellOrder.getBuyersName());
-            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-            listItemView.tv_buyer.setText(content);
-            listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
+        } else
+        {
+            convertView = lmap.get(position);
+            listItemView = (ListItemView) convertView.getTag();
+        }
+
+        listItemView.tv_importance.setText(sellOrder.getMainPepName());
+
+        final SpannableString content = new SpannableString(sellOrder.getBuyersName());
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        listItemView.tv_buyer.setText(content);
+        listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
             {
-                @Override
-                public void onClick(View v)
-                {
-                    showDialog_addsaleinfo("15989154871");
-                }
-            });
+                showDialog_addsaleinfo("15989154871");
+            }
+        });
 
-            SpannableString spanStr_buyer = new SpannableString("就绪");
-            spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
-            //下划线跳转
+        SpannableString spanStr_buyer = new SpannableString("就绪");
+        spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
+        //下划线跳转
 /*            listItemView.tv_batchtime.setText(spanStr_buyer);
             listItemView.tv_batchtime.setOnClickListener(new View.OnClickListener()
             {
@@ -164,46 +171,50 @@ public class PG_NeedAdapter extends BaseAdapter
                 }
             });*/
 
-            if (sellOrder.getFreeDeposit().equals("0"))
-            {
-                listItemView.tv_batchtime.setText("申请免付订金");
-            } else if (sellOrder.getFreeFinalPay().equals("0"))
-            {
-                listItemView.tv_batchtime.setText("申请免付尾款");
-            } else if (sellOrder.getIsNeedAudit().equals("0") && sellOrder.getCreatorid().equals(""))
-            {
-                listItemView.tv_batchtime.setText("订单申请修改");
-            } else
-            {
-                listItemView.tv_batchtime.setText("自发订单申请");
-            }
+        if (sellOrder.getFreeDeposit().equals("0"))
+        {
+            listItemView.tv_batchtime.setText("申请免付订金");
+        } else if (sellOrder.getFreeFinalPay().equals("0"))
+        {
+            listItemView.tv_batchtime.setText("申请免付尾款");
+        } else if (sellOrder.getIsNeedAudit().equals("0") && sellOrder.getCreatorid().equals(""))
+        {
+            listItemView.tv_batchtime.setText("订单申请修改");
+        } else
+        {
+            listItemView.tv_batchtime.setText("自发订单申请");
+        }
 
-            //片管修改订单
-            listItemView.btn_bohui.setTag(R.id.tag_danxuan,sellOrder);
-            listItemView.btn_bohui.setOnClickListener(new View.OnClickListener()
+        if (sellOrder.getSelltype().equals("审批结算"))
+        {
+            listItemView.tv_batchtime.setText("申请审核结算单");
+        }
+        //片管修改订单
+        listItemView.btn_bohui.setTag(R.id.tag_danxuan,sellOrder);
+        listItemView.btn_bohui.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
             {
-                @Override
-                public void onClick(View view)
-                {
-                    SellOrder_New sellOrdesr = new SellOrder_New();
-                    sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_danxuan);
-                    Intent intent=new Intent(context, PG_SP_EditOreder_.class);
-                    intent.putExtra("bean", sellOrdesr);
-                    context.startActivity(intent);
-                }
-            });
-            //片管取消订单
-            listItemView.chakan.setTag(R.id.tag_cash, sellOrder);
-            listItemView.chakan.setOnClickListener(new View.OnClickListener()
+                SellOrder_New sellOrdesr = new SellOrder_New();
+                sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_danxuan);
+                Intent intent=new Intent(context, PG_SP_EditOreder_.class);
+                intent.putExtra("bean", sellOrdesr);
+                context.startActivity(intent);
+            }
+        });
+        //片管取消订单
+        listItemView.chakan.setTag(R.id.tag_cash, sellOrder);
+        listItemView.chakan.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
             {
-                @Override
-                public void onClick(View view)
-                {
-                    SellOrder_New sellOrdesr = new SellOrder_New();
-                    sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_cash);
-                    showDeleteTip(sellOrdesr.getUuid());
-                }
-            });
+                SellOrder_New sellOrdesr = new SellOrder_New();
+                sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_cash);
+                showDeleteTip(sellOrdesr.getUuid());
+            }
+        });
 /*            listItemView.btn_pizhun.setTag(R.id.tag_cash,sellOrder);
             listItemView.btn_pizhun.setOnClickListener(new View.OnClickListener()
             {
@@ -217,30 +228,30 @@ public class PG_NeedAdapter extends BaseAdapter
             });*/
 
 //            listItemView.tv_buyer.setText(sellOrder.getBuyers());
-            listItemView.tv_price.setText(sellOrder.getPrice());
-            listItemView.tv_car.setText(sellOrder.getProducer());
-            listItemView.tv_from.setText(sellOrder.getProducer());
+        listItemView.tv_price.setText(sellOrder.getPrice());
+        listItemView.tv_car.setText(sellOrder.getProducer());
+        listItemView.tv_from.setText(sellOrder.getProducer());
 //            listItemView.tv_batchtime.setText(sellOrder.getBatchTime());
-            if (sellOrder.getActualsumvalues().equals(""))
+        if (sellOrder.getActualsumvalues().equals(""))
+        {
+            listItemView.tv_sum.setText("待反馈");
+        } else
+        {
+            listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
+        }
+        if (sellOrder.getDeposit().equals("0"))
+        {
+            listItemView.tv_state.setText("等待买家付定金");
+        } else
+        {
+            if (sellOrder.getFinalpayment().equals("0"))
             {
-                listItemView.tv_sum.setText("待反馈");
+                listItemView.tv_state.setText("等待买家付尾款");
             } else
             {
-                listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
+                listItemView.tv_state.setText("买家已付尾款");
             }
-            if (sellOrder.getDeposit().equals("0"))
-            {
-                listItemView.tv_state.setText("等待买家付定金");
-            } else
-            {
-                if (sellOrder.getFinalpayment().equals("0"))
-                {
-                    listItemView.tv_state.setText("等待买家付尾款");
-                } else
-                {
-                    listItemView.tv_state.setText("买家已付尾款");
-                }
-            }
+        }
 /*            listItemView.btn_cancleorder.setTag(R.id.tag_cash,sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
@@ -252,26 +263,21 @@ public class PG_NeedAdapter extends BaseAdapter
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
             });*/
-            listItemView.btn_editorder.setTag(R.id.tag_postion, position);
-            listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
-            listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    int pos = (int) v.getTag(R.id.tag_postion);
-                    SellOrder_New sellOrder = (SellOrder_New) v.getTag(R.id.tag_bean);
-                    Intent intent = new Intent(context, NCZ_EditOrder_.class);
-                    intent.putExtra("bean", sellOrder);
-                    intent.putExtra("broadcast", broadcast);
-                    context.startActivity(intent);
-                }
-            });
-        } else
+        listItemView.btn_editorder.setTag(R.id.tag_postion, position);
+        listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
+        listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
         {
-            convertView = lmap.get(position);
-            listItemView = (ListItemView) convertView.getTag();
-        }
+            @Override
+            public void onClick(View v)
+            {
+                int pos = (int) v.getTag(R.id.tag_postion);
+                SellOrder_New sellOrder = (SellOrder_New) v.getTag(R.id.tag_bean);
+                Intent intent = new Intent(context, NCZ_EditOrder_.class);
+                intent.putExtra("bean", sellOrder);
+                intent.putExtra("broadcast", broadcast);
+                context.startActivity(intent);
+            }
+        });
         if (listItems.get(position).getFlashStr().equals("0"))
         {
             listItemView.fl_dynamic.setVisibility(View.INVISIBLE);

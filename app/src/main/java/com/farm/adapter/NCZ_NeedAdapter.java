@@ -189,6 +189,11 @@ public class NCZ_NeedAdapter extends BaseAdapter
         {
             listItemView.tv_batchtime.setText("自发订单审批");
         }
+
+        if (sellOrder.getSelltype().equals("审批结算"))
+        {
+            listItemView.tv_batchtime.setText("审批结算单");
+        }
         listItemView.chakan.setTag(R.id.tag_cash, sellOrder);
         listItemView.chakan.setOnClickListener(new View.OnClickListener()
         {

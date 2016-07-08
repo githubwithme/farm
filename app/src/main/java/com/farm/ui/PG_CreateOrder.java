@@ -401,14 +401,14 @@ public class PG_CreateOrder extends Activity
         sellOrder.setDefectNum("0");
         sellOrder.setActualnumber("");
         sellOrder.setActualsumvalues("");
-        sellOrder.setDeposit("0");
+        sellOrder.setDeposit("");
         sellOrder.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
         sellOrder.setYear(utils.getYear());
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
         sellOrder.setProducer(producer);
-        sellOrder.setFinalpayment("0");
+        sellOrder.setFinalpayment("");
 
     /*    sellOrder.setSaletime(dd_time.getText().toString());
         sellOrder.setPrice(et_price.getText().toString());
@@ -560,6 +560,7 @@ public class PG_CreateOrder extends Activity
         commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("creatorId", commembertab.getId());
         params.addQueryStringParameter("action", "deleNewSaleAddsalefor");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

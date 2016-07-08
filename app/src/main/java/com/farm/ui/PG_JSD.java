@@ -27,6 +27,7 @@ import com.farm.adapter.WZ_RKExecute_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Park_AllCBH;
+import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
@@ -65,6 +66,12 @@ import java.util.List;
 @EActivity(R.layout.pg_jsd)
 public class PG_JSD extends Activity
 {
+    CustomDialog_ListView customDialog_listViews;
+    String zzsl = "";
+    List<Purchaser> listData_BY = new ArrayList<Purchaser>();
+    List<Purchaser> listData_BZ = new ArrayList<Purchaser>();
+    String byId = "";
+    String bzId = "";
 
     PG_JSD_Adapter pg_jsd_adapter;
     SellOrder_New sellOrder_new;
@@ -134,14 +141,14 @@ public class PG_JSD extends Activity
     @ViewById
     EditText bz_nc_danjia;//包装农场  包装单价
     @ViewById
-    EditText bz_fzrid;//包装负责人Id
+    TextView bz_fzrid;//包装负责人Id
 
     @ViewById
     EditText by_khnote; //搬运客户自带说明
     @ViewById
     EditText by_nc_danjia;//搬运农场  搬运单价
     @ViewById
-    EditText by_fzrid;//搬运负责人Id
+    TextView by_fzrid;//搬运负责人Id
 
     @ViewById
     EditText jsd_zongjianshu;//总件数
@@ -189,6 +196,32 @@ public class PG_JSD extends Activity
 
     @ViewById
     PullToRefreshListView frame_listview_news;
+
+    @Click
+    void bz_fzrid()
+    {
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listData_BZ.size(); i++)
+        {
+            listdata.add(listData_BZ.get(i).getName());
+            listid.add(listData_BZ.get(i).getId());
+        }
+        showDialog_bz(listdata, listid);
+    }
+
+    @Click
+    void by_fzrid()
+    {
+        List<String> listdata = new ArrayList<String>();
+        List<String> listid = new ArrayList<String>();
+        for (int i = 0; i < listData_BY.size(); i++)
+        {
+            listdata.add(listData_BY.get(i).getName());
+            listid.add(listData_BY.get(i).getId());
+        }
+        showDialog_by(listdata, listid);
+    }
 
     @Click
     void nc_banyun()
@@ -243,37 +276,41 @@ public class PG_JSD extends Activity
         sellOrder.setPrice(sellOrder_new.getPrice());
         sellOrder.setWeight(sellOrder_new.getWeight());
         sellOrder.setSumvalues(sellOrder_new.getSumvalues());
-        sellOrder.setActualprice("");
+   /*     sellOrder.setActualprice("");
         sellOrder.setActualweight("");
         sellOrder.setActualnumber("");
-        sellOrder.setActualsumvalues("");
-        sellOrder.setDeposit("0");
+        sellOrder.setActualsumvalues("");*/
+//        sellOrder.setDeposit("0");
         sellOrder.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
         sellOrder.setSaletime(sellOrder_new.getSaletime());
         sellOrder.setYear(utils.getYear());
         sellOrder.setXxzt("0");
         sellOrder.setProducer(sellOrder_new.getProducer());
-        sellOrder.setFinalpayment("0");
+//        sellOrder.setFinalpayment("0");
         sellOrder.setGoodsname(sellOrder_new.getGoodsname());
         sellOrder.setMainPepole(sellOrder_new.getMainPepole());
         sellOrder.setPlateNumber(sellOrder_new.getPlateNumber());
-        sellOrder.setContractorId(sellOrder_new.getContractorId());
-        sellOrder.setPickId(sellOrder_new.getPickId());
+        sellOrder.setContractorId(byId);
+        sellOrder.setPickId(bzId);
         sellOrder.setCarryPrice(sellOrder_new.getCarryPrice());
         sellOrder.setPackPrice(sellOrder_new.getPackPrice());
         sellOrder.setPackPec(sellOrder_new.getPackPec());
         sellOrder.setWaitDeposit(sellOrder_new.getWaitDeposit());
         sellOrder.setAddress(sellOrder_new.getAddress());
-                //
+        sellOrder.setPackPrice(bz_nc_danjia.getText().toString());
+        sellOrder.setCarryPrice(by_nc_danjia.getText().toString());
+        //
         sellOrder.setActualprice(jsd_zpprice.getText().toString());//  正品单价
         sellOrder.setDefectPrice(jsd_cpprice.getText().toString());//  次品单价
-        sellOrder.setActualweight(zp_jianshu.getText().toString());//  正品件数
+        sellOrder.setActualnumber(zp_jianshu.getText().toString());//  正品件数
         sellOrder.setDefectNum(cp_jianshu.getText().toString());//  次品件数
         sellOrder.setPackPec(packPec.getText().toString());//  包装规格
 
         sellOrder.setSelltype("审批结算");//  包装规格
-
+        sellOrder.setIsNeedAudit("0");
+        sellOrder.setFreeFinalPay("1");
+        sellOrder.setFreeDeposit("1");
 /*        public String total ;//总件数
         public String qualityTotalWeight;//正品总净重
         public String defectTotalWeight;//次品重净重
@@ -302,7 +339,6 @@ public class PG_JSD extends Activity
         sellOrder_new_first.setPackFee(packFee.getText().toString());
         sellOrder_new_first.setCarryFee(carryFee.getText().toString());
         sellOrder_new_first.setTotalFee(totalFee.getText().toString());
-
         sellOrder_new_first.setActualMoney(actualMoney.getText().toString());
 //        sellOrder_new_first.setPersonNote(totalFee.getText().toString());
 
@@ -327,7 +363,7 @@ public class PG_JSD extends Activity
 //        View view = inflater.inflate(R.layout.pg_dtcbh, null);
         View view = inflater.inflate(R.layout.pg_jsd_adapter, null);
         view.setId(curremt);
-        TextView all_cbh= (TextView) findViewById(R.id.all_cbh);
+        TextView all_cbh = (TextView) findViewById(R.id.all_cbh);
 /*        EditText cipin = (EditText) view.findViewById(R.id.cipin);
         cipin.addTextChangedListener(oncigpin);
         EditText jinzhong = (EditText) view.findViewById(R.id.jinzhong);
@@ -352,6 +388,10 @@ public class PG_JSD extends Activity
     void after()
     {
 
+        byId = sellOrder_new.getContractorId();
+        bzId = sellOrder_new.getPickId();
+
+        getpurchaser("");
         showData();
         getsellOrderDetailBySaleId();
         getchengbaohu();
@@ -379,7 +419,7 @@ public class PG_JSD extends Activity
         cp_ds_zhong.setText(sellOrder_new.getDefectWaterWeight());
         zp_ds_zhong.setText(sellOrder_new.getQualityWaterWeight());
         cp_jianshu.setText(sellOrder_new.getDefectNum());
-        zp_jianshu.setText(sellOrder_new.getActualweight());
+        zp_jianshu.setText(sellOrder_new.getActualnumber());
         jsd_cpprice.setText(sellOrder_new.getDefectPrice());
 //        jsd_zpprice.setText(sellOrder_new.getActualprice());
         jsd_cpzjs.setText(sellOrder_new.getDefectTotalWeight());
@@ -438,7 +478,6 @@ public class PG_JSD extends Activity
         @Override
         public void afterTextChanged(Editable editable)
         {
-
 
 
         }
@@ -680,11 +719,8 @@ public class PG_JSD extends Activity
     }
 
 
-
-
     private void getsellOrderDetailBySaleId()
     {
-
 
 
         commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
@@ -707,7 +743,7 @@ public class PG_JSD extends Activity
 
 
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        pg_jsd_adapter = new PG_JSD_Adapter(PG_JSD.this, listNewData, sellOrder_new.getQualityNetWeight(),sellOrder_new.getDefectNetWeight());
+                        pg_jsd_adapter = new PG_JSD_Adapter(PG_JSD.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight());
                         frame_listview_news.setAdapter(pg_jsd_adapter);
                         utils.setListViewHeight(frame_listview_news);
 
@@ -732,7 +768,7 @@ public class PG_JSD extends Activity
         });
     }
 
-    private void newaddOrder( String data)
+    private void newaddOrder(String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "editOrder");
@@ -780,5 +816,132 @@ public class PG_JSD extends Activity
                 AppContext.makeToast(PG_JSD.this, "error_connectServer");
             }
         });
+    }
+
+    private void getpurchaser(String name)
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getpurchaser");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<Purchaser> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        if (result.getAffectedRows() != 0)
+                        {
+                            listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                if (listNewData.get(i).userType.equals("采购商"))
+                                {
+                                } else if (listNewData.get(i).userType.equals("包装工头"))
+                                {
+                                    listData_BZ.add(listNewData.get(i));
+                                } else
+                                {
+                                    listData_BY.add(listNewData.get(i));
+                                }
+                            }
+
+
+                  /*          String[] str = new String[listData_CG.size()];
+                            for (int i = 0; i < listData_CG.size(); i++)
+                            {
+                                str[i] = listData_CG.get(i).getName();
+                            }
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(NCZ_CreateNewOrder.this,
+                                    android.R.layout.simple_dropdown_item_1line, str);
+                            et_name.setAdapter(adapter);
+                            et_name.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                            {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                                {
+                                    Object obj = adapterView.getItemAtPosition(i);
+                                    String ss = obj.toString();
+                                    for (int j = 0; j < listData_CG.size(); j++)
+                                    {
+                                        if (listData_CG.get(j).getName().equals(ss))
+                                        {
+                                            et_phone.setText(listData_CG.get(j).getTelephone());
+                                            et_address.setText(listData_CG.get(j).getAddress());
+                                            et_email.setText(listData_CG.get(j).getMailbox());
+                                        }
+                                    }
+                                }
+                            });*/
+
+                        } else
+                        {
+                            listNewData = new ArrayList<Purchaser>();
+                        }
+
+                    } else
+                    {
+                        listNewData = new ArrayList<Purchaser>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+            }
+        });
+    }
+
+    //包装工
+    public void showDialog_bz(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) PG_JSD.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listViews = new CustomDialog_ListView(PG_JSD.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                bz_fzrid.setText(zzsl);
+                bzId = bundle.getString("id");
+
+            }
+        });
+        customDialog_listViews.show();
+    }
+
+    //搬运工
+    public void showDialog_by(List<String> listdata, List<String> listid)
+    {
+        View dialog_layout = (RelativeLayout) PG_JSD.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listViews = new CustomDialog_ListView(PG_JSD.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                by_fzrid.setText(zzsl);
+                byId = bundle.getString("id");
+
+            }
+        });
+        customDialog_listViews.show();
     }
 }

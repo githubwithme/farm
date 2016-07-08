@@ -627,7 +627,7 @@
                         android:background="@color/bg_main"/>
 
 
-                    <EditText
+                    <TextView
                         android:textSize="14dip"
                         android:id="@+id/bz_fzrid"
                         android:layout_width="0dip"
@@ -828,7 +828,7 @@
                         android:background="@color/bg_main"/>
 
 
-                    <EditText
+                    <TextView
                         android:textSize="14dip"
                         android:id="@+id/by_fzrid"
                         android:layout_width="0dip"
@@ -895,6 +895,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:numeric="decimal"
                     android:id="@+id/packFee"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
@@ -922,6 +923,7 @@
                     android:background="@color/bg_main"/>
 
                 <EditText
+                    android:numeric="decimal"
                     android:id="@+id/carryFee"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"

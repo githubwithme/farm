@@ -41,7 +41,7 @@ import java.util.List;
 /**
  * Created by hasee on 2016/6/29.
  */
-public class NCZ_NotpayAdapter  extends BaseAdapter
+public class NCZ_NotpayAdapter extends BaseAdapter
 {
     static String name = "";
     CustomDialog_CallTip custom_calltip;
@@ -69,7 +69,7 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
 
     }
 
-    public NCZ_NotpayAdapter(Context context, List<SellOrder_New> data,String broadcast)
+    public NCZ_NotpayAdapter(Context context, List<SellOrder_New> data, String broadcast)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -121,10 +121,10 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-            if ( sellOrder.getSellOrderDetailList().size()>0)
+            if (sellOrder.getSellOrderDetailList().size() > 0)
             {
-                listItemView.tv_car.setText( sellOrder.getSellOrderDetailList().get(0).getparkname());
-            }else
+                listItemView.tv_car.setText(sellOrder.getSellOrderDetailList().get(0).getparkname());
+            } else
             {
                 listItemView.tv_car.setText("没有选择区域");
             }
@@ -170,12 +170,15 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
             if (sellOrder.getSelltype().equals("待付订金"))
             {
                 listItemView.tv_state.setText("等待买家付定金");
-            }else if (sellOrder.getSelltype().equals("交易中"))
+            } else if (sellOrder.getSelltype().equals("交易中"))
             {
                 listItemView.tv_state.setText("交易正在进行中");
-            }else if(sellOrder.getSelltype().equals("待付尾款"))
+            } else if (sellOrder.getSelltype().equals("待付尾款"))
             {
-                listItemView.tv_state.setText("等待买家付尾款");
+                listItemView.tv_state.setText("等待卖家付尾款");
+            } else if (sellOrder.getSelltype().equals("审核结算单"))
+            {
+                listItemView.tv_state.setText("审批结算");
             }
 
 /*            if (sellOrder.getDeposit().equals("0"))
@@ -191,13 +194,13 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
                     listItemView.tv_state.setText("买家已付尾款");
                 }
             }*/
-            listItemView.btn_cancleorder.setTag(R.id.tag_cash,sellOrder);
+            listItemView.btn_cancleorder.setTag(R.id.tag_cash, sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    SellOrder_New sellOrder_new= (SellOrder_New) v.getTag(R.id.tag_cash);
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_cash);
                     showDeleteTip(sellOrder_new.getUuid());
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
@@ -225,12 +228,12 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
         if (listItems.get(position).getFlashStr().equals("0"))
         {
             listItemView.fl_dynamic.setVisibility(View.INVISIBLE);
-        }else
+        } else
         {
             listItemView.fl_dynamic.setVisibility(View.VISIBLE);
         }
         //
-        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work,  R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
+        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work, R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
         if (name.equals(""))
         {
             name += sellOrder.getMainPepole() + ",";
@@ -255,8 +258,8 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
         {
             String[] data = name.split(",");
             name += listItems.get(position).getMainPepole() + ",";
-            listItemView.circle_img.setImageResource(color[(data.length ) % color.length]);
-            int y = (data.length ) % color.length;
+            listItemView.circle_img.setImageResource(color[(data.length) % color.length]);
+            int y = (data.length) % color.length;
         }
         return convertView;
     }
@@ -265,7 +268,7 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
     {
 
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uuid",uuid );
+        params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("action", "deleteSellOrderAndDetail");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -307,6 +310,7 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
             }
         });
     }
+
     public void showDialog_addsaleinfo(final String phone)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_calltip, null);
@@ -347,7 +351,7 @@ public class NCZ_NotpayAdapter  extends BaseAdapter
         custom_calltip.show();
     }
 
-    private void showDeleteTip(final String  uuid)
+    private void showDeleteTip(final String uuid)
     {
 
         View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);

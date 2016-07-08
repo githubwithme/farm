@@ -234,10 +234,12 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
                         hashMap.put("batchTime", batchTime);
                         hashMap.put("number_difference", number_left);
                         uuids.add(hashMap);
-
+                        commembertab commembertab = AppContext.getUserInfo(this);
                         String uuid = java.util.UUID.randomUUID().toString();
                         SellOrderDetail_New sellorderdetail_newsale = new SellOrderDetail_New();
                         sellorderdetail_newsale.setuid(contractTab.getuId());
+                        sellorderdetail_newsale.setCreatorId(commembertab.getId());
+
                         sellorderdetail_newsale.setUuid(uuid);
                         sellorderdetail_newsale.setactuallat("");
                         sellorderdetail_newsale.setactuallatlngsize("");
@@ -639,6 +641,7 @@ public class NCZ_CreateOrder_SelectProduct extends Activity
         commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("creatorId", commembertab.getId());
         params.addQueryStringParameter("action", "deleNewSaleAddsalefor");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

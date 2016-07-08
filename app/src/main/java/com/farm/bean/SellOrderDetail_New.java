@@ -56,8 +56,19 @@ public class SellOrderDetail_New implements Parcelable
 	public String xxzt;
 	public String type;
 	public String year;
+	public String creatorId;
 	public List<CoordinatesBean> coordinatesBeanList;
 
+
+	public String getCreatorId()
+	{
+		return creatorId;
+	}
+
+	public void setCreatorId(String creatorId)
+	{
+		this.creatorId = creatorId;
+	}
 
 	public void setYear(String year)
 	{
@@ -428,6 +439,7 @@ public class SellOrderDetail_New implements Parcelable
          p.setXxzt(source.readString());
          p.setType(source.readString());
          p.setYear(source.readString());
+         p.setCreatorId(source.readString());
 		  p.coordinatesBeanList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
          return p;
       }  
@@ -473,6 +485,7 @@ public class SellOrderDetail_New implements Parcelable
          p.writeString(xxzt);
          p.writeString(type);
          p.writeString(year);
+         p.writeString(creatorId);
 		p.writeList(coordinatesBeanList);
 	}
     @Override

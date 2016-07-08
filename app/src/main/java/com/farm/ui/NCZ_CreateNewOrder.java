@@ -125,6 +125,7 @@ public class NCZ_CreateNewOrder extends Activity
     @ViewById
     TextView CR_chanpin;
 
+
     String cgId = "";
     String byId = "";
     String bzId = "";
@@ -418,7 +419,7 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setActualsumvalues("");
         sellOrder.setActualweight("0");
         sellOrder.setDefectNum("0");
-        sellOrder.setDeposit("0");
+        sellOrder.setDeposit("");
         sellOrder.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
         sellOrder.setSaletime(dd_time.getText().toString());
@@ -427,7 +428,6 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setXxzt("0");
         sellOrder.setProducer(producer);
         sellOrder.setFinalpayment("");
-
         sellOrder.setMainPepole(fzrId);
         sellOrder.setPlateNumber(dd_cl.getText().toString());
         sellOrder.setContractorId(bzId);
@@ -568,6 +568,7 @@ public class NCZ_CreateNewOrder extends Activity
         commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("creatorId", commembertab.getId());
         params.addQueryStringParameter("action", "deleNewSaleAddsalefor");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

@@ -398,6 +398,7 @@ public class NCZ_CreateNewFarmOrder extends Activity
         commembertab commembertab = AppContext.getUserInfo(this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("creatorId", commembertab.getId());
         params.addQueryStringParameter("action", "deleNewSaleAddsalefor");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
