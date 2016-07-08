@@ -163,7 +163,7 @@ public class NCZ_NewOrderDetail extends Activity
         defectNetWeight.setText(sellOrder.getDefectNetWeight());
         qualityTotalWeight.setText(sellOrder.getQualityTotalWeight());
         defectTotalWeight.setText(sellOrder.getDefectTotalWeight());
-        actualweight.setText(sellOrder.getActualweight());
+        actualweight.setText(sellOrder.getActualnumber());
         defectNum.setText(sellOrder.getDefectNum());
         actualprice.setText(sellOrder.getActualprice());
         defectPrice.setText(sellOrder.getDefectPrice());

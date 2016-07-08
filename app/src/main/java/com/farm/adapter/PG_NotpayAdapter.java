@@ -168,7 +168,7 @@ public class PG_NotpayAdapter extends BaseAdapter
             {
                 listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
             }
-            if (sellOrder.getSelltype().equals("待付订金"))
+/*            if (sellOrder.getSelltype().equals("待付订金"))
             {
                 listItemView.tv_state.setText("等待买家付定金");
             }else if (sellOrder.getSelltype().equals("交易中"))
@@ -177,8 +177,8 @@ public class PG_NotpayAdapter extends BaseAdapter
             }else if(sellOrder.getSelltype().equals("待付尾款"))
             {
                 listItemView.tv_state.setText("等待买家付尾款");
-            }
-
+            }*/
+            listItemView.tv_state.setText(sellOrder.getSelltype());
 /*            if (sellOrder.getDeposit().equals("0"))
             {
                 listItemView.tv_state.setText("等待买家付定金");

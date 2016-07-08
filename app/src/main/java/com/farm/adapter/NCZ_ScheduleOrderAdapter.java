@@ -65,6 +65,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
 
     static class ListItemView
     {
+        public TextView tv_fzr;
         public TextView tv_car;
         public TextView tv_name;
         public TextView tv_buyer;
@@ -123,6 +124,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             convertView = listContainer.inflate(R.layout.listitem_scheduleorder, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.tv_fzr = (TextView) convertView.findViewById(R.id.tv_fzr);
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
@@ -216,20 +218,20 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             {
                 listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
             }
-            listItemView.tv_state.setText(sellOrder.getMainPepName());
-/*            if (sellOrder.getDeposit().equals("0"))
+            listItemView.tv_fzr.setText(sellOrder.getMainPepName());
+            if (sellOrder.getSelltype().equals("待付订金"))
             {
                 listItemView.tv_state.setText("等待买家付定金");
-            } else
+            } else if (sellOrder.getSelltype().equals("交易中"))
             {
-                    if (sellOrder.getFinalpayment().equals("0"))
-                {
-                    listItemView.tv_state.setText("等待买家付尾款");
-                } else
-                {
-                    listItemView.tv_state.setText("买家已付尾款");
-                }
-            }*/
+                listItemView.tv_state.setText("交易正在进行中");
+            } else if (sellOrder.getSelltype().equals("待付尾款"))
+            {
+                listItemView.tv_state.setText("等待卖家付尾款");
+            } else if (sellOrder.getSelltype().equals("审核结算单"))
+            {
+                listItemView.tv_state.setText("审批结算");
+            }
             listItemView.btn_cancleorder.setTag(R.id.tag_cash, sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {

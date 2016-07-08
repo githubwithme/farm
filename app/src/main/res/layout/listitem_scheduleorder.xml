@@ -206,7 +206,17 @@
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="10dip">
 
-
+                <TextView
+                    android:id="@+id/tv_fzr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:minWidth="60dip"
+                    android:text="等待买家付款"
+                    android:textColor="@color/red"
+                    android:textSize="14sp"/>
                 <TextView
                     android:id="@+id/tv_batchtimetip"
                     android:layout_width="wrap_content"
@@ -233,6 +243,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_marginTop="5dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dip"
