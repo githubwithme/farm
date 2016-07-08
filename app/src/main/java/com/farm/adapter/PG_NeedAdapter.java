@@ -172,10 +172,10 @@ public class PG_NeedAdapter extends BaseAdapter
                 listItemView.tv_batchtime.setText("申请免付尾款");
             } else if (sellOrder.getIsNeedAudit().equals("0") && sellOrder.getCreatorid().equals(""))
             {
-                listItemView.tv_batchtime.setText("订单发生改变");
+                listItemView.tv_batchtime.setText("订单申请修改");
             } else
             {
-                listItemView.tv_batchtime.setText("自发订单审批");
+                listItemView.tv_batchtime.setText("自发订单申请");
             }
 
             //片管修改订单
@@ -327,14 +327,9 @@ public class PG_NeedAdapter extends BaseAdapter
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-               /* if (result.getAffectedRows() != 0)
-                {
-                    listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-
-                } else
-                {
-                    listData = new ArrayList<SellOrder_New>();
-                }*/
+                    Intent intent = new Intent();
+                    intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
+                    context.sendBroadcast(intent);
 
                 } else
                 {

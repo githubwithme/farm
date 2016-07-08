@@ -55,7 +55,7 @@ public class PG_FarmManagerFragment extends Fragment
         Intent intent = new Intent(getActivity(), PG_Workplan_.class);
         getActivity().startActivity(intent);
     }
-    @Click
+/*    @Click
     void ll_jsd()
     {
 //        Intent intent = new Intent(getActivity(), PG_JSD_.class);
@@ -63,7 +63,7 @@ public class PG_FarmManagerFragment extends Fragment
         Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
         getActivity().startActivity(intent);
 //        PG_Workplan
-    }
+    }*/
 
 //    @Click
 //    void gongdan()

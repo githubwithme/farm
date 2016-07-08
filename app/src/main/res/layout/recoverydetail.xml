@@ -45,6 +45,7 @@
         android:background="@color/line_color"/>
 
     <TextView
+        android:id="@+id/bz_fzr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dip"
@@ -58,9 +59,20 @@
         android:layout_margin="10dip"
         android:text="采收工：已落实   张三  13189458345"
         android:textColor="@color/bg_text"
+        android:textSize="16sp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/by_fzr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:text="挑工：未落实 "
+        android:textColor="@color/bg_text"
         android:textSize="16sp"/>
 
     <TextView
+        android:id="@+id/cl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dip"

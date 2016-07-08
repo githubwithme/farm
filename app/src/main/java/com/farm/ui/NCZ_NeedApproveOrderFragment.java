@@ -124,6 +124,10 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
         @Override
         public void onReceive(Context context, Intent intent)
         {
+
+           /*
+            lv.setAdapter(null);
+            lv.removeAllViews();*/
             getAllOrders();
         }
     };
@@ -182,9 +186,9 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
                                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                                 AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
 //                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
+                              /*  Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
-                                getActivity().startActivity(intent);
+                                getActivity().startActivity(intent);*/
                             }
                         });
 
@@ -608,9 +612,9 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
 
                                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                                 AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                       /*         Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
-                                getActivity().startActivity(intent);
+                                getActivity().startActivity(intent);*/
                             }
                         });
 

@@ -123,7 +123,7 @@ public class PG_ScheduleOrderFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.cz_allorderfarment, container, false);
         appContext = (AppContext) getActivity().getApplication();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_FARMMANAGER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
         return rootView;
     }
@@ -143,7 +143,7 @@ public class PG_ScheduleOrderFragment extends Fragment
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new PG_scheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+            listAdapter = new PG_scheduleOrderAdapter(getActivity(), listData, AppContext.UPDATEMESSAGE_FARMMANAGER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {

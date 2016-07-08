@@ -409,6 +409,8 @@ public class NCZ_DD_SH_Detail extends Activity
                         intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
                         NCZ_DD_SH_Detail.this.sendBroadcast(intent);
                         finish();
+
+
                     }
 
                 } else

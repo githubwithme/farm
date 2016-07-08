@@ -353,34 +353,6 @@
                         android:layout_height="match_parent"
                         android:background="@color/light_gray"/>
 
-                    <LinearLayout
-                        android:id="@+id/ll_jsd"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dip"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="40dip"
-                            android:layout_height="40dip"
-                            android:layout_gravity="center_horizontal"
-                            android:background="@drawable/newicon_sale1"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dip"
-                            android:gravity="center"
-                            android:text="结算单"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="2px"
-                        android:layout_height="match_parent"
-                        android:background="@color/light_gray"/>
 
                     <LinearLayout
                         android:id="@+id/ll_workplan"
@@ -402,6 +374,35 @@
                             android:layout_marginTop="5dip"
                             android:gravity="center"
                             android:text="工作计划"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="2px"
+                        android:layout_height="match_parent"
+                        android:background="@color/light_gray"/>
+
+                    <LinearLayout
+                        android:visibility="invisible"
+                        android:id="@+id/ll_jsd"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dip"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dip"
+                            android:layout_height="40dip"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/newicon_sale1"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dip"
+                            android:gravity="center"
+                            android:text="结算单"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
                     </LinearLayout>

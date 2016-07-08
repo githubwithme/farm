@@ -86,13 +86,13 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
         public void click(View v);
     }
 
-    public NCZ_ScheduleOrderAdapter(Context context, List<SellOrder_New> data, String broadcast,Callback callback)
+    public NCZ_ScheduleOrderAdapter(Context context, List<SellOrder_New> data, String broadcast, Callback callback)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.listItems = data;
         this.broadcast = broadcast;
-        mCallback=callback;
+        mCallback = callback;
     }
 
     public int getCount()
@@ -141,7 +141,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             convertView.setTag(listItemView);
 
 
-            listItemView.tv_car.setText(sellOrder.getProducer()+sellOrder.getGoodsname());
+            listItemView.tv_car.setText(sellOrder.getProducer() + sellOrder.getGoodsname());
 //            SpannableString content = new SpannableString(sellOrder.getBuyers());
             SpannableString content = new SpannableString(sellOrder.getBuyersName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -174,24 +174,33 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
 //                    newaddOrder(builder.toString());
                 }
             });
-
-            SpannableString spanStr_buyer = new SpannableString("就绪");
-
+            String zbstudio="";
+            if (!sellOrder.getContractorId().equals("") && !sellOrder.getPickId().equals(""))
+            {
+                zbstudio="就绪";
+            }else
+            {
+                zbstudio="未就绪";
+            }
+            SpannableString spanStr_buyer = new SpannableString(zbstudio);
             spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
             listItemView.tv_batchtime.setText(spanStr_buyer);
+            listItemView.tv_batchtime.setTag(R.id.tag_danwei,sellOrder);
             listItemView.tv_batchtime.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
                     Intent intent = new Intent(context, RecoveryDetail_.class);
+                    intent.putExtra("zbstudio",sellOrder_new);
                     context.startActivity(intent);
                 }
             });
             if (sellOrder.getSaletime().equals(""))
             {
                 listItemView.tv_name.setText(sellOrder.getOldsaletime().substring(5, sellOrder.getOldsaletime().length() - 8));//时间
-            }else
+            } else
             {
                 listItemView.tv_name.setText(sellOrder.getSaletime().substring(5, sellOrder.getSaletime().length() - 8));//时间
 

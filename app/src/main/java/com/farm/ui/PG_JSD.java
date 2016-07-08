@@ -235,7 +235,7 @@ public class PG_JSD extends Activity
         sellOrder.setUid(sellOrder_new.getUid());
         sellOrder.setUuid(sellOrder_new.getUuid());
         sellOrder.setBatchTime(sellOrder_new.getBatchTime());
-        sellOrder.setSelltype("交易中");//
+//        sellOrder.setSelltype("交易中");//
         sellOrder.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrder.setBuyers(sellOrder_new.getBuyersId());
@@ -272,6 +272,7 @@ public class PG_JSD extends Activity
         sellOrder.setDefectNum(cp_jianshu.getText().toString());//  次品件数
         sellOrder.setPackPec(packPec.getText().toString());//  包装规格
 
+        sellOrder.setSelltype("审批结算");//  包装规格
 
 /*        public String total ;//总件数
         public String qualityTotalWeight;//正品总净重
@@ -759,9 +760,8 @@ public class PG_JSD extends Activity
                         Toast.makeText(PG_JSD.this, "订单修改成功！", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent();
-//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
-                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
-                        PG_JSD.this.sendBroadcast(intent);
+                        intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
+                        sendBroadcast(intent);
 
                         finish();
                     }

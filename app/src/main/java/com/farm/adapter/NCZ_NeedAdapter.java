@@ -27,6 +27,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.ui.NCZ_DD_SH_Detail_;
 import com.farm.ui.NCZ_EditOrder_;
+import com.farm.ui.NCZ_Need_JSD_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
@@ -50,7 +51,7 @@ import java.util.List;
 @SuppressLint("NewApi")
 public class NCZ_NeedAdapter extends BaseAdapter
 {
-    static String name="";
+    static String name = "";
     CustomDialog_CallTip custom_calltip;
     MyDialog myDialog;
     String broadcast;
@@ -80,7 +81,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
 
     }
 
-    public NCZ_NeedAdapter(Context context, List<SellOrder_New> data,String broadcast)
+    public NCZ_NeedAdapter(Context context, List<SellOrder_New> data, String broadcast)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -134,23 +135,36 @@ public class NCZ_NeedAdapter extends BaseAdapter
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
-            listItemView.tv_importance.setText(sellOrder.getMainPepName());
 
-            final SpannableString content = new SpannableString(sellOrder.getBuyersName());
-            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-            listItemView.tv_buyer.setText(content);
-            listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
+        } else
+        {
+            convertView = lmap.get(position);
+            listItemView = (ListItemView) convertView.getTag();
+        }
+        if (listItems.get(position).getFlashStr().equals("0"))
+        {
+            listItemView.fl_dynamic.setVisibility(View.INVISIBLE);
+        } else
+        {
+            listItemView.fl_dynamic.setVisibility(View.VISIBLE);
+        }
+        listItemView.tv_importance.setText(sellOrder.getMainPepName());
+
+        final SpannableString content = new SpannableString(sellOrder.getBuyersName());
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        listItemView.tv_buyer.setText(content);
+        listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
             {
-                @Override
-                public void onClick(View v)
-                {
-                    showDialog_addsaleinfo("15989154871");
-                }
-            });
+                showDialog_addsaleinfo("15989154871");
+            }
+        });
 
-            SpannableString spanStr_buyer = new SpannableString("就绪");
-            spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
-            //下划线跳转
+        SpannableString spanStr_buyer = new SpannableString("就绪");
+        spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
+        //下划线跳转
 /*            listItemView.tv_batchtime.setText(spanStr_buyer);
             listItemView.tv_batchtime.setOnClickListener(new View.OnClickListener()
             {
@@ -162,32 +176,42 @@ public class NCZ_NeedAdapter extends BaseAdapter
                 }
             });*/
 
-            if(sellOrder.getFreeDeposit().equals("0"))
+        if (sellOrder.getFreeDeposit().equals("0"))
+        {
+            listItemView.tv_batchtime.setText("申请免付订金");
+        } else if (sellOrder.getFreeFinalPay().equals("0"))
+        {
+            listItemView.tv_batchtime.setText("申请免付尾款");
+        } else if (sellOrder.getIsNeedAudit().equals("0") && sellOrder.getCreatorid().equals(""))
+        {
+            listItemView.tv_batchtime.setText("订单发生改变");
+        } else
+        {
+            listItemView.tv_batchtime.setText("自发订单审批");
+        }
+        listItemView.chakan.setTag(R.id.tag_cash, sellOrder);
+        listItemView.chakan.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
             {
-                listItemView.tv_batchtime.setText("申请免付订金");
-            }else if (sellOrder.getFreeFinalPay().equals("0"))
-            {
-                listItemView.tv_batchtime.setText("申请免付尾款");
-            }else if(sellOrder.getIsNeedAudit().equals("0")&&sellOrder.getCreatorid().equals(""))
-            {
-                listItemView.tv_batchtime.setText("订单发生改变");
-            }else
-            {
-                listItemView.tv_batchtime.setText("自发订单审批");
-            }
-            listItemView.chakan.setTag(R.id.tag_cash,sellOrder);
-            listItemView.chakan.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
+                SellOrder_New sellOrdesr = new SellOrder_New();
+                sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_cash);
+                if (!sellOrdesr.getSelltype().equals("审批结算"))
                 {
-                    SellOrder_New sellOrdesr=new SellOrder_New();
-                    sellOrdesr= (SellOrder_New) view.getTag(R.id.tag_cash);
-                    Intent intent=new Intent(context, NCZ_DD_SH_Detail_.class);
-                    intent.putExtra("SellOrder_New",sellOrdesr);
+                    Intent intent = new Intent(context, NCZ_DD_SH_Detail_.class);
+                    intent.putExtra("SellOrder_New", sellOrdesr);
                     context.startActivity(intent);
+                } else
+                {
+                    Intent intent = new Intent(context, NCZ_Need_JSD_.class);
+                    intent.putExtra("SellOrder_New", sellOrdesr);
+                    context.startActivity(intent);
+
                 }
-            });
+
+            }
+        });
 /*            listItemView.btn_pizhun.setTag(R.id.tag_cash,sellOrder);
             listItemView.btn_pizhun.setOnClickListener(new View.OnClickListener()
             {
@@ -201,30 +225,30 @@ public class NCZ_NeedAdapter extends BaseAdapter
             });*/
 
 //            listItemView.tv_buyer.setText(sellOrder.getBuyers());
-            listItemView.tv_price.setText(sellOrder.getPrice());
-            listItemView.tv_car.setText(sellOrder.getProducer());
-            listItemView.tv_from.setText(sellOrder.getProducer());
+        listItemView.tv_price.setText(sellOrder.getPrice());
+        listItemView.tv_car.setText(sellOrder.getProducer());
+        listItemView.tv_from.setText(sellOrder.getProducer());
 //            listItemView.tv_batchtime.setText(sellOrder.getBatchTime());
-            if (sellOrder.getActualsumvalues().equals(""))
+        if (sellOrder.getActualsumvalues().equals(""))
+        {
+            listItemView.tv_sum.setText("待反馈");
+        } else
+        {
+            listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
+        }
+        if (sellOrder.getDeposit().equals("0"))
+        {
+            listItemView.tv_state.setText("等待买家付定金");
+        } else
+        {
+            if (sellOrder.getFinalpayment().equals("0"))
             {
-                listItemView.tv_sum.setText("待反馈");
+                listItemView.tv_state.setText("等待买家付尾款");
             } else
             {
-                listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
+                listItemView.tv_state.setText("买家已付尾款");
             }
-            if (sellOrder.getDeposit().equals("0"))
-            {
-                listItemView.tv_state.setText("等待买家付定金");
-            } else
-            {
-                if (sellOrder.getFinalpayment().equals("0"))
-                {
-                    listItemView.tv_state.setText("等待买家付尾款");
-                } else
-                {
-                    listItemView.tv_state.setText("买家已付尾款");
-                }
-            }
+        }
 /*            listItemView.btn_cancleorder.setTag(R.id.tag_cash,sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
@@ -236,35 +260,22 @@ public class NCZ_NeedAdapter extends BaseAdapter
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
             });*/
-            listItemView.btn_editorder.setTag(R.id.tag_postion, position);
-            listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
-            listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
+        listItemView.btn_editorder.setTag(R.id.tag_postion, position);
+        listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
+        listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
             {
-                @Override
-                public void onClick(View v)
-                {
-                    int pos = (int) v.getTag(R.id.tag_postion);
-                    SellOrder_New sellOrder = (SellOrder_New) v.getTag(R.id.tag_bean);
-                    Intent intent = new Intent(context, NCZ_EditOrder_.class);
-                    intent.putExtra("bean", sellOrder);
-                    intent.putExtra("broadcast", broadcast);
-                    context.startActivity(intent);
-                }
-            });
-        } else
-        {
-            convertView = lmap.get(position);
-            listItemView = (ListItemView) convertView.getTag();
-        }
-        if (listItems.get(position).getFlashStr().equals("0"))
-        {
-            listItemView.fl_dynamic.setVisibility(View.INVISIBLE);
-        }else
-        {
-            listItemView.fl_dynamic.setVisibility(View.VISIBLE);
-        }
-
-        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work,  R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
+                int pos = (int) v.getTag(R.id.tag_postion);
+                SellOrder_New sellOrder = (SellOrder_New) v.getTag(R.id.tag_bean);
+                Intent intent = new Intent(context, NCZ_EditOrder_.class);
+                intent.putExtra("bean", sellOrder);
+                intent.putExtra("broadcast", broadcast);
+                context.startActivity(intent);
+            }
+        });
+        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work, R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
         if (name.equals(""))
         {
             name += sellOrder.getMainPepole() + ",";
@@ -290,7 +301,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
             String[] data = name.split(",");
             name += listItems.get(position).getMainPepole() + ",";
             listItemView.circle_img.setImageResource(color[(data.length) % color.length]);
-            int y = (data.length ) % color.length;
+            int y = (data.length) % color.length;
         }
         return convertView;
     }
@@ -336,6 +347,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
             }
         });
     }
+
     public void showDialog_addsaleinfo(final String phone)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_calltip, null);
@@ -388,8 +400,8 @@ public class NCZ_NeedAdapter extends BaseAdapter
                 switch (v.getId())
                 {
                     case R.id.btn_sure:
-                        SellOrder_New sellOrdesrt=new SellOrder_New();
-                        sellOrdesrt=sellOrdesr;
+                        SellOrder_New sellOrdesrt = new SellOrder_New();
+                        sellOrdesrt = sellOrdesr;
                         if (sellOrdesr.getFreeDeposit().equals("0"))
                         {
                             sellOrdesrt.setBuyers(sellOrdesrt.getBuyersId());
@@ -418,7 +430,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
         myDialog.show();
     }
 
-    private void newaddOrder( String data)
+    private void newaddOrder(String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "editOrder");

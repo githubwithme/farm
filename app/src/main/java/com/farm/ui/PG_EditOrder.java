@@ -432,7 +432,9 @@ public class PG_EditOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         Toast.makeText(PG_EditOrder.this, "订单修改成功！", Toast.LENGTH_SHORT).show();
-
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
+                        sendBroadcast(intent);
                         finish();
                     }
 

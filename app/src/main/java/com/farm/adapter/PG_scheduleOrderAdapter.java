@@ -57,6 +57,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
 
     static class ListItemView
     {
+        public TextView cl;
         public TextView tv_car;
         public TextView tv_name;
         public TextView tv_buyer;
@@ -114,6 +115,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
             convertView = listContainer.inflate(R.layout.pg_sched_adapter, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.cl = (TextView) convertView.findViewById(R.id.cl);
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
@@ -132,7 +134,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
             convertView.setTag(listItemView);
 
 
-            listItemView.tv_car.setText(sellOrder.getProducer());
+            listItemView.tv_car.setText(sellOrder.getProducer()+"("+sellOrder.getGoodsname()+")");
 //            SpannableString content = new SpannableString(sellOrder.getBuyers());
             SpannableString content = new SpannableString(sellOrder.getBuyersName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -145,6 +147,8 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
                     showDialog_addsaleinfo(sellOrder.getPurchaTel());
                 }
             });
+            String []  str=sellOrder.getPlateNumber().split(",");
+            listItemView.cl.setText(str.length+"");
 //            listItemView.circle_img.setOnClickListener(this);
             listItemView.btn_editorder.setTag(R.id.tag_kg, listItemView);
             listItemView.btn_editorder.setTag(R.id.tag_hg, sellOrder);
@@ -157,27 +161,33 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
                     ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
                     MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name, sellOrders, "2");
                     myDatepicker.getDialog().show();
-    /*                sellOrders.setSaletime(listItemView2.tv_name.getText().toString());
-                    StringBuilder builder = new StringBuilder();
-                    builder.append("{\"SellOrder_new\": [");
-                    builder.append(JSON.toJSONString(sellOrders));
-                    builder.append("]} ");*/
-//                    newaddOrder(builder.toString());
+
                 }
             });
-            listItemView.tv_batchtime.setText(sellOrder.getGoodsname());
-/*            SpannableString spanStr_buyer = new SpannableString("就绪");
+//            listItemView.tv_batchtime.setText(sellOrder.getGoodsname());
+            String zbstudio="";
+            if (!sellOrder.getContractorId().equals("") && !sellOrder.getPickId().equals(""))
+            {
+                zbstudio="就绪";
+            }else
+            {
+                zbstudio="未就绪";
+            }
+            SpannableString spanStr_buyer = new SpannableString(zbstudio);
             spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
             listItemView.tv_batchtime.setText(spanStr_buyer);
+            listItemView.tv_batchtime.setTag(R.id.tag_danwei, sellOrder);
             listItemView.tv_batchtime.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
                     Intent intent = new Intent(context, RecoveryDetail_.class);
+                    intent.putExtra("zbstudio", sellOrder_new);
                     context.startActivity(intent);
                 }
-            });*/
+            });
             if (sellOrder.getSaletime().length()>0)
             {
                 listItemView.tv_name.setText(sellOrder.getSaletime().substring(5, sellOrder.getSaletime().length() - 8));//时间
@@ -192,7 +202,9 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
             {
                 listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
             }
-            listItemView.tv_state.setText(sellOrder.getMainPepName());
+            //负责人
+            listItemView.tv_state.setText(sellOrder.getSelltype());
+//            listItemView.tv_state.setText(sellOrder.getMainPepName());
 /*            if (sellOrder.getDeposit().equals("0"))
             {
                 listItemView.tv_state.setText("等待买家付定金");

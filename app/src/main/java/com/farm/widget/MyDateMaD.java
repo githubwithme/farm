@@ -149,10 +149,19 @@ public class MyDateMaD
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        Intent intent = new Intent();
-//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
-                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
-                        context.sendBroadcast(intent);
+
+                        if (type.equals("1"))
+                        {
+                            Intent intent = new Intent();
+                            intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                            context.sendBroadcast(intent);
+                        }else
+                        {
+                            Intent intent = new Intent();
+                            intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
+                            context.sendBroadcast(intent);
+                        }
+
                     }
 
                 } else

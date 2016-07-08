@@ -203,6 +203,8 @@
         <activity android:name=".ui.NCZ_CreateNewFarmOrder_"/>
         <activity android:name=".ui.NCZ_DD_SH_Detail_"/>
         <activity android:name=".ui.NCZ_NewOrderDetail_"/>
+        <activity android:name=".ui.PG_Need_Orderdetail_"/>
+        <activity android:name=".ui.NCZ_Need_JSD_"/>
 
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>
