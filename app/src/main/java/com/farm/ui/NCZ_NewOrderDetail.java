@@ -188,7 +188,7 @@ public class NCZ_NewOrderDetail extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder = getIntent().getParcelableExtra("bean");
-        list_orderdetail = sellOrder.getSellOrderDetailList();
+//        list_orderdetail = sellOrder.getSellOrderDetailList();
     }
 
     private void getsellOrderDetailBySaleId()
@@ -215,7 +215,8 @@ public class NCZ_NewOrderDetail extends Activity
                     {
 
 
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+                        list_orderdetail = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+//                        adapter_sellOrderDetail = new Adapter_New_SellDetail(NCZ_NewOrderDetail.this, list_orderdetail);
                         adapter_sellOrderDetail = new Adapter_New_SellDetail(NCZ_NewOrderDetail.this, list_orderdetail);
                         lv.setAdapter(adapter_sellOrderDetail);
                         utils.setListViewHeight(lv);

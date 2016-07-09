@@ -167,7 +167,7 @@ public class NCZ_NotpayAdapter extends BaseAdapter
             {
                 listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
             }
-            if (sellOrder.getSelltype().equals("待付订金"))
+            if (sellOrder.getSelltype().equals("待付定金"))
             {
                 listItemView.tv_state.setText("等待买家付定金");
             } else if (sellOrder.getSelltype().equals("交易中"))

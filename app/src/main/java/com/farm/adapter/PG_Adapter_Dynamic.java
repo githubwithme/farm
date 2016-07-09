@@ -21,6 +21,7 @@ import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
 import com.farm.common.utils;
 import com.farm.ui.NCZ_JobActivity_;
+import com.farm.ui.PG_BreakOffActivity_;
 import com.farm.ui.PG_GddList_;
 import com.farm.ui.PG_ListOfEvents_;
 import com.farm.ui.PG_OrderManager_;
@@ -277,7 +278,8 @@ public class PG_Adapter_Dynamic extends BaseAdapter
                     context.startActivity(intent);
                 } else if (type.equals("DL"))
                 {
-                    intent = new Intent(context, PQ_DLFragment_.class);
+//                    intent = new Intent(context, PQ_DLFragment_.class);
+                    intent = new Intent(context, PG_BreakOffActivity_.class);
                     context.startActivity(intent);
                 }
 

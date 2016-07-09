@@ -69,7 +69,7 @@ public class PG_AllOrderAdapter extends BaseAdapter
 
     }
 
-    public PG_AllOrderAdapter(Context context, List<SellOrder_New> data,String broadcast)
+    public PG_AllOrderAdapter(Context context, List<SellOrder_New> data, String broadcast)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -167,53 +167,22 @@ public class PG_AllOrderAdapter extends BaseAdapter
             {
                 listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
             }
-/*            if (sellOrder.getSelltype().equals("待付订金"))
+//            tv_state
+            if (sellOrder.getFreeDeposit().equals("-1"))
             {
-                listItemView.tv_state.setText("等待买家付定金");
-            }else if (sellOrder.getSelltype().equals("交易中"))
+                listItemView.tv_state.setText("申请免付定金不通过");
+            } else if (sellOrder.getFreeFinalPay().equals("-1"))
             {
-                listItemView.tv_state.setText("交易正在进行中");
-            }else if(sellOrder.getSelltype().equals("待付尾款"))
-            {
-                listItemView.tv_state.setText("等待买家付尾款");
-            }*/
-            listItemView.tv_state.setText(sellOrder.getSelltype());
-/*            if (sellOrder.getDeposit().equals("0"))
-            {
-                listItemView.tv_state.setText("等待买家付定金");
-            } else
-            {
-                if (sellOrder.getFinalpayment().equals("0"))
-                {
-                    listItemView.tv_state.setText("等待买家付尾款");
-                } else
-                {
-                    listItemView.tv_state.setText("买家已付尾款");
-                }
-            }*/
-            listItemView.btn_cancleorder.setTag(R.id.tag_cash,sellOrder);
-            listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
+                listItemView.tv_state.setText("申请免付尾款不通过");
 
-                    SellOrder_New sellOrder_new= (SellOrder_New) v.getTag(R.id.tag_cash);
+            } else if (sellOrder.getIsNeedAudit().equals("-1"))
+            {
+                listItemView.tv_state.setText("申请修改订单不通过");
+            }
 
-                    if (sellOrder_new.getSelltype().equals("待付定金"))
-                    {
-                        AppContext.makeToast(context, "买家未付定金");
-                    }else
-                    {
-                        Intent intent = new Intent(context, PG_JSD_.class);
-                        intent.putExtra("bean", sellOrder_new);
-                        intent.putExtra("broadcast", broadcast);
-                        context.startActivity(intent);
-                    }
-    /*                showDeleteTip(sellOrder_new.getUuid());
-//                    deleteSellOrderAndDetail(sellOrder_new.getUuid());*/
-                }
-            });
+
+            listItemView.btn_cancleorder.setVisibility(View.GONE);
+
             listItemView.btn_editorder.setTag(R.id.tag_postion, position);
             listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
             listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
@@ -238,12 +207,12 @@ public class PG_AllOrderAdapter extends BaseAdapter
         if (listItems.get(position).getFlashStr().equals("0"))
         {
             listItemView.fl_dynamic.setVisibility(View.INVISIBLE);
-        }else
+        } else
         {
             listItemView.fl_dynamic.setVisibility(View.VISIBLE);
         }
         //
-        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work,  R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
+        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work, R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
         if (name.equals(""))
         {
             name += sellOrder.getMainPepole() + ",";
@@ -268,8 +237,8 @@ public class PG_AllOrderAdapter extends BaseAdapter
         {
             String[] data = name.split(",");
             name += listItems.get(position).getMainPepole() + ",";
-            listItemView.circle_img.setImageResource(color[(data.length ) % color.length]);
-            int y = (data.length ) % color.length;
+            listItemView.circle_img.setImageResource(color[(data.length) % color.length]);
+            int y = (data.length) % color.length;
         }
         return convertView;
     }
@@ -278,7 +247,7 @@ public class PG_AllOrderAdapter extends BaseAdapter
     {
 
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uuid",uuid );
+        params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("action", "deleteSellOrderAndDetail");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -320,6 +289,7 @@ public class PG_AllOrderAdapter extends BaseAdapter
             }
         });
     }
+
     public void showDialog_addsaleinfo(final String phone)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_calltip, null);
@@ -360,7 +330,7 @@ public class PG_AllOrderAdapter extends BaseAdapter
         custom_calltip.show();
     }
 
-    private void showDeleteTip(final String  uuid)
+    private void showDeleteTip(final String uuid)
     {
 
         View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);

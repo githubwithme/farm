@@ -211,6 +211,7 @@ public class PG_OrderManager extends Activity
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("userId", commembertab.getId());
+        params.addQueryStringParameter("isPass", "-1");
         params.addQueryStringParameter("action", "getSellOrderByUserId");//
 //        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
         HttpUtils http = new HttpUtils();

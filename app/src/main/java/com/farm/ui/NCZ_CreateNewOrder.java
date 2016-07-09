@@ -316,11 +316,7 @@ public class NCZ_CreateNewOrder extends Activity
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }*/
-        if (et_address.getText().toString().equals(""))
-        {
-            Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
   /*      if (et_phone.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -419,7 +415,7 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setUid(commembertab.getuId());
         sellOrder.setUuid(uuid);
         sellOrder.setBatchTime(batchtime);
-        sellOrder.setSelltype("待付订金");
+        sellOrder.setSelltype("待付定金");
         sellOrder.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrder.setBuyers(cgId);
@@ -434,8 +430,8 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setActualprice("");
         sellOrder.setActualnumber("");
         sellOrder.setActualsumvalues("");
-        sellOrder.setActualweight("0");
-        sellOrder.setDefectNum("0");
+        sellOrder.setActualweight("");
+        sellOrder.setDefectNum("");
         sellOrder.setDeposit("");
         sellOrder.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
@@ -460,12 +456,12 @@ public class NCZ_CreateNewOrder extends Activity
         SellOrderList.add(sellOrder);
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         sellOrder_new_first.setSellOrderId(uuid);
-        sellOrder_new_first.setQualityWaterWeight("0");
+/*        sellOrder_new_first.setQualityWaterWeight("0");
         sellOrder_new_first.setQualityNetWeight("0");
         sellOrder_new_first.setQualityBalance("0");
         sellOrder_new_first.setDefectWaterWeight("0");
         sellOrder_new_first.setDefectNetWeight("0");
-        sellOrder_new_first.setDefectBalance("0");
+        sellOrder_new_first.setDefectBalance("0");*/
 
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrderList\": ");
@@ -629,6 +625,7 @@ public class NCZ_CreateNewOrder extends Activity
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("creatorId", commembertab.getId());
         params.addQueryStringParameter("action", "getSellOrderDetailList");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

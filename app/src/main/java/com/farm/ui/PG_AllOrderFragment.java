@@ -39,6 +39,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ import java.util.List;
 /**
  * Created by hasee on 2016/7/9.
  */
+@EFragment
 public class PG_AllOrderFragment  extends Fragment
 {
     List<AllType> listdata_cp = new ArrayList<AllType>();
@@ -67,8 +69,7 @@ public class PG_AllOrderFragment  extends Fragment
     View pv_tab;
     PopupWindow pw_command;
     View pv_command;
-    @ViewById
-    View line;
+
     @ViewById
     ListView lv;
     @ViewById
@@ -157,7 +158,7 @@ public class PG_AllOrderFragment  extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("userId", commembertab.getId());
-        params.addQueryStringParameter("isPass", "-1");
+
         params.addQueryStringParameter("action", "getSellOrderByUserId");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -290,7 +291,6 @@ public class PG_AllOrderFragment  extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("userId", commembertab.getId());
-        params.addQueryStringParameter("isPass", "-1");
         params.addQueryStringParameter("action", "getSellOrderByUserId");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

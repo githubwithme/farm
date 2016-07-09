@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -122,13 +123,13 @@ public class PG_NotpayAdapter extends BaseAdapter
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-            if ( sellOrder.getSellOrderDetailList().size()>0)
+   /*         if ( sellOrder.getSellOrderDetailList().size()>0)
             {
                 listItemView.tv_car.setText( sellOrder.getSellOrderDetailList().get(0).getparkname());
             }else
             {
                 listItemView.tv_car.setText("没有选择区域");
-            }
+            }*/
             listItemView.tv_importance.setText(sellOrder.getMainPepName());
 //            listItemView.tv_car.setText(sellOrder.getProducer());
             SpannableString content = new SpannableString(sellOrder.getPurchaName());
@@ -203,7 +204,7 @@ public class PG_NotpayAdapter extends BaseAdapter
 
                     if (sellOrder_new.getSelltype().equals("待付定金"))
                     {
-                        AppContext.makeToast(context, "买家未付定金");
+                        Toast.makeText(context, "请先填写信息", Toast.LENGTH_SHORT).show();
                     }else
                     {
                         Intent intent = new Intent(context, PG_JSD_.class);

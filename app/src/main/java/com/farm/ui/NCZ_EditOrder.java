@@ -211,11 +211,7 @@ public class NCZ_EditOrder extends Activity
     void btn_sure()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_EditOrder.this);
-        if (dd_fzr.getText().toString().equals(""))
-        {
-            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         if (dd_time.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -306,8 +302,6 @@ public class NCZ_EditOrder extends Activity
         sellOrders.setUuid(sellOrder.getUuid());
         sellOrders.setGoodsname(chanpin.getText().toString());
         sellOrders.setBatchTime(sellOrder.getBatchTime());
-        sellOrders.setSelltype("0");
-        sellOrders.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrders.setBuyers(cgId);
         sellOrders.setAddress(et_address.getText().toString());
@@ -322,7 +316,7 @@ public class NCZ_EditOrder extends Activity
         sellOrders.setActualweight("");
         sellOrders.setActualnumber("");
         sellOrders.setActualsumvalues("");
-        sellOrders.setDeposit("0");
+        sellOrders.setDeposit("");
         sellOrders.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
 
@@ -330,7 +324,7 @@ public class NCZ_EditOrder extends Activity
         sellOrders.setNote(et_note.getText().toString());
         sellOrders.setXxzt("0");
         sellOrders.setProducer(producer);
-        sellOrders.setFinalpayment("0");
+        sellOrders.setFinalpayment("");
         sellOrders.setWaitDeposit(dingjin.getText().toString());
         sellOrders.setMainPepole(fzrId);
         sellOrders.setPlateNumber(dd_cl.getText().toString());

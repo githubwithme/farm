@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.Adapter_New_SellDetail;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.PeopelList;
@@ -226,11 +227,11 @@ public class PG_EditOrder extends Activity
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }*/
-        if (et_address.getText().toString().equals(""))
+/*        if (et_address.getText().toString().equals(""))
         {
             Toast.makeText(PG_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
   /*      if (et_phone.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -315,7 +316,7 @@ public class PG_EditOrder extends Activity
         sellOrders.setActualweight("");
         sellOrders.setActualnumber("");
         sellOrders.setActualsumvalues("");
-        sellOrders.setDeposit("0");
+        sellOrders.setDeposit("");
         sellOrders.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
 
@@ -323,7 +324,7 @@ public class PG_EditOrder extends Activity
         sellOrders.setNote(et_note.getText().toString());
         sellOrders.setXxzt("0");
         sellOrders.setProducer(producer);
-        sellOrders.setFinalpayment("0");
+        sellOrders.setFinalpayment("");
 
         sellOrders.setPlateNumber(dd_cl.getText().toString());
         sellOrders.setContractorId(bzId);
@@ -391,7 +392,7 @@ public class PG_EditOrder extends Activity
         sellOrders.setOldsaletime(dd_time.getText().toString());*/
 
         List<SellOrder_New> SellOrderList = new ArrayList<>();
-        SellOrderList.add(sellOrder);
+        SellOrderList.add(sellOrders);
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrder_new\":[ ");
@@ -503,13 +504,12 @@ public class PG_EditOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
+
+        getsellOrderDetailBySaleId();
         cgId = sellOrder.getBuyers();
         byId = sellOrder.getPickId();
         bzId = sellOrder.getContractorId();
-        tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
-        adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(PG_EditOrder.this);
-        lv.setAdapter(adapter_editSellOrderDetail_ncz);
-        utils.setListViewHeight(lv);
+
 //        getListData();
         showData();
         getpurchaser();
@@ -523,16 +523,16 @@ public class PG_EditOrder extends Activity
         getActionBar().hide();
         sellOrder = getIntent().getParcelableExtra("bean");
         broadcast = getIntent().getStringExtra("broadcast");
-        list_orderDetail = sellOrder.getSellOrderDetailList();
+  /*      list_orderDetail = sellOrder.getSellOrderDetailList();
         if (list_orderDetail == null)
         {
             list_orderDetail = new ArrayList<>();
-        }
+        }*/
     }
 
     public int countAllNumber()
     {
-        List<SellOrderDetail_New> list = sellOrder.getSellOrderDetailList();
+        List<SellOrderDetail_New> list = list_orderDetail;
         int allnumber = 0;
         for (int i = 0; i < list.size(); i++)
         {
@@ -1141,6 +1141,57 @@ public class PG_EditOrder extends Activity
 
             }
         });
-
     }
+
+    private void getsellOrderDetailBySaleId()
+    {
+
+
+
+        commembertab commembertab = AppContext.getUserInfo(PG_EditOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("saleId", sellOrder.getUuid());
+        params.addQueryStringParameter("action", "getsellOrderDetailBySaleId");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<SellOrderDetail_New> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+
+                        list_orderDetail = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+//                  tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
+                        adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(PG_EditOrder.this);
+                        lv.setAdapter(adapter_editSellOrderDetail_ncz);
+                        utils.setListViewHeight(lv);
+
+                    } else
+                    {
+                        listNewData = new ArrayList<SellOrderDetail_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_EditOrder.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_EditOrder.this, "error_connectServer");
+            }
+        });
+    }
+
+
 }

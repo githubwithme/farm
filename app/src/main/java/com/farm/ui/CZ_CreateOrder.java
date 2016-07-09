@@ -80,8 +80,7 @@ public class CZ_CreateOrder extends Activity
     EditText dd_cl;
     @ViewById
     TextView dd_time;
-    @ViewById
-    EditText dd_fzr;
+
     @ViewById
     TextView dd_bz;
     @ViewById
@@ -175,18 +174,7 @@ public class CZ_CreateOrder extends Activity
         showDialog_fcp(listdata, listid);
     }
 
-    @Click
-    void dd_fzr()
-    {
-        List<String> listdata = new ArrayList<String>();
-        List<String> listid = new ArrayList<String>();
-        for (int i = 0; i < listpeople.size(); i++)
-        {
-            listdata.add(listpeople.get(i).getRealName());
-            listid.add(listpeople.get(i).getId());
-        }
-        showDialog_fzr(listdata, listid);
-    }
+
 
     @Click
     void et_name()
@@ -275,11 +263,7 @@ public class CZ_CreateOrder extends Activity
             Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (dd_fzr.getText().toString().equals(""))
-        {
-            Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         if (dd_time.getText().toString().equals(""))
         {
             Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -290,21 +274,8 @@ public class CZ_CreateOrder extends Activity
             Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-   /*     if (et_email.getText().toString().equals(""))
-        {
-            Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }*/
-        if (et_address.getText().toString().equals(""))
-        {
-            Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
-  /*      if (et_phone.getText().toString().equals(""))
-        {
-            Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }*/
+
+
         if (et_price.getText().toString().equals(""))
         {
             Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -341,15 +312,7 @@ public class CZ_CreateOrder extends Activity
         data.putExtra(Intent.EXTRA_SUBJECT, "订单");
         data.putExtra(Intent.EXTRA_TEXT, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元");
         startActivity(data);*/
-/*
-        Intent myIntent=new Intent(android.content.Intent.ACTION_SEND);
-        myIntent.setType("plain/text");//设置邮件格式
 
-        myIntent.putExtra(android.content.Intent.EXTRA_EMAIL, mail);
-        myIntent.putExtra(android.content.Intent.EXTRA_CC, "");//副本
-        myIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "订单");//主题
-        myIntent.putExtra(android.content.Intent.EXTRA_TEXT, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元");//内容
-        startActivity(Intent.createChooser(myIntent, "标题"));*/
         List<String> list_uuid = new ArrayList<>();
         String batchtime = "";
         String producer = "";
@@ -398,7 +361,7 @@ public class CZ_CreateOrder extends Activity
         sellOrder.setUid(commembertab.getuId());
         sellOrder.setUuid(uuid);
         sellOrder.setBatchTime(batchtime);
-        sellOrder.setSelltype("待付订金");
+        sellOrder.setSelltype("待付定金");
         sellOrder.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrder.setBuyers(cgId);
@@ -424,7 +387,7 @@ public class CZ_CreateOrder extends Activity
         sellOrder.setProducer(producer);
         sellOrder.setFinalpayment("0");
 
-        sellOrder.setMainPepole(fzrId);
+        sellOrder.setMainPepole(commembertab.getId());
         sellOrder.setPlateNumber(dd_cl.getText().toString());
         sellOrder.setContractorId(bzId);
         sellOrder.setPickId(byId);
@@ -468,7 +431,6 @@ public class CZ_CreateOrder extends Activity
         dd_time.setText(str);*/
         dd_bz.setInputType(InputType.TYPE_NULL);
         dd_by.setInputType(InputType.TYPE_NULL);
-        dd_fzr.setInputType(InputType.TYPE_NULL);
         getpurchaser("");
         getchanpin();
         getlistdata();
@@ -608,6 +570,7 @@ public class CZ_CreateOrder extends Activity
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("creatorId", commembertab.getId());
         params.addQueryStringParameter("action", "getSellOrderDetailList");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -786,24 +749,7 @@ public class CZ_CreateOrder extends Activity
         customDialog_listView.show();
     }
 
-    //负责人
-    public void showDialog_fzr(List<String> listdata, List<String> listid)
-    {
-        View dialog_layout = (RelativeLayout) CZ_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(CZ_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
-        {
-            @Override
-            public void OnClick(Bundle bundle)
-            {
-                //id也是有的
-                zzsl = bundle.getString("name");
-                dd_fzr.setText(zzsl);
-                fzrId = bundle.getString("id");
 
-            }
-        });
-        customDialog_listView.show();
-    }
 
     private void getpurchaser(String name)
     {

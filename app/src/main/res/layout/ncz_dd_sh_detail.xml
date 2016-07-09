@@ -81,7 +81,7 @@
         android:layout_toLeftOf="@+id/dj_pz"
         android:textSize="15dip"
         android:gravity="center"
-        android:text="申请免付订金"
+        android:text="申请免付定金"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <Button
@@ -160,6 +160,7 @@
         android:layout_height="1dp"
         android:background="@color/line_color"/>
     <ScrollView
+        android:visibility="gone"
         android:id="@+id/dd_edit"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -660,7 +661,7 @@
                             android:layout_height="match_parent"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*待付订金(元)"
+                            android:text="*待付定金(元)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 

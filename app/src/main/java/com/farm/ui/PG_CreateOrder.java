@@ -280,11 +280,7 @@ public class PG_CreateOrder extends Activity
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }*/
-        if (et_address.getText().toString().equals(""))
-        {
-            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
   /*      if (et_phone.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -604,6 +600,7 @@ public class PG_CreateOrder extends Activity
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("creatorId", commembertab.getId());
         params.addQueryStringParameter("action", "getSellOrderDetailList");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

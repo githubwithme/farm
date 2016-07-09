@@ -274,7 +274,7 @@ public class NCZ_DD_SH_Detail extends Activity
             old_bzdanjia.setText(sellOrder_new.getOldPackPrice());
         } else
         {
-            ig_view4.setVisibility(View.INVISIBLE);
+            ig_view5.setVisibility(View.INVISIBLE);
 //            bz_danjia.setText(sellOrder_new.getPackPrice());
             old_bzdanjia.setText(sellOrder_new.getPackPrice());
         }
@@ -286,7 +286,7 @@ public class NCZ_DD_SH_Detail extends Activity
             et_weight.setText(sellOrder_new.getWeight());//总重量
         } else
         {
-            ig_view5.setVisibility(View.INVISIBLE);
+            ig_view4.setVisibility(View.INVISIBLE);
 //            et_weight.setText(sellOrder_new.getWeight());//总重量
             old_weight.setText(sellOrder_new.getWeight());//总重量
         }
@@ -363,7 +363,7 @@ public class NCZ_DD_SH_Detail extends Activity
             sellOrder.setSaletime(sellOrder.getOldsaletime());
             sellOrder.setOldsaletime("");
         }
-        sellOrder.setSelltype("待付订金");
+        sellOrder.setSelltype("待付定金");
         sellOrder.setBuyers(sellOrder.getBuyers());
         sellOrder.setIsNeedAudit("1");
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
