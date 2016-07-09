@@ -65,8 +65,7 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/line"
             android:layout_marginBottom="60dip"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
+            android:scrollbars="none"
             android:layout_marginTop="5dip"
             android:focusable="false"
             android:focusableInTouchMode="false"
@@ -81,13 +80,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
                     android:background="@color/white"
                     android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="45dip">
+                        android:layout_height="45dip"
+                        android:layout_marginLeft="10dip"
+                        android:layout_marginRight="10dip">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -116,6 +116,8 @@
                         android:id="@+id/expandableListView_areasaledata"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:layout_marginRight="10dip"
                         android:childDivider="@color/transparent"
                         android:divider="@color/transparent"
                         android:dividerHeight="0dip"
@@ -134,7 +136,9 @@
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="45dip">
+                        android:layout_height="45dip"
+                        android:layout_marginLeft="10dip"
+                        android:layout_marginRight="10dip">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -161,6 +165,8 @@
                         android:id="@+id/expandableListView_batchtimesaledata"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:layout_marginRight="10dip"
                         android:childDivider="@color/transparent"
                         android:divider="@color/transparent"
                         android:dividerHeight="0dip"
@@ -179,7 +185,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dip"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dip"
+            android:layout_marginBottom="8dip"
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
             android:background="@color/red"
@@ -237,10 +243,10 @@
             android:layout_marginBottom="10dip"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
-            android:visibility="gone"
             android:text="注：向左滑动可以加载更多数据"
             android:textColor="@color/gray"
-            android:textSize="13sp"/>
+            android:textSize="13sp"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

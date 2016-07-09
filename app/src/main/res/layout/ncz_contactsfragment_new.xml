@@ -88,6 +88,7 @@
         android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="none"
         android:childDivider="@color/transparent"
         android:dividerHeight="0dip"
         android:groupIndicator="@null"/>
