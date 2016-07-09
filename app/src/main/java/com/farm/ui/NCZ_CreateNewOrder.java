@@ -53,7 +53,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 /**
  * Created by ${hmj} on 2016/1/20.
  */
@@ -63,7 +62,7 @@ import java.util.List;
  */
 @EActivity(R.layout.ncz_createneworder)
 public class NCZ_CreateNewOrder extends Activity
-    {
+{
     String mail;
     String telphone;
     @ViewById
@@ -124,18 +123,35 @@ public class NCZ_CreateNewOrder extends Activity
     TextView tv_allnumber;
     @ViewById
     TextView CR_chanpin;
+    @ViewById
+    LinearLayout ll_more;
+    @ViewById
+    LinearLayout ll_more_tip;
 
 
     String cgId = "";
     String byId = "";
     String bzId = "";
     String fzrId = "";
-    String cpid="";
+    String cpid = "";
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Purchaser> listData_BY = new ArrayList<Purchaser>();
     List<Purchaser> listData_BZ = new ArrayList<Purchaser>();
     List<AllType> listAlltype = new ArrayList<AllType>();
 
+
+    @Click
+    void ll_more_tip()
+    {
+        if (ll_more.isShown())
+        {
+            ll_more.setVisibility(View.GONE);
+        } else
+        {
+            ll_more.setVisibility(View.VISIBLE);
+        }
+
+    }
 
     @Click
     void btn_addcg()
@@ -180,6 +196,7 @@ public class NCZ_CreateNewOrder extends Activity
         }
         showDialog_fcp(listdata, listid);
     }
+
     @Click
     void dd_fzr()
     {
@@ -789,6 +806,7 @@ public class NCZ_CreateNewOrder extends Activity
         });
         customDialog_listView.show();
     }
+
     //负责人
     public void showDialog_fzr(List<String> listdata, List<String> listid)
     {
@@ -1000,7 +1018,6 @@ public class NCZ_CreateNewOrder extends Activity
 
 
     }
-
 
 
     private void getchanpin()

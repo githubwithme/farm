@@ -45,6 +45,20 @@
             android:background="@color/gray"/>
 
         <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="0dip"
+            android:layout_height="40dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="暂无"
+            android:textColor="@color/bg_text"
+            android:textSize="14sp"/>
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/gray"/>
+
+        <TextView
             android:id="@+id/tv_zg"
             android:layout_width="0dip"
             android:layout_height="40dip"

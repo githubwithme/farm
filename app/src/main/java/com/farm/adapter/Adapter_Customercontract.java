@@ -1,6 +1,7 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.bean.AgreementBean;
 import com.farm.bean.CustomerContractBean;
+import com.farm.ui.NCZ_AgreementDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_ListView;
 import com.swipelistview.SwipeLayout;
@@ -114,8 +116,22 @@ public class Adapter_Customercontract extends BaseExpandableListAdapter
             //数据添加
             listItemView.circle_img.setImageResource(color[childPosition]);
             listItemView.tv_phone.setText("合同号：" + agreementBean.getAgreementNumber());
-            listItemView.tv_name.setText(agreementBean.getYear());
-
+            listItemView.tv_name.setText(agreementBean.getAgreementTime().substring(0,4));
+            convertView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    AgreementBean agreementBean = (AgreementBean) v.getTag(R.id.tag_bean);
+                    String name = (String) v.getTag(R.id.tag_name);
+                    Intent intent = new Intent(context, NCZ_AgreementDetail_.class);
+                    intent.putExtra("bean", agreementBean);
+                    intent.putExtra("name", name);
+                    context.startActivity(intent);
+                }
+            });
+            convertView.setTag(R.id.tag_bean, agreementBean);
+            convertView.setTag(R.id.tag_name, listData.get(groupPosition).getCustomerName());
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);

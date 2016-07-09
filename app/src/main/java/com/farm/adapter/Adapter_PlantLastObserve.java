@@ -23,6 +23,7 @@ public class Adapter_PlantLastObserve extends BaseAdapter
     static class ListItemView
     {
         public TextView tv_plantname;
+        public TextView tv_status;
         public TextView tv_zg;
         public TextView tv_wj;
         public TextView tv_ys;
@@ -72,6 +73,7 @@ public class Adapter_PlantLastObserve extends BaseAdapter
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_plantname = (TextView) convertView.findViewById(R.id.tv_plantname);
+            listItemView.tv_status = (TextView) convertView.findViewById(R.id.tv_status);
             listItemView.tv_zg = (TextView) convertView.findViewById(R.id.tv_zg);
             listItemView.tv_wj = (TextView) convertView.findViewById(R.id.tv_wj);
             listItemView.tv_ys = (TextView) convertView.findViewById(R.id.tv_ys);
@@ -89,10 +91,27 @@ public class Adapter_PlantLastObserve extends BaseAdapter
         // 设置文字和图片
 
         listItemView.tv_plantname.setText(plantgrowthtab.getplantName());
-        listItemView.tv_date.setText(plantgrowthtab.getcjDate().substring(0,plantgrowthtab.getcjDate().lastIndexOf(" ")));
+        listItemView.tv_date.setText(plantgrowthtab.getcjDate().substring(0, plantgrowthtab.getcjDate().lastIndexOf(" ")));
         listItemView.tv_zg.setText(plantgrowthtab.gethNum());
         listItemView.tv_wj.setText(plantgrowthtab.getwNum());
         listItemView.tv_ys.setText(plantgrowthtab.getyNum());
+        String status = "";
+        if (plantgrowthtab.getplantType().equals("1"))
+        {
+            status = "异常";
+        } else
+        {
+            status = "正常";
+        }
+        if (plantgrowthtab.getcDate().equals("1"))
+        {
+            status = "已抽蕾";
+        }
+        if (plantgrowthtab.getzDate().equals("1"))
+        {
+            status = "已留芽";
+        }
+        listItemView.tv_status.setText(status);
         listItemView.tv_lys.setText(plantgrowthtab.getxNum());//有问题
         return convertView;
     }

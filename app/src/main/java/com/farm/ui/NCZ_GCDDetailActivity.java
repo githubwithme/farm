@@ -515,37 +515,122 @@ public class NCZ_GCDDetailActivity extends Activity
             bundle1.putStringArrayList("imgurl", (ArrayList<String>) urls);
             dialog.setArguments(bundle1);
             dialog.show(getFragmentManager(), "EditNameDialog");
-
-//            showDialog_photos(urls);
-//            String parkid = (String) v.getTag(R.id.tag_kg);
-//            String parkname = (String) v.getTag(R.id.tag_parkname);
-//            Intent intent = new Intent(NCZ_GCDDetailActivity.this, NCZ_AreaSaleData_.class);
-//            intent.putExtra("parkid", parkid);
-//            intent.putExtra("parkname", parkname);
-//            intent.putExtra("batchTime", batchTimes);
-//            NCZ_GCDDetailActivity.this.startActivity(intent);
         }
     };
 
-//    public void showDialog_photos(final List<String> urls)
+//    private ArrayList<String> generateItem(List<ChartEntity> list)
 //    {
-//        final View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_GCDDetailActivity.this).inflate(R.layout.customdialog_plantphotos, null);
-//        customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(NCZ_GCDDetailActivity.this, R.style.MyDialog, dialog_layout);
-//        FrameLayout menu_container = (FrameLayout) dialog_layout.findViewById(R.id.menu_container);
-//        Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
-//        PictureScrollFragment pictureScrollFragment = new PictureScrollFragment();
-//        Bundle bundle1 = new Bundle();
-//        bundle1.putStringArrayList("imgurl", (ArrayList<String>) urls);
-//        pictureScrollFragment.setArguments(bundle1);
-//        getFragmentManager().beginTransaction().replace(R.id.menu_container, pictureScrollFragment).commit();
-//        btn_cancle.setOnClickListener(new View.OnClickListener()
+//        ArrayList<String> m = new ArrayList<String>();
+//        for (int i = 0; i < list.size(); i++)
 //        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                customDialog_editSaleInInfo.dismiss();
-//            }
-//        });
-//        customDialog_editSaleInInfo.show();
+//            m.add(list.get(i).getItem());
+//        }
+//        return m;
+//    }
+
+//    private BarData generateDataBar()
+//    {
+////        ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
+////        for (int i = 0; i < listNewData.size(); i++)
+////        {
+////            entries.add(new BarEntry(Float.valueOf(listNewData.get(i).getNumber()), i));
+////        }
+////        BarDataSet d1 = new BarDataSet(entries, "物资剩余量/kg");
+////        d1.setBarSpacePercent(20f);
+////        d1.setColor(Color.rgb(255, 0, 255));
+////        d1.setHighLightAlpha(255);
+////        d1.setStackLabels(new String[1]);
+////        d1.setValueTextSize(12);
+//
+//        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+//
+//
+//        for (int i = 0; i < listNewData.size(); i++)
+//        {
+//            parktab parktab = listNewData.get(i);
+//            float[] f = new float[]{Float.valueOf(parktab.getAllsaleout()), Float.valueOf(parktab.getAllsalein()), Float.valueOf(parktab.getAllsalefor())};
+//            yVals1.add(new BarEntry(f, i));
+//        }
+//        ArrayList<String> listitem = new ArrayList<String>();
+//        for (int i = 0; i < listNewData.size(); i++)
+//        {
+//            listitem.add(listNewData.get(i).getparkName());
+//        }
+//
+//        BarDataSet set1 = new BarDataSet(yVals1, "单位:株");
+//        set1.setColors(getColors());
+//        set1.setStackLabels(new String[]{"已售", "售中", "待售"});
+//
+//        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+//        dataSets.add(set1);
+//
+//        BarData cd = new BarData(listitem, set1);
+//        cd.setValueTextSize(16);
+//        cd.setValueTextColor(getResources().getColor(R.color.white));
+////        data.setValueFormatter(new MyValueFormatter());
+//
+//
+////        ArrayList<BarDataSet> sets = new ArrayList<BarDataSet>();
+////        sets.add(d1);
+////        BarData cd = new BarData(generateItem(list_leftnumber), sets);
+//        return cd;
+//    }
+//    private LineData generateDataLine_ZG()
+//    {
+//        ArrayList<Entry> e1 = new ArrayList<Entry>();
+//        for (int i = 0; i < list_outnumber.size(); i++)
+//        {
+//            e1.add(new Entry(Float.valueOf(list_outnumber.get(i).getNumber()), i));
+//        }
+//        LineDataSet d1 = new LineDataSet(e1, "销售");
+//        d1.setLineWidth(1.8f);
+//        d1.setCircleSize(3.6f);
+//        d1.setHighLightColor(Color.rgb(244, 117, 117));
+//        d1.setDrawValues(false);
+//        d1.setValueTextSize(20f);
+//
+//
+//
+//
+//        ArrayList<LineDataSet> sets = new ArrayList<LineDataSet>();
+//        sets.add(d1);
+////        sets.add(d2);
+//
+//        LineData cd = new LineData(generateItem(list_outnumber), sets);
+//        return cd;
+//    }
+//
+//
+//    private class ChartDataAdapter extends ArrayAdapter<ChartItem>
+//    {
+//
+//        public ChartDataAdapter(Context context, List<ChartItem> objects)
+//        {
+//            super(context, 0, objects);
+//        }
+//
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent)
+//        {
+//            return getItem(position).getView(position, convertView, getContext());
+//        }
+//
+//        @Override
+//        public int getItemViewType(int position)
+//        {
+//            return getItem(position).getItemType();
+//        }
+//
+//        @Override
+//        public int getViewTypeCount()
+//        {
+//            return 3; // we have 3 different item-types
+//        }
+//    }
+//
+//    private int[] getColors()
+//    {
+//        int[] colors = new int[]{Color.rgb(255, 0, 0), Color.rgb(0, 0, 255), Color.rgb(0, 255, 0)};
+//        return colors;
 //    }
 }

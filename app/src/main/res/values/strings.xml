@@ -66,6 +66,7 @@
     <item name="tag_childsize" type="id"></item>
     <item name="tag_parentview" type="id"></item>
     <item name="tag_bean" type="id"></item>
+    <item name="tag_name" type="id"></item>
     <item name="tag_batchtime" type="id"></item>
     <item name="tag_breakoff" type="id"></item>
     <item name="tag_batchcolor" type="id"></item>
