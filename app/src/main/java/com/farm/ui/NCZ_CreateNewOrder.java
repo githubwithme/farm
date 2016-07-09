@@ -126,7 +126,7 @@ public class NCZ_CreateNewOrder extends Activity
     @ViewById
     LinearLayout ll_more;
     @ViewById
-    LinearLayout ll_more_tip;
+    RelativeLayout rl_more_tip;
 
 
     String cgId = "";
@@ -141,7 +141,7 @@ public class NCZ_CreateNewOrder extends Activity
 
 
     @Click
-    void ll_more_tip()
+    void rl_more_tip()
     {
         if (ll_more.isShown())
         {

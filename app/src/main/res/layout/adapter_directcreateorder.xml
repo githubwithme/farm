@@ -26,7 +26,7 @@
                 android:gravity="center"
                 android:text="乐丰园区"
                 android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_sp_16"/>
+                android:textSize="14sp"/>
 
 
 
@@ -50,7 +50,7 @@
                 android:gravity="center"
                 android:text="出售"
                 android:textColor="@color/bg_text"
-                android:textSize="16sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/tv_batchtime"
@@ -75,7 +75,7 @@
                 android:gravity="center"
                 android:text="100000"
                 android:textColor="@color/red"
-                android:textSize="16sp"/>
+                android:textSize="14sp"/>
         </RelativeLayout>
     </LinearLayout>
 

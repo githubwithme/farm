@@ -56,7 +56,7 @@ import java.util.List;
 /**
  * Created by hasee on 2016/7/5.
  */
-@EActivity(R.layout.ncz_createneworder)
+@EActivity(R.layout.cz_pg_create_order)
 public class CZ_CreateOrder extends Activity
 {
     String mail;

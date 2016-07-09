@@ -289,6 +289,7 @@ public class NCZ_GCDDetailActivity extends Activity
                         list_lastObserveData = JSON.parseArray(result.getRows().toJSONString(), plantgrowthtab.class);
                         adapter_plantLastObserve = new Adapter_PlantLastObserve(NCZ_GCDDetailActivity.this, list_lastObserveData);
                         lv.setAdapter(adapter_plantLastObserve);
+                        utils.setListViewHeight(lv);
                         int size = list_lastObserveData.size();
                         int zg = 0;
                         int wj = 0;
@@ -336,6 +337,7 @@ public class NCZ_GCDDetailActivity extends Activity
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
         mAdapter = new ScrollAdapter();
         mListView.setAdapter(mAdapter);
+        utils.setListViewHeight(mListView);
     }
 
     public void addHViews(final CustomHorizontalScrollView_PlantObserve hScrollView)
