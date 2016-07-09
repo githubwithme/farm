@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.PG_AllOrderAdapter;
 import com.farm.adapter.PG_NotpayAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
@@ -38,7 +39,6 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -48,7 +48,6 @@ import java.util.List;
 /**
  * Created by hasee on 2016/7/9.
  */
-@EFragment
 public class PG_AllOrderFragment  extends Fragment
 {
     List<AllType> listdata_cp = new ArrayList<AllType>();
@@ -57,7 +56,7 @@ public class PG_AllOrderFragment  extends Fragment
     String cgsname = "";
     //
 
-    private PG_NotpayAdapter listAdapter;
+    private PG_AllOrderAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     private AppContext appContext;
@@ -132,7 +131,7 @@ public class PG_AllOrderFragment  extends Fragment
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new PG_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+            listAdapter = new PG_AllOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -158,6 +157,7 @@ public class PG_AllOrderFragment  extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("userId", commembertab.getId());
+        params.addQueryStringParameter("isPass", "-1");
         params.addQueryStringParameter("action", "getSellOrderByUserId");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -173,7 +173,15 @@ public class PG_AllOrderFragment  extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-
+                        Iterator<SellOrder_New> it = listData.iterator();
+                        while (it.hasNext())
+                        {
+                            String value = it.next().getSelltype();
+                            if (value.equals("已完成"))
+                            {
+                                it.remove();
+                            }
+                        }
       /*                  Iterator<SellOrder_New> its = listData.iterator();
                         while (its.hasNext())
                         {
@@ -184,7 +192,7 @@ public class PG_AllOrderFragment  extends Fragment
                             }
                         }*/
 
-                        listAdapter = new PG_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+                        listAdapter = new PG_AllOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
@@ -282,6 +290,7 @@ public class PG_AllOrderFragment  extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("userId", commembertab.getId());
+        params.addQueryStringParameter("isPass", "-1");
         params.addQueryStringParameter("action", "getSellOrderByUserId");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -352,7 +361,7 @@ public class PG_AllOrderFragment  extends Fragment
                             }
                         }
 
-                        listAdapter = new PG_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+                        listAdapter = new PG_AllOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
