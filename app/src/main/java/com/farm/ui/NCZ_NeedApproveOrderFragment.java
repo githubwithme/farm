@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.NCZ_NeedAdapter;
-import com.farm.adapter.NCZ_ScheduleOrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
@@ -56,10 +55,10 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
-    String parkname="";
-    String cpname="";
-    String cgsname="";
-//    private NCZ_OrderAdapter listAdapter;
+    String parkname = "";
+    String cpname = "";
+    String cgsname = "";
+    //    private NCZ_OrderAdapter listAdapter;
     private NCZ_NeedAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
@@ -97,7 +96,6 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
-
         getchanpin();//产品
         getpurchaser();//采购商
         getlistdata();//园区
@@ -352,7 +350,8 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
         });
 
     }
-//产品
+
+    //产品
     private void getchanpin()
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());

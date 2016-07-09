@@ -20,9 +20,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_NeedAdapter;
 import com.farm.adapter.PG_NeedAdapter;
-import com.farm.adapter.PG_scheduleOrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
@@ -344,6 +342,7 @@ public class PG_NeedApproveOrderFragment extends Fragment
         });
 
     }
+
     //采购商
     private void getpurchaser()
     {
