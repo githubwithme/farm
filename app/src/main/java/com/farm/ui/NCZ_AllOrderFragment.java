@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.NCZ_AllorderAdapter;
 import com.farm.adapter.NCZ_DealingAdapter;
 import com.farm.adapter.NCZ_OrderAdapter;
 import com.farm.app.AppConfig;
@@ -50,7 +51,7 @@ import java.util.List;
 public class NCZ_AllOrderFragment extends Fragment
 {
 //    private NCZ_OrderAdapter listAdapter;
-private NCZ_DealingAdapter listAdapter;
+    private NCZ_AllorderAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     private AppContext appContext;
@@ -90,7 +91,7 @@ private NCZ_DealingAdapter listAdapter;
     {
 //        getNewSaleList_test();
         setSpinner();
-//        getAllOrders();
+        getAllOrders();
     }
 
 
@@ -119,7 +120,7 @@ private NCZ_DealingAdapter listAdapter;
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_DealingAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+            listAdapter = new NCZ_AllorderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -142,8 +143,8 @@ private NCZ_DealingAdapter listAdapter;
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
+//        params.addQueryStringParameter("type", "0");
+        params.addQueryStringParameter("action", "getDeleteSellOrderByNCZ");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -158,7 +159,7 @@ private NCZ_DealingAdapter listAdapter;
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         //已取消
-                        Iterator<SellOrder_New> it = listData.iterator();
+       /*                 Iterator<SellOrder_New> it = listData.iterator();
                         while (it.hasNext())
                         {
                             String value = it.next().getSelltype();
@@ -166,8 +167,8 @@ private NCZ_DealingAdapter listAdapter;
                             {
                                 it.remove();
                             }
-                        }
-                        listAdapter = new NCZ_DealingAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+                        }*/
+                        listAdapter = new NCZ_AllorderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {

@@ -123,7 +123,7 @@ public class NCZ_DealingAdapter extends BaseAdapter
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
-            listItemView.dd_jsje.setText("结算金额:10086");
+            listItemView.dd_jsje.setText(sellOrder.getActualMoney());
             if ( sellOrder.getSellOrderDetailList().size()>0)
             {
                 listItemView.tv_car.setText( sellOrder.getSellOrderDetailList().get(0).getparkname());
@@ -133,7 +133,7 @@ public class NCZ_DealingAdapter extends BaseAdapter
             }
             listItemView.tv_importance.setText(sellOrder.getMainPepName());
 //            listItemView.tv_car.setText(sellOrder.getProducer());
-            SpannableString content = new SpannableString(sellOrder.getBuyersName());
+            SpannableString content = new SpannableString(sellOrder.getPurchaName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             listItemView.tv_buyer.setText(content);
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()

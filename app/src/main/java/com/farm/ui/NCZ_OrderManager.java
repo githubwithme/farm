@@ -4,15 +4,36 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.NCZ_NeedAdapter;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
+import com.farm.bean.Result;
+import com.farm.bean.SellOrder_New;
+import com.farm.bean.commembertab;
+import com.farm.common.utils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by ${hmj} on 2016/5/16.
@@ -20,11 +41,11 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.ncz_ordermanager)
 public class NCZ_OrderManager extends Activity
 {
-    NCZ_AllOrderFragment ncz_allOrderFragment;
-    NCZ_NotPayFragment ncz_notPayFragment;
-    NCZ_DealingOrderFragment ncz_dealingOrderFragment;
-    NCZ_ScheduleOrderFragment ncz_scheduleOrderFragment;
-    NCZ_NeedApproveOrderFragment ncz_needApproveOrderFragment;
+    NCZ_AllOrderFragment ncz_allOrderFragment;//删除
+    NCZ_NotPayFragment ncz_notPayFragment;  //交易中
+    NCZ_DealingOrderFragment ncz_dealingOrderFragment;//完成
+    NCZ_ScheduleOrderFragment ncz_scheduleOrderFragment;//排单
+    NCZ_NeedApproveOrderFragment ncz_needApproveOrderFragment;  //审批
     Fragment mContent = new Fragment();
     @ViewById
     Button btn_back;
@@ -38,6 +59,19 @@ public class NCZ_OrderManager extends Activity
     TextView tv_dealing;
     @ViewById
     TextView tv_notpay;
+
+    @ViewById
+    FrameLayout fl_dynamic;
+    @ViewById
+    TextView tv_dynamic_new;
+    @ViewById
+    FrameLayout fl_dsp;
+    @ViewById
+    TextView tv_dsp;
+    @ViewById
+    FrameLayout fl_jyz;
+    @ViewById
+    TextView tv_jyz;
 
     @Click
     void btn_back()
@@ -73,6 +107,7 @@ public class NCZ_OrderManager extends Activity
         setBackground(2);
         switchContent(mContent, ncz_notPayFragment);
     }
+
     @Click
     void tv_pending()
     {
@@ -83,6 +118,8 @@ public class NCZ_OrderManager extends Activity
     @AfterViews
     void afterOncreate()
     {
+        getNeedOrders();
+        getAllOrders();
         setBackground(0);
         switchContent(mContent, ncz_scheduleOrderFragment);
     }
@@ -96,7 +133,7 @@ public class NCZ_OrderManager extends Activity
         ncz_allOrderFragment = new NCZ_AllOrderFragment_();
         ncz_notPayFragment = new NCZ_NotPayFragment_();
         ncz_dealingOrderFragment = new NCZ_DealingOrderFragment_();
-        ncz_needApproveOrderFragment=new NCZ_NeedApproveOrderFragment_();
+        ncz_needApproveOrderFragment = new NCZ_NeedApproveOrderFragment_();
     }
 
     public void switchContent(Fragment from, Fragment to)
@@ -164,4 +201,115 @@ public class NCZ_OrderManager extends Activity
         }
 
     }
+
+
+    private void getAllOrders()
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_OrderManager.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("type", "0");
+        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+                        Iterator<SellOrder_New> it = listData.iterator();
+                        while (it.hasNext())
+                        {
+                            String value = it.next().getSelltype();
+                            if (value.equals("已完成") || value.equals("待审批"))
+                            {
+                                it.remove();
+                            }
+                        }
+                        if (listData.size() > 0)
+                        {
+                            fl_dynamic.setVisibility(View.VISIBLE);
+                            tv_dynamic_new.setText(listData.size() + "");
+                            fl_jyz.setVisibility(View.VISIBLE);
+                            tv_jyz.setText(listData.size() + "");
+                        }
+                    } else
+                    {
+                        listData = new ArrayList<SellOrder_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_OrderManager.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_OrderManager.this, "error_connectServer");
+
+            }
+        });
+    }
+    private void getNeedOrders()
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_OrderManager.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("type", "0");
+        params.addQueryStringParameter("isApprove", "1");//不为空
+        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+                        if (listData.size()>0)
+                        {
+                            fl_dsp.setVisibility(View.VISIBLE);
+                            tv_dsp.setText(listData.size() + "");
+                        }
+                    } else
+                    {
+                        listData = new ArrayList<SellOrder_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_OrderManager.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_OrderManager.this, "error_connectServer");
+
+            }
+        });
+    }
+
 }

@@ -165,9 +165,8 @@ public class PG_ScheduleOrderFragment extends Fragment
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
-//        params.addQueryStringParameter("action", "getOrderByPGOrCC");//jobGetList1
+        params.addQueryStringParameter("userId", commembertab.getId());
+        params.addQueryStringParameter("action", "getSellOrderByUserId");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -192,7 +191,7 @@ public class PG_ScheduleOrderFragment extends Fragment
                                 it.remove();
                             }
                         }
-                        Iterator<SellOrder_New> its = listData.iterator();
+       /*                 Iterator<SellOrder_New> its = listData.iterator();
                         while (its.hasNext())
                         {
                             String value = its.next().getMainPepole();
@@ -200,7 +199,7 @@ public class PG_ScheduleOrderFragment extends Fragment
                             {
                                 its.remove();
                             }
-                        }
+                        }*/
                         listAdapter = new PG_scheduleOrderAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -327,8 +326,8 @@ public class PG_ScheduleOrderFragment extends Fragment
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
+        params.addQueryStringParameter("userId", commembertab.getId());
+        params.addQueryStringParameter("action", "getSellOrderByUserId");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -344,7 +343,7 @@ public class PG_ScheduleOrderFragment extends Fragment
                         commembertab commembertab = AppContext.getUserInfo(getActivity());
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
-                        Iterator<SellOrder_New> ist = listData.iterator();
+/*                        Iterator<SellOrder_New> ist = listData.iterator();
                         while (ist.hasNext())
                         {
                             String value = ist.next().getMainPepole();
@@ -352,7 +351,7 @@ public class PG_ScheduleOrderFragment extends Fragment
                             {
                                 ist.remove();
                             }
-                        }
+                        }*/
                         Iterator<SellOrder_New> it = listData.iterator();
                         while (it.hasNext())
                         {
@@ -371,7 +370,7 @@ public class PG_ScheduleOrderFragment extends Fragment
                                 Iterator<SellOrder_New> its = listData.iterator();
                                 while (its.hasNext())
                                 {
-                                    String value = its.next().getBuyersName();
+                                    String value = its.next().getPurchaName();
 //                            if (!value.equals("已完成"))
                                     if (value.indexOf(cgsname) == -1)
                                     {

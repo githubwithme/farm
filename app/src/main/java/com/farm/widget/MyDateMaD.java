@@ -79,11 +79,11 @@ public class MyDateMaD
         if (type.equals("1"))
         {
             textView.setText(new StringBuilder().append(mMonth + 1).append("/").append(mDay).append(" "));
-            sellOrders.setBuyers(sellOrders.getBuyersId());
+//            sellOrders.setBuyers(sellOrders.getBuyers());
             sellOrders.setSaletime(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" ").toString());
         }else
         {
-            sellOrders.setBuyers(sellOrders.getBuyersId());
+//            sellOrders.setBuyers(sellOrders.getBuyers());
             sellOrders.setOldsaletime(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" ").toString());
             sellOrders.setIsNeedAudit("0");
         }

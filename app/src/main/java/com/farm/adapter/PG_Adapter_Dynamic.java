@@ -23,6 +23,7 @@ import com.farm.common.utils;
 import com.farm.ui.NCZ_JobActivity_;
 import com.farm.ui.PG_GddList_;
 import com.farm.ui.PG_ListOfEvents_;
+import com.farm.ui.PG_OrderManager_;
 import com.farm.ui.PQ_DLFragment_;
 import com.farm.ui.SelectorCommand_;
 import com.farm.widget.CircleImageView;
@@ -254,7 +255,13 @@ public class PG_Adapter_Dynamic extends BaseAdapter
                 {
                     intent = new Intent(context, PG_GddList_.class);
                     context.startActivity(intent);
-                }/* else if (type.equals("XS"))
+                }
+                else if (type.equals("XS"))
+                {
+                    intent = new Intent(context, PG_OrderManager_.class);
+                    context.startActivity(intent);
+                }
+                /* else if (type.equals("XS"))
                 {
 //                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
                     intent = new Intent(context, NCZ_OrderManager_.class);

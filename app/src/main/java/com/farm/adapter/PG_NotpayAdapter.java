@@ -131,7 +131,7 @@ public class PG_NotpayAdapter extends BaseAdapter
             }
             listItemView.tv_importance.setText(sellOrder.getMainPepName());
 //            listItemView.tv_car.setText(sellOrder.getProducer());
-            SpannableString content = new SpannableString(sellOrder.getBuyersName());
+            SpannableString content = new SpannableString(sellOrder.getPurchaName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             listItemView.tv_buyer.setText(content);
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
@@ -198,12 +198,19 @@ public class PG_NotpayAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    SellOrder_New sellOrder_new= (SellOrder_New) v.getTag(R.id.tag_cash);
-                    Intent intent = new Intent(context, PG_JSD_.class);
-                    intent.putExtra("bean", sellOrder_new);
-                    intent.putExtra("broadcast", broadcast);
-                    context.startActivity(intent);
 
+                    SellOrder_New sellOrder_new= (SellOrder_New) v.getTag(R.id.tag_cash);
+
+                    if (sellOrder_new.getSelltype().equals("待付定金"))
+                    {
+                        AppContext.makeToast(context, "买家未付定金");
+                    }else
+                    {
+                        Intent intent = new Intent(context, PG_JSD_.class);
+                        intent.putExtra("bean", sellOrder_new);
+                        intent.putExtra("broadcast", broadcast);
+                        context.startActivity(intent);
+                    }
     /*                showDeleteTip(sellOrder_new.getUuid());
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());*/
                 }

@@ -271,7 +271,7 @@ public class PG_JSD extends Activity
 //        sellOrder.setSelltype("交易中");//
         sellOrder.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
-        sellOrder.setBuyers(sellOrder_new.getBuyersId());
+        sellOrder.setBuyers(sellOrder_new.getBuyers());
 
         sellOrder.setPrice(sellOrder_new.getPrice());
         sellOrder.setWeight(sellOrder_new.getWeight());

@@ -141,6 +141,8 @@ public class NCZ_NeedAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
+
+
         if (listItems.get(position).getFlashStr().equals("0"))
         {
             listItemView.fl_dynamic.setVisibility(View.INVISIBLE);
@@ -150,7 +152,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
         }
         listItemView.tv_importance.setText(sellOrder.getMainPepName());
 
-        final SpannableString content = new SpannableString(sellOrder.getBuyersName());
+        final SpannableString content = new SpannableString(sellOrder.getPurchaName());
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         listItemView.tv_buyer.setText(content);
         listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
@@ -409,13 +411,13 @@ public class NCZ_NeedAdapter extends BaseAdapter
                         sellOrdesrt = sellOrdesr;
                         if (sellOrdesr.getFreeDeposit().equals("0"))
                         {
-                            sellOrdesrt.setBuyers(sellOrdesrt.getBuyersId());
+                            sellOrdesrt.setBuyers(sellOrdesrt.getBuyers());
                             sellOrdesr.setFreeDeposit("1");
                             sellOrdesr.setSelltype("待付尾款");
                         }
                         if (sellOrdesr.getFreeFinalPay().equals("0"))
                         {
-                            sellOrdesrt.setBuyers(sellOrdesrt.getBuyersId());
+                            sellOrdesrt.setBuyers(sellOrdesrt.getBuyers());
                             sellOrdesr.setFreeFinalPay("1");
                             sellOrdesr.setSelltype("已完成");
                         }

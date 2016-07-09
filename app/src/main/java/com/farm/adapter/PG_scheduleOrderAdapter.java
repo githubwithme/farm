@@ -136,7 +136,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
 
             listItemView.tv_car.setText(sellOrder.getProducer()+"("+sellOrder.getGoodsname()+")");
 //            SpannableString content = new SpannableString(sellOrder.getBuyers());
-            SpannableString content = new SpannableString(sellOrder.getBuyersName());
+            SpannableString content = new SpannableString(sellOrder.getPurchaName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
             listItemView.tv_buyer.setText(content);
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
