@@ -497,7 +497,7 @@ public class PG_SP_EditOreder extends Activity
     @AfterViews
     void afterOncreate()
     {
-        cgId = sellOrder.getBuyersId();
+        cgId = sellOrder.getBuyers();
         byId = sellOrder.getPickId();
         bzId = sellOrder.getContractorId();
         tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
@@ -560,7 +560,7 @@ public class PG_SP_EditOreder extends Activity
 
     private void showData()
     {
-        et_name.setText(sellOrder.getBuyersName());
+        et_name.setText(sellOrder.getPurchaName());
         bz_guige.setText(sellOrder.getPackPec());
 
        /* et_price.setText(sellOrder.getPrice());

@@ -183,7 +183,7 @@ public class NCZ_NotPayFragment extends Fragment
                         while (it.hasNext())
                         {
                             String value = it.next().getSelltype();
-                            if (value.equals("已完成"))
+                            if (value.equals("已完成")||value.equals("待审批"))
                             {
                                 it.remove();
                             }
@@ -554,7 +554,7 @@ public class NCZ_NotPayFragment extends Fragment
                         while (ita.hasNext())
                         {
                             String value = ita.next().getSelltype();
-                            if (value.equals("已完成"))
+                            if (value.equals("已完成")||value.equals("待审批"))
                             {
                                 ita.remove();
                             }
@@ -583,7 +583,7 @@ public class NCZ_NotPayFragment extends Fragment
                                 Iterator<SellOrder_New> its = listData.iterator();
                                 while (its.hasNext())
                                 {
-                                    String value = its.next().getBuyersName();
+                                    String value = its.next().getPurchaName();
                                     if (value.indexOf(cgsname) == -1)
                                     {
                                         its.remove();

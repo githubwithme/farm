@@ -459,9 +459,12 @@ public class NCZ_EditOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
-        cgId = sellOrder.getBuyersId();
+
+
+        cgId = sellOrder.getBuyers();
         byId = sellOrder.getPickId();
         bzId = sellOrder.getContractorId();
+        fzrId=sellOrder.getMainPepole();
         tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
         adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(NCZ_EditOrder.this);
         lv.setAdapter(adapter_editSellOrderDetail_ncz);
@@ -523,7 +526,7 @@ public class NCZ_EditOrder extends Activity
     private void showData()
     {
         chanpin.setText(sellOrder.getGoodsname());
-        et_name.setText(sellOrder.getBuyersName());
+        et_name.setText(sellOrder.getPurchaName());
         et_price.setText(sellOrder.getPrice());
         et_weight.setText(sellOrder.getWeight());
         et_values.setText(sellOrder.getSumvalues());

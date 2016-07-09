@@ -182,7 +182,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
                         while (it.hasNext())
                         {
                             String value = it.next().getSelltype();
-                            if (value.equals("已完成"))
+                            if (value.equals("已完成") || value.equals("待审批"))
                             {
                                 it.remove();
                             }
@@ -456,7 +456,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
                         while (ita.hasNext())
                         {
                             String value = ita.next().getSelltype();
-                            if (value.equals("已完成"))
+                            if (value.equals("已完成") || value.equals("待审批"))
                             {
                                 ita.remove();
                             }
@@ -486,7 +486,7 @@ public class NCZ_ScheduleOrderFragment extends Fragment implements NCZ_ScheduleO
                                 Iterator<SellOrder_New> its = listData.iterator();
                                 while (its.hasNext())
                                 {
-                                    String value = its.next().getBuyersName();
+                                    String value = its.next().getPurchaName();
 //                            if (!value.equals("已完成"))
                                     if (value.indexOf(cgsname) == -1)
                                     {

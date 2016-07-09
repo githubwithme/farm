@@ -576,7 +576,7 @@ public class NCZ_DealingOrderFragment extends Fragment
                                 Iterator<SellOrder_New> its = listData.iterator();
                                 while (its.hasNext())
                                 {
-                                    String value = its.next().getBuyersName();
+                                    String value = its.next().getPurchaName();
                                     if (value.indexOf(cgsname) == -1)
                                     {
                                         its.remove();
@@ -613,7 +613,8 @@ public class NCZ_DealingOrderFragment extends Fragment
 
                                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                                 AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }

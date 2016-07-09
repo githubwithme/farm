@@ -2,6 +2,8 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -118,9 +120,21 @@ public class NCZ_NewOrderDetail extends Activity
     TextView actualprice;//正品单价
     @ViewById
     TextView defectPrice;//次品单价
+
+
+    @ViewById
+    TextView tv_jsd;
+    @ViewById
+    LinearLayout ll_jsd;
     @AfterViews
     void afterview()
     {
+
+        if (sellOrder.getSelltype().equals("审批结算")||sellOrder.getSelltype().equals("已完成"))
+        {
+            tv_jsd.setVisibility(View.VISIBLE);
+            ll_jsd.setVisibility(View.VISIBLE);
+        }
         showData();
         getsellOrderDetailBySaleId();
     }
@@ -133,10 +147,9 @@ public class NCZ_NewOrderDetail extends Activity
         }
 
         price.setText(sellOrder.getPrice());
-        buyers.setText(sellOrder.getBuyersName());
+        buyers.setText(sellOrder.getPurchaName());
         mainPepole.setText(sellOrder.getMainPepName());
         tv_planweight.setText(sellOrder.getWeight());
-        tv_plansumvalues.setText(sellOrder.getBuyersName());
         tv_plansumvalues.setText(sellOrder.getSumvalues());
         tv_deposit.setText(sellOrder.getWaitDeposit());
         tv_finalpayment.setText(sellOrder.getAddress());

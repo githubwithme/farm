@@ -119,7 +119,7 @@ public class PG_Need_Orderdetail extends Activity
 
 
 
-        tv_plansumvalues.setText(sellOrder.getBuyersName());
+        tv_plansumvalues.setText(sellOrder.getPurchaName());
         tv_plansumvalues.setText(sellOrder.getSumvalues());
         tv_deposit.setText(sellOrder.getWaitDeposit());
 //        goodsName.setText(sellOrder.getGoodsname());

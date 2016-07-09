@@ -145,7 +145,7 @@ public class PG_NeedAdapter extends BaseAdapter
 
         listItemView.tv_importance.setText(sellOrder.getMainPepName());
 
-        final SpannableString content = new SpannableString(sellOrder.getBuyersName());
+        final SpannableString content = new SpannableString(sellOrder.getPurchaName());
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         listItemView.tv_buyer.setText(content);
         listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()

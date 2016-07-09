@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -108,6 +109,17 @@ public class NCZ_DD_SH_Detail extends Activity
     @ViewById
     ScrollView dd_edit;
 
+
+    @ViewById
+    ImageView ig_view1;
+    @ViewById
+    ImageView ig_view2;
+    @ViewById
+    ImageView ig_view3;
+    @ViewById
+    ImageView ig_view4;
+    @ViewById
+    ImageView ig_view5;
     @AfterViews
     void afview()
     {
@@ -196,7 +208,7 @@ public class NCZ_DD_SH_Detail extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder_new = getIntent().getParcelableExtra("SellOrder_New");
-        String a = sellOrder_new.getBuyersId();
+        String a = sellOrder_new.getBuyers();
     }
 
     private void getData()
@@ -204,7 +216,7 @@ public class NCZ_DD_SH_Detail extends Activity
 
         dd_cl.setText(sellOrder_new.getPlateNumber());
         chanpin.setText(sellOrder_new.getGoodsname());
-        et_name.setText(sellOrder_new.getBuyersName());
+        et_name.setText(sellOrder_new.getPurchaName());
         et_note.setText(sellOrder_new.getNote());
         dd_fzr.setText(sellOrder_new.getMainPepName());
         dd_by.setText(sellOrder_new.getContractorName());
@@ -215,82 +227,68 @@ public class NCZ_DD_SH_Detail extends Activity
 
         bz_guige.setText(sellOrder_new.getPackPec());//包装规格
 
-
-        if (!sellOrder_new.getSaletime().equals(""))
-        {
-            dd_time.setText(sellOrder_new.getSaletime().substring(5, sellOrder_new.getSaletime().length() - 8));
-        } else
-        {
-            dd_time.setText("");
-        }
-
         if (!sellOrder_new.getOldsaletime().equals(""))
         {
             old_time.setText(sellOrder_new.getOldsaletime().substring(5, sellOrder_new.getOldsaletime().length() - 8));
+            dd_time.setText(sellOrder_new.getSaletime().substring(5, sellOrder_new.getSaletime().length() - 8));
         } else
         {
-            old_time.setText("");
+            ig_view1.setVisibility(View.INVISIBLE);
+//            dd_time.setText(sellOrder_new.getSaletime().substring(5, sellOrder_new.getSaletime().length() - 8));
+            old_time.setText(sellOrder_new.getSaletime().substring(5, sellOrder_new.getSaletime().length() - 8));
         }
-        if (!sellOrder_new.getPrice().equals(""))
-        {
-            et_price.setText(sellOrder_new.getPrice());
-        } else
-        {
-            et_price.setText("");
-        }
+
+
+
+
+
         if (!sellOrder_new.getOldPrice().equals(""))
         {
             old_price.setText(sellOrder_new.getOldPrice());
+            et_price.setText(sellOrder_new.getPrice());
         } else
         {
-            old_price.setText("");
+            ig_view2.setVisibility(View.INVISIBLE);
+//            et_price.setText(sellOrder_new.getPrice());
+            old_price.setText(sellOrder_new.getPrice());
         }
-        if (!sellOrder_new.getCarryPrice().equals(""))
-        {
-            by_danjia.setText(sellOrder_new.getCarryPrice());
-        } else
-        {
-            by_danjia.setText("");
-        }
+
+
+
         if (!sellOrder_new.getOldCarryPrice().equals(""))
         {
 
             old_danjia.setText(sellOrder_new.getOldCarryPrice());
+            by_danjia.setText(sellOrder_new.getCarryPrice());
         } else
         {
-            old_danjia.setText("");
+            ig_view3.setVisibility(View.INVISIBLE);
+//            by_danjia.setText(sellOrder_new.getCarryPrice());
+            old_danjia.setText(sellOrder_new.getCarryPrice());
         }
-        if (!sellOrder_new.getPackPrice().equals(""))
-        {
 
-            bz_danjia.setText(sellOrder_new.getPackPrice());
-        } else
-        {
-            bz_danjia.setText("");
-        }
+
         if (!sellOrder_new.getOldPackPrice().equals(""))
         {
-
+            bz_danjia.setText(sellOrder_new.getPackPrice());
             old_bzdanjia.setText(sellOrder_new.getOldPackPrice());
         } else
         {
-            old_bzdanjia.setText("");
+            ig_view4.setVisibility(View.INVISIBLE);
+//            bz_danjia.setText(sellOrder_new.getPackPrice());
+            old_bzdanjia.setText(sellOrder_new.getPackPrice());
         }
-        if (!sellOrder_new.getWeight().equals(""))
-        {
 
-            et_weight.setText(sellOrder_new.getWeight());//总重量
-        } else
-        {
-            et_weight.setText("");
-        }
         if (!sellOrder_new.getOldnumber().equals(""))
         {
 
             old_weight.setText(sellOrder_new.getOldnumber());//总重量
+            et_weight.setText(sellOrder_new.getWeight());//总重量
         } else
         {
-            old_weight.setText("");
+            ig_view5.setVisibility(View.INVISIBLE);
+//            et_weight.setText(sellOrder_new.getWeight());//总重量
+            old_weight.setText(sellOrder_new.getWeight());//总重量
         }
 
 
@@ -366,7 +364,7 @@ public class NCZ_DD_SH_Detail extends Activity
             sellOrder.setOldsaletime("");
         }
         sellOrder.setSelltype("待付订金");
-        sellOrder.setBuyers(sellOrder.getBuyersId());
+        sellOrder.setBuyers(sellOrder.getBuyers());
         sellOrder.setIsNeedAudit("1");
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         StringBuilder builder = new StringBuilder();
@@ -565,7 +563,7 @@ public class NCZ_DD_SH_Detail extends Activity
         {
             sellOrder.setOldsaletime("");
         }
-        sellOrder.setBuyers(sellOrder.getBuyersId());
+        sellOrder.setBuyers(sellOrder.getBuyers());
         sellOrder.setIsNeedAudit("-1");
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         StringBuilder builder = new StringBuilder();
@@ -609,7 +607,7 @@ public class NCZ_DD_SH_Detail extends Activity
         {
             sellOrders.setFreeFinalPay("-1");
         }
-        sellOrders.setBuyers(sellOrders.getBuyersId());
+        sellOrders.setBuyers(sellOrders.getBuyers());
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrder_new\":[ ");
@@ -652,7 +650,7 @@ public class NCZ_DD_SH_Detail extends Activity
         {
             sellOrders.setFreeDeposit("-1");
         }
-        sellOrders.setBuyers(sellOrders.getBuyersId());
+        sellOrders.setBuyers(sellOrders.getBuyers());
 
      /*   StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrder_new\": [");

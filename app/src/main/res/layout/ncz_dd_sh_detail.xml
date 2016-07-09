@@ -161,7 +161,6 @@
         android:background="@color/line_color"/>
     <ScrollView
         android:id="@+id/dd_edit"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -320,11 +319,12 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:hint="请选择采收时间"
+                            android:hint=""
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
                         <ImageView
+                            android:id="@+id/ig_view1"
                             android:layout_width="30dip"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/img_right_red"/>
@@ -368,12 +368,13 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:hint="单价"
+                            android:hint=""
                             android:inputType="numberDecimal"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
                         <ImageView
+                            android:id="@+id/ig_view2"
                             android:layout_width="30dip"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/img_right_red"/>
@@ -418,11 +419,12 @@
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="搬运单价"
+                            android:hint=""
                             android:inputType="numberDecimal"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
                         <ImageView
+                            android:id="@+id/ig_view3"
                             android:layout_width="30dip"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/img_right_red"/>
@@ -471,12 +473,13 @@
                             android:layout_weight="1"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="包装单价"
+                            android:hint=""
                             android:inputType="numberDecimal"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
                         <ImageView
+                            android:id="@+id/ig_view5"
                             android:layout_width="30dip"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/img_right_red"/>
@@ -518,11 +521,12 @@
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="重量"
+                            android:hint=""
                             android:inputType="numberDecimal"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
                         <ImageView
+                            android:id="@+id/ig_view4"
                             android:layout_width="30dip"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/img_right_red"/>
@@ -564,7 +568,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="包装规格"
+                            android:hint=""
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -634,7 +638,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入采购商电话"
+                            android:hint="暂无"
                             android:inputType="phone"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -666,7 +670,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入订金"
+                            android:hint="暂无"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -701,7 +705,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入采购商地址"
+                            android:hint="暂无"
                             android:inputType="phone"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -738,7 +742,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入负责人"
+                            android:hint="暂无"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
@@ -770,7 +774,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入车牌号（多辆请用逗号隔开）"
+                            android:hint="暂无）"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
                     </LinearLayout>
@@ -803,7 +807,7 @@
                             android:layout_height="match_parent"
                             android:layout_toRightOf="@+id/dd_tv"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入包装工"
+                            android:hint="暂无"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
@@ -838,7 +842,7 @@
                             android:layout_height="match_parent"
                             android:layout_toRightOf="@+id/by_tv"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入搬运工"
+                            android:hint="暂无"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
@@ -875,7 +879,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入订单备注"
+                            android:hint="暂无"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>

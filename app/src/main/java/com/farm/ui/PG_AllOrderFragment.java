@@ -1,6 +1,5 @@
 package com.farm.ui;
 
-import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,15 +19,13 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_NeedAdapter;
-import com.farm.adapter.NCZ_ScheduleOrderAdapter;
+import com.farm.adapter.PG_NotpayAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
 import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
-import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
@@ -48,19 +45,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@SuppressLint("NewApi")
+/**
+ * Created by hasee on 2016/7/9.
+ */
 @EFragment
-public class NCZ_NeedApproveOrderFragment extends Fragment
+public class PG_AllOrderFragment  extends Fragment
 {
-
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
-    List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
-    String parkname="";
-    String cpname="";
-    String cgsname="";
-//    private NCZ_OrderAdapter listAdapter;
-    private NCZ_NeedAdapter listAdapter;
+    String cpname = "";
+    String cgsname = "";
+    //
+
+    private PG_NotpayAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     private AppContext appContext;
@@ -84,9 +81,10 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
     ArrayAdapter<String> provinceAdapter = null;  //省级适配器
     ArrayAdapter<String> cityAdapter = null;    //地级适配器
     ArrayAdapter<String> countyAdapter = null;    //县级适配器
-    private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
-    private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
-    private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
+    static int provincePosition = 3;
+    private String[] mProvinceDatas=new String[]{"全部分场","乐丰分场","双桥分场"};
+    private String[] mCitisDatasMap=new String[]{"全部产品","香蕉","柑橘"};
+    private String[] mAreaDatasMap=new String[]{"不限采购商","李四","张三"};
 
     @Override
     public void onResume()
@@ -97,24 +95,24 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
     @AfterViews
     void afterOncreate()
     {
-
         getchanpin();//产品
         getpurchaser();//采购商
-        getlistdata();//园区
 //        getNewSaleList_test();
         setSpinner();
         getAllOrders();
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
+        View rootView = inflater.inflate(R.layout.cz_allorderfarment, container, false);
         appContext = (AppContext) getActivity().getApplication();
-//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
+//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENOTPAYORDER);
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
+
         return rootView;
     }
 
@@ -124,27 +122,27 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
         @Override
         public void onReceive(Context context, Intent intent)
         {
-
-           /*
-            lv.setAdapter(null);
-            lv.removeAllViews();*/
             getAllOrders();
         }
     };
+
 
     private void getNewSaleList_test()
     {
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_NeedAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+            listAdapter = new PG_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
-                    Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                    commembertab commembertab = AppContext.getUserInfo(getActivity());
+                    AppContext.eventStatus(getActivity(), "8",  listData.get(position).getUuid(), commembertab.getId());
+//                    Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                    Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
                     intent.putExtra("bean", listData.get(position));
                     getActivity().startActivity(intent);
                 }
@@ -159,15 +157,15 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("isApprove", "1");//不为空
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
+        params.addQueryStringParameter("userId", commembertab.getId());
+        params.addQueryStringParameter("action", "getSellOrderByUserId");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
+                commembertab commembertab = AppContext.getUserInfo(getActivity());
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
@@ -175,20 +173,28 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        listAdapter = new NCZ_NeedAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+
+      /*                  Iterator<SellOrder_New> its = listData.iterator();
+                        while (its.hasNext())
+                        {
+                            String value = its.next().getMainPepole();
+                            if (!value.equals(commembertab.getId()))
+                            {
+                                its.remove();
+                            }
+                        }*/
+
+                        listAdapter = new PG_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
-
-                                commembertab commembertab = AppContext.getUserInfo(getActivity());
-                                AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
 //                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                              /*  Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
+                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
-                                getActivity().startActivity(intent);*/
+                                getActivity().startActivity(intent);
                             }
                         });
 
@@ -213,7 +219,6 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
             }
         });
     }
-
     /*
         * 设置下拉框
         */
@@ -265,100 +270,19 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
             }
         });
     }
-
     @Override
     public void onDestroyView()
     {
         super.onDestroyView();
     }
-
-    //园区
-    private void getlistdata()
-    {
-        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(getActivity());
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("parkId", "16");
-//        params.addQueryStringParameter("action", "getGoodsByUid");
-        params.addQueryStringParameter("action", "getcontractByUid");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<Wz_Storehouse> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        Wz_Storehouse wz_storehouses = new Wz_Storehouse();
-                        wz_storehouses.setParkId("");
-                        wz_storehouses.setParkName("全部分场");
-                        listpark.add(wz_storehouses);
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
-                        listpark.addAll(listNewData);
-
-
-                        String park[] = new String[listpark.size()];
-                        for (int i = 0; i < listpark.size(); i++)
-                        {
-                            park[i] = listpark.get(i).getParkName();
-                        }
-
-                        //绑定适配器和值
-//        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
-                        provinceAdapter = new CustomArrayAdapter(getActivity(), park);
-                        provinceSpinner.setAdapter(provinceAdapter);
-                        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
-                        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-                        {
-                            @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-                            {
-
-                                parkname = listpark.get(i).getParkName();
-                                getAllOrdersname();
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> adapterView)
-                            {
-
-                            }
-                        });
-                    } else
-                    {
-                        listNewData = new ArrayList<Wz_Storehouse>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
-
-            }
-        });
-
-    }
-//产品
-    private void getchanpin()
+    private void getAllOrdersname()
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getProduct");
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("userId", commembertab.getId());
+        params.addQueryStringParameter("action", "getSellOrderByUserId");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -366,52 +290,93 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<AllType> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), AllType.class);
-                        AllType allType = new AllType();
-                        allType.setId("");
-                        allType.setProductName("全部产品");
-                        listdata_cp.add(allType);
-                        listdata_cp.addAll(listNewData);
+                        commembertab commembertab = AppContext.getUserInfo(getActivity());
+                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
-
-                        String park[] = new String[listdata_cp.size()];
-                        for (int i = 0; i < listdata_cp.size(); i++)
+                        Iterator<SellOrder_New> ist = listData.iterator();
+ /*                       while (ist.hasNext())
                         {
-                            park[i] = listdata_cp.get(i).getProductName();
-                        }
-                        cityAdapter = new CustomArrayAdapter(getActivity(), park);
-                        citySpinner.setAdapter(cityAdapter);
-                        citySpinner.setSelection(0, true);  //默认选中第0个
-                        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-                        {
-                            @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                            String value = ist.next().getMainPepole();
+                            if (!value.equals(commembertab.getId()))
                             {
-
-                                cpname = listdata_cp.get(i).getProductName();
-                                getAllOrdersname();
+                                ist.remove();
                             }
+                        }*/
+                        Iterator<SellOrder_New> it = listData.iterator();
+                        while (it.hasNext())
+                        {
+                            String value = it.next().getSelltype();
+                            if (value.equals("已完成"))
+                            {
+                                it.remove();
+                            }
+                        }
 
+                        if (!cgsname.equals(""))
+                        {
+
+                            if (!cgsname.equals("全部采购商"))
+                            {
+                                Iterator<SellOrder_New> its = listData.iterator();
+                                while (its.hasNext())
+                                {
+                                    String value = its.next().getPurchaName();
+//                            if (!value.equals("已完成"))
+                                    if (value.indexOf(cgsname) == -1)
+                                    {
+                                        its.remove();
+                                    }
+                                }
+                            }
+                        }
+                        if (!cpname.equals(""))
+                        {
+
+                            if (!cpname.equals("全部产品"))
+                            {
+                                Iterator<SellOrder_New> its = listData.iterator();
+                                while (its.hasNext())
+                                {
+                                    String value = its.next().getGoodsname();
+//                            if (!value.equals("已完成"))
+                                    if (value.indexOf(cpname) == -1)
+                                    {
+                                        its.remove();
+                                    }
+                                }
+                            }
+                        }
+
+                        listAdapter = new PG_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+                        lv.setAdapter(listAdapter);
+                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                        {
                             @Override
-                            public void onNothingSelected(AdapterView<?> adapterView)
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
 
+                                commembertab commembertab = AppContext.getUserInfo(getActivity());
+                                AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
+//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
+                                intent.putExtra("bean", listData.get(position));
+                                getActivity().startActivity(intent);
                             }
                         });
+
                     } else
                     {
-                        listNewData = new ArrayList<AllType>();
+                        listData = new ArrayList<SellOrder_New>();
                     }
+
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
-
                     return;
                 }
 
@@ -420,7 +385,6 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
 
             }
@@ -485,6 +449,46 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
                                 {
                                     cgsname = listData_CG.get(i).getName();
                                     getAllOrdersname();
+//                                    getAllOrdersname("采购商", listData_CG.get(i).getName());
+//                                    secletcgs = new ArrayList<SellOrder_New>();
+//                                    if (secletchanpin.size()==0||secletchanpin.equals("")||secletchanpin==null)
+//                                    {
+//                                        secletcgs.addAll(listData);
+//                                    }else
+//                                    {
+//                                        secletcgs.addAll(secletchanpin);
+//                                    }
+//                                    if (!listData_CG.get(i).getName().equals("不限采购商"))
+//                                    {
+//                                        Iterator<SellOrder_New> it = secletcgs.iterator();
+//                                        while (it.hasNext())
+//                                        {
+//                                            String value = it.next().getBuyersName();
+////                            if (!value.equals("已完成"))
+//                                            if (value.indexOf(listData_CG.get(i).getName()) == -1)
+//                                            {
+//                                                it.remove();
+//                                            }
+//                                        }
+//                                    }
+//
+//
+//                                    listAdapter = new NCZ_ScheduleOrderAdapter(getActivity(), secletcgs, AppContext.BROADCAST_UPDATEAllORDER, mCallback);
+//                                    lv.setAdapter(listAdapter);
+//                                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//                                    {
+//                                        @Override
+//                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//                                        {
+//
+//                                            commembertab commembertab = AppContext.getUserInfo(getActivity());
+//                                            AppContext.eventStatus(getActivity(), "8", secletcgs.get(position).getUuid(), commembertab.getId());
+//                                            Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+//                                            intent.putExtra("bean", secletcgs.get(position));
+//                                            getActivity().startActivity(intent);
+//                                        }
+//                                    });
+
                                 }
 
                                 @Override
@@ -520,15 +524,12 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
     }
 
 
-    private void getAllOrdersname()
+    private void getchanpin()
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("isApprove", "1");//不为空
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
+        params.addQueryStringParameter("action", "getProduct");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -536,96 +537,53 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
+                List<AllType> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        Iterator<SellOrder_New> ita = listData.iterator();
-                        while (ita.hasNext())
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), AllType.class);
+                        AllType allType = new AllType();
+                        allType.setId("");
+                        allType.setProductName("全部产品");
+                        listdata_cp.add(allType);
+                        listdata_cp.addAll(listNewData);
+
+
+                        String park[] = new String[listdata_cp.size()];
+                        for (int i = 0; i < listdata_cp.size(); i++)
                         {
-                            String value = ita.next().getSelltype();
-                            if (value.equals("已完成"))
-                            {
-                                ita.remove();
-                            }
+                            park[i] = listdata_cp.get(i).getProductName();
                         }
-
-                        if (!parkname.equals(""))
-                        {
-                            if (!parkname.equals("全部分场"))
-                            {
-                                Iterator<SellOrder_New> it = listData.iterator();
-                                while (it.hasNext())
-                                {
-                                    String value = it.next().getProducer();
-                                    if (value.indexOf(parkname) == -1)
-                                    {
-                                        it.remove();
-                                    }
-                                }
-                            }
-                        }
-                        if (!cgsname.equals(""))
-                        {
-
-                            if (!cgsname.equals("全部采购商"))
-                            {
-                                Iterator<SellOrder_New> its = listData.iterator();
-                                while (its.hasNext())
-                                {
-                                    String value = its.next().getPurchaName();
-                                    if (value.indexOf(cgsname) == -1)
-                                    {
-                                        its.remove();
-                                    }
-                                }
-                            }
-                        }
-
-                        if (!cpname.equals(""))
-                        {
-
-                            if (!cpname.equals("全部产品"))
-                            {
-                                Iterator<SellOrder_New> its = listData.iterator();
-                                while (its.hasNext())
-                                {
-                                    String value = its.next().getGoodsname();
-//                            if (!value.equals("已完成"))
-                                    if (value.indexOf(cpname) == -1)
-                                    {
-                                        its.remove();
-                                    }
-                                }
-                            }
-                        }
-
-                        listAdapter = new NCZ_NeedAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
-                        lv.setAdapter(listAdapter);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                        cityAdapter = new CustomArrayAdapter(getActivity(), park);
+                        citySpinner.setAdapter(cityAdapter);
+                        citySpinner.setSelection(0, true);  //默认选中第0个
+                        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
                         {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                             {
 
-                                commembertab commembertab = AppContext.getUserInfo(getActivity());
-                                AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-                       /*         Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                                intent.putExtra("bean", listData.get(position));
-                                getActivity().startActivity(intent);*/
+                                cpname = listdata_cp.get(i).getProductName();
+                                getAllOrdersname();
+
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView)
+                            {
+
                             }
                         });
-
                     } else
                     {
-                        listData = new ArrayList<SellOrder_New>();
+                        listNewData = new ArrayList<AllType>();
                     }
-
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
+
                     return;
                 }
 
@@ -634,9 +592,11 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
             @Override
             public void onFailure(HttpException error, String msg)
             {
+                String a = error.getMessage();
                 AppContext.makeToast(getActivity(), "error_connectServer");
 
             }
         });
+
     }
 }

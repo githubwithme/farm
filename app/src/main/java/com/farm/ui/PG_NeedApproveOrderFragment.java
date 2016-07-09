@@ -484,7 +484,7 @@ public class PG_NeedApproveOrderFragment extends Fragment
                                 Iterator<SellOrder_New> its = listData.iterator();
                                 while (its.hasNext())
                                 {
-                                    String value = its.next().getBuyersName();
+                                    String value = its.next().getPurchaName();
 //                            if (!value.equals("已完成"))
                                     if (value.indexOf(cgsname) == -1)
                                     {

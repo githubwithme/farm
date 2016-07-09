@@ -798,6 +798,8 @@
                 android:dividerHeight="0dip"/>
 
             <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_jsd"
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
                 android:layout_marginLeft="10dip"
@@ -808,6 +810,8 @@
                 android:text="结算单"
                 android:textSize="@dimen/size_16"/>
             <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_jsd"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:layout_width="match_parent"

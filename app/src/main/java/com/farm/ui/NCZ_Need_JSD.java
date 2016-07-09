@@ -117,7 +117,7 @@ public class NCZ_Need_JSD extends Activity
         SellOrder_New sellOrders=new SellOrder_New();
         sellOrders=sellOrder;
         sellOrders.setSelltype("待付尾款");
-        sellOrders.setBuyers(sellOrder.getBuyersId());
+        sellOrders.setBuyers(sellOrder.getBuyers());
         sellOrders.setIsNeedAudit("1");
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         StringBuilder builder = new StringBuilder();
@@ -134,7 +134,7 @@ public class NCZ_Need_JSD extends Activity
         SellOrder_New sellOrders=new SellOrder_New();
         sellOrders=sellOrder;
         sellOrders.setSelltype("交易失败");
-        sellOrders.setBuyers(sellOrder.getBuyersId());
+        sellOrders.setBuyers(sellOrder.getBuyers());
         sellOrders.setIsNeedAudit("-1");
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         StringBuilder builder = new StringBuilder();
@@ -158,7 +158,7 @@ public class NCZ_Need_JSD extends Activity
             saletime.setText(sellOrder.getSaletime().substring(0,sellOrder.getSaletime().length()-8));
         }
 
-        buyers.setText(sellOrder.getBuyersName());
+        buyers.setText(sellOrder.getPurchaName());
         mainPepole.setText(sellOrder.getMainPepName());
         tv_finalpayment.setText(sellOrder.getAddress());
         goodsName.setText(sellOrder.getGoodsname());
