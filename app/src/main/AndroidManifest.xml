@@ -61,10 +61,12 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.NCZ_JobActivity_"/>
 
+        <activity android:name=".ui.NCZ_AgreementDetail_"/>
         <activity android:name=".ui.PG_JobFragment_"/>
         <activity android:name=".ui.CZ_ContractBatchTimeBreakOff_"/>
         <activity android:name=".ui.CZ_AreaBatchTimeBreakOff_"/>
         <activity android:name=".ui.CZ_SaleActivity_"/>
+        <activity android:name=".ui.CZ_ContractBatchTimeSale_"/>
         <activity android:name=".ui.CZ_JobFragment_"/>
         <activity android:name=".ui.CZ_BreakOffActivity_"/>
         <activity android:name=".ui.NCZ_ContractBreakOffActivity_"/>

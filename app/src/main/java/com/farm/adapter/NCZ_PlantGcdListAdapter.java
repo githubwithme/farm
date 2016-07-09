@@ -226,7 +226,7 @@ public class NCZ_PlantGcdListAdapter extends BaseAdapter
             listItemView.tv_average_lys.setText(PlantGcd.getAverage_xnum() + "张");
         }
 
-        listItemView.tv_area.setText(PlantGcd.getparkName() + PlantGcd.getareaName());
+        listItemView.tv_area.setText(PlantGcd.getparkName() +"  "+ PlantGcd.getareaName());
         listItemView.tv_plantname.setText(PlantGcd.getPlantgcdName());
         listItemView.tv_time.setText(PlantGcd.getregDate().substring(5, PlantGcd.getregDate().lastIndexOf(":")));
         return convertView;

@@ -61,7 +61,6 @@ public class PG_BreakOffActivity extends Activity
     protected List<CustomHorizontalScrollView_PGBreakOff> mHScrollViews = new ArrayList<CustomHorizontalScrollView_PGBreakOff>();
     private ScrollAdapter mAdapter;
     int screenWidth = 0;
-    int allnumber = 0;
     @ViewById
     LinearLayout ll_park;
     @ViewById
@@ -181,6 +180,10 @@ public class PG_BreakOffActivity extends Activity
 
     private void initViews()
     {
+        int allnumber = 0;
+        mHScrollViews.clear();
+        ll_park.removeAllViews();
+        ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) PG_BreakOffActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < listData.get(0).getContractTabList().size(); i++)
         {
@@ -491,6 +494,7 @@ public class PG_BreakOffActivity extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         Toast.makeText(PG_BreakOffActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                        getfarmSalesData();
                     } else
                     {
                         Toast.makeText(PG_BreakOffActivity.this, "保存失败", Toast.LENGTH_SHORT).show();
@@ -535,6 +539,7 @@ public class PG_BreakOffActivity extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         Toast.makeText(PG_BreakOffActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                        getfarmSalesData();
                     } else
                     {
                         Toast.makeText(PG_BreakOffActivity.this, "修改失败", Toast.LENGTH_SHORT).show();

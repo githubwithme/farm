@@ -140,7 +140,8 @@ public class CZ_FarmManagerFragment extends Fragment
     @Click
     void ll_xs()
     {
-        Intent intent = new Intent(getActivity(), CZ_OrderManager_.class);
+//        Intent intent = new Intent(getActivity(), CZ_OrderManager_.class);
+        Intent intent = new Intent(getActivity(), CZ_SaleActivity_.class);
         getActivity().startActivity(intent);
     }
 

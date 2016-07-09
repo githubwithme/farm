@@ -1,6 +1,7 @@
 package com.farm.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.farm.R;
 import com.farm.bean.BatchTime;
 import com.farm.bean.areatab;
 import com.farm.common.utils;
+import com.farm.ui.CZ_ContractBatchTimeSale_;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.CustomListView;
@@ -129,7 +131,7 @@ public class Adapter_BatchTimeSale_CZ extends BaseExpandableListAdapter
         super.onGroupCollapsed(groupPosition);
         if (listData.get(groupPosition).getAreatabList().size() == 0)
         {
-            Toast.makeText(context,"该园区暂无批次",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "该园区暂无批次", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -188,7 +190,7 @@ public class Adapter_BatchTimeSale_CZ extends BaseExpandableListAdapter
         TextView tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);
         BatchTime batchTime = listData.get(groupPosition);
 
-        tv_contractname.setText(listData.get(groupPosition).getBatchTime());
+        tv_contractname.setText(batchTime.getBatchTime());
         tv_salefor.setText(batchTime.getAllsalefor());
         tv_allsale.setText(batchTime.getAllnumber());
         tv_saleout.setText(batchTime.getAllsaleout());
@@ -217,11 +219,11 @@ public class Adapter_BatchTimeSale_CZ extends BaseExpandableListAdapter
         CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
         private Context context;
         Holder view;
-        String parkname;
+        String batchtime;
 
-        public GridViewAdapter_SellOrDetail_NCZ(Context context, List<areatab> list, String parkname)
+        public GridViewAdapter_SellOrDetail_NCZ(Context context, List<areatab> list, String batchtime)
         {
-            this.parkname = parkname;
+            this.batchtime = batchtime;
             this.list = list;
             this.context = context;
         }
@@ -263,18 +265,20 @@ public class Adapter_BatchTimeSale_CZ extends BaseExpandableListAdapter
                     @Override
                     public void onClick(View v)
                     {
-//                        BatchTime batchTimes = (com.farm.bean.BatchTime) v.getTag(R.id.tag_batchtime);
-//                        String parkname = (String) v.getTag(R.id.tag_parkname);
-//                        Intent intent = new Intent(context, NCZ_AreaSaleData_.class);
-//                        intent.putExtra("parkid", batchTimes.getParkId());
-//                        intent.putExtra("parkname", parkname);
-//                        intent.putExtra("batchTime", batchTimes.getBatchTime());
-//                        context.startActivity(intent);
+                        String areaid = (String) v.getTag(R.id.tag_areaid);
+                        String areaname = (String) v.getTag(R.id.tag_areaname);
+                        String batchtime = (String) v.getTag(R.id.tag_batchtime);
+                        Intent intent = new Intent(context, CZ_ContractBatchTimeSale_.class);
+                        intent.putExtra("areaid", areaid);
+                        intent.putExtra("areaname", areaname);
+                        intent.putExtra("batchtime", batchtime);
+                        context.startActivity(intent);
                     }
                 });
                 convertView.setTag(view);
-                convertView.setTag(R.id.tag_batchtime, areatab);
-                convertView.setTag(R.id.tag_parkname, parkname);
+                convertView.setTag(R.id.tag_areaid, areatab.getAreaid());
+                convertView.setTag(R.id.tag_areaname, areatab.getareaName());
+                convertView.setTag(R.id.tag_batchtime, batchtime);
             } else
             {
                 view = (Holder) convertView.getTag();

@@ -13,8 +13,8 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
+import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
-import com.farm.bean.parktab;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -46,9 +46,16 @@ public class CZ_SaleActivity extends Activity
 
 
     @Click
+    void btn_back()
+    {
+        finish();
+    }
+
+
+    @Click
     void btn_createorders()
     {
-        Intent intent = new Intent(CZ_SaleActivity.this, NCZ_CreateNewOrder_.class);
+        Intent intent = new Intent(CZ_SaleActivity.this, CZ_CreateOrder_.class);
         startActivity(intent);
     }
 
@@ -56,7 +63,7 @@ public class CZ_SaleActivity extends Activity
     @Click
     void btn_orders()
     {
-        Intent intent = new Intent(CZ_SaleActivity.this, NCZ_OrderManager_.class);
+        Intent intent = new Intent(CZ_SaleActivity.this, CZ_OrderManager_New_.class);
         startActivity(intent);
     }
 
@@ -87,7 +94,7 @@ public class CZ_SaleActivity extends Activity
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_SaleActivity.this);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("parkid", commembertab.getuId());
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("action", "CZ_getBatchTimeContractData");//jobGetList1
         HttpUtils http = new HttpUtils();
@@ -137,9 +144,9 @@ public class CZ_SaleActivity extends Activity
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_SaleActivity.this);
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "getAreaSaleData");//jobGetList1
+        params.addQueryStringParameter("action", "CZ_GetAreaSaleData");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -147,13 +154,13 @@ public class CZ_SaleActivity extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<parktab> listNewData = null;
+                List<areatab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), areatab.class);
                         adapter_areaSale_cz = new Adapter_AreaSale_CZ(CZ_SaleActivity.this, listNewData, expandableListView_areasaledata);
                         expandableListView_areasaledata.setAdapter(adapter_areaSale_cz);
                         utils.setListViewHeight(expandableListView_areasaledata);
@@ -165,7 +172,7 @@ public class CZ_SaleActivity extends Activity
 
                     } else
                     {
-                        listNewData = new ArrayList<parktab>();
+                        listNewData = new ArrayList<areatab>();
                     }
 
                 } else
