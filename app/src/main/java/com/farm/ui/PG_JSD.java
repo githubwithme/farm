@@ -460,8 +460,11 @@ public class PG_JSD extends Activity
         jsd_zpjz.addTextChangedListener(all_jingzhong);//正品总净重
         jsd_cpzjs.addTextChangedListener(all_jingzhong);//次品总净重
 
-//        zp_jsje//正品结算金额   cp_jsje  //次品结算金额 carryFee//总搬运费  packFee//总包装费
-
+//        zp_jsje//正品结算金额   cp_jsje  //次品结算金额 carryFee//总搬运费  packFee//总包装费all_jine
+        zp_jsje.addTextChangedListener(all_jine);//次品总净重
+        cp_jsje.addTextChangedListener(all_jine);//次品总净重
+        carryFee.addTextChangedListener(all_jine);//次品总净重
+        packFee.addTextChangedListener(all_jine);//次品总净重
     }
 
     @Override
@@ -593,7 +596,7 @@ public class PG_JSD extends Activity
         public void afterTextChanged(Editable editable)
         {
 
-            if (!jsd_zpprice.getText().toString().equals("") && !jsd_zpjz.getText().toString().equals(""))
+            if (!cp_jianshu.getText().toString().equals("") && !cp_jingzhong.getText().toString().equals(""))
             {
                 jsd_cpzjs.setText(Double.valueOf(cp_jianshu.getText().toString()) * Double.valueOf(cp_jingzhong.getText().toString()) + "");
             }
@@ -620,7 +623,7 @@ public class PG_JSD extends Activity
         public void afterTextChanged(Editable editable)
         {
 
-            if (!jsd_zpprice.getText().toString().equals("") && !jsd_zpjz.getText().toString().equals(""))
+            if (!jsd_cpzjs.getText().toString().equals("") && !jsd_cpprice.getText().toString().equals(""))
             {
                 cp_jsje.setText(Double.valueOf(jsd_cpzjs.getText().toString()) * Double.valueOf(jsd_cpprice.getText().toString()) + "");
             }
@@ -652,7 +655,7 @@ public class PG_JSD extends Activity
 //            packFee 包装  carryFee搬运
             if (!bz_nc_danjia.getText().toString().equals("") && !jsd_zongjianshu.getText().toString().equals(""))
             {
-                packFee.setText(Double.valueOf(bz_nc_danjia.getText().toString())*Double.valueOf(jsd_zongjianshu.getText().toString())+"");
+                packFee.setText(Double.valueOf(bz_nc_danjia.getText().toString()) * Double.valueOf(jsd_zongjianshu.getText().toString()) + "");
             }
 
    /*         if (!by_nc_danjia.getText().toString().equals("") && !jsd_zongjianshu.getText().toString().equals(""))
@@ -687,7 +690,7 @@ public class PG_JSD extends Activity
 
             if (!by_nc_danjia.getText().toString().equals("") && !jsd_zongjianshu.getText().toString().equals(""))
             {
-                carryFee.setText(Double.valueOf(by_nc_danjia.getText().toString())*Double.valueOf(jsd_zongjianshu.getText().toString())+"");
+                carryFee.setText(Double.valueOf(by_nc_danjia.getText().toString()) * Double.valueOf(jsd_zongjianshu.getText().toString()) + "");
             }
         }
     };
@@ -711,11 +714,50 @@ public class PG_JSD extends Activity
         {
 
 
-
             if (!jsd_zpjz.getText().toString().equals("") && !jsd_cpzjs.getText().toString().equals(""))
             {
-                jsd_zongjingzhong.setText(Double.valueOf(jsd_zpjz.getText().toString())+Double.valueOf(jsd_cpzjs.getText().toString())+"");
+                jsd_zongjingzhong.setText(Double.valueOf(jsd_zpjz.getText().toString()) + Double.valueOf(jsd_cpzjs.getText().toString()) + "");
             }
+        }
+    };
+    //总净重
+    private TextWatcher all_jine = new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable)
+        {
+//        zp_jsje//正品结算金额   cp_jsje  //次品结算金额 carryFee//总搬运费  packFee//总包装费all_jine
+
+            double allvalue = 0;
+            if (!zp_jsje.getText().toString().equals(""))
+            {
+                allvalue+=Double.valueOf(zp_jsje.getText().toString());
+            }
+            if (!cp_jsje.getText().toString().equals(""))
+            {
+                allvalue+=Double.valueOf(cp_jsje.getText().toString());
+            }
+            if (!carryFee.getText().toString().equals(""))
+            {
+                allvalue+=Double.valueOf(carryFee.getText().toString());
+            }
+            if (!packFee.getText().toString().equals(""))
+            {
+                allvalue+=Double.valueOf(packFee.getText().toString());
+            }
+            actualMoney.setText(allvalue+"");
         }
     };
     //区域选择
