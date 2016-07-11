@@ -147,8 +147,15 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
                     showDialog_addsaleinfo(sellOrder.getPurchaTel());
                 }
             });
-            String []  str=sellOrder.getPlateNumber().split(",");
-            listItemView.cl.setText(str.length+"");
+            if (sellOrder.getPlateNumber().equals(""))
+            {
+                listItemView.cl.setText("0");
+            }else
+            {
+                String []  str=sellOrder.getPlateNumber().split(",");
+                listItemView.cl.setText(str.length+"");
+            }
+
 //            listItemView.circle_img.setOnClickListener(this);
             listItemView.btn_editorder.setTag(R.id.tag_kg, listItemView);
             listItemView.btn_editorder.setTag(R.id.tag_hg, sellOrder);

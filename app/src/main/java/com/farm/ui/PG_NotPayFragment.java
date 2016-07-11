@@ -162,6 +162,7 @@ public class PG_NotPayFragment extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("userId", commembertab.getId());
+        params.addQueryStringParameter("isPass", "-1");
         params.addQueryStringParameter("action", "getSellOrderByUserId");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -294,6 +295,7 @@ public class PG_NotPayFragment extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("userId", commembertab.getId());
+        params.addQueryStringParameter("isPass", "-1");
         params.addQueryStringParameter("action", "getSellOrderByUserId");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

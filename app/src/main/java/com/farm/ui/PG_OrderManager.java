@@ -211,6 +211,7 @@ public class PG_OrderManager extends Activity
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("userId", commembertab.getId());
+        params.addQueryStringParameter("isPass", "-1");
         params.addQueryStringParameter("action", "getSellOrderByUserId");//
 //        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
         HttpUtils http = new HttpUtils();
@@ -238,7 +239,7 @@ public class PG_OrderManager extends Activity
                                 it.remove();
                             }
                         }
-                        Iterator<SellOrder_New> its = listData.iterator();
+    /*                    Iterator<SellOrder_New> its = listData.iterator();
                         while (its.hasNext())
                         {
                             String value = its.next().getMainPepole();
@@ -246,13 +247,25 @@ public class PG_OrderManager extends Activity
                             {
                                 its.remove();
                             }
-                        }
+                        }*/
+                        int b = 0;
                         if (listData.size() > 0)
                         {
+                            for (int j = 0; j < listData.size(); j++)
+                            {
+                                if (listData.get(j).getFlashStr().equals("1"))
+                                {
+                                    b++;
+                                }
+                            }
+                        }
+
+                        if (b>0)
+                        {
                             fl_dynamic.setVisibility(View.VISIBLE);
-                            tv_dynamic_new.setText(listData.size() + "");
+                            tv_dynamic_new.setText(b + "");
                             fl_jyz.setVisibility(View.VISIBLE);
-                            tv_jyz.setText(listData.size() + "");
+                            tv_jyz.setText(b + "");
                         }
 
                     } else
@@ -300,10 +313,21 @@ public class PG_OrderManager extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        if (listData.size()>0)
+                        int b = 0;
+                        if (listData.size() > 0)
+                        {
+                            for (int j = 0; j < listData.size(); j++)
+                            {
+                                if (listData.get(j).getFlashStr().equals("1"))
+                                {
+                                    b++;
+                                }
+                            }
+                        }
+                        if (b > 0)
                         {
                             fl_dsp.setVisibility(View.VISIBLE);
-                            tv_dsp.setText(listData.size() + "");
+                            tv_dsp.setText(b + "");
                         }
                     } else
                     {

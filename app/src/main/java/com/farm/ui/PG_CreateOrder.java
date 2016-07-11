@@ -280,11 +280,7 @@ public class PG_CreateOrder extends Activity
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }*/
-        if (et_address.getText().toString().equals(""))
-        {
-            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
   /*      if (et_phone.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
@@ -436,12 +432,21 @@ public class PG_CreateOrder extends Activity
         SellOrderList.add(sellOrder);
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         sellOrder_new_first.setSellOrderId(uuid);
- /*       sellOrder_new_first.setQualityWaterWeight("0");
-        sellOrder_new_first.setQualityNetWeight("0");
-        sellOrder_new_first.setQualityBalance("0");
-        sellOrder_new_first.setDefectWaterWeight("0");
-        sellOrder_new_first.setDefectNetWeight("0");
-        sellOrder_new_first.setDefectBalance("0");*/
+        sellOrder_new_first.setQualityWaterWeight("");
+        sellOrder_new_first.setQualityNetWeight("");
+        sellOrder_new_first.setQualityBalance("");
+        sellOrder_new_first.setDefectWaterWeight("");
+        sellOrder_new_first.setDefectNetWeight("");
+        sellOrder_new_first.setDefectBalance("");
+        sellOrder_new_first.setTotal("");
+        sellOrder_new_first.setActualMoney("");
+        sellOrder_new_first.setQualityTotalWeight("");
+        sellOrder_new_first.setDefectTotalWeight("");
+        sellOrder_new_first.setTotalWeight("");
+        sellOrder_new_first.setPackFee("");
+        sellOrder_new_first.setCarryFee("");
+        sellOrder_new_first.setTotalFee("");
+        sellOrder_new_first.setPersonNote("");
 
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrderList\": ");
@@ -604,6 +609,7 @@ public class PG_CreateOrder extends Activity
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("creatorId", commembertab.getId());
         params.addQueryStringParameter("action", "getSellOrderDetailList");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

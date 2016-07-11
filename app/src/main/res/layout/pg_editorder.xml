@@ -365,7 +365,7 @@
                             android:layout_height="match_parent"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="*待付订金(元)"
+                            android:text="*待付定金(元)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
@@ -375,7 +375,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
-                            android:hint="请输入订金"
+                            android:hint="请输入定金"
                             android:inputType="numberDecimal"
                             android:paddingRight="20dip"
                             android:textColor="@color/bg_text"
@@ -383,38 +383,7 @@
 
 
                     </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="@color/line_color"/>
 
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="50dip"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="100dip"
-                            android:layout_height="match_parent"
-                            android:gravity="left|center_vertical"
-                            android:paddingLeft="10dip"
-                            android:text="*发往城市"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-
-
-                        <EditText
-                            android:id="@+id/et_address"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="right|center_vertical"
-                            android:hint="请输入采购商地址"
-                            android:inputType="phone"
-                            android:paddingRight="20dip"
-                            android:textColor="@color/bg_text"
-                            android:textSize="@dimen/size_14"/>
-                    </LinearLayout>
 
                     <View
                         android:visibility="gone"
@@ -672,6 +641,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:background="@color/line_color"/>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="100dip"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="发往城市"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <EditText
+                            android:id="@+id/et_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:hint="请输入采购商地址"
+                            android:paddingRight="20dip"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+                    </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"

@@ -180,7 +180,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
 
         if (sellOrder.getFreeDeposit().equals("0"))
         {
-            listItemView.tv_batchtime.setText("申请免付订金");
+            listItemView.tv_batchtime.setText("申请免付定金");
         } else if (sellOrder.getFreeFinalPay().equals("0"))
         {
             listItemView.tv_batchtime.setText("申请免付尾款");

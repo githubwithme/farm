@@ -1,7 +1,10 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -427,6 +430,38 @@ public class PG_JSD extends Activity
         jsd_zongjingzhong.setText(sellOrder_new.getTotalWeight());
         jsd_zongjianshu.setText(sellOrder_new.getTotal());
         totalFee.setText(sellOrder_new.getTotalFee());
+
+
+        zp_jianshu.addTextChangedListener(jianshu);//正品件数
+        cp_jianshu.addTextChangedListener(jianshu);//次品件数
+
+        zp_bds_zhong.addTextChangedListener(zpZongjingzhong);//正品净重
+        zp_jianshu.addTextChangedListener(zpZongjingzhong);//正品件数
+
+        jsd_zpprice.addTextChangedListener(zpJSjiner);//正品单价
+        jsd_zpjz.addTextChangedListener(zpJSjiner);//正品总净重
+
+
+        cp_jingzhong.addTextChangedListener(cpZongjingzhong);//次品净重
+        cp_jianshu.addTextChangedListener(cpZongjingzhong);//次品件数
+
+        jsd_cpprice.addTextChangedListener(cpJSjiner);//次品单价
+        jsd_cpzjs.addTextChangedListener(cpJSjiner);//次品总净重
+
+
+        bz_nc_danjia.addTextChangedListener(bzallfee);   //包装单价
+//        by_nc_danjia.addTextChangedListener(bzallfee);   //搬运单价
+        jsd_zongjianshu.addTextChangedListener(bzallfee);  //总件数
+
+        by_nc_danjia.addTextChangedListener(byallfee);   //搬运单价
+        jsd_zongjianshu.addTextChangedListener(byallfee);  //总件数
+
+
+        jsd_zpjz.addTextChangedListener(all_jingzhong);//正品总净重
+        jsd_cpzjs.addTextChangedListener(all_jingzhong);//次品总净重
+
+//        zp_jsje//正品结算金额   cp_jsje  //次品结算金额 carryFee//总搬运费  packFee//总包装费
+
     }
 
     @Override
@@ -435,77 +470,24 @@ public class PG_JSD extends Activity
         super.onCreate(savedInstanceState);
         sellOrder_new = getIntent().getParcelableExtra("bean");
         broadcast = getIntent().getStringExtra("broadcast");
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_PG_JSD);
+        registerReceiver(receiver_update, intentfilter_update);
         getActionBar().hide();
     }
 
-
-    //全部净重自动
-    private TextWatcher onzidong = new TextWatcher()
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
+        @SuppressWarnings("deprecation")
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        public void onReceive(Context context, Intent intent)
         {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-        {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable)
-        {
-
-        }
-    };
-    //全部净重手动
-    private TextWatcher onjinzhong = new TextWatcher()
-    {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
-        {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-        {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable)
-        {
-
-
-        }
-    };
-    //次品个数
-    private TextWatcher oncigpin = new TextWatcher()
-    {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
-        {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-        {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable)
-        {
-
+            getsellOrderDetailBySaleId();
         }
     };
 
-    //正品个数
-    private TextWatcher onzhengpin = new TextWatcher()
+
+    //总件数
+    private TextWatcher jianshu = new TextWatcher()
     {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
@@ -522,41 +504,220 @@ public class PG_JSD extends Activity
         @Override
         public void afterTextChanged(Editable editable)
         {
-
-        }
-    };
-    //总株树
-    private TextWatcher onclickText = new TextWatcher()
-    {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
-        {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-        {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable)
-        {
-            int num = 0;
-            for (int i = 0; i < curremt; i++)
+            if (!zp_jianshu.getText().toString().equals("") && !cp_jianshu.getText().toString().equals(""))
             {
-                if (!zhushus[i].getText().toString().equals(""))
-                {
-                    num += Integer.valueOf(zhushus[i].getText().toString());
-                }
-
-
+                jsd_zongjianshu.setText(Double.valueOf(zp_jianshu.getText().toString()) + Double.valueOf(cp_jianshu.getText().toString()) + "");
+            } else if (!zp_jianshu.getText().toString().equals(""))
+            {
+                jsd_zongjianshu.setText(zp_jianshu.getText().toString());
+            } else if (!cp_jianshu.getText().toString().equals(""))
+            {
+                jsd_zongjianshu.setText(cp_jianshu.getText().toString());
             }
-            allnum.setText(num + "");
+
+
         }
     };
 
+    //正总净重
+    private TextWatcher zpZongjingzhong = new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable)
+        {
+
+            if (!zp_bds_zhong.getText().toString().equals("") && !zp_jianshu.getText().toString().equals(""))
+            {
+                jsd_zpjz.setText(Double.valueOf(zp_bds_zhong.getText().toString()) * Double.valueOf(zp_jianshu.getText().toString()) + "");
+            }
+
+
+        }
+    };
+
+    //正品的结算金额
+    private TextWatcher zpJSjiner = new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable)
+        {
+
+            if (!jsd_zpprice.getText().toString().equals("") && !jsd_zpjz.getText().toString().equals(""))
+            {
+                zp_jsje.setText(Double.valueOf(jsd_zpprice.getText().toString()) * Double.valueOf(jsd_zpjz.getText().toString()) + "");
+            }
+
+        }
+    };
+
+    //次品总净重
+    private TextWatcher cpZongjingzhong = new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable)
+        {
+
+            if (!jsd_zpprice.getText().toString().equals("") && !jsd_zpjz.getText().toString().equals(""))
+            {
+                jsd_cpzjs.setText(Double.valueOf(cp_jianshu.getText().toString()) * Double.valueOf(cp_jingzhong.getText().toString()) + "");
+            }
+
+        }
+    };
+
+    //次品的结算金额
+    private TextWatcher cpJSjiner = new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable)
+        {
+
+            if (!jsd_zpprice.getText().toString().equals("") && !jsd_zpjz.getText().toString().equals(""))
+            {
+                cp_jsje.setText(Double.valueOf(jsd_cpzjs.getText().toString()) * Double.valueOf(jsd_cpprice.getText().toString()) + "");
+            }
+
+        }
+    };
+
+    //包装总费
+    private TextWatcher bzallfee = new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable)
+        {
+          /*  bz_nc_danjia.addTextChangedListener(otherjiner);   //包装单价
+            by_nc_danjia.addTextChangedListener(otherjiner);   //搬运单价
+            jsd_zongjianshu.addTextChangedListener(otherjiner);  //总件数*/
+//            packFee 包装  carryFee搬运
+            if (!bz_nc_danjia.getText().toString().equals("") && !jsd_zongjianshu.getText().toString().equals(""))
+            {
+                packFee.setText(Double.valueOf(bz_nc_danjia.getText().toString())*Double.valueOf(jsd_zongjianshu.getText().toString())+"");
+            }
+
+   /*         if (!by_nc_danjia.getText().toString().equals("") && !jsd_zongjianshu.getText().toString().equals(""))
+            {
+                carryFee.setText(Double.valueOf(by_nc_danjia.getText().toString())*Double.valueOf(jsd_zongjianshu.getText().toString())+"");
+            }*/
+        }
+    };
+    //搬运总费
+    private TextWatcher byallfee = new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable)
+        {
+          /*  bz_nc_danjia.addTextChangedListener(otherjiner);   //包装单价
+            by_nc_danjia.addTextChangedListener(otherjiner);   //搬运单价
+            jsd_zongjianshu.addTextChangedListener(otherjiner);  //总件数*/
+//            packFee 包装  carryFee搬运
+
+
+            if (!by_nc_danjia.getText().toString().equals("") && !jsd_zongjianshu.getText().toString().equals(""))
+            {
+                carryFee.setText(Double.valueOf(by_nc_danjia.getText().toString())*Double.valueOf(jsd_zongjianshu.getText().toString())+"");
+            }
+        }
+    };
+    //总净重
+    private TextWatcher all_jingzhong = new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable)
+        {
+
+
+
+            if (!jsd_zpjz.getText().toString().equals("") && !jsd_cpzjs.getText().toString().equals(""))
+            {
+                jsd_zongjingzhong.setText(Double.valueOf(jsd_zpjz.getText().toString())+Double.valueOf(jsd_cpzjs.getText().toString())+"");
+            }
+        }
+    };
     //区域选择
     private View.OnClickListener toolsItemListener = new View.OnClickListener()
     {
@@ -564,13 +725,6 @@ public class PG_JSD extends Activity
         public void onClick(View v)
         {
             int g = v.getId();
-        /*    int g = v.getId();
-            List<String> list = new ArrayList<String>();
-            for (int i = 0; i < listpeople.size(); i++)
-            {
-                list.add(listpeople.get(i).getParkName());
-            }
-            showDialog_workday(list,g);*/
             showDialog_workday(listpeople, g);
 
         }
@@ -579,17 +733,8 @@ public class PG_JSD extends Activity
 
     public void showDialog_workday(List<WZ_CRk> listData, final int g)
     {
-//        View dialog_layout = (RelativeLayout) PG_JSD.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         View dialog_layout = (RelativeLayout) PG_JSD.this.getLayoutInflater().inflate(R.layout.customdialog_explistview, null);
-/*        customDialog_listView = new CustomDialog_Expandlistview(PG_JSD.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
-        {
-            @Override
-            public void OnClick(Bundle bundle)
-            {
-                zzsl = bundle.getString("name");
-                pianqus[g].setText(zzsl);
-            }
-        });*/
+
         customDialog_listView = new CustomDialog_Expandlistview(PG_JSD.this, R.style.mystyle, dialog_layout, listData, new CustomDialog_Expandlistview.CustomDialogListener()
         {
             @Override
@@ -604,53 +749,6 @@ public class PG_JSD extends Activity
         customDialog_listView.show();
     }
 
-/*    private void getBreakOffInfoOfContract()
-    {
-        commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getGoodsInByUid");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<WZ_CRk> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    *//*if (result.getAffectedRows() != 0)
-                    {*//*
-                    listNewData = JSON.parseArray(result.getRows().toJSONString(), WZ_CRk.class);
-                    listpeople.addAll(listNewData);
-//                        for (int i = 0; i < listNewData.size(); i++)
-//                        {
-////                            expandableListView.expandGroup(i);//展开
-//                            expandableListView.collapseGroup(i);//关闭
-//                        }
-
-                *//*    } else
-                    {
-                        listNewData = new ArrayList<WZ_CRk>();
-                    }*//*
-
-                } else
-                {
-                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(PG_JSD.this, "error_connectServer");
-            }
-        });
-    }*/
 
     private void getchengbaohu()
     {
@@ -721,8 +819,6 @@ public class PG_JSD extends Activity
 
     private void getsellOrderDetailBySaleId()
     {
-
-
         commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("saleId", sellOrder_new.getUuid());
@@ -747,6 +843,7 @@ public class PG_JSD extends Activity
                         frame_listview_news.setAdapter(pg_jsd_adapter);
                         utils.setListViewHeight(frame_listview_news);
 
+                        shouData(listNewData);
                     } else
                     {
                         listNewData = new ArrayList<SellOrderDetail_New>();
@@ -793,7 +890,7 @@ public class PG_JSD extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        Toast.makeText(PG_JSD.this, "订单修改成功！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PG_JSD.this, "订单保存成功！", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent();
                         intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
@@ -943,5 +1040,31 @@ public class PG_JSD extends Activity
             }
         });
         customDialog_listViews.show();
+    }
+
+    public void shouData(List<SellOrderDetail_New> JSD_listData)
+    {
+
+        double zpjianshu = 0;
+        double cpjianshu = 0;
+        if (JSD_listData.size() > 0)
+        {
+            for (int i = 0; i < JSD_listData.size(); i++)
+            {
+                if (!JSD_listData.get(i).getplanprice().equals(""))
+                {
+                    cpjianshu += Double.valueOf(JSD_listData.get(i).getplanprice());
+                }
+                if (!JSD_listData.get(i).getactualprice().equals(""))
+                {
+                    zpjianshu += Double.valueOf(JSD_listData.get(i).getactualprice());
+                }
+
+            }
+            zp_jianshu.setText(zpjianshu + "");
+            cp_jianshu.setText(cpjianshu + "");
+//            jsd_zongjianshu.setText(zpjianshu+cpjianshu+"");
+        }
+
     }
 }

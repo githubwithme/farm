@@ -309,7 +309,7 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:paddingLeft="10dip"
-                        android:text="*订金(元)"
+                        android:text="*定金(元)"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
 
@@ -320,7 +320,7 @@
                         android:layout_height="match_parent"
                         android:background="@null"
                         android:gravity="right|center_vertical"
-                        android:hint="请输入订金"
+                        android:hint="请输入定金"
                         android:inputType="numberDecimal"
                         android:paddingRight="20dip"
                         android:textColor="@color/bg_text"

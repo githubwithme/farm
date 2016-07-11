@@ -155,6 +155,7 @@ public class PG_DealingOrder extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("type", "0");
+        params.addQueryStringParameter("isPass", "-1");
         params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -290,6 +291,7 @@ public class PG_DealingOrder extends Fragment
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("type", "0");
+        params.addQueryStringParameter("isPass", "-1");
         params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
