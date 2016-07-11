@@ -5,14 +5,12 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_NeedAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -175,27 +173,27 @@ public class NCZ_OrderManager extends Activity
         {
             case 0:
                 tv_schedule.setSelected(false);
-                tv_schedule.setTextColor(getResources().getColor(R.color.bg_blue));
+                tv_schedule.setTextColor(getResources().getColor(R.color.red));
                 tv_schedule.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 1:
                 tv_pending.setSelected(false);
-                tv_pending.setTextColor(getResources().getColor(R.color.bg_blue));
+                tv_pending.setTextColor(getResources().getColor(R.color.red));
                 tv_pending.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 2:
                 tv_notpay.setSelected(false);
-                tv_notpay.setTextColor(getResources().getColor(R.color.bg_blue));
+                tv_notpay.setTextColor(getResources().getColor(R.color.red));
                 tv_notpay.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 3:
                 tv_dealing.setSelected(false);
-                tv_dealing.setTextColor(getResources().getColor(R.color.bg_blue));
+                tv_dealing.setTextColor(getResources().getColor(R.color.red));
                 tv_dealing.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 4:
                 tv_allorder.setSelected(false);
-                tv_allorder.setTextColor(getResources().getColor(R.color.bg_blue));
+                tv_allorder.setTextColor(getResources().getColor(R.color.red));
                 tv_allorder.setBackgroundResource(R.drawable.red_bottom);
                 break;
         }

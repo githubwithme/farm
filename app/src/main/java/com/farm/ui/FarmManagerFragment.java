@@ -93,7 +93,8 @@ public class FarmManagerFragment extends Fragment
     @Click
     void ll_kc()
     {
-        Intent intent = new Intent(getActivity(), Ncz_wz_ll_.class);
+//        Intent intent = new Intent(getActivity(), Ncz_wz_ll_.class);
+        Intent intent = new Intent(getActivity(), NCZ_GoogdsManagerActivity_.class);
         getActivity().startActivity(intent);
     }
 

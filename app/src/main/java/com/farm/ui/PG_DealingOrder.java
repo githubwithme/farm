@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.NCZ_DealingAdapter;
-import com.farm.adapter.PG_scheduleOrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
@@ -54,7 +53,6 @@ import java.util.List;
 @EFragment
 public class PG_DealingOrder extends Fragment
 {
-
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     String cpname = "";
@@ -85,9 +83,9 @@ public class PG_DealingOrder extends Fragment
     ArrayAdapter<String> cityAdapter = null;    //地级适配器
     ArrayAdapter<String> countyAdapter = null;    //县级适配器
     static int provincePosition = 3;
-    private String[] mProvinceDatas=new String[]{"全部分场","乐丰分场","双桥分场"};
-    private String[] mCitisDatasMap=new String[]{"全部产品","香蕉","柑橘"};
-    private String[] mAreaDatasMap=new String[]{"不限采购商","李四","张三"};
+    private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
+    private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
+    private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
 
     @Override
     public void onResume()
@@ -227,6 +225,7 @@ public class PG_DealingOrder extends Fragment
             }
         });
     }
+
     /*
         * 设置下拉框
         */
@@ -278,6 +277,7 @@ public class PG_DealingOrder extends Fragment
             }
         });
     }
+
     @Override
     public void onDestroyView()
     {

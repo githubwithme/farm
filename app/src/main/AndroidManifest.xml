@@ -63,7 +63,9 @@
 
         <activity android:name=".ui.NCZ_AgreementDetail_"/>
         <activity android:name=".ui.PG_JobFragment_"/>
+        <activity android:name=".ui.NCZ_GoodsDistribution_"/>
         <activity android:name=".ui.CZ_ContractBatchTimeBreakOff_"/>
+        <activity android:name=".ui.NCZ_GoogdsManagerActivity_"/>
         <activity android:name=".ui.CZ_AreaBatchTimeBreakOff_"/>
         <activity android:name=".ui.CZ_SaleActivity_"/>
         <activity android:name=".ui.CZ_ContractBatchTimeSale_"/>
