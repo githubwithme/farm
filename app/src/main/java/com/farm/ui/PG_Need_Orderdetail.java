@@ -82,7 +82,7 @@ public class PG_Need_Orderdetail extends Activity
     {
         if (!sellOrder.getOldsaletime().equals(""))
         {
-            saletime.setText(sellOrder.getOldsaletime().substring(0,sellOrder.getSaletime().length()-8));
+            saletime.setText(sellOrder.getOldsaletime().substring(0,sellOrder.getOldsaletime().length()-8));
         }else if (sellOrder.getOldsaletime().equals("")&&!sellOrder.getSaletime().equals(""))
         {
             saletime.setText(sellOrder.getSaletime().substring(0,sellOrder.getSaletime().length()-8));

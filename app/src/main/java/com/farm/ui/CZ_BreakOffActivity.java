@@ -28,6 +28,7 @@ import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomHorizontalScrollView_CZBreakOff;
+import com.farm.widget.MyDatepicker;
 import com.farm.widget.MyDialog;
 import com.guide.DensityUtil;
 import com.lidroid.xutils.HttpUtils;
@@ -93,6 +94,13 @@ public class CZ_BreakOffActivity extends Activity
     TextView tv_timelimit;
     @ViewById
     RelativeLayout rl_view;
+    @Click
+    void tv_timelimit()
+    {
+//        tv_timelimit.setTextColor(getContext().getResources().getColor(R.color.bg_yellow));
+        MyDatepicker myDatepicker = new MyDatepicker(CZ_BreakOffActivity.this, tv_timelimit);
+        myDatepicker.getDialog().show();
+    }
 
     @Click
     void startdl()

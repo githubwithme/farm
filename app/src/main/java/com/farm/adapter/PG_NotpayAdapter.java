@@ -204,7 +204,7 @@ public class PG_NotpayAdapter extends BaseAdapter
 
                     if (sellOrder_new.getSelltype().equals("待付定金"))
                     {
-                        Toast.makeText(context, "请先填写信息", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "客户未交定金", Toast.LENGTH_SHORT).show();
                     }else
                     {
                         Intent intent = new Intent(context, PG_JSD_.class);

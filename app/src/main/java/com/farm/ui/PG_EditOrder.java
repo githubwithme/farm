@@ -296,7 +296,7 @@ public class PG_EditOrder extends Activity
         }
 
         SellOrder_New sellOrders = new SellOrder_New();
-        sellOrders= sellOrder;
+        sellOrders = sellOrder;
         sellOrders.setid("");
         sellOrders.setUid(commembertab.getuId());
         sellOrders.setUuid(sellOrder.getUuid());
@@ -332,54 +332,54 @@ public class PG_EditOrder extends Activity
 
         sellOrders.setPackPec(bz_guige.getText().toString());
         sellOrders.setWaitDeposit(dingjin.getText().toString());
-        if (! sellOrders.getSaletime().equals(""))
+        if (!sellOrders.getSaletime().equals(""))
         {
             if (!sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length() - 8).equals(dd_time.getText().toString()))
             {
                 sellOrders.setOldsaletime(dd_time.getText().toString());
             }
-        }else
+        } else
         {
             sellOrders.setOldsaletime(dd_time.getText().toString());
         }
 
-        if (! sellOrders.getWeight().equals(""))
+        if (!sellOrders.getWeight().equals(""))
         {
             if (!sellOrders.getWeight().equals(et_weight.getText().toString()))
             {
                 sellOrders.setOldnumber(et_weight.getText().toString());//
             }
-        }else
+        } else
         {
             sellOrders.setOldnumber(et_weight.getText().toString());//
         }
-        if (! sellOrders.getPrice().equals(""))
+        if (!sellOrders.getPrice().equals(""))
         {
             if (!sellOrders.getPrice().equals(et_price.getText().toString()))
             {
                 sellOrders.setOldPrice(et_price.getText().toString());
             }
-        }else
+        } else
         {
             sellOrders.setOldPrice(et_price.getText().toString());
         }
-        if (! sellOrders.getCarryPrice().equals(""))
+        if (!sellOrders.getCarryPrice().equals(""))
         {
             if (!sellOrders.getCarryPrice().equals(by_danjia.getText().toString()))
             {
                 sellOrders.setOldCarryPrice(by_danjia.getText().toString());
             }
-        }else
+        } else
         {
             sellOrders.setOldCarryPrice(by_danjia.getText().toString());
         }
-        if (! sellOrders.getPackPrice().equals(""))
+        if (!sellOrders.getPackPrice().equals(""))
         {
             if (!sellOrders.getPackPrice().equals(bz_danjia.getText().toString()))
             {
                 sellOrders.setOldPackPrice(bz_danjia.getText().toString());
             }
-        }else
+        } else
         {
             sellOrders.setOldPackPrice(bz_danjia.getText().toString());
 
@@ -567,12 +567,12 @@ public class PG_EditOrder extends Activity
     private void showData()
     {
         et_name.setText(sellOrder.getPurchaName());
-        et_price.setText(sellOrder.getPrice());
-        et_weight.setText(sellOrder.getWeight());
+
+
         et_values.setText(sellOrder.getSumvalues());
-        by_danjia.setText(sellOrder.getCarryPrice());
+
         bz_guige.setText(sellOrder.getPackPec());
-        bz_danjia.setText(sellOrder.getPackPrice());
+
         dd_fzr.setText(sellOrder.getMainPepole());
         dd_cl.setText(sellOrder.getPlateNumber());
         dd_bz.setText(sellOrder.getContractorName());
@@ -580,7 +580,52 @@ public class PG_EditOrder extends Activity
         et_address.setText(sellOrder.getAddress());
         dingjin.setText(sellOrder.getWaitDeposit());
         chanpin.setText(sellOrder.getGoodsname());
-        dd_time.setText(sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length() - 8));
+
+
+        if (!sellOrder.getOldPackPrice().equals(""))
+        {
+            bz_danjia.setText(sellOrder.getOldPackPrice());
+        } else
+        {
+            bz_danjia.setText(sellOrder.getPackPrice());
+
+        }
+        if (!sellOrder.getOldCarryPrice().equals(""))
+        {
+            by_danjia.setText(sellOrder.getOldCarryPrice());
+        } else
+        {
+            by_danjia.setText(sellOrder.getCarryPrice());
+
+        }
+
+        if (!sellOrder.getOldnumber().equals(""))
+        {
+            et_weight.setText(sellOrder.getOldnumber());
+        }else
+        {
+            et_weight.setText(sellOrder.getWeight());
+
+        }
+
+        if (!sellOrder.getOldPrice().equals(""))
+        {
+            et_price.setText(sellOrder.getPrice());
+        }else
+        {
+            et_price.setText(sellOrder.getPrice());
+
+        }
+
+        if (!sellOrder.getOldsaletime().equals(""))
+        {
+            dd_time.setText(sellOrder.getOldsaletime().substring(0, sellOrder.getSaletime().length() - 8));
+
+        }else
+        {
+            dd_time.setText(sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length() - 8));
+        }
+
 
 //        tv_planweight.setText(sellOrder.getWeight());
 //        tv_actualweight.setText(sellOrder.getBuyers());
@@ -1145,7 +1190,6 @@ public class PG_EditOrder extends Activity
 
     private void getsellOrderDetailBySaleId()
     {
-
 
 
         commembertab commembertab = AppContext.getUserInfo(PG_EditOrder.this);

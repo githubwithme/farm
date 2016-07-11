@@ -456,12 +456,21 @@ public class NCZ_CreateNewOrder extends Activity
         SellOrderList.add(sellOrder);
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         sellOrder_new_first.setSellOrderId(uuid);
-/*        sellOrder_new_first.setQualityWaterWeight("0");
-        sellOrder_new_first.setQualityNetWeight("0");
-        sellOrder_new_first.setQualityBalance("0");
-        sellOrder_new_first.setDefectWaterWeight("0");
-        sellOrder_new_first.setDefectNetWeight("0");
-        sellOrder_new_first.setDefectBalance("0");*/
+        sellOrder_new_first.setQualityWaterWeight("");
+        sellOrder_new_first.setQualityNetWeight("");
+        sellOrder_new_first.setQualityBalance("");
+        sellOrder_new_first.setDefectWaterWeight("");
+        sellOrder_new_first.setDefectNetWeight("");
+        sellOrder_new_first.setDefectBalance("");
+        sellOrder_new_first.setTotal("");
+        sellOrder_new_first.setActualMoney("");
+        sellOrder_new_first.setQualityTotalWeight("");
+        sellOrder_new_first.setDefectTotalWeight("");
+        sellOrder_new_first.setTotalWeight("");
+        sellOrder_new_first.setPackFee("");
+        sellOrder_new_first.setCarryFee("");
+        sellOrder_new_first.setTotalFee("");
+        sellOrder_new_first.setPersonNote("");
 
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrderList\": ");

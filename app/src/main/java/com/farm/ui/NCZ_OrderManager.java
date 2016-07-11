@@ -234,13 +234,27 @@ public class NCZ_OrderManager extends Activity
                                 it.remove();
                             }
                         }
+
+                        int b = 0;
                         if (listData.size() > 0)
                         {
-                            fl_dynamic.setVisibility(View.VISIBLE);
-                            tv_dynamic_new.setText(listData.size() + "");
-                            fl_jyz.setVisibility(View.VISIBLE);
-                            tv_jyz.setText(listData.size() + "");
+                            for (int j = 0; j < listData.size(); j++)
+                            {
+                                if (listData.get(j).getFlashStr().equals("1"))
+                                {
+                                    b++;
+                                }
+                            }
                         }
+
+                        if (b>0)
+                        {
+                            fl_dynamic.setVisibility(View.VISIBLE);
+                            tv_dynamic_new.setText(b + "");
+                            fl_jyz.setVisibility(View.VISIBLE);
+                            tv_jyz.setText(b + "");
+                        }
+
                     } else
                     {
                         listData = new ArrayList<SellOrder_New>();
@@ -262,6 +276,7 @@ public class NCZ_OrderManager extends Activity
             }
         });
     }
+
     private void getNeedOrders()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_OrderManager.this);
@@ -285,11 +300,24 @@ public class NCZ_OrderManager extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        if (listData.size()>0)
+
+                        int b = 0;
+                        if (listData.size() > 0)
+                        {
+                            for (int j = 0; j < listData.size(); j++)
+                            {
+                                if (listData.get(j).getFlashStr().equals("1"))
+                                {
+                                    b++;
+                                }
+                            }
+                        }
+                        if (b > 0)
                         {
                             fl_dsp.setVisibility(View.VISIBLE);
-                            tv_dsp.setText(listData.size() + "");
+                            tv_dsp.setText(b + "");
                         }
+
                     } else
                     {
                         listData = new ArrayList<SellOrder_New>();

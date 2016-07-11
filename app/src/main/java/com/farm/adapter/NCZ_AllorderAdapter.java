@@ -171,9 +171,9 @@ public class NCZ_AllorderAdapter extends BaseAdapter
             if (sellOrder.getSelltype().equals("待付定金"))
             {
                 listItemView.tv_state.setText("等待买家付定金");
-            }else if (sellOrder.getSelltype().equals("交易中"))
+            }else if (sellOrder.getSelltype().equals("已付定金"))
             {
-                listItemView.tv_state.setText("交易正在进行中");
+                listItemView.tv_state.setText("已付定金");
             }else if(sellOrder.getSelltype().equals("待付尾款"))
             {
                 listItemView.tv_state.setText("等待买家付尾款");

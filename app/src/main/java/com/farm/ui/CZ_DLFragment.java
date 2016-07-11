@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -55,7 +56,7 @@ public class CZ_DLFragment extends Activity
     @ViewById
     TextView startdl;
     @ViewById
-    TextView tv_timelimit;
+    Button tv_timelimit;
     @ViewById
     ExpandableListView expandableListView;
     @ViewById

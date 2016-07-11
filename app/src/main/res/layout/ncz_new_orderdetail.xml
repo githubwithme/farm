@@ -108,11 +108,14 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
-
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/line_color"/>
                         <TextView
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
@@ -131,7 +134,7 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
@@ -168,11 +171,14 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
-
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/line_color"/>
                         <TextView
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
@@ -191,7 +197,7 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
@@ -232,11 +238,14 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
-
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/line_color"/>
                         <TextView
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
@@ -255,7 +264,7 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
@@ -291,30 +300,34 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
-
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/line_color"/>
                         <TextView
+
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
-                            android:text="发往城市"
+                            android:text="已付定金（元）"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_14"/>
 
 
                         <TextView
-                            android:id="@+id/tv_finalpayment"
+                            android:id="@+id/deposit"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
@@ -349,11 +362,14 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
-
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/line_color"/>
                         <TextView
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
@@ -372,7 +388,7 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
@@ -408,11 +424,14 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
-
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/line_color"/>
                         <TextView
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
@@ -431,7 +450,7 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
@@ -467,11 +486,14 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
-
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/line_color"/>
                         <TextView
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
@@ -490,7 +512,7 @@
                             android:layout_weight="1"
                             android:gravity="right|center_vertical"
                             android:inputType="numberDecimal"
-                            android:paddingRight="20dip"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
@@ -507,9 +529,37 @@
                         android:layout_height="40dip"
                         android:orientation="horizontal">
 
+
                         <TextView
-                            android:layout_width="100dip"
+                            android:layout_width="0dip"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:paddingLeft="10dip"
+                            android:text="发往城市"
+                            android:textColor="@color/bg_text"
+                            android:textSize="@dimen/size_14"/>
+
+
+                        <TextView
+                            android:id="@+id/tv_finalpayment"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="10dip"
+                            android:text="暂无"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/size_14"/>
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@color/line_color"/>
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="10dip"
                             android:text="备注"
@@ -519,10 +569,13 @@
 
                         <TextView
                             android:id="@+id/tv_note"
-                            android:layout_width="match_parent"
+
+                            android:layout_width="0dip"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="right|center_vertical"
-                            android:paddingRight="20dip"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="10dip"
                             android:text="暂无"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/size_14"/>
@@ -844,7 +897,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -868,7 +921,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -902,7 +955,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -925,7 +978,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -959,7 +1012,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -982,7 +1035,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1016,7 +1069,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1039,7 +1092,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1073,7 +1126,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1096,7 +1149,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1130,7 +1183,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1153,7 +1206,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1187,7 +1240,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1210,7 +1263,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1244,7 +1297,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1267,7 +1320,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1301,7 +1354,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>
@@ -1325,7 +1378,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:inputType="numberDecimal"
-                        android:paddingRight="20dip"
+                        android:paddingRight="10dip"
                         android:text="暂无"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/size_14"/>

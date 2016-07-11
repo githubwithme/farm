@@ -81,7 +81,8 @@ public class NCZ_NewOrderDetail extends Activity
     TextView carryPrice;//搬运价格
     @ViewById
     TextView tv_note;//说明
-
+@ViewById
+TextView deposit;
 
     //结算表
     @ViewById
@@ -160,6 +161,7 @@ public class NCZ_NewOrderDetail extends Activity
         pickId.setText(sellOrder.getPickName());
         carryPrice.setText(sellOrder.getCarryPrice());
         tv_note.setText(sellOrder.getNote());
+        deposit.setText(sellOrder.getDeposit());
 
         //
         total.setText(sellOrder.getTotal());

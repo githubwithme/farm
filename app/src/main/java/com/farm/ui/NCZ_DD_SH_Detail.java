@@ -2,6 +2,7 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,6 +121,12 @@ public class NCZ_DD_SH_Detail extends Activity
     ImageView ig_view4;
     @ViewById
     ImageView ig_view5;
+
+    @Click
+    void btn_back()
+    {
+        finish();
+    }
     @AfterViews
     void afview()
     {
@@ -229,13 +236,20 @@ public class NCZ_DD_SH_Detail extends Activity
 
         if (!sellOrder_new.getOldsaletime().equals(""))
         {
+
             old_time.setText(sellOrder_new.getOldsaletime().substring(5, sellOrder_new.getOldsaletime().length() - 8));
-            dd_time.setText(sellOrder_new.getSaletime().substring(5, sellOrder_new.getSaletime().length() - 8));
+            if (!sellOrder_new.saletime.equals(""))
+            {
+                ig_view1.setVisibility(View.VISIBLE);
+                dd_time.setText(sellOrder_new.getSaletime().substring(5, sellOrder_new.getSaletime().length() - 8));
+            }
+
         } else
         {
-            ig_view1.setVisibility(View.INVISIBLE);
+
 //            dd_time.setText(sellOrder_new.getSaletime().substring(5, sellOrder_new.getSaletime().length() - 8));
             old_time.setText(sellOrder_new.getSaletime().substring(5, sellOrder_new.getSaletime().length() - 8));
+            old_time.setTextColor(getResources().getColor(R.color.bg_text));
         }
 
 
@@ -244,13 +258,19 @@ public class NCZ_DD_SH_Detail extends Activity
 
         if (!sellOrder_new.getOldPrice().equals(""))
         {
+
             old_price.setText(sellOrder_new.getOldPrice());
-            et_price.setText(sellOrder_new.getPrice());
+            if (!sellOrder_new.getPrice().equals(""))
+            {
+                ig_view2.setVisibility(View.VISIBLE);
+                et_price.setText(sellOrder_new.getPrice());
+            }
+
         } else
         {
-            ig_view2.setVisibility(View.INVISIBLE);
 //            et_price.setText(sellOrder_new.getPrice());
             old_price.setText(sellOrder_new.getPrice());
+            old_price.setTextColor(getResources().getColor(R.color.bg_text));
         }
 
 
@@ -259,36 +279,53 @@ public class NCZ_DD_SH_Detail extends Activity
         {
 
             old_danjia.setText(sellOrder_new.getOldCarryPrice());
-            by_danjia.setText(sellOrder_new.getCarryPrice());
+            if (!sellOrder_new.getCarryPrice().equals(""))
+            {
+                ig_view3.setVisibility(View.VISIBLE);
+                by_danjia.setText(sellOrder_new.getCarryPrice());
+            }
+
         } else
         {
-            ig_view3.setVisibility(View.INVISIBLE);
 //            by_danjia.setText(sellOrder_new.getCarryPrice());
             old_danjia.setText(sellOrder_new.getCarryPrice());
+            old_danjia.setTextColor(getResources().getColor(R.color.bg_text));
         }
 
 
         if (!sellOrder_new.getOldPackPrice().equals(""))
         {
-            bz_danjia.setText(sellOrder_new.getPackPrice());
+
             old_bzdanjia.setText(sellOrder_new.getOldPackPrice());
+            if (!sellOrder_new.getPackPrice().equals(""))
+            {
+                ig_view5.setVisibility(View.VISIBLE);
+                bz_danjia.setText(sellOrder_new.getPackPrice());
+            }
         } else
         {
-            ig_view5.setVisibility(View.INVISIBLE);
 //            bz_danjia.setText(sellOrder_new.getPackPrice());
             old_bzdanjia.setText(sellOrder_new.getPackPrice());
+            old_bzdanjia.setTextColor(getResources().getColor(R.color.bg_text));
         }
 
         if (!sellOrder_new.getOldnumber().equals(""))
         {
 
             old_weight.setText(sellOrder_new.getOldnumber());//总重量
-            et_weight.setText(sellOrder_new.getWeight());//总重量
+
+
+            if (!sellOrder_new.getWeight().equals(""))
+            {
+                et_weight.setText(sellOrder_new.getWeight());//总重量
+                ig_view4.setVisibility(View.VISIBLE);
+            }
         } else
         {
-            ig_view4.setVisibility(View.INVISIBLE);
 //            et_weight.setText(sellOrder_new.getWeight());//总重量
+
             old_weight.setText(sellOrder_new.getWeight());//总重量
+            old_weight.setTextColor(getResources().getColor(R.color.bg_text));
         }
 
 
@@ -363,7 +400,11 @@ public class NCZ_DD_SH_Detail extends Activity
             sellOrder.setSaletime(sellOrder.getOldsaletime());
             sellOrder.setOldsaletime("");
         }
-        sellOrder.setSelltype("待付定金");
+        if (sellOrder.getSelltype().equals("待审批"))
+        {
+            sellOrder.setSelltype("待付定金");
+        }
+
         sellOrder.setBuyers(sellOrder.getBuyers());
         sellOrder.setIsNeedAudit("1");
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
