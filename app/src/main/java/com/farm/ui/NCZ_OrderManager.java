@@ -245,7 +245,7 @@ public class NCZ_OrderManager extends Activity
                             }
                         }
 
-                        if (b>0)
+                        if (b > 0)
                         {
                             fl_dynamic.setVisibility(View.VISIBLE);
                             tv_dynamic_new.setText(b + "");
