@@ -23,11 +23,113 @@ public class WZ_YCxx implements Parcelable
     public String nowDate;
     public String type;
     public String expDate;
+    public String expDate1;
     public String batchNumber;
     public String batchName;
     public String expQuantity;
     public String quantity;
     public String flashStr;
+    public String daysBeforeWarning;  //警戒天数
+    public String levelOfWarning;   //警戒数量
+    public String firsNum;   //
+    public String firs;   //
+    public String sec;   //
+    public String secNum;   //
+    public String three;   //
+    public String threeNum;   //
+
+
+
+
+    public String getDaysBeforeWarning()
+    {
+        return daysBeforeWarning;
+    }
+
+    public void setDaysBeforeWarning(String daysBeforeWarning)
+    {
+        this.daysBeforeWarning = daysBeforeWarning;
+    }
+
+    public String getLevelOfWarning()
+    {
+        return levelOfWarning;
+    }
+
+    public void setLevelOfWarning(String levelOfWarning)
+    {
+        this.levelOfWarning = levelOfWarning;
+    }
+
+    public String getFirsNum()
+    {
+        return firsNum;
+    }
+
+    public void setFirsNum(String firsNum)
+    {
+        this.firsNum = firsNum;
+    }
+
+    public String getFirs()
+    {
+        return firs;
+    }
+
+    public void setFirs(String firs)
+    {
+        this.firs = firs;
+    }
+
+    public String getSec()
+    {
+        return sec;
+    }
+
+    public void setSec(String sec)
+    {
+        this.sec = sec;
+    }
+
+    public String getSecNum()
+    {
+        return secNum;
+    }
+
+    public void setSecNum(String secNum)
+    {
+        this.secNum = secNum;
+    }
+
+    public String getThree()
+    {
+        return three;
+    }
+
+    public void setThree(String three)
+    {
+        this.three = three;
+    }
+
+    public String getThreeNum()
+    {
+        return threeNum;
+    }
+
+    public void setThreeNum(String threeNum)
+    {
+        this.threeNum = threeNum;
+    }
+
+    public String getExpDate1()
+    {
+        return expDate1;
+    }
+
+    public void setExpDate1(String expDate1)
+    {
+        this.expDate1 = expDate1;
+    }
 
     public String getFlashStr() {
         return flashStr;
@@ -165,6 +267,7 @@ public class WZ_YCxx implements Parcelable
             p.setNowDate(source.readString());
             p.setType(source.readString());
             p.setExpDate(source.readString());
+            p.setExpDate1(source.readString());
 
             p.setBatchNumber(source.readString());//仓库物资
             p.setBatchName(source.readString());
@@ -174,6 +277,14 @@ public class WZ_YCxx implements Parcelable
             p.setFlashStr(source.readString());
 
 
+            p.setDaysBeforeWarning(source.readString());
+            p.setLevelOfWarning(source.readString());
+            p.setFirsNum(source.readString());
+            p.setFirs(source.readString());
+            p.setSec(source.readString());
+            p.setSecNum(source.readString());
+            p.setThree(source.readString());
+            p.setThreeNum(source.readString());
             return  p;
         }
 
@@ -198,11 +309,21 @@ public class WZ_YCxx implements Parcelable
         p.writeString(nowDate);
         p.writeString(type);
         p.writeString(expDate);
+        p.writeString(expDate1);
         p.writeString(batchNumber);
         p.writeString(batchName);
         p.writeString(expQuantity);
         p.writeString(quantity);
         p.writeString(flashStr);
+        p.writeString(daysBeforeWarning);
+        p.writeString(levelOfWarning);
+        p.writeString(firsNum);
+        p.writeString(firs);
+        p.writeString(sec);
+        p.writeString(secNum);
+        p.writeString(three);
+        p.writeString(threeNum);
+
 
     }
 

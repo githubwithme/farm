@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:layout_width="200dip"
+        android:layout_height="300dip">
+
+        <FrameLayout
+
+            android:id="@+id/fr_id"
+            android:layout_width="200dip"
+            android:layout_height="40dip"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/parkSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="2dip"
+                android:background="@drawable/downward"/>
+        </FrameLayout>
+
+        <View
+            android:layout_below="@+id/fr_id"
+            android:id="@+id/lins"
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/gray"/>
+        <ListView
+            android:layout_below="@+id/fr_id"
+            android:id="@+id/lv"
+            android:layout_width="match_parent"
+            android:layout_height="300dip"
+
+            android:divider="@color/line_color"
+            android:dividerHeight="1px"/>
+    </RelativeLayout>
+
+</RelativeLayout>

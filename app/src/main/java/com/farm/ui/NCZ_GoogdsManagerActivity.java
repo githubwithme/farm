@@ -42,6 +42,9 @@ public class NCZ_GoogdsManagerActivity extends FragmentActivity
     String wzgl;
     ViewPagerAdapter_GcdDetail viewPagerAdapter_gcdDetail;
     NCZ_GoodsFragment ncz_goodsFragment;
+    NCZ_WZ_RKFragment ncz_wz_rkFragment;
+    NCZ_WZ_CKFRagment ncz_wz_ckfRagment;
+    NCZ_NewYCFragment ncz_newYCFragment;
     int currentItem = 0;
     List<Fragment> fragmentList;
     Fragment mContent = new Fragment();
@@ -82,26 +85,26 @@ public class NCZ_GoogdsManagerActivity extends FragmentActivity
     @Click
     void wz_ll()
     {
-        cvPager.setCurrentItem(3);
-    }
+        cvPager.setCurrentItem(0);
+    }//库存
 
 
     @Click
     void wz_rk()
     {
-        cvPager.setCurrentItem(1);
-    }
+        cvPager.setCurrentItem(2);
+    }//入库
 
     @Click
     void wz_ck()
     {
-        cvPager.setCurrentItem(0);
-    }
+        cvPager.setCurrentItem(1);
+    }//出库
 
     @Click
     void wz_yc()
     {
-        cvPager.setCurrentItem(2);
+        cvPager.setCurrentItem(3);
     }
 
     @AfterViews
@@ -110,10 +113,13 @@ public class NCZ_GoogdsManagerActivity extends FragmentActivity
         commembertab = AppContext.getUserInfo(NCZ_GoogdsManagerActivity.this);
         fragmentList = new ArrayList<>();
         ncz_goodsFragment = new NCZ_GoodsFragment_();
+        ncz_wz_rkFragment = new NCZ_WZ_RKFragment_();
+        ncz_wz_ckfRagment = new NCZ_WZ_CKFRagment_();
+        ncz_newYCFragment=new NCZ_NewYCFragment_();
         fragmentList.add(ncz_goodsFragment);
-        fragmentList.add(ncz_goodsFragment);
-        fragmentList.add(ncz_goodsFragment);
-        fragmentList.add(ncz_goodsFragment);
+        fragmentList.add(ncz_wz_ckfRagment);
+        fragmentList.add(ncz_wz_rkFragment);
+        fragmentList.add(ncz_newYCFragment);
         currentItem = 0;
         setBackground(0);
         cvPager.setOffscreenPageLimit(0);

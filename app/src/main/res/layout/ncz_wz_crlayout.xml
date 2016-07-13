@@ -6,6 +6,7 @@
 
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:background="@drawable/bg_white"
@@ -35,7 +36,85 @@
             android:background="@null"
             android:src="@drawable/searchitem"/>
     </RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dip">
 
+    <TextView
+        android:id="@+id/tv_data"
+        android:gravity="center"
+        android:text="日期="
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:background="@drawable/background_view_rounded_single"
+        android:layout_toRightOf="@+id/tv_data"
+        android:id="@+id/tv_data1"
+        android:gravity="center"
+        android:text=""
+        android:layout_width="80dip"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_toRightOf="@+id/tv_data1"
+        android:id="@+id/tv_image"
+        android:gravity="center"
+        android:text="~"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:background="@drawable/background_view_rounded_single"
+        android:layout_toRightOf="@+id/tv_image"
+        android:id="@+id/tv_data2"
+        android:gravity="center"
+        android:text=""
+        android:layout_width="80dip"
+        android:layout_height="match_parent"/>
+    <FrameLayout
+        android:layout_marginRight="5dip"
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@+id/tv_data2"
+        android:background="@color/white"
+        android:layout_width="60dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <Spinner
+            android:id="@+id/dataSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center|center_horizontal"/>
+
+        <View
+            android:layout_width="13dip"
+            android:layout_height="13dip"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="2dip"
+            android:background="@drawable/downward"/>
+    </FrameLayout>
+    <FrameLayout
+        android:background="@color/white"
+        android:layout_alignParentRight="true"
+        android:id="@+id/fr_id"
+        android:layout_width="80dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <Spinner
+            android:id="@+id/parkSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center|center_horizontal"/>
+
+        <View
+            android:layout_width="13dip"
+            android:layout_height="13dip"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="2dip"
+            android:background="@drawable/downward"/>
+    </FrameLayout>
+</RelativeLayout>
 
     <ExpandableListView
         android:id="@+id/expandableListView"

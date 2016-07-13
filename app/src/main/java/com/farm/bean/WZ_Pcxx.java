@@ -8,7 +8,7 @@ import com.lidroid.xutils.db.annotation.Table;
 /**
  * Created by user on 2016/4/7.
  */
-@Table(name = "Wz_Storehouse")
+@Table(name = "WZ_Pcxx")
 public class WZ_Pcxx  implements Parcelable
 {
 
@@ -26,6 +26,172 @@ public class WZ_Pcxx  implements Parcelable
     public String sumWeight;
     public String stockValue;
 
+
+    public String GoodsStatistical;
+    public String goodsunit;
+    public String goodsTypeId;
+    public String goodsTypeName;
+    public String userDefTypeId;
+    public String userDefTypeName;
+    public String goodsInInfoId;
+    public String firs;
+    public String firsNum;
+    public String sec;
+    public String secNum;
+    public String three;
+    public String threeNum;
+    public String Id;
+    public String goodsName;
+
+    public String getGoodsStatistical()
+    {
+        return GoodsStatistical;
+    }
+
+    public void setGoodsStatistical(String goodsStatistical)
+    {
+        GoodsStatistical = goodsStatistical;
+    }
+
+    public String getGoodsunit()
+    {
+        return goodsunit;
+    }
+
+    public void setGoodsunit(String goodsunit)
+    {
+        this.goodsunit = goodsunit;
+    }
+
+    public String getGoodsTypeId()
+    {
+        return goodsTypeId;
+    }
+
+    public void setGoodsTypeId(String goodsTypeId)
+    {
+        this.goodsTypeId = goodsTypeId;
+    }
+
+    public String getGoodsTypeName()
+    {
+        return goodsTypeName;
+    }
+
+    public void setGoodsTypeName(String goodsTypeName)
+    {
+        this.goodsTypeName = goodsTypeName;
+    }
+
+    public String getUserDefTypeId()
+    {
+        return userDefTypeId;
+    }
+
+    public void setUserDefTypeId(String userDefTypeId)
+    {
+        this.userDefTypeId = userDefTypeId;
+    }
+
+    public String getUserDefTypeName()
+    {
+        return userDefTypeName;
+    }
+
+    public void setUserDefTypeName(String userDefTypeName)
+    {
+        this.userDefTypeName = userDefTypeName;
+    }
+
+    public String getGoodsInInfoId()
+    {
+        return goodsInInfoId;
+    }
+
+    public void setGoodsInInfoId(String goodsInInfoId)
+    {
+        this.goodsInInfoId = goodsInInfoId;
+    }
+
+    public String getFirs()
+    {
+        return firs;
+    }
+
+    public void setFirs(String firs)
+    {
+        this.firs = firs;
+    }
+
+    public String getFirsNum()
+    {
+        return firsNum;
+    }
+
+    public void setFirsNum(String firsNum)
+    {
+        this.firsNum = firsNum;
+    }
+
+    public String getSec()
+    {
+        return sec;
+    }
+
+    public void setSec(String sec)
+    {
+        this.sec = sec;
+    }
+
+    public String getSecNum()
+    {
+        return secNum;
+    }
+
+    public void setSecNum(String secNum)
+    {
+        this.secNum = secNum;
+    }
+
+    public String getThree()
+    {
+        return three;
+    }
+
+    public void setThree(String three)
+    {
+        this.three = three;
+    }
+
+    public String getThreeNum()
+    {
+        return threeNum;
+    }
+
+    public void setThreeNum(String threeNum)
+    {
+        this.threeNum = threeNum;
+    }
+
+    public String getGoodsName()
+    {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName)
+    {
+        this.goodsName = goodsName;
+    }
+
+    public String getId()
+    {
+        return Id;
+    }
+
+    public void setId(String id)
+    {
+        Id = id;
+    }
 
     public String getStockValue()
     {
@@ -140,9 +306,11 @@ public class WZ_Pcxx  implements Parcelable
         @Override
         public WZ_Pcxx createFromParcel(Parcel source)
         {
+
+
+
             // 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错
             WZ_Pcxx p = new WZ_Pcxx();
-
             p.setBatchNumber(source.readString());//仓库物资
             p.setBatchName(source.readString());
             p.setParkId(source.readString());
@@ -158,6 +326,25 @@ public class WZ_Pcxx  implements Parcelable
             p.setStockValue(source.readString());
 
 
+
+
+            p.setGoodsStatistical(source.readString());
+            p.setGoodsunit(source.readString());
+            p.setGoodsTypeId(source.readString());
+            p.setGoodsTypeName(source.readString());
+            p.setUserDefTypeId(source.readString());
+            p.setUserDefTypeName(source.readString());
+            p.setGoodsInInfoId(source.readString());
+            p.setFirs(source.readString());
+            p.setFirsNum(source.readString());
+            p.setSec(source.readString());
+            p.setSecNum(source.readString());
+            p.setThree(source.readString());
+            p.setThreeNum(source.readString());
+            p.setId(source.readString());
+            p.setGoodsName(source.readString());
+
+
             return  p;
         }
 
@@ -170,6 +357,8 @@ public class WZ_Pcxx  implements Parcelable
     @Override
     public void writeToParcel(Parcel p, int arg1)
     {
+
+
         p.writeString(batchNumber);
         p.writeString(batchName);
         p.writeString(parkId);
@@ -183,6 +372,22 @@ public class WZ_Pcxx  implements Parcelable
         p.writeString(inGoodsValue);
         p.writeString(sumWeight);
         p.writeString(stockValue);
+        p.writeString(GoodsStatistical);
+        p.writeString(goodsunit);
+        p.writeString(goodsTypeId);
+        p.writeString(goodsTypeName);
+        p.writeString(userDefTypeId);
+        p.writeString(userDefTypeName);
+        p.writeString(goodsInInfoId);
+        p.writeString(firs);
+        p.writeString(firsNum);
+        p.writeString(sec);
+        p.writeString(secNum);
+        p.writeString(three);
+        p.writeString(threeNum);
+        p.writeString(Id);
+        p.writeString(goodsName);
+
 
     }
 
