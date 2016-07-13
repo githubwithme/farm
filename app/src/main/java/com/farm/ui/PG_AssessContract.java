@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -18,6 +19,8 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.media.MediaChooser;
+import com.media.MediaChooserConstants;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -80,7 +83,7 @@ public class PG_AssessContract extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), commandtab.class);
-                        adapter_pgAssessContract=new Adapter_PGAssessContract(PG_AssessContract.this,listNewData);
+                        adapter_pgAssessContract = new Adapter_PGAssessContract(PG_AssessContract.this, listNewData);
                         lv.setAdapter(adapter_pgAssessContract);
                     } else
                     {
@@ -94,5 +97,18 @@ public class PG_AssessContract extends Activity
 
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == MediaChooserConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE)
+        {// 拍照
+            if (resultCode == RESULT_OK)
+            {
+                Intent intent = new Intent();
+                intent.setAction(MediaChooser.IMAGE_SELECTED_ACTION_FROM_MEDIA_CHOOSER);
+                sendBroadcast(intent);
+            }
+        }
     }
 }

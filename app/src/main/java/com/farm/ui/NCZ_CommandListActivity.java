@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.farm.R;
@@ -26,7 +28,16 @@ public class NCZ_CommandListActivity extends Activity
     TextView commanding;
     @ViewById
     TextView commanded;
+    @ViewById
+    Button btn_addcommand;
     String workuserid;
+
+    @Click
+    void btn_addcommand()
+    {
+        Intent intent = new Intent(NCZ_CommandListActivity.this, NCZ_AddNewCommand_.class);
+        startActivity(intent);
+    }
 
     @Click
     void commanding()

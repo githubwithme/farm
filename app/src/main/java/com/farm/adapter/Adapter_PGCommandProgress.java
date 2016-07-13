@@ -89,10 +89,12 @@ public class Adapter_PGCommandProgress extends BaseAdapter
                     LinearLayout ll_operateprogress = (LinearLayout) v.getTag(R.id.tag_ll);
                     if (button.getText().equals("确定"))
                     {
+                        button.setText("编辑");
                         ll_operateprogress.setVisibility(View.GONE);
                         //进行网络提交操作...
                     } else
                     {
+                        button.setText("确定");
                         ll_operateprogress.setVisibility(View.VISIBLE);
                     }
                 }
@@ -102,8 +104,8 @@ public class Adapter_PGCommandProgress extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    ProgressBar pb_jd = (ProgressBar) v.getTag(R.id.tag_text);
-                    TextView tv_progress = (TextView) v.getTag(R.id.tag_pb);
+                    ProgressBar pb_jd = (ProgressBar) v.getTag(R.id.tag_pb);
+                    TextView tv_progress = (TextView) v.getTag(R.id.tag_text);
                     if (pb_jd.getProgress() <= 100)
                     {
                         pb_jd.setProgress(pb_jd.getProgress() - 10);
@@ -120,8 +122,8 @@ public class Adapter_PGCommandProgress extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    ProgressBar pb_jd = (ProgressBar) v.getTag(R.id.tag_text);
-                    TextView tv_progress = (TextView) v.getTag(R.id.tag_pb);
+                    ProgressBar pb_jd = (ProgressBar) v.getTag(R.id.tag_pb);
+                    TextView tv_progress = (TextView) v.getTag(R.id.tag_text);
                     if (pb_jd.getProgress() <= 100)
                     {
                         pb_jd.setProgress(pb_jd.getProgress() + 10);

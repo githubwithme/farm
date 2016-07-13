@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_ScheduleOrderAdapter;
 import com.farm.adapter.PG_scheduleOrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
@@ -27,7 +25,6 @@ import com.farm.bean.AllType;
 import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
-import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
@@ -82,19 +79,16 @@ public class PG_ScheduleOrderFragment extends Fragment
     Spinner citySpinner;
     @ViewById
     Spinner countySpinner;
-/*    @ViewById
-    FrameLayout fr_id;
-    @ViewById
-    View lins;*/
-    CustomArrayAdapter provinceAdapter = null;  //省级适配器
+    /*    @ViewById
+        FrameLayout fr_id;
+        @ViewById
+        View lins;*/ CustomArrayAdapter provinceAdapter = null;  //省级适配器
     CustomArrayAdapter cityAdapter = null;    //地级适配器
     CustomArrayAdapter countyAdapter = null;    //县级适配器
     static int provincePosition = 3;
     private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
     private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
     private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
-
-
 
 
     @Override
@@ -182,7 +176,7 @@ public class PG_ScheduleOrderFragment extends Fragment
                     {
 
                         commembertab commembertab = AppContext.getUserInfo(getActivity());
-                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         Iterator<SellOrder_New> it = listData.iterator();
                         while (it.hasNext())
                         {
@@ -208,7 +202,6 @@ public class PG_ScheduleOrderFragment extends Fragment
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
-
                                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                                 AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
 //                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
@@ -317,8 +310,6 @@ public class PG_ScheduleOrderFragment extends Fragment
     {
         super.onDestroyView();
     }
-
-
 
 
     private void getAllOrdersname()
@@ -598,7 +589,7 @@ public class PG_ScheduleOrderFragment extends Fragment
                         listdata_cp.addAll(listNewData);
 
 
-                         String park[] = new String[listdata_cp.size()];
+                        String park[] = new String[listdata_cp.size()];
                         for (int i = 0; i < listdata_cp.size(); i++)
                         {
                             park[i] = listdata_cp.get(i).getProductName();

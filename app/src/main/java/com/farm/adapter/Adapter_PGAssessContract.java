@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,6 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.commandtab;
 import com.farm.common.BitmapHelper;
-import com.farm.ui.PictureScrollFragment_DialogFragment;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -36,7 +34,6 @@ import com.media.MediaChooserConstants;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -114,13 +111,14 @@ public class Adapter_PGAssessContract extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-                    Integer pos = (Integer) v.getTag();
-                    List<String> urls = (List<String>) v.getTag();
-                    PictureScrollFragment_DialogFragment dialog = new PictureScrollFragment_DialogFragment();
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putStringArrayList("imgurl", (ArrayList<String>) urls);
-                    dialog.setArguments(bundle1);
-                    dialog.show(context.getFragmentManager(), "EditNameDialog");
+                    //获取当天所有图片并展示
+//                    Integer pos = (Integer) v.getTag();
+//                    List<String> urls = (List<String>) v.getTag();
+//                    PictureScrollFragment_DialogFragment dialog = new PictureScrollFragment_DialogFragment();
+//                    Bundle bundle1 = new Bundle();
+//                    bundle1.putStringArrayList("imgurl", (ArrayList<String>) urls);
+//                    dialog.setArguments(bundle1);
+//                    dialog.show(context.getFragmentManager(), "EditNameDialog");
                 }
             });
             listItemView.btn_warn.setOnClickListener(new View.OnClickListener()
@@ -190,14 +188,13 @@ public class Adapter_PGAssessContract extends BaseAdapter
         public void onReceive(final Context context, Intent intent)
         {
             String FJBDLJ = fileUri.toString().replaceFirst("file:///", "/").trim();
-            BitmapHelper.setImageView(context, currentimageView, FJBDLJ);
+            BitmapHelper.setImageViewBackground(context, currentimageView, FJBDLJ);
             //1进行网络提交 2提交完毕刷新当前页面
 
 
 //            Bundle bundle = new Bundle();
-//            bundle.putInt("index_ll", currentItem);
-//            bundle.putInt("index_imageview", current_ll_picture.getChildCount() + 1);
-//            imageView.setTag(bundle);
+//            bundle.putString("id", "");
+//            currentimageView.setTag(bundle);
 
         }
     };
