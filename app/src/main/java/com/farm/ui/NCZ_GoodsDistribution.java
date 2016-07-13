@@ -7,8 +7,10 @@ import android.widget.ExpandableListView;
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.Adapter_Goods_NCZ;
+import com.farm.adapter.NCZ_GoodsDis_Adater;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.ParkGoods;
 import com.farm.bean.ParkGoodsBean;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
@@ -37,14 +39,14 @@ public class NCZ_GoodsDistribution extends Activity
 
     @ViewById
     ExpandableListView expandableListView;
-    Adapter_Goods_NCZ adapter_goods_ncz;
+    NCZ_GoodsDis_Adater adapter_goods_ncz;
 
-
+   ParkGoods ParkGoods;
     @AfterViews
     void afterOncreate()
     {
-//        getGoods();
-        getNewSaleList_test();
+        getGoods();
+
     }
 
 
@@ -52,6 +54,9 @@ public class NCZ_GoodsDistribution extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        getActionBar().hide();
+        ParkGoods=getIntent().getParcelableExtra("userid");
+        String a=ParkGoods.getId();
     }
 
 
@@ -60,7 +65,7 @@ public class NCZ_GoodsDistribution extends Activity
         List<ParkGoodsBean> listNewData = FileHelper.getAssetsData(NCZ_GoodsDistribution.this, "getgoods", ParkGoodsBean.class);
         if (listNewData != null)
         {
-            adapter_goods_ncz = new Adapter_Goods_NCZ(NCZ_GoodsDistribution.this, listNewData, expandableListView);
+            adapter_goods_ncz = new NCZ_GoodsDis_Adater(NCZ_GoodsDistribution.this, listNewData, expandableListView);
             expandableListView.setAdapter(adapter_goods_ncz);
             utils.setListViewHeight(expandableListView);
         }
@@ -76,7 +81,9 @@ public class NCZ_GoodsDistribution extends Activity
         commembertab commembertab = AppContext.getUserInfo(NCZ_GoodsDistribution.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getBatchTimeByUid");//jobGetList1
+        params.addQueryStringParameter("goodsId", ParkGoods.getId());
+        params.addQueryStringParameter("parkId",ParkGoods.getParkId());
+        params.addQueryStringParameter("action", "getBatchtimeByGoodsId");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -91,13 +98,13 @@ public class NCZ_GoodsDistribution extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), ParkGoodsBean.class);
-                        adapter_goods_ncz = new Adapter_Goods_NCZ(NCZ_GoodsDistribution.this, listNewData, expandableListView);
+                        adapter_goods_ncz = new NCZ_GoodsDis_Adater(NCZ_GoodsDistribution.this, listNewData, expandableListView);
                         expandableListView.setAdapter(adapter_goods_ncz);
                         utils.setListViewHeight(expandableListView);
-//                        for (int i = 0; i < listNewData.size(); i++)
-//                        {
-//                            expandableListView.expandGroup(i);//展开
-//                        }
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            expandableListView.expandGroup(i);//展开
+                        }
 
                     } else
                     {

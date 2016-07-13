@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.bean.ParkGoods;
 import com.farm.bean.ParkGoodsBean;
+import com.farm.bean.WZ_Pcxx;
 import com.farm.ui.NCZ_GoodsDistribution_;
 import com.farm.widget.CustomDialog_ListView;
 import com.swipelistview.SwipeLayout;
@@ -21,9 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by user on 2016/4/8.
+ * Created by hasee on 2016/7/12.
  */
-public class Adapter_Goods_NCZ extends BaseExpandableListAdapter
+public class NCZ_GoodsDis_Adater extends BaseExpandableListAdapter
 {
     int[] color;
     SwipeLayout swipeLayout;
@@ -36,7 +37,7 @@ public class Adapter_Goods_NCZ extends BaseExpandableListAdapter
     List<ParkGoodsBean> listData;
     ListView list;
 
-    public Adapter_Goods_NCZ(Context context, List<ParkGoodsBean> listData, ExpandableListView mainlistview)
+    public NCZ_GoodsDis_Adater(Context context, List<ParkGoodsBean> listData, ExpandableListView mainlistview)
     {
         color = new int[]{R.color.bg_ask, R.color.bg_work, R.color.gray, R.color.green, R.color.bg_job, R.color.gray, R.color.green, R.color.bg_job, R.color.bg_plant, R.color.bg_text_small, R.color.bg_job, R.color.bg_plant, R.color.bg_text_small, R.color.bg_job, R.color.bg_plant, R.color.bg_text_small};
         this.mainlistview = mainlistview;
@@ -48,11 +49,11 @@ public class Adapter_Goods_NCZ extends BaseExpandableListAdapter
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        if (listData.get(groupPosition).getGoodsStockLists() == null)
+        if (listData.get(groupPosition).getBatchNameLists() == null)
         {
             return null;
         }
-        return listData.get(groupPosition).getGoodsStockLists().get(childPosition);
+        return listData.get(groupPosition).getBatchNameLists().get(childPosition);
     }
 
     //得到子item的ID
@@ -68,11 +69,10 @@ public class Adapter_Goods_NCZ extends BaseExpandableListAdapter
 
     static class ListItemView
     {
-        public TextView tv_type;
-        public TextView tv_goodsname;
+        public TextView tv_batchtime;
         public TextView tv_number;
-        public TextView tv_values;
-        public TextView tv_gg;
+        public TextView tv_value;
+        public TextView tv_data;
     }
 
     //设置子item的组件
@@ -80,8 +80,8 @@ public class Adapter_Goods_NCZ extends BaseExpandableListAdapter
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<ParkGoods> childData = listData.get(groupPosition).getGoodsStockLists();
-        final ParkGoods ParkGoods = childData.get(childPosition);
+        List<WZ_Pcxx> childData = listData.get(groupPosition).getBatchNameLists();
+        final WZ_Pcxx wz_pcxx = childData.get(childPosition);
         View v = null;
         if (lmap.get(groupPosition) != null)
         {
@@ -90,27 +90,20 @@ public class Adapter_Goods_NCZ extends BaseExpandableListAdapter
         }
         if (v == null)
         {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.adapter_goods_ncz, null);
-            listItemView = new ListItemView();
-            listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
-            listItemView.tv_goodsname = (TextView) convertView.findViewById(R.id.tv_goodsname);
-            listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
-            listItemView.tv_values = (TextView) convertView.findViewById(R.id.tv_values);
-            listItemView.tv_gg = (TextView) convertView.findViewById(R.id.tv_gg);
-            convertView.setTag(listItemView);
-            convertView.setTag(R.id.tag_fi, ParkGoods);
-            convertView.setOnClickListener(new View.OnClickListener()
+            if (childPosition == 0)
             {
-                @Override
-                public void onClick(View v)
-                {
-                    ParkGoods ParkGoods= (com.farm.bean.ParkGoods) v.getTag(R.id.tag_fi);
-                    Intent intent = new Intent(context, NCZ_GoodsDistribution_.class);
-                    intent.putExtra("userid", ParkGoods);// 因为list中添加了头部,因此要去掉一个
-                    context.startActivity(intent);
-                }
-            });
+                convertView = LayoutInflater.from(context).inflate(R.layout.ncz_goodsdis_topadater, null);
+            } else
+            {
+                convertView = LayoutInflater.from(context).inflate(R.layout.ncz_goodsdis_child, null);
+            }
+      /*      LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.adapter_goods_ncz, null);*/
+            listItemView = new ListItemView();
+            listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
+            listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
+            listItemView.tv_value = (TextView) convertView.findViewById(R.id.tv_value);
+            listItemView.tv_data = (TextView) convertView.findViewById(R.id.tv_data);
             map.put(childPosition, convertView);
             lmap.put(groupPosition, map);
             if (isLastChild)
@@ -118,27 +111,26 @@ public class Adapter_Goods_NCZ extends BaseExpandableListAdapter
                 map = new HashMap<>();
             }
 
-
-            String danwei="";
-            if (!ParkGoods.getThree().equals(""))
+            listItemView.tv_batchtime.setText(wz_pcxx.getBatchName());
+            listItemView.tv_value.setText(wz_pcxx.getInGoodsValue()+"元");
+            listItemView.tv_data.setText(wz_pcxx.getExpDate().substring(0,wz_pcxx.getExpDate().length()-8));
+            if (!wz_pcxx.getThree().equals(""))
             {
-                listItemView.tv_number.setText(ParkGoods.getThreeNum()+ParkGoods.getThree() );
-                danwei=ParkGoods.getThree();
-            }else if (ParkGoods.getThree().equals("")&&!ParkGoods.getSec().equals(""))
+                listItemView.tv_number.setText(wz_pcxx.getThreeNum()+wz_pcxx.getThree() );
+            }else if (wz_pcxx.getThree().equals("")&&!wz_pcxx.getSec().equals(""))
             {
-                listItemView.tv_number.setText(ParkGoods.getSecNum()+ParkGoods.getSec() );
-                danwei=ParkGoods.getSec();
+                listItemView.tv_number.setText(wz_pcxx.getSecNum()+wz_pcxx.getSec() );
             }else
             {
-                listItemView.tv_number.setText(ParkGoods.getFirsNum()+ParkGoods.getFirs() );
-                danwei=ParkGoods.getFirs();
+                listItemView.tv_number.setText(wz_pcxx.getFirsNum()+wz_pcxx.getFirs());
             }
+/*            String danwei="";
+
             //数据添加
             listItemView.tv_type.setText(ParkGoods.getUserDefTypeName());
             listItemView.tv_values.setText(ParkGoods.getInGoodsValue()+"元");
             listItemView.tv_goodsname.setText(ParkGoods.getGoodsName());
-//            listItemView.tv_number.setText(ParkGoods.getNumber());
-            listItemView.tv_gg.setText(ParkGoods.getGoodsStatistical()+ParkGoods.getGoodsunit()+"/"+danwei);//规格
+            listItemView.tv_gg.setText(ParkGoods.getGoodsStatistical()+ParkGoods.getGoodsunit()+"/"+danwei);//规格*/
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -164,11 +156,11 @@ public class Adapter_Goods_NCZ extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getGoodsStockLists() == null)
+        if (listData.get(groupPosition).getBatchNameLists() == null)
         {
             return 0;
         }
-        return listData.get(groupPosition).getGoodsStockLists().size();
+        return listData.get(groupPosition).getBatchNameLists().size();
     }
 
     //获取当前父item的数据
@@ -201,7 +193,7 @@ public class Adapter_Goods_NCZ extends BaseExpandableListAdapter
         }
         TextView tv_type = (TextView) convertView.findViewById(R.id.tv_type);
 
-        tv_type.setText(listData.get(groupPosition).getParkName());
+        tv_type.setText(listData.get(groupPosition).getStorehouseName());
         return convertView;
     }
 

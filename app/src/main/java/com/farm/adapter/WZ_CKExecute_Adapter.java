@@ -74,11 +74,12 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
 
     static class ListItemView
     {
-        public TextView goodsname;
-//        public TextView local;
-        public TextView quantity;
-//        public TextView inGoodsvalue;
-//        public TextView zhongliangs;
+        public TextView tv_goodsname;
+        public TextView tv_number;
+        public TextView tv_values;
+        public TextView tv_type;
+        public TextView tv_gg;
+        public TextView tv_type_tip;
     }
 
     //设置子item的组件
@@ -99,13 +100,14 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.layout_children_ckexecute, null);
+            convertView = inflater.inflate(R.layout.adapter_rk_ck_ncz, null);
             listItemView = new ListItemView();
-            listItemView.goodsname = (TextView) convertView.findViewById(R.id.goodsname);
-//            listItemView.local = (TextView) convertView.findViewById(R.id.local);
-            listItemView.quantity = (TextView) convertView.findViewById(R.id.quantity);
-//            listItemView.inGoodsvalue = (TextView) convertView.findViewById(R.id.inGoodsvalue);
-//            listItemView.zhongliangs = (TextView) convertView.findViewById(R.id.zhongliangs);
+            listItemView.tv_goodsname = (TextView) convertView.findViewById(R.id.tv_goodsname);
+            listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
+            listItemView.tv_values = (TextView) convertView.findViewById(R.id.tv_values);
+            listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
+            listItemView.tv_gg = (TextView) convertView.findViewById(R.id.tv_gg);
+            listItemView.tv_type_tip = (TextView) convertView.findViewById(R.id.tv_type_tip);
             convertView.setTag(listItemView);
             convertView.setOnClickListener(new View.OnClickListener()
             {
@@ -127,11 +129,12 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
             }
 
             //数据添加
-            listItemView.goodsname.setText(wz_rKxx.getGoodsname());
-//            listItemView.local.setText(wz_rKxx.getParkName() + "-" + wz_rKxx.getStorehouseName());
-            listItemView.quantity.setText( wz_rKxx.getQuantity());
-//            listItemView.inGoodsvalue.setText("总值:" + wz_rKxx.getOutGoodsvalue() + "元");
-//            listItemView.zhongliangs.setText("总量:" + wz_rKxx.getSumWeight() );
+            listItemView.tv_goodsname.setText(wz_rKxx.getGoodsname());
+            listItemView.tv_values.setText(wz_rKxx.getOutGoodsvalue()+"元");
+            listItemView.tv_number.setText( wz_rKxx.getQuantity());
+            listItemView.tv_gg.setText( wz_rKxx.getStorehouseName());
+            listItemView.tv_type.setText(listData.get(groupPosition).getInType());
+            listItemView.tv_type_tip.setText("出库类型");
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -260,7 +263,7 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
         loadingFee.setText("装卸费:" + listData.get(groupPosition).getLoadingFee() + "元");
         shippingFee.setText("运费:" + listData.get(groupPosition).getShippingFee() + "元");
         double a = Double.valueOf(listData.get(groupPosition).getInGoodsValue()) + Double.valueOf(listData.get(groupPosition).getLoadingFee()) + Double.valueOf(listData.get(groupPosition).getShippingFee());
-        inGoodsValue.setText("总值"+String.format("%.2f",a) + "元");
+        inGoodsValue.setText("总值:"+String.format("%.2f",a) + "元");
         return convertView;
     }
 

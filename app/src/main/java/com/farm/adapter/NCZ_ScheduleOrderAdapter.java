@@ -65,6 +65,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
 
     static class ListItemView
     {
+        public TextView tv_time;
         public TextView tv_fzr;
         public TextView tv_car;
         public TextView tv_name;
@@ -124,6 +125,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             convertView = listContainer.inflate(R.layout.listitem_scheduleorder, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             listItemView.tv_fzr = (TextView) convertView.findViewById(R.id.tv_fzr);
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
@@ -142,7 +144,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-
+            listItemView.tv_time.setText("采收时间：" + sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length()-8));
             listItemView.tv_car.setText(sellOrder.getProducer() + sellOrder.getGoodsname());
 //            SpannableString content = new SpannableString(sellOrder.getBuyers());
             SpannableString content = new SpannableString(sellOrder.getPurchaName());

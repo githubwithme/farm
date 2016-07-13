@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="5dip"
+            android:orientation="horizontal">
+
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="15dip"
+                android:layout_height="15dip"
+                android:layout_centerVertical="true"
+                android:background="@drawable/temp1"/>
+
+            <TextView
+                android:id="@+id/tv_goodsname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/view"
+                android:gravity="center"
+                android:text="钾肥"
+                android:textColor="@color/bg_text"
+                android:textSize="16sp"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_number_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="库存："
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/tv_number_tip"
+                android:gravity="center"
+                android:text="100件35包"
+                android:textColor="@color/red"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_values_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dip"
+                android:layout_toRightOf="@+id/tv_number"
+                android:gravity="center"
+                android:text="价值"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_values"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/tv_values_tip"
+                android:gravity="center"
+                android:text="15000元"
+                android:textColor="@color/red"
+                android:textSize="14sp"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_gg_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="仓库："
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_gg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/tv_gg_tip"
+                android:gravity="center"
+                android:text="100件111向352包"
+                android:textColor="@color/red"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_type_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dip"
+                android:layout_toRightOf="@+id/tv_gg"
+                android:gravity="center"
+                android:text="入库类型："
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/tv_type_tip"
+                android:gravity="center"
+                android:text="有机肥"
+                android:textColor="@color/red"
+                android:textSize="14sp"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginBottom="5dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:background="@color/line_color"/>
+    </LinearLayout>
+</LinearLayout>

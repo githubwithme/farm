@@ -14,36 +14,33 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.app.AppContext;
-import com.farm.bean.WZ_CRk;
-import com.farm.bean.WZ_RKxx;
+import com.farm.bean.ListYc;
+import com.farm.bean.WZ_YCxx;
 import com.farm.bean.commembertab;
-import com.farm.ui.NCZ_WZ_RKDetail_;
+import com.farm.ui.NCZ_NewYc_detail_;
+import com.farm.ui.NCZ_WZ_YCDetail_;
 import com.farm.widget.CustomDialog_ListView;
-import com.swipelistview.SwipeLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by user on 2016/4/7.
+ * Created by hasee on 2016/7/12.
  */
-public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
+public class WZ_YCExecute_Adapter extends BaseExpandableListAdapter
 {
-    SwipeLayout swipeLayout;
-    int currentgroupPosition = 0;
-    int currentchildPosition = 0;
+
     TextView currentTextView;
     CustomDialog_ListView customDialog_listView;
-    private int currentItem = 0;
-    //    List<goodslisttab> list_goods = new ArrayList<goodslisttab>();
     ExpandableListView mainlistview;
     private Context context;// 运行上下文
     int currentChildsize = 0;
     private GoodsAdapter adapter;
-    List<WZ_CRk> listData;
+    List<ListYc> listData;
     ListView list;
 
-    public WZ_RKExecute_Adapter(Context context, List<WZ_CRk> listData, ExpandableListView mainlistview)
+    public WZ_YCExecute_Adapter(Context context, List<ListYc> listData, ExpandableListView mainlistview)
     {
         this.mainlistview = mainlistview;
         this.listData = listData;
@@ -54,11 +51,11 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        if (listData.get(groupPosition).getWzcrkxx() == null)
+        if (listData.get(groupPosition).getGoodsLists() == null)
         {
             return null;
         }
-        return listData.get(groupPosition).getWzcrkxx().get(childPosition);
+        return listData.get(groupPosition).getGoodsLists().get(childPosition);
     }
 
     //得到子item的ID
@@ -74,11 +71,12 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
 
     static class ListItemView
     {
-        public TextView tv_goodsname;
-        public TextView tv_number;
-        public TextView tv_values;
-        public TextView tv_type;
-        public TextView tv_gg;
+        public TextView goodsname;
+        public TextView number;
+        public TextView data;
+        public TextView storehouse;
+        public TextView type;
+
     }
 
     //设置子item的组件
@@ -86,11 +84,10 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<WZ_RKxx> childData = listData.get(groupPosition).getWzcrkxx();
-        final WZ_RKxx wz_rKxx = childData.get(childPosition);
+        List<WZ_YCxx> childData = listData.get(groupPosition).getGoodsLists();
+        final String parkname = listData.get(groupPosition).getParkName();
+        final WZ_YCxx wz_YCxx = childData.get(childPosition);
 
-        final String batchname = listData.get(groupPosition).getBatchName();
-        final String indate = listData.get(groupPosition).getInDate();
         View v = null;
         if (lmap.get(groupPosition) != null)
         {
@@ -100,26 +97,27 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.adapter_rk_ck_ncz, null);
+            convertView = inflater.inflate(R.layout.wz_yc_child_adapter, null);
             listItemView = new ListItemView();
-            listItemView.tv_goodsname = (TextView) convertView.findViewById(R.id.tv_goodsname);
-            listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
-            listItemView.tv_values = (TextView) convertView.findViewById(R.id.tv_values);
-            listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
-            listItemView.tv_gg = (TextView) convertView.findViewById(R.id.tv_gg);
+            listItemView.goodsname = (TextView) convertView.findViewById(R.id.goodsname);
+            listItemView.number = (TextView) convertView.findViewById(R.id.number);
+            listItemView.data = (TextView) convertView.findViewById(R.id.data);
+            listItemView.storehouse = (TextView) convertView.findViewById(R.id.storehouse);
+            listItemView.type = (TextView) convertView.findViewById(R.id.type);
             convertView.setTag(listItemView);
-//            convertView.setTag(R.id.tag_bean, jobtab);
+            convertView.setTag(R.id.tag_bean, wz_YCxx);
+            convertView.setTag(R.id.tag_rk, parkname);
             convertView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-//                    jobtab jobtab = (com.farm.bean.jobtab) v.getTag(R.id.tag_bean);
-                    Intent intent = new Intent(context, NCZ_WZ_RKDetail_.class);
-
-                    intent.putExtra("wz_rKxx", wz_rKxx);
-                    intent.putExtra("batchname", batchname);
-                    intent.putExtra("indate", indate);
+                    String parknames = (String) v.getTag(R.id.tag_rk);
+                    WZ_YCxx wz_yCxxList = new WZ_YCxx();
+                    wz_yCxxList = (WZ_YCxx) v.getTag(R.id.tag_bean);
+                    Intent intent = new Intent(context, NCZ_NewYc_detail_.class);
+                    intent.putExtra("wz_rKxx", wz_yCxxList);
+                    intent.putExtra("parkname", parknames);
                     context.startActivity(intent);
 
                 }
@@ -131,12 +129,46 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
                 map = new HashMap<>();
             }
 
+            String danwei = "";
+            if (!wz_YCxx.getThree().equals(""))
+            {
+                listItemView.number.setText("库存数量:" + wz_YCxx.getThreeNum() + wz_YCxx.getThree());
+                danwei = wz_YCxx.getThree();
+            } else if (wz_YCxx.getThree().equals("") && !wz_YCxx.getSec().equals(""))
+            {
+                listItemView.number.setText("库存数量:" + wz_YCxx.getSecNum() + wz_YCxx.getSec());
+                danwei = wz_YCxx.getSec();
+            } else
+            {
+                listItemView.number.setText("库存数量;" + wz_YCxx.getFirsNum() + wz_YCxx.getFirs());
+                danwei = wz_YCxx.getFirs();
+            }
+
             //数据添加
-            listItemView.tv_goodsname.setText(wz_rKxx.getGoodsname());
-            listItemView.tv_values.setText(wz_rKxx.getInGoodsvalue()+"元");
-            listItemView.tv_number.setText( wz_rKxx.getQuantity());
-            listItemView.tv_gg.setText( wz_rKxx.getStorehouseName());
-            listItemView.tv_type.setText( wz_rKxx.getInType());
+            listItemView.goodsname.setText(wz_YCxx.getGoodsName());
+
+
+            listItemView.storehouse.setText(wz_YCxx.getStorehouseName());
+            if (wz_YCxx.getType().equals("0"))
+            {
+                listItemView.type.setText("即将过期");
+                listItemView.data.setText("过期时间:" + wz_YCxx.getExpDate1().substring(0, wz_YCxx.getExpDate1().length() - 8));
+
+            } else if (wz_YCxx.getType().equals("1"))
+            {
+                listItemView.type.setText("库存过低");
+                listItemView.data.setText("警戒数量:" + wz_YCxx.getLevelOfWarning() + danwei);
+            } else if (wz_YCxx.getType().equals("2"))
+            {
+                listItemView.type.setText("即将过期|库存过低");
+                listItemView.data.setText("过期时间:" + wz_YCxx.getExpDate1().substring(0, wz_YCxx.getExpDate1().length() - 8));
+            } else if (wz_YCxx.getType().equals("3"))
+            {
+                listItemView.type.setText("已经过期");
+                listItemView.data.setText("过期时间:" + wz_YCxx.getExpDate1().substring(0, wz_YCxx.getExpDate1().length() - 8));
+            }
+
+
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -174,11 +206,11 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getWzcrkxx() == null)
+        if (listData.get(groupPosition).getGoodsLists() == null)
         {
             return 0;
         }
-        return listData.get(groupPosition).getWzcrkxx().size();
+        return listData.get(groupPosition).getGoodsLists().size();
     }
 
     //获取当前父item的数据
@@ -209,10 +241,7 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_parent_rkexecute, null);
         }
-        TextView inDate = (TextView) convertView.findViewById(R.id.inDate);
         TextView batchName = (TextView) convertView.findViewById(R.id.batchName);
-        TextView loadingFee = (TextView) convertView.findViewById(R.id.loadingFee);
-        TextView shippingFee = (TextView) convertView.findViewById(R.id.shippingFee);
         TextView inGoodsValue = (TextView) convertView.findViewById(R.id.inGoodsValue);
         FrameLayout fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
         RelativeLayout groupExpand = (RelativeLayout) convertView.findViewById(R.id.groupExpand);
@@ -229,41 +258,28 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
                 {
                     mainlistview.expandGroup(groupPosition);
                 }
-                WZ_CRk wz_cRk2 = (WZ_CRk) view.getTag(R.id.tag_rk);
-                if (wz_cRk2.getFlashStr().equals("1"))
+ /*               ListYc listYc = (ListYc) view.getTag(R.id.tag_rk);
+                if (ListYc.getFlashStr().equals("1"))
                 {
                     commembertab commembertab = AppContext.getUserInfo(context);
                     AppContext.eventStatus(context, "4", wz_cRk2.getBatchNumber(), commembertab.getId());
-                }
+                }*/
 
 
             }
         });
-        if (listData.get(groupPosition).getFlashStr().equals("1"))
-        {
-            fl_new_item.setVisibility(View.VISIBLE);
-        } else
-        {
-            fl_new_item.setVisibility(View.GONE);
-        }
-/*        groupExpand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isExpanded) {
-                    mainlistview.collapseGroup(groupPosition);
-                } else {
-                    mainlistview.expandGroup(groupPosition);
-                }
-            }
-        });*/
-        inDate.setText(listData.get(groupPosition).getInType());
-        batchName.setText("批次号:" + listData.get(groupPosition).getBatchName());
-        loadingFee.setText("装卸费:" + listData.get(groupPosition).getLoadingFee() + "元");
-        shippingFee.setText("运费:" + listData.get(groupPosition).getShippingFee() + "元");
-         double a= Double.valueOf(listData.get(groupPosition).getInGoodsValue())+Double.valueOf(listData.get(groupPosition).getLoadingFee())+Double.valueOf(listData.get(groupPosition).getShippingFee());
-        inGoodsValue.setText("总值:"+String.format("%.2f",a) + "元");
+        batchName.setTextSize(16);
+        batchName.setText(listData.get(groupPosition).getParkName());
+        inGoodsValue.setTextSize(12);
+        inGoodsValue.setText(listData.get(groupPosition).getParkCount() + "条");
+
+/*
+        double a= Double.valueOf(listData.get(groupPosition).getInGoodsValue())+Double.valueOf(listData.get(groupPosition).getLoadingFee())+Double.valueOf(listData.get(groupPosition).getShippingFee());
+        inGoodsValue.setText("总值"+String.format("%.2f",a) + "元");
+ */
         return convertView;
     }
+
 
     @Override
     public boolean hasStableIds()
