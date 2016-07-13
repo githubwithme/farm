@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
-                android:layout_marginTop="10dip"
+                android:layout_marginTop="5dip"
                 android:orientation="horizontal">
 
                 <TextView
@@ -259,12 +259,91 @@
 
             </LinearLayout>
 
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
-                android:layout_marginTop="10dip">
+                android:layout_marginTop="5dip">
+
+
+                <TextView
+                    android:id="@+id/tv_car_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="left"
+                    android:text="采收区域："
+                    android:textColor="@color/gray"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/tv_car"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_car_tip"
+                    android:gravity="left"
+                    android:text="乐丰分场"
+                    android:textColor="@color/gray"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/tv_product_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dip"
+                    android:layout_toRightOf="@+id/tv_car"
+                    android:gravity="left"
+                    android:text="产品："
+                    android:textColor="@color/gray"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/tv_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_product_tip"
+                    android:gravity="left"
+                    android:text="香蕉"
+                    android:textColor="@color/gray"
+                    android:textSize="13sp"/>
+
+                <Button
+                    android:id="@+id/btn_cancleorder1"
+                    android:layout_width="40dip"
+                    android:layout_height="20dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/round_red"
+                    android:text="取消"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/btn_editorder1"
+                    android:layout_width="60dip"
+                    android:layout_height="20dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dip"
+                    android:layout_toLeftOf="@+id/btn_cancleorder1"
+                    android:background="@drawable/round_red"
+                    android:text="调整时间"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip">
 
 
                 <TextView
@@ -300,66 +379,10 @@
                     android:minWidth="60dip"
                     android:text="负责人"
                     android:textColor="@color/red"
-                    android:textSize="13sp"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dip"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="5dip">
-
-
-                <TextView
-                    android:id="@+id/tv_car_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="left"
-                    android:text="采收区域："
-                    android:textColor="@color/gray"
-                    android:textSize="13sp"/>
-
-                <TextView
-                    android:id="@+id/tv_car"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/tv_car_tip"
-                    android:gravity="left"
-                    android:text="乐丰分场"
-                    android:textColor="@color/gray"
-                    android:textSize="13sp"/>
-
-                <Button
-                    android:id="@+id/btn_cancleorder1"
-                    android:layout_width="40dip"
-                    android:layout_height="20dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/round_red"
-                    android:text="取消"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:visibility="gone"/>
 
-                <Button
-                    android:id="@+id/btn_editorder1"
-                    android:layout_width="60dip"
-                    android:layout_height="20dip"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="2dip"
-                    android:layout_toLeftOf="@+id/btn_cancleorder1"
-                    android:background="@drawable/round_red"
-                    android:text="调整时间"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
-                    android:visibility="gone"/>
             </RelativeLayout>
-
 
         </LinearLayout>
     </LinearLayout>

@@ -56,6 +56,11 @@ public class PG_FarmManagerFragment extends Fragment
         getActivity().startActivity(intent);
     }
     @Click
+    void ll_zl()
+    {
+        Intent intent = new Intent(getActivity(), PG_CommandActivity_.class);
+        getActivity().startActivity(intent);
+    }    @Click
     void ll_gz()
     {
         Intent intent = new Intent(getActivity(), PG_JobFragment_.class);

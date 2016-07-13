@@ -79,7 +79,6 @@ public class AddPlantObservation_StepTwo_Adapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
-
                     if (tempButton != null)
                     {
                         tempButton.setSelected(false);

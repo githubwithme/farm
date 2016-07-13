@@ -63,6 +63,10 @@
 
         <activity android:name=".ui.NCZ_AgreementDetail_"/>
         <activity android:name=".ui.PG_JobFragment_"/>
+        <activity android:name=".ui.PG_CommandActivity_"/>
+        <activity android:name=".ui.PG_AssessContract_"/>
+        <activity android:name=".ui.PG_CommandProgress_"/>
+        <activity android:name=".ui.PG_GoodsUsed_"/>
         <activity android:name=".ui.NCZ_GoodsDistribution_"/>
         <activity android:name=".ui.CZ_ContractBatchTimeBreakOff_"/>
         <activity android:name=".ui.NCZ_GoogdsManagerActivity_"/>
