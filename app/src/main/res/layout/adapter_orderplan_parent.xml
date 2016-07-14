@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:layout_marginTop="10dip"
+        android:background="@color/white">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="30dip"
+            android:layout_marginLeft="5dip"
+            android:layout_centerVertical="true"
+            android:layout_height="30dip"
+            android:background="@mipmap/ic_time"/>
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/view"
+            android:text="hellow"
+            android:layout_centerVertical="true"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
+
+
+        <View
+            android:id="@+id/view_down"
+            android:layout_width="15dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_height="15dip"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/downward"/>
+
+
+        <TextView
+            android:id="@+id/tv_carnumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginRight="10dip"
+            android:text="3车"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/view_down"
+            android:textColor="@color/red"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/tv_ordernumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginRight="10dip"
+            android:text="3单"
+            android:layout_toLeftOf="@+id/tv_carnumber"
+            android:layout_centerVertical="true"
+            android:textColor="@color/red"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+</LinearLayout>

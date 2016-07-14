@@ -42,7 +42,8 @@ public class NCZ_OrderManager extends Activity
     NCZ_AllOrderFragment ncz_allOrderFragment;//删除
     NCZ_NotPayFragment ncz_notPayFragment;  //交易中
     NCZ_DealingOrderFragment ncz_dealingOrderFragment;//完成
-    NCZ_ScheduleOrderFragment ncz_scheduleOrderFragment;//排单
+//    NCZ_ScheduleOrderFragment ncz_scheduleOrderFragment;//排单
+    NCZ_OrderPlanFragment ncz_orderPlanFragment;
     NCZ_NeedApproveOrderFragment ncz_needApproveOrderFragment;  //审批
     Fragment mContent = new Fragment();
     @ViewById
@@ -81,7 +82,7 @@ public class NCZ_OrderManager extends Activity
     void tv_schedule()
     {
         setBackground(0);
-        switchContent(mContent, ncz_scheduleOrderFragment);
+        switchContent(mContent, ncz_orderPlanFragment);
     }
 
     @Click
@@ -119,7 +120,7 @@ public class NCZ_OrderManager extends Activity
         getNeedOrders();
         getAllOrders();
         setBackground(0);
-        switchContent(mContent, ncz_scheduleOrderFragment);
+        switchContent(mContent, ncz_orderPlanFragment);
     }
 
     @Override
@@ -127,7 +128,7 @@ public class NCZ_OrderManager extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        ncz_scheduleOrderFragment = new NCZ_ScheduleOrderFragment_();
+        ncz_orderPlanFragment = new NCZ_OrderPlanFragment_();
         ncz_allOrderFragment = new NCZ_AllOrderFragment_();
         ncz_notPayFragment = new NCZ_NotPayFragment_();
         ncz_dealingOrderFragment = new NCZ_DealingOrderFragment_();
