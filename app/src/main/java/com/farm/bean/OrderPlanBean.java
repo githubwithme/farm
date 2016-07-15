@@ -11,19 +11,19 @@ import java.util.List;
 public class OrderPlanBean implements Parcelable
 {
     String date;
-    String orderNumber;
-    String carNumber;
-    List<OrderPlan> orderList;
+    String orderNumber;//合计订单数
+    String carNumber;//合计车辆数
+    String notPayDepositNumber;//待付定金订单数
+    String paidDepositNumber;//已付定金订单数
+    String readyNumber;//已就绪订单数
+    String notreadyNumber;//未就绪订单数
+    List<OrderPlan> OrderPlanList;//各个园区订单车辆数
+    List<SellOrder_New> sellOrderList;//订单列表
 
 
-    public OrderPlanBean()//实体类需要一个空构造函数
+    public OrderPlanBean()
     {
         super();
-    }
-
-    public static Creator<OrderPlanBean> getCREATOR()
-    {
-        return CREATOR;
     }
 
     protected OrderPlanBean(Parcel in)
@@ -31,6 +31,12 @@ public class OrderPlanBean implements Parcelable
         date = in.readString();
         orderNumber = in.readString();
         carNumber = in.readString();
+        notPayDepositNumber = in.readString();
+        paidDepositNumber = in.readString();
+        readyNumber = in.readString();
+        notreadyNumber = in.readString();
+        OrderPlanList = in.createTypedArrayList(OrderPlan.CREATOR);
+        sellOrderList = in.createTypedArrayList(SellOrder_New.CREATOR);
     }
 
     public static final Creator<OrderPlanBean> CREATOR = new Creator<OrderPlanBean>()
@@ -78,14 +84,64 @@ public class OrderPlanBean implements Parcelable
         this.carNumber = carNumber;
     }
 
-    public List<OrderPlan> getOrderList()
+    public String getNotPayDepositNumber()
     {
-        return orderList;
+        return notPayDepositNumber;
     }
 
-    public void setOrderList(List<OrderPlan> orderList)
+    public void setNotPayDepositNumber(String notPayDepositNumber)
     {
-        this.orderList = orderList;
+        this.notPayDepositNumber = notPayDepositNumber;
+    }
+
+    public String getPaidDepositNumber()
+    {
+        return paidDepositNumber;
+    }
+
+    public void setPaidDepositNumber(String paidDepositNumber)
+    {
+        this.paidDepositNumber = paidDepositNumber;
+    }
+
+    public String getReadyNumber()
+    {
+        return readyNumber;
+    }
+
+    public void setReadyNumber(String readyNumber)
+    {
+        this.readyNumber = readyNumber;
+    }
+
+    public String getNotreadyNumber()
+    {
+        return notreadyNumber;
+    }
+
+    public void setNotreadyNumber(String notreadyNumber)
+    {
+        this.notreadyNumber = notreadyNumber;
+    }
+
+    public List<OrderPlan> getOrderPlanList()
+    {
+        return OrderPlanList;
+    }
+
+    public void setOrderPlanList(List<OrderPlan> orderPlanList)
+    {
+        OrderPlanList = orderPlanList;
+    }
+
+    public List<SellOrder_New> getSellOrderList()
+    {
+        return sellOrderList;
+    }
+
+    public void setSellOrderList(List<SellOrder_New> sellOrderList)
+    {
+        this.sellOrderList = sellOrderList;
     }
 
     @Override
@@ -100,7 +156,11 @@ public class OrderPlanBean implements Parcelable
         dest.writeString(date);
         dest.writeString(orderNumber);
         dest.writeString(carNumber);
+        dest.writeString(notPayDepositNumber);
+        dest.writeString(paidDepositNumber);
+        dest.writeString(readyNumber);
+        dest.writeString(notreadyNumber);
+        dest.writeTypedList(OrderPlanList);
+        dest.writeTypedList(sellOrderList);
     }
-
-
 }

@@ -6,14 +6,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +21,8 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.ui.NCZ_EditOrder_;
+import com.farm.ui.RecoveryDetail_;
+import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
@@ -52,18 +51,22 @@ public class NCZ_NotpayAdapter extends BaseAdapter
 
     static class ListItemView
     {
-//        public CircleImageView circle_img;
+        //        public CircleImageView circle_img;
         public TextView tv_mainpeple;
         public TextView tv_parkname;
         public TextView tv_buyer;
         public TextView tv_orderstate;
-//        public TextView tv_price;
+        //        public TextView tv_price;
 //        public TextView tv_sum;
 //        public TextView tv_from;
         public TextView tv_product;
         public Button btn_cancleorder;
+        public Button btn_preparework;
         public Button btn_editorder;
-        public FrameLayout fl_dynamic;
+        public CircleImageView circleImageView;
+        public LinearLayout ll_car;
+        public LinearLayout ll_mainpeople;
+//        public FrameLayout fl_dynamic;
 
     }
 
@@ -111,9 +114,13 @@ public class NCZ_NotpayAdapter extends BaseAdapter
 //            listItemView.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
+            listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
-            listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
+//            listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
             listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
+            listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
+            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
+            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
 //            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
             // 设置控件集到convertView
             lmap.put(position, convertView);
@@ -128,9 +135,9 @@ public class NCZ_NotpayAdapter extends BaseAdapter
             }
             listItemView.tv_mainpeple.setText(sellOrder.getMainPepName());
 //            listItemView.tv_car.setText(sellOrder.getProducer());
-            SpannableString content = new SpannableString(sellOrder.getPurchaName());
-            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-            listItemView.tv_buyer.setText(content);
+//            SpannableString content = new SpannableString(sellOrder.getPurchaName());
+//            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            listItemView.tv_buyer.setText(sellOrder.getPurchaName());
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -139,7 +146,49 @@ public class NCZ_NotpayAdapter extends BaseAdapter
                     showDialog_addsaleinfo("15989154871");
                 }
             });
+//            listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
+//            listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
+//            listItemView.btn_changetime.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View view)
+//                {
+//                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
+//                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
+//                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name, sellOrders, "1");
+//                    myDatepicker.getDialog().show();
+//                }
+//            });
+            //            listItemView.btn_preparework.setTag(R.id.tag_danwei,sellOrder);
+            listItemView.btn_preparework.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
+                    Intent intent = new Intent(context, RecoveryDetail_.class);
+//                    intent.putExtra("zbstudio", sellOrder_new);
+                    context.startActivity(intent);
+                }
+            });
+                //            listItemView.ll_car.setTag(R.id.tag_danwei,sellOrder);
+            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
 
+                }
+            });
+//        listItemView.ll_mainpeople.setTag(R.id.tag_fi, listData.get(groupPosition).getDate());
+            listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    showDialog_addsaleinfo("15989154871");
+                }
+            });
             listItemView.tv_product.setText(sellOrder.getGoodsname());
             //下划线就绪
 /*            SpannableString spanStr_buyer = new SpannableString("就绪");
@@ -192,6 +241,19 @@ public class NCZ_NotpayAdapter extends BaseAdapter
                     listItemView.tv_state.setText("买家已付尾款");
                 }
             }*/
+//            listItemView.btn_editorder.setTag(R.id.tag_kg, listItemView);
+//            listItemView.btn_editorder.setTag(R.id.tag_hg, sellOrder);
+//            listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View view)
+//                {
+//                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
+//                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
+//                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name, sellOrders, "1");
+//                    myDatepicker.getDialog().show();
+//                }
+//            });
             listItemView.btn_cancleorder.setTag(R.id.tag_cash, sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
@@ -225,10 +287,10 @@ public class NCZ_NotpayAdapter extends BaseAdapter
         }
         if (listItems.get(position).getFlashStr().equals("0"))
         {
-            listItemView.fl_dynamic.setVisibility(View.INVISIBLE);
+            listItemView.circleImageView.setVisibility(View.INVISIBLE);
         } else
         {
-            listItemView.fl_dynamic.setVisibility(View.VISIBLE);
+            listItemView.circleImageView.setVisibility(View.VISIBLE);
         }
         //
         int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work, R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};

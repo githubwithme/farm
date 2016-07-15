@@ -20,14 +20,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_NeedAdapter;
 import com.farm.adapter.NCZ_NotpayAdapter;
-import com.farm.adapter.NCZ_OrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
 import com.farm.bean.Purchaser;
-import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.Wz_Storehouse;
@@ -113,7 +110,7 @@ public class NCZ_NotPayFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
+        View rootView = inflater.inflate(R.layout.ncz_notpayfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
 //        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENOTPAYORDER);
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);

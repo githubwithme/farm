@@ -7,14 +7,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,7 +57,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
 
     static class ListItemView
     {
-        public CircleImageView circle_img;
+//        public CircleImageView circle_img;
         public TextView tv_parkname;
         public TextView tv_mainpeople;
         public TextView tv_buyer;
@@ -73,10 +70,12 @@ public class NCZ_NeedAdapter extends BaseAdapter
 //        public Button btn_cancleorder;
 //        public Button btn_editorder;
 
-        public FrameLayout fl_dynamic;
+//        public FrameLayout fl_dynamic;
 //        public Button btn_pizhun;
 //        public Button btn_bohui;
         public Button btn_showdetail;
+        public LinearLayout ll_mainpeople;
+        public CircleImageView circleImageView;
 
     }
 
@@ -125,12 +124,14 @@ public class NCZ_NeedAdapter extends BaseAdapter
             listItemView.tv_ask = (TextView) convertView.findViewById(R.id.tv_ask);
 //            listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
 //            listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
-            listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
+//            listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
             listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
-            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
+            listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
+//            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
 //            listItemView.btn_pizhun = (Button) convertView.findViewById(R.id.btn_pizhun);
 //            listItemView.btn_bohui = (Button) convertView.findViewById(R.id.btn_bohui);
             listItemView.btn_showdetail = (Button) convertView.findViewById(R.id.btn_showdetail);
+            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -144,16 +145,16 @@ public class NCZ_NeedAdapter extends BaseAdapter
 
         if (listItems.get(position).getFlashStr().equals("0"))
         {
-            listItemView.fl_dynamic.setVisibility(View.INVISIBLE);
+            listItemView.circleImageView.setVisibility(View.INVISIBLE);
         } else
         {
-            listItemView.fl_dynamic.setVisibility(View.VISIBLE);
+            listItemView.circleImageView.setVisibility(View.VISIBLE);
         }
         listItemView.tv_mainpeople.setText(sellOrder.getMainPepName());
 
-        final SpannableString content = new SpannableString(sellOrder.getPurchaName());
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        listItemView.tv_buyer.setText(content);
+//        final SpannableString content = new SpannableString(sellOrder.getPurchaName());
+//        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        listItemView.tv_buyer.setText(sellOrder.getPurchaName());
         listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -162,9 +163,18 @@ public class NCZ_NeedAdapter extends BaseAdapter
                 showDialog_addsaleinfo("15989154871");
             }
         });
+//        listItemView.ll_mainpeople.setTag(R.id.tag_fi, listData.get(groupPosition).getDate());
+        listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                showDialog_addsaleinfo("15989154871");
+            }
+        });
 
-        SpannableString spanStr_buyer = new SpannableString("就绪");
-        spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
+//        SpannableString spanStr_buyer = new SpannableString("就绪");
+//        spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
         //下划线跳转
 /*            listItemView.tv_ask.setText(spanStr_buyer);
             listItemView.tv_ask.setOnClickListener(new View.OnClickListener()
@@ -293,22 +303,22 @@ public class NCZ_NeedAdapter extends BaseAdapter
 
         //                String[] nongzi = commandtab.getnongziName().split(",");
 
-        if (name.indexOf(listItems.get(position).getMainPepole()) != -1)
-        {
-            String[] data = name.split(",");
-            for (int j = 0; j < data.length; j++)
-            {
-                if (data[j].equals(listItems.get(position).getMainPepole()))
-                    listItemView.circle_img.setImageResource(color[j % color.length]);
-                int x = j % color.length;
-            }
-        } else
-        {
-            String[] data = name.split(",");
-            name += listItems.get(position).getMainPepole() + ",";
-            listItemView.circle_img.setImageResource(color[(data.length) % color.length]);
-            int y = (data.length) % color.length;
-        }
+//        if (name.indexOf(listItems.get(position).getMainPepole()) != -1)
+//        {
+//            String[] data = name.split(",");
+//            for (int j = 0; j < data.length; j++)
+//            {
+//                if (data[j].equals(listItems.get(position).getMainPepole()))
+//                    listItemView.circle_img.setImageResource(color[j % color.length]);
+//                int x = j % color.length;
+//            }
+//        } else
+//        {
+//            String[] data = name.split(",");
+//            name += listItems.get(position).getMainPepole() + ",";
+//            listItemView.circle_img.setImageResource(color[(data.length) % color.length]);
+//            int y = (data.length) % color.length;
+//        }
         return convertView;
     }
 

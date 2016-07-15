@@ -2,50 +2,97 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/light_gray"
+              android:background="@color/defaultbackground"
               android:orientation="vertical">
 
-
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dip"
-        android:background="@drawable/bg_white"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:visibility="gone">
+        android:layout_height="40dip"
+        android:background="@drawable/round_white"
+        android:orientation="horizontal">
 
-
-        <EditText
-            android:id="@+id/et_goodsname"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_colum"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="50dip"
-            android:layout_span="3"
-            android:layout_toRightOf="@+id/namess"
-            android:hint="请输入物资名称"
-            android:paddingLeft="10dip"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14"/>
-
-        <ImageButton
-            android:id="@+id/imgbtn"
-            android:layout_width="40dip"
+        <FrameLayout
+            android:id="@+id/fr_id"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dip"
-            android:background="@null"
-            android:src="@drawable/searchitem"/>
-    </RelativeLayout>
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/provinceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center|center_horizontal"/>
+
+            <View
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/downward"/>
+        </FrameLayout>
+
+        <View
+            android:id="@+id/lins"
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/citySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center|center_horizontal"/>
+
+            <View
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/downward"/>
+        </FrameLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/countySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center|center_horizontal"/>
+
+            <View
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/downward"/>
+        </FrameLayout>
+
+
+    </LinearLayout>
 
 
     <ExpandableListView
         android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
         android:childDivider="@color/transparent"
         android:dividerHeight="0dip"
-        android:groupIndicator="@null"/>
+        android:groupIndicator="@null"
+        android:scrollbars="none"/>
 </LinearLayout>

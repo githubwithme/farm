@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/defaultbackground"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:background="@drawable/round_white"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/provinceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center|center_horizontal"/>
+
+            <View
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/downward"/>
+        </FrameLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/citySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center|center_horizontal"/>
+
+            <View
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/downward"/>
+        </FrameLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/countySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center|center_horizontal"/>
+
+            <View
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/downward"/>
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/defaultbackground_tip"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="10dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="2016-07-15"
+                android:textColor="@color/gray"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tv_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/tv_date"
+                android:gravity="center"
+                android:text="星期四"
+                android:textColor="@color/gray"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/tv_week"
+                android:gravity="center"
+                android:text="今天"
+                android:textColor="@color/gray"
+                android:textSize="16sp"/>
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:layout_gravity="center_vertical"
+                android:background="@color/gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dip"
+                android:gravity="center"
+                android:text="1单"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="未付定金;"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:layout_gravity="center_vertical"
+                android:background="@color/gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dip"
+                android:gravity="center"
+                android:text="2单"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="已付定金："
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="其中"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="1单"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="已就绪；"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="1单"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="未就绪"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:layout_gravity="top"
+                android:layout_marginTop="10dip"
+                android:background="@color/gray"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dip"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="乐丰园区：1单,2车；双桥园区：1单；2车"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dip"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="华兴园区：1单,3车"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="10dip"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dip"
+                android:gravity="center"
+                android:text="合计：3单；8车"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/lv"
+        style="@style/widget_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/transparent"
+        android:dividerHeight="0dip"/>
+
+
+</LinearLayout>

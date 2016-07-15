@@ -8,35 +8,20 @@ import android.os.Parcelable;
  */
 public class OrderPlan implements Parcelable
 {
-    String orderId;
-    String orderStatus;
-    String prepareStatus;
-    String buyer;
-    String product;
-    String parkname;
+    String orderNumber;//该园区订单数
+    String carNumber;//该园区该天车辆数
+    String parkname;//园区名称
 
     public OrderPlan()
     {
         super();
     }
 
-    public String getParkname()
-    {
-        return parkname;
-    }
-
-    public void setParkname(String parkname)
-    {
-        this.parkname = parkname;
-    }
-
     protected OrderPlan(Parcel in)
     {
-        orderId = in.readString();
-        orderStatus = in.readString();
-        prepareStatus = in.readString();
-        buyer = in.readString();
-        product = in.readString();
+        orderNumber = in.readString();
+        carNumber = in.readString();
+        parkname = in.readString();
     }
 
     public static final Creator<OrderPlan> CREATOR = new Creator<OrderPlan>()
@@ -54,54 +39,34 @@ public class OrderPlan implements Parcelable
         }
     };
 
-    public String getOrderId()
+    public String getParkname()
     {
-        return orderId;
+        return parkname;
     }
 
-    public void setOrderId(String orderId)
+    public void setParkname(String parkname)
     {
-        this.orderId = orderId;
+        this.parkname = parkname;
     }
 
-    public String getOrderStatus()
+    public String getOrderNumber()
     {
-        return orderStatus;
+        return orderNumber;
     }
 
-    public void setOrderStatus(String orderStatus)
+    public void setOrderNumber(String orderNumber)
     {
-        this.orderStatus = orderStatus;
+        this.orderNumber = orderNumber;
     }
 
-    public String getPrepareStatus()
+    public String getCarNumber()
     {
-        return prepareStatus;
+        return carNumber;
     }
 
-    public void setPrepareStatus(String prepareStatus)
+    public void setCarNumber(String carNumber)
     {
-        this.prepareStatus = prepareStatus;
-    }
-
-    public String getBuyer()
-    {
-        return buyer;
-    }
-
-    public void setBuyer(String buyer)
-    {
-        this.buyer = buyer;
-    }
-
-    public String getProduct()
-    {
-        return product;
-    }
-
-    public void setProduct(String product)
-    {
-        this.product = product;
+        this.carNumber = carNumber;
     }
 
     @Override
@@ -113,10 +78,8 @@ public class OrderPlan implements Parcelable
     @Override
     public void writeToParcel(Parcel dest, int flags)
     {
-        dest.writeString(orderId);
-        dest.writeString(orderStatus);
-        dest.writeString(prepareStatus);
-        dest.writeString(buyer);
-        dest.writeString(product);
+        dest.writeString(orderNumber);
+        dest.writeString(carNumber);
+        dest.writeString(parkname);
     }
 }

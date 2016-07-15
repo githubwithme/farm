@@ -100,6 +100,28 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String totalFee;//总合计金额
     public String personNote;//搬运说明
     public String actualMoney;//实际金额
+    public String prepareStatus;//订单状态
+    public String product;//订单状态
+
+    public String getProduct()
+    {
+        return product;
+    }
+
+    public void setProduct(String product)
+    {
+        this.product = product;
+    }
+
+    public String getPrepareStatus()
+    {
+        return prepareStatus;
+    }
+
+    public void setPrepareStatus(String prepareStatus)
+    {
+        this.prepareStatus = prepareStatus;
+    }
 
     public String getQualityWaterWeight()
     {
@@ -936,6 +958,8 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setTotalFee(source.readString());
             p.setPersonNote(source.readString());
             p.setActualMoney(source.readString());
+            p.setPrepareStatus(source.readString());
+            p.setprod(source.readString());
             return p;
 
 
@@ -1026,6 +1050,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(totalFee);
         p.writeString(personNote);
         p.writeString(actualMoney);
+        p.writeString(prepareStatus);
     }
 
     @Override
