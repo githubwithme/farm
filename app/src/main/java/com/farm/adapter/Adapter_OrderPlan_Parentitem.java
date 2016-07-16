@@ -58,9 +58,16 @@ public class Adapter_OrderPlan_Parentitem extends BaseAdapter
         if (list != null && list.size() > 0)
         {
             orderPlan = list.get(position);
-            view.tv_parkname.setText(orderPlan.getParkname()+"：");
+            view.tv_parkname.setText(orderPlan.getParkname().replace(";","")+"：");
             view.tv_ordernumber.setText(orderPlan.getOrderNumber() + "单，");
-            view.tv_carnumber.setText(orderPlan.getCarNumber() + "车；");
+            if (orderPlan.getCarNumber().equals(""))
+            {
+                view.tv_carnumber.setText("0车；");
+            }else
+            {
+                view.tv_carnumber.setText(orderPlan.getCarNumber() + "车；");
+            }
+
         }
 
         return convertView;

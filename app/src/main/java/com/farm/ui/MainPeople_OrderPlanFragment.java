@@ -27,7 +27,6 @@ import com.farm.bean.SellOrder_New;
 import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
-import com.farm.common.utils;
 import com.farm.widget.CustomArrayAdapter;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -47,7 +46,7 @@ import java.util.List;
  * Created by user on 2016/2/26.
  */
 @EFragment
-public class NCZ_OrderPlanFragment extends Fragment
+public class MainPeople_OrderPlanFragment extends Fragment
 {
     List<OrderPlanBean> listNewData = null;
     Adapter_OrderPlan adapter_orderPlan;
@@ -83,15 +82,14 @@ public class NCZ_OrderPlanFragment extends Fragment
         getchanpin();//产品
         getpurchaser();//采购商
         getlistdata();//园区
-//        getNewSaleList_test();
-        getOrderPlan();
+        getNewSaleList_test();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_orderplanfragment_new, container, false);
+        View rootView = inflater.inflate(R.layout.mainpeople_orderplanfragment, container, false);
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
         return rootView;
@@ -123,17 +121,12 @@ public class NCZ_OrderPlanFragment extends Fragment
 
     }
 
-    private void getOrderPlan()
+    private void getBreakOffInfoOfContract()
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("parkid", "-1");
-        params.addQueryStringParameter("productname","-1");
-        params.addQueryStringParameter("buyer","-1");
-        params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("status", "0");
-        params.addQueryStringParameter("action", "NCZ_getOrderPlan");
+        params.addQueryStringParameter("action", "getContactsData");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -147,10 +140,11 @@ public class NCZ_OrderPlanFragment extends Fragment
                     listNewData = JSON.parseArray(result.getRows().toJSONString(), OrderPlanBean.class);
                     adapter_orderPlan = new Adapter_OrderPlan(getActivity(), listNewData, AppContext.BROADCAST_UPDATEAllORDER ,expandableListView);
                     expandableListView.setAdapter(adapter_orderPlan);
-//                    for (int i = 0; i < listNewData.size(); i++)
-//                    {
-//                        expandableListView.expandGroup(i);//展开
-//                    }
+
+                    for (int i = 0; i < listNewData.size(); i++)
+                    {
+                        expandableListView.expandGroup(i);//展开
+                    }
 
                 } else
                 {
@@ -337,7 +331,7 @@ public class NCZ_OrderPlanFragment extends Fragment
     //园区
     private void getlistdata()
     {
-        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(getActivity());
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
 //        params.addQueryStringParameter("parkId", "16");

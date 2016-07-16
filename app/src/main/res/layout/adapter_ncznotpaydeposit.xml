@@ -9,11 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dip"
-        android:layout_marginRight="15dip"
-        android:layout_marginTop="10dip"
-        android:background="@drawable/round_white"
-        android:minHeight="120dip"
+        android:layout_marginBottom="10dip"
+        android:background="@color/white"
         android:orientation="horizontal">
 
 
@@ -26,66 +23,67 @@
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="30dip"
+                android:layout_height="40dip"
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
-                android:layout_marginTop="5dip"
                 android:background="@color/white"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:id="@+id/fl_dynamic"
+                <LinearLayout
+                    android:id="@+id/ll_buyer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dip">
+                    android:orientation="horizontal">
 
-                    <View
-                        android:id="@+id/view_user"
-                        android:layout_width="15dip"
-                        android:layout_height="15dip"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/user"/>
-                    <LinearLayout
-                        android:id="@+id/ll_buyer"
+                    <RelativeLayout
+                        android:id="@+id/fl_dynamic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/view_user"
-                        android:orientation="horizontal">
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip">
+
+                        <View
+                            android:id="@+id/view_user"
+                            android:layout_width="15dip"
+                            android:layout_centerVertical="true"
+                            android:layout_height="15dip"
+                            android:background="@drawable/user"/>
 
                         <TextView
                             android:id="@+id/tv_buyer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
+                            android:layout_centerVertical="true"
                             android:layout_marginLeft="5dip"
+                            android:layout_toRightOf="@id/view_user"
                             android:gravity="center"
                             android:text="李总"
                             android:textColor="@color/bg_text"
                             android:textSize="16sp"/>
 
-                        <View
-                            android:layout_width="15dip"
-                            android:layout_height="15dip"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="5dip"
-                            android:background="@drawable/ic_next"/>
-                    </LinearLayout>
+                        <com.farm.widget.CircleImageView
+                            android:id="@+id/circleImageView"
+                            android:layout_width="8dip"
+                            android:layout_height="8dip"
+                            android:layout_alignParentLeft="true"
+                            android:layout_gravity="left|top"
+                            android:src="@color/red"
+                            android:visibility="gone"
+                            app:border_color="@color/red"
+                            app:border_width="0dp"/>
+
+                    </RelativeLayout>
 
 
-                    <com.farm.widget.CircleImageView
-                        android:id="@+id/circleImageView"
-                        android:layout_width="8dip"
-                        android:layout_height="8dip"
-                        android:layout_alignParentLeft="true"
-                        android:layout_gravity="left|top"
-                        android:src="@color/red"
-                        android:visibility="gone"
-                        app:border_color="@color/red"
-                        app:border_width="0dp"/>
-
-                </RelativeLayout>
+                    <View
+                        android:id="@+id/view_buyer_goto"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip"
+                        android:background="@drawable/ic_next"/>
+                </LinearLayout>
 
 
                 <TextView
@@ -196,7 +194,7 @@
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="30dip"
+                android:layout_height="40dip"
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="5dip">
@@ -226,7 +224,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:gravity="left"
-                        android:text="暂无"
+                        android:text="3车"
                         android:textColor="@color/gray"
                         android:textSize="14sp"/>
 
@@ -258,7 +256,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/tv_product_tip"
                     android:gravity="left"
-                    android:text="暂无"
+                    android:text="香蕉"
                     android:textColor="@color/gray"
                     android:textSize="14sp"/>
 
@@ -289,7 +287,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:gravity="left"
-                        android:text="暂无"
+                        android:text="李四"
                         android:textColor="@color/gray"
                         android:textSize="14sp"/>
 
@@ -302,37 +300,14 @@
                         android:background="@drawable/ic_next"/>
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_cancleorder1"
-                    android:layout_width="40dip"
-                    android:layout_height="20dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/round_red"
-                    android:text="取消"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
-                    android:visibility="gone"/>
 
-                <Button
-                    android:id="@+id/btn_editorder1"
-                    android:layout_width="60dip"
-                    android:layout_height="20dip"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="2dip"
-                    android:layout_toLeftOf="@+id/btn_cancleorder1"
-                    android:background="@drawable/round_red"
-                    android:text="调整时间"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
-                    android:visibility="gone"/>
             </RelativeLayout>
 
 
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dip"
+                android:layout_marginBottom="10dip"
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip">
 

@@ -48,11 +48,10 @@
                 android:gravity="center"
                 android:text="订单排班"
                 android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
+                android:textSize="13sp"/>
 
             <FrameLayout
-
-                android:id="@+id/fl_dynamic"
+                android:id="@+id/fl_schedule"
                 android:layout_width="13dip"
                 android:layout_height="13dip"
                 android:layout_alignParentRight="true"
@@ -70,7 +69,7 @@
                     app:border_width="0dp"/>
 
                 <TextView
-                    android:id="@+id/tv_dynamic_new"
+                    android:id="@+id/tv_schedule_tip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -95,10 +94,10 @@
                 android:gravity="center"
                 android:text="待审批"
                 android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
+                android:textSize="13sp"/>
 
             <FrameLayout
-                android:id="@+id/fl_dsp"
+                android:id="@+id/fl_pending"
                 android:layout_width="13dip"
                 android:layout_height="13dip"
                 android:layout_alignParentRight="true"
@@ -116,7 +115,7 @@
                     app:border_width="0dp"/>
 
                 <TextView
-                    android:id="@+id/tv_dsp"
+                    android:id="@+id/tv_pending_tip"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -134,18 +133,18 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/tv_notpay"
+                android:id="@+id/tv_notpaydeposit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="交易中"
+                android:text="待付定金"
                 android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
+                android:textSize="13sp"/>
 
             <FrameLayout
-                android:id="@+id/fl_jyz"
+                android:id="@+id/fl_notpaydeposit"
                 android:layout_width="13dip"
                 android:layout_height="13dip"
                 android:layout_alignParentRight="true"
@@ -163,7 +162,142 @@
                     app:border_width="0dp"/>
 
                 <TextView
-                    android:id="@+id/tv_jyz"
+                    android:id="@+id/tv_notpaydeposit_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+            </FrameLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_waitingForHarvest"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="待采收"
+                android:textColor="@color/bg_text"
+                android:textSize="13sp"/>
+
+            <FrameLayout
+                android:id="@+id/fl_waitingForHarvest"
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="3dip"
+                android:visibility="invisible"
+                >
+
+                <com.farm.widget.CircleImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@color/red"
+                    app:border_color="@color/red"
+                    app:border_width="0dp"/>
+
+                <TextView
+                    android:id="@+id/tv_waitingForHarvest_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+            </FrameLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_waitingForSettlement"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="待结算"
+                android:textColor="@color/bg_text"
+                android:textSize="13sp"/>
+
+            <FrameLayout
+                android:id="@+id/fl_waitingForSettlement"
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="3dip"
+                android:visibility="invisible"
+                >
+
+                <com.farm.widget.CircleImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@color/red"
+                    app:border_color="@color/red"
+                    app:border_width="0dp"/>
+
+                <TextView
+                    android:id="@+id/tv_waitingForSettlement_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+            </FrameLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_allorder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="全部订单"
+                android:textColor="@color/bg_text"
+                android:textSize="13sp"/>
+
+            <FrameLayout
+                android:id="@+id/fl_allorder"
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="3dip"
+                android:visibility="invisible"
+                >
+
+                <com.farm.widget.CircleImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@color/red"
+                    app:border_color="@color/red"
+                    app:border_width="0dp"/>
+
+                <TextView
+                    android:id="@+id/tv_allorder_tip"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -175,28 +309,8 @@
         </RelativeLayout>
 
 
-        <TextView
-            android:id="@+id/tv_dealing"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/tv_notpay"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="已完成"
-            android:textColor="@color/bg_text"
-            android:textSize="14sp"/>
 
-        <TextView
-            android:id="@+id/tv_allorder"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/tv_notpay"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="已取消"
-            android:textColor="@color/bg_text"
-            android:textSize="14sp"/>
+
     </LinearLayout>
 
 

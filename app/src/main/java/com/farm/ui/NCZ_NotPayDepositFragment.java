@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_DealingAdapter;
+import com.farm.adapter.NCZ_NotPayDepositAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
@@ -49,8 +49,9 @@ import java.util.List;
 
 @SuppressLint("NewApi")
 @EFragment
-public class NCZ_DealingOrderFragment extends Fragment
+public class NCZ_NotPayDepositFragment extends Fragment
 {
+
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
@@ -58,7 +59,7 @@ public class NCZ_DealingOrderFragment extends Fragment
     String cpname="";
     String cgsname="";
 //    private NCZ_OrderAdapter listAdapter;
-    private NCZ_DealingAdapter listAdapter;
+    private NCZ_NotPayDepositAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     private AppContext appContext;
@@ -102,16 +103,19 @@ public class NCZ_DealingOrderFragment extends Fragment
 //        getNewSaleList_test();
         setSpinner();
         getAllOrders();
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
+        View rootView = inflater.inflate(R.layout.ncz_notpaydepositfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEDEALINGORDER);
+//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENOTPAYORDER);
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
+
         return rootView;
     }
 
@@ -125,12 +129,14 @@ public class NCZ_DealingOrderFragment extends Fragment
         }
     };
 
+
     private void getNewSaleList_test()
     {
         listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
         if (listData != null)
         {
-            listAdapter = new NCZ_DealingAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEDEALINGORDER);
+//            listAdapter = new NCZ_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+            listAdapter = new NCZ_NotPayDepositAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -138,7 +144,7 @@ public class NCZ_DealingOrderFragment extends Fragment
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
                     commembertab commembertab = AppContext.getUserInfo(getActivity());
-                    AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
+                    AppContext.eventStatus(getActivity(), "8",  listData.get(position).getUuid(), commembertab.getId());
 //                    Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
                     Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
                     intent.putExtra("bean", listData.get(position));
@@ -174,12 +180,14 @@ public class NCZ_DealingOrderFragment extends Fragment
                         while (it.hasNext())
                         {
                             String value = it.next().getSelltype();
-                            if (!value.equals("已完成"))
+                            if (value.equals("已完成")||value.equals("待审批"))
                             {
                                 it.remove();
                             }
                         }
-                        listAdapter = new NCZ_DealingAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEDEALINGORDER);
+
+
+                        listAdapter = new NCZ_NotPayDepositAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
@@ -270,11 +278,10 @@ public class NCZ_DealingOrderFragment extends Fragment
     {
         super.onDestroyView();
     }
-
     //园区
     private void getlistdata()
     {
-        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(getActivity());
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
 //        params.addQueryStringParameter("parkId", "16");
@@ -544,7 +551,7 @@ public class NCZ_DealingOrderFragment extends Fragment
                         while (ita.hasNext())
                         {
                             String value = ita.next().getSelltype();
-                            if (!value.equals("已完成"))
+                            if (value.equals("已完成")||value.equals("待审批"))
                             {
                                 ita.remove();
                             }
@@ -600,7 +607,7 @@ public class NCZ_DealingOrderFragment extends Fragment
                             }
                         }
 
-                        listAdapter = new NCZ_DealingAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+                        listAdapter = new NCZ_NotPayDepositAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {

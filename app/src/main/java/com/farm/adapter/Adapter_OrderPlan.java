@@ -95,6 +95,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
         public TextView tv_preparestatus;
         public TextView tv_car;
         public TextView tv_orderstate;
+        public TextView tv_mainpeple;
         public TextView tv_product;
         public TextView tv_parkname;
         public Button btn_cancleorder;
@@ -128,6 +129,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_preparestatus = (TextView) convertView.findViewById(R.id.tv_preparestatus);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
+            listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
@@ -254,19 +256,36 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             }
 
             //数据添加
-            listItemView.tv_buyer.setText(sellOrder_new.getPurchaName());
+
+            if (sellOrder_new.getCarNumber().equals(""))
+            {
+                listItemView.tv_car.setText("0车");
+            }else
+            {
+                listItemView.tv_car.setText(sellOrder_new.getCarNumber()+"车");
+            }
+
+            listItemView.tv_buyer.setText(sellOrder_new.getBuyersName());
             listItemView.tv_orderstate.setText(sellOrder_new.getSelltype());
+            listItemView.tv_mainpeple.setText(sellOrder_new.getMainPeople());
             if (sellOrder_new.getSelltype().equals("已付定金"))
             {
                 listItemView.tv_orderstate.setTextColor(context.getResources().getColor(R.color.gray));
                 listItemView.tv_preparestatus.setTextColor(context.getResources().getColor(R.color.red));
-                listItemView.tv_preparestatus.setText(sellOrder_new.getPrepareStatus());
+                if (sellOrder_new.getStatus().equals("0"))
+                {
+                    listItemView.tv_preparestatus.setText("未就绪");
+                }else
+                {
+                    listItemView.tv_preparestatus.setText("已就绪");
+                }
+
             } else
             {
                 listItemView.tv_preparestatus.setVisibility(View.GONE);
             }
             listItemView.tv_product.setText(sellOrder_new.getProduct());
-            listItemView.tv_parkname.setText(sellOrder_new.getProducer());
+            listItemView.tv_parkname.setText(sellOrder_new.getParkname());
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -354,10 +373,29 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.adapter_orderplan_parent, null);
             TextView tv_ordernumber = (TextView) convertView.findViewById(R.id.tv_ordernumber);
             GridView gv = (GridView) convertView.findViewById(R.id.gv);
+            TextView tv_datenote = (TextView) convertView.findViewById(R.id.tv_datenote);
             TextView tv_carnumber = (TextView) convertView.findViewById(R.id.tv_carnumber);
+            TextView tv_notPayDepositNumber = (TextView) convertView.findViewById(R.id.tv_notPayDepositNumber);
+            TextView tv_paidDepositNumber = (TextView) convertView.findViewById(R.id.tv_paidDepositNumber);
+            TextView tv_notreadyNumber = (TextView) convertView.findViewById(R.id.tv_notreadyNumber);
+            TextView tv_readyNumber = (TextView) convertView.findViewById(R.id.tv_readyNumber);
             TextView tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 
-            tv_date.setText(listData.get(groupPosition).getDate());
+
+            String date=listData.get(groupPosition).getDate();
+            tv_date.setText(date);
+            if (date.equals(utils.getToday().toString()))
+            {
+                tv_datenote.setText("今天");
+            }else
+            {
+                tv_datenote.setText(utils.OffSetOfDate_OrderDate(utils.getToday(), date));
+            }
+
+            tv_notPayDepositNumber.setText(listData.get(groupPosition).getNotPayDepositNumber()+"单");
+            tv_paidDepositNumber.setText(listData.get(groupPosition).getPaidDepositNumber()+"单");
+            tv_notreadyNumber.setText(listData.get(groupPosition).getNotreadyNumber()+"单");
+            tv_readyNumber.setText(listData.get(groupPosition).getReadyNumber()+"单");
             tv_carnumber.setText("合计" + listData.get(groupPosition).getCarNumber() + "车");
             tv_ordernumber.setText("合计" + listData.get(groupPosition).getOrderNumber() + "单");
             Adapter_OrderPlan_Parentitem adapter_orderPlan_parentitem = new Adapter_OrderPlan_Parentitem(context, listData.get(groupPosition).getOrderPlanList());

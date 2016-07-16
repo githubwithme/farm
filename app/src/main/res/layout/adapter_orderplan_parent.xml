@@ -9,7 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_color"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dip"
@@ -34,6 +37,17 @@
                 android:text="hellow"
                 android:textColor="@color/bg_text"
                 android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/tv_datenote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_date"
+                android:layout_marginLeft="10dip"
+                android:gravity="center"
+                android:text="hellow"
+                android:textColor="@color/gray"
+                android:textSize="16sp"/>
 
 
             <View
@@ -54,7 +68,7 @@
                 android:layout_marginRight="10dip"
                 android:layout_toLeftOf="@+id/view_down"
                 android:gravity="center"
-                android:text="合计8车"
+                android:text="合计车"
                 android:textColor="@color/gray"
                 android:textSize="14sp"/>
 
@@ -66,7 +80,7 @@
                 android:layout_marginRight="10dip"
                 android:layout_toLeftOf="@+id/tv_carnumber"
                 android:gravity="center"
-                android:text="合计3单"
+                android:text="合计单"
                 android:textColor="@color/gray"
                 android:textSize="14sp"/>
         </RelativeLayout>
@@ -98,12 +112,13 @@
                     android:background="@color/gray"/>
 
                 <TextView
+                    android:id="@+id/tv_notPayDepositNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="25dip"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dip"
                     android:gravity="center"
-                    android:text="1单"
+                    android:text="暂无"
                     android:textColor="@color/red"
                     android:textSize="14sp"/>
 
@@ -131,12 +146,13 @@
                     android:background="@color/gray"/>
 
                 <TextView
+                    android:id="@+id/tv_paidDepositNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="25dip"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dip"
                     android:gravity="center"
-                    android:text="2单"
+                    android:text="暂无"
                     android:textColor="@color/red"
                     android:textSize="14sp"/>
 
@@ -159,11 +175,12 @@
                     android:textSize="14sp"/>
 
                 <TextView
+                    android:id="@+id/tv_readyNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="25dip"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="1单"
+                    android:text="暂无"
                     android:textColor="@color/red"
                     android:textSize="14sp"/>
 
@@ -177,11 +194,12 @@
                     android:textSize="14sp"/>
 
                 <TextView
+                    android:id="@+id/tv_notreadyNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="25dip"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="1单"
+                    android:text="暂无"
                     android:textColor="@color/red"
                     android:textSize="14sp"/>
 
@@ -215,39 +233,16 @@
                     android:focusableInTouchMode="false"
                     android:focusable="false"
                     android:clickable="false"
+                    android:layout_marginBottom="10dip"
                    android:numColumns="auto_fit"
                     android:layout_height="wrap_content"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
-                    android:visibility="gone"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dip"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="乐丰园区：1单,2车；双桥园区：1单；2车"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dip"
-                        android:layout_centerVertical="true"
-                        android:layout_marginBottom="10dip"
-                        android:gravity="center"
-                        android:text="华兴园区：1单,3车"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"/>
-                </LinearLayout>
             </LinearLayout>
 
 
         </LinearLayout>
+
     </LinearLayout>
 
 
