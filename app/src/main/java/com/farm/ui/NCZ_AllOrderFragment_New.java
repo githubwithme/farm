@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_NotpayAdapter;
+import com.farm.adapter.NCZ_AllOrderAdapter_New;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
@@ -49,9 +49,8 @@ import java.util.List;
 
 @SuppressLint("NewApi")
 @EFragment
-public class NCZ_NotPayFragment extends Fragment
+public class NCZ_AllOrderFragment_New extends Fragment
 {
-
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
@@ -59,7 +58,7 @@ public class NCZ_NotPayFragment extends Fragment
     String cpname = "";
     String cgsname = "";
     //    private NCZ_OrderAdapter listAdapter;
-    private NCZ_NotpayAdapter listAdapter;
+    private NCZ_AllOrderAdapter_New listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
     private AppContext appContext;
@@ -80,13 +79,17 @@ public class NCZ_NotPayFragment extends Fragment
     Spinner citySpinner;
     @ViewById
     Spinner countySpinner;
+    @ViewById
+    Spinner payStatusSpinner;
     ArrayAdapter<String> provinceAdapter = null;  //省级适配器
     ArrayAdapter<String> cityAdapter = null;    //地级适配器
     ArrayAdapter<String> countyAdapter = null;    //县级适配器
+    ArrayAdapter<String> payStatusAdapter = null;
     static int provincePosition = 3;
     private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
     private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
     private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
+    private String[] mPayStatusDatasMap = new String[]{"不限付款情况","待付定金","免付定金", "待付尾款","免付尾款"};
 
     @Override
     public void onResume()
@@ -110,7 +113,7 @@ public class NCZ_NotPayFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_notpayfragment, container, false);
+        View rootView = inflater.inflate(R.layout.ncz_allorderfragment_new, container, false);
         appContext = (AppContext) getActivity().getApplication();
 //        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENOTPAYORDER);
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
@@ -136,7 +139,7 @@ public class NCZ_NotPayFragment extends Fragment
         if (listData != null)
         {
 //            listAdapter = new NCZ_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
-            listAdapter = new NCZ_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+            listAdapter = new NCZ_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -187,7 +190,7 @@ public class NCZ_NotPayFragment extends Fragment
                         }
 
 
-                        listAdapter = new NCZ_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+                        listAdapter = new NCZ_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
@@ -223,26 +226,13 @@ public class NCZ_NotPayFragment extends Fragment
         });
     }
 
-    /*
-        * 设置下拉框
-        */
     private void setSpinner()
     {
         //绑定适配器和值
-        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
-        provinceSpinner.setAdapter(provinceAdapter);
-        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
-
-        cityAdapter = new CustomArrayAdapter(getActivity(), mCitisDatasMap);
-        citySpinner.setAdapter(cityAdapter);
-        citySpinner.setSelection(0, true);  //默认选中第0个
-
-        countyAdapter = new CustomArrayAdapter(getActivity(), mAreaDatasMap);
-        countySpinner.setAdapter(countyAdapter);
-        countySpinner.setSelection(0, true);
-
-        //省级下拉框监听
-        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        payStatusAdapter = new CustomArrayAdapter(getActivity(), mPayStatusDatasMap);
+        payStatusSpinner.setAdapter(payStatusAdapter);
+        payStatusSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第0个值
+        payStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             // 表示选项被改变的时候触发此方法，主要实现办法：动态改变地级适配器的绑定值
             @Override
@@ -258,21 +248,6 @@ public class NCZ_NotPayFragment extends Fragment
         });
 
 
-        //地级下拉监听
-        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3)
-            {
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0)
-            {
-
-            }
-        });
     }
 
     @Override
@@ -284,7 +259,7 @@ public class NCZ_NotPayFragment extends Fragment
     //园区
     private void getlistdata()
     {
-        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(getActivity());
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
 //        params.addQueryStringParameter("parkId", "16");
@@ -611,7 +586,7 @@ public class NCZ_NotPayFragment extends Fragment
                             }
                         }
 
-                        listAdapter = new NCZ_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+                        listAdapter = new NCZ_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {

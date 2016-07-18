@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * Created by hasee on 2016/6/29.
  */
-public class NCZ_NotPayDepositAdapter extends BaseAdapter
+public class NCZ_WaitForHarvestAdapter extends BaseAdapter
 {
     static String name = "";
     CustomDialog_CallTip custom_calltip;
@@ -70,7 +70,7 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
 
     }
 
-    public NCZ_NotPayDepositAdapter(Context context, List<SellOrder_New> data, String broadcast)
+    public NCZ_WaitForHarvestAdapter(Context context, List<SellOrder_New> data, String broadcast)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -103,7 +103,7 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.adapter_ncznotpaydeposit, null);
+            convertView = listContainer.inflate(R.layout.adapter_nczwaitforharvest, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);

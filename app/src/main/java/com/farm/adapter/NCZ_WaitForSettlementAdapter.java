@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * Created by hasee on 2016/6/29.
  */
-public class NCZ_NotPayDepositAdapter extends BaseAdapter
+public class NCZ_WaitForSettlementAdapter extends BaseAdapter
 {
     static String name = "";
     CustomDialog_CallTip custom_calltip;
@@ -63,6 +63,7 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
         public Button btn_cancleorder;
         public Button btn_preparework;
         public Button btn_editorder;
+        public Button btn_showSettlement;
         public CircleImageView circleImageView;
         public LinearLayout ll_car;
         public LinearLayout ll_mainpeople;
@@ -70,7 +71,7 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
 
     }
 
-    public NCZ_NotPayDepositAdapter(Context context, List<SellOrder_New> data, String broadcast)
+    public NCZ_WaitForSettlementAdapter(Context context, List<SellOrder_New> data, String broadcast)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -103,7 +104,7 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.adapter_ncznotpaydeposit, null);
+            convertView = listContainer.inflate(R.layout.adapter_nczwaitforsettlement, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
@@ -116,6 +117,7 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
+            listItemView.btn_showSettlement = (Button) convertView.findViewById(R.id.btn_showSettlement);
 //            listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
             listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
@@ -161,6 +163,18 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
 //            });
             //            listItemView.btn_preparework.setTag(R.id.tag_danwei,sellOrder);
             listItemView.btn_preparework.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
+                    Intent intent = new Intent(context, RecoveryDetail_.class);
+//                    intent.putExtra("zbstudio", sellOrder_new);
+                    context.startActivity(intent);
+                }
+            });
+             //            listItemView.btn_showSettlement.setTag(R.id.tag_danwei,sellOrder);
+            listItemView.btn_showSettlement.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)

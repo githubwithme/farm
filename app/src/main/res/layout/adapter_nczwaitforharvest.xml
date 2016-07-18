@@ -85,19 +85,26 @@
                         android:background="@drawable/ic_next"/>
                 </LinearLayout>
 
-
-                <TextView
-                    android:id="@+id/tv_orderstate"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginRight="5dip"
-                    android:gravity="center"
-                    android:minWidth="60dip"
-                    android:text="待付定金10000元"
-                    android:textColor="@color/red"
-                    android:textSize="14sp"/>
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/tv_prepareworkStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="未准备就绪"
+                        android:textColor="@color/red"
+                        android:textSize="14sp"/>
+
+
+                </LinearLayout>
 
 
             </RelativeLayout>
@@ -278,10 +285,70 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="40dip"
+                android:background="@color/defaultbackground_light">
+
+
+                <TextView
+                    android:id="@+id/tv_carstatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dip"
+                    android:gravity="left"
+                    android:text="车辆未就绪;"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_TGstatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dip"
+                    android:layout_toRightOf="@+id/tv_carstatus"
+                    android:gravity="left"
+                    android:text="挑工未就绪;"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_BZGstatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dip"
+                    android:layout_toRightOf="@+id/tv_TGstatus"
+                    android:gravity="left"
+                    android:text="包装工已就绪"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+
+            </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="30dip">
 
+                <View
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
+                    android:background="@drawable/icon_ok"/>
+
+                <TextView
+                    android:id="@+id/tv_depositStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="免付定金"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
 
                 <View
                     android:layout_width="17dip"
@@ -367,8 +434,7 @@
                     android:minWidth="60dip"
                     android:text="准备工作"
                     android:textColor="@color/gray"
-                    android:textSize="12sp"
-                    android:visibility="gone"/>
+                    android:textSize="12sp"/>
 
                 <Button
                     android:id="@+id/btn_cancleorder"

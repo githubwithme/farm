@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * Created by hasee on 2016/6/29.
  */
-public class NCZ_NotPayDepositAdapter extends BaseAdapter
+public class NCZ_AllOrderAdapter_New extends BaseAdapter
 {
     static String name = "";
     CustomDialog_CallTip custom_calltip;
@@ -70,7 +70,7 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
 
     }
 
-    public NCZ_NotPayDepositAdapter(Context context, List<SellOrder_New> data, String broadcast)
+    public NCZ_AllOrderAdapter_New(Context context, List<SellOrder_New> data, String broadcast)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -103,7 +103,7 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.adapter_ncznotpaydeposit, null);
+            convertView = listContainer.inflate(R.layout.adapter_nczallorder_new, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
@@ -214,19 +214,19 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
 //            {
 //                listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
 //            }
-//            if (sellOrder.getSelltype().equals("待付定金"))
-//            {
-//                listItemView.tv_orderstate.setText("等待买家付定金");
-//            } else if (sellOrder.getSelltype().equals("已付定金"))
-//            {
-//                listItemView.tv_orderstate.setText("已付定金");
-//            } else if (sellOrder.getSelltype().equals("待付尾款"))
-//            {
-//                listItemView.tv_orderstate.setText("等待卖家付尾款");
-//            } else if (sellOrder.getSelltype().equals("审核结算单"))
-//            {
-//                listItemView.tv_orderstate.setText("审批结算");
-//            }
+            if (sellOrder.getSelltype().equals("待付定金"))
+            {
+                listItemView.tv_orderstate.setText("等待买家付定金");
+            } else if (sellOrder.getSelltype().equals("已付定金"))
+            {
+                listItemView.tv_orderstate.setText("已付定金");
+            } else if (sellOrder.getSelltype().equals("待付尾款"))
+            {
+                listItemView.tv_orderstate.setText("等待卖家付尾款");
+            } else if (sellOrder.getSelltype().equals("审核结算单"))
+            {
+                listItemView.tv_orderstate.setText("审批结算");
+            }
 
 /*            if (sellOrder.getDeposit().equals("0"))
             {

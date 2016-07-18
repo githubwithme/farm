@@ -40,12 +40,15 @@ import java.util.List;
 public class NCZ_OrderManager extends Activity
 {
 //    NCZ_AllOrderFragment ncz_allOrderFragment;//删除
-//    NCZ_NotPayFragment ncz_notPayFragment;  //交易中
+    NCZ_NotPayFragment ncz_notPayFragment;  //交易中
 //    NCZ_DealingOrderFragment ncz_dealingOrderFragment;//完成
 //    NCZ_ScheduleOrderFragment ncz_scheduleOrderFragment;//排单
-    NCZ_OrderPlanFragment ncz_orderPlanFragment;
+    NCZ_OrderPlanFragment ncz_orderPlanFragment;//订单排班
     NCZ_NeedApproveOrderFragment ncz_needApproveOrderFragment;  //审批
-    NCZ_NotPayDepositFragment ncz_notPayDepositFragment;
+    NCZ_NotPayDepositFragment ncz_notPayDepositFragment;//待付定金
+    NCZ_WaitForHarvestFragment ncz_waitForHarvestFragment;//待采收
+    NCZ_WaitForSettlementFragment ncz_waitForSettlementFragment;//待结算
+    NCZ_AllOrderFragment_New ncz_allOrderFragment_new;//全部订单
     Fragment mContent = new Fragment();
     @ViewById
     Button btn_back;
@@ -117,19 +120,19 @@ public class NCZ_OrderManager extends Activity
     void tv_waitingForHarvest()
     {
         setBackground(3);
-        switchContent(mContent, ncz_notPayDepositFragment);
+        switchContent(mContent, ncz_waitForHarvestFragment);
     }
     @Click
     void tv_waitingForSettlement()
     {
         setBackground(4);
-        switchContent(mContent, ncz_notPayDepositFragment);
+        switchContent(mContent, ncz_waitForSettlementFragment);
     }
     @Click
     void tv_allorder()
     {
         setBackground(5);
-        switchContent(mContent, ncz_notPayDepositFragment);
+        switchContent(mContent, ncz_allOrderFragment_new);
 
     }
 
@@ -155,6 +158,9 @@ public class NCZ_OrderManager extends Activity
 //        ncz_notPayFragment = new NCZ_NotPayFragment_();
 //        ncz_dealingOrderFragment = new NCZ_DealingOrderFragment_();
         ncz_needApproveOrderFragment = new NCZ_NeedApproveOrderFragment_();
+        ncz_waitForHarvestFragment = new NCZ_WaitForHarvestFragment_();
+        ncz_waitForSettlementFragment = new NCZ_WaitForSettlementFragment_();
+        ncz_allOrderFragment_new = new NCZ_AllOrderFragment_New_();
     }
 
     public void switchContent(Fragment from, Fragment to)
