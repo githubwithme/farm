@@ -20,14 +20,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_NeedAdapter;
 import com.farm.adapter.NCZ_NotpayAdapter;
-import com.farm.adapter.NCZ_OrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
 import com.farm.bean.Purchaser;
-import com.farm.bean.ReportedBean;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.Wz_Storehouse;
@@ -58,10 +55,10 @@ public class NCZ_NotPayFragment extends Fragment
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
-    String parkname="";
-    String cpname="";
-    String cgsname="";
-//    private NCZ_OrderAdapter listAdapter;
+    String parkname = "";
+    String cpname = "";
+    String cgsname = "";
+    //    private NCZ_OrderAdapter listAdapter;
     private NCZ_NotpayAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
@@ -87,9 +84,9 @@ public class NCZ_NotPayFragment extends Fragment
     ArrayAdapter<String> cityAdapter = null;    //地级适配器
     ArrayAdapter<String> countyAdapter = null;    //县级适配器
     static int provincePosition = 3;
-    private String[] mProvinceDatas=new String[]{"全部分场","乐丰分场","双桥分场"};
-    private String[] mCitisDatasMap=new String[]{"全部产品","香蕉","柑橘"};
-    private String[] mAreaDatasMap=new String[]{"不限采购商","李四","张三"};
+    private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
+    private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
+    private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
 
     @Override
     public void onResume()
@@ -113,7 +110,7 @@ public class NCZ_NotPayFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_allorderfragment, container, false);
+        View rootView = inflater.inflate(R.layout.ncz_notpayfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
 //        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENOTPAYORDER);
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
@@ -147,7 +144,7 @@ public class NCZ_NotPayFragment extends Fragment
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                 {
                     commembertab commembertab = AppContext.getUserInfo(getActivity());
-                    AppContext.eventStatus(getActivity(), "8",  listData.get(position).getUuid(), commembertab.getId());
+                    AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
 //                    Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
                     Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
                     intent.putExtra("bean", listData.get(position));
@@ -183,7 +180,7 @@ public class NCZ_NotPayFragment extends Fragment
                         while (it.hasNext())
                         {
                             String value = it.next().getSelltype();
-                            if (value.equals("已完成")||value.equals("待审批"))
+                            if (value.equals("已完成") || value.equals("待审批"))
                             {
                                 it.remove();
                             }
@@ -225,6 +222,7 @@ public class NCZ_NotPayFragment extends Fragment
             }
         });
     }
+
     /*
         * 设置下拉框
         */
@@ -276,11 +274,13 @@ public class NCZ_NotPayFragment extends Fragment
             }
         });
     }
+
     @Override
     public void onDestroyView()
     {
         super.onDestroyView();
     }
+
     //园区
     private void getlistdata()
     {
@@ -361,6 +361,7 @@ public class NCZ_NotPayFragment extends Fragment
         });
 
     }
+
     //产品
     private void getchanpin()
     {
@@ -554,7 +555,7 @@ public class NCZ_NotPayFragment extends Fragment
                         while (ita.hasNext())
                         {
                             String value = ita.next().getSelltype();
-                            if (value.equals("已完成")||value.equals("待审批"))
+                            if (value.equals("已完成") || value.equals("待审批"))
                             {
                                 ita.remove();
                             }

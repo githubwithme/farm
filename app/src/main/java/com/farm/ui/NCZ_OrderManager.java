@@ -39,37 +39,56 @@ import java.util.List;
 @EActivity(R.layout.ncz_ordermanager)
 public class NCZ_OrderManager extends Activity
 {
-    NCZ_AllOrderFragment ncz_allOrderFragment;//删除
+//    NCZ_AllOrderFragment ncz_allOrderFragment;//删除
     NCZ_NotPayFragment ncz_notPayFragment;  //交易中
-    NCZ_DealingOrderFragment ncz_dealingOrderFragment;//完成
-    NCZ_ScheduleOrderFragment ncz_scheduleOrderFragment;//排单
+//    NCZ_DealingOrderFragment ncz_dealingOrderFragment;//完成
+//    NCZ_ScheduleOrderFragment ncz_scheduleOrderFragment;//排单
+    NCZ_OrderPlanFragment ncz_orderPlanFragment;//订单排班
     NCZ_NeedApproveOrderFragment ncz_needApproveOrderFragment;  //审批
+    NCZ_NotPayDepositFragment ncz_notPayDepositFragment;//待付定金
+    NCZ_WaitForHarvestFragment ncz_waitForHarvestFragment;//待采收
+    NCZ_WaitForSettlementFragment ncz_waitForSettlementFragment;//待结算
+    NCZ_AllOrderFragment_New ncz_allOrderFragment_new;//全部订单
     Fragment mContent = new Fragment();
     @ViewById
     Button btn_back;
     @ViewById
-    TextView tv_allorder;
+    TextView tv_allorder;//全部订单
     @ViewById
-    TextView tv_pending;
+    TextView tv_pending;//待审核
     @ViewById
-    TextView tv_schedule;
+    TextView tv_schedule;//订单排班
     @ViewById
-    TextView tv_dealing;
+    TextView tv_notpaydeposit;//待付定金
     @ViewById
-    TextView tv_notpay;
+    TextView tv_waitingForHarvest; //待采收
+    @ViewById
+    TextView tv_waitingForSettlement;//待结算
 
     @ViewById
-    FrameLayout fl_dynamic;
+    FrameLayout fl_schedule;
     @ViewById
-    TextView tv_dynamic_new;
+    TextView tv_schedule_tip;
     @ViewById
-    FrameLayout fl_dsp;
+    FrameLayout fl_pending;
     @ViewById
-    TextView tv_dsp;
+    TextView tv_pending_tip;
     @ViewById
-    FrameLayout fl_jyz;
+    FrameLayout fl_notpaydeposit;
     @ViewById
-    TextView tv_jyz;
+    TextView tv_notpaydeposit_tip;
+    @ViewById
+    FrameLayout fl_waitingForHarvest;
+    @ViewById
+    TextView tv_waitingForHarvest_tip;
+    @ViewById
+    FrameLayout fl_waitingForSettlement;
+    @ViewById
+    TextView tv_waitingForSettlement_tip;
+    @ViewById
+    FrameLayout fl_allorder;
+    @ViewById
+    TextView tv_allorder_tip;
 
     @Click
     void btn_back()
@@ -81,31 +100,8 @@ public class NCZ_OrderManager extends Activity
     void tv_schedule()
     {
         setBackground(0);
-        switchContent(mContent, ncz_scheduleOrderFragment);
+        switchContent(mContent, ncz_orderPlanFragment);
     }
-
-    @Click
-    void tv_allorder()
-    {
-        setBackground(4);
-        switchContent(mContent, ncz_allOrderFragment);
-
-    }
-
-    @Click
-    void tv_dealing()
-    {
-        setBackground(3);
-        switchContent(mContent, ncz_dealingOrderFragment);
-    }
-
-    @Click
-    void tv_notpay()
-    {
-        setBackground(2);
-        switchContent(mContent, ncz_notPayFragment);
-    }
-
     @Click
     void tv_pending()
     {
@@ -113,13 +109,42 @@ public class NCZ_OrderManager extends Activity
         switchContent(mContent, ncz_needApproveOrderFragment);
     }
 
+    @Click
+    void tv_notpaydeposit()
+    {
+        setBackground(2);
+        switchContent(mContent, ncz_notPayDepositFragment);
+    }
+
+    @Click
+    void tv_waitingForHarvest()
+    {
+        setBackground(3);
+        switchContent(mContent, ncz_waitForHarvestFragment);
+    }
+    @Click
+    void tv_waitingForSettlement()
+    {
+        setBackground(4);
+        switchContent(mContent, ncz_waitForSettlementFragment);
+    }
+    @Click
+    void tv_allorder()
+    {
+        setBackground(5);
+        switchContent(mContent, ncz_allOrderFragment_new);
+
+    }
+
+
+
     @AfterViews
     void afterOncreate()
     {
         getNeedOrders();
         getAllOrders();
         setBackground(0);
-        switchContent(mContent, ncz_scheduleOrderFragment);
+        switchContent(mContent, ncz_orderPlanFragment);
     }
 
     @Override
@@ -127,11 +152,15 @@ public class NCZ_OrderManager extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        ncz_scheduleOrderFragment = new NCZ_ScheduleOrderFragment_();
-        ncz_allOrderFragment = new NCZ_AllOrderFragment_();
-        ncz_notPayFragment = new NCZ_NotPayFragment_();
-        ncz_dealingOrderFragment = new NCZ_DealingOrderFragment_();
+        ncz_orderPlanFragment = new NCZ_OrderPlanFragment_();
+        ncz_notPayDepositFragment = new NCZ_NotPayDepositFragment_();
+//        ncz_allOrderFragment = new NCZ_AllOrderFragment_();
+//        ncz_notPayFragment = new NCZ_NotPayFragment_();
+//        ncz_dealingOrderFragment = new NCZ_DealingOrderFragment_();
         ncz_needApproveOrderFragment = new NCZ_NeedApproveOrderFragment_();
+        ncz_waitForHarvestFragment = new NCZ_WaitForHarvestFragment_();
+        ncz_waitForSettlementFragment = new NCZ_WaitForSettlementFragment_();
+        ncz_allOrderFragment_new = new NCZ_AllOrderFragment_New_();
     }
 
     public void switchContent(Fragment from, Fragment to)
@@ -152,23 +181,27 @@ public class NCZ_OrderManager extends Activity
 
     private void setBackground(int pos)
     {
-        tv_allorder.setSelected(false);
-        tv_notpay.setSelected(false);
-        tv_dealing.setSelected(false);
         tv_schedule.setSelected(false);
         tv_pending.setSelected(false);
+        tv_notpaydeposit.setSelected(false);
+        tv_waitingForHarvest.setSelected(false);
+        tv_waitingForSettlement.setSelected(false);
+        tv_allorder.setSelected(false);
 
-        tv_allorder.setBackgroundResource(R.color.white);
-        tv_notpay.setBackgroundResource(R.color.white);
-        tv_dealing.setBackgroundResource(R.color.white);
+
         tv_schedule.setBackgroundResource(R.color.white);
         tv_pending.setBackgroundResource(R.color.white);
+        tv_notpaydeposit.setBackgroundResource(R.color.white);
+        tv_waitingForHarvest.setBackgroundResource(R.color.white);
+        tv_waitingForSettlement.setBackgroundResource(R.color.white);
+        tv_allorder.setBackgroundResource(R.color.white);
 
-        tv_allorder.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_notpay.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_dealing.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_schedule.setTextColor(getResources().getColor(R.color.menu_textcolor));
         tv_pending.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_notpaydeposit.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_waitingForHarvest.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_waitingForSettlement.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_allorder.setTextColor(getResources().getColor(R.color.menu_textcolor));
         switch (pos)
         {
             case 0:
@@ -182,16 +215,21 @@ public class NCZ_OrderManager extends Activity
                 tv_pending.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 2:
-                tv_notpay.setSelected(false);
-                tv_notpay.setTextColor(getResources().getColor(R.color.red));
-                tv_notpay.setBackgroundResource(R.drawable.red_bottom);
+                tv_notpaydeposit.setSelected(false);
+                tv_notpaydeposit.setTextColor(getResources().getColor(R.color.red));
+                tv_notpaydeposit.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 3:
-                tv_dealing.setSelected(false);
-                tv_dealing.setTextColor(getResources().getColor(R.color.red));
-                tv_dealing.setBackgroundResource(R.drawable.red_bottom);
+                tv_waitingForHarvest.setSelected(false);
+                tv_waitingForHarvest.setTextColor(getResources().getColor(R.color.red));
+                tv_waitingForHarvest.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 4:
+                tv_waitingForSettlement.setSelected(false);
+                tv_waitingForSettlement.setTextColor(getResources().getColor(R.color.red));
+                tv_waitingForSettlement.setBackgroundResource(R.drawable.red_bottom);
+                break;
+            case 5:
                 tv_allorder.setSelected(false);
                 tv_allorder.setTextColor(getResources().getColor(R.color.red));
                 tv_allorder.setBackgroundResource(R.drawable.red_bottom);
@@ -247,10 +285,10 @@ public class NCZ_OrderManager extends Activity
 
                         if (b > 0)
                         {
-                            fl_dynamic.setVisibility(View.VISIBLE);
-                            tv_dynamic_new.setText(b + "");
-                            fl_jyz.setVisibility(View.VISIBLE);
-                            tv_jyz.setText(b + "");
+                            fl_schedule.setVisibility(View.VISIBLE);
+                            tv_schedule_tip.setText(b + "");
+//                            fl_.setVisibility(View.VISIBLE);
+//                            tv_jyz.setText(b + "");
                         }
 
                     } else
@@ -312,8 +350,8 @@ public class NCZ_OrderManager extends Activity
                         }
                         if (b > 0)
                         {
-                            fl_dsp.setVisibility(View.VISIBLE);
-                            tv_dsp.setText(b + "");
+                            fl_waitingForSettlement.setVisibility(View.VISIBLE);
+                            tv_waitingForSettlement_tip.setText(b + "");
                         }
 
                     } else

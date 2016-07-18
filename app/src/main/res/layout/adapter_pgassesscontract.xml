@@ -94,6 +94,7 @@
                 android:id="@+id/iv"
                 android:layout_width="80dip"
                 android:layout_height="80dip"
+                android:scaleType="matrix"
                 android:background="@drawable/noimg"/>
 
             <LinearLayout

@@ -102,6 +102,72 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String totalFee;//总合计金额
     public String personNote;//搬运说明
     public String actualMoney;//实际金额
+    public String prepareStatus;//准备状态
+    public String product;//产品名称
+    public String carNumber;//车辆数
+    public String mainPeople;//负责人名称
+    public String mainPeoplePhone;//负责人电话
+    public String parkname;//采收园区名称
+
+    public String getParkname()
+    {
+        return parkname;
+    }
+
+    public void setParkname(String parkname)
+    {
+        this.parkname = parkname;
+    }
+
+    public String getMainPeople()
+    {
+        return mainPeople;
+    }
+
+    public void setMainPeople(String mainPeople)
+    {
+        this.mainPeople = mainPeople;
+    }
+
+    public String getMainPeoplePhone()
+    {
+        return mainPeoplePhone;
+    }
+
+    public void setMainPeoplePhone(String mainPeoplePhone)
+    {
+        this.mainPeoplePhone = mainPeoplePhone;
+    }
+
+    public String getCarNumber()
+    {
+        return carNumber;
+    }
+
+    public void setCarNumber(String carNumber)
+    {
+        this.carNumber = carNumber;
+    }
+
+    public String getProduct()
+    {
+        return product;
+    }
+
+    public void setProduct(String product)
+    {
+        this.product = product;
+    }
+
+    public String getPrepareStatus()
+    {
+        return prepareStatus;
+    }
+
+    public void setPrepareStatus(String prepareStatus)
+    {
+        this.prepareStatus = prepareStatus;
+    }
 
 
     public List<SellOrderDetail_New> getDetailSecLists()
@@ -961,6 +1027,12 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setTotalFee(source.readString());
             p.setPersonNote(source.readString());
             p.setActualMoney(source.readString());
+            p.setPrepareStatus(source.readString());
+            p.setProduct(source.readString());
+            p.setCarNumber(source.readString());
+            p.setMainPeople(source.readString());
+            p.setMainPeoplePhone(source.readString());
+            p.setParkname(source.readString());
             return p;
 
 
@@ -1053,6 +1125,12 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(totalFee);
         p.writeString(personNote);
         p.writeString(actualMoney);
+        p.writeString(prepareStatus);
+        p.writeString(product);
+        p.writeString(carNumber);
+        p.writeString(mainPeople);
+        p.writeString(mainPeoplePhone);
+        p.writeString(parkname);
     }
 
     @Override

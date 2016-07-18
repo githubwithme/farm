@@ -10,7 +10,6 @@ import com.farm.bean.SellOrder_New;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-import org.w3c.dom.Text;
 
 /**
  * Created by ${hmj} on 2016/6/27.
@@ -31,7 +30,7 @@ public class RecoveryDetail extends Activity
     @AfterViews
     void afterOncreate()
     {
-        showdata();
+//        showdata();
     }
 
     private void showdata()
@@ -59,6 +58,6 @@ public class RecoveryDetail extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        sellOrder_new = getIntent().getParcelableExtra("zbstudio");
+//        sellOrder_new = getIntent().getParcelableExtra("zbstudio");
     }
 }

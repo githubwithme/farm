@@ -49,6 +49,13 @@ public class PG_CommandActivity extends FragmentActivity
     TextView tv_zz;
 
     @Click
+    void btn_addcommand()
+    {
+        Intent intent = new Intent(PG_CommandActivity.this, NCZ_AddNewCommand_.class);
+        startActivity(intent);
+    }
+
+    @Click
     void btn_add()
     {
         Intent intent = new Intent(PG_CommandActivity.this, AddPlantObservation_.class);

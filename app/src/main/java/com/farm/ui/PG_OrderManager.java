@@ -3,18 +3,14 @@ package com.farm.ui;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.PG_NeedAdapter;
-import com.farm.adapter.PG_scheduleOrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
@@ -45,7 +41,8 @@ public class PG_OrderManager extends Activity
 {
     PG_DealingOrder pg_dealingOrder;
     PG_NeedApproveOrderFragment pg_needApproveOrderFragment;
-    PG_ScheduleOrderFragment pg_scheduleOrderFragment;//排单
+//    PG_ScheduleOrderFragment pg_scheduleOrderFragment;//排单
+    MainPeople_OrderPlanFragment mainPeople_orderPlanFragment;
     PG_NotPayFragment pg_notPayFragment;//交易中
     PG_AllOrderFragment pg_allOrderFragment;
     Fragment mContent = new Fragment();
@@ -87,7 +84,7 @@ public class PG_OrderManager extends Activity
     void tv_schedule()
     {
         setBackground(0);
-        switchContent(mContent, pg_scheduleOrderFragment);
+        switchContent(mContent, mainPeople_orderPlanFragment);
     }
 
     @Click
@@ -124,7 +121,7 @@ public class PG_OrderManager extends Activity
         getAllOrders();
         getNeedOrders();
         setBackground(0);
-        switchContent(mContent, pg_scheduleOrderFragment);
+        switchContent(mContent, mainPeople_orderPlanFragment);
     }
 
     @Override
@@ -132,7 +129,8 @@ public class PG_OrderManager extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        pg_scheduleOrderFragment=new PG_ScheduleOrderFragment_();
+//        pg_scheduleOrderFragment=new PG_ScheduleOrderFragment_();
+        mainPeople_orderPlanFragment=new MainPeople_OrderPlanFragment_();
         pg_notPayFragment=new PG_NotPayFragment_();
         pg_needApproveOrderFragment=new PG_NeedApproveOrderFragment_();
         pg_dealingOrder=new PG_DealingOrder_();

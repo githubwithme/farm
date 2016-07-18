@@ -151,7 +151,75 @@ public class utils
         }
         return dt;
     }
+    public static String OffSetOfDate_OrderDate(String today, String date)
+    {
+        String dt = new String();
+        if (today.equals("") || today.equals("null") || date.equals("") || date.equals("null"))
+        {
+            return "";
+        }
+        try
+        {
+            SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date_today = dfs.parse(today);
+            java.util.Date date_date = dfs.parse(date);
 
+            long between = (  date_date.getTime()-date_today.getTime()) / 1000;// 除以1000是为了转换成秒
+            long day1 = between / (24 * 3600);
+
+            if (day1 <0)
+            {
+                dt = "已过期，请重设时间" ;
+//                day1=Math.abs(day1);
+//                if (day1 <=1 && day1>0)
+//                {
+//                    dt = "昨天" ;
+//                } else if (day1 == 2)
+//                {
+//                    dt = "前天";
+//                } else if (day1 == 3)
+//                {
+//                    dt = "3天前";
+//                } else if (day1 >= 7  && day1 < 14   )
+//                {
+//                    dt = "一周前";
+//                } else if  (day1 >= 14 && day1 <30   )
+//                {
+//                    dt = "一个月前";
+//                }else
+//                {
+//                    dt = "4天前";
+//                }
+            }else
+            {
+                if (day1 <=1 && day1>0)
+                {
+                    dt = "明天";
+                } else if (day1 == 2)
+                {
+                    dt = "后天";
+                } else if (day1 == 3)
+                {
+                    dt = "3天后";
+                } else if (day1 >= 7  && day1 < 14   )
+                {
+                    dt = "一周后";
+                } else if  (day1 >= 14 && day1 <30   )
+                {
+                    dt = "一个月后";
+                }else
+                {
+                    dt = "4天后";
+                }
+
+            }
+            return dt;
+
+        } catch (Exception e)
+        {
+        }
+        return dt;
+    }
     public static String OffSetOfDate(String today, String date)
     {
         String dt = new String();
@@ -178,6 +246,15 @@ public class utils
                 } else if (day1 == 3)
                 {
                     dt = "3天前";
+                } else if (day1 == 4)
+                {
+                    dt = "4天前";
+                } else if (day1 == 5)
+                {
+                    dt = "5天前";
+                } else if (day1 == 6)
+                {
+                    dt = "6天前";
                 } else if (day1 >= 7)
                 {
                     dt = "一周前";

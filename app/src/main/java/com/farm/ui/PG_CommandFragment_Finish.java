@@ -557,17 +557,18 @@ public class PG_CommandFragment_Finish extends Fragment implements OnClickListen
             public ImageView iv_record;
             public ProgressBar pb_jd;
             public TextView tv_jobtype;
-            public TextView tv_importance;
             public TextView tv_jd;
             public TextView tv_time;
             public TextView tv_type;
             public TextView tv_zf;
-            public Button btn_sure;
             public FrameLayout fl_new;
             public LinearLayout ll_main;
             public FrameLayout fl_new_item;
             public CircleImageView circle_img;
             public TextView tv_new;
+            public Button btn_assess;
+            public Button btn_progress;
+            public Button btn_goodsused;
         }
 
         public ListViewPGCommandAdapter(Context context, List<commandtab> data)
@@ -611,16 +612,68 @@ public class PG_CommandFragment_Finish extends Fragment implements OnClickListen
                 listItemView.tv_new = (TextView) convertView.findViewById(R.id.tv_new);
                 listItemView.iv_record = (ImageView) convertView.findViewById(R.id.iv_record);
                 listItemView.pb_jd = (ProgressBar) convertView.findViewById(R.id.pb_jd);
-                listItemView.btn_sure = (Button) convertView.findViewById(R.id.btn_sure);
                 listItemView.tv_jobtype = (TextView) convertView.findViewById(R.id.tv_jobtype);
-                listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
                 listItemView.tv_jd = (TextView) convertView.findViewById(R.id.tv_jd);
                 listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
                 listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
                 listItemView.tv_zf = (TextView) convertView.findViewById(R.id.tv_zf);
                 listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
-                listItemView.btn_sure.setId(position);
                 listItemView.iv_record.setId(position);
+                listItemView.btn_assess = (Button) convertView.findViewById(R.id.btn_assess);
+                listItemView.btn_progress = (Button) convertView.findViewById(R.id.btn_progress);
+                listItemView.btn_goodsused = (Button) convertView.findViewById(R.id.btn_goodsused);
+                listItemView.iv_record.setId(position);
+                listItemView.btn_assess.setId(position);
+                listItemView.btn_progress.setId(position);
+                listItemView.btn_goodsused.setId(position);
+
+                listItemView.btn_goodsused.setOnClickListener(new OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        commandtab command = listItems.get(v.getId());
+                        commembertab commembertab = AppContext.getUserInfo(context);
+                        AppContext.updateStatus(context, "1", command.getId(), "2", commembertab.getId());
+
+                        Intent intent = new Intent(context, PG_GoodsUsed_.class);
+                        intent.putExtra("type", "2");
+                        intent.putExtra("workid", listItems.get(v.getId()).getId());
+                        String aaa = listItems.get(v.getId()).getStatusid();
+                        context.startActivity(intent);
+                    }
+                });
+                listItemView.btn_progress.setOnClickListener(new OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        commandtab command = listItems.get(v.getId());
+                        commembertab commembertab = AppContext.getUserInfo(context);
+                        AppContext.updateStatus(context, "1", command.getId(), "2", commembertab.getId());
+                        Intent intent = new Intent(context, PG_CommandProgress_.class);
+                        intent.putExtra("type", "2");
+                        intent.putExtra("workid", listItems.get(v.getId()).getId());
+                        String aaa = listItems.get(v.getId()).getStatusid();
+                        context.startActivity(intent);
+                    }
+                });
+                listItemView.btn_assess.setOnClickListener(new OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        commandtab command = listItems.get(v.getId());
+                        commembertab commembertab = AppContext.getUserInfo(context);
+                        AppContext.updateStatus(context, "1", command.getId(), "2", commembertab.getId());
+
+                        Intent intent = new Intent(context, PG_AssessContract_.class);
+                        intent.putExtra("type", "2");
+                        intent.putExtra("workid", listItems.get(v.getId()).getId());
+                        String aaa = listItems.get(v.getId()).getStatusid();
+                        context.startActivity(intent);
+                    }
+                });
                 listItemView.iv_record.setOnClickListener(new OnClickListener()
                 {
                     @Override
@@ -637,14 +690,14 @@ public class PG_CommandFragment_Finish extends Fragment implements OnClickListen
                         context.startActivity(intent);
                     }
                 });
-                listItemView.btn_sure.setOnClickListener(new OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        commandSetStatus(v, listItems.get(v.getId()));
-                    }
-                });
+//                listItemView.btn_sure.setOnClickListener(new OnClickListener()
+//                {
+//                    @Override
+//                    public void onClick(View v)
+//                    {
+//                        commandSetStatus(v, listItems.get(v.getId()));
+//                    }
+//                });
                 // 设置控件集到convertView
                 lmap.put(position, convertView);
                 convertView.setTag(listItemView);
@@ -684,26 +737,26 @@ public class PG_CommandFragment_Finish extends Fragment implements OnClickListen
                 listItemView.tv_jobtype.setText(commandtab.getstdJobTypeName() + "——" + commandtab.getstdJobName());
             }
             // 反馈状态
-            if (commandtab.getcommStatus().equals("2") || commandtab.getcommStatus().equals("1"))
-            {
-                listItemView.btn_sure.setVisibility(View.GONE);
-            }
-            if (commandtab.getimportance().equals("0"))
-            {
-                listItemView.tv_importance.setText("一般");
-//                listItemView.circle_img.setImageResource(R.color.bg_blue);
-                listItemView.circle_img.setImageResource(R.drawable.yb);
-            } else if (commandtab.getimportance().equals("1"))
-            {
-                listItemView.tv_importance.setText("重要");
-//                listItemView.circle_img.setImageResource(R.color.bg_green);
-                listItemView.circle_img.setImageResource(R.drawable.zyx);
-            } else if (commandtab.getimportance().equals("2"))
-            {
-                listItemView.tv_importance.setText("非常重要");
-//                listItemView.circle_img.setImageResource(R.color.color_orange);
-                listItemView.circle_img.setImageResource(R.drawable.fczy);
-            }
+//            if (commandtab.getcommStatus().equals("2") || commandtab.getcommStatus().equals("1"))
+//            {
+//                listItemView.btn_sure.setVisibility(View.GONE);
+//            }
+//            if (commandtab.getimportance().equals("0"))
+//            {
+//                listItemView.tv_importance.setText("一般");
+////                listItemView.circle_img.setImageResource(R.color.bg_blue);
+//                listItemView.circle_img.setImageResource(R.drawable.yb);
+//            } else if (commandtab.getimportance().equals("1"))
+//            {
+//                listItemView.tv_importance.setText("重要");
+////                listItemView.circle_img.setImageResource(R.color.bg_green);
+//                listItemView.circle_img.setImageResource(R.drawable.zyx);
+//            } else if (commandtab.getimportance().equals("2"))
+//            {
+//                listItemView.tv_importance.setText("非常重要");
+////                listItemView.circle_img.setImageResource(R.color.color_orange);
+//                listItemView.circle_img.setImageResource(R.drawable.fczy);
+//            }
             listItemView.tv_time.setText(commandtab.getregDate());
             if (commandtab.getcommFromVPath().equals("0"))
             {

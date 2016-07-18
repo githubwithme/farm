@@ -4,6 +4,7 @@
     <color name="defaultbackground_light">#f8f8f8</color>
     <color name="defaultbackground_tip">#fee7b1</color>
     <color name="black_light">#65655b</color>
+    <color name="red_light">#fe5555</color>
     <color name="explore_color">#5A89C5</color>
     <color name="semitransparent">#92bbbbbb</color>
     <color name="white">#ffffff</color>

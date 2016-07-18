@@ -106,7 +106,7 @@ public class Adapter_Dynamic extends BaseAdapter
             listItemView.tv_date.setText(utils.OffSetOfDate(utils.getToday(), date));
         }else
         {
-            listItemView.tv_date.setText("无");
+            listItemView.tv_date.setText("");
         }
         String type = dynamicBean.getType();
         if (type.equals("ZL"))
@@ -117,7 +117,7 @@ public class Adapter_Dynamic extends BaseAdapter
                 listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
             }else
             {
-                listItemView.tv_note.setText("无");
+                listItemView.tv_note.setText("暂无新内容");
             }
 
             listItemView.circle_img.setBackgroundResource(R.drawable.newicon_cmd);

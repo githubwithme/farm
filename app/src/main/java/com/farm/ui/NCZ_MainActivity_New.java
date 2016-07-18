@@ -49,6 +49,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_activity_new)
 public class NCZ_MainActivity_New extends Activity
 {
+//    NCZ_OrderPlanFragment ncz_orderPlanFragment;
     NCZ_ContactsFragment_New ncz_contactsFragment;
 //    NCZ_ContactsFragment ncz_contactsFragment;//联系人fragment
     MyDialog myDialog;

@@ -21,8 +21,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.NCZ_DealingAdapter;
-import com.farm.adapter.NCZ_NotpayAdapter;
-import com.farm.adapter.NCZ_OrderAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
@@ -53,7 +51,6 @@ import java.util.List;
 @EFragment
 public class NCZ_DealingOrderFragment extends Fragment
 {
-
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();

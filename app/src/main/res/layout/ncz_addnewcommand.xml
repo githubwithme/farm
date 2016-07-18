@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/defaultbackground"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@color/color_topbar">
+
+        <ImageButton
+            android:id="@+id/imgbtn_back"
+            android:layout_width="15dip"
+            android:layout_height="15dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dip"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/ic_back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/imgbtn_back"
+            android:gravity="center"
+            android:text="新增工作"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dip">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/ll_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:background="@color/defaultbackground_tip"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="35dip"
+                        android:layout_height="35dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip"
+                        android:background="@mipmap/icon_tip"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip"
+                        android:text="工作可以持续几天,物资可选可不选"
+                        android:textColor="@color/black_light"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_selectjob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_tip"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_selectjob"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dip"
+                            android:gravity="center"
+                            android:text="* 选择工作"
+                            android:textColor="@color/bg_text"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="15dip"
+                            android:layout_height="15dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="15dip"
+                            android:background="@drawable/downward"/>
+                    </RelativeLayout>
+
+                    <GridView
+                        android:id="@+id/gv_job"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dip"
+                        android:layout_marginLeft="20dip"
+                        android:layout_marginRight="20dip"
+                        android:layout_marginTop="10dip"
+                        android:numColumns="auto_fit"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_selecttime"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dip"
+                    android:layout_below="@+id/ll_selectjob"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_starttime_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="center"
+                        android:text="* 开始时间："
+                        android:textColor="@color/bg_text"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_starttime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:layout_toRightOf="@+id/tv_starttime_tip"
+                        android:gravity="center"
+                        android:hint="请选择"
+                        android:textColor="@color/bg_text"
+                        android:textSize="14sp"/>
+
+                    <View
+                        android:id="@+id/view_line"
+                        android:layout_width="1px"
+                        android:layout_height="20dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:layout_toRightOf="@+id/tv_starttime"
+                        android:background="@color/line_color"/>
+
+                    <TextView
+                        android:id="@+id/tv_days_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:layout_toRightOf="@+id/view_line"
+                        android:gravity="center"
+                        android:text="* 作业天数："
+                        android:textColor="@color/bg_text"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dip"
+                        android:layout_toRightOf="@+id/tv_days_tip"
+                        android:gravity="center"
+                        android:hint="请选择"
+                        android:textColor="@color/bg_text"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_selectgoods"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_selecttime"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_selectarea"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dip"
+                            android:gravity="center"
+                            android:text="* 执行区域"
+                            android:textColor="@color/bg_text"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="15dip"
+                            android:layout_height="15dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="15dip"
+                            android:background="@drawable/downward"/>
+                    </RelativeLayout>
+
+                    <com.farm.widget.CustomExpandableListView
+                        android:id="@+id/expandableListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dip"
+                        android:layout_marginLeft="35dip"
+                        android:layout_marginRight="35dip"
+                        android:layout_marginTop="10dip"
+                        android:childDivider="@color/transparent"
+                        android:divider="@color/transparent"
+                        android:dividerHeight="0dip"
+                        android:focusable="false"
+                        android:background="@drawable/round_white"
+                        android:focusableInTouchMode="false"
+                        android:groupIndicator="@null"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_selectgoods"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_below="@+id/ll_selectgoods"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="center"
+                        android:text="   选择物资"
+                        android:textColor="@color/bg_text"
+                        android:textSize="14sp"/>
+
+                    <View
+                        android:id="@+id/view_down"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dip"
+                        android:background="@drawable/downward"/>
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dip"
+            android:background="@color/red_light"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+</LinearLayout>
