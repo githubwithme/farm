@@ -11,43 +11,33 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.CustomArray_cbh_Adapter;
-import com.farm.adapter.PG_CBF_CLAdapyer;
 import com.farm.adapter.PG_JSD_Adapter;
-import com.farm.adapter.WZ_RKExecute_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Park_AllCBH;
 import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
-import com.farm.bean.SellOrder;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
-import com.farm.bean.SellOrder_New_First;
 import com.farm.bean.WZ_CRk;
-import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
 import com.farm.common.utils;
-import com.farm.widget.CustomArrayAdapter;
 import com.farm.widget.CustomDialog_Expandlistview;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDialog;
-import com.farm.widget.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -60,19 +50,17 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.entity.StringEntity;
-import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by hasee on 2016/6/21.
+ * Created by hasee on 2016/7/15.
  */
 @EActivity(R.layout.pg_jsd)
-public class PG_JSD extends Activity
+public class PG_JSD_Detail extends Activity
 {
-
     @ViewById
     View btn_view;
     @ViewById
@@ -86,7 +74,7 @@ public class PG_JSD extends Activity
     List<Purchaser> listData_BZ = new ArrayList<Purchaser>();
     String byId = "";
     String bzId = "";
-    String batchTime="";
+    String batcgTime="";
 
     PG_JSD_Adapter pg_jsd_adapter;
     SellOrder_New sellOrder_new;
@@ -209,6 +197,9 @@ public class PG_JSD extends Activity
    /* @ViewById
     ListView pg_sale;*/
 
+    @ViewById
+    EditText plateNumber;
+
     @Click
     void button_add()
     {
@@ -231,8 +222,6 @@ public class PG_JSD extends Activity
     LinearLayout ll_jsd;//结算单统计
     @ViewById
     TextView tv_isgood;
-    @ViewById
-    EditText plateNumber;
 
 /*    @Click
     void tv_isgood()
@@ -322,9 +311,15 @@ public class PG_JSD extends Activity
     @Click
     void button_save()
     {
+        if (plateNumber.getText().toString().equals(""))
+        {
+            Toast.makeText(PG_JSD_Detail.this,"请填写车牌号",Toast.LENGTH_SHORT).show();
+            return;
+        }
         SellOrder_New sellOrder = new SellOrder_New();
-        sellOrder.setid(jsdId);
-        sellOrder.setInfoId(sellOrder_new.getUuid());
+        sellOrder=sellOrder_new;
+//        sellOrder.setid("");
+        sellOrder.setInfoId(sellOrder_new.getInfoId());
         sellOrder.setUid(sellOrder_new.getUid());
         sellOrder.setUuid(sellOrder_new.getUuid());
         sellOrder.setBatchTime(sellOrder_new.getBatchTime());
@@ -380,6 +375,7 @@ public class PG_JSD extends Activity
         sellOrder.setCarryFee(carryFee.getText().toString());
         sellOrder.setTotalFee(totalFee.getText().toString());
         sellOrder.setActualMoney(actualMoney.getText().toString());
+        sellOrder.setPlateNumber(plateNumber.getText().toString());
         StringBuilder builder = new StringBuilder();
         builder.append("{\"sellOrderSettlementlist\":[ ");
         builder.append(JSON.toJSONString(sellOrder));
@@ -391,11 +387,6 @@ public class PG_JSD extends Activity
     @Click
     void btn_upload()
     {
-        if (plateNumber.getText().toString().equals(""))
-        {
-            Toast.makeText(PG_JSD.this,"请填写车牌号",Toast.LENGTH_SHORT).show();
-            return;
-        }
         SellOrder_New sellOrder = new SellOrder_New();
         sellOrder.setid("");
         sellOrder.setInfoId(sellOrder_new.getUuid());
@@ -403,26 +394,20 @@ public class PG_JSD extends Activity
         sellOrder.setUuid(sellOrder_new.getUuid());
         sellOrder.setBatchTime(sellOrder_new.getBatchTime());
         sellOrder.setStatus("0");
-//        sellOrder.setBuyers(et_name.getText().toString());
         sellOrder.setBuyers(sellOrder_new.getBuyers());
 
         sellOrder.setPrice(sellOrder_new.getPrice());
         sellOrder.setWeight(sellOrder_new.getWeight());
         sellOrder.setSumvalues(sellOrder_new.getSumvalues());
-   /*     sellOrder.setActualprice("");
-        sellOrder.setActualweight("");
-        sellOrder.setActualnumber("");
-        sellOrder.setActualsumvalues("");*/
-//        sellOrder.setDeposit("0");
+
         sellOrder.setReg(utils.getTime());
-//        sellOrder.setSaletime(utils.getTime());
         sellOrder.setSaletime(sellOrder_new.getSaletime());
         sellOrder.setYear(utils.getYear());
         sellOrder.setXxzt("0");
         sellOrder.setProducer(sellOrder_new.getProducer());
-//        sellOrder.setFinalpayment("0");
         sellOrder.setGoodsname(sellOrder_new.getGoodsname());
         sellOrder.setMainPepole(sellOrder_new.getMainPepole());
+        sellOrder.setPlateNumber(sellOrder_new.getPlateNumber());
         sellOrder.setContractorId(byId);
         sellOrder.setPickId(bzId);
         sellOrder.setCarryPrice(sellOrder_new.getCarryPrice());
@@ -443,43 +428,7 @@ public class PG_JSD extends Activity
         sellOrder.setIsNeedAudit("1");
         sellOrder.setFreeFinalPay("1");
         sellOrder.setFreeDeposit("1");
-/*        public String total ;//总件数
-        public String qualityTotalWeight;//正品总净重
-        public String defectTotalWeight;//次品重净重
-        public String TotalWeight;//总净重
-        public String packFee;//总包装费
-        public String carryFee;//总搬运费
-        public String totalFee;//总合计金额
-           public String personNote;//搬运说明
-    public String actualMoney;//实际金额*/
-        //附表2
-/*        SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
-        sellOrder_new_first.setSellOrderId(sellOrder_new.getUuid());
-        sellOrder_new_first.setQualityWaterWeight(zp_ds_zhong.getText().toString());
-        sellOrder_new_first.setQualityNetWeight(zp_bds_zhong.getText().toString());
-        sellOrder_new_first.setQualityBalance(zp_jsje.getText().toString());
-        sellOrder_new_first.setDefectWaterWeight(cp_ds_zhong.getText().toString());
-        sellOrder_new_first.setDefectNetWeight(cp_jingzhong.getText().toString());
-        sellOrder_new_first.setDefectBalance(cp_jsje.getText().toString());
 
-        sellOrder_new_first.setTotal(jsd_zongjianshu.getText().toString());
-
-        sellOrder_new_first.setQualityTotalWeight(jsd_zpjz.getText().toString());
-        sellOrder_new_first.setDefectTotalWeight(jsd_cpzjs.getText().toString());
-
-        sellOrder_new_first.setTotalWeight(jsd_zongjingzhong.getText().toString());
-        sellOrder_new_first.setPackFee(packFee.getText().toString());
-        sellOrder_new_first.setCarryFee(carryFee.getText().toString());
-        sellOrder_new_first.setTotalFee(totalFee.getText().toString());
-        sellOrder_new_first.setActualMoney(actualMoney.getText().toString());*/
-
- /*       StringBuilder builder = new StringBuilder();
-        builder.append("{\"SellOrder_new\":[ ");
-        builder.append(JSON.toJSONString(sellOrder));
-        builder.append("], \"sellorderlistadd\": [");
-        builder.append(JSON.toJSONString(sellOrder_new_first));
-        builder.append("]} ");
-        newaddOrder(builder.toString());*/
         sellOrder.setQualityWaterWeight(zp_ds_zhong.getText().toString());
         sellOrder.setQualityNetWeight(zp_bds_zhong.getText().toString());
         sellOrder.setQualityBalance(zp_jsje.getText().toString());
@@ -497,7 +446,6 @@ public class PG_JSD extends Activity
         sellOrder.setCarryFee(carryFee.getText().toString());
         sellOrder.setTotalFee(totalFee.getText().toString());
         sellOrder.setActualMoney(actualMoney.getText().toString());
-        sellOrder.setPlateNumber(plateNumber.getText().toString());
         StringBuilder builder = new StringBuilder();
         builder.append("{\"sellOrderSettlementlist\":[ ");
         builder.append(JSON.toJSONString(sellOrder));
@@ -506,44 +454,14 @@ public class PG_JSD extends Activity
 
     }
 
-    @Click
-    void btn_save()
-    {
-        addView();
-        curremt++;
-    }
-
-    private void addView()
-    {
-//        View view = inflater.inflate(R.layout.pg_dtcbh, null);
-        View view = inflater.inflate(R.layout.pg_jsd_adapter, null);
-        view.setId(curremt);
-        TextView all_cbh = (TextView) findViewById(R.id.all_cbh);
-/*        EditText cipin = (EditText) view.findViewById(R.id.cipin);
-        cipin.addTextChangedListener(oncigpin);
-        EditText jinzhong = (EditText) view.findViewById(R.id.jinzhong);
-        jinzhong.addTextChangedListener(onjinzhong);*/
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-        lp.setMargins(0, 0, 0, 0);
-        all_cbh.setLayoutParams(lp);
-/*        zhushu.setLayoutParams(lp);
-        zhengpin.setLayoutParams(lp);
-        cipin.setLayoutParams(lp);
-        jinzhong.setLayoutParams(lp);
-        pg_dts.addView(view);
-        zhushus[curremt] = zhushu;
-        zhengpins[curremt] = zhengpin;
-        cipins[curremt] = cipin;
-        zhongliangs[curremt] = jinzhong;*/
-
-        views[curremt] = view;
-    }
 
     @AfterViews
     void after()
     {
-        btn_upload.setVisibility(View.VISIBLE);
-        btn_view.setVisibility(View.VISIBLE);
+
+      ll_cbhlist.setVisibility(View.VISIBLE);//承包户
+
+        ll_jsd.setVisibility(View.VISIBLE);//结算单统计
 //        getDetailSecBysettleId();
         byId = sellOrder_new.getContractorId();
         bzId = sellOrder_new.getPickId();
@@ -553,22 +471,20 @@ public class PG_JSD extends Activity
         getsellOrderDetailBySaleId();
         getchengbaohu();
 //        getBreakOffInfoOfContract();
-        inflater = LayoutInflater.from(PG_JSD.this);
+        inflater = LayoutInflater.from(PG_JSD_Detail.this);
 
     }
 
     private void showData()
     {
+        plateNumber.setText(sellOrder_new.getPlateNumber());
         bz_nc_danjia.setText(sellOrder_new.getPackPrice());
         by_nc_danjia.setText(sellOrder_new.getCarryPrice());
         by_fzrid.setText(sellOrder_new.getContractorName());
         bz_fzrid.setText(sellOrder_new.getPickName());
-        jsd_zpprice.setText(sellOrder_new.getPrice());
-
+        jsd_zpprice.setText(sellOrder_new.getActualprice());
         actualMoney.setText(sellOrder_new.getActualMoney());
-
         packPec.setText(sellOrder_new.getPackPec());
-
         packFee.setText(sellOrder_new.getPackFee());
         carryFee.setText(sellOrder_new.getCarryFee());
         cp_jsje.setText(sellOrder_new.getDefectBalance());
@@ -580,47 +496,40 @@ public class PG_JSD extends Activity
         cp_jianshu.setText(sellOrder_new.getDefectNum());
         zp_jianshu.setText(sellOrder_new.getActualnumber());
         jsd_cpprice.setText(sellOrder_new.getDefectPrice());
-//        jsd_zpprice.setText(sellOrder_new.getActualprice());
         jsd_cpzjs.setText(sellOrder_new.getDefectTotalWeight());
         jsd_zpjz.setText(sellOrder_new.getQualityTotalWeight());
         jsd_zongjingzhong.setText(sellOrder_new.getTotalWeight());
         jsd_zongjianshu.setText(sellOrder_new.getTotal());
         totalFee.setText(sellOrder_new.getTotalFee());
-
-
         zp_jianshu.addTextChangedListener(jianshu);//正品件数
         cp_jianshu.addTextChangedListener(jianshu);//次品件数
-
         zp_bds_zhong.addTextChangedListener(zpZongjingzhong);//正品净重
         zp_jianshu.addTextChangedListener(zpZongjingzhong);//正品件数
-
         jsd_zpprice.addTextChangedListener(zpJSjiner);//正品单价
         jsd_zpjz.addTextChangedListener(zpJSjiner);//正品总净重
-
-
         cp_jingzhong.addTextChangedListener(cpZongjingzhong);//次品净重
         cp_jianshu.addTextChangedListener(cpZongjingzhong);//次品件数
-
         jsd_cpprice.addTextChangedListener(cpJSjiner);//次品单价
         jsd_cpzjs.addTextChangedListener(cpJSjiner);//次品总净重
-
-
         bz_nc_danjia.addTextChangedListener(bzallfee);   //包装单价
-//        by_nc_danjia.addTextChangedListener(bzallfee);   //搬运单价
         jsd_zongjianshu.addTextChangedListener(bzallfee);  //总件数
-
         by_nc_danjia.addTextChangedListener(byallfee);   //搬运单价
         jsd_zongjianshu.addTextChangedListener(byallfee);  //总件数
-
-
         jsd_zpjz.addTextChangedListener(all_jingzhong);//正品总净重
         jsd_cpzjs.addTextChangedListener(all_jingzhong);//次品总净重
-
-//        zp_jsje//正品结算金额   cp_jsje  //次品结算金额 carryFee//总搬运费  packFee//总包装费all_jine
         zp_jsje.addTextChangedListener(all_jine);//次品总净重
         cp_jsje.addTextChangedListener(all_jine);//次品总净重
         carryFee.addTextChangedListener(all_jine);//次品总净重
         packFee.addTextChangedListener(all_jine);//次品总净重
+
+
+        if (sellOrder_new.getDetailSecLists().size() > 0)
+        {
+            pg_jsd_adapter = new PG_JSD_Adapter(PG_JSD_Detail.this, sellOrder_new.getDetailSecLists(), sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight());
+            frame_listview_news.setAdapter(pg_jsd_adapter);
+            utils.setListViewHeight(frame_listview_news);
+            shouData(sellOrder_new.getDetailSecLists());
+        }
     }
 
     @Override
@@ -628,7 +537,7 @@ public class PG_JSD extends Activity
     {
         super.onCreate(savedInstanceState);
         sellOrder_new = getIntent().getParcelableExtra("bean");
-        broadcast = getIntent().getStringExtra("broadcast");
+        jsdId=sellOrder_new.getid();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_PG_UPDATE_DELETE);
         registerReceiver(receiver_update, intentfilter_update);
         getActionBar().hide();
@@ -641,6 +550,8 @@ public class PG_JSD extends Activity
         public void onReceive(Context context, Intent intent)
         {
             getSellOrderDetailSec();
+
+
         }
     };
 
@@ -805,19 +716,12 @@ public class PG_JSD extends Activity
         @Override
         public void afterTextChanged(Editable editable)
         {
-          /*  bz_nc_danjia.addTextChangedListener(otherjiner);   //包装单价
-            by_nc_danjia.addTextChangedListener(otherjiner);   //搬运单价
-            jsd_zongjianshu.addTextChangedListener(otherjiner);  //总件数*/
-//            packFee 包装  carryFee搬运
+
             if (!bz_nc_danjia.getText().toString().equals("") && !jsd_zongjianshu.getText().toString().equals(""))
             {
                 packFee.setText(Double.valueOf(bz_nc_danjia.getText().toString()) * Double.valueOf(jsd_zongjianshu.getText().toString()) + "");
             }
 
-   /*         if (!by_nc_danjia.getText().toString().equals("") && !jsd_zongjianshu.getText().toString().equals(""))
-            {
-                carryFee.setText(Double.valueOf(by_nc_danjia.getText().toString())*Double.valueOf(jsd_zongjianshu.getText().toString())+"");
-            }*/
         }
     };
     //搬运总费
@@ -838,10 +742,6 @@ public class PG_JSD extends Activity
         @Override
         public void afterTextChanged(Editable editable)
         {
-          /*  bz_nc_danjia.addTextChangedListener(otherjiner);   //包装单价
-            by_nc_danjia.addTextChangedListener(otherjiner);   //搬运单价
-            jsd_zongjianshu.addTextChangedListener(otherjiner);  //总件数*/
-//            packFee 包装  carryFee搬运
 
 
             if (!by_nc_danjia.getText().toString().equals("") && !jsd_zongjianshu.getText().toString().equals(""))
@@ -931,9 +831,9 @@ public class PG_JSD extends Activity
 
     public void showDialog_workday(List<Park_AllCBH> listData, final int g)
     {
-        View dialog_layout = (RelativeLayout) PG_JSD.this.getLayoutInflater().inflate(R.layout.customdialog_explistview, null);
+        View dialog_layout = (RelativeLayout) PG_JSD_Detail.this.getLayoutInflater().inflate(R.layout.customdialog_explistview, null);
 
-        customDialog_listView = new CustomDialog_Expandlistview(PG_JSD.this, R.style.cut_expand, dialog_layout, listData, new CustomDialog_Expandlistview.CustomDialogListener()
+        customDialog_listView = new CustomDialog_Expandlistview(PG_JSD_Detail.this, R.style.cut_expand, dialog_layout, listData, new CustomDialog_Expandlistview.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
@@ -942,19 +842,21 @@ public class PG_JSD extends Activity
                 String areaName = bundle.getString("areaName");
                 String contractId = bundle.getString("contractId");
                 String contractNum = bundle.getString("contractNum");
-
                 String parkId = bundle.getString("parkId");
                 String parkName = bundle.getString("parkName");
-
+                commembertab commembertab=new commembertab();
 //                sellOrder_new
                 String uuid = java.util.UUID.randomUUID().toString();
-                SellOrderDetail_New sellOrderDetail_new=new SellOrderDetail_New();
-                sellOrderDetail_new.setUuid(uuid);
+                        SellOrderDetail_New sellOrderDetail_new=new SellOrderDetail_New();
                 sellOrderDetail_new.setuid(sellOrder_new.getUid());
+                sellOrderDetail_new.setsaleid(sellOrder_new.getUuid());
+                sellOrderDetail_new.setUuid(uuid);
                 sellOrderDetail_new.setInfoId(uuid);
                 sellOrderDetail_new.setSettlementId(jsdId);
-                sellOrderDetail_new.setBatchTime(batchTime);
+                sellOrderDetail_new.setBatchTime(batcgTime);
+                sellOrderDetail_new.setType("saleout");
                 sellOrderDetail_new.setYear(utils.getYear());
+                sellOrderDetail_new.setCreatorId(commembertab.getId());
 
                 sellOrderDetail_new.setparkid(parkId);
                 sellOrderDetail_new.setparkname(parkName);
@@ -967,11 +869,13 @@ public class PG_JSD extends Activity
                 sellOrderDetail_new.setplanprice("");
                 sellOrderDetail_new.setactualprice("");
                 sellOrderDetail_new.setactualweight("");
+
                 StringBuilder builder = new StringBuilder();
                 builder.append("{\"SellOrderDetailSeclist\": [");
                 builder.append(JSON.toJSONString(sellOrderDetail_new));
                 builder.append("]} ");
                 addSellOrderDetailSec(builder.toString());
+
                 StringBuilder builder1 = new StringBuilder();
                 builder1.append("{\"SellOrderDetail_newlist\": [");
                 builder1.append(JSON.toJSONString(sellOrderDetail_new));
@@ -986,7 +890,7 @@ public class PG_JSD extends Activity
 
     private void getchengbaohu()
     {
-        commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
+        commembertab commembertab = AppContext.getUserInfo(PG_JSD_Detail.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("parkId", commembertab.getparkId());
@@ -1032,7 +936,7 @@ public class PG_JSD extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_JSD_Detail.this, "error_connectDataBase");
                     return;
                 }
 
@@ -1041,7 +945,7 @@ public class PG_JSD extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+                AppContext.makeToast(PG_JSD_Detail.this, "error_connectServer");
             }
         });
     }
@@ -1050,7 +954,7 @@ public class PG_JSD extends Activity
     private void getsellOrderDetailBySaleId()
     {
 
-        commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
+        commembertab commembertab = AppContext.getUserInfo(PG_JSD_Detail.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("saleId", sellOrder_new.getUuid());
         params.addQueryStringParameter("action", "getsellOrderDetailBySaleId");
@@ -1072,8 +976,9 @@ public class PG_JSD extends Activity
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
                         if (listNewData.size()>0)
                         {
-                            batchTime=listNewData.get(0).getBatchTime();
+                            batcgTime=listNewData.get(0).getBatchTime();
                         }
+
 
                         listSellData.addAll(listNewData);
 
@@ -1090,7 +995,7 @@ public class PG_JSD extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_JSD_Detail.this, "error_connectDataBase");
                     return;
                 }
 
@@ -1099,7 +1004,7 @@ public class PG_JSD extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+                AppContext.makeToast(PG_JSD_Detail.this, "error_connectServer");
             }
         });
     }
@@ -1129,7 +1034,7 @@ public class PG_JSD extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        Toast.makeText(PG_JSD.this, "订单保存成功！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PG_JSD_Detail.this, "订单保存成功！", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent();
                         intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
@@ -1140,7 +1045,7 @@ public class PG_JSD extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_JSD_Detail.this, "error_connectDataBase");
                     return;
                 }
 
@@ -1149,7 +1054,7 @@ public class PG_JSD extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+                AppContext.makeToast(PG_JSD_Detail.this, "error_connectServer");
             }
         });
     }
@@ -1157,7 +1062,7 @@ public class PG_JSD extends Activity
     //承包户
     private void getpurchaser(String name)
     {
-        commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
+        commembertab commembertab = AppContext.getUserInfo(PG_JSD_Detail.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getpurchaser");//jobGetList1
@@ -1190,6 +1095,34 @@ public class PG_JSD extends Activity
                                 }
                             }
 
+
+                  /*          String[] str = new String[listData_CG.size()];
+                            for (int i = 0; i < listData_CG.size(); i++)
+                            {
+                                str[i] = listData_CG.get(i).getName();
+                            }
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(NCZ_CreateNewOrder.this,
+                                    android.R.layout.simple_dropdown_item_1line, str);
+                            et_name.setAdapter(adapter);
+                            et_name.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                            {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                                {
+                                    Object obj = adapterView.getItemAtPosition(i);
+                                    String ss = obj.toString();
+                                    for (int j = 0; j < listData_CG.size(); j++)
+                                    {
+                                        if (listData_CG.get(j).getName().equals(ss))
+                                        {
+                                            et_phone.setText(listData_CG.get(j).getTelephone());
+                                            et_address.setText(listData_CG.get(j).getAddress());
+                                            et_email.setText(listData_CG.get(j).getMailbox());
+                                        }
+                                    }
+                                }
+                            });*/
+
                         } else
                         {
                             listNewData = new ArrayList<Purchaser>();
@@ -1202,7 +1135,7 @@ public class PG_JSD extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_JSD_Detail.this, "error_connectDataBase");
                     return;
                 }
 
@@ -1211,7 +1144,7 @@ public class PG_JSD extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+                AppContext.makeToast(PG_JSD_Detail.this, "error_connectServer");
             }
         });
     }
@@ -1219,8 +1152,8 @@ public class PG_JSD extends Activity
     //包装工
     public void showDialog_bz(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_JSD.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listViews = new CustomDialog_ListView(PG_JSD.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        View dialog_layout = (RelativeLayout) PG_JSD_Detail.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listViews = new CustomDialog_ListView(PG_JSD_Detail.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
@@ -1238,8 +1171,8 @@ public class PG_JSD extends Activity
     //搬运工
     public void showDialog_by(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_JSD.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_listViews = new CustomDialog_ListView(PG_JSD.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
+        View dialog_layout = (RelativeLayout) PG_JSD_Detail.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listViews = new CustomDialog_ListView(PG_JSD_Detail.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
             public void OnClick(Bundle bundle)
@@ -1341,7 +1274,7 @@ public class PG_JSD extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_JSD_Detail.this, "error_connectDataBase");
                     return;
                 }
 
@@ -1350,7 +1283,7 @@ public class PG_JSD extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+                AppContext.makeToast(PG_JSD_Detail.this, "error_connectServer");
             }
         });
     }
@@ -1387,7 +1320,7 @@ public class PG_JSD extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_JSD_Detail.this, "error_connectDataBase");
                     return;
                 }
 
@@ -1396,7 +1329,7 @@ public class PG_JSD extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+                AppContext.makeToast(PG_JSD_Detail.this, "error_connectServer");
             }
         });
     }
@@ -1430,7 +1363,7 @@ public class PG_JSD extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_JSD_Detail.this, "error_connectDataBase");
                     return;
                 }
 
@@ -1439,13 +1372,13 @@ public class PG_JSD extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+                AppContext.makeToast(PG_JSD_Detail.this, "error_connectServer");
             }
         });
     }
     public void getSellOrderDetailSec()
     {
-        commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);
+        commembertab commembertab = AppContext.getUserInfo(PG_JSD_Detail.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("strWhere", "uid=" + commembertab.getuId() + " and settlementId=" + jsdId);
         params.addQueryStringParameter("action", "getSellOrderDetailSec");
@@ -1468,7 +1401,7 @@ public class PG_JSD extends Activity
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
 
 
-                        pg_jsd_adapter = new PG_JSD_Adapter(PG_JSD.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight());
+                        pg_jsd_adapter = new PG_JSD_Adapter(PG_JSD_Detail.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight());
                         frame_listview_news.setAdapter(pg_jsd_adapter);
                         utils.setListViewHeight(frame_listview_news);
                         shouData(listNewData);
@@ -1479,7 +1412,7 @@ public class PG_JSD extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_JSD_Detail.this, "error_connectDataBase");
                     return;
                 }
 
@@ -1488,7 +1421,7 @@ public class PG_JSD extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+                AppContext.makeToast(PG_JSD_Detail.this, "error_connectServer");
             }
         });
     }
@@ -1518,16 +1451,16 @@ public class PG_JSD extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-
-                        Toast.makeText(PG_JSD.this,"保存成功",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DELETE);
+                        sendBroadcast(intent);
+                        Toast.makeText(PG_JSD_Detail.this,"保存成功",Toast.LENGTH_SHORT).show();
                         finish();
-
-
                     }
 
                 } else
                 {
-                    AppContext.makeToast(PG_JSD.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_JSD_Detail.this, "error_connectDataBase");
                     return;
                 }
 
@@ -1536,9 +1469,8 @@ public class PG_JSD extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(PG_JSD.this, "error_connectServer");
+                AppContext.makeToast(PG_JSD_Detail.this, "error_connectServer");
             }
         });
     }
-
 }

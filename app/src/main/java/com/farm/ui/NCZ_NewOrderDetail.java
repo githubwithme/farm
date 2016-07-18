@@ -195,9 +195,6 @@ TextView deposit;
 
     private void getsellOrderDetailBySaleId()
     {
-
-
-
         commembertab commembertab = AppContext.getUserInfo(NCZ_NewOrderDetail.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("saleId", sellOrder.getUuid());

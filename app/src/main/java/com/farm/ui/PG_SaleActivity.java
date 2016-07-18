@@ -21,6 +21,7 @@ import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
+import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomHorizontalScrollView_PGSale;
@@ -46,8 +47,9 @@ import java.util.Map;
  * Created by ${hmj} on 2016/6/57.
  */
 @EActivity(R.layout.pg_saleactivity)
-public class PG_SaleActivity extends Activity
+public class PG_SaleActivity extends Activity implements CustomHorizontalScrollView_PGSale.CustomOntouch
 {
+    CustomHorizontalScrollView_PGSale.CustomOntouch customOntouch = null;
     List<BatchTime> listData = null;
     private ListView mListView;
     public HorizontalScrollView mTouchView;
@@ -73,6 +75,7 @@ public class PG_SaleActivity extends Activity
     {
         getActionBar().hide();
         getfarmSalesData();
+        customOntouch = (PG_SaleActivity) this;
 //        getNewSaleList_test();
     }
 
@@ -149,7 +152,7 @@ public class PG_SaleActivity extends Activity
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() >0)
+                    if (result.getAffectedRows() > 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                         DensityUtil densityUtil = new DensityUtil(PG_SaleActivity.this);
@@ -220,7 +223,9 @@ public class PG_SaleActivity extends Activity
 
         Map<String, String> data = null;
         CustomHorizontalScrollView_PGSale headerScroll = (CustomHorizontalScrollView_PGSale) findViewById(R.id.item_scroll_title);
+        headerScroll.setCuttomOntouch(customOntouch);
         CustomHorizontalScrollView_PGSale totalScroll = (CustomHorizontalScrollView_PGSale) findViewById(R.id.totalScroll);
+        totalScroll.setCuttomOntouch(customOntouch);
         // 添加头滑动事件
         mHScrollViews.add(headerScroll);
         mHScrollViews.add(totalScroll);
@@ -261,6 +266,29 @@ public class PG_SaleActivity extends Activity
             if (mTouchView != scrollView) scrollView.smoothScrollTo(l, t);
         }
     }
+
+    @Override
+    public void customOnTouchEvent(HorizontalScrollView horizontalScrollView)
+    {
+        mTouchView = horizontalScrollView;
+    }
+
+    @Override
+    public void customOnScrollChanged(int l, int t, int oldl, int oldt)
+    {
+        for (CustomHorizontalScrollView_PGSale scrollView : mHScrollViews)
+        {
+            // 防止重复滑动
+            if (mTouchView != scrollView) scrollView.smoothScrollTo(l, t);
+        }
+    }
+
+    @Override
+    public HorizontalScrollView getmTouchView()
+    {
+        return mTouchView;
+    }
+
 
     class ScrollAdapter extends BaseAdapter
     {
@@ -338,7 +366,9 @@ public class PG_SaleActivity extends Activity
 
             }
             // 第一次初始化的时候装进来
-            addHViews((CustomHorizontalScrollView_PGSale) convertView.findViewById(R.id.item_chscroll_scroll));
+            CustomHorizontalScrollView_PGSale customHorizontalScrollView_pgSale = (CustomHorizontalScrollView_PGSale) convertView.findViewById(R.id.item_chscroll_scroll);
+            addHViews(customHorizontalScrollView_pgSale);
+            customHorizontalScrollView_pgSale.setCuttomOntouch(customOntouch);
             // 设置控件集到convertView
 //                lmap.put(position, convertView);
 //                convertView.setTag(listItemView);
@@ -370,4 +400,5 @@ public class PG_SaleActivity extends Activity
 
         }
     };
+
 }

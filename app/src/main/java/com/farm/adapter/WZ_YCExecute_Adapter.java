@@ -77,6 +77,14 @@ public class WZ_YCExecute_Adapter extends BaseExpandableListAdapter
         public TextView storehouse;
         public TextView type;
 
+
+        public TextView tv_goodsname;
+        public TextView tv_number;
+        public TextView tv_values;
+        public TextView tv_type;
+        public TextView tv_gg;
+        public TextView tv_type_tip;
+        public TextView tv_gg_tip;
     }
 
     //设置子item的组件
@@ -104,6 +112,15 @@ public class WZ_YCExecute_Adapter extends BaseExpandableListAdapter
             listItemView.data = (TextView) convertView.findViewById(R.id.data);
             listItemView.storehouse = (TextView) convertView.findViewById(R.id.storehouse);
             listItemView.type = (TextView) convertView.findViewById(R.id.type);
+
+
+            listItemView.tv_goodsname = (TextView) convertView.findViewById(R.id.tv_goodsname);
+            listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
+            listItemView.tv_values = (TextView) convertView.findViewById(R.id.tv_values);
+            listItemView.tv_type = (TextView) convertView.findViewById(R.id.tv_type);
+            listItemView.tv_gg = (TextView) convertView.findViewById(R.id.tv_gg);
+            listItemView.tv_type_tip = (TextView) convertView.findViewById(R.id.tv_type_tip);
+            listItemView.tv_gg_tip = (TextView) convertView.findViewById(R.id.tv_gg_tip);
             convertView.setTag(listItemView);
             convertView.setTag(R.id.tag_bean, wz_YCxx);
             convertView.setTag(R.id.tag_rk, parkname);
@@ -124,6 +141,20 @@ public class WZ_YCExecute_Adapter extends BaseExpandableListAdapter
             });
             map.put(childPosition, convertView);
             lmap.put(groupPosition, map);
+
+//新数据
+
+            listItemView.tv_goodsname.setText(wz_YCxx.getGoodsName());
+
+
+
+            listItemView.tv_values.setText(wz_YCxx.getStorehouseName());
+
+
+
+
+
+            //旧数据
             if (isLastChild)
             {
                 map = new HashMap<>();
@@ -133,14 +164,17 @@ public class WZ_YCExecute_Adapter extends BaseExpandableListAdapter
             if (!wz_YCxx.getThree().equals(""))
             {
                 listItemView.number.setText("库存数量:" + wz_YCxx.getThreeNum() + wz_YCxx.getThree());
+                listItemView.tv_number.setText( wz_YCxx.getThreeNum() + wz_YCxx.getThree());
                 danwei = wz_YCxx.getThree();
             } else if (wz_YCxx.getThree().equals("") && !wz_YCxx.getSec().equals(""))
             {
                 listItemView.number.setText("库存数量:" + wz_YCxx.getSecNum() + wz_YCxx.getSec());
+                listItemView.tv_number.setText(wz_YCxx.getSecNum() + wz_YCxx.getSec());
                 danwei = wz_YCxx.getSec();
             } else
             {
-                listItemView.number.setText("库存数量;" + wz_YCxx.getFirsNum() + wz_YCxx.getFirs());
+                listItemView.number.setText("库存数量:" + wz_YCxx.getFirsNum() + wz_YCxx.getFirs());
+                listItemView.tv_number.setText( wz_YCxx.getFirsNum() + wz_YCxx.getFirs());
                 danwei = wz_YCxx.getFirs();
             }
 
@@ -152,20 +186,32 @@ public class WZ_YCExecute_Adapter extends BaseExpandableListAdapter
             if (wz_YCxx.getType().equals("0"))
             {
                 listItemView.type.setText("即将过期");
+                listItemView.tv_type.setText("即将过期");
+                listItemView.tv_gg_tip.setText("过期时间:");
                 listItemView.data.setText("过期时间:" + wz_YCxx.getExpDate1().substring(0, wz_YCxx.getExpDate1().length() - 8));
+                listItemView.tv_gg.setText( wz_YCxx.getExpDate1().substring(0, wz_YCxx.getExpDate1().length() - 8));
 
             } else if (wz_YCxx.getType().equals("1"))
             {
                 listItemView.type.setText("库存过低");
+                listItemView.tv_type.setText("库存过低");
+                listItemView.tv_gg_tip.setText("警戒数量:");
                 listItemView.data.setText("警戒数量:" + wz_YCxx.getLevelOfWarning() + danwei);
+                listItemView.tv_gg.setText(wz_YCxx.getLevelOfWarning() + danwei);
             } else if (wz_YCxx.getType().equals("2"))
             {
                 listItemView.type.setText("即将过期|库存过低");
+                listItemView.tv_type.setText("即将过期");
+                listItemView.tv_gg_tip.setText("过期时间:");
                 listItemView.data.setText("过期时间:" + wz_YCxx.getExpDate1().substring(0, wz_YCxx.getExpDate1().length() - 8));
+                listItemView.tv_gg.setText( wz_YCxx.getExpDate1().substring(0, wz_YCxx.getExpDate1().length() - 8));
             } else if (wz_YCxx.getType().equals("3"))
             {
                 listItemView.type.setText("已经过期");
+                listItemView.tv_type.setText("已经过期");
+                listItemView.tv_gg_tip.setText("过期时间:");
                 listItemView.data.setText("过期时间:" + wz_YCxx.getExpDate1().substring(0, wz_YCxx.getExpDate1().length() - 8));
+                listItemView.tv_gg.setText( wz_YCxx.getExpDate1().substring(0, wz_YCxx.getExpDate1().length() - 8));
             }
 
 

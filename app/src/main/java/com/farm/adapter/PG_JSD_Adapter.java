@@ -28,6 +28,9 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import org.apache.http.entity.StringEntity;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,12 +47,13 @@ public class PG_JSD_Adapter extends BaseAdapter
     SellOrderDetail_New sellOrderDetail_new;
     String zpzl;
     String cpzl;
+    TextView shengyuliang;
 
 
     class ListItemView
     {
         public TextView all_cbh;
-        public EditText jh_zhushu;
+        public TextView jh_zhushu;
         public EditText zhushu;
         public EditText zhengpin;
         public EditText cipin;
@@ -81,7 +85,7 @@ public class PG_JSD_Adapter extends BaseAdapter
             listItemView = new ListItemView();
 //            listItemView.tv_yq = (TextView) convertView.findViewById(R.id.tv_yq);
             listItemView.all_cbh = (TextView) convertView.findViewById(R.id.all_cbh);
-            listItemView.jh_zhushu = (EditText) convertView.findViewById(R.id.jh_zhushu);
+            listItemView.jh_zhushu = (TextView) convertView.findViewById(R.id.jh_zhushu);
             listItemView.zhushu = (EditText) convertView.findViewById(R.id.zhushu);
             listItemView.zhengpin = (EditText) convertView.findViewById(R.id.zhengpin);
             listItemView.cipin = (EditText) convertView.findViewById(R.id.cipin);
@@ -96,6 +100,8 @@ public class PG_JSD_Adapter extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
 
+        getSellOrderDetailBystrWhere(sellOrderDetail_new,listItemView.jh_zhushu);
+
         listItemView.shanchu.setTag(R.id.tag_btn_number, sellOrderDetail_new);
         listItemView.shanchu.setOnClickListener(new View.OnClickListener()
         {
@@ -108,8 +114,8 @@ public class PG_JSD_Adapter extends BaseAdapter
         });
         listItemView.jinzhong.setText(sellOrderDetail_new.getactualweight());
         listItemView.zhushu.setText(sellOrderDetail_new.getactualnumber());
-        listItemView.zhengpin.setText(sellOrderDetail_new.getplanprice());
-        listItemView.cipin.setText(sellOrderDetail_new.getactualprice());
+        listItemView.cipin.setText(sellOrderDetail_new.getplanprice());
+        listItemView.zhengpin.setText(sellOrderDetail_new.getactualprice());
         listItemView.jh_zhushu.setText(sellOrderDetail_new.getplannumber());
         listItemView.all_cbh.setText(sellOrderDetail_new.getareaname() + "\n" + sellOrderDetail_new.getcontractname());
 
@@ -128,8 +134,7 @@ public class PG_JSD_Adapter extends BaseAdapter
                 sellOrderDetail_new = (SellOrderDetail_New) view.getTag(R.id.tag_cash);
                 ListItemView listItemViews = (ListItemView) view.getTag(R.id.tag_bean);
 
-//                int a = Integer.valueOf(listItemViews.zhushu.getText().toString())-Integer.valueOf(sellOrderDetail_new.getplannumber());
-                int number_difference=0;
+/*                int number_difference=0;
                 if (sellOrderDetail_new.getactualnumber()==null||sellOrderDetail_new.getactualnumber().equals(""))
                 {
                      number_difference=Integer.valueOf(sellOrderDetail_new.getplannumber())-Integer.valueOf(listItemViews.zhushu.getText().toString());
@@ -142,18 +147,26 @@ public class PG_JSD_Adapter extends BaseAdapter
                 sellOrderDetail_new.setplanprice(listItemViews.zhengpin.getText().toString());
                 sellOrderDetail_new.setactualprice(listItemViews.cipin.getText().toString());
                 sellOrderDetail_new.setactualweight(listItemViews.jinzhong.getText().toString());
-                feedbackOrderDetail_add(sellOrderDetail_new,number_difference);
+                feedbackOrderDetail_add(sellOrderDetail_new,number_difference);*/
 
+                sellOrderDetail_new.setactualnumber(listItemViews.zhushu.getText().toString());
+                sellOrderDetail_new.setplanprice(listItemViews.cipin.getText().toString());
+                sellOrderDetail_new.setactualprice(listItemViews.zhengpin.getText().toString());
+                sellOrderDetail_new.setactualweight(listItemViews.jinzhong.getText().toString());
+                StringBuilder builder = new StringBuilder();
+                builder.append("{\"SellOrderDetailSeclist\": [");
+                builder.append(JSON.toJSONString(sellOrderDetail_new));
+                builder.append("]} ");
+                updateSellOrderDetailSec(builder.toString());
             }
         });
-//        listItemView.tv_yq.setText(wz_storehouse.getBatchName()+"--"+wz_storehouse.getQuantity());
         return convertView;
     }
 
     private void showDelete(final SellOrderDetail_New sellOrderDetai)
     {
         View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "驳回", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "承包户产量", "是否删除这条承包户数据?", "删除", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -161,7 +174,8 @@ public class PG_JSD_Adapter extends BaseAdapter
                 switch (v.getId())
                 {
                     case R.id.btn_sure:
-                        deleteAndUpdateSellOrder_detail(sellOrderDetai);
+//                        deleteAndUpdateSellOrder_detail(sellOrderDetai);
+                        DeleteSellOrderDetailSec(sellOrderDetai);
                         myDialog.cancel();
                         break;
                     case R.id.btn_cancle:
@@ -191,14 +205,63 @@ public class PG_JSD_Adapter extends BaseAdapter
         return 0;
     }
 
-    /*    number_difference	数量差
-    uuid
-            uid
-    contractid
-            year
-    batchTime
-            number_new
-    Weight*/
+
+
+
+
+    private void updateSellOrderDetailSec(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "updateSellOrderDetailSec");
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+
+
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.UPDATEMESSAGE_PG_UPDATE_DELETE);
+                        context.sendBroadcast(intent);
+
+                   /*     Toast.makeText(PG_JSD.this, "订单保存成功！", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
+                        sendBroadcast(intent);
+                        finish();*/
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
 
     private void feedbackOrderDetail_add( SellOrderDetail_New sellOrderDetail_new,  int number_difference)
     {
@@ -282,6 +345,104 @@ public class PG_JSD_Adapter extends BaseAdapter
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
 
+
+
+                    } else
+                    {
+                        listNewData = new ArrayList<SellOrderDetail_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
+
+
+    public  void DeleteSellOrderDetailSec( SellOrderDetail_New sellOrderDetai)
+    {
+        commembertab commembertab = AppContext.getUserInfo(context);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", sellOrderDetai.getid());
+        params.addQueryStringParameter("action", "DeleteSellOrderDetailSec");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<SellOrderDetail_New> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.UPDATEMESSAGE_PG_UPDATE_DELETE);
+                        context.sendBroadcast(intent);
+
+
+                    } else
+                    {
+                        listNewData = new ArrayList<SellOrderDetail_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
+
+
+    public  void getSellOrderDetailBystrWhere( SellOrderDetail_New sellOrderDetai,final TextView textView)
+    {
+        commembertab commembertab = AppContext.getUserInfo(context);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("strWhere","uid="+ sellOrderDetai.getuid()+" and batchTime='"+sellOrderDetai.getBatchTime()+"' and parkid="+sellOrderDetai.getparkid()+" and areaid="+sellOrderDetai.getareaid()
+        +" and contractid="+sellOrderDetai.getcontractid()+" and year='"+ sellOrderDetai.getYear()+"' and type='salefor'");
+
+        params.addQueryStringParameter("action", "getSellOrderDetailBystrWhere");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+
+                String a = responseInfo.result;
+                List<SellOrderDetail_New> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+                        if (listNewData.size()>0)
+                        {
+                            textView.setText(listNewData.get(0).getplannumber());
+                        }
 
 
                     } else

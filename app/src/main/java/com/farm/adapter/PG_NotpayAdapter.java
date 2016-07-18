@@ -24,6 +24,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
+import com.farm.ui.JSD_Detail_;
 import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.PG_EditOrder_;
 import com.farm.ui.PG_JSD_;
@@ -207,7 +208,9 @@ public class PG_NotpayAdapter extends BaseAdapter
                         Toast.makeText(context, "客户未交定金", Toast.LENGTH_SHORT).show();
                     }else
                     {
-                        Intent intent = new Intent(context, PG_JSD_.class);
+
+//                        Intent intent = new Intent(context, PG_JSD_.class);
+                        Intent intent = new Intent(context, JSD_Detail_.class);
                         intent.putExtra("bean", sellOrder_new);
                         intent.putExtra("broadcast", broadcast);
                         context.startActivity(intent);

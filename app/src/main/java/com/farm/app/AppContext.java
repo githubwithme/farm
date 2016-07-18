@@ -62,6 +62,8 @@ public class AppContext extends Application
     public final static String BROADCAST_DD_REFASH = "DD_REFASH";
     public final static String UPDATEMESSAGE_FARMMANAGER= "UPDATEMESSAGE_FARMMANAGER";
     public final static String UPDATEMESSAGE_PG_JSD= "PG_JSD";
+    public final static String UPDATEMESSAGE_PG_UPDATE_DELETE= "PG_UPDATE_DELETE";
+    public final static String UPDATEMESSAGE_PGDETAIL_UPDATE_DELETE= "PGDETAIL_UPDATE_DELETE";
 
     public final static int TIME_REFRESH = 30000;
     public final static int TIME_GZ = 60000;

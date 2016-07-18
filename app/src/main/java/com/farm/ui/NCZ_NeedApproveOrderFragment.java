@@ -174,6 +174,7 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         listAdapter = new NCZ_NeedAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+                        listAdapter.notifyDataSetChanged();
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {

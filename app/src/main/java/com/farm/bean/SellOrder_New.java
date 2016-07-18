@@ -23,6 +23,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
 {
     public String id;
     public String uid;
+    public String infoId;
     @Id
     @NoAutoIncrement
     public String uuid;
@@ -52,6 +53,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String finalpayment;
     public String flashStr;
     public List<SellOrderDetail_New> sellOrderDetailList;
+    public List<SellOrderDetail_New> DetailSecLists;
 
    public  String pactId;
     public String plateNumber; // 车牌号
@@ -100,6 +102,27 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String totalFee;//总合计金额
     public String personNote;//搬运说明
     public String actualMoney;//实际金额
+
+
+    public List<SellOrderDetail_New> getDetailSecLists()
+    {
+        return DetailSecLists;
+    }
+
+    public void setDetailSecLists(List<SellOrderDetail_New> detailSecLists)
+    {
+        DetailSecLists = detailSecLists;
+    }
+
+    public String getInfoId()
+    {
+        return infoId;
+    }
+
+    public void setInfoId(String infoId)
+    {
+        this.infoId = infoId;
+    }
 
     public String getQualityWaterWeight()
     {
@@ -860,6 +883,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             SellOrder_New p = new SellOrder_New();
             p.setid(source.readString());
             p.setUid(source.readString());
+            p.setInfoId(source.readString());
             p.setUuid(source.readString());
             p.setBatchTime(source.readString());
             p.setSelltype(source.readString());
@@ -887,6 +911,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setFinalpayment(source.readString());
             p.setFlashStr(source.readString());
             p.sellOrderDetailList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
+            p.DetailSecLists = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
 
 
             p.setPactId(source.readString());
@@ -953,6 +978,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     {
         p.writeString(id);
         p.writeString(uid);
+        p.writeString(infoId);
         p.writeString(uuid);
         p.writeString(batchTime);
         p.writeString(selltype);
@@ -980,6 +1006,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(finalpayment);
         p.writeString(flashStr);
         p.writeList(sellOrderDetailList);
+        p.writeList(DetailSecLists);//子表
 
         p.writeString(pactId);
         p.writeString(plateNumber);
