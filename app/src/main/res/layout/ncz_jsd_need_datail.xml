@@ -138,7 +138,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/gray"/>
 
-            <com.farm.ui.CustomHorizontalScrollView_JSDDetail
+            <com.farm.widget.CustomHorizontalScrollView_Allitem
                 android:id="@+id/item_scroll_title"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -154,7 +154,7 @@
 
 
                 </LinearLayout>
-            </com.farm.ui.CustomHorizontalScrollView_JSDDetail>
+            </com.farm.widget.CustomHorizontalScrollView_Allitem>
 
             <View
                 android:visibility="gone"
@@ -229,7 +229,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/gray"/>
 
-            <com.farm.ui.CustomHorizontalScrollView_JSDDetail
+            <com.farm.widget.CustomHorizontalScrollView_Allitem
                 android:id="@+id/totalScroll"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -245,7 +245,7 @@
 
 
                 </LinearLayout>
-            </com.farm.ui.CustomHorizontalScrollView_JSDDetail>
+       </com.farm.widget.CustomHorizontalScrollView_Allitem>
 
             <View
                 android:visibility="gone"

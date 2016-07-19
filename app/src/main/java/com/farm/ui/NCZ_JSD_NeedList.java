@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * Created by hasee on 2016/7/19.
  */
-@EActivity(R.layout.jsd_detail)
+@EActivity(R.layout.ncz_jsd_need_datail)
 public class NCZ_JSD_NeedList extends Activity
 {
     private ListView mListView;
@@ -414,7 +414,7 @@ public class NCZ_JSD_NeedList extends Activity
         {
 
             // 获取list_item布局文件的视图
-            convertView = LayoutInflater.from(NCZ_JSD_NeedList.this).inflate(R.layout.jsd_detail_scrolladapteritem, null);
+            convertView = LayoutInflater.from(NCZ_JSD_NeedList.this).inflate(R.layout.ncz_look_jsd_adapter_item, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
