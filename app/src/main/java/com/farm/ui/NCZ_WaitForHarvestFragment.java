@@ -156,10 +156,6 @@ public class NCZ_WaitForHarvestFragment extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("year", utils.getYear());
-//        params.addQueryStringParameter("type", "0");
-//        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("parkid", "-1");
         params.addQueryStringParameter("productname", "-1");

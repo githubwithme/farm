@@ -115,8 +115,7 @@ public class PG_AllOrderFragment_New extends Fragment
     {
         View rootView = inflater.inflate(R.layout.pg_allorderfragment_new, container, false);
         appContext = (AppContext) getActivity().getApplication();
-//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENOTPAYORDER);
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_FARMMANAGER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
 
         return rootView;
@@ -139,7 +138,7 @@ public class PG_AllOrderFragment_New extends Fragment
         if (listData != null)
         {
 //            listAdapter = new NCZ_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
-            listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+            listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData, AppContext.UPDATEMESSAGE_FARMMANAGER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -162,12 +161,7 @@ public class PG_AllOrderFragment_New extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("year", utils.getYear());
-//        params.addQueryStringParameter("type", "0");
-//        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("parkid", "-1");
+        params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("productname", "-1");
         params.addQueryStringParameter("buyer", "-1");
         params.addQueryStringParameter("year", utils.getYear());
@@ -590,7 +584,7 @@ public class PG_AllOrderFragment_New extends Fragment
 //                                }
 //                            }
 //                        }
-//                        listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+//                        listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData, AppContext.UPDATEMESSAGE_FARMMANAGER);
 //                        lv.setAdapter(listAdapter);
 //                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
 //                        {

@@ -110,7 +110,6 @@ public class PG_NeedApproveOrderFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.cz_allorderfarment, container, false);
         appContext = (AppContext) getActivity().getApplication();
-//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_FARMMANAGER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
         return rootView;
