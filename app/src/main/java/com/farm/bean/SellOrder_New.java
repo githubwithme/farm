@@ -109,7 +109,167 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String mainPeoplePhone;//负责人电话
     public String parkname;//采收园区名称
     public String isReady;//是否准备就绪
+    public String settlementNumber;//结算订单数
+    public String notPaySettlementNumber;//未结算金额订单数
+    public String paidSettlementNumber;//已结算金额订单数
+    public String paid;//已结算金额
+    public String unpaid;//未结算金额
 
+    protected SellOrder_New(Parcel in)
+    {
+        id = in.readString();
+        uid = in.readString();
+        infoId = in.readString();
+        uuid = in.readString();
+        batchTime = in.readString();
+        selltype = in.readString();
+        status = in.readString();
+        buyers = in.readString();
+        address = in.readString();
+        email = in.readString();
+        phone = in.readString();
+        price = in.readString();
+        number = in.readString();
+        weight = in.readString();
+        sumvalues = in.readString();
+        actualprice = in.readString();
+        actualweight = in.readString();
+        actualnumber = in.readString();
+        actualsumvalues = in.readString();
+        reg = in.readString();
+        saletime = in.readString();
+        year = in.readString();
+        note = in.readString();
+        feedbacknote = in.readString();
+        deposit = in.readString();
+        xxzt = in.readString();
+        producer = in.readString();
+        finalpayment = in.readString();
+        flashStr = in.readString();
+        sellOrderDetailList = in.createTypedArrayList(SellOrderDetail_New.CREATOR);
+        DetailSecLists = in.createTypedArrayList(SellOrderDetail_New.CREATOR);
+        pactId = in.readString();
+        plateNumber = in.readString();
+        mainPepole = in.readString();
+        mainPepName = in.readString();
+        contractorId = in.readString();
+        pickId = in.readString();
+        carryPrice = in.readString();
+        packPrice = in.readString();
+        defectPrice = in.readString();
+        defectNum = in.readString();
+        packPec = in.readString();
+        waitDeposit = in.readString();
+        buyersId = in.readString();
+        buyersName = in.readString();
+        contractorName = in.readString();
+        pickName = in.readString();
+        purchaName = in.readString();
+        purchaTel = in.readString();
+        purchaMail = in.readString();
+        isNeedAudit = in.readString();
+        freeDeposit = in.readString();
+        freeFinalPay = in.readString();
+        oldPrice = in.readString();
+        oldCarryPrice = in.readString();
+        oldPackPrice = in.readString();
+        oldnumber = in.readString();
+        oldsaletime = in.readString();
+        creatorid = in.readString();
+        goodsname = in.readString();
+        qualityWaterWeight = in.readString();
+        qualityNetWeight = in.readString();
+        qualityBalance = in.readString();
+        defectWaterWeight = in.readString();
+        defectNetWeight = in.readString();
+        defectBalance = in.readString();
+        total = in.readString();
+        qualityTotalWeight = in.readString();
+        defectTotalWeight = in.readString();
+        TotalWeight = in.readString();
+        packFee = in.readString();
+        carryFee = in.readString();
+        totalFee = in.readString();
+        personNote = in.readString();
+        actualMoney = in.readString();
+        prepareStatus = in.readString();
+        product = in.readString();
+        carNumber = in.readString();
+        mainPeople = in.readString();
+        mainPeoplePhone = in.readString();
+        parkname = in.readString();
+        isReady = in.readString();
+        settlementNumber = in.readString();
+        notPaySettlementNumber = in.readString();
+        paidSettlementNumber = in.readString();
+        paid = in.readString();
+        unpaid = in.readString();
+    }
+
+    public static final Creator<SellOrder_New> CREATOR = new Creator<SellOrder_New>()
+    {
+        @Override
+        public SellOrder_New createFromParcel(Parcel in)
+        {
+            return new SellOrder_New(in);
+        }
+
+        @Override
+        public SellOrder_New[] newArray(int size)
+        {
+            return new SellOrder_New[size];
+        }
+    };
+
+    public String getSettlementNumber()
+    {
+        return settlementNumber;
+    }
+
+    public void setSettlementNumber(String settlementNumber)
+    {
+        this.settlementNumber = settlementNumber;
+    }
+
+    public String getNotPaySettlementNumber()
+    {
+        return notPaySettlementNumber;
+    }
+
+    public void setNotPaySettlementNumber(String notPaySettlementNumber)
+    {
+        this.notPaySettlementNumber = notPaySettlementNumber;
+    }
+
+    public String getPaidSettlementNumber()
+    {
+        return paidSettlementNumber;
+    }
+
+    public void setPaidSettlementNumber(String paidSettlementNumber)
+    {
+        this.paidSettlementNumber = paidSettlementNumber;
+    }
+
+    public String getPaid()
+    {
+        return paid;
+    }
+
+    public void setPaid(String paid)
+    {
+        this.paid = paid;
+    }
+
+    public String getUnpaid()
+    {
+        return unpaid;
+    }
+
+    public void setUnpaid(String unpaid)
+    {
+        this.unpaid = unpaid;
+    }
 
     public String getIsReady()
     {
@@ -952,204 +1112,101 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         return 0;
     }
 
-    public static final Creator<SellOrder_New> CREATOR = new Creator()
-    {
-        @Override
-        public SellOrder_New createFromParcel(Parcel source)
-        {
-            // 必须按成员变量声明的顺序读取数据，不然会出现获取数据出错
-            SellOrder_New p = new SellOrder_New();
-            p.setid(source.readString());
-            p.setUid(source.readString());
-            p.setInfoId(source.readString());
-            p.setUuid(source.readString());
-            p.setBatchTime(source.readString());
-            p.setSelltype(source.readString());
-            p.setStatus(source.readString());
-            p.setBuyers(source.readString());
-            p.setAddress(source.readString());
-            p.setEmail(source.readString());
-            p.setPhone(source.readString());
-            p.setPrice(source.readString());
-            p.setNumber(source.readString());
-            p.setWeight(source.readString());
-            p.setSumvalues(source.readString());
-            p.setActualprice(source.readString());
-            p.setActualweight(source.readString());
-            p.setActualnumber(source.readString());
-            p.setActualsumvalues(source.readString());
-            p.setReg(source.readString());
-            p.setSaletime(source.readString());
-            p.setYear(source.readString());
-            p.setNote(source.readString());
-            p.setFeedbacknote(source.readString());
-            p.setDeposit(source.readString());
-            p.setXxzt(source.readString());
-            p.setProducer(source.readString());
-            p.setFinalpayment(source.readString());
-            p.setFlashStr(source.readString());
-            p.sellOrderDetailList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
-            p.DetailSecLists = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
-
-
-            p.setPactId(source.readString());
-            p.setPlateNumber(source.readString());
-            p.setMainPepole(source.readString());
-            p.setMainPepName(source.readString());
-            p.setContractorId(source.readString());
-            p.setPickId(source.readString());
-            p.setCarryPrice(source.readString());
-            p.setPackPrice(source.readString());
-            p.setDefectPrice(source.readString());
-            p.setDefectNum(source.readString());
-
-
-            p.setPackPec(source.readString());
-            p.setWaitDeposit(source.readString());
-            p.setBuyersId(source.readString());
-            p.setBuyersName(source.readString());
-            p.setContractorName(source.readString());
-            p.setPickName(source.readString());
-            p.setPurchaName(source.readString());
-            p.setPurchaTel(source.readString());
-            p.setPurchaMail(source.readString());
-            p.setIsNeedAudit(source.readString());
-            p.setFreeDeposit(source.readString());
-            p.setFreeFinalPay(source.readString());
-            p.setOldPrice(source.readString());
-            p.setOldCarryPrice(source.readString());
-            p.setOldPackPrice(source.readString());
-            p.setOldnumber(source.readString());
-            p.setOldsaletime(source.readString());
-            p.setCreatorid(source.readString());
-            p.setGoodsname(source.readString());
-
-            p.setQualityWaterWeight(source.readString());
-            p.setQualityNetWeight(source.readString());
-            p.setQualityBalance(source.readString());
-            p.setDefectWaterWeight(source.readString());
-            p.setDefectNetWeight(source.readString());
-            p.setDefectBalance(source.readString());
-            p.setTotal(source.readString());
-            p.setQualityTotalWeight(source.readString());
-            p.setDefectTotalWeight(source.readString());
-            p.setTotalWeight(source.readString());
-            p.setPackFee(source.readString());
-            p.setCarryFee(source.readString());
-            p.setTotalFee(source.readString());
-            p.setPersonNote(source.readString());
-            p.setActualMoney(source.readString());
-            p.setPrepareStatus(source.readString());
-            p.setProduct(source.readString());
-            p.setCarNumber(source.readString());
-            p.setMainPeople(source.readString());
-            p.setMainPeoplePhone(source.readString());
-            p.setParkname(source.readString());
-            p.setIsReady(source.readString());
-            return p;
-
-
-        }
-
-        @Override
-        public SellOrder_New[] newArray(int size)
-        {
-            return new SellOrder_New[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel p, int arg1)
-    {
-        p.writeString(id);
-        p.writeString(uid);
-        p.writeString(infoId);
-        p.writeString(uuid);
-        p.writeString(batchTime);
-        p.writeString(selltype);
-        p.writeString(status);
-        p.writeString(buyers);
-        p.writeString(address);
-        p.writeString(email);
-        p.writeString(phone);
-        p.writeString(price);
-        p.writeString(number);
-        p.writeString(weight);
-        p.writeString(sumvalues);
-        p.writeString(actualprice);
-        p.writeString(actualweight);
-        p.writeString(actualnumber);
-        p.writeString(actualsumvalues);
-        p.writeString(reg);
-        p.writeString(saletime);
-        p.writeString(year);
-        p.writeString(note);
-        p.writeString(feedbacknote);
-        p.writeString(deposit);
-        p.writeString(xxzt);
-        p.writeString(producer);
-        p.writeString(finalpayment);
-        p.writeString(flashStr);
-        p.writeList(sellOrderDetailList);
-        p.writeList(DetailSecLists);//子表
-
-        p.writeString(pactId);
-        p.writeString(plateNumber);
-        p.writeString(mainPepole);
-        p.writeString(mainPepName);
-        p.writeString(contractorId);
-        p.writeString(pickId);
-        p.writeString(carryPrice);
-        p.writeString(packPrice);
-        p.writeString(defectPrice);
-        p.writeString(defectNum);
-        p.writeString(packPec);
-        p.writeString(waitDeposit);
-        p.writeString(buyersId);
-        p.writeString(buyersName);
-        p.writeString(contractorName);
-        p.writeString(pickName);
-        p.writeString(purchaName);
-        p.writeString(purchaTel);
-        p.writeString(purchaMail);
-        p.writeString(isNeedAudit);
-        p.writeString(freeDeposit);
-        p.writeString(freeFinalPay);
-        p.writeString(oldPrice);
-        p.writeString(oldCarryPrice);
-        p.writeString(oldPackPrice);
-        p.writeString(oldnumber);
-        p.writeString(oldsaletime);
-        p.writeString(creatorid);
-        p.writeString(goodsname);
-
-        p.writeString(qualityWaterWeight);
-        p.writeString(qualityNetWeight);
-        p.writeString(qualityBalance);
-        p.writeString(defectWaterWeight);
-        p.writeString(defectNetWeight);
-        p.writeString(defectBalance);
-        p.writeString(total);
-        p.writeString(qualityTotalWeight);
-        p.writeString(defectTotalWeight);
-        p.writeString(TotalWeight);
-        p.writeString(packFee);
-        p.writeString(carryFee);
-        p.writeString(totalFee);
-        p.writeString(personNote);
-        p.writeString(actualMoney);
-        p.writeString(prepareStatus);
-        p.writeString(product);
-        p.writeString(carNumber);
-        p.writeString(mainPeople);
-        p.writeString(mainPeoplePhone);
-        p.writeString(parkname);
-        p.writeString(isReady);
-    }
-
     @Override
     public int describeContents()
     {
         return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeString(id);
+        dest.writeString(uid);
+        dest.writeString(infoId);
+        dest.writeString(uuid);
+        dest.writeString(batchTime);
+        dest.writeString(selltype);
+        dest.writeString(status);
+        dest.writeString(buyers);
+        dest.writeString(address);
+        dest.writeString(email);
+        dest.writeString(phone);
+        dest.writeString(price);
+        dest.writeString(number);
+        dest.writeString(weight);
+        dest.writeString(sumvalues);
+        dest.writeString(actualprice);
+        dest.writeString(actualweight);
+        dest.writeString(actualnumber);
+        dest.writeString(actualsumvalues);
+        dest.writeString(reg);
+        dest.writeString(saletime);
+        dest.writeString(year);
+        dest.writeString(note);
+        dest.writeString(feedbacknote);
+        dest.writeString(deposit);
+        dest.writeString(xxzt);
+        dest.writeString(producer);
+        dest.writeString(finalpayment);
+        dest.writeString(flashStr);
+        dest.writeTypedList(sellOrderDetailList);
+        dest.writeTypedList(DetailSecLists);
+        dest.writeString(pactId);
+        dest.writeString(plateNumber);
+        dest.writeString(mainPepole);
+        dest.writeString(mainPepName);
+        dest.writeString(contractorId);
+        dest.writeString(pickId);
+        dest.writeString(carryPrice);
+        dest.writeString(packPrice);
+        dest.writeString(defectPrice);
+        dest.writeString(defectNum);
+        dest.writeString(packPec);
+        dest.writeString(waitDeposit);
+        dest.writeString(buyersId);
+        dest.writeString(buyersName);
+        dest.writeString(contractorName);
+        dest.writeString(pickName);
+        dest.writeString(purchaName);
+        dest.writeString(purchaTel);
+        dest.writeString(purchaMail);
+        dest.writeString(isNeedAudit);
+        dest.writeString(freeDeposit);
+        dest.writeString(freeFinalPay);
+        dest.writeString(oldPrice);
+        dest.writeString(oldCarryPrice);
+        dest.writeString(oldPackPrice);
+        dest.writeString(oldnumber);
+        dest.writeString(oldsaletime);
+        dest.writeString(creatorid);
+        dest.writeString(goodsname);
+        dest.writeString(qualityWaterWeight);
+        dest.writeString(qualityNetWeight);
+        dest.writeString(qualityBalance);
+        dest.writeString(defectWaterWeight);
+        dest.writeString(defectNetWeight);
+        dest.writeString(defectBalance);
+        dest.writeString(total);
+        dest.writeString(qualityTotalWeight);
+        dest.writeString(defectTotalWeight);
+        dest.writeString(TotalWeight);
+        dest.writeString(packFee);
+        dest.writeString(carryFee);
+        dest.writeString(totalFee);
+        dest.writeString(personNote);
+        dest.writeString(actualMoney);
+        dest.writeString(prepareStatus);
+        dest.writeString(product);
+        dest.writeString(carNumber);
+        dest.writeString(mainPeople);
+        dest.writeString(mainPeoplePhone);
+        dest.writeString(parkname);
+        dest.writeString(isReady);
+        dest.writeString(settlementNumber);
+        dest.writeString(notPaySettlementNumber);
+        dest.writeString(paidSettlementNumber);
+        dest.writeString(paid);
+        dest.writeString(unpaid);
     }
 }
