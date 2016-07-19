@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +13,26 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.SellOrder_New_First;
+import com.farm.common.utils;
 import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
+import com.farm.widget.CustomDialog_ListView;
+import com.farm.widget.MyDateMaD;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -32,6 +41,10 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import org.apache.http.entity.StringEntity;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +53,9 @@ import java.util.List;
  */
 public class NCZ_NotPayDepositAdapter extends BaseAdapter
 {
+
+    CustomDialog_ListView customDialog_listView;
+    String zzsl;
     static String name = "";
     CustomDialog_CallTip custom_calltip;
     MyDialog myDialog;
@@ -52,6 +68,8 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
     static class ListItemView
     {
         //        public CircleImageView circle_img;
+        public TextView tv_car;
+        public TextView btn_changetime;
         public TextView tv_mainpeple;
         public TextView tv_parkname;
         public TextView tv_buyer;
@@ -121,6 +139,8 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
             listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
             listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
+            listItemView.btn_changetime = (TextView) convertView.findViewById(R.id.btn_changetime);
 //            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
             // 设置控件集到convertView
             lmap.put(position, convertView);
@@ -137,6 +157,8 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
 //            listItemView.tv_car.setText(sellOrder.getProducer());
 //            SpannableString content = new SpannableString(sellOrder.getPurchaName());
 //            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+
+
             listItemView.tv_buyer.setText(sellOrder.getPurchaName());
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
             {
@@ -146,19 +168,19 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
                     showDialog_addsaleinfo("15989154871");
                 }
             });
-//            listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
-//            listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
-//            listItemView.btn_changetime.setOnClickListener(new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View view)
-//                {
-//                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
-//                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-//                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name, sellOrders, "1");
-//                    myDatepicker.getDialog().show();
-//                }
-//            });
+            listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
+            listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
+            listItemView.btn_changetime.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
+                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
+                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.btn_changetime, sellOrders, "1");
+                    myDatepicker.getDialog().show();
+                }
+            });
             //            listItemView.btn_preparework.setTag(R.id.tag_danwei,sellOrder);
             listItemView.btn_preparework.setOnClickListener(new View.OnClickListener()
             {
@@ -172,12 +194,35 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
                 }
             });
                 //            listItemView.ll_car.setTag(R.id.tag_danwei,sellOrder);
+            listItemView.tv_car.setText(sellOrder.getActualweight());
+            listItemView.ll_car.setTag(R.id.tag_contract,sellOrder);
+            listItemView.ll_car.setTag(R.id.tag_batchtime,listItemView);
             listItemView.ll_car.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
 
+                    ListItemView listItemView2 = new ListItemView();
+
+                    listItemView2= (ListItemView) v.getTag(R.id.tag_batchtime);
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_contract);
+                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
+                    JSONArray jsonArray = null;
+                    try
+                    {
+                        jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+                    } catch (Exception e)
+                    {
+
+                    }
+
+                    List<String> list = new ArrayList<String>();
+                    for (int i = 0; i < jsonArray.size(); i++)
+                    {
+                        list.add(jsonArray.getString(i));
+                    }
+                    showDialog_workday(list,sellOrder_new);
                 }
             });
 //        listItemView.ll_mainpeople.setTag(R.id.tag_fi, listData.get(groupPosition).getDate());
@@ -434,4 +479,76 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
         myDialog.show();
     }
 
+
+    public void showDialog_workday(List<String> list,final SellOrder_New sellOrder_new)
+    {
+        View dialog_layout = (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                zzsl = bundle.getString("name");
+                SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
+                sellOrder_new.setActualweight(zzsl);
+                StringBuilder builder = new StringBuilder();
+                builder.append("{\"SellOrder_new\":[ ");
+                builder.append(JSON.toJSONString(sellOrder_new));
+                builder.append("], \"sellorderlistadd\": [");
+                builder.append(JSON.toJSONString(sellOrder_new_first));
+                builder.append("]} ");
+                newaddOrder(builder.toString());
+            }
+        });
+        customDialog_listView.show();
+    }
+    private void newaddOrder(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "editOrder");
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(context, "订单修改成功！", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent();
+//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
+                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                        context.sendBroadcast(intent);
+
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
 }

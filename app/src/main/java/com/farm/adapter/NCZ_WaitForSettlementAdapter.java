@@ -21,6 +21,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.ui.NCZ_EditOrder_;
+import com.farm.ui.NCZ_Look_JSD_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
@@ -173,19 +174,19 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter
                     context.startActivity(intent);
                 }
             });
-             //            listItemView.btn_showSettlement.setTag(R.id.tag_danwei,sellOrder);
+            listItemView.btn_showSettlement.setTag(R.id.tag_danwei, sellOrder);
             listItemView.btn_showSettlement.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
-                    Intent intent = new Intent(context, RecoveryDetail_.class);
-//                    intent.putExtra("zbstudio", sellOrder_new);
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
+                    Intent intent = new Intent(context, NCZ_Look_JSD_.class);
+                    intent.putExtra("zbstudio", sellOrder_new);
                     context.startActivity(intent);
                 }
             });
-                //            listItemView.ll_car.setTag(R.id.tag_danwei,sellOrder);
+            //            listItemView.ll_car.setTag(R.id.tag_danwei,sellOrder);
             listItemView.ll_car.setOnClickListener(new View.OnClickListener()
             {
                 @Override

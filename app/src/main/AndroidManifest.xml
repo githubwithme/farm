@@ -223,6 +223,10 @@
         <activity android:name=".ui.JSD_Detail_"/>
         <activity android:name=".ui.PG_JSD_Detail_"/>
         <activity android:name=".ui.NCZ_All_OneOrder_Detail_"/>
+        <activity android:name=".ui.NCZ_Look_JSD_Detail_"/>
+        <activity android:name=".ui.NCZ_Look_JSD_"/>
+        <activity android:name=".ui.NCZ_JSD_NeedList_"/>
+
 
         <!-- 场长UI -->
         <activity android:name=".ui.CZ_MainActivity_"/>

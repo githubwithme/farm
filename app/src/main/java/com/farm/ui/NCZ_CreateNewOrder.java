@@ -142,6 +142,12 @@ public class NCZ_CreateNewOrder extends Activity
     @ViewById
     EditText cheliang_num;
 
+
+    @Click
+    void btn_save()
+    {
+
+    }
     @Click
     void rl_more_tip()
     {

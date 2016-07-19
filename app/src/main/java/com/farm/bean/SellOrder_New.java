@@ -108,6 +108,18 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String mainPeople;//负责人名称
     public String mainPeoplePhone;//负责人电话
     public String parkname;//采收园区名称
+    public String isReady;//是否准备就绪
+
+
+    public String getIsReady()
+    {
+        return isReady;
+    }
+
+    public void setIsReady(String isReady)
+    {
+        this.isReady = isReady;
+    }
 
     public String getParkname()
     {
@@ -1033,6 +1045,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setMainPeople(source.readString());
             p.setMainPeoplePhone(source.readString());
             p.setParkname(source.readString());
+            p.setIsReady(source.readString());
             return p;
 
 
@@ -1131,6 +1144,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(mainPeople);
         p.writeString(mainPeoplePhone);
         p.writeString(parkname);
+        p.writeString(isReady);
     }
 
     @Override
