@@ -27,7 +27,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.common.utils;
-import com.farm.ui.NCZ_EditOrder_;
+import com.farm.ui.PG_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
@@ -138,24 +138,24 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-            if (sellOrder.getFreeDeposit().equals("1"))
-            {
-                listItemView.ll_undeposit.setVisibility(View.VISIBLE);
-            } else
-            {
-                listItemView.ll_undeposit.setVisibility(View.GONE);
-            }
+//            if (sellOrder.getFreeDeposit().equals("1"))
+//            {
+//                listItemView.ll_undeposit.setVisibility(View.VISIBLE);
+//            } else
+//            {
+//                listItemView.ll_undeposit.setVisibility(View.GONE);
+//            }
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.tv_parkname.setText(sellOrder.getParkname());
             listItemView.tv_mainpeple.setText(sellOrder.getMainPeople());
             listItemView.tv_car.setText(sellOrder.getCarNumber());
-            if (sellOrder.getIsReady().equals("true"))
-            {
-                listItemView.tv_prepareworkStatus.setText("准备就绪");
-            } else
-            {
-                listItemView.tv_prepareworkStatus.setText("未准备就绪");
-            }
+//            if (sellOrder.getIsReady().equals("true"))
+//            {
+//                listItemView.tv_prepareworkStatus.setText("准备就绪");
+//            } else
+//            {
+//                listItemView.tv_prepareworkStatus.setText("未准备就绪");
+//            }
 
             listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
@@ -244,7 +244,7 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                 {
                     int pos = (int) v.getTag(R.id.tag_postion);
                     SellOrder_New sellOrder = (SellOrder_New) v.getTag(R.id.tag_bean);
-                    Intent intent = new Intent(context, NCZ_EditOrder_.class);
+                    Intent intent = new Intent(context, PG_EditOrder_.class);
                     intent.putExtra("bean", sellOrder);
                     intent.putExtra("broadcast", broadcast);
                     context.startActivity(intent);

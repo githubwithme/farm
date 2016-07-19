@@ -27,8 +27,8 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.common.utils;
-import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.NCZ_Look_JSD_;
+import com.farm.ui.PG_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
@@ -262,7 +262,7 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
                 {
                     int pos = (int) v.getTag(R.id.tag_postion);
                     SellOrder_New sellOrder = (SellOrder_New) v.getTag(R.id.tag_bean);
-                    Intent intent = new Intent(context, NCZ_EditOrder_.class);
+                    Intent intent = new Intent(context, PG_EditOrder_.class);
                     intent.putExtra("bean", sellOrder);
                     intent.putExtra("broadcast", broadcast);
                     context.startActivity(intent);
