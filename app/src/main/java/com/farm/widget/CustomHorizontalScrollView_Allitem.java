@@ -1,31 +1,31 @@
 package com.farm.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.HorizontalScrollView;
 
 import com.farm.ui.PG_SaleActivity;
 
 /**
- * Created by ${hmj} on 2016/6/27.
+ * Created by hasee on 2016/7/18.
  */
-public class CustomHorizontalScrollView_PGSale extends HorizontalScrollView
+public class CustomHorizontalScrollView_Allitem extends HorizontalScrollView
 {
     CustomOntouch customOntouch;
 
-    public CustomHorizontalScrollView_PGSale(Context context, AttributeSet attrs, int defStyle)
+    public CustomHorizontalScrollView_Allitem(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
     }
 
-    public CustomHorizontalScrollView_PGSale(Context context, AttributeSet attrs)
+    public CustomHorizontalScrollView_Allitem(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public CustomHorizontalScrollView_PGSale(Context context)
+    public CustomHorizontalScrollView_Allitem(Context context)
     {
         super(context);
     }
@@ -61,5 +61,4 @@ public class CustomHorizontalScrollView_PGSale extends HorizontalScrollView
         public void customOnScrollChanged(int l, int t, int oldl, int oldt);
         public HorizontalScrollView getmTouchView();
     }
-
 }

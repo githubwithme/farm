@@ -44,6 +44,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/line_color"/>
+
+    <TextView
+        android:id="@+id/is_ready"
+        android:gravity="center"
+        android:textSize="16dip"
+        android:text="未就绪"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -57,7 +65,8 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_bz"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="包装工：已落实"
                 android:layout_centerVertical="true"
@@ -66,12 +75,14 @@
 
 
             <LinearLayout
+                android:id="@+id/btn_addbz"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_marginRight="15dip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -79,6 +90,7 @@
                     android:textColor="@color/bg_text"
                     android:textSize="16sp"/>
                 <View
+                    android:visibility="gone"
                     android:layout_width="15dip"
                     android:layout_height="15dip"
                     android:layout_gravity="center_vertical"
@@ -125,7 +137,8 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_by"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="挑工：已落实"
                 android:layout_centerVertical="true"
@@ -134,12 +147,14 @@
 
 
             <LinearLayout
+                android:id="@+id/btn_addby"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_marginRight="15dip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -147,6 +162,7 @@
                     android:textColor="@color/bg_text"
                     android:textSize="16sp"/>
                 <View
+                    android:visibility="gone"
                     android:layout_width="15dip"
                     android:layout_height="15dip"
                     android:layout_gravity="center_vertical"
@@ -181,6 +197,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="10dip"
@@ -208,6 +225,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_marginRight="15dip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -215,6 +233,7 @@
                     android:textColor="@color/bg_text"
                     android:textSize="16sp"/>
                 <View
+                    android:visibility="gone"
                     android:layout_width="15dip"
                     android:layout_height="15dip"
                     android:layout_gravity="center_vertical"
@@ -250,9 +269,116 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10dip"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:layout_marginLeft="10dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_cheliang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="车辆数:0"
+                android:layout_centerVertical="true"
+                android:textColor="@color/bg_text"
+                android:textSize="16sp"/>
+
+            <View
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_cheliang"
+                android:layout_width="14dip"
+                android:layout_height="14dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dip"
+                android:background="@drawable/ic_down_up"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btn_add"
+                    android:layout_marginRight="15dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="保存"
+                    android:textColor="@color/bg_text"
+                    android:textSize="16sp"/>
+                <View
+                    android:visibility="gone"
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_next"
+                    android:layout_marginRight="10dip"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dip"
+            android:layout_marginBottom="10dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_gravity="center_vertical"
+                android:text="车牌号"
+                android:textColor="@color/gray"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/chepai"
+                android:textSize="14dip"
+                android:hint="请输入车牌号"
+                android:layout_marginLeft="10dip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:visibility="gone"
+                android:layout_width="15dip"
+                android:layout_height="15dip"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_next"
+                android:layout_marginRight="10dip"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 
+    <LinearLayout
+        android:layout_marginTop="20dip"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dip"
+            android:background="@drawable/background_view_rounded_single"
+            android:gravity="center"
+            android:text="准备就绪"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+    </LinearLayout>
 
 
 

@@ -259,7 +259,8 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
 //        String indata=listData.get(groupPosition).getInDate().substring(0,listData.get(groupPosition).getInDate().length()-8);
         inDate.setText(listData.get(groupPosition).getInDate());
 //        inDate.setText(indata);
-        batchName.setText(listData.get(groupPosition).getInType());
+//        batchName.setText(listData.get(groupPosition).getInType());
+        batchName.setText(listData.get(groupPosition).getBatchNumber());
         loadingFee.setText("装卸费:" + listData.get(groupPosition).getLoadingFee() + "元");
         shippingFee.setText("运费:" + listData.get(groupPosition).getShippingFee() + "元");
         double a = Double.valueOf(listData.get(groupPosition).getInGoodsValue()) + Double.valueOf(listData.get(groupPosition).getLoadingFee()) + Double.valueOf(listData.get(groupPosition).getShippingFee());

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/color_topbar">
+
+        <ImageButton
+            android:id="@+id/imgbtn_back"
+            android:layout_width="35dip"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/ic_back"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/imgbtn_back"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:text="结算单列表"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"/>
+
+        <Button
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:text="添加"/>
+
+    </RelativeLayout>
+    <ScrollView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bg_main"/>
+
+            <ListView
+                android:id="@+id/liat_jsd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/bg_main"
+                android:dividerHeight="0px"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="20dip"
+                android:background="@color/bg_main"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rl_note"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_below="@+id/rl_title"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="结算单情况"
+            android:textColor="@color/bg_text"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:gravity="center"
+            android:text="单位：株"
+            android:textColor="@color/gray"
+            android:textSize="13sp"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/rl_note"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="5dip"
+        android:background="@drawable/round_white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_top"
+            android:layout_width="fill_parent"
+            android:layout_height="41dip"
+            android:layout_marginLeft="1px"
+            android:layout_marginRight="1px"
+            android:layout_marginTop="1px"
+            android:minHeight="41dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_top_left"
+                android:layout_width="60dip"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="车辆/数据"
+                android:textColor="@color/bg_text"
+                android:textSize="15sp"/>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/gray"/>
+
+            <com.farm.widget.CustomHorizontalScrollView_Allitem
+                android:id="@+id/item_scroll_title"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/ll_park"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dip"
+                    android:orientation="horizontal">
+
+
+                </LinearLayout>
+         </com.farm.widget.CustomHorizontalScrollView_Allitem>
+
+            <View
+                android:visibility="gone"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/gray"/>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_top_right"
+                android:layout_width="60dip"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="合计"
+                android:textColor="@color/bg_text"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line_middle"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/ll_top"
+            android:background="@color/gray"/>
+
+        <ListView
+            android:id="@+id/hlistview_scroll_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_middle"
+
+            android:layout_marginLeft="1px"
+            android:layout_marginRight="1px"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/transparent"
+            android:dividerHeight="0px"
+            android:fadingEdge="none"
+            android:scrollbars="none">
+        </ListView>
+
+        <LinearLayout
+            android:layout_below="@+id/hlistview_scroll_list"
+            android:id="@+id/ll_bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:layout_marginLeft="1px"
+            android:layout_marginRight="1px"
+            android:layout_marginTop="1px"
+            android:minHeight="41dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_bottom_left"
+                android:layout_width="60dip"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="合计"
+                android:textColor="@color/bg_text"
+                android:textSize="15sp"/>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/gray"/>
+
+            <com.farm.widget.CustomHorizontalScrollView_Allitem
+                android:id="@+id/totalScroll"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/ll_total"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dip"
+                    android:orientation="horizontal">
+
+
+                </LinearLayout>
+           </com.farm.widget.CustomHorizontalScrollView_Allitem>
+
+            <View
+                android:visibility="gone"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/gray"/>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/alltoatal"
+                android:layout_width="60dip"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="总量"
+                android:textColor="@color/red"
+                android:textSize="15sp"/>
+
+
+        </LinearLayout>
+        <Button
+            android:layout_below="@+id/line_above"
+            android:id="@+id/button_add"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:background="@drawable/background_view_rounded_single"
+            android:gravity="center"
+            android:text="添加承包户数据"
+            android:textColor="@color/bg_text"
+            android:textSize="@dimen/size_14"/>
+
+        <View
+            android:id="@+id/line_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_above="@+id/ll_bottom"
+            android:background="@color/gray"/>
+
+        <View
+            android:id="@+id/line_above"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/ll_bottom"
+            android:background="@color/gray"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:text="注：\n1、点击单元格可以编辑数据 \n2、左滑动加载更多"
+        android:textColor="@color/gray"
+        android:textSize="13sp"/>
+</LinearLayout>

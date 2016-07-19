@@ -18,9 +18,11 @@ import android.widget.TextView;
 
 import com.farm.R;
 import com.farm.app.AppContext;
+import com.farm.bean.Park_AllCBH;
 import com.farm.bean.WZ_CRk;
 import com.farm.bean.WZ_RKxx;
 import com.farm.bean.commembertab;
+import com.farm.bean.contractTab;
 import com.farm.ui.NCZ_WZ_RKDetail_;
 
 import java.util.ArrayList;
@@ -36,11 +38,11 @@ public class CustomDialog_Expandlistview extends Dialog
     CustomDialogListener cdListener;
     Context context;
     View layout;
-    List<WZ_CRk> listData;
+    List<Park_AllCBH> listData;
     String currentDat = "";
     ExpandableListView expandableListView;
 
-    public CustomDialog_Expandlistview(Context context, int theme, View layout, List<WZ_CRk> listData, CustomDialogListener cdListener)
+    public CustomDialog_Expandlistview(Context context, int theme, View layout, List<Park_AllCBH> listData, CustomDialogListener cdListener)
     {
         super(context, theme);
         this.context = context;
@@ -70,8 +72,12 @@ public class CustomDialog_Expandlistview extends Dialog
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l)
             {
                 Bundle bundle = new Bundle();
-                bundle.putString("parkname", listData.get(i).getBatchName());
-                bundle.putString("cbhname", listData.get(i).getWzcrkxx().get(i1).getGoodsname());
+                bundle.putString("areaId", listData.get(i).getId());
+                bundle.putString("areaName", listData.get(i).getAreaName());
+                bundle.putString("contractId", listData.get(i).getContractList().get(i1).getid());
+                bundle.putString("contractNum", listData.get(i).getContractList().get(i1).getContractNum());
+                bundle.putString("parkId", listData.get(i).getParkId());
+                bundle.putString("parkName", listData.get(i).getParkName());
                 cdListener.OnClick(bundle);
                 dismiss();
                 return true;
@@ -115,11 +121,11 @@ public class CustomDialog_Expandlistview extends Dialog
         @Override
         public Object getChild(int groupPosition, int childPosition)
         {
-            if (listData.get(groupPosition).getWzcrkxx() == null)
+            if (listData.get(groupPosition).getContractList() == null)
             {
                 return null;
             }
-            return listData.get(groupPosition).getWzcrkxx().get(childPosition);
+            return listData.get(groupPosition).getContractList().get(childPosition);
         }
         //得到子item的ID
         @Override
@@ -136,11 +142,9 @@ public class CustomDialog_Expandlistview extends Dialog
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
         {
 
-            List<WZ_RKxx> childData = listData.get(groupPosition).getWzcrkxx();
-            final WZ_RKxx wz_rKxx = childData.get(childPosition);
+            List<contractTab> childData = listData.get(groupPosition).getContractList();
+            final contractTab contractTab = childData.get(childPosition);
 
-            final String batchname = listData.get(groupPosition).getBatchName();
-            final String indate = listData.get(groupPosition).getInDate();
             View v = null;
             if (lmap.get(groupPosition) != null)
             {
@@ -150,10 +154,9 @@ public class CustomDialog_Expandlistview extends Dialog
             if (v == null)
             {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.layout_children_rkexecute, null);
+                convertView = inflater.inflate(R.layout.cut_children, null);
                 listItemView = new ListItemView();
-                listItemView.goodsname = (TextView) convertView.findViewById(R.id.goodsname);
-                listItemView.quantity = (TextView) convertView.findViewById(R.id.quantity);
+                listItemView.contractTab = (TextView) convertView.findViewById(R.id.contractTab);
 /*                convertView.setTag(listItemView);
                 convertView.setOnClickListener(new View.OnClickListener()
                 {
@@ -177,11 +180,8 @@ public class CustomDialog_Expandlistview extends Dialog
                 }
 
                 //数据添加
-                listItemView.goodsname.setText(wz_rKxx.getGoodsname());
-//            listItemView.local.setText(wz_rKxx.getParkName() + "-" + wz_rKxx.getStorehouseName());
-                listItemView.quantity.setText( wz_rKxx.getQuantity());
-//            listItemView.inGoodsvalue.setText("总值:" + wz_rKxx.getInGoodsvalue() + "元");
-//            listItemView.zhongliangs.setText("总量:" + wz_rKxx.getSumWeight() );
+                listItemView.contractTab.setText(contractTab.getContractNum());
+
             } else
             {
                 convertView = lmap.get(groupPosition).get(childPosition);
@@ -194,22 +194,31 @@ public class CustomDialog_Expandlistview extends Dialog
         public void onGroupExpanded(int groupPosition)
         {
             super.onGroupExpanded(groupPosition);
+            int len = this.getGroupCount();
+
+            for (int i = 0; i < len; i++) {
+                if (i != groupPosition) {
+                    expandableListView.collapseGroup(i);
+                }
+            }
         }
         @Override
         public void onGroupCollapsed(int groupPosition)
         {
             super.onGroupCollapsed(groupPosition);
 
+
+//        mainlistview  WZ_RKExecute_Adapter
         }
         //获取当前父item下的子item的个数
         @Override
         public int getChildrenCount(int groupPosition)
         {
-            if (listData.get(groupPosition).getWzcrkxx() == null)
+            if (listData.get(groupPosition).getContractList() == null)
             {
                 return 0;
             }
-            return listData.get(groupPosition).getWzcrkxx().size();
+            return listData.get(groupPosition).getContractList().size();
         }
         //获取当前父item的数据
         @Override
@@ -234,41 +243,14 @@ public class CustomDialog_Expandlistview extends Dialog
             if (convertView == null)
             {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.layout_parent_rkexecute, null);
+                convertView = inflater.inflate(R.layout.cut_parent, null);
             }
-            TextView inDate = (TextView) convertView.findViewById(R.id.inDate);
-            TextView batchName = (TextView) convertView.findViewById(R.id.batchName);
-            TextView loadingFee = (TextView) convertView.findViewById(R.id.loadingFee);
-            TextView shippingFee = (TextView) convertView.findViewById(R.id.shippingFee);
             TextView inGoodsValue = (TextView) convertView.findViewById(R.id.inGoodsValue);
-            FrameLayout fl_new_item = (FrameLayout) convertView.findViewById(R.id.fl_new_item);
-            RelativeLayout groupExpand = (RelativeLayout) convertView.findViewById(R.id.groupExpand);
 
 
 
-            if (listData.get(groupPosition).getFlashStr().equals("1"))
-            {
-                fl_new_item.setVisibility(View.VISIBLE);
-            } else
-            {
-                fl_new_item.setVisibility(View.GONE);
-            }
-/*        groupExpand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isExpanded) {
-                    mainlistview.collapseGroup(groupPosition);
-                } else {
-                    mainlistview.expandGroup(groupPosition);
-                }
-            }
-        });*/
-            inDate.setText(listData.get(groupPosition).getInDate());
-            batchName.setText("批次号:" + listData.get(groupPosition).getBatchName());
-            loadingFee.setText("装卸费:" + listData.get(groupPosition).getLoadingFee() + "元");
-            shippingFee.setText("运费:" + listData.get(groupPosition).getShippingFee() + "元");
-            double a= Double.valueOf(listData.get(groupPosition).getInGoodsValue())+Double.valueOf(listData.get(groupPosition).getLoadingFee())+Double.valueOf(listData.get(groupPosition).getShippingFee());
-            inGoodsValue.setText("总值"+String.format("%.2f",a) + "元");
+            inGoodsValue.setText(listData.get(groupPosition).getAreaName());
+
             return convertView;
         }
 
@@ -287,8 +269,7 @@ public class CustomDialog_Expandlistview extends Dialog
 
     static class ListItemView
     {
-        public TextView goodsname;
-        public TextView quantity;
+        public TextView contractTab;
     }
 
     public interface CustomDialogListener

@@ -130,4 +130,15 @@
         <item name="android:paddingBottom">1dp</item>
         <item name="android:paddingTop">1dp</item>
     </style>
+
+    <style name="cut_expand" >
+        <item name="android:windowBackground">@color/light_gray</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <!-- 显示对话框时当前的屏幕是否变暗 -->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

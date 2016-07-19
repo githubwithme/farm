@@ -27,6 +27,8 @@ public class SellOrderDetail_New implements Parcelable
 	@Id
 	@NoAutoIncrement
 	public String uuid;
+	public String infoId ;
+	public String settlementId;
 	public String saleid;
 	public String batchTime;
 	public String uid;
@@ -59,6 +61,26 @@ public class SellOrderDetail_New implements Parcelable
 	public String creatorId;
 	public List<CoordinatesBean> coordinatesBeanList;
 
+
+	public String getSettlementId()
+	{
+		return settlementId;
+	}
+
+	public void setSettlementId(String settlementId)
+	{
+		this.settlementId = settlementId;
+	}
+
+	public String getInfoId()
+	{
+		return infoId;
+	}
+
+	public void setInfoId(String infoId)
+	{
+		this.infoId = infoId;
+	}
 
 	public String getCreatorId()
 	{
@@ -410,6 +432,8 @@ public class SellOrderDetail_New implements Parcelable
     	 SellOrderDetail_New p = new SellOrderDetail_New();
          p.setid(source.readString());
          p.setUuid(source.readString());
+         p.setInfoId(source.readString());
+         p.setSettlementId(source.readString());
          p.setsaleid(source.readString());
          p.setBatchTime(source.readString());
          p.setuid(source.readString());
@@ -456,6 +480,8 @@ public class SellOrderDetail_New implements Parcelable
     {
          p.writeString(id);
          p.writeString(uuid);
+         p.writeString(infoId );
+         p.writeString(settlementId );
          p.writeString(saleid);
          p.writeString(batchTime);
          p.writeString(uid);

@@ -130,6 +130,25 @@ public class CZ_CreateOrder extends Activity
     List<AllType> listAlltype = new ArrayList<AllType>();
 
 
+    @ViewById
+    RelativeLayout rl_more_tip;
+    @ViewById
+    LinearLayout ll_more;
+    @ViewById
+    EditText cheliang_num;
+
+
+    @Click
+    void rl_more_tip()
+    {
+        if (ll_more.isShown())
+        {
+            ll_more.setVisibility(View.GONE);
+        }else
+        {
+            ll_more.setVisibility(View.VISIBLE);
+        }
+    }
     @Click
     void btn_addcg()
     {
@@ -291,27 +310,20 @@ public class CZ_CreateOrder extends Activity
             Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        //
-/*        String phone = phoneEt.getText().toString();
-        String context = contextEt.getText().toString();
-        SmsManager manager = SmsManager.getDefault();
-        ArrayList<String> list = manager.divideMessage(context);  //因为一条短信有字数限制，因此要将长短信拆分
-        for(String text:list){
-            manager.sendTextMessage(phone, null, text, null, null);
-        }*/
+        if (cheliang_num.getText().toString().equals(""))
+        {
+            Toast.makeText(CZ_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         //短信
         SmsManager smsMessage = SmsManager.getDefault();
 //        List<String> divideContents = smsMessage.divideMessage(message);
         smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元", null, null);
-        //
+
+
 //邮箱
-//        new Thread(networkTask).start();
-/*        Intent data=new Intent(Intent.ACTION_SENDTO);
-        data.setData(Uri.parse(mail));
-        data.putExtra(Intent.EXTRA_SUBJECT, "订单");
-        data.putExtra(Intent.EXTRA_TEXT, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元");
-        startActivity(data);*/
+
 
         List<String> list_uuid = new ArrayList<>();
         String batchtime = "";
@@ -362,7 +374,6 @@ public class CZ_CreateOrder extends Activity
         sellOrder.setUuid(uuid);
         sellOrder.setBatchTime(batchtime);
         sellOrder.setSelltype("待审批");
-        sellOrder.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrder.setBuyers(cgId);
         sellOrder.setAddress(et_address.getText().toString());
@@ -385,7 +396,6 @@ public class CZ_CreateOrder extends Activity
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
         sellOrder.setProducer(producer);
-        sellOrder.setFinalpayment("0");
 
         sellOrder.setMainPepole(commembertab.getId());
         sellOrder.setPlateNumber(dd_cl.getText().toString());
@@ -398,6 +408,7 @@ public class CZ_CreateOrder extends Activity
         sellOrder.setFreeFinalPay("2");
         sellOrder.setFreeDeposit("2");
         sellOrder.setIsNeedAudit("2");
+        sellOrder.setActualweight(cheliang_num.getText().toString());
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
@@ -417,6 +428,7 @@ public class CZ_CreateOrder extends Activity
         sellOrder_new_first.setCarryFee("");
         sellOrder_new_first.setTotalFee("");
         sellOrder_new_first.setPersonNote("");
+
 
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrderList\": ");

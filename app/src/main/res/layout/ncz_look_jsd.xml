@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:orientation="vertical">
-
+              android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/titlebar_height"
@@ -62,12 +59,12 @@
                     android:gravity="center|left"
                     android:text="一、产品信息"/>
 
-              <TextView
-                  android:layout_marginLeft="30dip"
-                  android:text="车牌号:"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"/>
-                <EditText
+                <TextView
+                    android:layout_marginLeft="30dip"
+                    android:text="车牌号:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
                     android:gravity="center"
                     android:id="@+id/plateNumber"
                     android:layout_width="match_parent"
@@ -105,7 +102,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/zp_ds_zhong"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -133,7 +130,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/cp_ds_zhong"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -167,7 +164,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/zp_bds_zhong"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -197,7 +194,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/cp_jingzhong"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -230,7 +227,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/jsd_zpprice"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -259,7 +256,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/jsd_cpprice"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -353,7 +350,7 @@
                             android:background="@color/bg_main"/>
 
 
-                        <EditText
+                        <TextView
                             android:id="@+id/bz_khnote"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
@@ -418,7 +415,7 @@
                             android:background="@color/bg_main"/>
 
 
-                        <EditText
+                        <TextView
                             android:id="@+id/bz_nc_danjia"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
@@ -458,7 +455,7 @@
                         android:background="@color/bg_main"/>
 
 
-                    <EditText
+                    <TextView
                         android:id="@+id/packPec"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -556,7 +553,7 @@
                             android:background="@color/bg_main"/>
 
 
-                        <EditText
+                        <TextView
                             android:id="@+id/by_khnote"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
@@ -621,7 +618,7 @@
                             android:background="@color/bg_main"/>
 
 
-                        <EditText
+                        <TextView
                             android:id="@+id/by_nc_danjia"
                             android:layout_width="0dip"
                             android:layout_height="match_parent"
@@ -634,24 +631,7 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <View
-                android:visibility="gone"
-                android:id="@+id/btn_view"
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/bg_main"/>
 
-            <Button
-                android:visibility="gone"
-                android:id="@+id/btn_upload"
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:layout_toLeftOf="@+id/loacal"
-                android:background="@drawable/background_view_rounded_single"
-                android:gravity="center"
-                android:text="保存"
-                android:textColor="@color/bg_text"
-                android:textSize="@dimen/size_14"/>
 
             <View
                 android:layout_width="match_parent"
@@ -660,7 +640,6 @@
 
 
             <LinearLayout
-                android:visibility="gone"
                 android:layout_marginTop="20dip"
                 android:id="@+id/ll_cbhlist"
                 android:layout_width="match_parent"
@@ -796,7 +775,7 @@
                 android:layout_height="wrap_content"
                 android:fadingEdge="none"
                 android:scrollbars="none"
-                android:visibility="gone">
+               >
 
                 <LinearLayout
                     android:id="@+id/pg_dts"
@@ -966,7 +945,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/zp_jianshu"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -995,7 +974,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/cp_jianshu"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -1028,7 +1007,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/jsd_zongjianshu"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -1057,7 +1036,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/jsd_zongjingzhong"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -1090,7 +1069,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/jsd_zpjz"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -1119,7 +1098,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/jsd_cpzjs"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -1152,7 +1131,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/zp_jsje"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -1181,7 +1160,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/cp_jsje"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -1215,7 +1194,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/packFee"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -1243,7 +1222,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/carryFee"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -1278,7 +1257,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/totalFee"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
@@ -1321,7 +1300,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/bg_main"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/actualMoney"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"

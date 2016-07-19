@@ -366,7 +366,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"/>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dip"
+                    android:orientation="horizontal">
 
+
+                    <TextView
+                        android:layout_width="100dip"
+                        android:layout_height="match_parent"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="10dip"
+                        android:text="*车辆数"
+                        android:textColor="@color/bg_text"
+                        android:textSize="14sp"/>
+
+
+                    <EditText
+                        android:id="@+id/cheliang_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right|center_vertical"
+                        android:hint="请填写车辆数"
+                        android:paddingRight="20dip"
+                        android:textColor="@color/bg_text"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color"/>
 
             </LinearLayout>
 
@@ -461,7 +491,7 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:paddingLeft="10dip"
-                        android:text="*发往城市"
+                        android:text="发往城市"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
 

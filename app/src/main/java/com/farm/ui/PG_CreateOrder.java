@@ -131,6 +131,25 @@ public class PG_CreateOrder extends Activity
     List<AllType> listAlltype = new ArrayList<AllType>();
 
 
+    @ViewById
+    RelativeLayout rl_more_tip;
+    @ViewById
+    LinearLayout ll_more;
+    @ViewById
+    EditText cheliang_num;
+
+
+    @Click
+    void rl_more_tip()
+    {
+        if (ll_more.isShown())
+        {
+            ll_more.setVisibility(View.GONE);
+        }else
+        {
+            ll_more.setVisibility(View.VISIBLE);
+        }
+    }
     @Click
     void btn_addcg()
     {
@@ -301,6 +320,12 @@ public class PG_CreateOrder extends Activity
             Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (cheliang_num.getText().toString().equals(""))
+        {
+            Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         //
 /*        String phone = phoneEt.getText().toString();
         String context = contextEt.getText().toString();
@@ -310,27 +335,12 @@ public class PG_CreateOrder extends Activity
             manager.sendTextMessage(phone, null, text, null, null);
         }*/
 
+
         //短信
         SmsManager smsMessage = SmsManager.getDefault();
 //        List<String> divideContents = smsMessage.divideMessage(message);
         smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元", null, null);
-        //
-//邮箱
-//        new Thread(networkTask).start();
-/*        Intent data=new Intent(Intent.ACTION_SENDTO);
-        data.setData(Uri.parse(mail));
-        data.putExtra(Intent.EXTRA_SUBJECT, "订单");
-        data.putExtra(Intent.EXTRA_TEXT, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元");
-        startActivity(data);*/
-/*
-        Intent myIntent=new Intent(android.content.Intent.ACTION_SEND);
-        myIntent.setType("plain/text");//设置邮件格式
 
-        myIntent.putExtra(android.content.Intent.EXTRA_EMAIL, mail);
-        myIntent.putExtra(android.content.Intent.EXTRA_CC, "");//副本
-        myIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "订单");//主题
-        myIntent.putExtra(android.content.Intent.EXTRA_TEXT, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元");//内容
-        startActivity(Intent.createChooser(myIntent, "标题"));*/
         List<String> list_uuid = new ArrayList<>();
         String batchtime = "";
         String producer = "";
@@ -381,7 +391,6 @@ public class PG_CreateOrder extends Activity
         sellOrder.setUuid(uuid);
         sellOrder.setBatchTime(batchtime);
         sellOrder.setSelltype("待审批");
-        sellOrder.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrder.setBuyers(cgId);
         sellOrder.setAddress(et_address.getText().toString());
@@ -393,7 +402,6 @@ public class PG_CreateOrder extends Activity
 
         sellOrder.setSumvalues(et_values.getText().toString());
         sellOrder.setActualprice("");
-        sellOrder.setActualweight("0");
         sellOrder.setDefectNum("0");
         sellOrder.setActualnumber("");
         sellOrder.setActualsumvalues("");
@@ -418,6 +426,7 @@ public class PG_CreateOrder extends Activity
         sellOrder.setNumber(String.valueOf(countAllNumber()));//株数
 
         sellOrder.setOldnumber(et_weight.getText().toString());
+        sellOrder.setActualweight(cheliang_num.getText().toString());
 
         sellOrder.setMainPepole(commembertab.getId());
         sellOrder.setPlateNumber(dd_cl.getText().toString());
