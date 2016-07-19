@@ -56,7 +56,6 @@ public class NCZ_WaitForHarvestFragment extends Fragment
     String parkname = "";
     String cpname = "";
     String cgsname = "";
-    //    private NCZ_OrderAdapter listAdapter;
     private NCZ_WaitForHarvestAdapter listAdapter;
     private int listSumData;
     private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();

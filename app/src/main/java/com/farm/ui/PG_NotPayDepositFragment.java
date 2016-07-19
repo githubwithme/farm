@@ -158,17 +158,16 @@ public class PG_NotPayDepositFragment extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
 //        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("parkid", "-1");
-//        params.addQueryStringParameter("productname","-1");
-//        params.addQueryStringParameter("buyer","-1");
 //        params.addQueryStringParameter("year", utils.getYear());
-//        params.addQueryStringParameter("status", "0");
-//        params.addQueryStringParameter("action", "MainPeople_getNotPayDepositOrder");
+//        params.addQueryStringParameter("type", "0");
+//        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("parkid", "-1");
+        params.addQueryStringParameter("productname","-1");
+        params.addQueryStringParameter("buyer","-1");
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "MainPeople_getNotPayDepositOrder");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
