@@ -29,13 +29,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 
-        <Button
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@null"
-            android:text="添加"/>
+
 
     </RelativeLayout>
     <ScrollView
@@ -163,8 +157,9 @@
                 android:background="@color/gray"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_top_right"
-                android:layout_width="50dip"
+                android:layout_width="30dip"
                 android:layout_height="fill_parent"
                 android:background="@color/white"
                 android:gravity="center"
@@ -172,7 +167,8 @@
                 android:textColor="@color/bg_text"
                 android:textSize="15sp"/>
             <TextView
-                android:layout_width="50dip"
+                android:visibility="gone"
+                android:layout_width="30dip"
                 android:layout_height="fill_parent"
                 android:background="@color/white"
                 android:gravity="center"
@@ -254,6 +250,7 @@
                 android:background="@color/gray"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/alltoatal"
                 android:layout_width="50dip"
                 android:layout_height="fill_parent"
@@ -263,6 +260,7 @@
                 android:textColor="@color/red"
                 android:textSize="15sp"/>
             <TextView
+                android:visibility="gone"
                 android:layout_width="50dip"
                 android:layout_height="fill_parent"
                 android:background="@color/white"

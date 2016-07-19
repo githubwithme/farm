@@ -27,8 +27,25 @@
             android:text="结算单"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
+        <Button
+            android:visibility="gone"
+            android:layout_toLeftOf="@+id/button_no"
+            android:text="批准"
+            android:background="@null"
+            android:id="@+id/button_yes"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
 
-
+        <Button
+            android:visibility="gone"
+            android:text="驳回"
+            android:background="@null"
+            android:id="@+id/button_no"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 

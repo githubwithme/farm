@@ -226,6 +226,7 @@
         <activity android:name=".ui.NCZ_Look_JSD_Detail_"/>
         <activity android:name=".ui.NCZ_Look_JSD_"/>
         <activity android:name=".ui.NCZ_JSD_NeedList_"/>
+        <activity android:name=".ui.NCZ__NeedOrder_Detail_"/>
 
 
         <!-- 场长UI -->

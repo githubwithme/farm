@@ -23,6 +23,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.ui.NCZ_DD_SH_Detail_;
+import com.farm.ui.NCZ_JSD_NeedList_;
 import com.farm.ui.NCZ_Need_JSD_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
@@ -220,8 +221,9 @@ public class NCZ_NeedAdapter extends BaseAdapter
                     context.startActivity(intent);
                 } else
                 {
-                    Intent intent = new Intent(context, NCZ_Need_JSD_.class);
-                    intent.putExtra("SellOrder_New", sellOrdesr);
+                    Intent intent = new Intent(context, NCZ_JSD_NeedList_.class);
+//                    Intent intent = new Intent(context, NCZ_Need_JSD_.class);
+                    intent.putExtra("zbstudio", sellOrdesr);
                     context.startActivity(intent);
 
                 }

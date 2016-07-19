@@ -51,10 +51,10 @@ public class NCZ_Look_JSD_Adapter extends BaseAdapter
     class ListItemView
     {
         public TextView all_cbh;
-        public EditText zhushu;
-        public EditText zhengpin;
-        public EditText cipin;
-        public EditText jinzhong;
+        public TextView zhushu;
+        public TextView zhengpin;
+        public TextView cipin;
+        public TextView jinzhong;
     }
 
     public NCZ_Look_JSD_Adapter(Context context, List<SellOrderDetail_New> data,String zpzl,String cpzl)
@@ -79,10 +79,10 @@ public class NCZ_Look_JSD_Adapter extends BaseAdapter
             convertView = listContainer.inflate(R.layout.ncz_look_jsd_adapter_item, null);
             listItemView = new ListItemView();
             listItemView.all_cbh = (TextView) convertView.findViewById(R.id.all_cbh);
-            listItemView.zhushu = (EditText) convertView.findViewById(R.id.zhushu);
-            listItemView.zhengpin = (EditText) convertView.findViewById(R.id.zhengpin);
-            listItemView.cipin = (EditText) convertView.findViewById(R.id.cipin);
-            listItemView.jinzhong = (EditText) convertView.findViewById(R.id.jinzhong);
+            listItemView.zhushu = (TextView) convertView.findViewById(R.id.zhushu);
+            listItemView.zhengpin = (TextView) convertView.findViewById(R.id.zhengpin);
+            listItemView.cipin = (TextView) convertView.findViewById(R.id.cipin);
+            listItemView.jinzhong = (TextView) convertView.findViewById(R.id.jinzhong);
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
         } else

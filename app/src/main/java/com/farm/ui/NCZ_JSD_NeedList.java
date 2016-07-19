@@ -24,6 +24,8 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
+import com.farm.common.utils;
+import com.farm.widget.CustomHorizontalScrollView_Allitem;
 import com.guide.DensityUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -46,14 +48,9 @@ import java.util.Map;
  * Created by hasee on 2016/7/19.
  */
 @EActivity(R.layout.ncz_jsd_need_datail)
-public class NCZ_JSD_NeedList extends Activity
+public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
-    private ListView mListView;
-    //界面
-    public HorizontalScrollView mTouchView;
-    private ScrollAdapter mAdapter;
-    protected List<CustomHorizontalScrollView_JSDDetail> mHScrollViews = new ArrayList<CustomHorizontalScrollView_JSDDetail>();
-    int screenWidth = 0;
+
     @ViewById
     LinearLayout ll_park;
     @ViewById
@@ -66,45 +63,54 @@ public class NCZ_JSD_NeedList extends Activity
     TextView tv_top_right;
     @ViewById
     TextView tv_bottom_left;
-
-
     List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
-    PG_CBF_CLAdapyer pg_cbf_adapter;
-    @ViewById
-    ListView liat_jsd;
+    CustomHorizontalScrollView_Allitem.CustomOntouch customOntouch = null;
+    private ListView mListView;
+    public HorizontalScrollView mTouchView;
+    protected List<CustomHorizontalScrollView_Allitem> mHScrollViews = new ArrayList<CustomHorizontalScrollView_Allitem>();
+    private ScrollAdapter mAdapter;
+    int screenWidth = 0;
     SellOrder_New sellOrder_new;
-    String broadcast;
 
-
-
+    @Click
+    void imgbtn_back()
+    {
+        finish();
+    }
     @AfterViews
     void afterview()
     {
+        customOntouch = (NCZ_JSD_NeedList) this;
         getDetailSecBysettleId();
-
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        sellOrder_new = getIntent().getParcelableExtra("zbstudio");
         getActionBar().hide();
-        sellOrder_new = getIntent().getParcelableExtra("bean");
-        broadcast = getIntent().getStringExtra("broadcast");
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DELETE);
-        registerReceiver(receiver_update, intentfilter_update);
+    }
+    @Override
+    public void customOnTouchEvent(HorizontalScrollView horizontalScrollView)
+    {
+        mTouchView = horizontalScrollView;
     }
 
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    @Override
+    public void customOnScrollChanged(int l, int t, int oldl, int oldt)
     {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onReceive(Context context, Intent intent)
+        for (CustomHorizontalScrollView_Allitem scrollView : mHScrollViews)
         {
-            getDetailSecBysettleId();
+            // 防止重复滑动
+            if (mTouchView != scrollView) scrollView.smoothScrollTo(l, t);
         }
-    };
+    }
 
+    @Override
+    public HorizontalScrollView getmTouchView()
+    {
+        return mTouchView;
+    }
     public void getDetailSecBysettleId()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_JSD_NeedList.this);
@@ -117,7 +123,7 @@ public class NCZ_JSD_NeedList extends Activity
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
-                listData=new ArrayList<SellOrder_New>();
+                listData = new ArrayList<SellOrder_New>();
                 String a = responseInfo.result;
                 List<SellOrder_New> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
@@ -148,21 +154,7 @@ public class NCZ_JSD_NeedList extends Activity
                         alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
 
-      /*                  pg_cbf_adapter = new PG_CBF_CLAdapyer(JSD_Detail.this, listNewData, "", "");
-                        liat_jsd.setAdapter(pg_cbf_adapter);
-                        utils.setListViewHeight(liat_jsd);
 
-                        liat_jsd.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                        {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-                            {
-                                SellOrder_New sellOrder_news=listData.get(i);
-                                Intent intent = new Intent(JSD_Detail.this, PG_JSD_Detail_.class);
-                                intent.putExtra("bean", sellOrder_news);
-                                startActivity(intent);
-                            }
-                        });*/
 
                     } else
                     {
@@ -184,7 +176,6 @@ public class NCZ_JSD_NeedList extends Activity
             }
         });
     }
-
     private void initViews()
     {
         int allnumber = 0;
@@ -192,7 +183,7 @@ public class NCZ_JSD_NeedList extends Activity
         ll_park.removeAllViews();
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) NCZ_JSD_NeedList.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        String [] name=new String []{"实际金额","合计金额","总净重","审批情况","正品结算金额","正品单价","正品净重","总包装费","总搬运费"};
+        String[] name = new String[]{"实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
 //        String[] name = new String[]{"实际金额", "合计金额"};
         for (int i = 0; i < name.length; i++)
         {
@@ -202,32 +193,6 @@ public class NCZ_JSD_NeedList extends Activity
             tv_parkname.setText(name[i]);   //最上边滑动承包区
             ll_park.addView(view);
         }
- /*       for (int i = 0; i < listData.get(0).getDetailSecLists().size(); i++)
-        {
-            View view = inflater.inflate(R.layout.pg_breakoff_contractitem, null);
-            TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
-            tv_parkname.getLayoutParams().width = (screenWidth);
-            tv_parkname.setText(listData.get(0).getDetailSecLists().get(i).getplannumber());   //最上边滑动承包区
-            ll_park.addView(view);
-        }*/
-/*        for (int i = 0; i < listData.get(0).getDetailSecLists().size(); i++)
-        {
-            View view = inflater.inflate(R.layout.pg_breakoff_totalitem, null);
-            TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
-            tv_total.getLayoutParams().width = (screenWidth);
-            int totalnumber = 0;
-            for (int j = 0; j < listData.size(); j++)
-            {
-                if (!listData.get(j).getDetailSecLists().get(i).getplannumber().equals(""))
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getDetailSecLists().get(i).getplannumber());    //最下面滑动合计
-            }
-            tv_total.setText(String.valueOf(totalnumber));
-            ll_total.addView(view);
-            allnumber = allnumber + totalnumber;
-        }*/
-//        alltoatal.setText(String.valueOf(allnumber));
-
-        //最下面滑动合计
         for (int i = 0; i < name.length; i++)
         {
             View view = inflater.inflate(R.layout.pg_breakoff_totalitem, null);
@@ -338,40 +303,45 @@ public class NCZ_JSD_NeedList extends Activity
                     ll_total.addView(view);
                     break;
             }
-//            String [] name=new String []{"实际金额","合计金额","总净重",,"正品结算金额","正品单价","正品净重","总包装费","总搬运费"};
         }
+
         Map<String, String> data = null;
-        CustomHorizontalScrollView_JSDDetail headerScroll = (CustomHorizontalScrollView_JSDDetail) findViewById(R.id.item_scroll_title);
-        CustomHorizontalScrollView_JSDDetail totalScroll = (CustomHorizontalScrollView_JSDDetail) findViewById(R.id.totalScroll);
+        CustomHorizontalScrollView_Allitem headerScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.item_scroll_title);
+        headerScroll.setCuttomOntouch(customOntouch);
+        CustomHorizontalScrollView_Allitem totalScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.totalScroll);
+        totalScroll.setCuttomOntouch(customOntouch);
         // 添加头滑动事件
         mHScrollViews.add(headerScroll);
         mHScrollViews.add(totalScroll);
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
+
         mAdapter = new ScrollAdapter();
         mListView.setAdapter(mAdapter);
-/*        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-            {
-                SellOrder_New sellOrder_news=listData.get(i);
-                Intent intent = new Intent(JSD_Detail.this, PG_JSD_Detail_.class);
-                intent.putExtra("bean", sellOrder_news);
-                startActivity(intent);
-            }
-        });*/
+        utils.setListViewHeight(mListView);
     }
-
-
-    public void onScrollChanged(int l, int t, int oldl, int oldt)
+    public void addHViews(final CustomHorizontalScrollView_Allitem hScrollView)
     {
-        for (CustomHorizontalScrollView_JSDDetail scrollView : mHScrollViews)
+        if (!mHScrollViews.isEmpty())
         {
-            // 防止重复滑动
-            if (mTouchView != scrollView) scrollView.smoothScrollTo(l, t);
+            int size = mHScrollViews.size();
+            CustomHorizontalScrollView_Allitem scrollView = mHScrollViews.get(size - 1);
+            final int scrollX = scrollView.getScrollX();
+            // 第一次满屏后，向下滑动，有一条数据在开始时未加入
+            if (scrollX != 0)
+            {
+                mListView.post(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        // 当listView刷新完成之后，把该条移动到最终位置
+                        hScrollView.scrollTo(scrollX, 0);
+                    }
+                });
+            }
         }
+        mHScrollViews.add(hScrollView);
     }
-
     class ScrollAdapter extends BaseAdapter
     {
 
@@ -412,9 +382,11 @@ public class NCZ_JSD_NeedList extends Activity
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-
+            // 自定义视图
+//            if (lmap.get(position) == null)
+//            {
             // 获取list_item布局文件的视图
-            convertView = LayoutInflater.from(NCZ_JSD_NeedList.this).inflate(R.layout.ncz_look_jsd_adapter_item, null);
+            convertView = LayoutInflater.from(NCZ_JSD_NeedList.this).inflate(R.layout.ncz_jsd_needlist_item, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
@@ -422,48 +394,28 @@ public class NCZ_JSD_NeedList extends Activity
             listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
 
+
+            listItemView.item_titlev.setText(listData.get(position).getBatchTime());
+            listItemView = new ListItemView();
+            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+            listItemView.item_total.getLayoutParams().width = (screenWidth);
+
             if (listData.get(position).getIsNeedAudit().equals("0"))
             {
 
-            }else if (listData.get(position).getIsNeedAudit().equals("1"))
+            } else if (listData.get(position).getIsNeedAudit().equals("1"))
             {
                 listItemView.item_titlev.setTextColor(NCZ_JSD_NeedList.this.getResources().getColor(R.color.green));
-            }
-            else if (listData.get(position).getIsNeedAudit().equals("-1"))
+            } else if (listData.get(position).getIsNeedAudit().equals("-1"))
             {
                 listItemView.item_titlev.setTextColor(NCZ_JSD_NeedList.this.getResources().getColor(R.color.red));
             }
             listItemView.item_titlev.setText(listData.get(position).getPlateNumber());
             listItemView.item_titlev.setTag(R.id.tag_batchtime, listData.get(position));
             listItemView.item_titlev.setOnClickListener(clickListener);
-   /*         int totalnumber = 0;
-            List<SellOrderDetail_New> list = listData.get(position).getDetailSecLists();
-            for (int j = 0; j < list.size(); j++)
-            {
-                if (!list.get(j).getplannumber().equals(""))
-                    totalnumber = totalnumber + Integer.valueOf(list.get(j).getplannumber());
-            }
-            listItemView.item_total.setText(String.valueOf(totalnumber));*/
-
-
-            //listview数据
-/*            for (int i = 0; i < listData.get(position).getDetailSecLists().size(); i++)
-            {
-                View view = LayoutInflater.from(JSD_Detail.this).inflate(R.layout.pg_breakoff_dataitem, null);
-                listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
-                listItemView.btn_data.setText(listData.get(position).getDetailSecLists().get(i).getplannumber());
-                listItemView.btn_data.getLayoutParams().width = (screenWidth);
-                ll_middle.addView(view);
-
-                listItemView.btn_data.requestFocusFromTouch();
-                listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                listItemView.btn_data.setTag(R.id.tag_batchcolor, listData.get(position).getYear());
-                listItemView.btn_data.setTag(R.id.tag_number, listData.get(position).getDetailSecLists().get(i).getplannumber());
-                listItemView.btn_data.setTag(R.id.tag_breakoff, listData.get(position).getDetailSecLists().get(i));
-//                listItemView.btn_data.setOnClickListener(clickListener);
-
-            }*/
-
+            // 第一次初始化的时候装进来
             for (int i = 0; i < 8; i++)
             {
                 View view = LayoutInflater.from(NCZ_JSD_NeedList.this).inflate(R.layout.pg_breakoff_dataitem, null);
@@ -497,11 +449,10 @@ public class NCZ_JSD_NeedList extends Activity
                         if (listData.get(position).getIsNeedAudit().equals("0"))
                         {
                             listItemView.btn_data.setText("待审批");
-                        }else if (listData.get(position).getIsNeedAudit().equals("1"))
+                        } else if (listData.get(position).getIsNeedAudit().equals("1"))
                         {
                             listItemView.btn_data.setText("审批通过");
-                        }
-                        else if (listData.get(position).getIsNeedAudit().equals("-1"))
+                        } else if (listData.get(position).getIsNeedAudit().equals("-1"))
                         {
                             listItemView.btn_data.setText("审批不通过");
                         }
@@ -550,35 +501,13 @@ public class NCZ_JSD_NeedList extends Activity
 //            String [] name=new String []{"实际金额","合计金额","总净重",,"正品结算金额","正品单价","正品净重","总包装费","总搬运费"};
             }
             // 第一次初始化的时候装进来
-            addHViews((CustomHorizontalScrollView_JSDDetail) convertView.findViewById(R.id.item_chscroll_scroll));
+            CustomHorizontalScrollView_Allitem customHorizontalScrollView_pgSale = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
+            addHViews(customHorizontalScrollView_pgSale);
+            customHorizontalScrollView_pgSale.setCuttomOntouch(customOntouch);
 
 
             return convertView;
         }
-    }
-
-    public void addHViews(final CustomHorizontalScrollView_JSDDetail hScrollView)
-    {
-        if (!mHScrollViews.isEmpty())
-        {
-            int size = mHScrollViews.size();
-            CustomHorizontalScrollView_JSDDetail scrollView = mHScrollViews.get(size - 1);
-            final int scrollX = scrollView.getScrollX();
-            // 第一次满屏后，向下滑动，有一条数据在开始时未加入
-            if (scrollX != 0)
-            {
-                mListView.post(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        // 当listView刷新完成之后，把该条移动到最终位置
-                        hScrollView.scrollTo(scrollX, 0);
-                    }
-                });
-            }
-        }
-        mHScrollViews.add(hScrollView);
     }
 
     // 测试点击的事件
@@ -587,11 +516,15 @@ public class NCZ_JSD_NeedList extends Activity
         @Override
         public void onClick(View v)
         {
-            SellOrder_New sellOrder_news=new SellOrder_New();
-            sellOrder_news= (SellOrder_New) v.getTag(R.id.tag_batchtime);
-            Intent intent = new Intent(NCZ_JSD_NeedList.this, NCZ_Look_JSD_Detail_.class);
-            intent.putExtra("bean", sellOrder_news);
-            startActivity(intent);
+            v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
+            SellOrder_New sellOrder_neww=new SellOrder_New();
+            sellOrder_neww= (SellOrder_New) v.getTag(R.id.tag_batchtime);
+            Intent intent = new Intent(NCZ_JSD_NeedList.this, NCZ__NeedOrder_Detail_.class);
+            intent.putExtra("bean", sellOrder_neww);
+//            intent.putExtra("parkname", parkname);
+//            intent.putExtra("batchTime", batchTimes);
+            NCZ_JSD_NeedList.this.startActivity(intent);
+
         }
     };
 }

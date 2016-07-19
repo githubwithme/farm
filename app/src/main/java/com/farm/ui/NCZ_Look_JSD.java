@@ -83,7 +83,7 @@ public class NCZ_Look_JSD extends Activity implements CustomHorizontalScrollView
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        sellOrder_new = getIntent().getParcelableExtra("bean");
+        sellOrder_new = getIntent().getParcelableExtra("zbstudio");
         getActionBar().hide();
     }
 
@@ -514,14 +514,13 @@ public class NCZ_Look_JSD extends Activity implements CustomHorizontalScrollView
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            String batchTimes = (String) v.getTag(R.id.tag_hg);
-            String parkid = (String) v.getTag(R.id.tag_kg);
-            String parkname = (String) v.getTag(R.id.tag_parkname);
-//            Intent intent = new Intent(PG_SaleActivity.this, NCZ_AreaSaleData_.class);
-//            intent.putExtra("parkid", parkid);
+        SellOrder_New sellOrder_neww=new SellOrder_New();
+            sellOrder_neww= (SellOrder_New) v.getTag(R.id.tag_batchtime);
+            Intent intent = new Intent(NCZ_Look_JSD.this, NCZ_Look_JSD_Detail_.class);
+            intent.putExtra("bean", sellOrder_neww);
 //            intent.putExtra("parkname", parkname);
 //            intent.putExtra("batchTime", batchTimes);
-//            PG_SaleActivity.this.startActivity(intent);
+            NCZ_Look_JSD.this.startActivity(intent);
 
         }
     };
