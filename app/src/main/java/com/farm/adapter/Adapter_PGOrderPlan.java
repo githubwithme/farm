@@ -95,7 +95,6 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
         public TextView tv_buyer;
         public TextView tv_preparestatus;
         public TextView tv_car;
-        public TextView tv_settlementtime;
         public TextView tv_orderstate;
         public TextView tv_mainpeple;
         public TextView tv_product;
@@ -132,7 +131,6 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
             listItemView.tv_preparestatus = (TextView) convertView.findViewById(R.id.tv_preparestatus);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
             listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
-            listItemView.tv_settlementtime = (TextView) convertView.findViewById(R.id.tv_settlementtime);
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);

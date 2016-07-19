@@ -60,9 +60,9 @@ public class PG_OrderPlanFragment extends Fragment
     Spinner citySpinner;
     @ViewById
     Spinner countySpinner;
-    String parkname="";
-    String cpname="";
-    String cgsname="";
+    String parkname = "";
+    String cpname = "";
+    String cgsname = "";
     CustomArrayAdapter provinceAdapter = null;  //省级适配器
     CustomArrayAdapter cityAdapter = null;    //地级适配器
     CustomArrayAdapter countyAdapter = null;    //县级适配器
@@ -107,6 +107,7 @@ public class PG_OrderPlanFragment extends Fragment
             getNewSaleList_test();
         }
     };
+
     private void getNewSaleList_test()
     {
         listNewData = FileHelper.getAssetsData(getActivity(), "getOrderPlanList", OrderPlanBean.class);
@@ -128,8 +129,8 @@ public class PG_OrderPlanFragment extends Fragment
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("productname","-1");
-        params.addQueryStringParameter("buyer","-1");
+        params.addQueryStringParameter("productname", "-1");
+        params.addQueryStringParameter("buyer", "-1");
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("status", "0");
         params.addQueryStringParameter("action", "MAinPeople_getOrderPlan");
@@ -144,7 +145,7 @@ public class PG_OrderPlanFragment extends Fragment
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     listNewData = JSON.parseArray(result.getRows().toJSONString(), OrderPlanBean.class);
-                    adapter_pgOrderPlan = new Adapter_PGOrderPlan(getActivity(), listNewData, AppContext.UPDATEMESSAGE_FARMMANAGER ,expandableListView);
+                    adapter_pgOrderPlan = new Adapter_PGOrderPlan(getActivity(), listNewData, AppContext.UPDATEMESSAGE_FARMMANAGER, expandableListView);
                     expandableListView.setAdapter(adapter_pgOrderPlan);
 //                    for (int i = 0; i < listNewData.size(); i++)
 //                    {
@@ -165,6 +166,7 @@ public class PG_OrderPlanFragment extends Fragment
             }
         });
     }
+
     private void getchanpin()
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
@@ -239,6 +241,7 @@ public class PG_OrderPlanFragment extends Fragment
         });
 
     }
+
     //采购商
     private void getpurchaser()
     {

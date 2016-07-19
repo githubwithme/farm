@@ -295,36 +295,11 @@
 
 
                 <TextView
-                    android:id="@+id/tv_settlementtime_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dip"
-                    android:gravity="left"
-                    android:text="采收时间："
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"/>
-
-
-                <TextView
-                    android:id="@+id/tv_settlementtime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/tv_settlementtime_tip"
-                    android:gravity="left"
-                    android:text="暂无"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"/>
-
-
-                <TextView
                     android:id="@+id/tv_mainpeople_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dip"
-                    android:layout_toRightOf="@+id/tv_settlementtime"
                     android:gravity="left"
                     android:text="负责人："
                     android:textColor="@color/gray"
