@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +13,25 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.SellOrder_New_First;
+import com.farm.common.utils;
 import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
+import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDateMaD;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
@@ -33,6 +41,10 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import org.apache.http.entity.StringEntity;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,7 +53,8 @@ import java.util.List;
  */
 public class PG_WaitForHarvestAdapter extends BaseAdapter
 {
-    static String name = "";
+    String zzsl;
+    CustomDialog_ListView customDialog_listView;
     CustomDialog_CallTip custom_calltip;
     MyDialog myDialog;
     String broadcast;
@@ -52,25 +65,21 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
 
     static class ListItemView
     {
-        //        public CircleImageView circle_img;
         public TextView tv_mainpeple;
         public TextView tv_parkname;
+        public TextView tv_prepareworkStatus;
         public TextView tv_buyer;
         public TextView tv_orderstate;
-        //        public TextView tv_price;
-//        public TextView tv_sum;
-//        public TextView tv_from;
         public TextView tv_product;
+        public TextView tv_car;
         public Button btn_cancleorder;
         public Button btn_preparework;
-        public Button btn_changetime;
         public Button btn_editorder;
+        public Button btn_changetime;
         public CircleImageView circleImageView;
         public LinearLayout ll_car;
         public LinearLayout ll_undeposit;
         public LinearLayout ll_mainpeople;
-//        public FrameLayout fl_dynamic;
-
     }
 
     public PG_WaitForHarvestAdapter(Context context, List<SellOrder_New> data, String broadcast)
@@ -109,24 +118,22 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
             convertView = listContainer.inflate(R.layout.adapter_pgwaitforharvest, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
+            listItemView.tv_prepareworkStatus = (TextView) convertView.findViewById(R.id.tv_prepareworkStatus);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
-//            listItemView.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
-//            listItemView.tv_sum = (TextView) convertView.findViewById(R.id.tv_sum);
-//            listItemView.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
             listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
-//            listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
             listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
             listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
+            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
             listItemView.ll_undeposit = (LinearLayout) convertView.findViewById(R.id.ll_undeposit);
             listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
-//            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -138,18 +145,26 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
             {
                 listItemView.ll_undeposit.setVisibility(View.GONE);
             }
+            listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.tv_parkname.setText(sellOrder.getParkname());
             listItemView.tv_mainpeple.setText(sellOrder.getMainPeople());
-//            listItemView.tv_car.setText(sellOrder.getProducer());
-//            SpannableString content = new SpannableString(sellOrder.getPurchaName());
-//            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-            listItemView.tv_buyer.setText(sellOrder.getBuyersName());
+            listItemView.tv_car.setText(sellOrder.getCarNumber());
+            if (sellOrder.getIsReady().equals("true"))
+            {
+                listItemView.tv_prepareworkStatus.setText("准备就绪");
+            } else
+            {
+                listItemView.tv_prepareworkStatus.setText("未准备就绪");
+            }
+
+            listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    showDialog_addsaleinfo("15989154871");
+                    String phone = (String) v.getTag();
+                    showDialog_addsaleinfo(phone);
                 }
             });
             listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
@@ -161,105 +176,55 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                 {
                     SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
                     ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-                    MyDateMaD myDatepicker = new MyDateMaD(context,  sellOrders, "1");
+                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "1");
                     myDatepicker.getDialog().show();
                 }
             });
-            //            listItemView.btn_preparework.setTag(R.id.tag_danwei,sellOrder);
+            listItemView.btn_preparework.setTag(R.id.tag_danwei, sellOrder);
             listItemView.btn_preparework.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
                     Intent intent = new Intent(context, RecoveryDetail_.class);
-//                    intent.putExtra("zbstudio", sellOrder_new);
                     context.startActivity(intent);
                 }
             });
-                //            listItemView.ll_car.setTag(R.id.tag_danwei,sellOrder);
+            listItemView.ll_car.setTag(R.id.tag_contract, sellOrder);
+            listItemView.ll_car.setTag(R.id.tag_batchtime, listItemView);
             listItemView.ll_car.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_contract);
+                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
+                    JSONArray jsonArray = null;
+                    try
+                    {
+                        jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+                    } catch (Exception e)
+                    {
 
+                    }
+                    List<String> list = new ArrayList<String>();
+                    for (int i = 0; i < jsonArray.size(); i++)
+                    {
+                        list.add(jsonArray.getString(i));
+                    }
+                    showDialog_workday(list, sellOrder_new);
                 }
             });
-//        listItemView.ll_mainpeople.setTag(R.id.tag_fi, listData.get(groupPosition).getDate());
+            listItemView.ll_mainpeople.setTag(sellOrder.getMainPeoplePhone());
             listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    showDialog_addsaleinfo("15989154871");
+                    String phone = (String) v.getTag();
+                    showDialog_addsaleinfo(phone);
                 }
             });
-            listItemView.tv_product.setText(sellOrder.getProduct());
-            //下划线就绪
-/*            SpannableString spanStr_buyer = new SpannableString("就绪");
-            spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
-            listItemView.tv_batchtime.setText(spanStr_buyer);
-            listItemView.tv_batchtime.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent intent = new Intent(context, RecoveryDetail_.class);
-                    context.startActivity(intent);
-                }
-            });*/
-//            listItemView.tv_buyer.setText(sellOrder.getBuyers());
-//            listItemView.tv_price.setText(sellOrder.getPrice());
-//            listItemView.tv_from.setText(sellOrder.getProducer());
-//            listItemView.tv_batchtime.setText(sellOrder.getBatchTime());
-//            if (sellOrder.getActualsumvalues().equals(""))
-//            {
-//                listItemView.tv_sum.setText("待反馈");
-//            } else
-//            {
-//                listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
-//            }
-//            if (sellOrder.getSelltype().equals("待付定金"))
-//            {
-//                listItemView.tv_orderstate.setText("等待买家付定金");
-//            } else if (sellOrder.getSelltype().equals("已付定金"))
-//            {
-//                listItemView.tv_orderstate.setText("已付定金");
-//            } else if (sellOrder.getSelltype().equals("待付尾款"))
-//            {
-//                listItemView.tv_orderstate.setText("等待卖家付尾款");
-//            } else if (sellOrder.getSelltype().equals("审核结算单"))
-//            {
-//                listItemView.tv_orderstate.setText("审批结算");
-//            }
-
-/*            if (sellOrder.getDeposit().equals("0"))
-            {
-                listItemView.tv_state.setText("等待买家付定金");
-            } else
-            {
-                if (sellOrder.getFinalpayment().equals("0"))
-                {
-                    listItemView.tv_state.setText("等待买家付尾款");
-                } else
-                {
-                    listItemView.tv_state.setText("买家已付尾款");
-                }
-            }*/
-//            listItemView.btn_editorder.setTag(R.id.tag_kg, listItemView);
-//            listItemView.btn_editorder.setTag(R.id.tag_hg, sellOrder);
-//            listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View view)
-//                {
-//                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
-//                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-//                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name, sellOrders, "1");
-//                    myDatepicker.getDialog().show();
-//                }
-//            });
             listItemView.btn_cancleorder.setTag(R.id.tag_cash, sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
@@ -268,7 +233,6 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                 {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_cash);
                     showDeleteTip(sellOrder_new.getUuid());
-//                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
             });
             listItemView.btn_editorder.setTag(R.id.tag_postion, position);
@@ -298,35 +262,6 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
         {
             listItemView.circleImageView.setVisibility(View.VISIBLE);
         }
-        //
-        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work, R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
-        if (name.equals(""))
-        {
-            name += sellOrder.getMainPepole() + ",";
-        }
-
-//        for(int i=0;i<position;i++)
-        int str = position;
-
-
-        //                String[] nongzi = commandtab.getnongziName().split(",");
-
-//        if (name.indexOf(listItems.get(position).getMainPepole()) != -1)
-//        {
-//            String[] data = name.split(",");
-//            for (int j = 0; j < data.length; j++)
-//            {
-//                if (data[j].equals(listItems.get(position).getMainPepole()))
-//                    listItemView.circle_img.setImageResource(color[j % color.length]);
-//                int x = j % color.length;
-//            }
-//        } else
-//        {
-//            String[] data = name.split(",");
-//            name += listItems.get(position).getMainPepole() + ",";
-//            listItemView.circle_img.setImageResource(color[(data.length) % color.length]);
-//            int y = (data.length) % color.length;
-//        }
         return convertView;
     }
 
@@ -440,4 +375,76 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
         myDialog.show();
     }
 
+    public void showDialog_workday(List<String> list, final SellOrder_New sellOrder_new)
+    {
+        View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                zzsl = bundle.getString("name");
+                SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
+                sellOrder_new.setActualweight(zzsl);
+                StringBuilder builder = new StringBuilder();
+                builder.append("{\"SellOrder_new\":[ ");
+                builder.append(JSON.toJSONString(sellOrder_new));
+                builder.append("], \"sellorderlistadd\": [");
+                builder.append(JSON.toJSONString(sellOrder_new_first));
+                builder.append("]} ");
+                newaddOrder(builder.toString());
+            }
+        });
+        customDialog_listView.show();
+    }
+
+    private void newaddOrder(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "editOrder");
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(context, "订单修改成功！", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent();
+//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
+                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                        context.sendBroadcast(intent);
+
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
 }

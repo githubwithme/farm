@@ -89,7 +89,7 @@ public class PG_AllOrderFragment_New extends Fragment
     private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
     private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
     private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
-    private String[] mPayStatusDatasMap = new String[]{"不限付款情况","待付定金","免付定金", "待付尾款","免付尾款"};
+    private String[] mPayStatusDatasMap = new String[]{"不限付款情况", "待付定金", "免付定金", "待付尾款", "免付尾款"};
 
     @Override
     public void onResume()
@@ -115,8 +115,7 @@ public class PG_AllOrderFragment_New extends Fragment
     {
         View rootView = inflater.inflate(R.layout.pg_allorderfragment_new, container, false);
         appContext = (AppContext) getActivity().getApplication();
-//        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATENOTPAYORDER);
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_FARMMANAGER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
 
         return rootView;
@@ -139,7 +138,7 @@ public class PG_AllOrderFragment_New extends Fragment
         if (listData != null)
         {
 //            listAdapter = new NCZ_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
-            listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+            listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData, AppContext.UPDATEMESSAGE_FARMMANAGER);
             lv.setAdapter(listAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
@@ -162,17 +161,12 @@ public class PG_AllOrderFragment_New extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("userid", commembertab.getId());
+        params.addQueryStringParameter("productname", "-1");
+        params.addQueryStringParameter("buyer", "-1");
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
-        //        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("parkid", "-1");
-//        params.addQueryStringParameter("productname","-1");
-//        params.addQueryStringParameter("buyer","-1");
-//        params.addQueryStringParameter("year", utils.getYear());
-//        params.addQueryStringParameter("status", "0");
-//        params.addQueryStringParameter("action", "MainPeople_getAllOrderWithStatus");
+        params.addQueryStringParameter("payStatus", "-1");
+        params.addQueryStringParameter("action", "MainPeople_getAllOrderWithStatus");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -590,7 +584,7 @@ public class PG_AllOrderFragment_New extends Fragment
 //                                }
 //                            }
 //                        }
-//                        listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+//                        listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData, AppContext.UPDATEMESSAGE_FARMMANAGER);
 //                        lv.setAdapter(listAdapter);
 //                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
 //                        {

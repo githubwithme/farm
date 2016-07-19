@@ -285,59 +285,17 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="40dip"
-                android:background="@color/defaultbackground_light">
-
-
-                <TextView
-                    android:id="@+id/tv_carstatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dip"
-                    android:gravity="left"
-                    android:text="车辆未就绪;"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"/>
-
-                <TextView
-                    android:id="@+id/tv_TGstatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dip"
-                    android:layout_toRightOf="@+id/tv_carstatus"
-                    android:gravity="left"
-                    android:text="挑工未就绪;"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"/>
-
-                <TextView
-                    android:id="@+id/tv_BZGstatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dip"
-                    android:layout_toRightOf="@+id/tv_TGstatus"
-                    android:gravity="left"
-                    android:text="包装工已就绪"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"/>
-
-
-            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:orientation="horizontal"
                 android:layout_height="30dip">
+
                 <LinearLayout
                     android:id="@+id/ll_undeposit"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
+
                     <View
                         android:layout_width="15dip"
                         android:layout_height="15dip"
@@ -354,26 +312,55 @@
                         android:text="免付定金"
                         android:textColor="@color/gray"
                         android:textSize="14sp"/>
+
                 </LinearLayout>
 
-
-                <View
-                    android:layout_width="17dip"
-                    android:layout_height="17dip"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dip"
-                    android:background="@drawable/user"/>
-
-                <TextView
-                    android:id="@+id/tv_mainpeople_tip"
+                <LinearLayout
+                    android:id="@+id/ll_unfinalpay"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dip"
-                    android:gravity="left"
-                    android:text="负责人："
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dip"
+                        android:background="@drawable/icon_ok"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="免付尾款"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="17dip"
+                        android:layout_height="17dip"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/user"/>
+
+                    <TextView
+                        android:id="@+id/tv_mainpeople_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="left"
+                        android:text="负责人："
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
 
 
                 <LinearLayout

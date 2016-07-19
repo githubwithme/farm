@@ -92,7 +92,7 @@ public class PG_OrderPlanFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.pg_orderplanfragment_new, container, false);
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_FARMMANAGER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
         return rootView;
     }
@@ -112,7 +112,7 @@ public class PG_OrderPlanFragment extends Fragment
         listNewData = FileHelper.getAssetsData(getActivity(), "getOrderPlanList", OrderPlanBean.class);
         if (listNewData != null)
         {
-            adapter_pgOrderPlan = new Adapter_PGOrderPlan(getActivity(), listNewData, AppContext.BROADCAST_UPDATEAllORDER, expandableListView);
+            adapter_pgOrderPlan = new Adapter_PGOrderPlan(getActivity(), listNewData, AppContext.UPDATEMESSAGE_FARMMANAGER, expandableListView);
             expandableListView.setAdapter(adapter_pgOrderPlan);
 
 //            for (int i = 0; i < listNewData.size(); i++)
@@ -127,8 +127,7 @@ public class PG_OrderPlanFragment extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("parkid", "-1");
+        params.addQueryStringParameter("userid", commembertab.getId());
         params.addQueryStringParameter("productname","-1");
         params.addQueryStringParameter("buyer","-1");
         params.addQueryStringParameter("year", utils.getYear());
@@ -145,7 +144,7 @@ public class PG_OrderPlanFragment extends Fragment
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     listNewData = JSON.parseArray(result.getRows().toJSONString(), OrderPlanBean.class);
-                    adapter_pgOrderPlan = new Adapter_PGOrderPlan(getActivity(), listNewData, AppContext.BROADCAST_UPDATEAllORDER ,expandableListView);
+                    adapter_pgOrderPlan = new Adapter_PGOrderPlan(getActivity(), listNewData, AppContext.UPDATEMESSAGE_FARMMANAGER ,expandableListView);
                     expandableListView.setAdapter(adapter_pgOrderPlan);
 //                    for (int i = 0; i < listNewData.size(); i++)
 //                    {

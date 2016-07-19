@@ -44,7 +44,6 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @SuppressLint("NewApi")
@@ -186,17 +185,6 @@ public class NCZ_AllOrderFragment_New extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        Iterator<SellOrder_New> it = listData.iterator();
-//                        while (it.hasNext())
-//                        {
-//                            String value = it.next().getSelltype();
-//                            if (value.equals("已完成") || value.equals("待审批"))
-//                            {
-//                                it.remove();
-//                            }
-//                        }
-
-
                         listAdapter = new NCZ_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -204,7 +192,6 @@ public class NCZ_AllOrderFragment_New extends Fragment
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
-//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
                                 Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);

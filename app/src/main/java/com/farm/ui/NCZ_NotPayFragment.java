@@ -51,7 +51,6 @@ import java.util.List;
 @EFragment
 public class NCZ_NotPayFragment extends Fragment
 {
-
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();

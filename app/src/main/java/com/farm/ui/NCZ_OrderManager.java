@@ -39,10 +39,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_ordermanager)
 public class NCZ_OrderManager extends Activity
 {
-    //    NCZ_AllOrderFragment ncz_allOrderFragment;//删除
     NCZ_NotPayFragment ncz_notPayFragment;  //交易中
-    //    NCZ_DealingOrderFragment ncz_dealingOrderFragment;//完成
-//    NCZ_ScheduleOrderFragment ncz_scheduleOrderFragment;//排单
     NCZ_OrderPlanFragment ncz_orderPlanFragment;//订单排班
     NCZ_NeedApproveOrderFragment ncz_needApproveOrderFragment;  //审批
     NCZ_NotPayDepositFragment ncz_notPayDepositFragment;//待付定金
@@ -156,9 +153,6 @@ public class NCZ_OrderManager extends Activity
         getActionBar().hide();
         ncz_orderPlanFragment = new NCZ_OrderPlanFragment_();
         ncz_notPayDepositFragment = new NCZ_NotPayDepositFragment_();
-//        ncz_allOrderFragment = new NCZ_AllOrderFragment_();
-//        ncz_notPayFragment = new NCZ_NotPayFragment_();
-//        ncz_dealingOrderFragment = new NCZ_DealingOrderFragment_();
         ncz_needApproveOrderFragment = new NCZ_NeedApproveOrderFragment_();
         ncz_waitForHarvestFragment = new NCZ_WaitForHarvestFragment_();
         ncz_waitForSettlementFragment = new NCZ_WaitForSettlementFragment_();
