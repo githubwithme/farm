@@ -360,10 +360,10 @@ public class NCZ_CreateNewOrder extends Activity
         }*/
 
         //短信
-        SmsManager smsMessage = SmsManager.getDefault();
+     /*   SmsManager smsMessage = SmsManager.getDefault();
 //        List<String> divideContents = smsMessage.divideMessage(message);
         smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元", null, null);
-
+*/
         List<String> list_uuid = new ArrayList<>();
         String batchtime = "";
         String producer = "";

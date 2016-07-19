@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
+import com.farm.adapter.Adapter_New_SellDetail;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.PeopelList;
@@ -61,7 +62,8 @@ import java.util.List;
 @EActivity(R.layout.ncz_editorder)
 public class NCZ_EditOrder extends Activity
 {
-
+    Adapter_New_SellDetail adapter_sellOrderDetail;
+    List<SellOrderDetail_New> list_orderDetail;
     MyDialog myDialog;
     CustomDialog_ListView customDialog_listView;
     String zzsl = "";
@@ -71,7 +73,6 @@ public class NCZ_EditOrder extends Activity
     List<PeopelList> listpeople = new ArrayList<PeopelList>();
 
     String broadcast;
-    List<SellOrderDetail_New> list_orderDetail;
     SellOrder_New sellOrder;
     Adapter_EditSellOrderDetail_NCZ adapter_editSellOrderDetail_ncz;
     SellOrderDetail SellOrderDetail;
@@ -309,7 +310,7 @@ public class NCZ_EditOrder extends Activity
         sellOrders.setEmail(et_email.getText().toString());
         sellOrders.setPhone(et_phone.getText().toString());
 
-        sellOrders.setNumber(String.valueOf(countAllNumber()));
+//        sellOrders.setNumber(String.valueOf(countAllNumber()));
 
         sellOrders.setSumvalues(et_values.getText().toString());
         sellOrders.setActualprice("");
@@ -454,15 +455,15 @@ public class NCZ_EditOrder extends Activity
     void afterOncreate()
     {
 
-
+        getsellOrderDetailBySaleId();
         cgId = sellOrder.getBuyers();
         byId = sellOrder.getPickId();
         bzId = sellOrder.getContractorId();
-        fzrId=sellOrder.getMainPepole();
-        tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
-        adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(NCZ_EditOrder.this);
+        fzrId = sellOrder.getMainPepole();
+//        tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
+   /*     adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(NCZ_EditOrder.this);
         lv.setAdapter(adapter_editSellOrderDetail_ncz);
-        utils.setListViewHeight(lv);
+        utils.setListViewHeight(lv);*/
 //        getListData();
         showData();
         getpurchaser();
@@ -476,14 +477,14 @@ public class NCZ_EditOrder extends Activity
         getActionBar().hide();
         sellOrder = getIntent().getParcelableExtra("bean");
         broadcast = getIntent().getStringExtra("broadcast");
-        list_orderDetail = sellOrder.getSellOrderDetailList();
+/*        list_orderDetail = sellOrder.getSellOrderDetailList();
         if (list_orderDetail == null)
         {
             list_orderDetail = new ArrayList<>();
-        }
+        }*/
     }
 
-    public int countAllNumber()
+/*    public int countAllNumber()
     {
         List<SellOrderDetail_New> list = sellOrder.getSellOrderDetailList();
         int allnumber = 0;
@@ -492,7 +493,7 @@ public class NCZ_EditOrder extends Activity
             allnumber = allnumber + Integer.valueOf(list.get(i).getplannumber());
         }
         return allnumber;
-    }
+    }*/
 
     /*    @ViewById
         EditText by_danjia;
@@ -1095,5 +1096,58 @@ public class NCZ_EditOrder extends Activity
             }
         });
 
+    }
+
+    private void getsellOrderDetailBySaleId()
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_EditOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("saleId", sellOrder.getUuid());
+        params.addQueryStringParameter("action", "getsellOrderDetailBySaleId");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<SellOrderDetail_New> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+
+
+                        list_orderDetail = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+           /*             adapter_sellOrderDetail = new Adapter_New_SellDetail(NCZ_EditOrder.this, list_orderDetail);
+                        lv.setAdapter(adapter_sellOrderDetail);
+                        utils.setListViewHeight(lv);*/
+                    /*    if (list_orderDetail.size()>0)
+                        {
+                            tv_cbh.setText(list_orderdetail.get(0).getparkname()+"承包户产量");
+                        }*/
+                        adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(NCZ_EditOrder.this);
+                        lv.setAdapter(adapter_editSellOrderDetail_ncz);
+                        utils.setListViewHeight(lv);
+                    } else
+                    {
+                        listNewData = new ArrayList<SellOrderDetail_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_EditOrder.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_EditOrder.this, "error_connectServer");
+            }
+        });
     }
 }
