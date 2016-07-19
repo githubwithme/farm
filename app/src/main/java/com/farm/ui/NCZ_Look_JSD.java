@@ -383,7 +383,7 @@ public class NCZ_Look_JSD extends Activity implements CustomHorizontalScrollView
 //            if (lmap.get(position) == null)
 //            {
             // 获取list_item布局文件的视图
-            convertView = LayoutInflater.from(NCZ_Look_JSD.this).inflate(R.layout.customhorizontscrollview_allitem, null);
+            convertView = LayoutInflater.from(NCZ_Look_JSD.this).inflate(R.layout.ncz_jsd_detail_scrolladpteritem, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
