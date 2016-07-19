@@ -23,6 +23,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
 {
     public String id;
     public String uid;
+    public String infoId;
     @Id
     @NoAutoIncrement
     public String uuid;
@@ -52,8 +53,9 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String finalpayment;
     public String flashStr;
     public List<SellOrderDetail_New> sellOrderDetailList;
+    public List<SellOrderDetail_New> DetailSecLists;
 
-   public  String pactId;
+    public  String pactId;
     public String plateNumber; // 车牌号
     public String mainPepole;  // 负责人id
     public String mainPepName;  // 负责人
@@ -106,12 +108,8 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String mainPeople;//负责人名称
     public String mainPeoplePhone;//负责人电话
     public String parkname;//采收园区名称
-    public String settlementNumber;//结算单总数
-    public String notPaySettlementNumber;//待付结算单总数
-    public String paidSettlementNumber;//已付结算单总数
-    public String paid;//已付总额
-    public String unpaid;//待付总额
     public String isReady;//是否准备就绪
+
 
     public String getIsReady()
     {
@@ -121,56 +119,6 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public void setIsReady(String isReady)
     {
         this.isReady = isReady;
-    }
-
-    public String getSettlementNumber()
-    {
-        return settlementNumber;
-    }
-
-    public void setSettlementNumber(String settlementNumber)
-    {
-        this.settlementNumber = settlementNumber;
-    }
-
-    public String getNotPaySettlementNumber()
-    {
-        return notPaySettlementNumber;
-    }
-
-    public void setNotPaySettlementNumber(String notPaySettlementNumber)
-    {
-        this.notPaySettlementNumber = notPaySettlementNumber;
-    }
-
-    public String getPaidSettlementNumber()
-    {
-        return paidSettlementNumber;
-    }
-
-    public void setPaidSettlementNumber(String paidSettlementNumber)
-    {
-        this.paidSettlementNumber = paidSettlementNumber;
-    }
-
-    public String getPaid()
-    {
-        return paid;
-    }
-
-    public void setPaid(String paid)
-    {
-        this.paid = paid;
-    }
-
-    public String getUnpaid()
-    {
-        return unpaid;
-    }
-
-    public void setUnpaid(String unpaid)
-    {
-        this.unpaid = unpaid;
     }
 
     public String getParkname()
@@ -231,6 +179,27 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public void setPrepareStatus(String prepareStatus)
     {
         this.prepareStatus = prepareStatus;
+    }
+
+
+    public List<SellOrderDetail_New> getDetailSecLists()
+    {
+        return DetailSecLists;
+    }
+
+    public void setDetailSecLists(List<SellOrderDetail_New> detailSecLists)
+    {
+        DetailSecLists = detailSecLists;
+    }
+
+    public String getInfoId()
+    {
+        return infoId;
+    }
+
+    public void setInfoId(String infoId)
+    {
+        this.infoId = infoId;
     }
 
     public String getQualityWaterWeight()
@@ -992,6 +961,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             SellOrder_New p = new SellOrder_New();
             p.setid(source.readString());
             p.setUid(source.readString());
+            p.setInfoId(source.readString());
             p.setUuid(source.readString());
             p.setBatchTime(source.readString());
             p.setSelltype(source.readString());
@@ -1019,6 +989,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setFinalpayment(source.readString());
             p.setFlashStr(source.readString());
             p.sellOrderDetailList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
+            p.DetailSecLists = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
 
 
             p.setPactId(source.readString());
@@ -1074,11 +1045,6 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setMainPeople(source.readString());
             p.setMainPeoplePhone(source.readString());
             p.setParkname(source.readString());
-            p.setSettlementNumber(source.readString());
-            p.setNotPaySettlementNumber(source.readString());
-            p.setPaidSettlementNumber(source.readString());
-            p.setPaid(source.readString());
-            p.setUnpaid(source.readString());
             p.setIsReady(source.readString());
             return p;
 
@@ -1097,6 +1063,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     {
         p.writeString(id);
         p.writeString(uid);
+        p.writeString(infoId);
         p.writeString(uuid);
         p.writeString(batchTime);
         p.writeString(selltype);
@@ -1124,6 +1091,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(finalpayment);
         p.writeString(flashStr);
         p.writeList(sellOrderDetailList);
+        p.writeList(DetailSecLists);//子表
 
         p.writeString(pactId);
         p.writeString(plateNumber);
@@ -1176,11 +1144,6 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(mainPeople);
         p.writeString(mainPeoplePhone);
         p.writeString(parkname);
-        p.writeString(settlementNumber);
-        p.writeString(notPaySettlementNumber);
-        p.writeString(paidSettlementNumber);
-        p.writeString(paid);
-        p.writeString(unpaid);
         p.writeString(isReady);
     }
 
