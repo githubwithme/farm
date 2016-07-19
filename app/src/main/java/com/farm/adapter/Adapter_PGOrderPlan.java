@@ -41,7 +41,7 @@ import java.util.List;
 /**
  * Created by user on 2016/4/8.
  */
-public class Adapter_OrderPlan extends BaseExpandableListAdapter
+public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
 {
     TextView tv_car;
     CustomDialog_CallTip custom_calltip;
@@ -57,7 +57,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
     ListView list;
     String broadcast;
 
-    public Adapter_OrderPlan(Context context, List<OrderPlanBean> listData, String broadcast, ExpandableListView mainlistview)
+    public Adapter_PGOrderPlan(Context context, List<OrderPlanBean> listData, String broadcast, ExpandableListView mainlistview)
     {
         this.mainlistview = mainlistview;
         this.listData = listData;
@@ -122,7 +122,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.adapter_orderplan_child, null);
+            convertView = inflater.inflate(R.layout.adapter_pgorderplan_child, null);
             listItemView = new ListItemView();
             listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
             listItemView.ll_buyer = (LinearLayout) convertView.findViewById(R.id.ll_buyer);
@@ -373,7 +373,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
         if (convertView == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.adapter_orderplan_parent, null);
+            convertView = inflater.inflate(R.layout.adapter_pgorderplan_parent, null);
             TextView tv_ordernumber = (TextView) convertView.findViewById(R.id.tv_ordernumber);
             GridView gv = (GridView) convertView.findViewById(R.id.gv);
             TextView tv_datenote = (TextView) convertView.findViewById(R.id.tv_datenote);
@@ -394,16 +394,15 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             {
                 tv_datenote.setText(utils.OffSetOfDate_OrderDate(utils.getToday(), date));
             }
-
             tv_notPayDepositNumber.setText(listData.get(groupPosition).getNotPayDepositNumber() + "单");
             tv_paidDepositNumber.setText(listData.get(groupPosition).getPaidDepositNumber() + "单");
             tv_notreadyNumber.setText(listData.get(groupPosition).getNotreadyNumber() + "单");
             tv_readyNumber.setText(listData.get(groupPosition).getReadyNumber() + "单");
             tv_carnumber.setText("合计" + listData.get(groupPosition).getCarNumber() + "车");
             tv_ordernumber.setText("合计" + listData.get(groupPosition).getOrderNumber() + "单");
-            Adapter_OrderPlan_Parentitem adapter_orderPlan_parentitem = new Adapter_OrderPlan_Parentitem(context, listData.get(groupPosition).getOrderPlanList());
-            gv.setAdapter(adapter_orderPlan_parentitem);
-            utils.setGridViewHeight(gv);
+//            Adapter_OrderPlan_Parentitem adapter_orderPlan_parentitem = new Adapter_OrderPlan_Parentitem(context, listData.get(groupPosition).getOrderPlanList());
+//            gv.setAdapter(adapter_orderPlan_parentitem);
+//            utils.setGridViewHeight(gv);
         }
 
         return convertView;

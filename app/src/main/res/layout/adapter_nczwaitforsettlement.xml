@@ -112,6 +112,7 @@
                         android:layout_marginRight="3dip"/>
 
                     <TextView
+                        android:id="@+id/tv_unpaid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -304,7 +305,7 @@
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="30dip"
+                android:layout_height="40dip"
                 android:background="@color/defaultbackground_light">
 
 
@@ -400,41 +401,57 @@
                 android:layout_width="fill_parent"
                 android:layout_height="30dip">
 
-                <View
-                    android:id="@+id/view_depositstatus1"
-                    android:layout_width="15dip"
-                    android:layout_height="15dip"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dip"
-                    android:background="@drawable/icon_ok"/>
-
-                <TextView
-                    android:id="@+id/tv_depositStatus"
+                <LinearLayout
+                    android:id="@+id/ll_undeposit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:text="免付定金"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <View
-                    android:id="@+id/view_finalpaystatus"
-                    android:layout_width="15dip"
-                    android:layout_height="15dip"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dip"
-                    android:background="@drawable/icon_ok"/>
+                    <View
+                        android:id="@+id/view_depositstatus1"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dip"
+                        android:background="@drawable/icon_ok"/>
 
-                <TextView
-                    android:id="@+id/tv_finalpayStatus"
+                    <TextView
+                        android:id="@+id/tv_depositStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="免付定金"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_unfinalpay"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:text="免付尾款"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/view_finalpaystatus"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/icon_ok"/>
+
+                    <TextView
+                        android:id="@+id/tv_finalpayStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="免付尾款"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="fill_parent"

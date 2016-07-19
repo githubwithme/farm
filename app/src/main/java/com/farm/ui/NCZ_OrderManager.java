@@ -39,9 +39,9 @@ import java.util.List;
 @EActivity(R.layout.ncz_ordermanager)
 public class NCZ_OrderManager extends Activity
 {
-//    NCZ_AllOrderFragment ncz_allOrderFragment;//删除
+    //    NCZ_AllOrderFragment ncz_allOrderFragment;//删除
     NCZ_NotPayFragment ncz_notPayFragment;  //交易中
-//    NCZ_DealingOrderFragment ncz_dealingOrderFragment;//完成
+    //    NCZ_DealingOrderFragment ncz_dealingOrderFragment;//完成
 //    NCZ_ScheduleOrderFragment ncz_scheduleOrderFragment;//排单
     NCZ_OrderPlanFragment ncz_orderPlanFragment;//订单排班
     NCZ_NeedApproveOrderFragment ncz_needApproveOrderFragment;  //审批
@@ -102,6 +102,7 @@ public class NCZ_OrderManager extends Activity
         setBackground(0);
         switchContent(mContent, ncz_orderPlanFragment);
     }
+
     @Click
     void tv_pending()
     {
@@ -122,12 +123,14 @@ public class NCZ_OrderManager extends Activity
         setBackground(3);
         switchContent(mContent, ncz_waitForHarvestFragment);
     }
+
     @Click
     void tv_waitingForSettlement()
     {
         setBackground(4);
         switchContent(mContent, ncz_waitForSettlementFragment);
     }
+
     @Click
     void tv_allorder()
     {
@@ -135,7 +138,6 @@ public class NCZ_OrderManager extends Activity
         switchContent(mContent, ncz_allOrderFragment_new);
 
     }
-
 
 
     @AfterViews

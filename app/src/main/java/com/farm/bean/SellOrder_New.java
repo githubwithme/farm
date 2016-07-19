@@ -55,7 +55,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public List<SellOrderDetail_New> sellOrderDetailList;
     public List<SellOrderDetail_New> DetailSecLists;
 
-   public  String pactId;
+    public  String pactId;
     public String plateNumber; // 车牌号
     public String mainPepole;  // 负责人id
     public String mainPepName;  // 负责人

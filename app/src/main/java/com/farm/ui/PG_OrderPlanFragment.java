@@ -16,7 +16,7 @@ import android.widget.Spinner;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.Adapter_OrderPlan;
+import com.farm.adapter.Adapter_PGOrderPlan;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
@@ -47,10 +47,10 @@ import java.util.List;
  * Created by user on 2016/2/26.
  */
 @EFragment
-public class NCZ_OrderPlanFragment extends Fragment
+public class PG_OrderPlanFragment extends Fragment
 {
     List<OrderPlanBean> listNewData = null;
-    Adapter_OrderPlan adapter_orderPlan;
+    Adapter_PGOrderPlan adapter_pgOrderPlan;
     String goodsName;
     @ViewById
     ExpandableListView expandableListView;
@@ -60,9 +60,9 @@ public class NCZ_OrderPlanFragment extends Fragment
     Spinner citySpinner;
     @ViewById
     Spinner countySpinner;
-    String parkname = "";
-    String cpname = "";
-    String cgsname = "";
+    String parkname="";
+    String cpname="";
+    String cgsname="";
     CustomArrayAdapter provinceAdapter = null;  //省级适配器
     CustomArrayAdapter cityAdapter = null;    //地级适配器
     CustomArrayAdapter countyAdapter = null;    //县级适配器
@@ -91,7 +91,7 @@ public class NCZ_OrderPlanFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_orderplanfragment_new, container, false);
+        View rootView = inflater.inflate(R.layout.pg_orderplanfragment_new, container, false);
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATEAllORDER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
         return rootView;
@@ -107,14 +107,13 @@ public class NCZ_OrderPlanFragment extends Fragment
             getNewSaleList_test();
         }
     };
-
     private void getNewSaleList_test()
     {
         listNewData = FileHelper.getAssetsData(getActivity(), "getOrderPlanList", OrderPlanBean.class);
         if (listNewData != null)
         {
-            adapter_orderPlan = new Adapter_OrderPlan(getActivity(), listNewData, AppContext.BROADCAST_UPDATEAllORDER, expandableListView);
-            expandableListView.setAdapter(adapter_orderPlan);
+            adapter_pgOrderPlan = new Adapter_PGOrderPlan(getActivity(), listNewData, AppContext.BROADCAST_UPDATEAllORDER, expandableListView);
+            expandableListView.setAdapter(adapter_pgOrderPlan);
 
 //            for (int i = 0; i < listNewData.size(); i++)
 //            {
@@ -130,11 +129,11 @@ public class NCZ_OrderPlanFragment extends Fragment
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("parkid", "-1");
-        params.addQueryStringParameter("productname", "-1");
-        params.addQueryStringParameter("buyer", "-1");
+        params.addQueryStringParameter("productname","-1");
+        params.addQueryStringParameter("buyer","-1");
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("status", "0");
-        params.addQueryStringParameter("action", "NCZ_getOrderPlan");
+        params.addQueryStringParameter("action", "MAinPeople_getOrderPlan");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -146,8 +145,8 @@ public class NCZ_OrderPlanFragment extends Fragment
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     listNewData = JSON.parseArray(result.getRows().toJSONString(), OrderPlanBean.class);
-                    adapter_orderPlan = new Adapter_OrderPlan(getActivity(), listNewData, AppContext.BROADCAST_UPDATEAllORDER, expandableListView);
-                    expandableListView.setAdapter(adapter_orderPlan);
+                    adapter_pgOrderPlan = new Adapter_PGOrderPlan(getActivity(), listNewData, AppContext.BROADCAST_UPDATEAllORDER ,expandableListView);
+                    expandableListView.setAdapter(adapter_pgOrderPlan);
 //                    for (int i = 0; i < listNewData.size(); i++)
 //                    {
 //                        expandableListView.expandGroup(i);//展开
@@ -167,7 +166,6 @@ public class NCZ_OrderPlanFragment extends Fragment
             }
         });
     }
-
     private void getchanpin()
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
@@ -242,7 +240,6 @@ public class NCZ_OrderPlanFragment extends Fragment
         });
 
     }
-
     //采购商
     private void getpurchaser()
     {
@@ -339,7 +336,7 @@ public class NCZ_OrderPlanFragment extends Fragment
     //园区
     private void getlistdata()
     {
-        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(getActivity());
+        commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
 //        params.addQueryStringParameter("parkId", "16");

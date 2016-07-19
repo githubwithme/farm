@@ -22,8 +22,6 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
-import com.farm.ui.NCZ_EditOrder_;
-import com.farm.ui.PG_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
@@ -52,7 +50,6 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
     private LayoutInflater listContainer;// 视图容器
     SellOrder_New sellOrder;
     private Callback mCallback;
-
 
 
     static class ListItemView
@@ -134,7 +131,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
             convertView.setTag(listItemView);
 
 
-            listItemView.tv_car.setText(sellOrder.getProducer()+"("+sellOrder.getGoodsname()+")");
+            listItemView.tv_car.setText(sellOrder.getProducer() + "(" + sellOrder.getGoodsname() + ")");
 //            SpannableString content = new SpannableString(sellOrder.getBuyers());
             SpannableString content = new SpannableString(sellOrder.getPurchaName());
             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -150,10 +147,10 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
             if (sellOrder.getPlateNumber().equals(""))
             {
                 listItemView.cl.setText("0");
-            }else
+            } else
             {
-                String []  str=sellOrder.getPlateNumber().split(",");
-                listItemView.cl.setText(str.length+"");
+                String[] str = sellOrder.getPlateNumber().split(",");
+                listItemView.cl.setText(str.length + "");
             }
 
 //            listItemView.circle_img.setOnClickListener(this);
@@ -166,19 +163,18 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
                 {
                     SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
                     ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name, sellOrders, "2");
+                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "2");
                     myDatepicker.getDialog().show();
-
                 }
             });
 //            listItemView.tv_batchtime.setText(sellOrder.getGoodsname());
-            String zbstudio="";
+            String zbstudio = "";
             if (!sellOrder.getContractorId().equals("") && !sellOrder.getPickId().equals(""))
             {
-                zbstudio="就绪";
-            }else
+                zbstudio = "就绪";
+            } else
             {
-                zbstudio="未就绪";
+                zbstudio = "未就绪";
             }
             SpannableString spanStr_buyer = new SpannableString(zbstudio);
             spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
@@ -195,7 +191,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
                     context.startActivity(intent);
                 }
             });
-            if (sellOrder.getSaletime().length()>0)
+            if (sellOrder.getSaletime().length() > 0)
             {
                 listItemView.tv_name.setText(sellOrder.getSaletime().substring(5, sellOrder.getSaletime().length() - 8));//时间
             }
