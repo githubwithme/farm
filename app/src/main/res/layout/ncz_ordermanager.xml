@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
-            android:text="订单排班"
+            android:text="销售单排班"
             android:textColor="@color/white"/>
 
     </RelativeLayout>

@@ -60,9 +60,9 @@ public class NCZ_OrderPlanFragment extends Fragment
     Spinner citySpinner;
     @ViewById
     Spinner countySpinner;
-    String parkname="";
-    String cpname="";
-    String cgsname="";
+    String parkname = "";
+    String cpname = "";
+    String cgsname = "";
     CustomArrayAdapter provinceAdapter = null;  //省级适配器
     CustomArrayAdapter cityAdapter = null;    //地级适配器
     CustomArrayAdapter countyAdapter = null;    //县级适配器
@@ -107,6 +107,7 @@ public class NCZ_OrderPlanFragment extends Fragment
             getNewSaleList_test();
         }
     };
+
     private void getNewSaleList_test()
     {
         listNewData = FileHelper.getAssetsData(getActivity(), "getOrderPlanList", OrderPlanBean.class);
@@ -129,8 +130,8 @@ public class NCZ_OrderPlanFragment extends Fragment
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("parkid", "-1");
-        params.addQueryStringParameter("productname","-1");
-        params.addQueryStringParameter("buyer","-1");
+        params.addQueryStringParameter("productname", "-1");
+        params.addQueryStringParameter("buyer", "-1");
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("status", "0");
         params.addQueryStringParameter("action", "NCZ_getOrderPlan");
@@ -145,7 +146,7 @@ public class NCZ_OrderPlanFragment extends Fragment
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     listNewData = JSON.parseArray(result.getRows().toJSONString(), OrderPlanBean.class);
-                    adapter_orderPlan = new Adapter_OrderPlan(getActivity(), listNewData, AppContext.BROADCAST_UPDATEAllORDER ,expandableListView);
+                    adapter_orderPlan = new Adapter_OrderPlan(getActivity(), listNewData, AppContext.BROADCAST_UPDATEAllORDER, expandableListView);
                     expandableListView.setAdapter(adapter_orderPlan);
 //                    for (int i = 0; i < listNewData.size(); i++)
 //                    {
@@ -166,6 +167,7 @@ public class NCZ_OrderPlanFragment extends Fragment
             }
         });
     }
+
     private void getchanpin()
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
@@ -240,6 +242,7 @@ public class NCZ_OrderPlanFragment extends Fragment
         });
 
     }
+
     //采购商
     private void getpurchaser()
     {

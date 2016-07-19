@@ -199,7 +199,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center"
-                android:text="创建订单"
+                android:text="创建销售单"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_sp_14"/>
 
@@ -215,7 +215,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center"
-                android:text="订单管理"
+                android:text="销售单管理"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_sp_14"/>
 

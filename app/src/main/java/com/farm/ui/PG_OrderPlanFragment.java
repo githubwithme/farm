@@ -133,7 +133,7 @@ public class PG_OrderPlanFragment extends Fragment
         params.addQueryStringParameter("buyer","-1");
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("status", "0");
-        params.addQueryStringParameter("action", "NCZ_getOrderPlan");
+        params.addQueryStringParameter("action", "MAinPeople_getOrderPlan");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

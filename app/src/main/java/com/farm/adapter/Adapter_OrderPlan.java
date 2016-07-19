@@ -30,6 +30,7 @@ import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
 import com.farm.widget.CustomDialog_ListView;
+import com.farm.widget.MyDateMaD;
 import com.farm.widget.MyDialog;
 import com.swipelistview.SwipeLayout;
 
@@ -94,6 +95,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
         public TextView tv_buyer;
         public TextView tv_preparestatus;
         public TextView tv_car;
+        public TextView tv_settlementtime;
         public TextView tv_orderstate;
         public TextView tv_mainpeple;
         public TextView tv_product;
@@ -130,6 +132,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             listItemView.tv_preparestatus = (TextView) convertView.findViewById(R.id.tv_preparestatus);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
             listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
+            listItemView.tv_settlementtime = (TextView) convertView.findViewById(R.id.tv_settlementtime);
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
@@ -168,10 +171,10 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
                 @Override
                 public void onClick(View view)
                 {
-//                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
-//                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-//                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name, sellOrders, "1");
-//                    myDatepicker.getDialog().show();
+                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
+                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
+                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "1");
+                    myDatepicker.getDialog().show();
                 }
             });
             listItemView.btn_cancleorder.setTag(R.id.tag_cash, sellOrder_new);
@@ -260,9 +263,9 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             if (sellOrder_new.getCarNumber().equals(""))
             {
                 listItemView.tv_car.setText("0车");
-            }else
+            } else
             {
-                listItemView.tv_car.setText(sellOrder_new.getCarNumber()+"车");
+                listItemView.tv_car.setText(sellOrder_new.getCarNumber() + "车");
             }
 
             listItemView.tv_buyer.setText(sellOrder_new.getBuyersName());
@@ -275,7 +278,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
                 if (sellOrder_new.getStatus().equals("0"))
                 {
                     listItemView.tv_preparestatus.setText("未就绪");
-                }else
+                } else
                 {
                     listItemView.tv_preparestatus.setText("已就绪");
                 }
@@ -382,20 +385,20 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             TextView tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 
 
-            String date=listData.get(groupPosition).getDate();
+            String date = listData.get(groupPosition).getDate();
             tv_date.setText(date);
             if (date.equals(utils.getToday().toString()))
             {
                 tv_datenote.setText("今天");
-            }else
+            } else
             {
                 tv_datenote.setText(utils.OffSetOfDate_OrderDate(utils.getToday(), date));
             }
 
-            tv_notPayDepositNumber.setText(listData.get(groupPosition).getNotPayDepositNumber()+"单");
-            tv_paidDepositNumber.setText(listData.get(groupPosition).getPaidDepositNumber()+"单");
-            tv_notreadyNumber.setText(listData.get(groupPosition).getNotreadyNumber()+"单");
-            tv_readyNumber.setText(listData.get(groupPosition).getReadyNumber()+"单");
+            tv_notPayDepositNumber.setText(listData.get(groupPosition).getNotPayDepositNumber() + "单");
+            tv_paidDepositNumber.setText(listData.get(groupPosition).getPaidDepositNumber() + "单");
+            tv_notreadyNumber.setText(listData.get(groupPosition).getNotreadyNumber() + "单");
+            tv_readyNumber.setText(listData.get(groupPosition).getReadyNumber() + "单");
             tv_carnumber.setText("合计" + listData.get(groupPosition).getCarNumber() + "车");
             tv_ordernumber.setText("合计" + listData.get(groupPosition).getOrderNumber() + "单");
             Adapter_OrderPlan_Parentitem adapter_orderPlan_parentitem = new Adapter_OrderPlan_Parentitem(context, listData.get(groupPosition).getOrderPlanList());

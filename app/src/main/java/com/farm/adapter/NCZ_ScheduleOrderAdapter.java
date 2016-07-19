@@ -23,14 +23,11 @@ import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.SellOrder;
 import com.farm.bean.SellOrder_New;
-import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
 import com.farm.widget.MyDateMaD;
-import com.farm.widget.MyDatepicker;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -144,7 +141,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-            listItemView.tv_time.setText("采收时间：" + sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length()-8));
+            listItemView.tv_time.setText("采收时间：" + sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length() - 8));
             listItemView.tv_car.setText(sellOrder.getProducer() + sellOrder.getGoodsname());
 //            SpannableString content = new SpannableString(sellOrder.getBuyers());
             SpannableString content = new SpannableString(sellOrder.getPurchaName());
@@ -168,7 +165,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                 {
                     SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
                     ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name, sellOrders, "1");
+                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "1");
                     myDatepicker.getDialog().show();
     /*                sellOrders.setSaletime(listItemView2.tv_name.getText().toString());
                     StringBuilder builder = new StringBuilder();
@@ -177,19 +174,18 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                     builder.append("]} ");*/
 //                    newaddOrder(builder.toString());
                 }
-            });
-            String zbstudio="";
+            }); String zbstudio = "";
             if (!sellOrder.getContractorId().equals("") && !sellOrder.getPickId().equals(""))
             {
-                zbstudio="就绪";
-            }else
+                zbstudio = "就绪";
+            } else
             {
-                zbstudio="未就绪";
+                zbstudio = "未就绪";
             }
             SpannableString spanStr_buyer = new SpannableString(zbstudio);
             spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
             listItemView.tv_batchtime.setText(spanStr_buyer);
-            listItemView.tv_batchtime.setTag(R.id.tag_danwei,sellOrder);
+            listItemView.tv_batchtime.setTag(R.id.tag_danwei, sellOrder);
             listItemView.tv_batchtime.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -197,7 +193,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
                 {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
                     Intent intent = new Intent(context, RecoveryDetail_.class);
-                    intent.putExtra("zbstudio",sellOrder_new);
+                    intent.putExtra("zbstudio", sellOrder_new);
                     context.startActivity(intent);
                 }
             });
@@ -220,7 +216,7 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
             {
                 listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
             }
-            listItemView.tv_fzr.setText("负责人:"+sellOrder.getMainPepName());
+            listItemView.tv_fzr.setText("负责人:" + sellOrder.getMainPepName());
             if (sellOrder.getSelltype().equals("待付定金"))
             {
                 listItemView.tv_state.setText("等待买家付定金");
@@ -264,14 +260,13 @@ public class NCZ_ScheduleOrderAdapter extends BaseAdapter implements View.OnClic
         {
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
-        }
-        if (listItems.get(position).getFlashStr().equals("0"))
-        {
-            listItemView.fl_dynamic.setVisibility(View.INVISIBLE);
-        } else
-        {
-            listItemView.fl_dynamic.setVisibility(View.VISIBLE);
-        }
+        } if (listItems.get(position).getFlashStr().equals("0"))
+    {
+        listItemView.fl_dynamic.setVisibility(View.INVISIBLE);
+    } else
+    {
+        listItemView.fl_dynamic.setVisibility(View.VISIBLE);
+    }
 
         if (position == 0)
         {

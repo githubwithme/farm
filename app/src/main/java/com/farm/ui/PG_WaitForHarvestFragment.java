@@ -163,6 +163,13 @@ public class PG_WaitForHarvestFragment extends Fragment
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("type", "0");
         params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
+        //        params.addQueryStringParameter("uid", commembertab.getuId());
+//        params.addQueryStringParameter("parkid", "-1");
+//        params.addQueryStringParameter("productname","-1");
+//        params.addQueryStringParameter("buyer","-1");
+//        params.addQueryStringParameter("year", utils.getYear());
+//        params.addQueryStringParameter("status", "0");
+//        params.addQueryStringParameter("action", "MainPeople_getwaitingForHarvestOrder");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -326,7 +333,7 @@ public class PG_WaitForHarvestFragment extends Fragment
                             {
 
                                 parkname = listpark.get(i).getParkName();
-                                getAllOrdersname();
+                                getAllOrders();
                             }
 
                             @Override
@@ -401,7 +408,7 @@ public class PG_WaitForHarvestFragment extends Fragment
                             {
 
                                 cpname = listdata_cp.get(i).getProductName();
-                                getAllOrdersname();
+                                getAllOrders();
                             }
 
                             @Override
@@ -490,7 +497,7 @@ public class PG_WaitForHarvestFragment extends Fragment
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                                 {
                                     cgsname = listData_CG.get(i).getName();
-                                    getAllOrdersname();
+                                    getAllOrders();
                                 }
 
                                 @Override
@@ -526,123 +533,123 @@ public class PG_WaitForHarvestFragment extends Fragment
     }
 
 
-    private void getAllOrdersname()
-    {
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        Iterator<SellOrder_New> ita = listData.iterator();
-                        while (ita.hasNext())
-                        {
-                            String value = ita.next().getSelltype();
-                            if (value.equals("已完成")||value.equals("待审批"))
-                            {
-                                ita.remove();
-                            }
-                        }
-
-                        if (!parkname.equals(""))
-                        {
-                            if (!parkname.equals("全部分场"))
-                            {
-                                Iterator<SellOrder_New> it = listData.iterator();
-                                while (it.hasNext())
-                                {
-                                    String value = it.next().getProducer();
-                                    if (value.indexOf(parkname) == -1)
-                                    {
-                                        it.remove();
-                                    }
-                                }
-                            }
-                        }
-                        if (!cgsname.equals(""))
-                        {
-
-                            if (!cgsname.equals("全部采购商"))
-                            {
-                                Iterator<SellOrder_New> its = listData.iterator();
-                                while (its.hasNext())
-                                {
-                                    String value = its.next().getPurchaName();
-                                    if (value.indexOf(cgsname) == -1)
-                                    {
-                                        its.remove();
-                                    }
-                                }
-                            }
-                        }
-
-                        if (!cpname.equals(""))
-                        {
-
-                            if (!cpname.equals("全部产品"))
-                            {
-                                Iterator<SellOrder_New> its = listData.iterator();
-                                while (its.hasNext())
-                                {
-                                    String value = its.next().getGoodsname();
-//                            if (!value.equals("已完成"))
-                                    if (value.indexOf(cpname) == -1)
-                                    {
-                                        its.remove();
-                                    }
-                                }
-                            }
-                        }
-
-                        listAdapter = new PG_WaitForHarvestAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
-                        lv.setAdapter(listAdapter);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                        {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                            {
-
-                                commembertab commembertab = AppContext.getUserInfo(getActivity());
-                                AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
-                                intent.putExtra("bean", listData.get(position));
-                                getActivity().startActivity(intent);
-                            }
-                        });
-
-                    } else
-                    {
-                        listData = new ArrayList<SellOrder_New>();
-                    }
-
-                } else
-                {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(getActivity(), "error_connectServer");
-
-            }
-        });
-    }
+//    private void getAllOrdersname()
+//    {
+//        commembertab commembertab = AppContext.getUserInfo(getActivity());
+//        RequestParams params = new RequestParams();
+//        params.addQueryStringParameter("uid", commembertab.getuId());
+//        params.addQueryStringParameter("year", utils.getYear());
+//        params.addQueryStringParameter("type", "0");
+//        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
+//        HttpUtils http = new HttpUtils();
+//        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+//        {
+//            @Override
+//            public void onSuccess(ResponseInfo<String> responseInfo)
+//            {
+//                String a = responseInfo.result;
+//                Result result = JSON.parseObject(responseInfo.result, Result.class);
+//                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+//                {
+//                    if (result.getAffectedRows() != 0)
+//                    {
+//                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+//                        Iterator<SellOrder_New> ita = listData.iterator();
+//                        while (ita.hasNext())
+//                        {
+//                            String value = ita.next().getSelltype();
+//                            if (value.equals("已完成")||value.equals("待审批"))
+//                            {
+//                                ita.remove();
+//                            }
+//                        }
+//
+//                        if (!parkname.equals(""))
+//                        {
+//                            if (!parkname.equals("全部分场"))
+//                            {
+//                                Iterator<SellOrder_New> it = listData.iterator();
+//                                while (it.hasNext())
+//                                {
+//                                    String value = it.next().getProducer();
+//                                    if (value.indexOf(parkname) == -1)
+//                                    {
+//                                        it.remove();
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        if (!cgsname.equals(""))
+//                        {
+//
+//                            if (!cgsname.equals("全部采购商"))
+//                            {
+//                                Iterator<SellOrder_New> its = listData.iterator();
+//                                while (its.hasNext())
+//                                {
+//                                    String value = its.next().getPurchaName();
+//                                    if (value.indexOf(cgsname) == -1)
+//                                    {
+//                                        its.remove();
+//                                    }
+//                                }
+//                            }
+//                        }
+//
+//                        if (!cpname.equals(""))
+//                        {
+//
+//                            if (!cpname.equals("全部产品"))
+//                            {
+//                                Iterator<SellOrder_New> its = listData.iterator();
+//                                while (its.hasNext())
+//                                {
+//                                    String value = its.next().getGoodsname();
+////                            if (!value.equals("已完成"))
+//                                    if (value.indexOf(cpname) == -1)
+//                                    {
+//                                        its.remove();
+//                                    }
+//                                }
+//                            }
+//                        }
+//
+//                        listAdapter = new PG_WaitForHarvestAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
+//                        lv.setAdapter(listAdapter);
+//                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//                        {
+//                            @Override
+//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//                            {
+//
+//                                commembertab commembertab = AppContext.getUserInfo(getActivity());
+//                                AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
+////                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+//                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
+//                                intent.putExtra("bean", listData.get(position));
+//                                getActivity().startActivity(intent);
+//                            }
+//                        });
+//
+//                    } else
+//                    {
+//                        listData = new ArrayList<SellOrder_New>();
+//                    }
+//
+//                } else
+//                {
+//                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+//                    return;
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(HttpException error, String msg)
+//            {
+//                AppContext.makeToast(getActivity(), "error_connectServer");
+//
+//            }
+//        });
+//    }
 }

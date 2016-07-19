@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.app.AppConfig;
@@ -35,25 +34,21 @@ public class MyDateMaD
 {
     private TextView mDateDisplay;
     private Button mPickDate;
-
     private int mYear;
     private int mMonth;
     private int mDay;
     SellOrder_New sellOrders;
-
-    TextView textView = null;
     EditText editText = null;
 
     static final int DATE_DIALOG_ID = 0;
     Context context;
-   private String type;
+    private String type;
 
-    public MyDateMaD(Context context, TextView textView,SellOrder_New sellOrders,String type)
+    public MyDateMaD(Context context, SellOrder_New sellOrders, String type)
     {
         this.context = context;
-        this.textView = textView;
-        this.sellOrders=sellOrders;
-        this.type=type;
+        this.sellOrders = sellOrders;
+        this.type = type;
     }
 
     public MyDateMaD(Context context, EditText editText)
@@ -72,26 +67,17 @@ public class MyDateMaD
         return new DatePickerDialog(context, mDateSetListener, mYear, mMonth, mDay);
     }
 
-    // updates the date we display in the TextView
-    public void updateDisplay(TextView textView)
+    public void updateDisplay()
     {
 
         if (type.equals("1"))
         {
-            textView.setText(new StringBuilder().append(mMonth + 1).append("/").append(mDay).append(" "));
-//            sellOrders.setBuyers(sellOrders.getBuyers());
             sellOrders.setSaletime(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" ").toString());
-        }else
+        } else
         {
-//            sellOrders.setBuyers(sellOrders.getBuyers());
             sellOrders.setOldsaletime(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" ").toString());
             sellOrders.setIsNeedAudit("0");
         }
-
-      /*  StringBuilder builder = new StringBuilder();
-        builder.append("{\"SellOrder_new\": [");
-        builder.append(JSON.toJSONString(sellOrders));
-        builder.append("]} ");*/
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrder_new\":[ ");
@@ -99,7 +85,7 @@ public class MyDateMaD
         builder.append("], \"sellorderlistadd\": [");
         builder.append(JSON.toJSONString(sellOrder_new_first));
         builder.append("]} ");
-                    newaddOrder(builder.toString());
+        newaddOrder(builder.toString());
     }
 
     public void updateDisplay(EditText editText)
@@ -114,17 +100,12 @@ public class MyDateMaD
             mYear = year;
             mMonth = monthOfYear;
             mDay = dayOfMonth;
-            if (textView == null)
-            {
-                updateDisplay(editText);
-            } else
-            {
-                updateDisplay(textView);
-            }
+            updateDisplay();
 
         }
     };
-    private void newaddOrder( String data)
+
+    private void newaddOrder(String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "editOrder");
@@ -155,7 +136,7 @@ public class MyDateMaD
                             Intent intent = new Intent();
                             intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
                             context.sendBroadcast(intent);
-                        }else
+                        } else
                         {
                             Intent intent = new Intent();
                             intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);

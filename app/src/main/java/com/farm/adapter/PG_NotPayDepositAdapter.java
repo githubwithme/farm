@@ -24,6 +24,7 @@ import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
+import com.farm.widget.MyDateMaD;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -52,6 +53,7 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
     static class ListItemView
     {
         //        public CircleImageView circle_img;
+        public TextView tv_car;
         public TextView tv_mainpeple;
         public TextView tv_parkname;
         public TextView tv_buyer;
@@ -62,6 +64,7 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
         public TextView tv_product;
         public Button btn_cancleorder;
         public Button btn_preparework;
+        public Button btn_changetime;
         public Button btn_editorder;
         public CircleImageView circleImageView;
         public LinearLayout ll_car;
@@ -108,12 +111,14 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
             // 获取控件对象
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
 //            listItemView.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
 //            listItemView.tv_sum = (TextView) convertView.findViewById(R.id.tv_sum);
 //            listItemView.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
+            listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
 //            listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
@@ -126,18 +131,20 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-            if (sellOrder.getSellOrderDetailList().size() > 0)
-            {
-                listItemView.tv_parkname.setText(sellOrder.getSellOrderDetailList().get(0).getparkname());
-            } else
-            {
-                listItemView.tv_parkname.setText("没有选择区域");
-            }
-            listItemView.tv_mainpeple.setText(sellOrder.getMainPepName());
+//            if (sellOrder.getSellOrderDetailList().size() > 0)
+//            {
+//                listItemView.tv_parkname.setText(sellOrder.getSellOrderDetailList().get(0).getparkname());
+//            } else
+//            {
+//                listItemView.tv_parkname.setText("没有选择区域");
+//            }
+            listItemView.tv_car.setText(sellOrder.getCarNumber());
+            listItemView.tv_parkname.setText(sellOrder.getParkname());
+            listItemView.tv_mainpeple.setText(sellOrder.getMainPeople());
 //            listItemView.tv_car.setText(sellOrder.getProducer());
 //            SpannableString content = new SpannableString(sellOrder.getPurchaName());
 //            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-            listItemView.tv_buyer.setText(sellOrder.getPurchaName());
+            listItemView.tv_buyer.setText(sellOrder.getBuyersName());
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -146,19 +153,19 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
                     showDialog_addsaleinfo("15989154871");
                 }
             });
-//            listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
-//            listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
-//            listItemView.btn_changetime.setOnClickListener(new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View view)
-//                {
-//                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
-//                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-//                    MyDateMaD myDatepicker = new MyDateMaD(context, listItemView2.tv_name, sellOrders, "1");
-//                    myDatepicker.getDialog().show();
-//                }
-//            });
+            listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
+            listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
+            listItemView.btn_changetime.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
+                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
+                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "1");
+                    myDatepicker.getDialog().show();
+                }
+            });
             //            listItemView.btn_preparework.setTag(R.id.tag_danwei,sellOrder);
             listItemView.btn_preparework.setOnClickListener(new View.OnClickListener()
             {
@@ -171,7 +178,7 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
                     context.startActivity(intent);
                 }
             });
-                //            listItemView.ll_car.setTag(R.id.tag_danwei,sellOrder);
+            //            listItemView.ll_car.setTag(R.id.tag_danwei,sellOrder);
             listItemView.ll_car.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -189,7 +196,7 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
                     showDialog_addsaleinfo("15989154871");
                 }
             });
-            listItemView.tv_product.setText(sellOrder.getGoodsname());
+            listItemView.tv_product.setText(sellOrder.getProduct());
             //下划线就绪
 /*            SpannableString spanStr_buyer = new SpannableString("就绪");
             spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);

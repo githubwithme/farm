@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:background="@color/white"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
 
     <RelativeLayout
@@ -13,8 +13,10 @@
 
         <ImageButton
             android:id="@+id/btn_back"
-            android:layout_width="30dip"
-            android:layout_height="@dimen/titlebar_height"
+            android:layout_width="15dip"
+            android:layout_height="15dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dip"
             android:background="@null"
             android:contentDescription=""
             android:src="@drawable/ic_back"/>
@@ -22,10 +24,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="30dip"
+            android:layout_marginLeft="5dip"
             android:gravity="center"
+            android:layout_toRightOf="@+id/btn_back"
             android:text="销售"
             android:textColor="@color/white"
             android:textSize="@dimen/size_sp_18"/>
@@ -44,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/line"
-        android:layout_marginBottom="80dip"
+        android:layout_marginBottom="90dip"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -73,19 +75,20 @@
             android:layout_height="fill_parent"
             android:layout_below="@+id/rl_note"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
+            android:layout_marginBottom="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
             android:layout_marginTop="5dip"
-            android:background="@drawable/round_white"
+            android:background="@drawable/frame_innerwhite_boderblack"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/ll_top"
                 android:layout_width="fill_parent"
                 android:layout_height="41dip"
-                android:layout_marginLeft="1px"
-                android:layout_marginRight="1px"
-                android:layout_marginTop="1px"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_marginTop="2dip"
                 android:minHeight="41dip"
                 android:orientation="horizontal">
 
@@ -95,7 +98,7 @@
                     android:layout_height="fill_parent"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:text="批次/承包区"
+                    android:text="批次"
                     android:textColor="@color/bg_text"
                     android:textSize="15sp"/>
 
@@ -151,8 +154,8 @@
                 android:layout_height="fill_parent"
                 android:layout_below="@+id/line_middle"
                 android:layout_marginBottom="42dip"
-                android:layout_marginLeft="1px"
-                android:layout_marginRight="1px"
+                android:layout_marginLeft="1dip"
+                android:layout_marginRight="1dip"
                 android:cacheColorHint="@android:color/transparent"
                 android:divider="@color/transparent"
                 android:dividerHeight="0px"
@@ -165,9 +168,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="40dip"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="1px"
-                android:layout_marginRight="1px"
-                android:layout_marginTop="1px"
+                android:layout_marginBottom="5dip"
+                android:layout_marginLeft="1dip"
+                android:layout_marginRight="1dip"
+                android:layout_marginTop="1dip"
                 android:minHeight="41dip"
                 android:orientation="horizontal">
 
@@ -258,7 +262,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:gravity="center"
-            android:text="创建订单"
+            android:text="创建销售单"
             android:textColor="@color/white"
             android:textSize="@dimen/size_sp_14"/>
 
@@ -274,7 +278,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:gravity="center"
-            android:text="订单管理"
+            android:text="销售单管理"
             android:textColor="@color/white"
             android:textSize="@dimen/size_sp_14"/>
 

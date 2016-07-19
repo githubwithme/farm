@@ -46,8 +46,8 @@
                         <View
                             android:id="@+id/view_user"
                             android:layout_width="15dip"
-                            android:layout_centerVertical="true"
                             android:layout_height="15dip"
+                            android:layout_centerVertical="true"
                             android:background="@drawable/user"/>
 
                         <TextView
@@ -85,19 +85,43 @@
                         android:background="@drawable/ic_next"/>
                 </LinearLayout>
 
-
-                <TextView
-                    android:id="@+id/tv_orderstate"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginRight="5dip"
-                    android:gravity="center"
-                    android:minWidth="60dip"
-                    android:text="等待买家付款"
-                    android:textColor="@color/red"
-                    android:textSize="14sp"/>
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/tv_paid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="已付150000元"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:visibility="gone"/>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="15dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="3dip"
+                        android:layout_marginRight="3dip"/>
+
+                    <TextView
+                        android:id="@+id/tv_unpaid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="待付150000元"
+                        android:textColor="@color/red"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
 
 
             </RelativeLayout>
@@ -184,7 +208,7 @@
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="40dip"
+                android:layout_height="30dip"
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="5dip">
@@ -200,6 +224,7 @@
                     android:text="车辆："
                     android:textColor="@color/gray"
                     android:textSize="14sp"/>
+
                 <LinearLayout
                     android:id="@+id/ll_car"
                     android:layout_width="wrap_content"
@@ -251,47 +276,145 @@
                     android:textSize="14sp"/>
 
                 <TextView
-                    android:id="@+id/tv_mainpeople_tip"
+                    android:id="@+id/tv_parkname_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dip"
                     android:layout_toRightOf="@+id/tv_product"
                     android:gravity="left"
-                    android:text="负责人："
+                    android:text="采收区："
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_parkname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dip"
+                    android:layout_toRightOf="@+id/tv_parkname_tip"
+                    android:gravity="left"
+                    android:text="乐丰园区"
                     android:textColor="@color/gray"
                     android:textSize="14sp"/>
 
 
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30dip"
+                android:orientation="horizontal">
+
                 <LinearLayout
-                    android:id="@+id/ll_mainpeople"
+                    android:id="@+id/ll_undeposit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/tv_mainpeople_tip"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_mainpeple"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="left"
-                        android:text="李四"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"/>
-
                     <View
-                        android:id="@+id/view_mainpeople_goto"
+                        android:id="@+id/view_depositstatus1"
                         android:layout_width="15dip"
                         android:layout_height="15dip"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dip"
-                        android:background="@drawable/ic_next"/>
+                        android:layout_marginLeft="10dip"
+                        android:background="@drawable/icon_ok"/>
+
+                    <TextView
+                        android:id="@+id/tv_depositStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="免付定金"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_unfinalpay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/view_finalpaystatus"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dip"
+                        android:background="@drawable/icon_ok"/>
+
+                    <TextView
+                        android:id="@+id/tv_finalpayStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="免付尾款"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"/>
+
                 </LinearLayout>
 
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dip">
+
+                    <View
+                        android:layout_width="17dip"
+                        android:layout_height="17dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dip"
+                        android:background="@drawable/user"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="left"
+                        android:text="负责人："
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"/>
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_mainpeople"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_mainpeple"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="left"
+                            android:text="李四"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:id="@+id/view_mainpeople_goto"
+                            android:layout_width="15dip"
+                            android:layout_height="15dip"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dip"
+                            android:background="@drawable/ic_next"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
 
             <RelativeLayout
@@ -301,16 +424,6 @@
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip">
 
-                <TextView
-                    android:id="@+id/tv_parkname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dip"
-                    android:gravity="left"
-                    android:text="乐丰园区"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"/>
 
                 <Button
                     android:id="@+id/btn_changetime"
@@ -369,6 +482,21 @@
                     android:gravity="center"
                     android:minWidth="60dip"
                     android:text="编辑"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"/>
+
+                <Button
+                    android:id="@+id/btn_showSettlement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="27dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="7dip"
+                    android:layout_marginTop="5dip"
+                    android:layout_toLeftOf="@+id/btn_editorder"
+                    android:background="@drawable/round_white"
+                    android:gravity="center"
+                    android:minWidth="60dip"
+                    android:text="查看结算单"
                     android:textColor="@color/gray"
                     android:textSize="12sp"/>
 

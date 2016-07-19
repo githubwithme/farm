@@ -54,6 +54,7 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
         //        public CircleImageView circle_img;
         public TextView tv_mainpeple;
         public TextView tv_parkname;
+        public TextView tv_prepareworkStatus;
         public TextView tv_buyer;
         public TextView tv_orderstate;
         //        public TextView tv_price;
@@ -65,6 +66,7 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
         public Button btn_editorder;
         public CircleImageView circleImageView;
         public LinearLayout ll_car;
+        public LinearLayout ll_undeposit;
         public LinearLayout ll_mainpeople;
 //        public FrameLayout fl_dynamic;
 
@@ -107,6 +109,7 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
+            listItemView.tv_prepareworkStatus = (TextView) convertView.findViewById(R.id.tv_prepareworkStatus);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
 //            listItemView.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
@@ -121,23 +124,36 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
             listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
             listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
+            listItemView.ll_undeposit = (LinearLayout) convertView.findViewById(R.id.ll_undeposit);
+            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
 //            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-            if (sellOrder.getSellOrderDetailList().size() > 0)
-            {
-                listItemView.tv_parkname.setText(sellOrder.getSellOrderDetailList().get(0).getparkname());
-            } else
-            {
-                listItemView.tv_parkname.setText("没有选择区域");
-            }
-            listItemView.tv_mainpeple.setText(sellOrder.getMainPepName());
+//            if (sellOrder.getFreeDeposit().equals("1"))
+//            {
+//                listItemView.ll_undeposit.setVisibility(View.VISIBLE);
+//            } else
+//            {
+//                listItemView.ll_undeposit.setVisibility(View.GONE);
+//            }
+
+
+            listItemView.tv_parkname.setText(sellOrder.getParkname());
+            listItemView.tv_mainpeple.setText(sellOrder.getMainPeople());
 //            listItemView.tv_car.setText(sellOrder.getProducer());
 //            SpannableString content = new SpannableString(sellOrder.getPurchaName());
 //            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-            listItemView.tv_buyer.setText(sellOrder.getPurchaName());
+            if (sellOrder.getIsReady().equals("true"))
+            {
+                listItemView.tv_prepareworkStatus.setText("准备就绪");
+            } else
+            {
+                listItemView.tv_prepareworkStatus.setText("未准备就绪");
+            }
+
+            listItemView.tv_buyer.setText(sellOrder.getBuyersName());
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -171,7 +187,7 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
                     context.startActivity(intent);
                 }
             });
-                //            listItemView.ll_car.setTag(R.id.tag_danwei,sellOrder);
+            //            listItemView.ll_car.setTag(R.id.tag_danwei,sellOrder);
             listItemView.ll_car.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -189,7 +205,7 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
                     showDialog_addsaleinfo("15989154871");
                 }
             });
-            listItemView.tv_product.setText(sellOrder.getGoodsname());
+            listItemView.tv_product.setText(sellOrder.getProduct());
             //下划线就绪
 /*            SpannableString spanStr_buyer = new SpannableString("就绪");
             spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);

@@ -106,6 +106,72 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String mainPeople;//负责人名称
     public String mainPeoplePhone;//负责人电话
     public String parkname;//采收园区名称
+    public String settlementNumber;//结算单总数
+    public String notPaySettlementNumber;//待付结算单总数
+    public String paidSettlementNumber;//已付结算单总数
+    public String paid;//已付总额
+    public String unpaid;//待付总额
+    public String isReady;//是否准备就绪
+
+    public String getIsReady()
+    {
+        return isReady;
+    }
+
+    public void setIsReady(String isReady)
+    {
+        this.isReady = isReady;
+    }
+
+    public String getSettlementNumber()
+    {
+        return settlementNumber;
+    }
+
+    public void setSettlementNumber(String settlementNumber)
+    {
+        this.settlementNumber = settlementNumber;
+    }
+
+    public String getNotPaySettlementNumber()
+    {
+        return notPaySettlementNumber;
+    }
+
+    public void setNotPaySettlementNumber(String notPaySettlementNumber)
+    {
+        this.notPaySettlementNumber = notPaySettlementNumber;
+    }
+
+    public String getPaidSettlementNumber()
+    {
+        return paidSettlementNumber;
+    }
+
+    public void setPaidSettlementNumber(String paidSettlementNumber)
+    {
+        this.paidSettlementNumber = paidSettlementNumber;
+    }
+
+    public String getPaid()
+    {
+        return paid;
+    }
+
+    public void setPaid(String paid)
+    {
+        this.paid = paid;
+    }
+
+    public String getUnpaid()
+    {
+        return unpaid;
+    }
+
+    public void setUnpaid(String unpaid)
+    {
+        this.unpaid = unpaid;
+    }
 
     public String getParkname()
     {
@@ -1008,6 +1074,12 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
             p.setMainPeople(source.readString());
             p.setMainPeoplePhone(source.readString());
             p.setParkname(source.readString());
+            p.setSettlementNumber(source.readString());
+            p.setNotPaySettlementNumber(source.readString());
+            p.setPaidSettlementNumber(source.readString());
+            p.setPaid(source.readString());
+            p.setUnpaid(source.readString());
+            p.setIsReady(source.readString());
             return p;
 
 
@@ -1104,6 +1176,12 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         p.writeString(mainPeople);
         p.writeString(mainPeoplePhone);
         p.writeString(parkname);
+        p.writeString(settlementNumber);
+        p.writeString(notPaySettlementNumber);
+        p.writeString(paidSettlementNumber);
+        p.writeString(paid);
+        p.writeString(unpaid);
+        p.writeString(isReady);
     }
 
     @Override
