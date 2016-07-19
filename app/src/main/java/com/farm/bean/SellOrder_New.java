@@ -55,29 +55,29 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public List<SellOrderDetail_New> sellOrderDetailList;
     public List<SellOrderDetail_New> DetailSecLists;
 
-    public  String pactId;
+    public String pactId;
     public String plateNumber; // 车牌号
     public String mainPepole;  // 负责人id
     public String mainPepName;  // 负责人
-    public String contractorId ; // 包工头
-    public String pickId ;      //  挑工头
-    public String carryPrice ;  // 搬运单价
-    public String packPrice ;   // 包装单价
+    public String contractorId; // 包工头
+    public String pickId;      //  挑工头
+    public String carryPrice;  // 搬运单价
+    public String packPrice;   // 包装单价
     public String defectPrice;   //次品单价
     public String defectNum;   // 次品数量
     public String packPec;   // 包装规格
-    public String waitDeposit ;   // 要付订金
+    public String waitDeposit;   // 要付订金
 
     public String buyersId;   // 采购商id
     public String buyersName;   // 采购商名
     public String contractorName;   //  包工头名
-    public String pickName ;   //  搬运工名
-    public String purchaName ;   // 片管获取采购商名字
-    public String purchaTel ;   //采购商电话
-    public String purchaMail ;   // 采购商mail
-    public String isNeedAudit ;   // 单价，订金的修改
-    public String freeDeposit ;   // 免付订金
-    public String freeFinalPay ;   // 免付尾款
+    public String pickName;   //  搬运工名
+    public String purchaName;   // 片管获取采购商名字
+    public String purchaTel;   //采购商电话
+    public String purchaMail;   // 采购商mail
+    public String isNeedAudit;   // 单价，订金的修改
+    public String freeDeposit;   // 免付订金
+    public String freeFinalPay;   // 免付尾款
 
     public String oldPrice;        //旧的单价
     public String oldCarryPrice;   //旧的搬运价格
@@ -93,7 +93,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String defectWaterWeight;//次品带水重
     public String defectNetWeight;//次品净重
     public String defectBalance;//次品结算金额
-    public String total ;//总件数
+    public String total;//总件数
     public String qualityTotalWeight;//正品总净重
     public String defectTotalWeight;//次品重净重
     public String TotalWeight;//总净重
@@ -114,6 +114,11 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String paidSettlementNumber;//已结算金额订单数
     public String paid;//已结算金额
     public String unpaid;//未结算金额
+
+    public SellOrder_New()
+    {
+        super();
+    }
 
     protected SellOrder_New(Parcel in)
     {
