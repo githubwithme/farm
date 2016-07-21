@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ll_goodsItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="45dip"
+            android:layout_marginLeft="20dip"
+            android:gravity="center"
+            android:text="测试钾肥"
+            android:textColor="@color/bg_text"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/et_number"
+            android:layout_width="120dip"
+            android:layout_height="45dip"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:hint="请输入"
+            android:inputType="number"
+            android:textColorHint="@color/bg_text"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="45dip"
+            android:layout_marginLeft="10dip"
+            android:gravity="center"
+            android:text="包"
+            android:textColor="@color/bg_text"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/ll_goodsItem"
+        android:background="@color/line_color"/>
+
+</RelativeLayout>

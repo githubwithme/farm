@@ -12,13 +12,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.BreakOff_New;
 import com.farm.bean.ContactsBean;
+import com.farm.bean.ContractGoodsUsed;
 import com.farm.bean.commembertab;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_ListView;
 import com.swipelistview.SwipeLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -173,8 +174,16 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.adapter_pggoodsused_parent, null);
         }
         TextView tv_type = (TextView) convertView.findViewById(R.id.tv_type);
-
-//        tv_type.setText(listData.get(groupPosition).getType());
+        Button btn_addGoods = (Button) convertView.findViewById(R.id.btn_addGoods);
+        btn_addGoods.setTag("");
+        btn_addGoods.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                showDialog_addgoods();
+            }
+        });
         return convertView;
     }
 
@@ -190,11 +199,11 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
         return true;
     }
 
-    public void showDialog_editBreakoffinfo(final BreakOff_New breakOff_new, final String batchtime, final String batchcolor, final String oldNumber)
+    public void showDialog_addgoods()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editcontractsale, null);
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_addgoods, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
-//        et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
+        ListView lv = (ListView) dialog_layout.findViewById(R.id.lv);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
         btn_sure.setOnClickListener(new View.OnClickListener()
@@ -203,17 +212,6 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
             public void onClick(View v)
             {
                 customDialog_editSaleInInfo.dismiss();
-//                if (et_number.getText().toString().equals(""))
-//                {
-//                    Toast.makeText(context, "请先填写数量", Toast.LENGTH_SHORT).show();
-//                } else if (oldNumber.equals("0"))//第一次添加
-//                {
-//                    addNewData(breakOff_new, et_number.getText().toString(), batchcolor, batchtime);
-//                } else//修改数据
-//                {
-//                    updateBreakOff(breakOff_new.getUuid(), oldNumber, et_number.getText().toString());
-//                }
-
             }
         });
         btn_cancle.setOnClickListener(new View.OnClickListener()
@@ -224,6 +222,15 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
                 customDialog_editSaleInInfo.dismiss();
             }
         });
+        List<ContractGoodsUsed> list = new ArrayList<>();
+        ContractGoodsUsed contractGoodsUsed = new ContractGoodsUsed();
+        contractGoodsUsed.setGoodsName("钾肥");
+        ContractGoodsUsed contractGoodsUsed1 = new ContractGoodsUsed();
+        contractGoodsUsed1.setGoodsName("磷肥");
+        list.add(contractGoodsUsed);
+        list.add(contractGoodsUsed1);
+        Adapter_PGAddGoodsUsed adapter_pgAddGoodsUsed = new Adapter_PGAddGoodsUsed(context, list);
+        lv.setAdapter(adapter_pgAddGoodsUsed);
         customDialog_editSaleInInfo.show();
     }
 

@@ -61,6 +61,7 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.NCZ_JobActivity_"/>
 
+        <activity android:name=".ui.PG_GoodsUsedInCommand_"/>
         <activity android:name=".ui.NCZ_AgreementDetail_"/>
         <activity android:name=".ui.PG_JobFragment_"/>
         <activity android:name=".ui.PG_CommandActivity_"/>

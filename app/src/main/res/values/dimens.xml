@@ -57,7 +57,7 @@
     <dimen name="message_content_padding">13dip</dimen>
     <dimen name="message_content_padding_left">18.5dip</dimen>
     <dimen name="height_line">1dip</dimen>
-    <dimen name="height_selector">45dip</dimen>
+    <dimen name="height_selector">30dip</dimen>
     <dimen name="size_40">40dip</dimen>
     <dimen name="size_20">20dip</dimen>
     <dimen name="size_10">10dip</dimen>
