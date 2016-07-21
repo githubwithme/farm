@@ -12,6 +12,7 @@
         android:layout_marginBottom="5dip"
         android:layout_marginLeft="25dip"
         android:layout_marginRight="25dip"
+        android:background="@drawable/round_white"
         android:layout_marginTop="5dip"
         android:orientation="horizontal">
 
@@ -24,6 +25,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:text="07-15 06:30"
+            android:layout_marginLeft="10dip"
             android:textColor="@color/bg_text"
             android:textSize="14sp"/>
 
@@ -64,11 +66,5 @@
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="25dip"
-        android:layout_marginRight="25dip"
-        android:layout_marginBottom="15dip"
-        android:background="@color/line_color"/>
+
 </LinearLayout>

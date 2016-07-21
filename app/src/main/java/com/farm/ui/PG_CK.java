@@ -173,11 +173,11 @@ public class PG_CK extends Activity
             for (int i = 0; i < list_goodslisttab.size(); i++)
             {
 
-                String [] danwei=  list_goodslisttab.get(i).getgoodsNote().split(",");
-                String [] nums= list_goodslisttab.get(i).getYL().split(",");
-                if(danwei.length>1)
+                String[] danwei = list_goodslisttab.get(i).getgoodsNote().split(",");
+                String[] nums = list_goodslisttab.get(i).getYL().split(",");
+                if (danwei.length > 1)
                 {
-                    for (int h=0;h<danwei.length;h++)
+                    for (int h = 0; h < danwei.length; h++)
                     {
                         pg_ckBean = new PG_CKBean();
                         pg_ckBean.setUid(commembertab.getuId());
@@ -226,7 +226,7 @@ public class PG_CK extends Activity
                         data.add(pg_ckBean);
                     }
 
-                }else
+                } else
                 {
                     pg_ckBean = new PG_CKBean();
                     pg_ckBean.setUid(commembertab.getuId());

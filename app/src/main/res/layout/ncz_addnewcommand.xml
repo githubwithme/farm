@@ -71,9 +71,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dip"
-                        android:text="工作可以持续几天,物资可选可不选"
+                        android:text="当前工作仅适用于种植香蕉；工作可以持续几天；物资可选可不选"
                         android:textColor="@color/black_light"
-                        android:textSize="14sp"/>
+                        android:textSize="13sp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -96,29 +96,27 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dip"
                             android:gravity="center"
-                            android:text="* 选择工作"
+                            android:text="* 工作类型"
                             android:textColor="@color/bg_text"
                             android:textSize="14sp"/>
 
-                        <View
-                            android:layout_width="15dip"
-                            android:layout_height="15dip"
+
+                        <TextView
+                            android:id="@+id/tv_jobtype"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="15dip"
-                            android:background="@drawable/downward"/>
+                            android:layout_marginRight="10dip"
+                            android:gravity="center"
+                            android:hint="请选择工作类型"
+                            android:textColor="@color/bg_text"
+                            android:textSize="14sp"/>
+
+
                     </RelativeLayout>
 
-                    <GridView
-                        android:id="@+id/gv_job"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dip"
-                        android:layout_marginLeft="20dip"
-                        android:layout_marginRight="20dip"
-                        android:layout_marginTop="10dip"
-                        android:numColumns="auto_fit"
-                        android:visibility="gone"/>
+
                 </LinearLayout>
 
 
@@ -137,30 +135,33 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dip"
                         android:gravity="center"
-                        android:text="* 开始时间："
+                        android:text="* 开始时间"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/tv_starttime"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dip"
-                        android:layout_toRightOf="@+id/tv_starttime_tip"
+                        android:layout_marginRight="10dip"
                         android:gravity="center"
-                        android:hint="请选择"
+                        android:hint="请选择开始时间"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
 
-                    <View
-                        android:id="@+id/view_line"
-                        android:layout_width="1px"
-                        android:layout_height="20dip"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dip"
-                        android:layout_toRightOf="@+id/tv_starttime"
-                        android:background="@color/line_color"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_selectdays"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dip"
+                    android:layout_below="@+id/rl_selecttime"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/white">
+
 
                     <TextView
                         android:id="@+id/tv_days_tip"
@@ -177,21 +178,22 @@
                     <TextView
                         android:id="@+id/tv_days"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dip"
-                        android:layout_toRightOf="@+id/tv_days_tip"
+                        android:layout_marginRight="10dip"
                         android:gravity="center"
-                        android:hint="请选择"
+                        android:hint="请选择作业天数"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
+
                 </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_selectgoods"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rl_selecttime"
+                    android:layout_below="@+id/rl_selectdays"
                     android:layout_marginTop="10dip"
                     android:background="@color/white"
                     android:orientation="vertical">
@@ -228,11 +230,11 @@
                         android:layout_marginLeft="35dip"
                         android:layout_marginRight="35dip"
                         android:layout_marginTop="10dip"
+                        android:background="@drawable/round_white"
                         android:childDivider="@color/transparent"
                         android:divider="@color/transparent"
                         android:dividerHeight="0dip"
                         android:focusable="false"
-                        android:background="@drawable/round_white"
                         android:focusableInTouchMode="false"
                         android:groupIndicator="@null"
                         android:visibility="gone"/>
@@ -257,17 +259,21 @@
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
 
-                    <View
-                        android:id="@+id/view_down"
-                        android:layout_width="15dip"
-                        android:layout_height="15dip"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dip"
-                        android:background="@drawable/downward"/>
+                        android:layout_marginRight="10dip"
+                        android:gravity="center"
+                        android:hint="选择物资"
+                        android:textColor="@color/bg_text"
+                        android:textSize="14sp"/>
 
 
                 </RelativeLayout>
+
+
             </RelativeLayout>
         </ScrollView>
 

@@ -23,7 +23,7 @@
             android:layout_height="@dimen/titlebar_height"
             android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
-            android:text="使用物资"
+            android:text="物资记录"
             android:layout_marginLeft="5dip"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
@@ -83,17 +83,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dip"
-            android:text="点击单元格可以编辑承包户使用物资情况"
+            android:text="每个承包户都可以多次领取物资，但只能领取指令中规定的物资"
             android:textColor="@color/black_light"
-            android:textSize="14sp"/>
+            android:textSize="13sp"/>
     </LinearLayout>
 
     <ExpandableListView
         android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:childDivider="@color/transparent"
         android:dividerHeight="0dip"
+        android:divider="@color/transparent"
         android:groupIndicator="@null"
         android:scrollbars="none"/>
 </LinearLayout>
