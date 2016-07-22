@@ -234,8 +234,6 @@
                         android:childDivider="@color/transparent"
                         android:divider="@color/transparent"
                         android:dividerHeight="0dip"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
                         android:groupIndicator="@null"
                         android:visibility="gone"/>
                 </LinearLayout>

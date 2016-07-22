@@ -241,6 +241,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="13dip"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <ImageView

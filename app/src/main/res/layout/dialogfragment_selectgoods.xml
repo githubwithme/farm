@@ -7,7 +7,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="45dip"
+        android:layout_height="40dip"
         android:background="@color/color_topbar"
         android:gravity="center"
         android:text="请选择物资"
@@ -121,16 +121,18 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="倍(兑水)"
+                    android:text="g/每株"
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="g/每株"
+                    android:text="倍(兑水)"
                     android:textColor="@color/bg_text"
                     android:textSize="14sp"/>
+
+
             </RadioGroup>
 
         </LinearLayout>
@@ -143,7 +145,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dip"
+        android:layout_height="40dip"
         android:orientation="horizontal">
 
         <Button

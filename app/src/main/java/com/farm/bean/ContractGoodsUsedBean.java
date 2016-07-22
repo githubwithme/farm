@@ -14,11 +14,18 @@ import java.util.List;
 
 public class ContractGoodsUsedBean implements Parcelable
 {
+    public String contractId;//承包区id
+    public String contractName;//承包区名称
     public String date;//承包区id
     public String confirmUserId;//确认者id
     public String isConfirm;  //是否确认
     public String flashStr;  //是否已读
     public List<ContractGoodsUsed> contractGoodsUsedList;//承包户具体物资使用情况
+
+    public ContractGoodsUsedBean()
+    {
+        super();
+    }
 
     protected ContractGoodsUsedBean(Parcel in)
     {

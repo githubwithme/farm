@@ -13,10 +13,11 @@ import com.farm.R;
 import com.farm.adapter.Adapter_CommandSelectArea;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.ContactsBean;
 import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.bean.parktab;
+import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.CustomExpandableListView;
@@ -73,7 +74,7 @@ public class NCZ_AddNewCommand extends Activity
     @Click
     void rl_selectgoods()
     {
-        DialogFragment_SelectGoods dialog = new DialogFragment_SelectGoods();
+        DialogFragment_SelectGoods dialog = new DialogFragment_SelectGoods_();
         dialog.show(getFragmentManager(), "EditNameDialog");
     }
 
@@ -86,7 +87,7 @@ public class NCZ_AddNewCommand extends Activity
         } else
         {
             expandableListView.setVisibility(View.VISIBLE);
-            getAreaList();
+            getNewSaleList_test();
         }
     }
 
@@ -122,7 +123,20 @@ public class NCZ_AddNewCommand extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
     }
+    private void getNewSaleList_test()
+    {
+        List<parktab> listNewData = FileHelper.getAssetsData(NCZ_AddNewCommand.this, "getParkAndArea", parktab.class);
+        if (listNewData != null)
+        {
+            Adapter_CommandSelectArea adapter_CommandSelectArea = new Adapter_CommandSelectArea(NCZ_AddNewCommand.this, listNewData, expandableListView);
+            expandableListView.setAdapter(adapter_CommandSelectArea);
+            for (int i = 0; i < listNewData.size(); i++)
+            {
+                expandableListView.expandGroup(i);//展开
+            }
+        }
 
+    }
     public void showDialog_workday(List<String> list)
     {
         View dialog_layout = (RelativeLayout) NCZ_AddNewCommand.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
@@ -167,11 +181,11 @@ public class NCZ_AddNewCommand extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<ContactsBean> listNewData = null;
+                List<parktab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    listNewData = JSON.parseArray(result.getRows().toJSONString(), ContactsBean.class);
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
                     Adapter_CommandSelectArea adapter_CommandSelectArea = new Adapter_CommandSelectArea(NCZ_AddNewCommand.this, listNewData, expandableListView);
                     expandableListView.setAdapter(adapter_CommandSelectArea);
                     for (int i = 0; i < listNewData.size(); i++)

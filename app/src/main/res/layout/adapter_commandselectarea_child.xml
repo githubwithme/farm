@@ -61,8 +61,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="60dip"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:layout_toRightOf="@+id/tv_parkname"/>
     </RelativeLayout>
 

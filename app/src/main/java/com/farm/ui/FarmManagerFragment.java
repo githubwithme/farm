@@ -65,7 +65,8 @@ public class FarmManagerFragment extends Fragment
     @Click
     void ll_zl()
     {
-        Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+//        Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+        Intent intent = new Intent(getActivity(), NCZ_CommandActivity_.class);
         getActivity().startActivity(intent);
     }
 

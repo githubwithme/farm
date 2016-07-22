@@ -8,13 +8,39 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dip"
-        android:layout_marginBottom="5dip"
+        android:layout_height="40dip"
         android:layout_marginLeft="25dip"
         android:layout_marginRight="25dip"
-        android:background="@drawable/round_white"
-        android:layout_marginTop="5dip"
         android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="15dip"
+            android:layout_height="match_parent">
+
+
+            <View
+                android:id="@+id/view_center"
+                android:layout_width="10dip"
+                android:layout_height="10dip"
+                android:layout_centerInParent="true"
+                android:background="@drawable/umeng_socialize_follow_on"/>
+
+            <View
+                android:id="@+id/view_top"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/view_center"
+                android:layout_centerHorizontal="true"
+                android:background="@color/gray"/>
+
+            <View
+                android:id="@+id/view_bottom"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/view_center"
+                android:layout_centerHorizontal="true"
+                android:background="@color/gray"/>
+        </RelativeLayout>
 
 
         <TextView
@@ -23,9 +49,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
             android:gravity="center"
             android:text="07-15 06:30"
-            android:layout_marginLeft="10dip"
             android:textColor="@color/bg_text"
             android:textSize="14sp"/>
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farm.R;
-import com.farm.bean.commandtab;
+import com.farm.bean.ContractCommandProgressBean;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +20,9 @@ import java.util.List;
 public class Adapter_PGCommandProgress extends BaseAdapter
 {
     private Context context;// 运行上下文
-    private List<com.farm.bean.commandtab> listItems;// 数据集合
+    private List<ContractCommandProgressBean> listItems;// 数据集合
     private LayoutInflater listContainer;// 视图容器
-    commandtab commandtab;
+    ContractCommandProgressBean contractCommandProgressBean;
 
     class ListItemView
     {
@@ -30,11 +30,12 @@ public class Adapter_PGCommandProgress extends BaseAdapter
         public Button btn_edit;
         public Button btn_add;
         public Button btn_minus;
+        public TextView tv_contractname;
         public TextView tv_progress;
         public LinearLayout ll_operateprogress;
     }
 
-    public Adapter_PGCommandProgress(Context context, List<commandtab> data)
+    public Adapter_PGCommandProgress(Context context, List<ContractCommandProgressBean> data)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
@@ -60,7 +61,7 @@ public class Adapter_PGCommandProgress extends BaseAdapter
 
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        commandtab = listItems.get(position);
+        contractCommandProgressBean = listItems.get(position);
         // 自定义视图
         ListItemView listItemView = null;
         if (lmap.get(position) == null)
@@ -69,6 +70,7 @@ public class Adapter_PGCommandProgress extends BaseAdapter
             convertView = listContainer.inflate(R.layout.adapter_pgcommandprogress, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);
             listItemView.tv_progress = (TextView) convertView.findViewById(R.id.tv_progress);
             listItemView.pb_jd = (ProgressBar) convertView.findViewById(R.id.pb_jd);
             listItemView.ll_operateprogress = (LinearLayout) convertView.findViewById(R.id.ll_operateprogress);
@@ -144,7 +146,9 @@ public class Adapter_PGCommandProgress extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
-//        listItemView.tv_time.setText(commandtab.getregDate());
+        listItemView.tv_progress.setText(contractCommandProgressBean.getProgress()+"%");
+        listItemView.tv_contractname.setText(contractCommandProgressBean.getContractName());
+        listItemView.pb_jd.setProgress(Integer.valueOf(contractCommandProgressBean.getProgress()));
         return convertView;
     }
 }
