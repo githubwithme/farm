@@ -4,138 +4,141 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dip"
+        android:layout_height="45dip"
         android:background="@color/light_gray"
         android:orientation="vertical">
-    <RelativeLayout
-        android:id="@+id/groupExpand"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_gray"
-        android:orientation="horizontal">
 
-        <FrameLayout
-            android:id="@+id/fl_new_item"
-            android:layout_width="15dip"
-            android:layout_height="15dip"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            >
-
-            <com.farm.widget.CircleImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:src="@color/red"
-                app:border_color="@color/red"
-                app:border_width="0dp"/>
-
-            <TextView
-                android:id="@+id/tv_new_item"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/size_10"/>
-        </FrameLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_type"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/groupExpand"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:background="@color/light_gray"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dip">
+            <FrameLayout
+                android:id="@+id/fl_new_item"
+                android:layout_width="15dip"
+                android:layout_height="15dip"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                >
 
-                <TextView
-                    android:textSize="@dimen/text_size_14"
-                    android:id="@+id/batchName"
+                <com.farm.widget.CircleImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="2016/12"
-                    android:textColor="@color/bg_text"/>
-            </LinearLayout>
+                    android:layout_gravity="center"
+                    android:src="@color/red"
+                    app:border_color="@color/red"
+                    app:border_width="0dp"/>
+
+                <TextView
+                    android:id="@+id/tv_new_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_10"/>
+            </FrameLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="25dip"
-                android:orientation="horizontal"
+                android:id="@+id/ll_type"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dip">
+
+                    <TextView
+                        android:id="@+id/batchName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="2016/12"
+                        android:textColor="@color/bg_text"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="25dip"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/loadingFee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="2016/12"/>
+
+                    <TextView
+                        android:id="@+id/shippingFee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="2016/12"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dip"
+                android:layout_toRightOf="@+id/ll_type"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/inGoodsValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="2016/12"
+                    android:textColor="@color/red"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_down"
+                android:layout_width="15dip"
+                android:layout_height="15dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dip"
+                android:background="@drawable/downward"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dip"
+                android:layout_toLeftOf="@+id/view_down"
                 android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/loadingFee"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/inDate"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="2016/12"/>
-
-                <TextView
-                    android:id="@+id/shippingFee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="2016/12"/>
+                    android:text="2016/12/12"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp"
+                    />
             </LinearLayout>
-        </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dip"
-            android:layout_toRightOf="@+id/ll_type"
-            android:gravity="center"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:textSize="@dimen/text_size_14"
-                android:id="@+id/inGoodsValue"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="2016/12"
-                android:textColor="@color/red"/>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/view_down"
-            android:layout_width="15dip"
-            android:layout_height="15dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/downward"/>
-
-        <LinearLayout
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:layout_toLeftOf="@+id/view_down">
-
-            <TextView
-                android:textSize="@dimen/text_size_14"
-                android:id="@+id/inDate"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="2016/12/12"
-                android:textColor="@color/gray"
-                />
-        </LinearLayout>
-
-    </RelativeLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

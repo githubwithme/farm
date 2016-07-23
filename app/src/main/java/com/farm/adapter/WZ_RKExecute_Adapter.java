@@ -100,7 +100,7 @@ public class WZ_RKExecute_Adapter extends BaseExpandableListAdapter
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.adapter_rk_ck_ncz, null);
+            convertView = inflater.inflate(R.layout.adapter_nczrk_child, null);
             listItemView = new ListItemView();
             listItemView.tv_goodsname = (TextView) convertView.findViewById(R.id.tv_goodsname);
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);

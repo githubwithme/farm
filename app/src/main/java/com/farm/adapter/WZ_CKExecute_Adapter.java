@@ -100,7 +100,7 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
         if (v == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.adapter_rk_ck_ncz, null);
+            convertView = inflater.inflate(R.layout.adapter_nczck_child, null);
             listItemView = new ListItemView();
             listItemView.tv_goodsname = (TextView) convertView.findViewById(R.id.tv_goodsname);
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
@@ -260,7 +260,7 @@ public class WZ_CKExecute_Adapter extends BaseExpandableListAdapter
         inDate.setText(listData.get(groupPosition).getInDate());
 //        inDate.setText(indata);
 //        batchName.setText(listData.get(groupPosition).getInType());
-        batchName.setText(listData.get(groupPosition).getBatchNumber());
+        batchName.setText("批次号:"+listData.get(groupPosition).getBatchName());
         loadingFee.setText("装卸费:" + listData.get(groupPosition).getLoadingFee() + "元");
         shippingFee.setText("运费:" + listData.get(groupPosition).getShippingFee() + "元");
         double a = Double.valueOf(listData.get(groupPosition).getInGoodsValue()) + Double.valueOf(listData.get(groupPosition).getLoadingFee()) + Double.valueOf(listData.get(groupPosition).getShippingFee());

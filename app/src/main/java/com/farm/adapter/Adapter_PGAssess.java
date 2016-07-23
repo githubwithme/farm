@@ -18,8 +18,8 @@ import com.farm.R;
 import com.farm.bean.ContractAssess;
 import com.farm.bean.ContractAssessBean;
 import com.farm.common.BitmapHelper;
-import com.farm.common.utils;
 import com.farm.ui.DialogFragment_AddNewAssess;
+import com.farm.ui.DialogFragment_AddNewAssess_;
 import com.farm.ui.PictureScrollFragment_DialogFragment;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_ListView;
@@ -138,13 +138,14 @@ public class Adapter_PGAssess extends BaseExpandableListAdapter
             {
                 listItemView.tv_assesstype.setText("合格");
             }
-            if (contractAssess.getAssessDate().substring(0, contractAssess.getAssessDate().lastIndexOf(" ")).equals(utils.getToday_MMDD()))
-            {
-                listItemView.tv_time.setText("今日 " + contractAssess.getAssessDate().substring(contractAssess.getAssessDate().lastIndexOf(" "), contractAssess.getAssessDate().length() - 1));
-            } else
-            {
-                listItemView.tv_time.setText(contractAssess.getAssessDate());
-            }
+//            if (contractAssess.getAssessDate().substring(0, contractAssess.getAssessDate().lastIndexOf(" ")).equals(utils.getToday_MMDD()))
+//            {
+//                listItemView.tv_time.setText("今日 " + contractAssess.getAssessDate().substring(contractAssess.getAssessDate().lastIndexOf(" "), contractAssess.getAssessDate().length() - 1));
+//            } else
+//            {
+//                listItemView.tv_time.setText(contractAssess.getAssessDate());
+//            }
+            listItemView.tv_time.setText(contractAssess.getAssessDate());
             if (contractAssess.getUrls().size() != 0)
             {
                 BitmapHelper.setImageViewBackground(context, listItemView.image, contractAssess.getUrls().get(0));
@@ -224,7 +225,7 @@ public class Adapter_PGAssess extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.adapter_pgassess_parent, null);
         }
-        TextView tv_type = (TextView) convertView.findViewById(R.id.tv_type);
+        TextView tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);
         Button btn_addGoods = (Button) convertView.findViewById(R.id.btn_addGoods);
         btn_addGoods.setTag("");
         btn_addGoods.setOnClickListener(new View.OnClickListener()
@@ -232,13 +233,14 @@ public class Adapter_PGAssess extends BaseExpandableListAdapter
             @Override
             public void onClick(View v)
             {
-                DialogFragment_AddNewAssess dialog = new DialogFragment_AddNewAssess();
+                DialogFragment_AddNewAssess dialog = new DialogFragment_AddNewAssess_();
                 Bundle bundle1 = new Bundle();
                 dialog.setArguments(bundle1);
                 dialog.show(context.getFragmentManager(), "EditNameDialog");
 //                showDialog_addNewAssess();
             }
         });
+        tv_contractname.setText(listData.get(groupPosition).getContractName());
         return convertView;
     }
 

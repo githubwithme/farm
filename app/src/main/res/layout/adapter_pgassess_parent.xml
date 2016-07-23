@@ -25,7 +25,7 @@
             android:background="@drawable/user"/>
 
         <TextView
-            android:id="@+id/tv_type"
+            android:id="@+id/tv_contractname"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dip"

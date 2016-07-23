@@ -20,6 +20,32 @@ public class ContractGoodsUsedBean implements Parcelable
     public String confirmUserId;//确认者id
     public String isConfirm;  //是否确认
     public String flashStr;  //是否已读
+
+    public String getContractId()
+    {
+        return contractId;
+    }
+
+    public void setContractId(String contractId)
+    {
+        this.contractId = contractId;
+    }
+
+    public String getContractName()
+    {
+        return contractName;
+    }
+
+    public void setContractName(String contractName)
+    {
+        this.contractName = contractName;
+    }
+
+    public static Creator<ContractGoodsUsedBean> getCREATOR()
+    {
+        return CREATOR;
+    }
+
     public List<ContractGoodsUsed> contractGoodsUsedList;//承包户具体物资使用情况
 
     public ContractGoodsUsedBean()

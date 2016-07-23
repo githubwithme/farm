@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.bean.ContractGoodsUsed;
 import com.farm.bean.ContractGoodsUsedBean;
-import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_ListView;
 import com.swipelistview.SwipeLayout;
@@ -121,14 +120,14 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
             {
 
             }
-            if (contractGoodsUsed.getGoodsUsedDate().substring(0, contractGoodsUsed.getGoodsUsedDate().lastIndexOf(" ")).equals(utils.getToday_MMDD()))
-            {
-                listItemView.tv_time.setText("今日 " + contractGoodsUsed.getGoodsUsedDate().substring(contractGoodsUsed.getGoodsUsedDate().lastIndexOf(" "), contractGoodsUsed.getGoodsUsedDate().length() - 1));
-            } else
-            {
-                listItemView.tv_time.setText(contractGoodsUsed.getGoodsUsedDate());
-            }
-
+//            if (contractGoodsUsed.getGoodsUsedDate().substring(0, contractGoodsUsed.getGoodsUsedDate().lastIndexOf(" ")).equals(utils.getToday_MMDD()))
+//            {
+//                listItemView.tv_time.setText("今日 " + contractGoodsUsed.getGoodsUsedDate().substring(contractGoodsUsed.getGoodsUsedDate().lastIndexOf(" "), contractGoodsUsed.getGoodsUsedDate().length() - 1));
+//            } else
+//            {
+//                listItemView.tv_time.setText(contractGoodsUsed.getGoodsUsedDate());
+//            }
+            listItemView.tv_time.setText(contractGoodsUsed.getGoodsUsedDate());
             listItemView.tv_number.setText(contractGoodsUsed.getThreeNum()+contractGoodsUsed.getThree());
             listItemView.tv_name.setText(contractGoodsUsed.getGoodsName());
         } else
@@ -191,7 +190,7 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.adapter_pggoodsused_parent, null);
         }
-        TextView tv_type = (TextView) convertView.findViewById(R.id.tv_type);
+        TextView tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);
         Button btn_addGoods = (Button) convertView.findViewById(R.id.btn_addGoods);
         btn_addGoods.setTag("");
         btn_addGoods.setOnClickListener(new View.OnClickListener()
@@ -202,6 +201,7 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
                 showDialog_addgoods();
             }
         });
+        tv_contractname.setText(listData.get(groupPosition).getContractName());
         return convertView;
     }
 

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/white"
-              android:orientation="vertical">
-
+              android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,9 +55,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="剩余库存量:"
+                android:text="出库数量:"
                 android:textColor="@color/gray"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_number"
@@ -71,19 +69,19 @@
                 android:gravity="center"
                 android:text="100件35包"
                 android:textColor="@color/red"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_values_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dip"
+                android:layout_marginLeft="20dip"
                 android:layout_toRightOf="@+id/tv_number"
                 android:gravity="center"
-                android:text="剩余价值:"
+                android:text="出库价值:"
                 android:textColor="@color/gray"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_values"
@@ -95,7 +93,7 @@
                 android:gravity="center"
                 android:text="15000元"
                 android:textColor="@color/red"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
 
         </RelativeLayout>
@@ -114,9 +112,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="规格："
+                android:text="出库仓库:"
                 android:textColor="@color/gray"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_gg"
@@ -128,7 +126,7 @@
                 android:gravity="center"
                 android:text="100件111向352包"
                 android:textColor="@color/red"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_type_tip"
@@ -138,9 +136,9 @@
                 android:layout_marginLeft="10dip"
                 android:layout_toRightOf="@+id/tv_gg"
                 android:gravity="center"
-                android:text="类型："
+                android:text="入库类型:"
                 android:textColor="@color/gray"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_type"
@@ -152,7 +150,7 @@
                 android:gravity="center"
                 android:text="有机肥"
                 android:textColor="@color/red"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
         </RelativeLayout>
 
@@ -164,6 +162,4 @@
             android:layout_marginRight="10dip"
             android:background="@color/line_color"/>
     </LinearLayout>
-
-
 </LinearLayout>

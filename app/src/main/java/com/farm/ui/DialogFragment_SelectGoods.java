@@ -71,6 +71,7 @@ public class DialogFragment_SelectGoods extends DialogFragment
     @AfterViews
     void AfterViews()
     {
+        getNewSaleList_test();
         getgoodsType();
     }
 

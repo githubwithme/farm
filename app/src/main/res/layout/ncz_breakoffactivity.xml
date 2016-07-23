@@ -78,11 +78,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_below="@+id/line"
-        android:layout_marginBottom="40dip"
-        android:layout_marginLeft="5dip"
+        android:layout_marginBottom="60dip"
         android:background="@color/white"
-        android:layout_marginRight="5dip"
-        android:layout_marginTop="5dip"
         android:orientation="vertical">
 
         <TextView
@@ -343,7 +340,7 @@
         android:layout_marginBottom="10dip"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
-        android:text="注：向左滑动可以加载更多数据"
+        android:text="注：向左滑动可以加载更多数据；点击单元格可以查看更多数据"
         android:textColor="@color/gray"
         android:textSize="13sp"/>
 </RelativeLayout>
