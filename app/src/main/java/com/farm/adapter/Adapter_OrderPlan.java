@@ -18,22 +18,39 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
 import com.farm.bean.OrderPlanBean;
+import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.SellOrder_New_First;
 import com.farm.common.utils;
+import com.farm.ui.NCZ_All_OneOrder_Detail_;
 import com.farm.ui.NCZ_EditOrder_;
+import com.farm.ui.NCZ_NewOrderDetail_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDateMaD;
 import com.farm.widget.MyDialog;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.swipelistview.SwipeLayout;
 
+import org.apache.http.entity.StringEntity;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -124,7 +141,6 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.adapter_orderplan_child, null);
             listItemView = new ListItemView();
             listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
-            listItemView.ll_buyer = (LinearLayout) convertView.findViewById(R.id.ll_buyer);
             listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
             listItemView.ll_buyer = (LinearLayout) convertView.findViewById(R.id.ll_buyer);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
@@ -139,7 +155,21 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
+
+
+
             convertView.setTag(listItemView);
+            convertView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
+                    intent.putExtra("bean", sellOrder_new);
+                    context.startActivity(intent);
+
+                }
+            });
 //            listItemView.btn_cancleorder.setTag(R.id.tag_danwei,sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
@@ -150,15 +180,15 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
 //                    showDeleteTip(sellOrder_new.getUuid());
                 }
             });
-//            listItemView.btn_preparework.setTag(R.id.tag_danwei,sellOrder);
+            listItemView.btn_preparework.setTag(R.id.tag_danwei, sellOrder_new);
             listItemView.btn_preparework.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
                     Intent intent = new Intent(context, RecoveryDetail_.class);
-//                    intent.putExtra("zbstudio", sellOrder_new);
+                    intent.putExtra("uuid", sellOrder_new.getUuid());
                     context.startActivity(intent);
                 }
             });
@@ -202,7 +232,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
                     {
                         list.add(jsonArray.getString(i));
                     }
-                    showDialog_carNumber(list);
+                    showDialog_carNumber(list, sellOrder_new);
                 }
             });
             listItemView.btn_editorder.setTag(R.id.tag_postion, childPosition);
@@ -220,7 +250,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
                     context.startActivity(intent);
                 }
             });
-            convertView.setTag(R.id.tag_fi, listData.get(groupPosition).getDate());
+/*            convertView.setTag(R.id.tag_fi, listData.get(groupPosition).getDate());
             convertView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -230,23 +260,25 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
 //                    intent.putExtra("type",type);// 因为list中添加了头部,因此要去掉一个
 //                    context.startActivity(intent);
                 }
-            });
-            listItemView.ll_buyer.setTag(R.id.tag_fi, listData.get(groupPosition).getDate());
+            });*/
+            listItemView.ll_buyer.setTag(R.id.tag_fi,sellOrder_new.getBuyersPhone());
             listItemView.ll_buyer.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    showDialog_addsaleinfo("15989154871");
+                    String phone = (String) v.getTag(R.id.tag_fi);
+                    showDialog_addsaleinfo(phone);
                 }
             });
-//            listItemView.ll_mainpeople.setTag(R.id.tag_fi, listData.get(groupPosition).getDate());
+            listItemView.ll_mainpeople.setTag(R.id.tag_czdl, sellOrder_new.getMainPeoplePhone());
             listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    showDialog_addsaleinfo("15989154871");
+                    String phone = (String) v.getTag(R.id.tag_czdl);
+                    showDialog_addsaleinfo(phone);
                 }
             });
             map.put(childPosition, convertView);
@@ -459,7 +491,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
         custom_calltip.show();
     }
 
-    public void showDialog_carNumber(List<String> list)
+    public void showDialog_carNumber(List<String> list, final SellOrder_New sellOrder_new)
     {
         View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
@@ -468,7 +500,18 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             public void OnClick(Bundle bundle)
             {
                 String workday = bundle.getString("name");
-                tv_car.setText(workday);
+                SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
+                sellOrder_new.setActualweight(workday);
+                sellOrder_new.setGoodsname(sellOrder_new.getProduct());
+                sellOrder_new.setProducer(sellOrder_new.getParkname());
+
+                StringBuilder builder = new StringBuilder();
+                builder.append("{\"SellOrder_new\":[ ");
+                builder.append(JSON.toJSONString(sellOrder_new));
+                builder.append("], \"sellorderlistadd\": [");
+                builder.append(JSON.toJSONString(sellOrder_new_first));
+                builder.append("]} ");
+                newaddOrder(builder.toString());
             }
         });
         customDialog_listView.show();
@@ -495,5 +538,56 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             }
         });
         myDialog.show();
+    }
+
+
+    private void newaddOrder(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "editOrder");
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(context, "订单修改成功！", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent();
+//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
+                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                        context.sendBroadcast(intent);
+
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+            }
+        });
     }
 }

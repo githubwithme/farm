@@ -82,7 +82,7 @@
                         android:layout_height="15dip"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dip"
-                        android:background="@drawable/ic_next"/>
+                        android:background="@mipmap/ic_launcher_phone"/>
                 </LinearLayout>
 
 
@@ -206,7 +206,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dip"
                     android:gravity="left"
-                    android:text="负责人："
+                    android:text="采收区："
                     android:textColor="@color/gray"
                     android:textSize="14sp"/>
 
@@ -258,7 +258,7 @@
                         android:layout_height="15dip"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dip"
-                        android:background="@drawable/ic_next"/>
+                        android:background="@mipmap/ic_launcher_phone"/>
                 </LinearLayout>
 
 

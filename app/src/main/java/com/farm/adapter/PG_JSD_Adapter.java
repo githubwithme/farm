@@ -116,7 +116,12 @@ public class PG_JSD_Adapter extends BaseAdapter
         listItemView.zhushu.setText(sellOrderDetail_new.getactualnumber());
         listItemView.cipin.setText(sellOrderDetail_new.getplanprice());
         listItemView.zhengpin.setText(sellOrderDetail_new.getactualprice());
+
         listItemView.jh_zhushu.setText(sellOrderDetail_new.getplannumber());
+
+        shengyuliang=(TextView) convertView.findViewById(R.id.jh_zhushu);
+        getSellOrderDetailBystrWhere(sellOrderDetail_new,shengyuliang);
+
         listItemView.all_cbh.setText(sellOrderDetail_new.getareaname() + "\n" + sellOrderDetail_new.getcontractname());
 
         if (!sellOrderDetail_new.getactualnumber().equals(""))

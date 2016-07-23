@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,7 +72,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
 //        public Button btn_cancleorder;
 //        public Button btn_editorder;
 
-//        public FrameLayout fl_dynamic;
+        public RelativeLayout fl_dynamic;
 //        public Button btn_pizhun;
 //        public Button btn_bohui;
         public Button btn_showdetail;
@@ -119,13 +120,14 @@ public class NCZ_NeedAdapter extends BaseAdapter
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
+            listItemView.tv_preparestatus = (TextView) convertView.findViewById(R.id.tv_preparestatus);
 //            listItemView.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
 //            listItemView.tv_sum = (TextView) convertView.findViewById(R.id.tv_sum);
 //            listItemView.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
             listItemView.tv_ask = (TextView) convertView.findViewById(R.id.tv_ask);
 //            listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
 //            listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
-//            listItemView.fl_dynamic = (FrameLayout) convertView.findViewById(R.id.fl_dynamic);
+            listItemView.fl_dynamic = (RelativeLayout) convertView.findViewById(R.id.fl_dynamic);
             listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
 //            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
@@ -142,7 +144,16 @@ public class NCZ_NeedAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
-
+        listItemView.fl_dynamic.setTag(R.id.tag_fi,sellOrder.getBuyersPhone());
+        listItemView.fl_dynamic.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                String phone = (String) v.getTag(R.id.tag_fi);
+                showDialog_addsaleinfo(phone);
+            }
+        });
 
         if (listItems.get(position).getFlashStr().equals("0"))
         {
@@ -153,6 +164,13 @@ public class NCZ_NeedAdapter extends BaseAdapter
         }
         listItemView.tv_mainpeople.setText(sellOrder.getMainPepName());
 
+        if (sellOrder.getIsReady().equals("False"))
+        {
+            listItemView.tv_preparestatus.setText("未就绪");
+        }else
+        {
+            listItemView.tv_preparestatus.setText("就绪");
+        }
 //        final SpannableString content = new SpannableString(sellOrder.getPurchaName());
 //        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         listItemView.tv_buyer.setText(sellOrder.getPurchaName());
@@ -164,13 +182,14 @@ public class NCZ_NeedAdapter extends BaseAdapter
                 showDialog_addsaleinfo("15989154871");
             }
         });
-//        listItemView.ll_mainpeople.setTag(R.id.tag_fi, listData.get(groupPosition).getDate());
+        listItemView.ll_mainpeople.setTag(R.id.tag_czdl, sellOrder.getMainPeoplePhone());
         listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                showDialog_addsaleinfo("15989154871");
+                String phone = (String) v.getTag(R.id.tag_czdl);
+                showDialog_addsaleinfo(phone);
             }
         });
 
@@ -254,7 +273,8 @@ public class NCZ_NeedAdapter extends BaseAdapter
 //        {
 //            listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
 //        }
-        if (sellOrder.getDeposit().equals("0"))
+        listItemView.tv_orderstate.setText(sellOrder.getSelltype());
+/*        if (sellOrder.getDeposit().equals("0"))
         {
             listItemView.tv_orderstate.setText("等待买家付定金");
         } else
@@ -266,7 +286,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
             {
                 listItemView.tv_orderstate.setText("买家已付尾款");
             }
-        }
+        }*/
 /*            listItemView.btn_cancleorder.setTag(R.id.tag_cash,sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {

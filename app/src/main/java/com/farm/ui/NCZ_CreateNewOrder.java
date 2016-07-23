@@ -1,13 +1,17 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
@@ -35,6 +41,7 @@ import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDatepicker;
 import com.farm.widget.MyDialog;
+import com.guide.DensityUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -63,6 +70,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_createneworder)
 public class NCZ_CreateNewOrder extends Activity
 {
+//    int num=0;
     String mail;
     String telphone;
     @ViewById
@@ -128,7 +136,7 @@ public class NCZ_CreateNewOrder extends Activity
     @ViewById
     RelativeLayout rl_more_tip;
 
-
+    String uuid = "";
     String cgId = "";
     String byId = "";
     String bzId = "";
@@ -140,14 +148,54 @@ public class NCZ_CreateNewOrder extends Activity
     List<AllType> listAlltype = new ArrayList<AllType>();
 
     @ViewById
-    EditText cheliang_num;
+    TextView cheliang_num;
 
+
+    @Click
+    void cheliang_num()
+    {
+        JSONObject jsonObject = utils.parseJsonFile(NCZ_CreateNewOrder.this, "dictionary.json");
+        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < jsonArray.size(); i++)
+        {
+            list.add(jsonArray.getString(i));
+        }
+        showDialog_carNumber(list);
+    }
+    public void showDialog_carNumber(List<String> list  )
+    {
+        View dialog_layout = (RelativeLayout) NCZ_CreateNewOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(NCZ_CreateNewOrder.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                String workday = bundle.getString("name");
+                cheliang_num.setText(workday);
+
+            }
+        });
+        customDialog_listView.show();
+    }
+    @Click
+    void add_jsd()
+    {
+
+        Intent intent = new Intent(NCZ_CreateNewOrder.this, RecoveryDetail_.class);
+        intent.putExtra("uuid", uuid);
+        SellOrder_New sellOrder_new = new SellOrder_New();
+        sellOrder_new.setIsReady("True");
+        intent.putExtra("bean", sellOrder_new);
+        startActivity(intent);
+    }
 
     @Click
     void btn_save()
     {
 
     }
+
     @Click
     void rl_more_tip()
     {
@@ -345,11 +393,7 @@ public class NCZ_CreateNewOrder extends Activity
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (cheliang_num.getText().toString().equals(""))
-        {
-            Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         //
 /*        String phone = phoneEt.getText().toString();
         String context = contextEt.getText().toString();
@@ -360,10 +404,9 @@ public class NCZ_CreateNewOrder extends Activity
         }*/
 
         //短信
-     /*   SmsManager smsMessage = SmsManager.getDefault();
+        SmsManager smsMessage = SmsManager.getDefault();
 //        List<String> divideContents = smsMessage.divideMessage(message);
-        smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元", null, null);
-*/
+        smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元,定金："+dingjin.getText().toString()+"元，采收时间："+dd_time.getText().toString(), null, null);
         List<String> list_uuid = new ArrayList<>();
         String batchtime = "";
         String producer = "";
@@ -378,9 +421,10 @@ public class NCZ_CreateNewOrder extends Activity
                 batchtime = batchtime + list_SellOrderDetail.get(0).getBatchTime() + ";";
             }
             if (i == 0)
-            {
-                list_producer.add(list_SellOrderDetail.get(0).getparkname());
-                producer = producer + list_SellOrderDetail.get(0).getparkname() + ";";
+            {   //园区名字，注释的是多个园区   目前是单园区，所有另写
+//                list_producer.add(list_SellOrderDetail.get(0).getparkname());
+//                producer = producer + list_SellOrderDetail.get(0).getparkname() + ";";
+                producer = list_SellOrderDetail.get(0).getparkname();
             }
             for (int j = 0; j < list_batchtime.size(); j++)
             {
@@ -406,13 +450,15 @@ public class NCZ_CreateNewOrder extends Activity
             }
 
         }
-        String uuid = java.util.UUID.randomUUID().toString();
+
         SellOrder_New sellOrder = new SellOrder_New();
         sellOrder.setid("");
         sellOrder.setUid(commembertab.getuId());
         sellOrder.setUuid(uuid);
         sellOrder.setBatchTime(batchtime);
         sellOrder.setSelltype("待付定金");
+        sellOrder.setStatus("0");
+        sellOrder.setIsReady("False");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrder.setBuyers(cgId);
         sellOrder.setAddress(et_address.getText().toString());
@@ -423,11 +469,10 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setNumber(String.valueOf(countAllNumber()));
         sellOrder.setWeight(et_weight.getText().toString());
         sellOrder.setSumvalues(et_values.getText().toString());
-        sellOrder.setSumvalues(cheliang_num.getText().toString());
+        sellOrder.setActualweight(cheliang_num.getText().toString());
         sellOrder.setActualprice("");
         sellOrder.setActualnumber("");
         sellOrder.setActualsumvalues("");
-        sellOrder.setActualweight("");
         sellOrder.setDefectNum("");
         sellOrder.setDeposit("");
         sellOrder.setReg(utils.getTime());
@@ -437,18 +482,20 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
         sellOrder.setProducer(producer);
-        sellOrder.setFinalpayment("");
+//        sellOrder.setFinalpayment("");
         sellOrder.setMainPepole(fzrId);
-        sellOrder.setPlateNumber(dd_cl.getText().toString());
+//        sellOrder.setPlateNumber(dd_cl.getText().toString());
+        sellOrder.setActualweight(dd_cl.getText().toString());
+
         sellOrder.setContractorId(bzId);
         sellOrder.setPickId(byId);
         sellOrder.setCarryPrice(by_danjia.getText().toString());
         sellOrder.setPackPrice(bz_danjia.getText().toString());
         sellOrder.setPackPec(bz_guige.getText().toString());
         sellOrder.setWaitDeposit(dingjin.getText().toString());
-        sellOrder.setFreeFinalPay("1");
-        sellOrder.setFreeDeposit("1");
         sellOrder.setIsNeedAudit("1");
+        sellOrder.setFreeFinalPay("2");
+        sellOrder.setFreeDeposit("2");
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
@@ -566,11 +613,27 @@ public class NCZ_CreateNewOrder extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+        uuid = java.util.UUID.randomUUID().toString();
 //        list_SellOrderDetail = getIntent().getParcelableArrayListExtra("list");
 //        Bundle bundle = getIntent().getExtras();
 //        ArrayList arraylist = bundle.getParcelableArrayList("list_uuid");
 //        uuids = (List<HashMap<String, String>>) arraylist.get(0);
+
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_CHE_LIANG);
+        registerReceiver(receiver_update, intentfilter_update);
     }
+
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+        /* String    num=getIntent().getStringExtra("num");
+            cheliang_num.setText(num);*/
+            getDetailSecBysettleId();
+        }
+    };
 
     public int countAllNumber()
     {
@@ -932,7 +995,7 @@ public class NCZ_CreateNewOrder extends Activity
                     case R.id.btn_sure:
 //                        myDialog.dismiss();
                         deleNewSaleAddsalefor();
-
+                        DeletesellOrderSettlement();
                         Toast.makeText(NCZ_CreateNewOrder.this, "已取消", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent();
                         intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
@@ -1016,13 +1079,6 @@ public class NCZ_CreateNewOrder extends Activity
     }
 
 
-    public void sendEmail()
-    {
-
-
-    }
-
-
     private void getchanpin()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_CreateNewOrder.this);
@@ -1068,5 +1124,96 @@ public class NCZ_CreateNewOrder extends Activity
             }
         });
 
+    }
+
+    private void DeletesellOrderSettlement()
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_CreateNewOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("strWhere", "infoId='" + uuid + "'");
+        params.addQueryStringParameter("action", "DeletesellOrderSettlement");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<PeopelList> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), PeopelList.class);
+
+                    } else
+                    {
+                        listNewData = new ArrayList<PeopelList>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(NCZ_CreateNewOrder.this, "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(NCZ_CreateNewOrder.this, "error_connectServer");
+
+            }
+        });
+    }
+
+    public void getDetailSecBysettleId()
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_CreateNewOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uuid", uuid);
+        params.addQueryStringParameter("action", "getDetailSecBysettleId");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+
+                String a = responseInfo.result;
+                List<SellOrder_New> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+//                    if (result.getAffectedRows() != 0)
+//                    {
+
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+
+                    if (listNewData.size() > 0)
+                    {
+                        cheliang_num.setText(listNewData.size()+"");
+                    }
+                    {
+                        listNewData = new ArrayList<SellOrder_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_CreateNewOrder.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_CreateNewOrder.this, "error_connectServer");
+            }
+        });
     }
 }

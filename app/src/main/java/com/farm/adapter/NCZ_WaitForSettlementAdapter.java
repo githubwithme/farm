@@ -85,6 +85,7 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter
         public LinearLayout ll_unfinalpay;
         public LinearLayout ll_undeposit;
         public LinearLayout ll_mainpeople;
+        public RelativeLayout fl_dynamic;
 
     }
 
@@ -124,6 +125,7 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter
             convertView = listContainer.inflate(R.layout.adapter_nczwaitforsettlement, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.fl_dynamic = (RelativeLayout) convertView.findViewById(R.id.fl_dynamic);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
@@ -147,6 +149,17 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
+
+            listItemView.fl_dynamic.setTag(R.id.tag_fi, sellOrder.getBuyersPhone());
+            listItemView.fl_dynamic.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    String phone = (String) v.getTag(R.id.tag_fi);
+                    showDialog_addsaleinfo(phone);
+                }
+            });
             if (sellOrder.getFreeDeposit().equals("1"))
             {
                 listItemView.ll_undeposit.setVisibility(View.VISIBLE);
@@ -174,6 +187,7 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter
                 listItemView.tv_unpaid.setText("待结算" + sellOrder.getUnpaid() + "元");
             }
 
+            listItemView.tv_parkname.setText(sellOrder.getParkname());
             listItemView.tv_car.setText(sellOrder.getCarNumber());
             listItemView.tv_buyer.setText(sellOrder.getBuyersName());
             listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
@@ -192,7 +206,11 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
+                    SellOrder_New sellOrder_new=new SellOrder_New();
+                    sellOrder_new= (SellOrder_New) v.getTag(R.id.tag_danwei);
+
                     Intent intent = new Intent(context, RecoveryDetail_.class);
+                    intent.putExtra("uuid",sellOrder_new.getUuid());
                     context.startActivity(intent);
                 }
             });
@@ -394,6 +412,8 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter
                 zzsl = bundle.getString("name");
                 SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
                 sellOrder_new.setActualweight(zzsl);
+                sellOrder_new.setGoodsname(sellOrder_new.getProduct());
+                sellOrder_new.setProducer(sellOrder_new.getParkname());
                 StringBuilder builder = new StringBuilder();
                 builder.append("{\"SellOrder_new\":[ ");
                 builder.append(JSON.toJSONString(sellOrder_new));

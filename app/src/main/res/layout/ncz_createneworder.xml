@@ -213,9 +213,9 @@
                         android:id="@+id/et_price"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请输入单价"
-                        android:background="@null"
                         android:inputType="numberDecimal"
                         android:paddingRight="20dip"
                         android:textColor="@color/bg_text"
@@ -251,9 +251,9 @@
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请输入重量"
-                        android:background="@null"
                         android:inputType="numberDecimal"
                         android:paddingRight="20dip"
                         android:textColor="@color/bg_text"
@@ -318,11 +318,11 @@
                         android:id="@+id/dingjin"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请输入定金"
                         android:inputType="numberDecimal"
                         android:paddingRight="20dip"
-                        android:background="@null"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
 
@@ -354,10 +354,10 @@
                         android:id="@+id/dd_fzr"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请选择负责人"
                         android:paddingRight="20dip"
-                        android:background="@null"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
                 </LinearLayout>
@@ -398,7 +398,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"/>
-                <LinearLayout
+
+                <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
                     android:orientation="horizontal">
@@ -409,21 +410,30 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:paddingLeft="10dip"
-                        android:text="*车辆"
+                        android:text="车辆数"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
 
 
-                    <EditText
+                    <TextView
                         android:id="@+id/cheliang_num"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_toLeftOf="@+id/add_jsd"
                         android:gravity="right|center_vertical"
                         android:hint="请填写车辆数目"
                         android:paddingRight="20dip"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
-                </LinearLayout>
+
+                    <Button
+                        android:id="@+id/add_jsd"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_add"/>
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -443,9 +453,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:gravity="center"
                     android:paddingLeft="10dip"
-                    android:layout_centerVertical="true"
                     android:text="选填项"
                     android:textColor="@color/bg_text"
                     android:textSize="18sp"/>
@@ -453,10 +463,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dip"
+                    android:gravity="center"
                     android:text="点击加载更多"
                     android:textColor="@color/gray"
                     android:textSize="14sp"/>
@@ -523,7 +533,7 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:paddingLeft="10dip"
-                        android:text="*发往城市"
+                        android:text="发往城市"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
 
@@ -532,9 +542,9 @@
                         android:id="@+id/et_address"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请输入发往城市"
-                        android:background="@null"
                         android:paddingRight="20dip"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
@@ -567,21 +577,23 @@
                         android:id="@+id/et_email"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请输入采购商的邮箱地址"
                         android:paddingRight="20dip"
-                        android:background="@null"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
                 </LinearLayout>
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"/>
 
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
                     android:orientation="horizontal">
@@ -601,19 +613,21 @@
                         android:id="@+id/dd_cl"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请输入车牌号（多辆请用逗号隔开）"
                         android:textColor="@color/bg_text"
-                        android:background="@null"
                         android:textSize="14sp"/>
                 </LinearLayout>
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"/>
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
                     android:orientation="horizontal">
@@ -652,11 +666,13 @@
                 </RelativeLayout>
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"/>
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
                     android:orientation="horizontal">
@@ -695,11 +711,13 @@
                 </RelativeLayout>
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
                     android:orientation="horizontal">
@@ -719,11 +737,11 @@
                         android:id="@+id/by_danjia"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请输入搬运单价"
                         android:inputType="numberDecimal"
                         android:paddingRight="20dip"
-                        android:background="@null"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
 
@@ -732,11 +750,13 @@
 
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
                     android:orientation="horizontal">
@@ -756,10 +776,10 @@
                         android:id="@+id/bz_guige"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请输入包装规格"
                         android:inputType="numberDecimal"
-                        android:background="@null"
                         android:paddingRight="20dip"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
@@ -769,11 +789,13 @@
 
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
                     android:orientation="horizontal">
@@ -793,9 +815,9 @@
                         android:id="@+id/bz_danjia"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请输入包装单价"
-                        android:background="@null"
                         android:inputType="numberDecimal"
                         android:paddingRight="20dip"
                         android:textColor="@color/bg_text"
@@ -828,10 +850,10 @@
                         android:id="@+id/et_note"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:gravity="right|center_vertical"
                         android:hint="请输入订单备注"
                         android:paddingRight="20dip"
-                        android:background="@null"
                         android:textColor="@color/bg_text"
                         android:textSize="14sp"/>
                 </LinearLayout>
@@ -865,11 +887,11 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:textSize="16sp"
-                        android:text="添加"
+                        android:background="@color/red"
                         android:gravity="center"
+                        android:text="添加"
                         android:textColor="@color/white"
-                        android:background="@color/red"/>
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:id="@+id/tv_allnumber"
@@ -883,10 +905,12 @@
                         android:textColor="@color/red"
                         android:textSize="@dimen/size_sp_16"/>
                 </RelativeLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/gray"/>
+
                 <ListView
                     android:id="@+id/lv"
                     android:layout_width="match_parent"

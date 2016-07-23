@@ -62,6 +62,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_editorder)
 public class NCZ_EditOrder extends Activity
 {
+    SellOrder_New sellOrder_new;
     Adapter_New_SellDetail adapter_sellOrderDetail;
     List<SellOrderDetail_New> list_orderDetail;
     MyDialog myDialog;
@@ -114,8 +115,7 @@ public class NCZ_EditOrder extends Activity
     EditText dingjin;
     @ViewById
     EditText dd_fzr;
-    @ViewById
-    EditText dd_cl;
+
     @ViewById
     TextView dd_bz;
     @ViewById
@@ -218,24 +218,9 @@ public class NCZ_EditOrder extends Activity
             Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (et_name.getText().toString().equals(""))
+   /*     if (et_name.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
-   /*     if (et_email.getText().toString().equals(""))
-        {
-            Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }*/
-/*        if (et_address.getText().toString().equals(""))
-        {
-            Toast.makeText(NCZ_EditOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
-            return;
-        }*/
-  /*      if (et_phone.getText().toString().equals(""))
-        {
-            Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }*/
         if (et_price.getText().toString().equals(""))
@@ -268,8 +253,10 @@ public class NCZ_EditOrder extends Activity
             }
             if (i == 0)
             {
-                list_producer.add(list_orderDetail.get(0).getparkname());
-                producer = producer + list_orderDetail.get(0).getparkname() + ";";
+                //园区名字，注释的是多个园区   目前是单园区，所有另写
+//                list_producer.add(list_SellOrderDetail.get(0).getparkname());
+//                producer = producer + list_SellOrderDetail.get(0).getparkname() + ";";
+                producer=list_orderDetail.get(0).getparkname();
             }
             for (int j = 0; j < list_batchtime.size(); j++)
             {
@@ -289,8 +276,10 @@ public class NCZ_EditOrder extends Activity
                     break;
                 } else if (i == list_producer.size() - 1)
                 {
-                    list_producer.add(list_orderDetail.get(i).getparkname());
-                    producer = producer + list_orderDetail.get(i).getparkname() + ";";
+                    //园区名字，注释的是多个园区   目前是单园区，所有另写
+//                list_producer.add(list_SellOrderDetail.get(0).getparkname());
+//                producer = producer + list_SellOrderDetail.get(0).getparkname() + ";";
+                    producer=list_orderDetail.get(0).getparkname();
                 }
             }
 
@@ -298,26 +287,20 @@ public class NCZ_EditOrder extends Activity
 
         SellOrder_New sellOrders = new SellOrder_New();
         sellOrders = sellOrder;
-        sellOrders.setid("");
         sellOrders.setUid(commembertab.getuId());
         sellOrders.setUuid(sellOrder.getUuid());
         sellOrders.setGoodsname(chanpin.getText().toString());
         sellOrders.setBatchTime(sellOrder.getBatchTime());
-//        sellOrder.setBuyers(et_name.getText().toString());
         sellOrders.setBuyers(cgId);
         sellOrders.setAddress(et_address.getText().toString());
-
         sellOrders.setEmail(et_email.getText().toString());
         sellOrders.setPhone(et_phone.getText().toString());
-
-//        sellOrders.setNumber(String.valueOf(countAllNumber()));
-
         sellOrders.setSumvalues(et_values.getText().toString());
-        sellOrders.setActualprice("");
+/*        sellOrders.setActualprice("");
         sellOrders.setActualweight("");
         sellOrders.setActualnumber("");
         sellOrders.setActualsumvalues("");
-        sellOrders.setDeposit("");
+        sellOrders.setDeposit("");*/
         sellOrders.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
 
@@ -325,17 +308,10 @@ public class NCZ_EditOrder extends Activity
         sellOrders.setNote(et_note.getText().toString());
         sellOrders.setXxzt("0");
         sellOrders.setProducer(producer);
-        sellOrders.setFinalpayment("");
         sellOrders.setWaitDeposit(dingjin.getText().toString());
-        sellOrders.setMainPepole(fzrId);
-        sellOrders.setPlateNumber(dd_cl.getText().toString());
-        sellOrders.setContractorId(bzId);
-        sellOrders.setPickId(byId);
-        sellOrders.setPackPec(bz_guige.getText().toString());
+//        sellOrders.setMainPepole(fzrId);
 
         sellOrders.setPrice(et_price.getText().toString());
-        sellOrders.setCarryPrice(by_danjia.getText().toString());
-        sellOrders.setPackPrice(bz_danjia.getText().toString());
         sellOrders.setSaletime(dd_time.getText().toString());
         sellOrders.setWeight(et_weight.getText().toString());
         List<SellOrder_New> SellOrderList = new ArrayList<>();
@@ -460,6 +436,10 @@ public class NCZ_EditOrder extends Activity
         byId = sellOrder.getPickId();
         bzId = sellOrder.getContractorId();
         fzrId = sellOrder.getMainPepole();
+
+     /*   mainPepole id
+                mainPeople name*/
+
 //        tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
    /*     adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(NCZ_EditOrder.this);
         lv.setAdapter(adapter_editSellOrderDetail_ncz);
@@ -512,6 +492,15 @@ public class NCZ_EditOrder extends Activity
         @ViewById
         EditText by_tv;*/
     @Click
+    void add_jsd()
+    {
+
+        Intent intent = new Intent(NCZ_EditOrder.this, RecoveryDetail_.class);
+        intent.putExtra("uuid", sellOrder.getUuid());
+        intent.putExtra("bean", sellOrder_new);
+        startActivity(intent);
+    }
+    @Click
     void dd_time()
     {
         MyDatepicker myDatepicker = new MyDatepicker(NCZ_EditOrder.this, dd_time);
@@ -520,31 +509,27 @@ public class NCZ_EditOrder extends Activity
 
     private void showData()
     {
-        chanpin.setText(sellOrder.getGoodsname());
-        et_name.setText(sellOrder.getPurchaName());
+//        chanpin.setText(sellOrder.getGoodsname());//产品
+        chanpin.setText(sellOrder.getProduct());//产品
+//        et_name.setText(sellOrder.getPurchaName());//采购商名字
+//        et_name.setText(sellOrder.getBuyersName());//采购商名字
+
+
         et_price.setText(sellOrder.getPrice());
         et_weight.setText(sellOrder.getWeight());
         et_values.setText(sellOrder.getSumvalues());
-        by_danjia.setText(sellOrder.getCarryPrice());
-        bz_guige.setText(sellOrder.getPackPec());
-        bz_danjia.setText(sellOrder.getPackPrice());
-        dd_fzr.setText(sellOrder.getMainPepName());
-        dd_cl.setText(sellOrder.getPlateNumber());
+//        by_danjia.setText(sellOrder.getCarryPrice());
+//        bz_guige.setText(sellOrder.getPackPec());
+//        bz_danjia.setText(sellOrder.getPackPrice());
+//        dd_fzr.setText(sellOrder.getMainPepName());
+        dd_fzr.setText(sellOrder.getMainPeople());
         dd_bz.setText(sellOrder.getContractorName());
         dd_by.setText(sellOrder.getPickName());
         et_address.setText(sellOrder.getAddress());
         dingjin.setText(sellOrder.getWaitDeposit());
         dd_time.setText(sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length() - 8));
 
-//        tv_planweight.setText(sellOrder.getWeight());
-//        tv_actualweight.setText(sellOrder.getBuyers());
-//        tv_plansumvalues.setText(sellOrder.getBuyers());
-//        tv_actualsumvalues.setText(sellOrder.getBuyers());
-//        et_deposit.setText(sellOrder.getDeposit());
-//        et_finalpayment.setText(sellOrder.getFinalpayment());
-//        et_phone.setText(sellOrder.getPhone());
-//        et_address.setText(sellOrder.getAddress());
-//        et_email.setText(sellOrder.getEmail());
+
         et_note.setText(sellOrder.getNote());
     }
 
@@ -665,6 +650,7 @@ public class NCZ_EditOrder extends Activity
 
             public TextView tv_yq;
             public TextView tv_pq;
+            public TextView tv_batchtime;
         }
 
         public Adapter_EditSellOrderDetail_NCZ(Activity context)
@@ -703,6 +689,7 @@ public class NCZ_EditOrder extends Activity
                 // 获取控件对象
                 listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
                 listItemView.tv_plannumber = (TextView) convertView.findViewById(R.id.tv_plannumber);
+                listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
                 listItemView.btn_editorderdetail = (Button) convertView.findViewById(R.id.btn_editorderdetail);
                 listItemView.btn_deleteorderdetail = (Button) convertView.findViewById(R.id.btn_deleteorderdetail);
                 listItemView.btn_editorderdetail.setTag(R.id.tag_tv_number, listItemView.tv_plannumber);
@@ -736,6 +723,7 @@ public class NCZ_EditOrder extends Activity
                 listItemView = (ListItemView) convertView.getTag();
             }
             // 设置文字和图片
+            listItemView.tv_batchtime.setText(SellOrderDetail.getBatchTime());
             listItemView.tv_plannumber.setText(SellOrderDetail.getplannumber());
             listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
             return convertView;
@@ -1123,10 +1111,13 @@ public class NCZ_EditOrder extends Activity
            /*             adapter_sellOrderDetail = new Adapter_New_SellDetail(NCZ_EditOrder.this, list_orderDetail);
                         lv.setAdapter(adapter_sellOrderDetail);
                         utils.setListViewHeight(lv);*/
-                    /*    if (list_orderDetail.size()>0)
+                        int allnumber = 0;
+                        for (int i = 0; i < list_orderDetail.size(); i++)
                         {
-                            tv_cbh.setText(list_orderdetail.get(0).getparkname()+"承包户产量");
-                        }*/
+                            if (!list_orderDetail.get(i).getplannumber().equals(""))
+                            allnumber = allnumber + Integer.valueOf(list_orderDetail.get(i).getplannumber());
+                        }
+                        tv_allnumber.setText(allnumber+"");
                         adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(NCZ_EditOrder.this);
                         lv.setAdapter(adapter_editSellOrderDetail_ncz);
                         utils.setListViewHeight(lv);

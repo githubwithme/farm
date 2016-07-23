@@ -82,7 +82,7 @@
                         android:layout_height="15dip"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dip"
-                        android:background="@drawable/ic_next"/>
+                        android:background="@mipmap/ic_launcher_phone"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -386,7 +386,7 @@
                         android:layout_height="15dip"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dip"
-                        android:background="@drawable/ic_next"/>
+                        android:background="@mipmap/ic_launcher_phone"/>
                 </LinearLayout>
 
 
@@ -459,6 +459,21 @@
                     android:text="编辑"
                     android:textColor="@color/gray"
                     android:textSize="12sp"/>
+                <Button
+                    android:id="@+id/btn_addjsd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="27dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="7dip"
+                    android:layout_marginTop="5dip"
+                    android:layout_toLeftOf="@+id/btn_editorder"
+                    android:background="@drawable/round_white"
+                    android:gravity="center"
+                    android:minWidth="60dip"
+                    android:text="填写结算单"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"/>
+
 
             </RelativeLayout>
 

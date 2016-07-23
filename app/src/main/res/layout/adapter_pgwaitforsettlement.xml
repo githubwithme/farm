@@ -588,7 +588,7 @@
                     android:background="@drawable/round_white"
                     android:gravity="center"
                     android:minWidth="60dip"
-                    android:text="查看结算单"
+                    android:text="查看|修改结算单"
                     android:textColor="@color/gray"
                     android:textSize="12sp"/>
 

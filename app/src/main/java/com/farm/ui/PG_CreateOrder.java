@@ -1,7 +1,10 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.text.Editable;
@@ -18,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.farm.R;
 import com.farm.adapter.Adapter_CreateSellOrderDetail_NCZ;
 import com.farm.app.AppConfig;
@@ -59,6 +64,7 @@ import java.util.List;
 @EActivity(R.layout.cz_pg_create_order)
 public class PG_CreateOrder extends Activity
 {
+
 
     String mail;
     String telphone;
@@ -136,9 +142,19 @@ public class PG_CreateOrder extends Activity
     @ViewById
     LinearLayout ll_more;
     @ViewById
-    EditText cheliang_num;
+    TextView cheliang_num;
+    String uuid;
+    @Click
+    void add_jsd()
+    {
 
-
+        Intent intent = new Intent(PG_CreateOrder.this, RecoveryDetail_.class);
+        intent.putExtra("uuid", uuid);
+        SellOrder_New sellOrder_new=new SellOrder_New();
+        sellOrder_new.setIsReady("True");
+        intent.putExtra("bean", sellOrder_new);
+        startActivity(intent);
+    }
     @Click
     void rl_more_tip()
     {
@@ -261,7 +277,33 @@ public class PG_CreateOrder extends Activity
         Intent intent = new Intent(PG_CreateOrder.this, PG_CreateOrder_SelectProduct_.class);
         startActivity(intent);
     }
+    @Click
+    void cheliang_num()
+    {
+        JSONObject jsonObject = utils.parseJsonFile(PG_CreateOrder.this, "dictionary.json");
+        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < jsonArray.size(); i++)
+        {
+            list.add(jsonArray.getString(i));
+        }
+        showDialog_carNumber(list);
+    }
+    public void showDialog_carNumber(List<String> list  )
+    {
+        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                String workday = bundle.getString("name");
+                cheliang_num.setText(workday);
 
+            }
+        });
+        customDialog_listView.show();
+    }
     @Click
     void btn_back()
     {
@@ -320,11 +362,11 @@ public class PG_CreateOrder extends Activity
             Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (cheliang_num.getText().toString().equals(""))
+/*        if (cheliang_num.getText().toString().equals(""))
         {
             Toast.makeText(PG_CreateOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
         //
 /*        String phone = phoneEt.getText().toString();
@@ -336,11 +378,10 @@ public class PG_CreateOrder extends Activity
         }*/
 
 
-  /*      //短信
+        //短信
         SmsManager smsMessage = SmsManager.getDefault();
 //        List<String> divideContents = smsMessage.divideMessage(message);
-        smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元", null, null);
-*/
+        smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元,定金："+dingjin.getText().toString()+"元，采收时间："+dd_time.getText().toString(), null, null);
         List<String> list_uuid = new ArrayList<>();
         String batchtime = "";
         String producer = "";
@@ -351,13 +392,15 @@ public class PG_CreateOrder extends Activity
             list_uuid.add(list_SellOrderDetail.get(i).getUuid());
             if (i == 0)
             {
-                list_batchtime.add(list_SellOrderDetail.get(0).getBatchTime());
-                batchtime = batchtime + list_SellOrderDetail.get(0).getBatchTime() + ";";
+                /*list_batchtime.add(list_SellOrderDetail.get(0).getBatchTime());
+                batchtime = batchtime + list_SellOrderDetail.get(0).getBatchTime() + ";";*/
+                batchtime= batchtime + list_SellOrderDetail.get(i).getBatchTime();
             }
             if (i == 0)
             {
-                list_producer.add(list_SellOrderDetail.get(0).getparkname());
-                producer = producer + list_SellOrderDetail.get(0).getparkname() + ";";
+              /*  list_producer.add(list_SellOrderDetail.get(0).getparkname());
+                producer = producer + list_SellOrderDetail.get(0).getparkname() + ";";*/
+                producer=list_SellOrderDetail.get(i).getparkname();
             }
             for (int j = 0; j < list_batchtime.size(); j++)
             {
@@ -366,8 +409,9 @@ public class PG_CreateOrder extends Activity
                     break;
                 } else if (i == list_batchtime.size() - 1)
                 {
-                    list_batchtime.add(list_SellOrderDetail.get(i).getBatchTime());
-                    batchtime = batchtime + list_SellOrderDetail.get(i).getBatchTime() + ";";
+                  /*  list_batchtime.add(list_SellOrderDetail.get(i).getBatchTime());
+                    batchtime = batchtime + list_SellOrderDetail.get(i).getBatchTime() + ";";*/
+                    batchtime= batchtime + list_SellOrderDetail.get(i).getBatchTime();
                 }
             }
             for (int j = 0; j < list_producer.size(); j++)
@@ -377,13 +421,14 @@ public class PG_CreateOrder extends Activity
                     break;
                 } else if (i == list_producer.size() - 1)
                 {
-                    list_producer.add(list_SellOrderDetail.get(i).getparkname());
-                    producer = producer + list_SellOrderDetail.get(i).getparkname() + ";";
+                    /*list_producer.add(list_SellOrderDetail.get(i).getparkname());
+                    producer = producer + list_SellOrderDetail.get(i).getparkname() + ";";*/
+                    producer=list_SellOrderDetail.get(i).getparkname();
                 }
             }
 
         }
-        String uuid = java.util.UUID.randomUUID().toString();
+
         SellOrder_New sellOrder = new SellOrder_New();
         sellOrder.setCreatorid(commembertab.getId());
         sellOrder.setid("");
@@ -391,6 +436,8 @@ public class PG_CreateOrder extends Activity
         sellOrder.setUuid(uuid);
         sellOrder.setBatchTime(batchtime);
         sellOrder.setSelltype("待审批");
+        sellOrder.setStatus("0");
+        sellOrder.setIsReady("False");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrder.setBuyers(cgId);
         sellOrder.setAddress(et_address.getText().toString());
@@ -401,18 +448,18 @@ public class PG_CreateOrder extends Activity
 
 
         sellOrder.setSumvalues(et_values.getText().toString());
-        sellOrder.setActualprice("");
+/*        sellOrder.setActualprice("");
         sellOrder.setDefectNum("0");
         sellOrder.setActualnumber("");
         sellOrder.setActualsumvalues("");
-        sellOrder.setDeposit("");
+        sellOrder.setDeposit("");*/
         sellOrder.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
         sellOrder.setYear(utils.getYear());
         sellOrder.setNote(et_note.getText().toString());
         sellOrder.setXxzt("0");
         sellOrder.setProducer(producer);
-        sellOrder.setFinalpayment("");
+//        sellOrder.setFinalpayment("");
 
     /*    sellOrder.setSaletime(dd_time.getText().toString());
         sellOrder.setPrice(et_price.getText().toString());
@@ -429,14 +476,14 @@ public class PG_CreateOrder extends Activity
         sellOrder.setActualweight(cheliang_num.getText().toString());
 
         sellOrder.setMainPepole(commembertab.getId());
-        sellOrder.setPlateNumber(dd_cl.getText().toString());
+//        sellOrder.setActualweight(dd_cl.getText().toString());
         sellOrder.setContractorId(bzId);
         sellOrder.setPickId(byId);
         sellOrder.setPackPec(bz_guige.getText().toString());
         sellOrder.setWaitDeposit(dingjin.getText().toString());
         sellOrder.setFreeFinalPay("2");
         sellOrder.setFreeDeposit("2");
-        sellOrder.setIsNeedAudit("2");
+        sellOrder.setIsNeedAudit("0");
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
@@ -553,12 +600,26 @@ public class PG_CreateOrder extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+         uuid = java.util.UUID.randomUUID().toString();
 //        list_SellOrderDetail = getIntent().getParcelableArrayListExtra("list");
 //        Bundle bundle = getIntent().getExtras();
 //        ArrayList arraylist = bundle.getParcelableArrayList("list_uuid");
 //        uuids = (List<HashMap<String, String>>) arraylist.get(0);
-    }
 
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_CHE_LIANG);
+        registerReceiver(receiver_update, intentfilter_update);
+    }
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+        /* String    num=getIntent().getStringExtra("num");
+            cheliang_num.setText(num);*/
+            getDetailSecBysettleId();
+        }
+    };
     public int countAllNumber()
     {
         int allnumber = 0;
@@ -1030,5 +1091,51 @@ public class PG_CreateOrder extends Activity
             }
         });
 
+    }
+    public void getDetailSecBysettleId()
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uuid", uuid);
+        params.addQueryStringParameter("action", "getDetailSecBysettleId");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+
+                String a = responseInfo.result;
+                List<SellOrder_New> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+//                    if (result.getAffectedRows() != 0)
+//                    {
+
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+
+                    if (listNewData.size() > 0)
+                    {
+                        cheliang_num.setText(listNewData.size()+"");
+                    }
+                    {
+                        listNewData = new ArrayList<SellOrder_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+            }
+        });
     }
 }

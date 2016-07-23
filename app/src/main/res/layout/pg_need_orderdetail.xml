@@ -95,10 +95,12 @@
 
     </LinearLayout>
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/line_color"/>
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
         android:orientation="horizontal">
@@ -130,11 +132,13 @@
 
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/line_color"/>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
         android:orientation="horizontal">
@@ -166,11 +170,13 @@
 
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/line_color"/>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
         android:orientation="horizontal">

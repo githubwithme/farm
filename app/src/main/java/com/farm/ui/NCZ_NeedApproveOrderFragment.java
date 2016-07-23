@@ -56,8 +56,10 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
     String parkname = "";
-    String cpname = "";
+    String parkId = "-1";
+    String cpname = "-1";
     String cgsname = "";
+    String cgsId = "-1";
     //    private NCZ_OrderAdapter listAdapter;
     private NCZ_NeedAdapter listAdapter;
     private int listSumData;
@@ -177,8 +179,8 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+              /*      if (result.getAffectedRows() != 0)
+                    {*/
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         listAdapter = new NCZ_NeedAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATEAllORDER);
                         listAdapter.notifyDataSetChanged();
@@ -198,7 +200,7 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
                             }
                         });
 
-                    } else
+//                    } else
                     {
                         listData = new ArrayList<SellOrder_New>();
                     }
@@ -301,7 +303,7 @@ public class NCZ_NeedApproveOrderFragment extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         Wz_Storehouse wz_storehouses = new Wz_Storehouse();
-                        wz_storehouses.setParkId("");
+                        wz_storehouses.setId("-1");
                         wz_storehouses.setParkName("全部分场");
                         listpark.add(wz_storehouses);
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);

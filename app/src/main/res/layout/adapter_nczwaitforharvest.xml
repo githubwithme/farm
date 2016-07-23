@@ -82,7 +82,7 @@
                         android:layout_height="15dip"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dip"
-                        android:background="@drawable/ic_next"/>
+                        android:background="@mipmap/ic_launcher_phone"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -386,7 +386,7 @@
                         android:layout_height="15dip"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dip"
-                        android:background="@drawable/ic_next"/>
+                        android:background="@mipmap/ic_launcher_phone"/>
                 </LinearLayout>
 
 

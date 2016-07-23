@@ -64,6 +64,8 @@ public class AppContext extends Application
     public final static String UPDATEMESSAGE_PG_JSD= "PG_JSD";
     public final static String UPDATEMESSAGE_PG_UPDATE_DELETE= "PG_UPDATE_DELETE";
     public final static String UPDATEMESSAGE_PGDETAIL_UPDATE_DELETE= "PGDETAIL_UPDATE_DELETE";
+    public final static String UPDATEMESSAGE_PGDETAIL_UPDATE_DINGDAN= "PGDETAIL_UPDATE_DINGDAN";
+    public final static String UPDATEMESSAGE_CHE_LIANG= "CHE_LIANG";
 
     public final static int TIME_REFRESH = 30000;
     public final static int TIME_GZ = 60000;

@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +15,12 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.Adapter_New_SellDetail;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
+import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
@@ -50,6 +53,11 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
 {
 
     @ViewById
+    TextView tv_cbh;
+    Adapter_New_SellDetail adapter_sellOrderDetail;
+    @ViewById
+    ListView lv;
+    @ViewById
     TextView is_setveiw;
     @ViewById
     LinearLayout ll_detail;
@@ -76,22 +84,66 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
     @ViewById
     TextView tv_bottom_left;
 
+    @ViewById
+    TextView buyers;  //采购商
+    @ViewById
+    TextView mainPepole;//负责人
+    @ViewById
+    TextView price; //单价
+    @ViewById
+    TextView saletime;//采收时间
+    @ViewById
+    TextView tv_planweight;//重量
+    @ViewById
+    TextView tv_plansumvalues;//总价
+    @ViewById
+    TextView tv_deposit;//定金
+    @ViewById
+    TextView deposit;//已付定金
+    @ViewById
+    TextView goodsName;//产品名字
+    @ViewById
+    TextView tv_finalpayment;//发往城市
+    @ViewById
+    TextView tv_note;
+
     @Click
     void is_setveiw()
     {
         if (ll_detail.isShown())
         {
             ll_detail.setVisibility(View.GONE);
-        }else
+        } else
         {
             ll_detail.setVisibility(View.VISIBLE);
         }
     }
+
     @AfterViews
     void afterview()
     {
+        getsellOrderDetailBySaleId();
+        showData();
         customOntouch = (NCZ_All_OneOrder_Detail) this;
         getDetailSecBysettleId();
+    }
+
+    private void showData()
+    {
+        buyers.setText(sellOrder_new.getBuyersName());
+        mainPepole.setText(sellOrder_new.getMainPepole());
+        price.setText(sellOrder_new.getPrice());
+        if (!sellOrder_new.getSaletime().equals(""))
+        {
+            saletime.setText(sellOrder_new.getSaletime().substring(0, sellOrder_new.getSaletime().length() - 8));
+        }
+
+        tv_planweight.setText(sellOrder_new.getWeight());
+        tv_deposit.setText(sellOrder_new.getWaitDeposit());
+        deposit.setText(sellOrder_new.getDeposit());
+        tv_plansumvalues.setText(sellOrder_new.getSumvalues());
+        goodsName.setText(sellOrder_new.getProduct());
+        tv_finalpayment.setText(sellOrder_new.getAddress());
     }
 
     @Override
@@ -100,7 +152,6 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder_new = getIntent().getParcelableExtra("bean");
-        broadcast = getIntent().getStringExtra("broadcast");
 
     }
 
@@ -152,7 +203,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
 
                         DensityUtil densityUtil = new DensityUtil(NCZ_All_OneOrder_Detail.this);
                         screenWidth = densityUtil.getScreenWidth();
-                        int size = listData.get(0).getDetailSecLists().size();
+                        int size = 2;
                         if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
@@ -549,15 +600,63 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            String batchTimes = (String) v.getTag(R.id.tag_hg);
-            String parkid = (String) v.getTag(R.id.tag_kg);
-            String parkname = (String) v.getTag(R.id.tag_parkname);
-//            Intent intent = new Intent(PG_SaleActivity.this, NCZ_AreaSaleData_.class);
-//            intent.putExtra("parkid", parkid);
-//            intent.putExtra("parkname", parkname);
-//            intent.putExtra("batchTime", batchTimes);
-//            PG_SaleActivity.this.startActivity(intent);
+            SellOrder_New sellOrder_news = new SellOrder_New();
+            sellOrder_news = (SellOrder_New) v.getTag(R.id.tag_batchtime);
+            Intent intent = new Intent(NCZ_All_OneOrder_Detail.this, PG_JSD_Detail_.class);
+            intent.putExtra("bean", sellOrder_news);
+            startActivity(intent);
 
         }
     };
+
+    private void getsellOrderDetailBySaleId()
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_All_OneOrder_Detail.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("saleId", sellOrder_new.getUuid());
+        params.addQueryStringParameter("action", "getsellOrderDetailBySaleId");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<SellOrderDetail_New> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+//                    if (result.getAffectedRows() != 0)
+//                    {
+
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+//                        adapter_sellOrderDetail = new Adapter_New_SellDetail(NCZ_NewOrderDetail.this, list_orderdetail);
+                    adapter_sellOrderDetail = new Adapter_New_SellDetail(NCZ_All_OneOrder_Detail.this, listNewData);
+                    lv.setAdapter(adapter_sellOrderDetail);
+                    utils.setListViewHeight(lv);
+                    if (listNewData.size() > 0)
+                    {
+                        tv_cbh.setText(listNewData.get(0).getparkname() + "销售情况");
+                    }
+
+//                    } else
+//                    {
+//                        listNewData = new ArrayList<SellOrderDetail_New>();
+//                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ_All_OneOrder_Detail.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_All_OneOrder_Detail.this, "error_connectServer");
+            }
+        });
+    }
 }

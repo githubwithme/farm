@@ -26,6 +26,7 @@ public class Adapter_SellOrderDetail extends BaseAdapter
         public TextView tv_actualweight;
         public TextView tv_actualnumber;
         public TextView tv_plannumber;
+        public TextView tv_batchtime;
 
         public TextView tv_yq;
         public TextView tv_pq;
@@ -67,6 +68,7 @@ public class Adapter_SellOrderDetail extends BaseAdapter
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
+            listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
             listItemView.tv_plannumber = (TextView) convertView.findViewById(R.id.tv_plannumber);
             listItemView.tv_actualnumber = (TextView) convertView.findViewById(R.id.tv_actualnumber);
             listItemView.tv_actualweight = (TextView) convertView.findViewById(R.id.tv_actualweight);
@@ -93,6 +95,7 @@ public class Adapter_SellOrderDetail extends BaseAdapter
         {
             listItemView.tv_actualweight.setText("实重" + SellOrderDetail.getactualweight() + "斤");
         }
+        listItemView.tv_batchtime.setText(SellOrderDetail.getBatchTime());
         listItemView.tv_plannumber.setText("拟售" + SellOrderDetail.getplannumber() + "株");
         listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
         return convertView;

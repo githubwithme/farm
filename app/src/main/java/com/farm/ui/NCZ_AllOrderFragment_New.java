@@ -53,9 +53,11 @@ public class NCZ_AllOrderFragment_New extends Fragment
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
-    String parkname = "";
-    String cpname = "";
-    String cgsname = "";
+    String parkname = "-1";
+    String parkId = "-1";
+    String cpname = "-1";
+    String cgsname = "-1";
+    String cgsId = "-1";
     //    private NCZ_OrderAdapter listAdapter;
     private NCZ_AllOrderAdapter_New listAdapter;
     private int listSumData;
@@ -88,7 +90,7 @@ public class NCZ_AllOrderFragment_New extends Fragment
     private String[] mProvinceDatas = new String[]{"全部分场", "乐丰分场", "双桥分场"};
     private String[] mCitisDatasMap = new String[]{"全部产品", "香蕉", "柑橘"};
     private String[] mAreaDatasMap = new String[]{"不限采购商", "李四", "张三"};
-    private String[] mPayStatusDatasMap = new String[]{"不限付款情况","待付定金","免付定金", "待付尾款","免付尾款"};
+    private String[] mPayStatusDatasMap = new String[]{"不限付款情况", "待付定金", "免付定金", "待付尾款", "免付尾款"};
 
     @Override
     public void onResume()
@@ -148,7 +150,8 @@ public class NCZ_AllOrderFragment_New extends Fragment
                     commembertab commembertab = AppContext.getUserInfo(getActivity());
                     AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
 //                    Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                    Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
+//                    Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
+                    Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
                     intent.putExtra("bean", listData.get(position));
                     getActivity().startActivity(intent);
                 }
@@ -161,14 +164,10 @@ public class NCZ_AllOrderFragment_New extends Fragment
     {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("year", utils.getYear());
-//        params.addQueryStringParameter("type", "0");
-//        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("parkid", "-1");
-        params.addQueryStringParameter("productname","-1");
-        params.addQueryStringParameter("buyer","-1");
+        params.addQueryStringParameter("parkid", parkId);
+        params.addQueryStringParameter("productname", cpname);
+        params.addQueryStringParameter("buyer", cgsId);
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("payStatus", "-1");
         params.addQueryStringParameter("action", "NCZ_getAllOrderWithStatus");
@@ -182,26 +181,21 @@ public class NCZ_AllOrderFragment_New extends Fragment
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        listAdapter = new NCZ_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
-                        lv.setAdapter(listAdapter);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                        {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                            {
-                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
-                                intent.putExtra("bean", listData.get(position));
-                                getActivity().startActivity(intent);
-                            }
-                        });
 
-                    } else
+                    listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+                    listAdapter = new NCZ_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+                    lv.setAdapter(listAdapter);
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {
-                        listData = new ArrayList<SellOrder_New>();
-                    }
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                        {
+                            Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
+                            intent.putExtra("bean", listData.get(position));
+                            getActivity().startActivity(intent);
+                        }
+                    });
+
 
                 } else
                 {
@@ -273,7 +267,7 @@ public class NCZ_AllOrderFragment_New extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         Wz_Storehouse wz_storehouses = new Wz_Storehouse();
-                        wz_storehouses.setParkId("");
+                        wz_storehouses.setId("-1");
                         wz_storehouses.setParkName("全部分场");
                         listpark.add(wz_storehouses);
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
@@ -298,6 +292,7 @@ public class NCZ_AllOrderFragment_New extends Fragment
                             {
 
                                 parkname = listpark.get(i).getParkName();
+                                parkId = listpark.get(i).getId();
                                 getAllOrders();
                             }
 
@@ -353,7 +348,7 @@ public class NCZ_AllOrderFragment_New extends Fragment
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), AllType.class);
                         AllType allType = new AllType();
-                        allType.setId("");
+                        allType.setId("-1");
                         allType.setProductName("全部产品");
                         listdata_cp.add(allType);
                         listdata_cp.addAll(listNewData);
@@ -373,7 +368,16 @@ public class NCZ_AllOrderFragment_New extends Fragment
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                             {
 
-                                cpname = listdata_cp.get(i).getProductName();
+                                if (listdata_cp.get(i).getProductName().equals("全部产品"))
+                                {
+                                    cpname = "-1";
+
+                                } else
+                                {
+                                    cpname = listdata_cp.get(i).getProductName();
+                                }
+
+
                                 getAllOrders();
                             }
 
@@ -430,7 +434,7 @@ public class NCZ_AllOrderFragment_New extends Fragment
                         {
                             listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
                             Purchaser purchaser = new Purchaser();
-                            purchaser.setId("");
+                            purchaser.setId("-1");
                             purchaser.setName("全部采购商");
                             listData_CG.add(purchaser);
                             for (int i = 0; i < listNewData.size(); i++)
@@ -463,6 +467,7 @@ public class NCZ_AllOrderFragment_New extends Fragment
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                                 {
                                     cgsname = listData_CG.get(i).getName();
+                                    cgsId = listData_CG.get(i).getId();
                                     getAllOrders();
                                 }
 

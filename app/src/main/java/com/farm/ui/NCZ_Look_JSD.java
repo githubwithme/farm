@@ -76,6 +76,8 @@ public class NCZ_Look_JSD extends Activity implements CustomHorizontalScrollView
     @AfterViews
     void afterview()
     {
+
+
         customOntouch = (NCZ_Look_JSD) this;
         getDetailSecBysettleId();
     }
@@ -126,15 +128,15 @@ public class NCZ_Look_JSD extends Activity implements CustomHorizontalScrollView
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+//                    if (result.getAffectedRows() != 0)
+//                    {
 
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         listData.addAll(listNewData);
 
                         DensityUtil densityUtil = new DensityUtil(NCZ_Look_JSD.this);
                         screenWidth = densityUtil.getScreenWidth();
-                        int size = listData.get(0).getDetailSecLists().size();
+                        int size =3;
                         if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
@@ -153,7 +155,7 @@ public class NCZ_Look_JSD extends Activity implements CustomHorizontalScrollView
 
 
 
-                    } else
+//                    } else
                     {
                         listNewData = new ArrayList<SellOrder_New>();
                     }

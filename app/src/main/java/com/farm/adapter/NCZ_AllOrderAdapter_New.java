@@ -160,7 +160,7 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter
             listItemView.tv_mainpeple.setText(sellOrder.getMainPeople());
             listItemView.tv_car.setText(sellOrder.getCarNumber());
 
-            listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
+    /*        listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -169,7 +169,7 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter
                     String phone = (String) v.getTag();
                     showDialog_addsaleinfo(phone);
                 }
-            });
+            });*/
             listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
             listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
             listItemView.btn_changetime.setOnClickListener(new View.OnClickListener()

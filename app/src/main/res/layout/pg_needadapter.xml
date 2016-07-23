@@ -8,333 +8,335 @@
               android:minHeight="100dip"
               android:orientation="horizontal">
 
-    <FrameLayout
-        android:id="@+id/fl_dynamic"
-        android:layout_width="15dip"
-        android:layout_height="15dip"
-        android:layout_gravity="center_vertical"
-        android:layout_toRightOf="@id/imgbtn_home"
-        android:visibility="invisible"
-        >
-
-        <com.farm.widget.CircleImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:src="@color/red"
-            app:border_color="@color/red"
-            app:border_width="0dp"/>
-
-        <TextView
-            android:id="@+id/tv_dynamic_new"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="@dimen/size_10"/>
-    </FrameLayout>
-
     <LinearLayout
-        android:layout_width="0dip"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginRight="15dip"
-        android:layout_weight="4"
-        android:background="@drawable/round_white"
-        android:orientation="vertical">
+        android:layout_marginTop="10dip"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/ddfzr"
-                android:layout_width="49dip"
-                android:layout_height="49dip"
-                android:layout_centerVertical="true"
-                >
-
-                <com.farm.widget.CircleImageView
-                    android:id="@+id/circle_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:src="@color/transparent"
-                    app:border_color="@color/transparent"
-                    app:border_width="0px"/>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:src="@drawable/expense_takepicture_select"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/tv_importance"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="1"
-                    android:textColor="@color/white"
-                    android:textSize="13sp"/>
-            </FrameLayout>
 
             <RelativeLayout
-                android:id="@+id/re_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_toRightOf="@+id/ddfzr"
+                android:layout_width="fill_parent"
+                android:layout_height="40dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:background="@color/white"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_cmdname_tip"
+                <LinearLayout
+                    android:id="@+id/ll_buyer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="采购商:"
-                    android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_sp_15"/>
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/fl_dynamic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip">
+
+                        <View
+                            android:id="@+id/view_user"
+                            android:layout_width="15dip"
+                            android:layout_height="15dip"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/user"/>
+
+                        <TextView
+                            android:id="@+id/tv_buyer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dip"
+                            android:layout_toRightOf="@id/view_user"
+                            android:gravity="center"
+                            android:text="李总"
+                            android:textColor="@color/bg_text"
+                            android:textSize="16sp"/>
+
+                        <com.farm.widget.CircleImageView
+                            android:id="@+id/circleImageView"
+                            android:layout_width="8dip"
+                            android:layout_height="8dip"
+                            android:layout_alignParentLeft="true"
+                            android:layout_gravity="left|top"
+                            android:src="@color/red"
+                            android:visibility="gone"
+                            app:border_color="@color/red"
+                            app:border_width="0dp"/>
+
+                    </RelativeLayout>
+
+
+                    <View
+                        android:id="@+id/view_buyer_goto"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip"
+                        android:background="@mipmap/ic_launcher_phone"/>
+                </LinearLayout>
+
 
                 <TextView
-                    android:id="@+id/tv_buyer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dip"
-                    android:layout_toRightOf="@id/tv_cmdname_tip"
-                    android:gravity="left|center_vertical"
-                    android:text="李总"
-                    android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_sp_15"/>
-
-
-                <TextView
-                    android:id="@+id/tv_state"
+                    android:id="@+id/tv_orderstate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="5dip"
                     android:gravity="center"
                     android:minWidth="60dip"
                     android:text="等待买家付款"
                     android:textColor="@color/red"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_preparestatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dip"
+                    android:layout_toLeftOf="@+id/tv_orderstate"
+                    android:gravity="left"
+                    android:text="就绪"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:background="@color/line_color"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="单价￥:"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:gravity="left"
+                    android:text="2.5元"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dip"
+                    android:gravity="center"
+                    android:text="总价￥:"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_sum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:gravity="left"
+                    android:text="待反馈"
+                    android:textColor="@color/gray"
                     android:textSize="14sp"
                     android:visibility="gone"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/cs_qy"
-                android:layout_marginBottom="10dip"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_toRightOf="@+id/ddfzr">
-
 
                 <TextView
-                    android:id="@+id/tv_car_tip"
+                    android:id="@+id/tv_fromtip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="left"
-                    android:text="采收区域："
-                    android:textColor="@color/gray"
-                    android:textSize="13sp"/>
-
-                <TextView
-                    android:id="@+id/tv_car"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/tv_car_tip"
-                    android:gravity="left"
-                    android:text="乐丰分场"
-                    android:textColor="@color/red"
-                    android:textSize="13sp"/>
-
-                <Button
-                    android:id="@+id/btn_cancleorder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/round_red"
-                    android:text="取消订单"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
-                    android:visibility="gone"/>
-
-                <Button
-                    android:id="@+id/btn_editorder"
-                    android:layout_width="40dip"
-                    android:layout_height="20dip"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="2dip"
-                    android:layout_toLeftOf="@+id/btn_cancleorder"
-                    android:background="@drawable/round_red"
-                    android:text="调整"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
-                    android:visibility="gone"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/cs_qy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/re_tv"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_toRightOf="@+id/ddfzr">
-
-
-                <TextView
-                    android:id="@+id/tv_batchtimetip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dip"
                     android:gravity="center"
-                    android:text="申请："
+                    android:text="产地:"
                     android:textColor="@color/gray"
-                    android:textSize="13sp"/>
+                    android:textSize="14sp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dip"
+                    android:layout_toRightOf="@+id/tv_fromtip"
+                    android:gravity="left"
+                    android:text="乐丰园区"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="40dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="5dip">
+
+                <TextView
+                    android:id="@+id/tv_area_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dip"
+                    android:gravity="left"
+                    android:text="采收区："
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_parkname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_area_tip"
+                    android:gravity="left"
+                    android:text="乐丰园区"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_mainpeople_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dip"
+                    android:layout_toRightOf="@id/tv_parkname"
+                    android:gravity="left"
+                    android:text="负责人："
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_mainpeople"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_mainpeople_tip"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_importance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toRightOf="@id/tv_mainpeople_tip"
+                        android:gravity="left"
+                        android:text="李四"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"/>
+
+                    <View
+                        android:id="@+id/view_mainpeople_goto"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip"
+                        android:background="@mipmap/ic_launcher_phone"/>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip">
+
+                <TextView
+                    android:id="@+id/tv_ask_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dip"
+                    android:gravity="left"
+                    android:text="申请内容："
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv_batchtime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dip"
-                    android:layout_toRightOf="@+id/tv_batchtimetip"
+                    android:layout_toRightOf="@+id/tv_ask_tip"
                     android:gravity="left"
-                    android:text="就绪"
-                    android:textColor="@color/red"
-                    android:textSize="13sp"/>
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_marginRight="10dip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true">
-
+                    android:text="申请免付尾款"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
                 <Button
-                    android:layout_toRightOf="@+id/chakan"
                     android:id="@+id/btn_bohui"
-                    android:layout_width="50dip"
-                    android:layout_height="30dip"
-                    android:background="@drawable/round_red"
-                    android:text="修改订单"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"/>
+                    android:layout_toLeftOf="@+id/chakan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="27dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dip"
+                    android:layout_marginTop="5dip"
+                    android:background="@drawable/round_white"
+                    android:gravity="center"
+                    android:minWidth="60dip"
+                    android:text="修改"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"/>
+
                 <Button
                     android:id="@+id/chakan"
-                    android:layout_width="50dip"
-                    android:layout_height="30dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="27dip"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/round_red"
-                    android:text="取消订单"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"/>
-                <Button
-                    android:visibility="gone"
-                    android:id="@+id/btn_pizhun"
-                    android:layout_width="50dip"
-                    android:layout_height="30dip"
-                    android:layout_marginRight="2dip"
+                    android:layout_marginRight="5dip"
+                    android:layout_marginTop="5dip"
+                    android:background="@drawable/round_white"
+                    android:gravity="center"
+                    android:minWidth="60dip"
+                    android:text="取消"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"/>
 
-                    android:background="@drawable/round_red"
-                    android:text="批准"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"/>
             </RelativeLayout>
-        </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            <View
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="单价￥:"
-                android:textColor="@color/gray"
-                android:textSize="13sp"/>
-
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
                 android:layout_marginLeft="10dip"
-                android:gravity="left"
-                android:text="2.5元"
-                android:textColor="@color/gray"
-                android:textSize="13sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dip"
-                android:gravity="center"
-                android:text="总价￥:"
-                android:textColor="@color/gray"
-                android:textSize="13sp"/>
-
-            <TextView
-                android:id="@+id/tv_sum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:gravity="left"
-                android:text="待反馈"
-                android:textColor="@color/gray"
-                android:textSize="13sp"
+                android:layout_marginRight="10dip"
+                android:background="@color/line_color"
                 android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/tv_fromtip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dip"
-                android:gravity="center"
-                android:text="产地:"
-                android:textColor="@color/gray"
-                android:textSize="13sp"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/tv_from"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dip"
-                android:layout_toRightOf="@+id/tv_fromtip"
-                android:gravity="left"
-                android:text="乐丰园区"
-                android:textColor="@color/gray"
-                android:textSize="13sp"
-                android:visibility="gone"/>
-
         </LinearLayout>
-
-
     </LinearLayout>
+
+
 </LinearLayout>

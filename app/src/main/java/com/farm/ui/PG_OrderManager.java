@@ -139,8 +139,8 @@ public class PG_OrderManager extends Activity
     @AfterViews
     void afterOncreate()
     {
-        getNeedOrders();
-        getAllOrders();
+//        getNeedOrders();
+//        getAllOrders();
         setBackground(0);
         switchContent(mContent, pg_orderPlanFragment);
     }

@@ -60,9 +60,11 @@ public class PG_OrderPlanFragment extends Fragment
     Spinner citySpinner;
     @ViewById
     Spinner countySpinner;
-    String parkname = "";
-    String cpname = "";
-    String cgsname = "";
+    String parkname = "-1";
+    String parkId = "-1";
+    String cpname = "-1";
+    String cgsname = "-1";
+    String cgsId = "-1";
     CustomArrayAdapter provinceAdapter = null;  //省级适配器
     CustomArrayAdapter cityAdapter = null;    //地级适配器
     CustomArrayAdapter countyAdapter = null;    //县级适配器
@@ -104,7 +106,7 @@ public class PG_OrderPlanFragment extends Fragment
         public void onReceive(Context context, Intent intent)
         {
 //            getAllOrders();
-            getNewSaleList_test();
+            getOrderPlan();
         }
     };
 
@@ -129,8 +131,8 @@ public class PG_OrderPlanFragment extends Fragment
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("productname", "-1");
-        params.addQueryStringParameter("buyer", "-1");
+        params.addQueryStringParameter("productname", cpname);
+        params.addQueryStringParameter("buyer", cgsId);
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("status", "0");
         params.addQueryStringParameter("action", "MAinPeople_getOrderPlan");
@@ -188,7 +190,7 @@ public class PG_OrderPlanFragment extends Fragment
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), AllType.class);
                         AllType allType = new AllType();
-                        allType.setId("");
+                        allType.setId("-1");
                         allType.setProductName("全部产品");
                         listdata_cp.add(allType);
                         listdata_cp.addAll(listNewData);
@@ -208,8 +210,15 @@ public class PG_OrderPlanFragment extends Fragment
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                             {
 
-                                cpname = listdata_cp.get(i).getProductName();
-//                                getAllOrdersname();
+                                if (listdata_cp.get(i).getProductName().equals("全部产品"))
+                                {
+                                    cpname="-1";
+                                }else
+                                {
+                                    cpname = listdata_cp.get(i).getProductName();
+                                }
+
+                               getOrderPlan();
                             }
 
                             @Override
@@ -266,7 +275,7 @@ public class PG_OrderPlanFragment extends Fragment
                         {
                             listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
                             Purchaser purchaser = new Purchaser();
-                            purchaser.setId("");
+                            purchaser.setId("-1");
                             purchaser.setName("全部采购商");
                             listData_CG.add(purchaser);
                             for (int i = 0; i < listNewData.size(); i++)
@@ -299,7 +308,8 @@ public class PG_OrderPlanFragment extends Fragment
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                                 {
                                     cgsname = listData_CG.get(i).getName();
-//                                    getAllOrdersname();
+                                    cgsId = listData_CG.get(i).getId();
+                                            getOrderPlan();
 
                                 }
 

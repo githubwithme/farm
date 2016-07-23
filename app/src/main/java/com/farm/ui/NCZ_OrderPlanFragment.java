@@ -61,8 +61,10 @@ public class NCZ_OrderPlanFragment extends Fragment
     @ViewById
     Spinner countySpinner;
     String parkname = "";
-    String cpname = "";
+    String parkId = "-1";
+    String cpname = "-1";
     String cgsname = "";
+    String cgsId = "-1";
     CustomArrayAdapter provinceAdapter = null;  //省级适配器
     CustomArrayAdapter cityAdapter = null;    //地级适配器
     CustomArrayAdapter countyAdapter = null;    //县级适配器
@@ -104,7 +106,7 @@ public class NCZ_OrderPlanFragment extends Fragment
         public void onReceive(Context context, Intent intent)
         {
 //            getAllOrders();
-            getNewSaleList_test();
+            getOrderPlan();
         }
     };
 
@@ -129,9 +131,9 @@ public class NCZ_OrderPlanFragment extends Fragment
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("parkid", "-1");
-        params.addQueryStringParameter("productname", "-1");
-        params.addQueryStringParameter("buyer", "-1");
+        params.addQueryStringParameter("parkid", parkId);
+        params.addQueryStringParameter("productname", cpname);
+        params.addQueryStringParameter("buyer", cgsId);
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("status", "0");
         params.addQueryStringParameter("action", "NCZ_getOrderPlan");
@@ -152,6 +154,7 @@ public class NCZ_OrderPlanFragment extends Fragment
 //                    {
 //                        expandableListView.expandGroup(i);//展开
 //                    }
+                    
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
@@ -189,7 +192,7 @@ public class NCZ_OrderPlanFragment extends Fragment
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), AllType.class);
                         AllType allType = new AllType();
-                        allType.setId("");
+                        allType.setId("-1");
                         allType.setProductName("全部产品");
                         listdata_cp.add(allType);
                         listdata_cp.addAll(listNewData);
@@ -209,8 +212,16 @@ public class NCZ_OrderPlanFragment extends Fragment
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                             {
 
-                                cpname = listdata_cp.get(i).getProductName();
-//                                getAllOrdersname();
+                                if (listdata_cp.get(i).getProductName().equals("全部产品"))
+                                {
+                                    cpname = "-1";
+
+
+                                }else
+                                {
+                                    cpname = listdata_cp.get(i).getProductName();
+                                }
+                                getOrderPlan();
                             }
 
                             @Override
@@ -267,7 +278,7 @@ public class NCZ_OrderPlanFragment extends Fragment
                         {
                             listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
                             Purchaser purchaser = new Purchaser();
-                            purchaser.setId("");
+                            purchaser.setId("-1");
                             purchaser.setName("全部采购商");
                             listData_CG.add(purchaser);
                             for (int i = 0; i < listNewData.size(); i++)
@@ -300,8 +311,9 @@ public class NCZ_OrderPlanFragment extends Fragment
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                                 {
                                     cgsname = listData_CG.get(i).getName();
+                                    cgsId = listData_CG.get(i).getId();
 //                                    getAllOrdersname();
-
+                                    getOrderPlan();
                                 }
 
                                 @Override
@@ -359,7 +371,7 @@ public class NCZ_OrderPlanFragment extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         Wz_Storehouse wz_storehouses = new Wz_Storehouse();
-                        wz_storehouses.setParkId("");
+                        wz_storehouses.setId("-1");
                         wz_storehouses.setParkName("全部分场");
                         listpark.add(wz_storehouses);
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
@@ -384,7 +396,8 @@ public class NCZ_OrderPlanFragment extends Fragment
                             {
 
                                 parkname = listpark.get(i).getParkName();
-//                                getAllOrdersname();
+                                parkname = listpark.get(i).getId();
+                                getOrderPlan();
                             }
 
                             @Override

@@ -129,15 +129,15 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+                   /* if (result.getAffectedRows() != 0)
+                    {*/
 
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         listData.addAll(listNewData);
 
                         DensityUtil densityUtil = new DensityUtil(NCZ_JSD_NeedList.this);
                         screenWidth = densityUtil.getScreenWidth();
-                        int size = listData.get(0).getDetailSecLists().size();
+                        int size =3;
                         if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
@@ -156,10 +156,10 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
 
 
 
-                    } else
+             /*       } else
                     {
                         listNewData = new ArrayList<SellOrder_New>();
-                    }
+                    }*/
 
                 } else
                 {

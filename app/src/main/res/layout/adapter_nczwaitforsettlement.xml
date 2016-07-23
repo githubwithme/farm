@@ -82,7 +82,7 @@
                         android:layout_height="15dip"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dip"
-                        android:background="@drawable/ic_next"/>
+                        android:background="@mipmap/ic_launcher_phone"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -117,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="待付150000元"
+                        android:text="测付5000"
                         android:textColor="@color/red"
                         android:textSize="14sp"/>
 
@@ -428,6 +428,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginLeft="10dip"
                     android:id="@+id/ll_unfinalpay"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -499,7 +500,7 @@
                             android:layout_height="15dip"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dip"
-                            android:background="@drawable/ic_next"/>
+                            android:background="@mipmap/ic_launcher_phone"/>
                     </LinearLayout>
 
 
@@ -518,6 +519,7 @@
 
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/btn_changetime"
                     android:layout_width="wrap_content"
                     android:layout_height="27dip"
@@ -533,6 +535,7 @@
                     android:textSize="12sp"/>
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/btn_preparework"
                     android:layout_width="wrap_content"
                     android:layout_height="27dip"
@@ -548,6 +551,7 @@
                     android:textSize="12sp"/>
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/btn_cancleorder"
                     android:layout_width="40dip"
                     android:layout_height="27dip"
@@ -563,6 +567,7 @@
                     android:textSize="12sp"/>
 
                 <Button
+
                     android:id="@+id/btn_editorder"
                     android:layout_width="40dip"
                     android:layout_height="27dip"

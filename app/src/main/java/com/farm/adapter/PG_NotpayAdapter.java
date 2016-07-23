@@ -212,7 +212,7 @@ public class PG_NotpayAdapter extends BaseAdapter
 //                        Intent intent = new Intent(context, PG_JSD_.class);
                         Intent intent = new Intent(context, JSD_Detail_.class);
                         intent.putExtra("bean", sellOrder_new);
-                        intent.putExtra("broadcast", broadcast);
+//                        intent.putExtra("broadcast", broadcast);
                         context.startActivity(intent);
                     }
     /*                showDeleteTip(sellOrder_new.getUuid());

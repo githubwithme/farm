@@ -62,10 +62,7 @@
     </LinearLayout>
 
 
-    <View
-        android:layout_width="1px"
-        android:layout_height="41dip"
-        android:background="@color/gray"/>
+
 
     <LinearLayout
         android:visibility="gone"

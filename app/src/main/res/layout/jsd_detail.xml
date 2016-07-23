@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
@@ -29,20 +30,14 @@
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 
-        <Button
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@null"
-            android:text="添加"/>
 
     </RelativeLayout>
+
     <ScrollView
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:divider="@color/bg_main"
                 android:dividerHeight="0px"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
@@ -73,9 +69,9 @@
         android:id="@+id/rl_note"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:layout_below="@+id/rl_title"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
-        android:layout_below="@+id/rl_title"
         android:background="@color/white">
 
         <TextView
@@ -123,15 +119,31 @@
             android:minHeight="41dip"
             android:orientation="horizontal">
 
-            <TextView
+            <RelativeLayout
                 android:id="@+id/tv_top_left"
                 android:layout_width="60dip"
-                android:layout_height="fill_parent"
-                android:background="@color/white"
-                android:gravity="center"
-                android:text="车辆/数据"
-                android:textColor="@color/bg_text"
-                android:textSize="15sp"/>
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="15dip"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="结算"
+                    android:textColor="@color/bg_text"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="30dip"
+                    android:layout_height="20dip"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="车辆"
+                    android:textColor="@color/bg_text"
+                    android:textSize="15sp"/>
+            </RelativeLayout>
+
 
             <View
                 android:layout_width="1px"
@@ -157,13 +169,12 @@
             </com.farm.ui.CustomHorizontalScrollView_JSDDetail>
 
             <View
-                android:visibility="gone"
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/gray"/>
+                android:background="@color/gray"
+                android:visibility="gone"/>
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_top_right"
                 android:layout_width="60dip"
                 android:layout_height="fill_parent"
@@ -171,7 +182,8 @@
                 android:gravity="center"
                 android:text="合计"
                 android:textColor="@color/bg_text"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <View
@@ -197,10 +209,10 @@
         </ListView>
 
         <LinearLayout
-            android:layout_below="@+id/hlistview_scroll_list"
             android:id="@+id/ll_bottom"
             android:layout_width="fill_parent"
             android:layout_height="40dip"
+            android:layout_below="@+id/hlistview_scroll_list"
             android:layout_marginLeft="1px"
             android:layout_marginRight="1px"
             android:layout_marginTop="1px"
@@ -241,13 +253,12 @@
             </com.farm.ui.CustomHorizontalScrollView_JSDDetail>
 
             <View
-                android:visibility="gone"
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/gray"/>
+                android:background="@color/gray"
+                android:visibility="gone"/>
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/alltoatal"
                 android:layout_width="60dip"
                 android:layout_height="fill_parent"
@@ -255,18 +266,20 @@
                 android:gravity="center"
                 android:text="总量"
                 android:textColor="@color/red"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:visibility="gone"/>
 
 
         </LinearLayout>
+
         <Button
-            android:layout_below="@+id/line_above"
             android:id="@+id/button_add"
             android:layout_width="match_parent"
             android:layout_height="45dip"
+            android:layout_below="@+id/line_above"
             android:background="@drawable/background_view_rounded_single"
             android:gravity="center"
-            android:text="添加承包户数据"
+            android:text="添加结算单"
             android:textColor="@color/bg_text"
             android:textSize="@dimen/size_14"/>
 

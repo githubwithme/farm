@@ -332,10 +332,11 @@ public class PG_JSD_Detail extends Activity
         sellOrder.setSaletime(sellOrder_new.getSaletime());
         sellOrder.setYear(utils.getYear());
         sellOrder.setXxzt("0");
-        sellOrder.setProducer(sellOrder_new.getProducer());
-        sellOrder.setGoodsname(sellOrder_new.getGoodsname());
+        sellOrder.setGoodsname(sellOrder.getProduct());
+        sellOrder.setProducer(sellOrder.getParkname());
+        sellOrder.setPlateNumber(sellOrder.getCarNumber());
+
         sellOrder.setMainPepole(sellOrder_new.getMainPepole());
-        sellOrder.setPlateNumber(sellOrder_new.getPlateNumber());
         sellOrder.setContractorId(byId);
         sellOrder.setPickId(bzId);
         sellOrder.setCarryPrice(sellOrder_new.getCarryPrice());
@@ -354,8 +355,80 @@ public class PG_JSD_Detail extends Activity
 
         sellOrder.setSelltype("审批结算");//  包装规格
         sellOrder.setIsNeedAudit("0");
-        sellOrder.setFreeFinalPay("1");
-        sellOrder.setFreeDeposit("1");
+//        sellOrder.setFreeFinalPay("1");
+//        sellOrder.setFreeDeposit("1");
+
+        sellOrder.setQualityWaterWeight(zp_ds_zhong.getText().toString());
+        sellOrder.setQualityNetWeight(zp_bds_zhong.getText().toString());
+        sellOrder.setQualityBalance(zp_jsje.getText().toString());
+        sellOrder.setDefectWaterWeight(cp_ds_zhong.getText().toString());
+        sellOrder.setDefectNetWeight(cp_jingzhong.getText().toString());
+        sellOrder.setDefectBalance(cp_jsje.getText().toString());
+
+        sellOrder.setTotal(jsd_zongjianshu.getText().toString());
+
+        sellOrder.setQualityTotalWeight(jsd_zpjz.getText().toString());
+        sellOrder.setDefectTotalWeight(jsd_cpzjs.getText().toString());
+
+        sellOrder.setTotalWeight(jsd_zongjingzhong.getText().toString());
+        sellOrder.setPackFee(packFee.getText().toString());
+        sellOrder.setCarryFee(carryFee.getText().toString());
+        sellOrder.setTotalFee(totalFee.getText().toString());
+        sellOrder.setActualMoney(actualMoney.getText().toString());
+        sellOrder.setActualweight(plateNumber.getText().toString());
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"sellOrderSettlementlist\":[ ");
+        builder.append(JSON.toJSONString(sellOrder));
+        builder.append("]} ");
+        updatesellOrderSettlement(builder.toString());
+
+    }
+
+    @Click
+    void btn_upload()
+    {
+        SellOrder_New sellOrder = new SellOrder_New();
+        sellOrder=sellOrder_new;
+//        sellOrder.setid("");
+        sellOrder.setInfoId(sellOrder_new.getInfoId());
+        sellOrder.setUid(sellOrder_new.getUid());
+        sellOrder.setUuid(sellOrder_new.getUuid());
+        sellOrder.setBatchTime(sellOrder_new.getBatchTime());
+        sellOrder.setBuyers(sellOrder_new.getBuyers());
+
+        sellOrder.setPrice(sellOrder_new.getPrice());
+        sellOrder.setWeight(sellOrder_new.getWeight());
+        sellOrder.setSumvalues(sellOrder_new.getSumvalues());
+
+        sellOrder.setReg(utils.getTime());
+        sellOrder.setSaletime(sellOrder_new.getSaletime());
+        sellOrder.setYear(utils.getYear());
+        sellOrder.setXxzt("0");
+        sellOrder.setGoodsname(sellOrder.getProduct());
+        sellOrder.setProducer(sellOrder.getParkname());
+        sellOrder.setActualweight(sellOrder.getCarNumber());
+
+        sellOrder.setMainPepole(sellOrder_new.getMainPepole());
+        sellOrder.setContractorId(byId);
+        sellOrder.setPickId(bzId);
+        sellOrder.setCarryPrice(sellOrder_new.getCarryPrice());
+        sellOrder.setPackPrice(sellOrder_new.getPackPrice());
+        sellOrder.setPackPec(sellOrder_new.getPackPec());
+        sellOrder.setWaitDeposit(sellOrder_new.getWaitDeposit());
+        sellOrder.setAddress(sellOrder_new.getAddress());
+        sellOrder.setPackPrice(bz_nc_danjia.getText().toString());
+        sellOrder.setCarryPrice(by_nc_danjia.getText().toString());
+        //
+        sellOrder.setActualprice(jsd_zpprice.getText().toString());//  正品单价
+        sellOrder.setDefectPrice(jsd_cpprice.getText().toString());//  次品单价
+        sellOrder.setActualnumber(zp_jianshu.getText().toString());//  正品件数
+        sellOrder.setDefectNum(cp_jianshu.getText().toString());//  次品件数
+        sellOrder.setPackPec(packPec.getText().toString());//  包装规格
+
+        sellOrder.setSelltype("审批结算");//  包装规格
+        sellOrder.setIsNeedAudit("0");
+//        sellOrder.setFreeFinalPay("1");
+//        sellOrder.setFreeDeposit("1");
 
         sellOrder.setQualityWaterWeight(zp_ds_zhong.getText().toString());
         sellOrder.setQualityNetWeight(zp_bds_zhong.getText().toString());
@@ -379,77 +452,7 @@ public class PG_JSD_Detail extends Activity
         builder.append("{\"sellOrderSettlementlist\":[ ");
         builder.append(JSON.toJSONString(sellOrder));
         builder.append("]} ");
-        updatesellOrderSettlement(builder.toString());
-
-    }
-
-    @Click
-    void btn_upload()
-    {
-        SellOrder_New sellOrder = new SellOrder_New();
-        sellOrder.setid("");
-        sellOrder.setInfoId(sellOrder_new.getUuid());
-        sellOrder.setUid(sellOrder_new.getUid());
-        sellOrder.setUuid(sellOrder_new.getUuid());
-        sellOrder.setBatchTime(sellOrder_new.getBatchTime());
-        sellOrder.setStatus("0");
-        sellOrder.setBuyers(sellOrder_new.getBuyers());
-
-        sellOrder.setPrice(sellOrder_new.getPrice());
-        sellOrder.setWeight(sellOrder_new.getWeight());
-        sellOrder.setSumvalues(sellOrder_new.getSumvalues());
-
-        sellOrder.setReg(utils.getTime());
-        sellOrder.setSaletime(sellOrder_new.getSaletime());
-        sellOrder.setYear(utils.getYear());
-        sellOrder.setXxzt("0");
-        sellOrder.setProducer(sellOrder_new.getProducer());
-        sellOrder.setGoodsname(sellOrder_new.getGoodsname());
-        sellOrder.setMainPepole(sellOrder_new.getMainPepole());
-        sellOrder.setPlateNumber(sellOrder_new.getPlateNumber());
-        sellOrder.setContractorId(byId);
-        sellOrder.setPickId(bzId);
-        sellOrder.setCarryPrice(sellOrder_new.getCarryPrice());
-        sellOrder.setPackPrice(sellOrder_new.getPackPrice());
-        sellOrder.setPackPec(sellOrder_new.getPackPec());
-        sellOrder.setWaitDeposit(sellOrder_new.getWaitDeposit());
-        sellOrder.setAddress(sellOrder_new.getAddress());
-        sellOrder.setPackPrice(bz_nc_danjia.getText().toString());
-        sellOrder.setCarryPrice(by_nc_danjia.getText().toString());
-        //
-        sellOrder.setActualprice(jsd_zpprice.getText().toString());//  正品单价
-        sellOrder.setDefectPrice(jsd_cpprice.getText().toString());//  次品单价
-        sellOrder.setActualnumber(zp_jianshu.getText().toString());//  正品件数
-        sellOrder.setDefectNum(cp_jianshu.getText().toString());//  次品件数
-        sellOrder.setPackPec(packPec.getText().toString());//  包装规格
-
-        sellOrder.setSelltype("审批结算");//  包装规格
-        sellOrder.setIsNeedAudit("1");
-        sellOrder.setFreeFinalPay("1");
-        sellOrder.setFreeDeposit("1");
-
-        sellOrder.setQualityWaterWeight(zp_ds_zhong.getText().toString());
-        sellOrder.setQualityNetWeight(zp_bds_zhong.getText().toString());
-        sellOrder.setQualityBalance(zp_jsje.getText().toString());
-        sellOrder.setDefectWaterWeight(cp_ds_zhong.getText().toString());
-        sellOrder.setDefectNetWeight(cp_jingzhong.getText().toString());
-        sellOrder.setDefectBalance(cp_jsje.getText().toString());
-
-        sellOrder.setTotal(jsd_zongjianshu.getText().toString());
-
-        sellOrder.setQualityTotalWeight(jsd_zpjz.getText().toString());
-        sellOrder.setDefectTotalWeight(jsd_cpzjs.getText().toString());
-
-        sellOrder.setTotalWeight(jsd_zongjingzhong.getText().toString());
-        sellOrder.setPackFee(packFee.getText().toString());
-        sellOrder.setCarryFee(carryFee.getText().toString());
-        sellOrder.setTotalFee(totalFee.getText().toString());
-        sellOrder.setActualMoney(actualMoney.getText().toString());
-        StringBuilder builder = new StringBuilder();
-        builder.append("{\"sellOrderSettlementlist\":[ ");
-        builder.append(JSON.toJSONString(sellOrder));
-        builder.append("]} ");
-        isnewaddOrder(builder.toString());
+       addsellOrderSettlement(builder.toString());
 
     }
 
@@ -458,9 +461,17 @@ public class PG_JSD_Detail extends Activity
     void after()
     {
 
-      ll_cbhlist.setVisibility(View.VISIBLE);//承包户
 
-        ll_jsd.setVisibility(View.VISIBLE);//结算单统计
+        if (!sellOrder_new.getIsNeedAudit().equals("2"))
+        {
+
+            ll_cbhlist.setVisibility(View.VISIBLE);//承包户
+            ll_jsd.setVisibility(View.VISIBLE);//结算单统计
+        }else
+        {
+            btn_upload.setVisibility(View.VISIBLE);
+        }
+
 //        getDetailSecBysettleId();
         byId = sellOrder_new.getContractorId();
         bzId = sellOrder_new.getPickId();
@@ -1455,6 +1466,81 @@ public class PG_JSD_Detail extends Activity
                         sendBroadcast(intent);
                         Toast.makeText(PG_JSD_Detail.this,"保存成功",Toast.LENGTH_SHORT).show();
                         finish();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_JSD_Detail.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_JSD_Detail.this, "error_connectServer");
+            }
+        });
+    }
+    private void addsellOrderSettlement(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "updatesellOrderSettlement");
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+
+
+                        List<SellOrderDetail_New> listAddSellData = new ArrayList<SellOrderDetail_New>();
+
+                        for (int i = 0; i < listSellData.size(); i++)
+                        {
+                            SellOrderDetail_New sellOrderDetail_new = new SellOrderDetail_New();
+                            sellOrderDetail_new.setSettlementId(jsdId);
+                            sellOrderDetail_new.setInfoId(listSellData.get(i).getUuid());
+                            sellOrderDetail_new.setuid(listSellData.get(i).getuid());
+                            sellOrderDetail_new.setBatchTime(listSellData.get(i).getBatchTime());
+                            sellOrderDetail_new.setYear(listSellData.get(i).getYear());
+                            sellOrderDetail_new.setparkid(listSellData.get(i).getparkid());
+                            sellOrderDetail_new.setparkname(listSellData.get(i).getparkname());
+                            sellOrderDetail_new.setareaid(listSellData.get(i).getareaid());
+                            sellOrderDetail_new.setareaname(listSellData.get(i).getareaname());
+                            sellOrderDetail_new.setcontractid(listSellData.get(i).getcontractid());
+                            sellOrderDetail_new.setcontractname(listSellData.get(i).getcontractname());
+                            listAddSellData.add(sellOrderDetail_new);
+                        }
+                        StringBuilder builder = new StringBuilder();
+                        builder.append("{\"SellOrderDetailSeclist\": ");
+                        builder.append(JSON.toJSONString(listAddSellData));
+                        builder.append("} ");
+                        addSellOrderDetailSec(builder.toString());
+
+
+
+                  /*      Intent intent = new Intent();
+                        intent.setAction(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DELETE);
+                        sendBroadcast(intent);
+                        Toast.makeText(PG_JSD_Detail.this,"保存成功",Toast.LENGTH_SHORT).show();
+                        finish();*/
                     }
 
                 } else

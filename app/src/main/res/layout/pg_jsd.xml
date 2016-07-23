@@ -3,7 +3,7 @@
 
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
+              android:background="@color/defaultbackground"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -44,11 +44,13 @@
 
 
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
+
                 android:id="@+id/isgoods_xx"
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
@@ -660,6 +662,7 @@
 
 
             <LinearLayout
+                android:background="@color/white"
                 android:visibility="gone"
                 android:layout_marginTop="20dip"
                 android:id="@+id/ll_cbhlist"
@@ -928,6 +931,7 @@
 
 
             <LinearLayout
+                android:background="@color/white"
                 android:visibility="gone"
                 android:id="@+id/ll_jsd"
                 android:layout_width="match_parent"
