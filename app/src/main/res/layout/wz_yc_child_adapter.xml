@@ -109,9 +109,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="库存数量："
+                android:text="过期数量:"
                 android:textColor="@color/gray"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_number"
@@ -123,19 +123,19 @@
                 android:gravity="center"
                 android:text="100件35包"
                 android:textColor="@color/red"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_values_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dip"
+                android:layout_marginLeft="10dip"
                 android:layout_toRightOf="@+id/tv_number"
                 android:gravity="center"
-                android:text="仓库："
+                android:text="所在仓库:"
                 android:textColor="@color/gray"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_values"
@@ -147,7 +147,7 @@
                 android:gravity="center"
                 android:text="15000元"
                 android:textColor="@color/red"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
 
         </RelativeLayout>
@@ -166,9 +166,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="仓库："
+                android:text="仓库:"
                 android:textColor="@color/gray"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_gg"
@@ -180,19 +180,19 @@
                 android:gravity="center"
                 android:text="100件111向352包"
                 android:textColor="@color/red"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_type_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dip"
+                android:layout_marginLeft="10dip"
                 android:layout_toRightOf="@+id/tv_gg"
                 android:gravity="center"
-                android:text="异常类型："
+                android:text="异常类型:"
                 android:textColor="@color/gray"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_type"
@@ -204,7 +204,7 @@
                 android:gravity="center"
                 android:text="有机肥"
                 android:textColor="@color/red"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
         </RelativeLayout>
 

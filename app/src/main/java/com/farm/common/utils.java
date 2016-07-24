@@ -76,6 +76,13 @@ public class utils
         return formatter.format(curDate);
     }
 
+    public static String getToday_MMDD()
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
+        Date curDate = new Date(System.currentTimeMillis());
+        return formatter.format(curDate);
+    }
+
     public static String getYear()
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy");

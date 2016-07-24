@@ -12,13 +12,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.BreakOff_New;
-import com.farm.bean.ContactsBean;
-import com.farm.bean.commembertab;
+import com.farm.bean.ContractGoodsUsed;
+import com.farm.bean.ContractGoodsUsedBean;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
 import com.farm.widget.CustomDialog_ListView;
 import com.swipelistview.SwipeLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,10 +33,10 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
     private Context context;// 运行上下文
     int currentChildsize = 0;
     private GoodsAdapter adapter;
-    List<ContactsBean> listData;
+    List<ContractGoodsUsedBean> listData;
     ListView list;
 
-    public Adapter_PGGoodsUsed(Context context, List<ContactsBean> listData, ExpandableListView mainlistview)
+    public Adapter_PGGoodsUsed(Context context, List<ContractGoodsUsedBean> listData, ExpandableListView mainlistview)
     {
         color = new int[]{R.color.bg_ask, R.color.bg_work, R.color.gray, R.color.green, R.color.bg_job, R.color.gray, R.color.green, R.color.bg_job, R.color.bg_plant, R.color.bg_text_small, R.color.bg_job, R.color.bg_plant, R.color.bg_text_small, R.color.bg_job, R.color.bg_plant, R.color.bg_text_small};
         this.mainlistview = mainlistview;
@@ -48,11 +48,11 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        if (listData.get(groupPosition).getCommembertablist() == null)
+        if (listData.get(groupPosition).getContractGoodsUsedList() == null)
         {
             return null;
         }
-        return listData.get(groupPosition).getCommembertablist().get(childPosition);
+        return listData.get(groupPosition).getContractGoodsUsedList().get(childPosition);
     }
 
     //得到子item的ID
@@ -68,6 +68,9 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
 
     static class ListItemView
     {
+        public View view_bottom;
+        public View view_top;
+        public TextView tv_time;
         public TextView tv_name;
         public TextView tv_number;
     }
@@ -77,8 +80,8 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<commembertab> childData = listData.get(groupPosition).getCommembertablist();
-        final commembertab commembertab = childData.get(childPosition);
+        List<ContractGoodsUsed> childData = listData.get(groupPosition).getContractGoodsUsedList();
+        final ContractGoodsUsed contractGoodsUsed = childData.get(childPosition);
         View v = null;
         if (lmap.get(groupPosition) != null)
         {
@@ -90,18 +93,21 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.adapter_pggoodsused_child, null);
             listItemView = new ListItemView();
+            listItemView.view_bottom = (View) convertView.findViewById(R.id.view_bottom);
+            listItemView.view_top = (View) convertView.findViewById(R.id.view_top);
             listItemView.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+            listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
-            convertView.setTag(listItemView);
-            convertView.setTag(R.id.tag_fi, listData.get(groupPosition).getType());
-            listItemView.tv_number.setOnClickListener(new View.OnClickListener()
+            if (childPosition == 0)
             {
-                @Override
-                public void onClick(View v)
-                {
-//                    showDialog_editBreakoffinfo();
-                }
-            });
+                listItemView.view_top.setVisibility(View.GONE);
+            }
+            if (isLastChild)
+            {
+                listItemView.view_bottom.setVisibility(View.GONE);
+            }
+            convertView.setTag(listItemView);
+
             map.put(childPosition, convertView);
             lmap.put(groupPosition, map);
             if (isLastChild)
@@ -110,8 +116,20 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
             }
 
             //数据添加
-//            listItemView.tv_phone.setText(commembertab.getuserCell());
-//            listItemView.tv_name.setText(commembertab.getrealName());
+            if (inflater == null)
+            {
+
+            }
+//            if (contractGoodsUsed.getGoodsUsedDate().substring(0, contractGoodsUsed.getGoodsUsedDate().lastIndexOf(" ")).equals(utils.getToday_MMDD()))
+//            {
+//                listItemView.tv_time.setText("今日 " + contractGoodsUsed.getGoodsUsedDate().substring(contractGoodsUsed.getGoodsUsedDate().lastIndexOf(" "), contractGoodsUsed.getGoodsUsedDate().length() - 1));
+//            } else
+//            {
+//                listItemView.tv_time.setText(contractGoodsUsed.getGoodsUsedDate());
+//            }
+            listItemView.tv_time.setText(contractGoodsUsed.getGoodsUsedDate());
+            listItemView.tv_number.setText(contractGoodsUsed.getThreeNum()+contractGoodsUsed.getThree());
+            listItemView.tv_name.setText(contractGoodsUsed.getGoodsName());
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -137,11 +155,11 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getCommembertablist() == null)
+        if (listData.get(groupPosition).getContractGoodsUsedList().size() == 0)
         {
             return 0;
         }
-        return listData.get(groupPosition).getCommembertablist().size();
+        return listData.get(groupPosition).getContractGoodsUsedList().size();
     }
 
     //获取当前父item的数据
@@ -172,9 +190,18 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.adapter_pggoodsused_parent, null);
         }
-        TextView tv_type = (TextView) convertView.findViewById(R.id.tv_type);
-
-//        tv_type.setText(listData.get(groupPosition).getType());
+        TextView tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);
+        Button btn_addGoods = (Button) convertView.findViewById(R.id.btn_addGoods);
+        btn_addGoods.setTag("");
+        btn_addGoods.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                showDialog_addgoods();
+            }
+        });
+        tv_contractname.setText(listData.get(groupPosition).getContractName());
         return convertView;
     }
 
@@ -190,11 +217,11 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
         return true;
     }
 
-    public void showDialog_editBreakoffinfo(final BreakOff_New breakOff_new, final String batchtime, final String batchcolor, final String oldNumber)
+    public void showDialog_addgoods()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editcontractsale, null);
+        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_addgoods, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
-//        et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
+        ListView lv = (ListView) dialog_layout.findViewById(R.id.lv);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
         btn_sure.setOnClickListener(new View.OnClickListener()
@@ -203,17 +230,6 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
             public void onClick(View v)
             {
                 customDialog_editSaleInInfo.dismiss();
-//                if (et_number.getText().toString().equals(""))
-//                {
-//                    Toast.makeText(context, "请先填写数量", Toast.LENGTH_SHORT).show();
-//                } else if (oldNumber.equals("0"))//第一次添加
-//                {
-//                    addNewData(breakOff_new, et_number.getText().toString(), batchcolor, batchtime);
-//                } else//修改数据
-//                {
-//                    updateBreakOff(breakOff_new.getUuid(), oldNumber, et_number.getText().toString());
-//                }
-
             }
         });
         btn_cancle.setOnClickListener(new View.OnClickListener()
@@ -224,6 +240,15 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
                 customDialog_editSaleInInfo.dismiss();
             }
         });
+        List<ContractGoodsUsed> list = new ArrayList<>();
+        ContractGoodsUsed contractGoodsUsed = new ContractGoodsUsed();
+        contractGoodsUsed.setGoodsName("钾肥");
+        ContractGoodsUsed contractGoodsUsed1 = new ContractGoodsUsed();
+        contractGoodsUsed1.setGoodsName("磷肥");
+        list.add(contractGoodsUsed);
+        list.add(contractGoodsUsed1);
+        Adapter_PGAddGoodsUsed adapter_pgAddGoodsUsed = new Adapter_PGAddGoodsUsed(context, list);
+        lv.setAdapter(adapter_pgAddGoodsUsed);
         customDialog_editSaleInInfo.show();
     }
 

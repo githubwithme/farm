@@ -6,13 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.farm.R;
-import com.farm.bean.ContactsBean;
-import com.farm.bean.commembertab;
+import com.farm.bean.areatab;
+import com.farm.bean.parktab;
 import com.farm.widget.CustomDialog_ListView;
 import com.swipelistview.SwipeLayout;
 
@@ -32,10 +33,10 @@ public class Adapter_CommandSelectArea extends BaseExpandableListAdapter
     private Context context;// 运行上下文
     int currentChildsize = 0;
     private GoodsAdapter adapter;
-    List<ContactsBean> listData;
+    List<parktab> listData;
     ListView list;
 
-    public Adapter_CommandSelectArea(Context context, List<ContactsBean> listData, ExpandableListView mainlistview)
+    public Adapter_CommandSelectArea(Context context, List<parktab> listData, ExpandableListView mainlistview)
     {
         this.mainlistview = mainlistview;
         this.listData = listData;
@@ -46,11 +47,11 @@ public class Adapter_CommandSelectArea extends BaseExpandableListAdapter
     @Override
     public Object getChild(int groupPosition, int childPosition)
     {
-        if (listData.get(groupPosition).getCommembertablist() == null)
+        if (listData.get(groupPosition).getAreatabList() == null)
         {
             return null;
         }
-        return listData.get(groupPosition).getCommembertablist().get(childPosition);
+        return listData.get(groupPosition).getAreatabList().get(childPosition);
     }
 
     //得到子item的ID
@@ -75,8 +76,8 @@ public class Adapter_CommandSelectArea extends BaseExpandableListAdapter
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        List<commembertab> childData = listData.get(groupPosition).getCommembertablist();
-        final commembertab commembertab = childData.get(childPosition);
+        List<areatab> childData = listData.get(groupPosition).getAreatabList();
+        final areatab areatab = childData.get(childPosition);
         View v = null;
         if (lmap.get(groupPosition) != null)
         {
@@ -99,7 +100,7 @@ public class Adapter_CommandSelectArea extends BaseExpandableListAdapter
             }
 
             //数据添加
-            listItemView.tv_parkname.setText(commembertab.getuserCell());
+            listItemView.tv_parkname.setText(areatab.getareaName());
         } else
         {
             convertView = lmap.get(groupPosition).get(childPosition);
@@ -125,11 +126,11 @@ public class Adapter_CommandSelectArea extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        if (listData.get(groupPosition).getCommembertablist() == null)
+        if (listData.get(groupPosition).getAreatabList() == null)
         {
             return 0;
         }
-        return listData.get(groupPosition).getCommembertablist().size();
+        return listData.get(groupPosition).getAreatabList().size();
     }
 
     //获取当前父item的数据
@@ -163,7 +164,34 @@ public class Adapter_CommandSelectArea extends BaseExpandableListAdapter
         TextView tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
         CheckBox cb = (CheckBox) convertView.findViewById(R.id.cb);
 
-        tv_parkname.setText(listData.get(groupPosition).getType());
+        cb.setTag(groupPosition);
+        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                Integer pos = (Integer) buttonView.getTag();
+                if (isChecked)
+                {
+                    int childrencount = mainlistview.getExpandableListAdapter().getChildrenCount(pos);
+                    for (int i = 0; i < childrencount; i++)
+                    {
+                        CheckBox checkbox = (CheckBox) mainlistview.getExpandableListAdapter().getChildView(pos, i, false, null, null).findViewById(R.id.cb);
+                        checkbox.setSelected(true);
+                    }
+
+                } else
+                {
+                    int childrencount = mainlistview.getExpandableListAdapter().getChildrenCount(pos);
+                    for (int i = 0; i < childrencount; i++)
+                    {
+                        CheckBox checkbox = (CheckBox) mainlistview.getExpandableListAdapter().getChildView(pos, i, false, null, null).findViewById(R.id.cb);
+                        checkbox.setSelected(false);
+                    }
+                }
+            }
+        });
+        tv_parkname.setText(listData.get(groupPosition).getparkName());
         return convertView;
     }
 

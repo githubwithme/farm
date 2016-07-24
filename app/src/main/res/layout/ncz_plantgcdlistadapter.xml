@@ -28,7 +28,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-
                 android:text="MQ2452233"
                 android:textColor="@color/bg_text"
                 android:textSize="16sp"/>
@@ -44,7 +43,7 @@
                 android:gravity="center"
                 android:text="正常"
                 android:textColor="@color/red"
-                android:textSize="14sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tv_statustip"
@@ -54,8 +53,8 @@
                 android:layout_toLeftOf="@+id/tv_status"
                 android:gravity="center"
                 android:text="最新状态："
-                android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
+                android:textColor="@color/gray"
+                android:textSize="15sp"/>
 
             <FrameLayout
                 android:id="@+id/fl_new_item"
@@ -109,8 +108,8 @@
                     android:layout_height="wrap_content"
                     android:scrollbarStyle="outsideInset"
                     android:text="平均株高："
-                    android:textColor="@color/bg_text"
-                    android:textSize="13sp"/>
+                    android:textColor="@color/gray"
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/tv_average_zg"
@@ -119,15 +118,15 @@
                     android:layout_marginLeft="5dip"
                     android:text="1.4m"
                     android:textColor="@color/red"
-                    android:textSize="13sp"/>
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
                     android:text="平均围径："
-                    android:textColor="@color/bg_text"
-                    android:textSize="13sp"/>
+                    android:textColor="@color/gray"
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/tv_average_wj"
@@ -136,7 +135,7 @@
                     android:layout_marginLeft="5dip"
                     android:text="75cm"
                     android:textColor="@color/red"
-                    android:textSize="13sp"/>
+                    android:textSize="15sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -149,8 +148,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="平均叶数："
-                    android:textColor="@color/bg_text"
-                    android:textSize="13sp"/>
+                    android:textColor="@color/gray"
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/tv_average_ys"
@@ -160,15 +159,15 @@
                     android:scrollbarStyle="outsideInset"
                     android:text="18张"
                     android:textColor="@color/red"
-                    android:textSize="13sp"/>
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
                     android:text="平均绿叶数："
-                    android:textColor="@color/bg_text"
-                    android:textSize="13sp"/>
+                    android:textColor="@color/gray"
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/tv_average_lys"
@@ -177,7 +176,7 @@
                     android:layout_marginLeft="5dip"
                     android:text="5张"
                     android:textColor="@color/red"
-                    android:textSize="13sp"/>
+                    android:textSize="15sp"/>
             </LinearLayout>
 
             <RelativeLayout
@@ -193,27 +192,26 @@
                     android:layout_height="wrap_content"
                     android:text="所属区域："
                     android:textColor="@color/gray"
-                    android:textSize="13sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
                     android:layout_toRightOf="@+id/tv_areatip"
                     android:text="片区一号"
                     android:textColor="@color/gray"
-                    android:textSize="13sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv_timetip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dip"
+                    android:layout_marginLeft="5dip"
                     android:layout_toRightOf="@+id/tv_area"
                     android:text="更新于："
                     android:textColor="@color/gray"
-                    android:textSize="13sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv_time"
@@ -222,7 +220,7 @@
                     android:layout_toRightOf="@+id/tv_timetip"
                     android:text="05-07"
                     android:textColor="@color/gray"
-                    android:textSize="13sp"/>
+                    android:textSize="14sp"/>
 
                 <FrameLayout
                     android:id="@+id/rl_record"

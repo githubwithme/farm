@@ -9,9 +9,10 @@ import com.farm.R;
 import com.farm.adapter.Adapter_PGCommandProgress;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.ContractCommandProgressBean;
 import com.farm.bean.Result;
-import com.farm.bean.commandtab;
 import com.farm.bean.commembertab;
+import com.farm.common.FileHelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -32,14 +33,15 @@ import java.util.List;
 @EActivity(R.layout.pg_commandprogress)
 public class PG_CommandProgress extends Activity
 {
+    List<ContractCommandProgressBean> listNewData = null;
     Adapter_PGCommandProgress adapter_pgCommandProgress;
     @ViewById
     ListView lv;
-
+    
     @AfterViews
     void AfterOncreate()
     {
-        getContractList();
+        getNewSaleList_test();
     }
 
     @Override
@@ -49,6 +51,17 @@ public class PG_CommandProgress extends Activity
         getActionBar().hide();
     }
 
+
+    private void getNewSaleList_test()
+    {
+        listNewData = FileHelper.getAssetsData(PG_CommandProgress.this, "getContractProgress", ContractCommandProgressBean.class);
+        if (listNewData != null)
+        {
+            adapter_pgCommandProgress = new Adapter_PGCommandProgress(PG_CommandProgress.this, listNewData);
+            lv.setAdapter(adapter_pgCommandProgress);
+        }
+
+    }
     private void getContractList()
     {
         commembertab commembertab = AppContext.getUserInfo(PG_CommandProgress.this);
@@ -73,18 +86,17 @@ public class PG_CommandProgress extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<commandtab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), commandtab.class);
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), ContractCommandProgressBean.class);
                         adapter_pgCommandProgress = new Adapter_PGCommandProgress(PG_CommandProgress.this, listNewData);
                         lv.setAdapter(adapter_pgCommandProgress);
                     } else
                     {
-                        listNewData = new ArrayList<commandtab>();
+                        listNewData = new ArrayList<ContractCommandProgressBean>();
                     }
                 } else
                 {

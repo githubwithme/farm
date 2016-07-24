@@ -300,7 +300,6 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
 
     private void deleteSellOrderAndDetail(String uuid)
     {
-
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("action", "deleteSellOrderAndDetail");//jobGetList1

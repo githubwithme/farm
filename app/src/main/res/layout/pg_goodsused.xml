@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/light_gray"
+              android:background="@color/defaultbackground"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -21,50 +21,70 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/titlebar_height"
+            android:layout_marginLeft="5dip"
             android:layout_toRightOf="@+id/btn_back"
             android:gravity="center"
-            android:text="使用物资"
-            android:layout_marginLeft="5dip"
+            android:text="物资记录"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>
 
-    <View
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line_color"/>
+        android:layout_height="40dip"
+        android:background="@drawable/round_white"
+        android:orientation="horizontal">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dip"
-        android:background="@drawable/bg_white"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:visibility="gone">
-
-
-        <EditText
-            android:id="@+id/et_goodsname"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_colum"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="50dip"
-            android:layout_span="3"
-            android:layout_toRightOf="@+id/namess"
-            android:hint="请输入物资名称"
-            android:paddingLeft="10dip"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14"/>
-
-        <ImageButton
-            android:id="@+id/imgbtn"
-            android:layout_width="40dip"
+        <FrameLayout
+            android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dip"
-            android:background="@null"
-            android:src="@drawable/searchitem"/>
-    </RelativeLayout>
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/provinceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center|center_horizontal"/>
+
+            <View
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/downward"/>
+        </FrameLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/citySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center|center_horizontal"/>
+
+            <View
+                android:layout_width="13dip"
+                android:layout_height="13dip"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/downward"/>
+        </FrameLayout>
+
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dip"
@@ -74,8 +94,8 @@
         <View
             android:layout_width="35dip"
             android:layout_height="35dip"
-            android:layout_marginLeft="5dip"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dip"
             android:background="@mipmap/icon_tip"/>
 
         <TextView
@@ -83,16 +103,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dip"
-            android:text="点击单元格可以编辑承包户使用物资情况"
+            android:text="每个承包户都可以多次领取物资，但只能领取指令中规定的物资"
             android:textColor="@color/black_light"
-            android:textSize="14sp"/>
+            android:textSize="13sp"/>
     </LinearLayout>
 
     <ExpandableListView
         android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:childDivider="@color/transparent"
+        android:divider="@color/transparent"
         android:dividerHeight="0dip"
         android:groupIndicator="@null"
         android:scrollbars="none"/>

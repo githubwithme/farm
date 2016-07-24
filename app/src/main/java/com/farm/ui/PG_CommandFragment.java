@@ -611,7 +611,7 @@ public class PG_CommandFragment extends Fragment implements OnClickListener
                         commembertab commembertab = AppContext.getUserInfo(context);
                         AppContext.updateStatus(context, "1", command.getId(), "2", commembertab.getId());
 
-                        Intent intent = new Intent(context, PG_AssessContract_.class);
+                        Intent intent = new Intent(context, PG_AssessActivity_.class);
                         intent.putExtra("type", "2");
                         intent.putExtra("workid", listItems.get(v.getId()).getId());
                         String aaa = listItems.get(v.getId()).getStatusid();

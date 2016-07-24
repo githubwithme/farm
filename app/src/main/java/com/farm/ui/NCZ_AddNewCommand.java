@@ -3,7 +3,6 @@ package com.farm.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,9 +13,11 @@ import com.farm.R;
 import com.farm.adapter.Adapter_CommandSelectArea;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.ContactsBean;
+import com.farm.bean.Dictionary;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.bean.parktab;
+import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.CustomExpandableListView;
@@ -45,6 +46,8 @@ public class NCZ_AddNewCommand extends Activity
     @ViewById
     RelativeLayout rl_selectgoods;
     @ViewById
+    RelativeLayout rl_selecttime;
+    @ViewById
     RelativeLayout rl_selectarea;
     @ViewById
     RelativeLayout rl_selectjob;
@@ -53,35 +56,26 @@ public class NCZ_AddNewCommand extends Activity
     @ViewById
     TextView tv_days;
     @ViewById
-    GridView gv_job;
+    TextView tv_jobtype;
     @ViewById
     CustomExpandableListView expandableListView;
 
     CustomDialog_ListView customDialog_listView;
     String workday = "";
+    String jobTypeName = "";
+    String jobTypeId = "";
 
     @Click
     void rl_selectjob()
     {
-        if (gv_job.isShown())
-        {
-            gv_job.setVisibility(View.GONE);
-        } else
-        {
-            gv_job.setVisibility(View.VISIBLE);
-        }
+        getCommandlist("19", "香蕉");
     }
 
     @Click
     void rl_selectgoods()
     {
-        if (gv_job.isShown())
-        {
-            gv_job.setVisibility(View.GONE);
-        } else
-        {
-            gv_job.setVisibility(View.VISIBLE);
-        }
+        DialogFragment_SelectGoods dialog = new DialogFragment_SelectGoods_();
+        dialog.show(getFragmentManager(), "EditNameDialog");
     }
 
     @Click
@@ -93,19 +87,19 @@ public class NCZ_AddNewCommand extends Activity
         } else
         {
             expandableListView.setVisibility(View.VISIBLE);
-            getAreaList();
+            getNewSaleList_test();
         }
     }
 
     @Click
-    void tv_starttime()
+    void rl_selecttime()
     {
         MyDatepicker myDatepicker = new MyDatepicker(NCZ_AddNewCommand.this, tv_starttime);
         myDatepicker.getDialog().show();
     }
 
     @Click
-    void tv_days()
+    void rl_selectdays()
     {
         JSONObject jsonObject = utils.parseJsonFile(NCZ_AddNewCommand.this, "dictionary.json");
         JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
@@ -129,7 +123,20 @@ public class NCZ_AddNewCommand extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
     }
+    private void getNewSaleList_test()
+    {
+        List<parktab> listNewData = FileHelper.getAssetsData(NCZ_AddNewCommand.this, "getParkAndArea", parktab.class);
+        if (listNewData != null)
+        {
+            Adapter_CommandSelectArea adapter_CommandSelectArea = new Adapter_CommandSelectArea(NCZ_AddNewCommand.this, listNewData, expandableListView);
+            expandableListView.setAdapter(adapter_CommandSelectArea);
+            for (int i = 0; i < listNewData.size(); i++)
+            {
+                expandableListView.expandGroup(i);//展开
+            }
+        }
 
+    }
     public void showDialog_workday(List<String> list)
     {
         View dialog_layout = (RelativeLayout) NCZ_AddNewCommand.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
@@ -140,6 +147,22 @@ public class NCZ_AddNewCommand extends Activity
             {
                 workday = bundle.getString("name");
                 tv_days.setText(workday);
+            }
+        });
+        customDialog_listView.show();
+    }
+
+    public void showDialog_selectJobType(List<String> list_name, List<String> list_id)
+    {
+        View dialog_layout = (RelativeLayout) NCZ_AddNewCommand.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(NCZ_AddNewCommand.this, R.style.MyDialog, dialog_layout, list_name, list_id, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                jobTypeName = bundle.getString("name");
+                jobTypeId = bundle.getString("id");
+                tv_jobtype.setText(jobTypeName);
             }
         });
         customDialog_listView.show();
@@ -158,14 +181,13 @@ public class NCZ_AddNewCommand extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<ContactsBean> listNewData = null;
+                List<parktab> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    listNewData = JSON.parseArray(result.getRows().toJSONString(), ContactsBean.class);
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
                     Adapter_CommandSelectArea adapter_CommandSelectArea = new Adapter_CommandSelectArea(NCZ_AddNewCommand.this, listNewData, expandableListView);
                     expandableListView.setAdapter(adapter_CommandSelectArea);
-
                     for (int i = 0; i < listNewData.size(); i++)
                     {
                         expandableListView.expandGroup(i);//展开
@@ -186,4 +208,63 @@ public class NCZ_AddNewCommand extends Activity
             }
         });
     }
+
+    private void getCommandlist(String zwid, String zwname)
+    {
+        commembertab commembertab = AppContext.getUserInfo(NCZ_AddNewCommand.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("productid", zwid);
+        params.addQueryStringParameter("name", "Zuoye");
+        params.addQueryStringParameter("action", "getDict");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<Dictionary> lsitNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        lsitNewData = JSON.parseArray(result.getRows().toJSONString(), Dictionary.class);
+                        if (lsitNewData != null)
+                        {
+                            List<String> list_id = new ArrayList<String>();
+                            List<String> list_name = new ArrayList<String>();
+                            for (int i = 0; i < lsitNewData.size(); i++)
+                            {
+                                list_id.add(lsitNewData.get(i).getFirstItemID().toString());
+                                list_name.add(lsitNewData.get(i).getFirstItemName().toString());
+                            }
+                            showDialog_selectJobType(list_name, list_id);
+                        } else
+                        {
+
+                        }
+
+                    } else
+                    {
+                        AppContext.makeToast(NCZ_AddNewCommand.this, "error_connectDataBase");
+                        return;
+                    }
+                } else
+                {
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ_AddNewCommand.this, "error_connectServer");
+            }
+        });
+    }
+
+
 }

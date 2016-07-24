@@ -2,8 +2,11 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -11,10 +14,11 @@ import com.farm.R;
 import com.farm.adapter.Adapter_PGGoodsUsed;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.ContactsBean;
+import com.farm.bean.ContractGoodsUsedBean;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
+import com.farm.widget.CustomArrayAdapter;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -23,7 +27,6 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -35,34 +38,30 @@ import java.util.List;
 @EActivity(R.layout.pg_goodsused)
 public class PG_GoodsUsed extends Activity
 {
-    List<ContactsBean> listNewData = null;
+    List<ContractGoodsUsedBean> listNewData = null;
     Adapter_PGGoodsUsed adapter_pgGoodsUsed;
     String goodsName;
     @ViewById
     ExpandableListView expandableListView;
     @ViewById
-    ImageButton imgbtn;
-    @ViewById
     TextView et_goodsname;
+    @ViewById
+    Spinner provinceSpinner;
+    @ViewById
+    Spinner citySpinner;
+    ArrayAdapter<String> provinceAdapter = null;  //省级适配器
+    ArrayAdapter<String> cityAdapter = null;    //地级适配器
+    private String[] mProvinceDatas = new String[]{"不限时间", "今天", "昨天"};
+    private String[] mCitisDatasMap = new String[]{"考核类型", "警告", "不合格", "合格"};
 
-    @Click
-    void et_goodsname()
-    {
-        et_goodsname.setText("");
-    }
-
-    @Click
-    void imgbtn()
-    {
-        goodsName = et_goodsname.getText().toString();
-        getBreakOffInfoOfContract();
-    }
 
     @AfterViews
     void afterOncreate()
     {
-        getBreakOffInfoOfContract();
-//        getNewSaleList_test();
+//        getBreakOffInfoOfContract();
+        getNewSaleList_test();
+        setSpinner();
+
     }
 
     @Override
@@ -75,12 +74,11 @@ public class PG_GoodsUsed extends Activity
 
     private void getNewSaleList_test()
     {
-        listNewData = FileHelper.getAssetsData(PG_GoodsUsed.this, "getUserInfo", ContactsBean.class);
+        listNewData = FileHelper.getAssetsData(PG_GoodsUsed.this, "getGoodsUsed", ContractGoodsUsedBean.class);
         if (listNewData != null)
         {
             adapter_pgGoodsUsed = new Adapter_PGGoodsUsed(PG_GoodsUsed.this, listNewData, expandableListView);
             expandableListView.setAdapter(adapter_pgGoodsUsed);
-
             for (int i = 0; i < listNewData.size(); i++)
             {
                 expandableListView.expandGroup(i);//展开
@@ -105,7 +103,7 @@ public class PG_GoodsUsed extends Activity
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    listNewData = JSON.parseArray(result.getRows().toJSONString(), ContactsBean.class);
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), ContractGoodsUsedBean.class);
                     adapter_pgGoodsUsed = new Adapter_PGGoodsUsed(PG_GoodsUsed.this, listNewData, expandableListView);
                     expandableListView.setAdapter(adapter_pgGoodsUsed);
 
@@ -129,4 +127,51 @@ public class PG_GoodsUsed extends Activity
             }
         });
     }
+
+    private void setSpinner()
+    {
+        //绑定适配器和值
+        provinceAdapter = new CustomArrayAdapter(PG_GoodsUsed.this, mProvinceDatas);
+        provinceSpinner.setAdapter(provinceAdapter);
+        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
+
+        cityAdapter = new CustomArrayAdapter(PG_GoodsUsed.this, mCitisDatasMap);
+        citySpinner.setAdapter(cityAdapter);
+        citySpinner.setSelection(0, true);  //默认选中第0个
+
+
+        //省级下拉框监听
+        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            // 表示选项被改变的时候触发此方法，主要实现办法：动态改变地级适配器的绑定值
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3)
+            {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0)
+            {
+            }
+
+        });
+
+
+        //地级下拉监听
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3)
+            {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0)
+            {
+
+            }
+        });
+    }
+
 }
