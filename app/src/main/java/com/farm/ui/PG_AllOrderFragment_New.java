@@ -55,8 +55,9 @@ public class PG_AllOrderFragment_New extends Fragment
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
     String parkname = "";
-    String cpname = "";
-    String cgsname = "";
+    String cpname = "-1";
+    String cgsname = "-1";
+    String cgsId = "-1";
     //    private NCZ_OrderAdapter listAdapter;
     private PG_AllOrderAdapter_New listAdapter;
     private int listSumData;
@@ -148,7 +149,7 @@ public class PG_AllOrderFragment_New extends Fragment
                     commembertab commembertab = AppContext.getUserInfo(getActivity());
                     AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
 //                    Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                    Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
+                    Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
                     intent.putExtra("bean", listData.get(position));
                     getActivity().startActivity(intent);
                 }
@@ -162,8 +163,8 @@ public class PG_AllOrderFragment_New extends Fragment
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("productname", "-1");
-        params.addQueryStringParameter("buyer", "-1");
+        params.addQueryStringParameter("productname", cpname);
+        params.addQueryStringParameter("buyer", cgsId);
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("payStatus", "-1");
         params.addQueryStringParameter("action", "MainPeople_getAllOrderWithStatus");
@@ -197,7 +198,7 @@ public class PG_AllOrderFragment_New extends Fragment
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
 //                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
+                                Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }
@@ -358,7 +359,7 @@ public class PG_AllOrderFragment_New extends Fragment
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), AllType.class);
                         AllType allType = new AllType();
-                        allType.setId("");
+                        allType.setId("-1");
                         allType.setProductName("全部产品");
                         listdata_cp.add(allType);
                         listdata_cp.addAll(listNewData);
@@ -378,7 +379,14 @@ public class PG_AllOrderFragment_New extends Fragment
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                             {
 
-                                cpname = listdata_cp.get(i).getProductName();
+                                if (listdata_cp.get(i).getProductName().equals("全部产品"))
+                                {
+                                    cpname="-1";
+                                }else
+                                {
+                                    cpname = listdata_cp.get(i).getProductName();
+                                }
+
                                 getAllOrders();
                             }
 
@@ -435,7 +443,7 @@ public class PG_AllOrderFragment_New extends Fragment
                         {
                             listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
                             Purchaser purchaser = new Purchaser();
-                            purchaser.setId("");
+                            purchaser.setId("-1");
                             purchaser.setName("全部采购商");
                             listData_CG.add(purchaser);
                             for (int i = 0; i < listNewData.size(); i++)
@@ -468,6 +476,7 @@ public class PG_AllOrderFragment_New extends Fragment
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                                 {
                                     cgsname = listData_CG.get(i).getName();
+                                    cgsId = listData_CG.get(i).getId();
                                     getAllOrders();
                                 }
 

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -65,8 +66,10 @@ public class JSD_Detail extends Activity
     LinearLayout ll_total;
     @ViewById
     TextView alltoatal;
+    /*  @ViewById
+      TextView tv_top_left;*/
     @ViewById
-    TextView tv_top_left;
+    RelativeLayout tv_top_left;
     @ViewById
     TextView tv_top_right;
     @ViewById
@@ -85,7 +88,7 @@ public class JSD_Detail extends Activity
     {
         Intent intent = new Intent(JSD_Detail.this, PG_JSD_.class);
         intent.putExtra("bean", sellOrder_new);
-        intent.putExtra("broadcast", broadcast);
+//        intent.putExtra("broadcast", broadcast);
         startActivity(intent);
     }
 
@@ -102,7 +105,7 @@ public class JSD_Detail extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder_new = getIntent().getParcelableExtra("bean");
-        broadcast = getIntent().getStringExtra("broadcast");
+//        broadcast = getIntent().getStringExtra("broadcast");
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DELETE);
         registerReceiver(receiver_update, intentfilter_update);
     }
@@ -129,36 +132,36 @@ public class JSD_Detail extends Activity
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
-                listData=new ArrayList<SellOrder_New>();
+                listData = new ArrayList<SellOrder_New>();
                 String a = responseInfo.result;
                 List<SellOrder_New> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
+//                    if (result.getAffectedRows() != 0)
+//                    {
+
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+                    listData.addAll(listNewData);
+
+                    DensityUtil densityUtil = new DensityUtil(JSD_Detail.this);
+                    screenWidth = densityUtil.getScreenWidth();
+                    int size = 3;
+                    if (size == 1)
                     {
-
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        listData.addAll(listNewData);
-
-                        DensityUtil densityUtil = new DensityUtil(JSD_Detail.this);
-                        screenWidth = densityUtil.getScreenWidth();
-                        int size = listData.get(0).getDetailSecLists().size();
-                        if (size == 1)
-                        {
-                            screenWidth = screenWidth / 3;
-                        } else if (size == 2)
-                        {
-                            screenWidth = screenWidth / 4;
-                        } else
-                        {
-                            screenWidth = screenWidth / 5;
-                        }
-                        tv_top_left.getLayoutParams().width = (screenWidth);
-                        tv_top_right.getLayoutParams().width = (screenWidth);
-                        tv_bottom_left.getLayoutParams().width = (screenWidth);
-                        alltoatal.getLayoutParams().width = (screenWidth);
-                        initViews();
+                        screenWidth = screenWidth / 3;
+                    } else if (size == 2)
+                    {
+                        screenWidth = screenWidth / 4;
+                    } else
+                    {
+                        screenWidth = screenWidth / 5;
+                    }
+                    tv_top_left.getLayoutParams().width = (screenWidth);
+                    tv_top_right.getLayoutParams().width = (screenWidth);
+                    tv_bottom_left.getLayoutParams().width = (screenWidth);
+                    alltoatal.getLayoutParams().width = (screenWidth);
+                    initViews();
 
       /*                  pg_cbf_adapter = new PG_CBF_CLAdapyer(JSD_Detail.this, listNewData, "", "");
                         liat_jsd.setAdapter(pg_cbf_adapter);
@@ -176,7 +179,7 @@ public class JSD_Detail extends Activity
                             }
                         });*/
 
-                    } else
+//                    } else
                     {
                         listNewData = new ArrayList<SellOrder_New>();
                     }
@@ -204,7 +207,7 @@ public class JSD_Detail extends Activity
         ll_park.removeAllViews();
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) JSD_Detail.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        String [] name=new String []{"实际金额","合计金额","总净重","审批情况","正品结算金额","正品单价","正品净重","总包装费","总搬运费"};
+        String[] name = new String[]{"实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
 //        String[] name = new String[]{"实际金额", "合计金额"};
         for (int i = 0; i < name.length; i++)
         {
@@ -261,7 +264,7 @@ public class JSD_Detail extends Activity
                     ll_total.addView(view);
                     break;
                 case 1:
-                     totalnumber = 0;
+                    totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
                         if (!listData.get(j).getTotalFee().equals(""))
@@ -437,11 +440,10 @@ public class JSD_Detail extends Activity
             if (listData.get(position).getIsNeedAudit().equals("0"))
             {
 
-            }else if (listData.get(position).getIsNeedAudit().equals("1"))
+            } else if (listData.get(position).getIsNeedAudit().equals("1"))
             {
                 listItemView.item_titlev.setTextColor(JSD_Detail.this.getResources().getColor(R.color.green));
-            }
-            else if (listData.get(position).getIsNeedAudit().equals("-1"))
+            } else if (listData.get(position).getIsNeedAudit().equals("-1"))
             {
                 listItemView.item_titlev.setTextColor(JSD_Detail.this.getResources().getColor(R.color.red));
             }
@@ -509,11 +511,10 @@ public class JSD_Detail extends Activity
                         if (listData.get(position).getIsNeedAudit().equals("0"))
                         {
                             listItemView.btn_data.setText("待审批");
-                        }else if (listData.get(position).getIsNeedAudit().equals("1"))
+                        } else if (listData.get(position).getIsNeedAudit().equals("1"))
                         {
                             listItemView.btn_data.setText("审批通过");
-                        }
-                        else if (listData.get(position).getIsNeedAudit().equals("-1"))
+                        } else if (listData.get(position).getIsNeedAudit().equals("-1"))
                         {
                             listItemView.btn_data.setText("审批不通过");
                         }
@@ -599,8 +600,8 @@ public class JSD_Detail extends Activity
         @Override
         public void onClick(View v)
         {
-            SellOrder_New sellOrder_news=new SellOrder_New();
-            sellOrder_news= (SellOrder_New) v.getTag(R.id.tag_batchtime);
+            SellOrder_New sellOrder_news = new SellOrder_New();
+            sellOrder_news = (SellOrder_New) v.getTag(R.id.tag_batchtime);
             Intent intent = new Intent(JSD_Detail.this, PG_JSD_Detail_.class);
             intent.putExtra("bean", sellOrder_news);
             startActivity(intent);

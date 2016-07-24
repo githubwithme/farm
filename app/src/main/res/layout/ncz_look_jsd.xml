@@ -676,6 +676,7 @@
                         android:text="二、承包户产量"
                         android:textSize="15dip"/>
                     <Button
+                        android:visibility="gone"
                         android:id="@+id/button_add"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -924,7 +925,6 @@
 
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/ll_jsd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

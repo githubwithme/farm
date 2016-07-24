@@ -78,6 +78,9 @@ public class MyDateMaD
             sellOrders.setOldsaletime(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" ").toString());
             sellOrders.setIsNeedAudit("0");
         }
+        sellOrders.setGoodsname(sellOrders.getProduct());
+        sellOrders.setProducer(sellOrders.getParkname());
+        sellOrders.setActualweight(sellOrders.getCarNumber());
         SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
         StringBuilder builder = new StringBuilder();
         builder.append("{\"SellOrder_new\":[ ");

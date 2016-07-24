@@ -176,7 +176,7 @@ public class utils
 
             if (day1 <0)
             {
-                dt = "已过期，请重设时间" ;
+                dt = "已过期" ;
 //                day1=Math.abs(day1);
 //                if (day1 <=1 && day1>0)
 //                {
@@ -208,15 +208,9 @@ public class utils
                 } else if (day1 == 3)
                 {
                     dt = "3天后";
-                } else if (day1 >= 7  && day1 < 14   )
-                {
-                    dt = "一周后";
-                } else if  (day1 >= 14 && day1 <30   )
-                {
-                    dt = "一个月后";
                 }else
                 {
-                    dt = "4天后";
+                    dt =Integer.valueOf((int) day1) +"天后";
                 }
 
             }

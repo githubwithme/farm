@@ -82,7 +82,7 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
         public CircleImageView circleImageView;
         public LinearLayout ll_car;
         public LinearLayout ll_mainpeople;
-//        public FrameLayout fl_dynamic;
+        public RelativeLayout fl_dynamic;
 
     }
 
@@ -122,6 +122,7 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
             convertView = listContainer.inflate(R.layout.adapter_ncznotpaydeposit, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.fl_dynamic = (RelativeLayout) convertView.findViewById(R.id.fl_dynamic);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
@@ -138,11 +139,33 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
+
+            listItemView.fl_dynamic.setTag(R.id.tag_fi, sellOrder.getBuyersPhone());
+            listItemView.fl_dynamic.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    String phone = (String) v.getTag(R.id.tag_fi);
+                    showDialog_addsaleinfo(phone);
+                }
+            });
             listItemView.tv_orderstate.setText("待付定金" + sellOrder.getWaitDeposit() + "元");
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.tv_buyer.setText(sellOrder.getBuyersName());
             listItemView.tv_parkname.setText(sellOrder.getParkname());
             listItemView.tv_mainpeple.setText(sellOrder.getMainPeople());
+            listItemView.ll_mainpeople.setTag(R.id.tag_czdl, sellOrder.getMainPeoplePhone());
+            listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    String phone = (String) v.getTag(R.id.tag_czdl);
+                    showDialog_addsaleinfo(phone);
+                }
+            });
+
             if (sellOrder.getCarNumber().equals(""))
             {
                 listItemView.tv_car.setText("0辆");
@@ -360,6 +383,9 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter
                 zzsl = bundle.getString("name");
                 SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
                 sellOrder_new.setActualweight(zzsl);
+                sellOrder_new.setGoodsname(sellOrder_new.getProduct());
+                sellOrder_new.setProducer(sellOrder_new.getParkname());
+
                 StringBuilder builder = new StringBuilder();
                 builder.append("{\"SellOrder_new\":[ ");
                 builder.append(JSON.toJSONString(sellOrder_new));

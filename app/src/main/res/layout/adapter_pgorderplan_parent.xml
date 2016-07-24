@@ -93,12 +93,15 @@
             android:background="@color/line_color"/>
 
         <LinearLayout
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_marginTop="5dip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -130,21 +133,6 @@
                     android:text="未付定金;"
                     android:textColor="@color/gray"
                     android:textSize="14sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="5dip"
-                    android:layout_height="5dip"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dip"
-                    android:background="@color/gray"/>
-
                 <TextView
                     android:id="@+id/tv_paidDepositNumber"
                     android:layout_width="wrap_content"
@@ -164,17 +152,26 @@
                     android:text="已付定金："
                     android:textColor="@color/gray"
                     android:textSize="14sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dip"
+                    android:layout_height="5dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
+                    android:background="@color/gray"/>
+
+
+
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dip"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="其中"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"/>
-
-                <TextView
+                    android:layout_marginLeft="5dip"
                     android:id="@+id/tv_readyNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="25dip"
@@ -214,6 +211,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginBottom="5dip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"

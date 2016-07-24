@@ -1,85 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/defaultbackground"
-              android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dip"
-        android:background="@color/color_topbar">
-
-        <Button
-            android:id="@+id/btn_back"
-            android:layout_width="20dip"
-            android:layout_height="20dip"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dip"
-            android:background="@drawable/ic_back"/>
-
-
-        <LinearLayout
-            android:id="@+id/ll_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@+id/btn_back"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="准备工作详情"
-                android:textColor="@color/white"
-                android:textSize="@dimen/titlebar_textsize"/>
-        </LinearLayout>
-
-        <Button
-            android:layout_alignParentRight="true"
-            android:id="@+id/btn_save"
-            android:layout_width="100dip"
-            android:layout_height="45dip"
-            android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="10dip"
-            android:background="@drawable/background_view_rounded_single"
-            android:gravity="center"
-            android:text="准备工作就绪"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14"/>
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_color"/>
-
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/is_ready"
-            android:layout_width="match_parent"
-            android:layout_height="50dip"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center"
-            android:text="未就绪"
-            android:textSize="16dip"/>
-    </LinearLayout>
-
-
+              android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -97,6 +23,7 @@
                 android:textSize="14sp"/>
 
             <EditText
+
                 android:id="@+id/CR_chanpin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -142,8 +69,8 @@
                 android:background="@color/line_color"/>
 
             <EditText
-                android:inputType="numberDecimal"
                 android:textSize="14dip"
+                android:inputType="numberDecimal"
                 android:id="@+id/packPrice"
                 android:gravity="center"
                 android:layout_weight="1"
@@ -192,8 +119,8 @@
                 android:background="@color/line_color"/>
 
             <EditText
-                android:inputType="numberDecimal"
                 android:textSize="14dip"
+                android:inputType="numberDecimal"
                 android:id="@+id/carryPrice"
                 android:gravity="center"
                 android:layout_weight="1"
@@ -211,55 +138,36 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/line_color"/>
-        <Button
-            android:id="@+id/button_add"
-            android:layout_width="match_parent"
-            android:layout_height="45dip"
-            android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="10dip"
-            android:background="@drawable/background_view_rounded_single"
+
+        <LinearLayout
             android:gravity="center"
-            android:text="添加"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14"/>
-    </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="35dip">
+            <Button
+                android:id="@+id/button_update"
+                android:layout_width="80dip"
+                android:layout_height="30dip"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/background_view_rounded_single"
+                android:gravity="center"
+                android:text="修改"
+                android:layout_marginRight="10dip"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_14"/>
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/hlistview_scroll_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/line_middle"
-
-            android:layout_marginLeft="1px"
-            android:layout_marginRight="1px"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@color/bg_text"
-            android:dividerHeight="1px"
-            android:fadingEdge="none"
-            android:scrollbars="none">
-        </ListView>
+            <Button
+                android:id="@+id/button_delete"
+                android:layout_width="80dip"
+                android:layout_height="30dip"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/background_view_rounded_single"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="@color/bg_text"
+                android:textSize="@dimen/size_14"/>
         </LinearLayout>
-</ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
-        android:orientation="vertical">
-
-
-
 
     </LinearLayout>
-
-
 </LinearLayout>

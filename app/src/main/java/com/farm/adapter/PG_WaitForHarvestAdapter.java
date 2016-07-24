@@ -27,6 +27,8 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.common.utils;
+import com.farm.ui.JSD_Detail_;
+import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.PG_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
@@ -76,10 +78,12 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
         public Button btn_preparework;
         public Button btn_editorder;
         public Button btn_changetime;
+        public Button btn_addjsd;
         public CircleImageView circleImageView;
         public LinearLayout ll_car;
         public LinearLayout ll_undeposit;
         public LinearLayout ll_mainpeople;
+        public LinearLayout ll_buyer;
     }
 
     public PG_WaitForHarvestAdapter(Context context, List<SellOrder_New> data, String broadcast)
@@ -129,34 +133,73 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
             listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
+            listItemView.btn_addjsd = (Button) convertView.findViewById(R.id.btn_addjsd);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
             listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
             listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
             listItemView.ll_undeposit = (LinearLayout) convertView.findViewById(R.id.ll_undeposit);
-            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
+            listItemView.ll_buyer = (LinearLayout) convertView.findViewById(R.id.ll_buyer);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-//            if (sellOrder.getFreeDeposit().equals("1"))
-//            {
-//                listItemView.ll_undeposit.setVisibility(View.VISIBLE);
-//            } else
-//            {
-//                listItemView.ll_undeposit.setVisibility(View.GONE);
-//            }
+            listItemView.ll_buyer.setTag(R.id.tag_fi,sellOrder.getBuyersPhone());
+            listItemView.ll_buyer.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    String phone = (String) v.getTag(R.id.tag_fi);
+                    showDialog_addsaleinfo(phone);
+                }
+            });
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.tv_parkname.setText(sellOrder.getParkname());
             listItemView.tv_mainpeple.setText(sellOrder.getMainPeople());
             listItemView.tv_car.setText(sellOrder.getCarNumber());
-//            if (sellOrder.getIsReady().equals("true"))
-//            {
-//                listItemView.tv_prepareworkStatus.setText("准备就绪");
-//            } else
-//            {
-//                listItemView.tv_prepareworkStatus.setText("未准备就绪");
-//            }
+            listItemView.ll_car.setTag(R.id.tag_bean, sellOrder);
+            listItemView.ll_car.setTag(R.id.tag_text, listItemView.tv_car);
+            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
+                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
+                    JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+                    List<String> list = new ArrayList<String>();
+                    for (int i = 0; i < jsonArray.size(); i++)
+                    {
+                        list.add(jsonArray.getString(i));
+                    }
+                    showDialog_carNumber(list,sellOrder_new);
+                }
+            });
+            listItemView.btn_addjsd.setTag(R.id.tag_eventlisttp, sellOrder);
+            listItemView.btn_addjsd.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    SellOrder_New sellOrder_new = new SellOrder_New();
+                    sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_eventlisttp);
 
+        /*            if (sellOrder_new.getSelltype().equals("待付定金"))
+                    {
+                        Toast.makeText(context, "客户未交定金", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else
+                    {*/
+//                        Intent intent = new Intent(context, PG_JSD_.class);
+                        Intent intent = new Intent(context, JSD_Detail_.class);
+                        intent.putExtra("bean", sellOrder_new);
+//                    intent.putExtra("broadcast", broadcast);
+                        context.startActivity(intent);
+//                    }
+    /*                showDeleteTip(sellOrder_new.getUuid());
+//                    deleteSellOrderAndDetail(sellOrder_new.getUuid());*/
+                }
+            });
             listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
             {
@@ -176,7 +219,7 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                 {
                     SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
                     ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "1");
+                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "2");
                     myDatepicker.getDialog().show();
                 }
             });
@@ -186,7 +229,10 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
+                    SellOrder_New sellOrder_new = new SellOrder_New();
+                    sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
                     Intent intent = new Intent(context, RecoveryDetail_.class);
+                    intent.putExtra("uuid", sellOrder_new.getUuid());
                     context.startActivity(intent);
                 }
             });
@@ -283,17 +329,8 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                 {
 
                     Intent intent = new Intent();
-//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
-                    intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                    intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
                     context.sendBroadcast(intent);
-               /* if (result.getAffectedRows() != 0)
-                {
-                    listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-
-                } else
-                {
-                    listData = new ArrayList<SellOrder_New>();
-                }*/
 
                 } else
                 {
@@ -386,6 +423,8 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                 zzsl = bundle.getString("name");
                 SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
                 sellOrder_new.setActualweight(zzsl);
+                sellOrder_new.setGoodsname(sellOrder_new.getProduct());
+                sellOrder_new.setProducer(sellOrder_new.getParkname());
                 StringBuilder builder = new StringBuilder();
                 builder.append("{\"SellOrder_new\":[ ");
                 builder.append(JSON.toJSONString(sellOrder_new));
@@ -426,8 +465,7 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                         Toast.makeText(context, "订单修改成功！", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent();
-//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
-                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                        intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
                         context.sendBroadcast(intent);
 
                     }
@@ -446,5 +484,32 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                 AppContext.makeToast(context, "error_connectServer");
             }
         });
+    }
+
+
+    public void showDialog_carNumber(List<String> list,final SellOrder_New sellOrder_new)
+    {
+        View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
+        customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                String workday = bundle.getString("name");
+                SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
+                sellOrder_new.setActualweight(workday);
+                sellOrder_new.setGoodsname(sellOrder_new.getProduct());
+                sellOrder_new.setProducer(sellOrder_new.getParkname());
+
+                StringBuilder builder = new StringBuilder();
+                builder.append("{\"SellOrder_new\":[ ");
+                builder.append(JSON.toJSONString(sellOrder_new));
+                builder.append("], \"sellorderlistadd\": [");
+                builder.append(JSON.toJSONString(sellOrder_new_first));
+                builder.append("]} ");
+                newaddOrder(builder.toString());
+            }
+        });
+        customDialog_listView.show();
     }
 }

@@ -27,12 +27,15 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.common.utils;
+import com.farm.ui.JSD_Detail_;
+import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.NCZ_Look_JSD_;
 import com.farm.ui.PG_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
 import com.farm.widget.CustomDialog_ListView;
+import com.farm.widget.MyDateMaD;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -80,6 +83,7 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
         public Button btn_preparework;
         public Button btn_editorder;
         public Button btn_showSettlement;
+        public Button btn_changetime;
         public CircleImageView circleImageView;
         public LinearLayout ll_car;
         public LinearLayout ll_unfinalpay;
@@ -136,6 +140,7 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
+            listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.btn_showSettlement = (Button) convertView.findViewById(R.id.btn_showSettlement);
             listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
@@ -146,6 +151,21 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
+
+
+            listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
+            listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
+            listItemView.btn_changetime.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
+                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
+                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "2");
+                    myDatepicker.getDialog().show();
+                }
+            });
 
             if (sellOrder.getFreeDeposit().equals("1"))
             {
@@ -192,19 +212,22 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v)
                 {
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
                     Intent intent = new Intent(context, RecoveryDetail_.class);
+                    intent.putExtra("uuid", sellOrder_new.getUuid());
                     context.startActivity(intent);
                 }
             });
-            listItemView.btn_showSettlement.setTag(R.id.tag_danwei, sellOrder);
+            listItemView.btn_showSettlement.setTag(R.id.tag_checkbox, sellOrder);
             listItemView.btn_showSettlement.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
-                    Intent intent = new Intent(context, NCZ_Look_JSD_.class);
-                    intent.putExtra("zbstudio", sellOrder_new);
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_checkbox);
+//                    Intent intent = new Intent(context, NCZ_Look_JSD_.class);
+                    Intent intent = new Intent(context, JSD_Detail_.class);
+                    intent.putExtra("bean", sellOrder_new);
                     context.startActivity(intent);
                 }
             });
@@ -301,7 +324,7 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
                 {
 
                     Intent intent = new Intent();
-                    intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                    intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
                     context.sendBroadcast(intent);
                 } else
                 {
@@ -394,6 +417,8 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
                 zzsl = bundle.getString("name");
                 SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
                 sellOrder_new.setActualweight(zzsl);
+                sellOrder_new.setGoodsname(sellOrder_new.getProduct());
+                sellOrder_new.setProducer(sellOrder_new.getParkname());
                 StringBuilder builder = new StringBuilder();
                 builder.append("{\"SellOrder_new\":[ ");
                 builder.append(JSON.toJSONString(sellOrder_new));
@@ -434,8 +459,7 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
                         Toast.makeText(context, "订单修改成功！", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent();
-//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
-                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                        intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
                         context.sendBroadcast(intent);
 
                     }

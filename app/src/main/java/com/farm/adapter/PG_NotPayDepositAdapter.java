@@ -27,6 +27,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.common.utils;
+import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.PG_EditOrder_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
@@ -169,7 +170,7 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
                 {
                     SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
                     ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "1");
+                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "2");
                     myDatepicker.getDialog().show();
                 }
             });
@@ -266,7 +267,7 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
                 {
 
                     Intent intent = new Intent();
-                    intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                    intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
                     context.sendBroadcast(intent);
                 } else
                 {
@@ -360,6 +361,8 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
                 zzsl = bundle.getString("name");
                 SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
                 sellOrder_new.setActualweight(zzsl);
+                sellOrder_new.setGoodsname(sellOrder_new.getProduct());
+                sellOrder_new.setProducer(sellOrder_new.getParkname());
                 StringBuilder builder = new StringBuilder();
                 builder.append("{\"SellOrder_new\":[ ");
                 builder.append(JSON.toJSONString(sellOrder_new));
@@ -400,8 +403,7 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
                         Toast.makeText(context, "订单修改成功！", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent();
-//                        intent.setAction(AppContext.BROADCAST_DD_REFASH);
-                        intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                        intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
                         context.sendBroadcast(intent);
 
                     }

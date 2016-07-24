@@ -77,7 +77,7 @@ public class PG_SP_EditOreder extends Activity
     @ViewById
     EditText et_values;
     @ViewById
-    EditText et_name;
+    TextView et_name;
     @ViewById
     EditText et_address;
     @ViewById
@@ -116,12 +116,18 @@ public class PG_SP_EditOreder extends Activity
     TextView dd_time;
 
     @ViewById
-    EditText chanpin;
+    TextView chanpin;
 
     String cgId = "";
     String byId = "";
     String bzId = "";
     String fzrId = "";
+
+    @Click
+    void btn_back()
+    {
+        finish();
+    }
 
     @Click
     void btn_addcg()
@@ -295,40 +301,40 @@ public class PG_SP_EditOreder extends Activity
 
         SellOrder_New sellOrders = new SellOrder_New();
         sellOrders = sellOrder;
-        sellOrders.setid("");
+//        sellOrders.setid("");
         sellOrders.setUid(commembertab.getuId());
         sellOrders.setUuid(sellOrder.getUuid());
         sellOrders.setBatchTime(sellOrder.getBatchTime());
-        sellOrders.setStatus("0");
+//        sellOrders.setStatus("0");
 //        sellOrder.setBuyers(et_name.getText().toString());
         sellOrders.setBuyers(cgId);
         sellOrders.setAddress(et_address.getText().toString());
         sellOrders.setIsNeedAudit("0");
-        sellOrders.setEmail(et_email.getText().toString());
-        sellOrders.setPhone(et_phone.getText().toString());
+//        sellOrders.setEmail(et_email.getText().toString());
+//        sellOrders.setPhone(et_phone.getText().toString());
 
         sellOrders.setNumber(String.valueOf(countAllNumber()));
 
         sellOrders.setSumvalues(et_values.getText().toString());
-        sellOrders.setActualprice("");
-        sellOrders.setActualweight("");
-        sellOrders.setActualnumber("");
-        sellOrders.setActualsumvalues("");
-        sellOrders.setDeposit("0");
-        sellOrders.setReg(utils.getTime());
+//        sellOrders.setActualprice("");
+//        sellOrders.setActualweight("");
+//        sellOrders.setActualnumber("");
+//        sellOrders.setActualsumvalues("");
+//        sellOrders.setDeposit("0");
+//        sellOrders.setReg(utils.getTime());
 //        sellOrder.setSaletime(utils.getTime());
 
         sellOrders.setYear(utils.getYear());
         sellOrders.setNote(et_note.getText().toString());
         sellOrders.setXxzt("0");
-        sellOrders.setProducer(producer);
-        sellOrders.setFinalpayment("0");
+        sellOrders.setProducer(sellOrder.getProducer());
+//        sellOrders.setFinalpayment("0");
 
-        sellOrders.setPlateNumber(dd_cl.getText().toString());
-        sellOrders.setContractorId(bzId);
-        sellOrders.setPickId(byId);
+//        sellOrders.setPlateNumber(dd_cl.getText().toString());
+//        sellOrders.setContractorId(bzId);
+//        sellOrders.setPickId(byId);
 
-        sellOrders.setPackPec(bz_guige.getText().toString());
+//        sellOrders.setPackPec(bz_guige.getText().toString());
         sellOrders.setWaitDeposit(dingjin.getText().toString());
 
         if (!sellOrders.getSaletime().equals(""))
@@ -362,7 +368,7 @@ public class PG_SP_EditOreder extends Activity
         {
             sellOrders.setOldPrice(et_price.getText().toString());
         }
-        if (!sellOrders.getCarryPrice().equals(""))
+/*        if (!sellOrders.getCarryPrice().equals(""))
         {
             if (!sellOrders.getCarryPrice().equals(by_danjia.getText().toString()))
             {
@@ -371,8 +377,8 @@ public class PG_SP_EditOreder extends Activity
         } else
         {
             sellOrders.setOldCarryPrice(by_danjia.getText().toString());
-        }
-        if (!sellOrders.getPackPrice().equals(""))
+        }*/
+/*        if (!sellOrders.getPackPrice().equals(""))
         {
             if (!sellOrders.getPackPrice().equals(bz_danjia.getText().toString()))
             {
@@ -382,7 +388,7 @@ public class PG_SP_EditOreder extends Activity
         {
             sellOrders.setOldPackPrice(bz_danjia.getText().toString());
 
-        }
+        }*/
 
 
         List<SellOrder_New> SellOrderList = new ArrayList<>();
@@ -590,7 +596,7 @@ public class PG_SP_EditOreder extends Activity
         {
             dd_time.setText(sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length() - 8));
         }
-        if (!sellOrder.getOldCarryPrice().equals(""))
+/*        if (!sellOrder.getOldCarryPrice().equals(""))
         {
             by_danjia.setText(sellOrder.getOldCarryPrice());
         } else
@@ -603,15 +609,15 @@ public class PG_SP_EditOreder extends Activity
         } else
         {
             bz_danjia.setText(sellOrder.getPackPrice());
-        }
+        }*/
 
 
 //        dd_fzr.setText(sellOrder.getMainPepole());
 
         et_values.setText(sellOrder.getSumvalues());
-        dd_cl.setText(sellOrder.getPlateNumber());
-        dd_bz.setText(sellOrder.getContractorName());
-        dd_by.setText(sellOrder.getPickName());
+//        dd_cl.setText(sellOrder.getPlateNumber());
+//        dd_bz.setText(sellOrder.getContractorName());
+//        dd_by.setText(sellOrder.getPickName());
         et_address.setText(sellOrder.getAddress());
         dingjin.setText(sellOrder.getWaitDeposit());
         chanpin.setText(sellOrder.getGoodsname());

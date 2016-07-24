@@ -23,6 +23,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -71,6 +72,12 @@ public class PG_Need_Orderdetail extends Activity
     @ViewById
     TextView carryPrice;//搬运价格
 
+    @Click
+    void btn_back()
+    {
+        finish();
+    }
+
     @AfterViews
     void afterview()
     {
@@ -82,41 +89,43 @@ public class PG_Need_Orderdetail extends Activity
     {
         if (!sellOrder.getOldsaletime().equals(""))
         {
-            saletime.setText(sellOrder.getOldsaletime().substring(0,sellOrder.getOldsaletime().length()-8));
-        }else if (sellOrder.getOldsaletime().equals("")&&!sellOrder.getSaletime().equals(""))
+            saletime.setTextColor(getResources().getColor(R.color.red));
+            saletime.setText(sellOrder.getOldsaletime().substring(0, sellOrder.getOldsaletime().length() - 8));
+        } else if (sellOrder.getOldsaletime().equals("") && !sellOrder.getSaletime().equals(""))
         {
-            saletime.setText(sellOrder.getSaletime().substring(0,sellOrder.getSaletime().length()-8));
+            saletime.setText(sellOrder.getSaletime().substring(0, sellOrder.getSaletime().length() - 8));
         }
 
         if (!sellOrder.getOldPrice().equals(""))
         {
+            price.setTextColor(getResources().getColor(R.color.red));
             price.setText(sellOrder.getOldPrice());
-        }else
+        } else
         {
             price.setText(sellOrder.getPrice());
         }
-        if (!sellOrder.getOldCarryPrice().equals(""))
+     /*   if (!sellOrder.getOldCarryPrice().equals(""))
         {
             carryPrice.setText(sellOrder.getOldCarryPrice());
         }else
         {
             carryPrice.setText(sellOrder.getCarryPrice());
-        }
+        }*/
         if (!sellOrder.getOldnumber().equals(""))
         {
+            tv_planweight.setTextColor(getResources().getColor(R.color.red));
             tv_planweight.setText(sellOrder.getOldnumber());
-        }else
+        } else
         {
             tv_planweight.setText(sellOrder.getWeight());
         }
-        if (!sellOrder.getOldPackPrice().equals(""))
+/*        if (!sellOrder.getOldPackPrice().equals(""))
         {
             tv_planweight.setText(sellOrder.getOldPackPrice());
         }else
         {
             packPrice.setText(sellOrder.getPackPrice());
-        }
-
+        }*/
 
 
         tv_plansumvalues.setText(sellOrder.getPurchaName());
@@ -137,7 +146,6 @@ public class PG_Need_Orderdetail extends Activity
 
     private void getsellOrderDetailBySaleId()
     {
-
 
 
         commembertab commembertab = AppContext.getUserInfo(PG_Need_Orderdetail.this);
@@ -163,9 +171,9 @@ public class PG_Need_Orderdetail extends Activity
                         adapter_sellOrderDetail = new Adapter_New_SellDetail(PG_Need_Orderdetail.this, list_orderdetail);
                         lv.setAdapter(adapter_sellOrderDetail);
                         utils.setListViewHeight(lv);
-                        if (list_orderdetail.size()>0)
+                        if (list_orderdetail.size() > 0)
                         {
-                            tv_cbh.setText(list_orderdetail.get(0).getparkname()+"承包户产量");
+                            tv_cbh.setText(list_orderdetail.get(0).getparkname() + "承包户产量");
                         }
 
                     } else

@@ -7,13 +7,13 @@
               android:orientation="horizontal">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dip"
         android:layout_marginRight="15dip"
         android:layout_marginTop="10dip"
-        android:background="@drawable/round_white"
-        android:minHeight="120dip"
+        android:background="@color/color_orange"
         android:orientation="horizontal">
 
 
@@ -30,7 +30,7 @@
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="5dip"
-                android:background="@color/white"
+                android:background="@color/color_orange"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -71,7 +71,7 @@
                             android:layout_height="15dip"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dip"
-                            android:background="@drawable/ic_next"/>
+                            android:background="@mipmap/ic_launcher_phone"/>
                     </LinearLayout>
 
 
@@ -120,7 +120,7 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
-                android:background="@color/line_color"/>
+                android:background="@color/white"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -330,7 +330,46 @@
                         android:layout_height="15dip"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dip"
-                        android:background="@drawable/ic_next"/>
+                        android:background="@mipmap/ic_launcher_phone"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/weijiuxu"
+                android:layout_width="fill_parent"
+                android:layout_height="30dip">
+
+
+                <TextView
+                    android:id="@+id/tv_reseatip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dip"
+                    android:gravity="left"
+                    android:text="未就绪原因："
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_reseatip"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="left"
+                        android:text="搬运工未找到；挑工未找到"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"/>
+
+
                 </LinearLayout>
 
             </RelativeLayout>
