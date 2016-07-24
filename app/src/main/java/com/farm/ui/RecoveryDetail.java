@@ -468,10 +468,10 @@ public class RecoveryDetail extends Activity
     private void updateSellOrderByuuid()
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("strWhere", uuid);
-        params.addQueryStringParameter("strUpdateValues", "isReady=''");
-
-        params.addQueryStringParameter("action", "updateSellOrderByuuid");
+        params.addQueryStringParameter("strWhere","uuid='"+ uuid+"'");
+        params.addQueryStringParameter("strUpdateValues", "isReady=1");
+//        params.addQueryStringParameter("action", "updateSellOrderByuuid");
+        params.addQueryStringParameter("action", "updateSellOrder_new");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

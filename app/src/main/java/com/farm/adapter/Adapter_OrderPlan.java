@@ -121,6 +121,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
         public Button btn_editorder;
         public Button btn_changetime;
         public CircleImageView circleImageView;
+        public RelativeLayout weijiux;
     }
 
     //设置子item的组件
@@ -155,6 +156,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
+            listItemView.weijiux = (RelativeLayout) convertView.findViewById(R.id.weijiux);
 
 
 
@@ -176,10 +178,12 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
                 @Override
                 public void onClick(View v)
                 {
-//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_cash);
-//                    showDeleteTip(sellOrder_new.getUuid());
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_cash);
+                    showDeleteTip(sellOrder_new.getUuid());
                 }
             });
+
+
             listItemView.btn_preparework.setTag(R.id.tag_danwei, sellOrder_new);
             listItemView.btn_preparework.setOnClickListener(new View.OnClickListener()
             {
@@ -305,12 +309,15 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             {
                 listItemView.tv_orderstate.setTextColor(context.getResources().getColor(R.color.gray));
                 listItemView.tv_preparestatus.setTextColor(context.getResources().getColor(R.color.red));
-                if (sellOrder_new.getStatus().equals("0"))
-                {
-                    listItemView.tv_preparestatus.setText("未就绪");
-                } else
+                if (sellOrder_new.getIsReady().equals("True"))
                 {
                     listItemView.tv_preparestatus.setText("已就绪");
+                    listItemView.weijiux.setVisibility(View.GONE);
+                } else
+                {
+
+                    listItemView.tv_preparestatus.setText("未就绪");
+                    listItemView.weijiux.setVisibility(View.INVISIBLE);
                 }
 
             } else
@@ -429,8 +436,8 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             tv_paidDepositNumber.setText(listData.get(groupPosition).getPaidDepositNumber() + "单");
             tv_notreadyNumber.setText(listData.get(groupPosition).getNotreadyNumber() + "单");
             tv_readyNumber.setText(listData.get(groupPosition).getReadyNumber() + "单");
-            tv_carnumber.setText("合计" + listData.get(groupPosition).getCarNumber() + "车");
-            tv_ordernumber.setText("合计" + listData.get(groupPosition).getOrderNumber() + "单");
+            tv_carnumber.setText("当天" + listData.get(groupPosition).getCarNumber() + "车");
+            tv_ordernumber.setText("当天" + listData.get(groupPosition).getOrderNumber() + "单");
             Adapter_OrderPlan_Parentitem adapter_orderPlan_parentitem = new Adapter_OrderPlan_Parentitem(context, listData.get(groupPosition).getOrderPlanList());
             gv.setAdapter(adapter_orderPlan_parentitem);
             utils.setGridViewHeight(gv);
@@ -529,7 +536,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
                 switch (v.getId())
                 {
                     case R.id.btn_sure:
-//                        deleteSellOrderAndDetail(uuid);
+                        deleteSellOrderAndDetail(uuid);
                         break;
                     case R.id.btn_cancle:
                         myDialog.cancel();
@@ -587,6 +594,44 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
+
+
+    private void deleteSellOrderAndDetail(String uuid)
+    {
+
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uuid", uuid);
+        params.addQueryStringParameter("action", "deleteSellOrderAndDetail");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+
+                    Intent intent = new Intent();
+                    intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                    context.sendBroadcast(intent);
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+
             }
         });
     }

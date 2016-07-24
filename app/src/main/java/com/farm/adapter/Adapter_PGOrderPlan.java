@@ -122,6 +122,7 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
         public Button btn_editorder;
         public Button btn_changetime;
         public CircleImageView circleImageView;
+        public RelativeLayout weijiuxu;
     }
 
     //设置子item的组件
@@ -156,6 +157,7 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
+            listItemView.weijiuxu = (RelativeLayout) convertView.findViewById(R.id.weijiuxu);
             convertView.setTag(listItemView);
             convertView.setOnClickListener(new View.OnClickListener()
             {
@@ -178,6 +180,8 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
                     showDeleteTip(sellOrder_new.getUuid());
                 }
             });
+
+
             listItemView.btn_preparework.setTag(R.id.tag_danwei, sellOrder_new);
             listItemView.btn_preparework.setOnClickListener(new View.OnClickListener()
             {
@@ -305,12 +309,14 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
             {
                 listItemView.tv_orderstate.setTextColor(context.getResources().getColor(R.color.gray));
                 listItemView.tv_preparestatus.setTextColor(context.getResources().getColor(R.color.red));
-                if (sellOrder_new.getStatus().equals("0"))
+                if (sellOrder_new.getIsReady().equals("False"))
                 {
                     listItemView.tv_preparestatus.setText("未就绪");
+                    listItemView.weijiuxu.setVisibility(View.INVISIBLE);
                 } else
                 {
                     listItemView.tv_preparestatus.setText("已就绪");
+                    listItemView.weijiuxu.setVisibility(View.GONE);
                 }
 
             } else

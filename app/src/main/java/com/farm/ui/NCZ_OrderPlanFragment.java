@@ -388,7 +388,7 @@ public class NCZ_OrderPlanFragment extends Fragment
 //        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
                         provinceAdapter = new CustomArrayAdapter(getActivity(), park);
                         provinceSpinner.setAdapter(provinceAdapter);
-                        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
+                        provinceSpinner.setSelection(1, true);  //设置默认选中项，此处为默认选中第4个值
                         provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
                         {
                             @Override

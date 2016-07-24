@@ -5,15 +5,15 @@
               android:layout_height="wrap_content"
               android:descendantFocusability="blocksDescendants"
               android:orientation="horizontal">
-
+    <!--android:background="@drawable/round_white"-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dip"
         android:layout_marginRight="15dip"
         android:layout_marginTop="10dip"
-        android:background="@drawable/round_white"
-        android:minHeight="120dip"
+     android:background="@color/color_orange"
+
         android:orientation="horizontal">
 
 
@@ -30,10 +30,11 @@
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="5dip"
-                android:background="@color/white"
+                android:background="@color/color_orange"
                 android:orientation="horizontal">
 
                 <RelativeLayout
+                    android:background="@color/color_orange"
                     android:id="@+id/fl_dynamic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -120,7 +121,7 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
-                android:background="@color/line_color"/>
+                android:background="@color/white"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -335,7 +336,44 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/weijiux"
+                android:layout_width="fill_parent"
+                android:layout_height="30dip">
 
+
+                <TextView
+                    android:id="@+id/tv_case"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dip"
+                    android:gravity="left"
+                    android:text="未就绪原因："
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_case"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="left"
+                        android:text="搬运工未找到；挑工未找到"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -386,7 +424,7 @@
                     android:text="取消"
                     android:textColor="@color/gray"
                     android:textSize="12sp"/>
-
+                <!--android:background="@color/color_orange"-->
                 <Button
                     android:id="@+id/btn_editorder"
                     android:layout_width="40dip"
