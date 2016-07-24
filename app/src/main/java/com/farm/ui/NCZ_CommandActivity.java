@@ -49,14 +49,17 @@ public class NCZ_CommandActivity extends FragmentActivity
     Fragment mContent = new Fragment();
     NCZ_CommandFragment ncz_commandFragment;
     NCZ_CommandFragment_Finish ncz_commandFragment_finish;
+    NCZ_CommandFragment_WaitForExecute nczCommandFragmentWaitForExecute;
     @ViewById
     ImageButton btn_back;
     @ViewById
     CustomViewPager vPager;
     @ViewById
-    TextView tv_title;
+    TextView tv_ongoing;
     @ViewById
-    TextView tv_zz;
+    TextView tv_waitforexecute;
+    @ViewById
+    TextView tv_finish;
     @ViewById
     Spinner provinceSpinner;
     @ViewById
@@ -78,6 +81,7 @@ public class NCZ_CommandActivity extends FragmentActivity
     private String[] mAreaDatasMap = new String[]{"全部考核", "警告", "不合格", "合格"};
     private String[] mWorkerDatasMap = new String[]{"全部类型", "植保", "施肥"};
     private String[] mDateDatasMap = new String[]{"不限时间", "昨天", "今天", "明天"};
+
     @Click
     void btn_addcommand()
     {
@@ -100,15 +104,21 @@ public class NCZ_CommandActivity extends FragmentActivity
     }
 
     @Click
-    void tv_zz()
+    void tv_finish()
     {
-        vPager.setCurrentItem(1);
+        vPager.setCurrentItem(2);
     }
 
     @Click
-    void tv_title()
+    void tv_ongoing()
     {
         vPager.setCurrentItem(0);
+    }
+
+    @Click
+    void tv_waitforexecute()
+    {
+        vPager.setCurrentItem(1);
     }
 
     @AfterViews
@@ -125,12 +135,14 @@ public class NCZ_CommandActivity extends FragmentActivity
         joblist = getIntent().getParcelableArrayListExtra("jobtablist");
         fragmentList = new ArrayList<>();
         ncz_commandFragment = new NCZ_CommandFragment_();
-        ncz_commandFragment_finish=new NCZ_CommandFragment_Finish_();
+        ncz_commandFragment_finish = new NCZ_CommandFragment_Finish_();
+        nczCommandFragmentWaitForExecute = new NCZ_CommandFragment_WaitForExecute_();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("jobtablist", (ArrayList<? extends Parcelable>) joblist);
         ncz_commandFragment.setArguments(bundle);
         ncz_commandFragment_finish.setArguments(bundle);
         fragmentList.add(ncz_commandFragment);
+        fragmentList.add(nczCommandFragmentWaitForExecute);
         fragmentList.add(ncz_commandFragment_finish);
 
         setBackground(0);
@@ -147,12 +159,13 @@ public class NCZ_CommandActivity extends FragmentActivity
             }
         });
     }
+
     private void setSpinner()
     {
         //绑定适配器和值
         provinceAdapter = new CustomArrayAdapter(NCZ_CommandActivity.this, mProvinceDatas);
         provinceSpinner.setAdapter(provinceAdapter);
-        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
+        provinceSpinner.setSelection(1, true);  //设置默认选中项，此处为默认选中第4个值
 
         cityAdapter = new CustomArrayAdapter(NCZ_CommandActivity.this, mCitisDatasMap);
         citySpinner.setAdapter(cityAdapter);
@@ -205,15 +218,19 @@ public class NCZ_CommandActivity extends FragmentActivity
 
     private void setBackground(int pos)
     {
-        tv_zz.setBackgroundResource(R.color.white);
-        tv_title.setBackgroundResource(R.color.white);
+        tv_waitforexecute.setBackgroundResource(R.color.white);
+        tv_finish.setBackgroundResource(R.color.white);
+        tv_ongoing.setBackgroundResource(R.color.white);
         switch (pos)
         {
             case 0:
-                tv_title.setBackgroundResource(R.drawable.red_bottom);
+                tv_ongoing.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 1:
-                tv_zz.setBackgroundResource(R.drawable.red_bottom);
+                tv_waitforexecute.setBackgroundResource(R.drawable.red_bottom);
+                break;
+            case 2:
+                tv_finish.setBackgroundResource(R.drawable.red_bottom);
                 break;
         }
 
@@ -225,6 +242,7 @@ public class NCZ_CommandActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
     }
+
     public void switchContent(Fragment from, Fragment to)
     {
         if (mContent != to)

@@ -85,6 +85,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="25dip"
+            android:visibility="gone"
             android:background="@color/defaultbackground_light"
             >
 
@@ -153,7 +154,7 @@
                 android:layout_marginLeft="25dip"
                 android:gravity="center"
                 android:text="执行区域："
-                android:textColor="@color/gray"
+                android:textColor="@color/bg_text"
                 android:textSize="13sp"/>
 
 
@@ -164,7 +165,18 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/tv_area_tip"
                 android:gravity="center"
-                android:text="片区一;片区二片区三片区四"
+                android:text="片区一；片区二；片区三；"
+                android:textColor="@color/bg_text"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/tv_notexecutearea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_area"
+                android:gravity="center"
+                android:text="片区四"
                 android:textColor="@color/gray"
                 android:textSize="13sp"/>
 
@@ -174,8 +186,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="25dip"
-            android:background="@color/defaultbackground_light"
-            >
+            android:visibility="gone"
+            android:background="@color/defaultbackground_light">
 
 
             <TextView
