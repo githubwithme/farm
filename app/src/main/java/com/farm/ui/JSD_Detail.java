@@ -86,7 +86,8 @@ public class JSD_Detail extends Activity
     @Click
     void button_add()
     {
-        Intent intent = new Intent(JSD_Detail.this, PG_JSD_.class);
+//        Intent intent = new Intent(JSD_Detail.this, PG_JSD_.class);
+        Intent intent = new Intent(JSD_Detail.this, Charge_Settlement_.class);
         intent.putExtra("bean", sellOrder_new);
 //        intent.putExtra("broadcast", broadcast);
         startActivity(intent);

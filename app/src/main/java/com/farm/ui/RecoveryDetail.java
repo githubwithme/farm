@@ -449,6 +449,12 @@ public class RecoveryDetail extends Activity
                     intent.putExtra("num", listNewData.size() + "");
                     sendBroadcast(intent);
 
+                    CR_chanpin.setText("");
+                    tv_bz.setText("");
+                    tv_by.setText("");
+                    packPrice.setText("");
+                    carryPrice.setText("");
+
                 } else
                 {
                     AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");

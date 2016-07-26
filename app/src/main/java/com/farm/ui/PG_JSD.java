@@ -348,18 +348,17 @@ public class PG_JSD extends Activity
         sellOrder.setPackPec(sellOrder_new.getPackPec());
         sellOrder.setWaitDeposit(sellOrder_new.getWaitDeposit());
         sellOrder.setAddress(sellOrder_new.getAddress());
+
+
         sellOrder.setPackPrice(bz_nc_danjia.getText().toString());
         sellOrder.setCarryPrice(by_nc_danjia.getText().toString());
-        //
         sellOrder.setActualprice(jsd_zpprice.getText().toString());//  正品单价
         sellOrder.setDefectPrice(jsd_cpprice.getText().toString());//  次品单价
         sellOrder.setActualnumber(zp_jianshu.getText().toString());//  正品件数
         sellOrder.setDefectNum(cp_jianshu.getText().toString());//  次品件数
         sellOrder.setPackPec(packPec.getText().toString());//  包装规格
-
         sellOrder.setSelltype("审批结算");//  包装规格
         sellOrder.setIsNeedAudit("0");
-
         sellOrder.setQualityWaterWeight(zp_ds_zhong.getText().toString());
         sellOrder.setQualityNetWeight(zp_bds_zhong.getText().toString());
         sellOrder.setQualityBalance(zp_jsje.getText().toString());
@@ -1110,7 +1109,7 @@ public class PG_JSD extends Activity
         });
     }
 
-    //承包户
+    //采购商，搬运工，包装工
     private void getpurchaser(String name)
     {
         commembertab commembertab = AppContext.getUserInfo(PG_JSD.this);

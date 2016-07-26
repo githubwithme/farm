@@ -83,7 +83,7 @@ android {
         }
         release {
             signingConfig signingConfigs.release
-            minifyEnabled true//开启混淆
+//            minifyEnabled true//开启混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
