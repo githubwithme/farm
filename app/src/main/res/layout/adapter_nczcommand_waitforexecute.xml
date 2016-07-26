@@ -85,8 +85,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="25dip"
-            android:background="@color/defaultbackground_light"
-            >
+            android:background="@color/defaultbackground_light">
 
 
             <TextView
@@ -174,8 +173,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="25dip"
-            android:background="@color/defaultbackground_light"
-            android:visibility="gone">
+            android:background="@color/defaultbackground_light">
 
 
             <TextView
@@ -240,8 +238,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:visibility="gone"
                 android:layout_marginRight="13dip"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -298,7 +296,7 @@
                     android:layout_width="70dip"
                     android:layout_height="28dip"
                     android:background="@drawable/round_white"
-                    android:text="使用物资"
+                    android:text="物资记录"
                     android:textColor="@color/bg_text"
                     android:textSize="13sp"/>
 
@@ -308,7 +306,7 @@
                     android:layout_height="28dip"
                     android:layout_marginLeft="10dip"
                     android:background="@drawable/round_white"
-                    android:text="进行考核"
+                    android:text="考核记录"
                     android:textColor="@color/bg_text"
                     android:textSize="13sp"/>
 
@@ -316,10 +314,9 @@
                     android:id="@+id/btn_progress"
                     android:layout_width="70dip"
                     android:layout_height="28dip"
-                    android:visibility="gone"
                     android:layout_marginLeft="10dip"
                     android:background="@drawable/round_white"
-                    android:text="反馈进度"
+                    android:text="进度记录"
                     android:textColor="@color/bg_text"
                     android:textSize="13sp"/>
             </LinearLayout>

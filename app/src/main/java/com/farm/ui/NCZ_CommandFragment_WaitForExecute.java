@@ -54,7 +54,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 @EFragment
-public class NCZ_CommandFragment extends Fragment implements OnClickListener
+public class NCZ_CommandFragment_WaitForExecute extends Fragment implements OnClickListener
 {
     boolean ishidding = false;
     commembertab commembertab;
@@ -125,7 +125,7 @@ public class NCZ_CommandFragment extends Fragment implements OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_commandfragment, container, false);
+        View rootView = inflater.inflate(R.layout.ncz_commandfragment_waitforexecute, container, false);
         commembertab = AppContext.getUserInfo(getActivity());
 //        joblist = getArguments().getParcelableArrayList("jobtablist");
         appContext = (AppContext) getActivity().getApplication();
@@ -550,7 +550,7 @@ public class NCZ_CommandFragment extends Fragment implements OnClickListener
             if (lmap.get(position) == null)
             {
                 // 获取list_item布局文件的视图
-                convertView = listContainer.inflate(R.layout.adapter_nczcommand, null);
+                convertView = listContainer.inflate(R.layout.adapter_nczcommand_waitforexecute, null);
                 listItemView = new ListItemView();
                 // 获取控件对象
                 listItemView.fl_new = (FrameLayout) convertView.findViewById(R.id.fl_new);

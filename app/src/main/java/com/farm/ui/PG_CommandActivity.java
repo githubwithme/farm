@@ -54,9 +54,11 @@ public class PG_CommandActivity extends FragmentActivity
     @ViewById
     CustomViewPager vPager;
     @ViewById
-    TextView tv_title;
+    TextView tv_ongoing;
     @ViewById
-    TextView tv_zz;
+    TextView tv_waitforexecute;
+    @ViewById
+    TextView tv_finish;
     @ViewById
     Spinner provinceSpinner;
     @ViewById
@@ -100,13 +102,13 @@ public class PG_CommandActivity extends FragmentActivity
     }
 
     @Click
-    void tv_zz()
+    void tv_finish()
     {
         vPager.setCurrentItem(1);
     }
 
     @Click
-    void tv_title()
+    void tv_ongoing()
     {
         vPager.setCurrentItem(0);
     }
@@ -205,15 +207,15 @@ public class PG_CommandActivity extends FragmentActivity
 
     private void setBackground(int pos)
     {
-        tv_zz.setBackgroundResource(R.color.white);
-        tv_title.setBackgroundResource(R.color.white);
+        tv_finish.setBackgroundResource(R.color.white);
+        tv_ongoing.setBackgroundResource(R.color.white);
         switch (pos)
         {
             case 0:
-                tv_title.setBackgroundResource(R.drawable.red_bottom);
+                tv_ongoing.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 1:
-                tv_zz.setBackgroundResource(R.drawable.red_bottom);
+                tv_finish.setBackgroundResource(R.drawable.red_bottom);
                 break;
         }
 

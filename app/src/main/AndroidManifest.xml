@@ -63,6 +63,9 @@
 
         <activity android:name=".ui.PG_GoodsUsedInCommand_"/>
         <activity android:name=".ui.NCZ_CommandActivity_"/>
+        <activity android:name=".ui.NCZ_AssessActivity_"/>
+        <activity android:name=".ui.NCZ_CommandProgress_"/>
+        <activity android:name=".ui.NCZ_GoodsUsed_New_"/>
         <activity android:name=".ui.NCZ_GoodsUsed_"/>
         <activity android:name=".ui.PG_AssessActivity_"/>
         <activity android:name=".ui.NCZ_AgreementDetail_"/>
