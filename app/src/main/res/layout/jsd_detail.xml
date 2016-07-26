@@ -29,7 +29,15 @@
             android:text="结算单列表"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
-
+        <Button
+            android:layout_alignParentRight="true"
+            android:id="@+id/button_add"
+            android:layout_width="80dip"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="添加结算单"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_14"/>
 
     </RelativeLayout>
 
@@ -272,16 +280,7 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/button_add"
-            android:layout_width="match_parent"
-            android:layout_height="45dip"
-            android:layout_below="@+id/line_above"
-            android:background="@drawable/background_view_rounded_single"
-            android:gravity="center"
-            android:text="添加结算单"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14"/>
+
 
         <View
             android:id="@+id/line_bottom"

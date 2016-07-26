@@ -6,6 +6,8 @@
               android:orientation="vertical">
 
     <RelativeLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:background="@color/color_topbar">
@@ -20,6 +22,7 @@
 
 
         <LinearLayout
+
             android:id="@+id/ll_tab"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -39,6 +42,7 @@
         </LinearLayout>
 
         <Button
+            android:visibility="gone"
             android:layout_alignParentRight="true"
             android:id="@+id/btn_save"
             android:layout_width="100dip"
