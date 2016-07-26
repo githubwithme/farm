@@ -7,13 +7,13 @@ import android.os.Bundle;
  */
 public interface FragmentCallBack
 {
-    public void callbackFun1(Bundle arg);
+    void callbackFun1(Bundle arg);
 
-    public void callbackFun2(Bundle arg);
+    void callbackFun2(Bundle arg);
 
-    public void callbackFun_setText(Bundle arg);
+    void callbackFun_setText(Bundle arg);
 
-    public void stepTwo_setHeadText(Bundle arg);
+    void stepTwo_setHeadText(Bundle arg);
 
 
 

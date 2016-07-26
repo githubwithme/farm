@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_AddNotStd_Cmd_Self;
 import com.farm.bean.SelectCmdArea;
+import com.farm.bean.commandtab_single;
 import com.farm.bean.goodslisttab;
 import com.farm.bean.goodslisttab_flsl;
 import com.farm.com.custominterface.FragmentCallBack;
@@ -97,7 +98,7 @@ public class AddNotStd_Cmd_Self_new extends FragmentActivity implements Fragment
     @AfterViews
     void afterOncreate()
     {
-        commandtab_single.getInstance().clearAll();
+        com.farm.bean.commandtab_single.getInstance().clearAll();
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self_new.this, SelectCmdArea.class);
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self_new.this, goodslisttab.class);
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self_new.this, goodslisttab_flsl.class);
@@ -139,7 +140,7 @@ public class AddNotStd_Cmd_Self_new extends FragmentActivity implements Fragment
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         level = getIntent().getStringExtra("level");
-        commandtab_single.getInstance().clearAll();
+        com.farm.bean.commandtab_single.getInstance().clearAll();
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self_new.this, SelectCmdArea.class);
     }
 
@@ -320,7 +321,7 @@ public class AddNotStd_Cmd_Self_new extends FragmentActivity implements Fragment
 
     private void showExistTip()
     {
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(AddNotStd_Cmd_Self_new.this, R.style.MyDialog, dialog_layout, "取消标准生产指令", "确定取消吗？", "是", "否", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -330,7 +331,7 @@ public class AddNotStd_Cmd_Self_new extends FragmentActivity implements Fragment
                 {
                     case R.id.btn_sure:
                         myDialog.dismiss();
-                        commandtab_single.getInstance().clearAll();
+                        com.farm.bean.commandtab_single.getInstance().clearAll();
                         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self_new.this, SelectCmdArea.class);
                         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self_new.this, goodslisttab.class);
                         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self_new.this, goodslisttab_flsl.class);

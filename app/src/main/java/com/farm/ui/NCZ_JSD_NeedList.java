@@ -80,7 +80,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
     @AfterViews
     void afterview()
     {
-        customOntouch = (NCZ_JSD_NeedList) this;
+        customOntouch = this;
         getDetailSecBysettleId();
     }
     @Override

@@ -80,7 +80,7 @@ public class NCZ_CommandEvearyDayGoodsUsed extends Fragment implements CustomHor
     @AfterViews
     void afterOncreate()
     {
-        customOntouch = (NCZ_CommandEvearyDayGoodsUsed) this;
+        customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
         getBatchTimeOfPark("15");

@@ -3,6 +3,7 @@ package com.farm.ui;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -399,7 +400,7 @@ public class NCZ_MainActivity extends BaseActivity
 
 	private void showExistTip()
 	{
-		View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+		View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
 		myDialog = new MyDialog(NCZ_MainActivity.this, R.style.MyDialog, dialog_layout, "确定退出吗？", "确定退出吗？", "退出", "取消", new CustomDialogListener()
 		{
 			@Override
@@ -410,7 +411,7 @@ public class NCZ_MainActivity extends BaseActivity
 				case R.id.btn_sure:
 					myDialog.dismiss();
 					AppManager.getAppManager().AppExit(NCZ_MainActivity.this);
-					NotificationManager manger =  (NotificationManager) NCZ_MainActivity.this.getSystemService(NCZ_MainActivity.this.NOTIFICATION_SERVICE);
+					NotificationManager manger =  (NotificationManager) NCZ_MainActivity.this.getSystemService(NOTIFICATION_SERVICE);
 					manger.cancel(101);
 					manger.cancel(100);
 					break;

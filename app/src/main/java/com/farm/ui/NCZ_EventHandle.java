@@ -107,7 +107,7 @@ public class NCZ_EventHandle extends Fragment
     void btn_handle()
     {
 
-        View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "指派人员", "是否指派"+name+"处理这件事", "确认", "取消", new MyDialog.CustomDialogListener()
         {
             @Override

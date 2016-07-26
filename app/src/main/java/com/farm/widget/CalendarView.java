@@ -64,7 +64,7 @@ public class CalendarView extends View implements View.OnTouchListener
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
 	{
 		surface.width = getResources().getDisplayMetrics().widthPixels;
-		surface.height = (int) (getResources().getDisplayMetrics().heightPixels * 2 / 5);
+		surface.height = getResources().getDisplayMetrics().heightPixels * 2 / 5;
 		// if (View.MeasureSpec.getMode(widthMeasureSpec) ==
 		// View.MeasureSpec.EXACTLY) {
 		// surface.width = View.MeasureSpec.getSize(widthMeasureSpec);
@@ -309,20 +309,12 @@ public class CalendarView extends View implements View.OnTouchListener
 
 	private boolean isLastMonth(int i)
 	{
-		if (i < curStartIndex)
-		{
-			return true;
-		}
-		return false;
+		return i < curStartIndex;
 	}
 
 	private boolean isNextMonth(int i)
 	{
-		if (i >= curEndIndex)
-		{
-			return true;
-		}
-		return false;
+		return i >= curEndIndex;
 	}
 
 	private int getXByIndex(int i)

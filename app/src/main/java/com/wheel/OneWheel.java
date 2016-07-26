@@ -35,7 +35,7 @@ public class OneWheel implements OnWheelChangedListener, WheelInterface, OnWheel
 
 	public OneWheel(Context context)
 	{
-		this.context = context;
+		OneWheel.context = context;
 	}
 
 	public void setID(String iD)
@@ -50,8 +50,8 @@ public class OneWheel implements OnWheelChangedListener, WheelInterface, OnWheel
 
 	public void buildWheel(WheelView firstItemView, String[] firstItemData)
 	{
-		this.firstItemView = firstItemView;
-		this.firstItemData = firstItemData;
+		OneWheel.firstItemView = firstItemView;
+		OneWheel.firstItemData = firstItemData;
 		setUpListener();
 		setUpData();
 	}
@@ -98,7 +98,7 @@ public class OneWheel implements OnWheelChangedListener, WheelInterface, OnWheel
 			Toast.makeText(context, "请勿重复点击！", Toast.LENGTH_SHORT).show();
 		} else
 		{
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			popupWindowView = inflater.inflate(R.layout.onewheel_in_bottom, null);
 			popupWindow = new PopupWindow(popupWindowView, LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, true);
 			firstItemView = (WheelView) popupWindowView.findViewById(R.id.firstItem);
@@ -113,9 +113,9 @@ public class OneWheel implements OnWheelChangedListener, WheelInterface, OnWheel
 				public void onClick(View arg0)
 				{
 					popupWindow.dismiss();
-					tv_showfirstItemselected.setText(onewheel.getFirstItemSelected());
+					tv_showfirstItemselected.setText(getFirstItemSelected());
 					Bundle bundle = new Bundle();
-					bundle.putString("FN", onewheel.getFirstItemSelected());
+					bundle.putString("FN", getFirstItemSelected());
 					bundle.putString("FI", firstItemId[firstItemView.getCurrentItem()]);
 					tv_showfirstItemselected.setTag(bundle);
 				}
@@ -137,7 +137,7 @@ public class OneWheel implements OnWheelChangedListener, WheelInterface, OnWheel
 					// TODO Auto-generated method stub
 					// String currentText = wheel.getFirstItemSelected();
 					// strProvince = currentText;
-					setTextviewSize(onewheel.getFirstItemSelected(), arrayWheelAdapter);
+					setTextviewSize(getFirstItemSelected(), arrayWheelAdapter);
 					// String[] citys = mCitisDatasMap.get(currentText);
 					// initCitys(citys);
 					// cityAdapter = new AddressTextAdapter(context, arrCitys,
@@ -160,7 +160,7 @@ public class OneWheel implements OnWheelChangedListener, WheelInterface, OnWheel
 			@Override
 			public void onScrollingFinished(WheelView wheel)
 			{
-				setTextviewSize(onewheel.getFirstItemSelected(), arrayWheelAdapter);
+				setTextviewSize(getFirstItemSelected(), arrayWheelAdapter);
 			}
 		});
 	}

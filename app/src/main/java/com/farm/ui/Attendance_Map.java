@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -200,7 +201,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
 
     public void showPop_user(List<String> list)
     {
-        LayoutInflater layoutInflater = (LayoutInflater) Attendance_Map.this.getSystemService(Attendance_Map.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) Attendance_Map.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_attendance, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {
@@ -269,7 +270,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
 
     public void showPop_park(List<String> list_yq)
     {
-        LayoutInflater layoutInflater = (LayoutInflater) Attendance_Map.this.getSystemService(Attendance_Map.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) Attendance_Map.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_attendance, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {
@@ -754,7 +755,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
     {
         Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         View view = LayoutInflater.from(Attendance_Map.this).inflate(R.layout.marker_sale, null);
-        View view_marker = (View) view.findViewById(R.id.view_marker);
+        View view_marker = view.findViewById(R.id.view_marker);
         view_marker.setBackgroundResource(icon);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
         if (note == null || note.equals(""))
@@ -1133,7 +1134,7 @@ public class Attendance_Map extends Activity implements TencentLocationListener,
                 {
                     try
                     {
-                        timethread.sleep(AppContext.TIME_REFRESH);
+                        sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 60000;
                         getLocationInfo(commembertab.getuId());
                     } catch (InterruptedException e)

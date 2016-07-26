@@ -223,7 +223,7 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
                 AddPlantObservation_stepfour fragment4 = (AddPlantObservation_stepfour) adapter.getFragment(2);
                 Dictionary dic = fragment4.getDic();
                 AddPlantObservation_stepFive fragment3 = (AddPlantObservation_stepFive) adapter.getFragment(3);
-                List<Fragment> list_fragment = (List<Fragment>) adapter.getAllFragment();
+                List<Fragment> list_fragment = adapter.getAllFragment();
                 fragment3.updateData(list_fragment, dic);
                 break;
             case 3:
@@ -261,7 +261,7 @@ public class AddPlantObservation extends FragmentActivity implements FragmentCal
 
     private void showExistTip()
     {
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(AddPlantObservation.this, R.style.MyDialog, dialog_layout, "取消观测", "确定取消吗？", "是", "否", new MyDialog.CustomDialogListener()
         {
             @Override

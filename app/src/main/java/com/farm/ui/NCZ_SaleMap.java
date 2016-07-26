@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -1580,7 +1581,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 
     public void showDialog_OperateSalefor(final String uuid, final Marker marker)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_operatepolygon_salefor, null);
+        final View dialog_layout = LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_operatepolygon_salefor, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(NCZ_SaleMap.this, R.style.MyDialog, dialog_layout);
         Button btn_salewhole = (Button) dialog_layout.findViewById(R.id.btn_salewhole);
         Button btn_sale = (Button) dialog_layout.findViewById(R.id.btn_sale);
@@ -1973,7 +1974,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 
     public void showDialog_addsaleinfo(final LatLng centerlatLng, final List<LatLng> list_latlng_selectpart, final List<LatLng> list_latlng_notselectpart)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_addsaleifo, null);
+        final View dialog_layout = LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_addsaleifo, null);
         customDialog_addSaleInInfo = new CustomDialog_AddSaleInInfo(NCZ_SaleMap.this, R.style.MyDialog, dialog_layout);
         et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -2179,7 +2180,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 
     public void showDialog_deletetip_shoppingcart()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_deletetip, null);
+        final View dialog_layout = LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_deletetip, null);
         customdialog_deletetip = new CustomDialog(NCZ_SaleMap.this, R.style.MyDialog, dialog_layout);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -2214,7 +2215,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 
     public void showDialog_OperateSalein(final SellOrderDetail sellOrderDetail, final Marker marker)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_feedbackofsale, null);
+        final View dialog_layout = LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_feedbackofsale, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(NCZ_SaleMap.this, R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
@@ -2252,7 +2253,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 
     public void showDialog_OperateSaleOut(final String uuid, final Marker marker)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_feedbackofsale, null);
+        final View dialog_layout = LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_feedbackofsale, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(NCZ_SaleMap.this, R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
@@ -2293,7 +2294,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 
     public void showDialog_overlayInfo(final String note)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_showpolygonifo, null);
+        final View dialog_layout = LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_showpolygonifo, null);
         customDialog_overlayInfo = new CustomDialog_OverlayInfo(NCZ_SaleMap.this, R.style.MyDialog, dialog_layout);
         TextView tv_note = (TextView) dialog_layout.findViewById(R.id.tv_note);
         Button btn_close = (Button) dialog_layout.findViewById(R.id.btn_close);
@@ -2314,7 +2315,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 
     public void showDialog_editsaleininfo(final SellOrderDetail sellOrderDetail, final Marker marker)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_editsaleininfo, null);
+        final View dialog_layout = LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.customdialog_editsaleininfo, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(NCZ_SaleMap.this, R.style.MyDialog, dialog_layout);
         et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
         et_note.setText(sellOrderDetail.getplannumber());
@@ -2423,7 +2424,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 
     public void showPop_batch()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) NCZ_SaleMap.this.getSystemService(NCZ_SaleMap.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_SaleMap.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_batch = layoutInflater.inflate(R.layout.pop_batch, null);// 外层
         pv_batch.setOnKeyListener(new View.OnKeyListener()
         {
@@ -2578,7 +2579,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
 
     public void showPop_orderdetail()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) NCZ_SaleMap.this.getSystemService(NCZ_SaleMap.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_SaleMap.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_orderdetail = layoutInflater.inflate(R.layout.pop_editorderdetail, null);// 外层
 //        pv_orderdetail.setOnKeyListener(new View.OnKeyListener()
 //        {
@@ -2877,7 +2878,7 @@ public class NCZ_SaleMap extends Activity implements TencentLocationListener, Vi
     {
         Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         View view = LayoutInflater.from(NCZ_SaleMap.this).inflate(R.layout.marker_sale, null);
-        View view_marker = (View) view.findViewById(R.id.view_marker);
+        View view_marker = view.findViewById(R.id.view_marker);
         view_marker.setBackgroundResource(icon);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
         if (note == null || note.equals(""))

@@ -3,22 +3,12 @@ package com.farm.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.GridView;
 
-import com.farm.R;
-import com.farm.adapter.PQ_GV_Adapter;
-import com.farm.bean.BreakOff_New;
-import com.farm.bean.Dictionary;
 import com.farm.bean.Dictionary_wheel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by hasee on 2016/6/15.
@@ -51,7 +41,7 @@ Dictionary_wheel dictionary_wheel;
     }
     public interface CustomDialogListener
     {
-        public void OnClick(Bundle bundle);
+        void OnClick(Bundle bundle);
     }
    /* public class Dialog_ExpandableListViewAdapter extends BaseExpandableListAdapter
     {

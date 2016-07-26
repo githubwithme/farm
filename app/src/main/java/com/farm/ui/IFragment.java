@@ -230,7 +230,7 @@ public class IFragment extends Fragment
         {
 //			intent.getStringArrayExtra()
 //			View dialog_layout = (LinearLayout) LayoutInflater.from(UpdateApk.this).inflate(R.layout.customdialog_callback, null);
-            View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+            View dialog_layout = getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
             myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "系统更新", "是否系统更新?", "确认", "取消", new MyDialog.CustomDialogListener()
             {
                 @Override
@@ -401,7 +401,7 @@ public class IFragment extends Fragment
                                 Toast.makeText(getActivity(), "当前版本已经是最新版本!", Toast.LENGTH_SHORT).show();
                             } else
                             {
-                                View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                                View dialog_layout = getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                                 myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "系统更新", "是否系统更新?", "确认", "取消", new MyDialog.CustomDialogListener()
                                 {
                                     @Override

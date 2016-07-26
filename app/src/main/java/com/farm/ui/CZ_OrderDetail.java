@@ -326,7 +326,7 @@ public class CZ_OrderDetail extends Activity
 
         private void showDialog_editNumber(final int pos, final SellOrderDetail_New sellOrderDetail_new)
         {
-            final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_czeditorderdetail, null);
+            final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_czeditorderdetail, null);
             customDialog_editOrderDetaill = new CustomDialog_EditOrderDetail(context, R.style.MyDialog, dialog_layout);
             et_actualnumber = (EditText) dialog_layout.findViewById(R.id.et_actualnumber);
             et_actualweight = (EditText) dialog_layout.findViewById(R.id.et_actualweight);

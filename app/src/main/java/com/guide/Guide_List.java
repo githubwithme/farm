@@ -334,7 +334,7 @@ public class Guide_List extends FragmentActivity implements OnPageChangeListener
 						t3_icon6_animationDrawable.start();
 
 					}
-				};
+				}
 			}.sendEmptyMessageDelayed(1, 1000);// 0.5秒
 
 			t3_fixed.startAnimation(animationTop);

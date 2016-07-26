@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -385,7 +384,7 @@ public class ProductBatch_Adapter extends BaseExpandableListAdapter
 
     public void showDialog(List<String> list)
     {
-        View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override

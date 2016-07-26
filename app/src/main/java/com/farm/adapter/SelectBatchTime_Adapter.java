@@ -209,7 +209,7 @@ public class SelectBatchTime_Adapter extends BaseExpandableListAdapter
         TextView tv_allnumber = (TextView) convertView.findViewById(R.id.tv_allnumber);
         TextView tv_pb = (TextView) convertView.findViewById(R.id.tv_pb);
         ProgressBar pb = (ProgressBar) convertView.findViewById(R.id.pb);
-        View view = (View) convertView.findViewById(R.id.view);
+        View view = convertView.findViewById(R.id.view);
         view.setTag(convertView);
         view.setOnClickListener(new View.OnClickListener()
         {

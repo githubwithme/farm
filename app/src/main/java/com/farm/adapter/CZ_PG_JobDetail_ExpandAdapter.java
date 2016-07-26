@@ -242,7 +242,7 @@ public class CZ_PG_JobDetail_ExpandAdapter extends BaseExpandableListAdapter
 
     public void showDialog(List<String> list, List<String> listid, List<String> listvalues)
     {
-        View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView_Assess(context, R.style.MyDialog, dialog_layout, list, listid, listvalues, new CustomDialog_ListView_Assess.CustomDialogListener()
         {
             @Override

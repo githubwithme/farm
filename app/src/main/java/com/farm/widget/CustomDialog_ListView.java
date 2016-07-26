@@ -123,7 +123,7 @@ public class CustomDialog_ListView extends Dialog
 
     public interface CustomDialogListener
     {
-        public void OnClick(Bundle bundle);
+        void OnClick(Bundle bundle);
     }
 
 }

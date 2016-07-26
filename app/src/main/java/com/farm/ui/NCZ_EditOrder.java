@@ -788,7 +788,7 @@ public class NCZ_EditOrder extends Activity
 
         private void showDeleteTip(final SellOrderDetail_New sellOrderDetail_new)
         {
-            View dialog_layout = (LinearLayout) context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+            View dialog_layout = context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
             myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
             {
                 @Override
@@ -864,7 +864,7 @@ public class NCZ_EditOrder extends Activity
 
         private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new, final TextView textView)
         {
-            final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editorderdetail, null);
+            final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_editorderdetail, null);
             customDialog_editOrderDetaill = new CustomDialog_EditOrderDetail(context, R.style.MyDialog, dialog_layout);
             et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
             Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -957,7 +957,7 @@ public class NCZ_EditOrder extends Activity
     //采购商的弹窗
     public void showDialog_workday(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(NCZ_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -976,7 +976,7 @@ public class NCZ_EditOrder extends Activity
     //包装工
     public void showDialog_bz(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(NCZ_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -995,7 +995,7 @@ public class NCZ_EditOrder extends Activity
     //搬运工
     public void showDialog_by(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(NCZ_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -1014,7 +1014,7 @@ public class NCZ_EditOrder extends Activity
     //负责人
     public void showDialog_fzr(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = NCZ_EditOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(NCZ_EditOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override

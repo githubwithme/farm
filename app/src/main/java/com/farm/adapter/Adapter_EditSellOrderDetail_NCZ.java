@@ -201,7 +201,7 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
 //    }
     private void showDeleteTip(final SellOrderDetail_New sellOrderDetail_new)
     {
-        View dialog_layout = (LinearLayout) context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -267,7 +267,7 @@ public class Adapter_EditSellOrderDetail_NCZ extends BaseAdapter
 
     private void showDialog_editNumber(final SellOrderDetail_New sellOrderDetail_new, final TextView textView)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editorderdetail, null);
+        final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_editorderdetail, null);
         customDialog_editOrderDetaill = new CustomDialog_EditOrderDetail(context, R.style.MyDialog, dialog_layout);
         et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);

@@ -274,7 +274,7 @@ public class CustomDialog_Expandlistview extends Dialog
 
     public interface CustomDialogListener
     {
-        public void OnClick(Bundle bundle);
+        void OnClick(Bundle bundle);
     }
 
 }

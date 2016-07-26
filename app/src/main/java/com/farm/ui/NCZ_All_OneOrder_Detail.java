@@ -124,7 +124,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
     {
         getsellOrderDetailBySaleId();
         showData();
-        customOntouch = (NCZ_All_OneOrder_Detail) this;
+        customOntouch = this;
         getDetailSecBysettleId();
     }
 

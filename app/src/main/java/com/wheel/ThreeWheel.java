@@ -47,9 +47,9 @@ public class ThreeWheel implements OnWheelChangedListener, WheelInterface
 
 	public void buildWheel(WheelView firstItemView, WheelView secondItemView, WheelView thirdItemView)
 	{
-		this.firstItemView = firstItemView;
-		this.secondItemView = secondItemView;
-		this.thirdItemView = thirdItemView;
+		ThreeWheel.firstItemView = firstItemView;
+		ThreeWheel.secondItemView = secondItemView;
+		ThreeWheel.thirdItemView = thirdItemView;
 		initProvinceDatas();
 		setUpListener();
 		setUpData();
@@ -236,7 +236,7 @@ public class ThreeWheel implements OnWheelChangedListener, WheelInterface
 			Toast.makeText(context, "请勿重复点击！", Toast.LENGTH_SHORT).show();
 		} else
 		{
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			popupWindowView = inflater.inflate(R.layout.threewheel_in_bottom, null);
 			popupWindow = new PopupWindow(popupWindowView, LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, true);
 			firstItemView = (WheelView) popupWindowView.findViewById(R.id.firstItem);

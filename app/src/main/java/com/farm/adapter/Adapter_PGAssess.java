@@ -102,8 +102,8 @@ public class Adapter_PGAssess extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.adapter_pgassess_child, null);
             listItemView = new ListItemView();
             listItemView.image = (ImageView) convertView.findViewById(R.id.image);
-            listItemView.view_bottom = (View) convertView.findViewById(R.id.view_bottom);
-            listItemView.view_top = (View) convertView.findViewById(R.id.view_top);
+            listItemView.view_bottom = convertView.findViewById(R.id.view_bottom);
+            listItemView.view_top = convertView.findViewById(R.id.view_top);
             listItemView.tv_assesstype = (TextView) convertView.findViewById(R.id.tv_assesstype);
             listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
@@ -258,7 +258,7 @@ public class Adapter_PGAssess extends BaseExpandableListAdapter
 
     public void showDialog_addNewAssess()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_addnewassess, null);
+        final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_addnewassess, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);

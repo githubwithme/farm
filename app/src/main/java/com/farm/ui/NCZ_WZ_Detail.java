@@ -56,7 +56,6 @@ public class NCZ_WZ_Detail extends FragmentActivity
     void imgbtn_back()
     {
         finish();
-        ;
     }
 
     @AfterViews

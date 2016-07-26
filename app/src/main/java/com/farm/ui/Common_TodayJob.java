@@ -601,7 +601,7 @@ public class Common_TodayJob extends Fragment implements View.OnClickListener
                 } else {
                     try
                     {
-                        timethread.sleep(AppContext.TIME_REFRESH);
+                        sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getCmdNum();
                     } catch (InterruptedException e)

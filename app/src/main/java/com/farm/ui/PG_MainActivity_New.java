@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -306,7 +307,7 @@ public class PG_MainActivity_New extends Activity
 
     private void showExistTip()
     {
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(PG_MainActivity_New.this, R.style.MyDialog, dialog_layout, "确定退出吗？", "确定退出吗？", "退出", "取消", new CustomDialogListener()
         {
             @Override
@@ -317,7 +318,7 @@ public class PG_MainActivity_New extends Activity
                     case R.id.btn_sure:
                         myDialog.dismiss();
                         AppManager.getAppManager().AppExit(PG_MainActivity_New.this);
-                        NotificationManager manger = (NotificationManager) PG_MainActivity_New.this.getSystemService(PG_MainActivity_New.this.NOTIFICATION_SERVICE);
+                        NotificationManager manger = (NotificationManager) PG_MainActivity_New.this.getSystemService(NOTIFICATION_SERVICE);
                         manger.cancel(101);
                         manger.cancel(100);
                         break;

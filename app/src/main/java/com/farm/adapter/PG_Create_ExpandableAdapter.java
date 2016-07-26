@@ -249,7 +249,7 @@ public class PG_Create_ExpandableAdapter extends BaseExpandableListAdapter
 
     public void showDialog_editBreakoffinfo(final SellOrderDetail_New sellOrderDetail_new, final Button button)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editcontractsale, null);
+        final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_editcontractsale, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
         et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
         et_number.setText(sellOrderDetail_new.getplannumber());

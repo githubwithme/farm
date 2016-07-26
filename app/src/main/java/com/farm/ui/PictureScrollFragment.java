@@ -57,7 +57,7 @@ public class PictureScrollFragment extends Fragment
 			default:
 				break;
 			}
-		};
+		}
 	};
 
 	@Override

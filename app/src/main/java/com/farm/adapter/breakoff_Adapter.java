@@ -379,7 +379,7 @@ public class breakoff_Adapter extends BaseExpandableListAdapter
 
     public void showDialog_AddBreakOffInfo(final contractTab contractTab)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_addbreakoffinfo, null);
+        final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_addbreakoffinfo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(context, R.style.MyDialog, dialog_layout);
         et_numberofbreakoff = (EditText) dialog_layout.findViewById(R.id.et_numberofbreakoff);
         tv_time = (TextView) dialog_layout.findViewById(R.id.tv_time);

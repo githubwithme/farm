@@ -62,7 +62,6 @@ public class MenuScrollFragment extends Fragment implements OnClickListener
             }
         }
 
-        ;
     };
 
     @Override

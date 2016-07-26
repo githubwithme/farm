@@ -93,8 +93,8 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.adapter_pggoodsused_child, null);
             listItemView = new ListItemView();
-            listItemView.view_bottom = (View) convertView.findViewById(R.id.view_bottom);
-            listItemView.view_top = (View) convertView.findViewById(R.id.view_top);
+            listItemView.view_bottom = convertView.findViewById(R.id.view_bottom);
+            listItemView.view_top = convertView.findViewById(R.id.view_top);
             listItemView.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             listItemView.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
@@ -219,7 +219,7 @@ public class Adapter_PGGoodsUsed extends BaseExpandableListAdapter
 
     public void showDialog_addgoods()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_addgoods, null);
+        final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_addgoods, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
         ListView lv = (ListView) dialog_layout.findViewById(R.id.lv);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);

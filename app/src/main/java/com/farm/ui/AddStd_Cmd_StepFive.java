@@ -139,7 +139,7 @@ public class AddStd_Cmd_StepFive extends Fragment
 
     public void showDialog_workday(List<String> list)
     {
-        View dialog_layout = (RelativeLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = getActivity().getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(getActivity(), R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -154,7 +154,7 @@ public class AddStd_Cmd_StepFive extends Fragment
 
     public void showDialog_Importance(List<String> list_id, List<String> listdata)
     {
-        View dialog_layout = (RelativeLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = getActivity().getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(getActivity(), R.style.MyDialog, dialog_layout, listdata, list_id, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override

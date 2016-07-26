@@ -498,13 +498,7 @@ public class SqliteDb
         {
             BreakOff breakoff = db.findFirst(Selector.from(BreakOff.class).where("batchTime", "=", batchtime).and("xxzt", "=", "0"));
 
-            if (breakoff == null)
-            {
-                return false;
-            } else
-            {
-                return true;
-            }
+            return breakoff != null;
         } catch (DbException e)
         {
             e.printStackTrace();

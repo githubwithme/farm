@@ -99,7 +99,7 @@ public class PG_JobDetail extends Fragment
 
     private void showDeleteTip(final String jobID)
     {
-        View dialog_layout = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getActivity().getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(getActivity(), R.style.MyDialog, dialog_layout, "工作", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
         {
             @Override

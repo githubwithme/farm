@@ -57,7 +57,7 @@ public class VideoFragment extends Fragment implements OnScrollListener
 	// Container Activity must implement this interface
 	public interface OnVideoSelectedListener
 	{
-		public void onVideoSelected(int count);
+		void onVideoSelected(int count);
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class VideoFragment extends Fragment implements OnScrollListener
 		}
 
 		return mView;
-	};
+	}
 
 	private void initVideos(String bucketName)
 	{
@@ -190,7 +190,7 @@ public class VideoFragment extends Fragment implements OnScrollListener
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
 			{
 				GridViewAdapter adapter = (GridViewAdapter) parent.getAdapter();
-				MediaModel galleryModel = (MediaModel) adapter.getItem(position);
+				MediaModel galleryModel = adapter.getItem(position);
 				File file = new File(galleryModel.url);
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.setDataAndType(Uri.fromFile(file), "video/*");
@@ -207,7 +207,7 @@ public class VideoFragment extends Fragment implements OnScrollListener
 			{
 				// update the mStatus of each category in the adapter
 				GridViewAdapter adapter = (GridViewAdapter) parent.getAdapter();
-				MediaModel galleryModel = (MediaModel) adapter.getItem(position);
+				MediaModel galleryModel = adapter.getItem(position);
 
 				if (!galleryModel.status)
 				{

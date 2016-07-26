@@ -170,7 +170,7 @@ public class PG_JSD_Adapter extends BaseAdapter
 
     private void showDelete(final SellOrderDetail_New sellOrderDetai)
     {
-        View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "承包户产量", "是否删除这条承包户数据?", "删除", "取消", new MyDialog.CustomDialogListener()
         {
             @Override

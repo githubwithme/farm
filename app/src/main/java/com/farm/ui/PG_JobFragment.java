@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -613,7 +614,7 @@ public class PG_JobFragment extends Activity implements View.OnClickListener
                 {
                     try
                     {
-                        timethread.sleep(AppContext.TIME_REFRESH);
+                        sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getCmdNum();
                     } catch (InterruptedException e)
@@ -637,7 +638,7 @@ public class PG_JobFragment extends Activity implements View.OnClickListener
 
     public void showPop_addcommand()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) PG_JobFragment.this.getSystemService(PG_JobFragment.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) PG_JobFragment.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {

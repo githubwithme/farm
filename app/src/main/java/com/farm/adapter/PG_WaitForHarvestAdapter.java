@@ -351,7 +351,7 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
 
     public void showDialog_addsaleinfo(final String phone)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_calltip, null);
+        final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_calltip, null);
         custom_calltip = new CustomDialog_CallTip(context, R.style.MyDialog, dialog_layout);
         TextView tv_tips = (TextView) dialog_layout.findViewById(R.id.tv_tips);
         tv_tips.setText(phone + "拨打这个电话吗?");
@@ -392,7 +392,7 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
     private void showDeleteTip(final String uuid)
     {
 
-        View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -414,7 +414,7 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
 
     public void showDialog_workday(List<String> list, final SellOrder_New sellOrder_new)
     {
-        View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -489,7 +489,7 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
 
     public void showDialog_carNumber(List<String> list,final SellOrder_New sellOrder_new)
     {
-        View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override

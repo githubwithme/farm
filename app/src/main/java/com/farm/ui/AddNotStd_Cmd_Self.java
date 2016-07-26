@@ -86,7 +86,7 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
     @AfterViews
     void afterOncreate()
     {
-        commandtab_single.getInstance().clearAll();
+        com.farm.bean.commandtab_single.getInstance().clearAll();
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self.this, SelectCmdArea.class);
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self.this, goodslisttab.class);
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self.this, goodslisttab_flsl.class);
@@ -125,7 +125,7 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         level = getIntent().getStringExtra("level");
-        commandtab_single.getInstance().clearAll();
+        com.farm.bean.commandtab_single.getInstance().clearAll();
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self.this, SelectCmdArea.class);
     }
 
@@ -266,7 +266,7 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
     }
     private void showExistTip()
     {
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(AddNotStd_Cmd_Self.this, R.style.MyDialog, dialog_layout, "取消标准生产指令", "确定取消吗？", "是", "否", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -276,7 +276,7 @@ public class AddNotStd_Cmd_Self extends FragmentActivity implements FragmentCall
                 {
                     case R.id.btn_sure:
                         myDialog.dismiss();
-                        commandtab_single.getInstance().clearAll();
+                        com.farm.bean.commandtab_single.getInstance().clearAll();
                         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self.this, SelectCmdArea.class);
                         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self.this, goodslisttab.class);
                         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_Self.this, goodslisttab_flsl.class);

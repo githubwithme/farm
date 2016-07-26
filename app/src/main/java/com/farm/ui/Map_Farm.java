@@ -829,7 +829,7 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
     {
         Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.marker_sale, null);
-        View view_marker = (View) view.findViewById(R.id.view_marker);
+        View view_marker = view.findViewById(R.id.view_marker);
         view_marker.setBackgroundResource(icon);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
         if (note == null || note.equals(""))
@@ -1216,7 +1216,7 @@ public class Map_Farm extends Fragment implements TencentLocationListener, View.
                 {
                     try
                     {
-                        timethread.sleep(AppContext.TIME_REFRESH);
+                        sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 60000;
                         getLocationInfo(commembertab.getuId());
                     } catch (InterruptedException e)

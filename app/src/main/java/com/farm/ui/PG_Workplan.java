@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -172,7 +173,7 @@ public class PG_Workplan extends FragmentActivity
     }
     public void showPop_user(final List<String> list)
     {
-        LayoutInflater layoutInflater = (LayoutInflater)PG_Workplan.this.getSystemService(PG_Workplan.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater)PG_Workplan.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_attendance, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {

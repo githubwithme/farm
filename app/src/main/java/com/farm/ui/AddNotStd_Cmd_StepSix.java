@@ -176,7 +176,7 @@ AddNotStd_Cmd_new fragmentCallBack;
 //                        }
                         Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
                         getActivity().finish();
-                        commandtab_single.getInstance().clearAll();
+                        com.farm.bean.commandtab_single.getInstance().clearAll();
                         SqliteDb.deleteAllSelectCmdArea(getActivity(), SelectCmdArea.class);
                         SqliteDb.deleteAllSelectCmdArea(getActivity(), goodslisttab.class);
                         SqliteDb.deleteAllSelectCmdArea(getActivity(),goodslisttab_flsl.class);

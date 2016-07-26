@@ -466,7 +466,7 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
 
     public void showPop_addcommand()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) NCZ_CZ_TodayCommand.this.getSystemService(NCZ_CZ_TodayCommand.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_CZ_TodayCommand.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
         pv_command.setOnKeyListener(new OnKeyListener()
         {
@@ -601,7 +601,7 @@ public class NCZ_CZ_TodayCommand extends Activity implements OnClickListener
                 {
                     try
                     {
-                        timethread.sleep(AppContext.TIME_REFRESH);
+                        sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
                         timethread.setSleep(true);

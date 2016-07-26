@@ -128,7 +128,7 @@ public class CustomDialog_ListView_Assess extends Dialog
 
     public interface CustomDialogListener
     {
-        public void OnClick(Bundle bundle);
+        void OnClick(Bundle bundle);
     }
 
 }

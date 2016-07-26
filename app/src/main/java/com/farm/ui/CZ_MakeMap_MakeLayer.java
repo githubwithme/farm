@@ -1080,7 +1080,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showPop_gk()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) CZ_MakeMap_MakeLayer.this.getSystemService(CZ_MakeMap_MakeLayer.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) CZ_MakeMap_MakeLayer.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_zs, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {
@@ -1127,7 +1127,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showPop_addcommand()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) CZ_MakeMap_MakeLayer.this.getSystemService(CZ_MakeMap_MakeLayer.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) CZ_MakeMap_MakeLayer.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_zs, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {
@@ -1207,7 +1207,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_addZS()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_addzs, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_addzs, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
         et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);
@@ -1227,7 +1227,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_CXinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1304,7 +1304,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_Roadinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1383,7 +1383,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_Mianinfo(final LatLng latlng)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1460,7 +1460,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_Lineinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1543,7 +1543,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_pointinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1618,7 +1618,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_editpointinfo(final PolygonBean polygonbean)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         et_polygonnote.setText(polygonbean.getNote());
@@ -1647,7 +1647,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_pickpointinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_pickpointinfo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_pickpointinfo, null);
         showDialog_pickpointinfo = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         tv_lng = (TextView) dialog_layout.findViewById(R.id.tv_lng);
@@ -1729,7 +1729,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_pickObservationinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_pickpointinfo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_pickpointinfo, null);
         showDialog_pickpointinfo = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         tv_lng = (TextView) dialog_layout.findViewById(R.id.tv_lng);
@@ -1811,7 +1811,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_houseinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1887,7 +1887,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_polygonnote(final String note)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_showpolygonifo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_showpolygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         tv_note = (TextView) dialog_layout.findViewById(R.id.tv_note);
         btn_close = (Button) dialog_layout.findViewById(R.id.btn_close);
@@ -1907,7 +1907,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
     }
     public void showDialog_deletetip_custom(final PolygonBean polygonbean_selected, final String type)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_deletepolygon_custom, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_deletepolygon_custom, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         TextView tv_delete = (TextView) dialog_layout.findViewById(R.id.tv_delete);
@@ -1935,7 +1935,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
     }
     public void showDialog_deletetip(final PolygonBean polygonbean_selected, final String type)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_deletepolygontip, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_deletepolygontip, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         TextView tv_delete = (TextView) dialog_layout.findViewById(R.id.tv_delete);
@@ -2063,7 +2063,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_SelectOperation()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_selectoperation, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_selectoperation, null);
         customdialog_editpolygoninfor = new CustomDialog_EditPolygonInfo(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         customdialog_editpolygoninfor.setCanceledOnTouchOutside(false);
         customdialog_editpolygoninfor.setOnCancelListener(new DialogInterface.OnCancelListener()
@@ -2259,7 +2259,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_department(final List<DepartmentBean> list_department)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_editpolygoninfo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_editpolygoninfo, null);
         customdialog_editpolygoninfor = new CustomDialog_EditPolygonInfo(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         ListView lv_department = (ListView) dialog_layout.findViewById(R.id.lv_department);
         final Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -3074,7 +3074,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 
     public void showDialog_SelectWholePolygon(final LatLng latlng)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_selectwholepolygon, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_selectwholepolygon, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         Button btn_selectwhole = (Button) dialog_layout.findViewById(R.id.btn_selectwhole);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -3109,7 +3109,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
     }
     public void showDialog_OperatePolygon_Custom(final PolygonBean polygonbean_selected, final String type)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_operatepolygon, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_operatepolygon, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
@@ -3155,7 +3155,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
     }
     public void showDialog_OperatePolygon(final PolygonBean polygonbean_selected, final String type)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_operateplanmap, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_operateplanmap, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -3705,7 +3705,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
     {
         Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         View view = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.marker_sale, null);
-        View view_marker = (View) view.findViewById(R.id.view_marker);
+        View view_marker = view.findViewById(R.id.view_marker);
         view_marker.setBackgroundResource(icon);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
         if (note == null || note.equals(""))
@@ -5103,7 +5103,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
         currentpointmarker = null;//点
         listlatlng_park = new ArrayList<>();//线、面
         prelatLng_drawerparklayer = null;
-        ;//线、面
+        //线、面
         btn_addmore.setClickable(true);
 
 
@@ -5261,7 +5261,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
         currentpointmarker = null;//点
         listlatlng_park = new ArrayList<>();//线、面
         prelatLng_drawerparklayer = null;
-        ;//线、面
+        //线、面
         btn_addmore.setClickable(true);
     }
 
@@ -5343,7 +5343,7 @@ public class CZ_MakeMap_MakeLayer extends Activity implements TencentLocationLis
 //    }
     public void showDialog_overlayInfo(final String note)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_showpolygonifo, null);
+        final View dialog_layout = LayoutInflater.from(CZ_MakeMap_MakeLayer.this).inflate(R.layout.customdialog_showpolygonifo, null);
         customDialog_overlayInfo = new CustomDialog_OverlayInfo(CZ_MakeMap_MakeLayer.this, R.style.MyDialog, dialog_layout);
         TextView tv_note = (TextView) dialog_layout.findViewById(R.id.tv_note);
         Button btn_close = (Button) dialog_layout.findViewById(R.id.btn_close);

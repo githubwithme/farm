@@ -57,9 +57,9 @@ public class CustomHorizontalScrollView_PGSale extends HorizontalScrollView
 
     public interface CustomOntouch
     {
-        public void customOnTouchEvent(HorizontalScrollView horizontalScrollView);
-        public void customOnScrollChanged(int l, int t, int oldl, int oldt);
-        public HorizontalScrollView getmTouchView();
+        void customOnTouchEvent(HorizontalScrollView horizontalScrollView);
+        void customOnScrollChanged(int l, int t, int oldl, int oldt);
+        HorizontalScrollView getmTouchView();
     }
 
 }

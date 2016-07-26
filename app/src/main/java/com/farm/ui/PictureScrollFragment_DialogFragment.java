@@ -61,7 +61,6 @@ public class PictureScrollFragment_DialogFragment extends DialogFragment
             }
         }
 
-        ;
     };
 
     @Override

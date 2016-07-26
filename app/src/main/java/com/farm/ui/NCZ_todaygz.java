@@ -171,7 +171,7 @@ public class NCZ_todaygz extends Fragment
                 {
                     try
                     {
-                        timethread.sleep(AppContext.TIME_GZ);
+                        sleep(AppContext.TIME_GZ);
                         starttime = starttime + 1000;
                         getBreakOffInfoOfContract();
                     } catch (InterruptedException e)

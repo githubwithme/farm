@@ -142,7 +142,7 @@ public class Fragment_DL extends Fragment implements View.OnClickListener
 
     public void showDialog_BreakOffList()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_breakofflist, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_breakofflist, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
         btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
         btn_addBreakOffInfo = (Button) dialog_layout.findViewById(R.id.btn_addBreakOffInfo);

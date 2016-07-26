@@ -841,7 +841,7 @@ public class PG_JSD_Detail extends Activity
 
     public void showDialog_workday(List<Park_AllCBH> listData, final int g)
     {
-        View dialog_layout = (RelativeLayout) PG_JSD_Detail.this.getLayoutInflater().inflate(R.layout.customdialog_explistview, null);
+        View dialog_layout = PG_JSD_Detail.this.getLayoutInflater().inflate(R.layout.customdialog_explistview, null);
 
         customDialog_listView = new CustomDialog_Expandlistview(PG_JSD_Detail.this, R.style.cut_expand, dialog_layout, listData, new CustomDialog_Expandlistview.CustomDialogListener()
         {
@@ -1162,7 +1162,7 @@ public class PG_JSD_Detail extends Activity
     //包装工
     public void showDialog_bz(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_JSD_Detail.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = PG_JSD_Detail.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listViews = new CustomDialog_ListView(PG_JSD_Detail.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -1181,7 +1181,7 @@ public class PG_JSD_Detail extends Activity
     //搬运工
     public void showDialog_by(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_JSD_Detail.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = PG_JSD_Detail.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listViews = new CustomDialog_ListView(PG_JSD_Detail.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override

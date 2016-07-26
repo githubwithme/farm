@@ -341,7 +341,7 @@ public class NCZ_DD_SH_Detail extends Activity
     private void showDeleteTip()
     {
 
-        View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "驳回", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -470,7 +470,7 @@ public class NCZ_DD_SH_Detail extends Activity
     private void showWk()
     {
 
-        View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "订单申请免付尾款", "批准", "驳回", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -516,7 +516,7 @@ public class NCZ_DD_SH_Detail extends Activity
     private void showList()
     {
 
-        View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "订单申请免付定金?", "批准", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -563,7 +563,7 @@ public class NCZ_DD_SH_Detail extends Activity
     private void no_showDeleteTip()
     {
 
-        View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "驳回", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -636,7 +636,7 @@ public class NCZ_DD_SH_Detail extends Activity
     private void no_showWk()
     {
 
-        View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "驳回", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -682,7 +682,7 @@ public class NCZ_DD_SH_Detail extends Activity
     private void no_showList()
     {
 
-        View dialog_layout = (LinearLayout) LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "驳回", new MyDialog.CustomDialogListener()
         {
             @Override

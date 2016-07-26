@@ -75,7 +75,7 @@ public class PG_SaleActivity extends Activity implements CustomHorizontalScrollV
     {
         getActionBar().hide();
         getfarmSalesData();
-        customOntouch = (PG_SaleActivity) this;
+        customOntouch = this;
 //        getNewSaleList_test();
     }
 

@@ -298,7 +298,7 @@ public class AddStd_Cmd_StepTwo_Self_goodslistdapter extends BaseAdapter
 
     public void showDialog_flsl(final String zzs,String goodssum)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_flsl_self, null);
+        final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_flsl_self, null);
         customDialog_flsl = new CustomDialog_FLSL(context, R.style.MyDialog, dialog_layout);
         tv_dw = (TextView) dialog_layout.findViewById(R.id.tv_dw);
         tv_tip_number = (TextView) dialog_layout.findViewById(R.id.tv_tip_number);

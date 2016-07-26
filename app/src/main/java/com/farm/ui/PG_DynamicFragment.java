@@ -511,7 +511,7 @@ public class PG_DynamicFragment extends Fragment
                 {
                     try
                     {
-                        timethread.sleep(AppContext.TIME_REFRESH);
+                        sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
 //                        getDynamicData_temp();
                         getDynamicData();

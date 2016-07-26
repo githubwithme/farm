@@ -66,7 +66,7 @@ public class CZ_DLFragment extends Activity
     void startdl()
     {
 //        cz_startdl.setVisibility(View.GONE);
-        View dialog_layout = (LinearLayout) CZ_DLFragment.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = CZ_DLFragment.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(CZ_DLFragment.this, R.style.MyDialog, dialog_layout, "断蕾", "是否选择" + tv_timelimit.getText().toString() + "这个时间为开始断蕾时间？", "确认", "取消", new MyDialog.CustomDialogListener()
         {
             @Override

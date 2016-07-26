@@ -78,7 +78,7 @@ public class NCZ_Look_JSD extends Activity implements CustomHorizontalScrollView
     {
 
 
-        customOntouch = (NCZ_Look_JSD) this;
+        customOntouch = this;
         getDetailSecBysettleId();
     }
     @Override

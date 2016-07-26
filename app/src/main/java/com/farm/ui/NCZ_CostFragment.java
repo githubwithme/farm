@@ -462,7 +462,7 @@ public class NCZ_CostFragment extends Activity implements OnClickListener
 
     public void showPop_title()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) NCZ_CostFragment.this.getSystemService(NCZ_CostFragment.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_CostFragment.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_tab = layoutInflater.inflate(R.layout.popup_yq, null);// 外层
         pv_tab.setOnKeyListener(new OnKeyListener()
         {
@@ -515,7 +515,7 @@ public class NCZ_CostFragment extends Activity implements OnClickListener
 
     public void showPop_addcommand()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) NCZ_CostFragment.this.getSystemService(NCZ_CostFragment.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_CostFragment.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
         pv_command.setOnKeyListener(new OnKeyListener()
         {

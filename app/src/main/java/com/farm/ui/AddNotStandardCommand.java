@@ -252,7 +252,7 @@ public class AddNotStandardCommand extends Activity implements OnClickListener
 			Toast.makeText(AddNotStandardCommand.this, "请选择区域！", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if ((Bundle) tv_importance.getTag() != null)
+		if (tv_importance.getTag() != null)
 		{
 			importance = ((Bundle) tv_importance.getTag()).getString("FI");// 濒危度
 		} else

@@ -50,7 +50,7 @@ public class LuYinFragment extends Fragment
 	// Container Activity must implement this interface
 	public interface OnLuYinSelectedListener
 	{
-		public void onLuYinSelected(int count);
+		void onLuYinSelected(int count);
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class LuYinFragment extends Fragment
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
 			{
 				AudioListViewAdapter adapter = (AudioListViewAdapter) parent.getAdapter();
-				MediaModel galleryModel = (MediaModel) adapter.getItem(position);
+				MediaModel galleryModel = adapter.getItem(position);
 				File file = new File(galleryModel.url);
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.setDataAndType(Uri.fromFile(file), "audio/*");
@@ -182,7 +182,7 @@ public class LuYinFragment extends Fragment
 			{
 				// update the mStatus of each category in the adapter
 				AudioListViewAdapter adapter = (AudioListViewAdapter) parent.getAdapter();
-				MediaModel galleryModel = (MediaModel) adapter.getItem(position);
+				MediaModel galleryModel = adapter.getItem(position);
 
 				if (!galleryModel.status)
 				{

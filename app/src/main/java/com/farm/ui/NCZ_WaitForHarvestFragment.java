@@ -490,7 +490,7 @@ public class NCZ_WaitForHarvestFragment extends Fragment
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                                 {
                                     cgsname = listData_CG.get(i).getName();
-                                    cgsId= listData_CG.get(i).getId();;
+                                    cgsId= listData_CG.get(i).getId();
                                     getAllOrders();
                                 }
 

@@ -38,15 +38,15 @@ public class TwoWheel implements OnWheelChangedListener, WheelInterface
 
 	public TwoWheel(Context context)
 	{
-		this.context = context;
+		TwoWheel.context = context;
 	}
 
 	public void buildWheel(WheelView firstItemView, WheelView secondItemView, String[] firstItemData, HashMap<String, String[]> secondItemData)
 	{
-		this.firstItemView = firstItemView;
-		this.secondItemView = secondItemView;
-		this.firstItemData = firstItemData;
-		this.secondItemData = secondItemData;
+		TwoWheel.firstItemView = firstItemView;
+		TwoWheel.secondItemView = secondItemView;
+		TwoWheel.firstItemData = firstItemData;
+		TwoWheel.secondItemData = secondItemData;
 		setUpListener();
 		setUpData();
 	}
@@ -148,7 +148,7 @@ public class TwoWheel implements OnWheelChangedListener, WheelInterface
 			Toast.makeText(context, "请勿重复点击！", Toast.LENGTH_SHORT).show();
 		} else
 		{
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			popupWindowView = inflater.inflate(R.layout.twowheel_in_bottom, null);
 			popupWindow = new PopupWindow(popupWindowView, LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, true);
 			firstItemView = (WheelView) popupWindowView.findViewById(R.id.firstItem);
