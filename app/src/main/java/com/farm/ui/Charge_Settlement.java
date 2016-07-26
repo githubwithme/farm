@@ -142,8 +142,8 @@ public class Charge_Settlement extends Activity
         sellOrder.setDefectNetWeight(cp_jingzhong.getText().toString());//次品净重
         sellOrder.setPackPrice(bz_nc_danjia.getText().toString());//包装单价
         sellOrder.setCarryPrice(by_nc_danjia.getText().toString());//搬运单价
-        sellOrder.setContractorId(byId);
-        sellOrder.setPickId(bzId);
+        sellOrder.setContractorId(bzId);
+        sellOrder.setPickId(byId);
         StringBuilder builder = new StringBuilder();
         builder.append("{\"sellOrderSettlementlist\":[ ");
         builder.append(JSON.toJSONString(sellOrder));
@@ -170,8 +170,8 @@ public class Charge_Settlement extends Activity
         sellOrder.setDefectNetWeight(cp_jingzhong.getText().toString());//次品净重
         sellOrder.setPackPrice(bz_nc_danjia.getText().toString());//包装单价
         sellOrder.setCarryPrice(by_nc_danjia.getText().toString());//搬运单价
-        sellOrder.setContractorId(byId);
-        sellOrder.setPickId(bzId);
+        sellOrder.setContractorId(bzId);
+        sellOrder.setPickId(byId);
         updatesellOrderSettlement(sellOrder);
     }
 //添加结算单
@@ -503,10 +503,21 @@ public class Charge_Settlement extends Activity
 
     private void updatesellOrderSettlement(SellOrder_New mSellOrder)
     {
+/*      contractorId   int     包工头
+        pickId         int     挑工头
+        carryPrice    float    搬运单价
+        packPrice     float    包装单价
+        qualityWaterWeight	float	正品带水重
+        qualityNetWeight	float	正品净重
+        defectWaterWeight	float	  次品带水重
+        defectNetWeight   	float	   次品净重
+        plateNumber      varchar(50)    车牌号
+        packPec	varchar(50)	       包装规格，斤/件 1
+        */
 
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("strWhere","id="+ jsdId);
-        params.addQueryStringParameter("strUpdateValues", "isReady=1");
+        params.addQueryStringParameter("strUpdateValues", "contractorId="+mSellOrder.getContractorId() +"and pickId="+mSellOrder.getPickId() +"and carryPrice");
 //        params.addQueryStringParameter("action", "updateSellOrderByuuid");
         params.addQueryStringParameter("action", "updatesellOrderSettlement");
         HttpUtils http = new HttpUtils();
