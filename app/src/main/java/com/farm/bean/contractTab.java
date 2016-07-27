@@ -41,7 +41,17 @@ public class contractTab implements Parcelable // 与数据库不一致
     public String allnumber;
     public List<breakofftab> breakofftabList;
     public List<BreakOff_New> BreakOffList;
+    public List<BatchTime> batchTimeList;
 
+    public List<BatchTime> getBatchTimeList()
+    {
+        return batchTimeList;
+    }
+
+    public void setBatchTimeList(List<BatchTime> batchTimeList)
+    {
+        this.batchTimeList = batchTimeList;
+    }
 
     public String getContractid()
     {
@@ -304,6 +314,7 @@ public class contractTab implements Parcelable // 与数据库不一致
             p.setAllnumber(source.readString());
             p.breakofftabList = source.readArrayList(breakofftab.class.getClassLoader());
             p.BreakOffList = source.readArrayList(breakofftab.class.getClassLoader());
+            p.batchTimeList = source.readArrayList(breakofftab.class.getClassLoader());
             return p;
         }
 
@@ -339,6 +350,7 @@ public class contractTab implements Parcelable // 与数据库不一致
         p.writeString(allnumber);
         p.writeList(breakofftabList);
         p.writeList(BreakOffList);
+        p.writeList(batchTimeList);
     }
 
     @Override

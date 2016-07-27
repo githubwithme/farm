@@ -1,29 +1,34 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.NCZ_DLAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.ParkDataBean;
+import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
-import com.farm.bean.SaleDataBean;
-import com.farm.bean.commembertab;
+import com.farm.bean.Wz_Storehouse;
+import com.farm.bean.areatab;
 import com.farm.common.FileHelper;
-import com.farm.widget.CustomHorizontalScrollView;
+import com.farm.common.utils;
+import com.farm.widget.CustomHorizontalScrollView_Allitem;
+import com.farm.widget.MyDialog;
 import com.guide.DensityUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -38,26 +43,27 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ${hmj} on 2016/6/57.
  */
-@EActivity(R.layout.ncz_saleinfor)
-public class NCZ_SaleInfor extends Activity
+@EActivity(R.layout.ncz_areasaleactivity)
+public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
-    List<SaleDataBean> listData = null;
+    String parkid;
+    @ViewById
+    CustomHorizontalScrollView_Allitem item_scroll_title;
+    @ViewById
+    CustomHorizontalScrollView_Allitem totalScroll;
+    CustomHorizontalScrollView_Allitem.CustomOntouch customOntouch = null;
+
+    List<BatchTime> listData = null;
     private ListView mListView;
     public HorizontalScrollView mTouchView;
-    protected List<CustomHorizontalScrollView> mHScrollViews = new ArrayList<CustomHorizontalScrollView>();
+    protected List<CustomHorizontalScrollView_Allitem> mHScrollViews = null;
     private ScrollAdapter mAdapter;
-    //    String[] item_batchtimedata;
-//    String[] item_parkid;
     int screenWidth = 0;
-    int allnumber = 0;
-    //    List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
     @ViewById
     LinearLayout ll_park;
     @ViewById
@@ -70,61 +76,63 @@ public class NCZ_SaleInfor extends Activity
     TextView tv_top_right;
     @ViewById
     TextView tv_bottom_left;
+    private String id;
+    private String name;
+    List<Wz_Storehouse> listpeople = new ArrayList<Wz_Storehouse>();
+    PopupWindow pw_tab;
+    View pv_tab;
+    @ViewById
+    View line;
+    //    PG_CKofListAdapter pg_cKlistAdapter;
+    NCZ_DLAdapter ncz_dlAdapter;
+    com.farm.bean.commembertab commembertab;
+    MyDialog myDialog;
+    Fragment mContent = new Fragment();
+    @ViewById
+    LinearLayout cz_startdl;
+    @ViewById
+    TextView startdl;
+    @ViewById
+    TextView tv_timelimit;
+    @ViewById
+    RelativeLayout rl_view;
+
+
+    @Click
+    void btn_back()
+    {
+        finish();
+    }
+
 
     @AfterViews
     void afterOncreate()
     {
-        getActionBar().hide();
-        getfarmSalesData();
-//        getNewSaleList_test();
+        customOntouch = this;
+        item_scroll_title.setCuttomOntouch(customOntouch);
+        totalScroll.setCuttomOntouch(customOntouch);
+        getNewSaleList_test();
+//        getBatchTimeOfPark();
     }
-
-    @Click
-    void btn_createorders()
-    {
-//        Intent intent = new Intent(NCZ_SaleInfor.this, NCZ_CreateNewOrder_.class);
-        Intent intent = new Intent(NCZ_SaleInfor.this, NCZ_SelectProduct_.class);
-        startActivity(intent);
-    }
-
-
-    @Click
-    void btn_orders()
-    {
-        Intent intent = new Intent(NCZ_SaleInfor.this, NCZ_OrderManager_.class);
-        startActivity(intent);
-    }
-
-    @Click
-    void tv_more()
-    {
-        Intent intent = new Intent(NCZ_SaleInfor.this, NCZ_SaleModuleActivity_.class);
-        startActivity(intent);
-    }
-
-
-    @Click
-    void btn_customer()
-    {
-        Intent intent = new Intent(NCZ_SaleInfor.this, NCZ_CustomerContract_.class);
-        startActivity(intent);
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        getActionBar().hide();
+        commembertab = AppContext.getUserInfo(NCZ_AreaSaleActivity.this);
+        parkid = getIntent().getStringExtra("parkid");
     }
+
 
     private void getNewSaleList_test()
     {
-        listData = FileHelper.getAssetsData(NCZ_SaleInfor.this, "getsaledata", SaleDataBean.class);
+        listData = FileHelper.getAssetsData(NCZ_AreaSaleActivity.this, "getAreaSaleData", BatchTime.class);
         if (listData != null)
         {
-            DensityUtil densityUtil = new DensityUtil(NCZ_SaleInfor.this);
+            DensityUtil densityUtil = new DensityUtil(NCZ_AreaSaleActivity.this);
             screenWidth = densityUtil.getScreenWidth();
-            int size = listData.get(0).getParklist().size();
+            int size = listData.get(0).getAreatabList().size();
             if (size == 1)
             {
                 screenWidth = screenWidth / 3;
@@ -140,16 +148,19 @@ public class NCZ_SaleInfor extends Activity
             tv_bottom_left.getLayoutParams().width = (screenWidth);
             alltoatal.getLayoutParams().width = (screenWidth);
             initViews();
+            cz_startdl.setVisibility(View.GONE);
         }
 
     }
 
-    private void getfarmSalesData()
+    public void getBatchTimeOfPark()
     {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_SaleInfor.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getfarmSalesData");//jobGetList1
+        params.addQueryStringParameter("userId", commembertab.getId());
+        params.addQueryStringParameter("parkid", parkid);
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("action", "NCZ_getAreaSaleData");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -160,12 +171,12 @@ public class NCZ_SaleInfor extends Activity
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() == 0)
+                    if (result.getAffectedRows() > 0)
                     {
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SaleDataBean.class);
-                        DensityUtil densityUtil = new DensityUtil(NCZ_SaleInfor.this);
+                        listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
+                        DensityUtil densityUtil = new DensityUtil(NCZ_AreaSaleActivity.this);
                         screenWidth = densityUtil.getScreenWidth();
-                        int size = listData.get(0).getParklist().size();
+                        int size = listData.get(0).getAreatabList().size();
                         if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
@@ -181,14 +192,16 @@ public class NCZ_SaleInfor extends Activity
                         tv_bottom_left.getLayoutParams().width = (screenWidth);
                         alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
+                        cz_startdl.setVisibility(View.GONE);
+
                     } else
                     {
-                        listData = new ArrayList<SaleDataBean>();
+                        listData = new ArrayList<BatchTime>();
                     }
 
                 } else
                 {
-                    AppContext.makeToast(NCZ_SaleInfor.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectDataBase");
                     return;
                 }
 
@@ -197,44 +210,48 @@ public class NCZ_SaleInfor extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_SaleInfor.this, "error_connectServer");
+                AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectServer");
             }
         });
     }
 
     private void initViews()
     {
-        LayoutInflater inflater = (LayoutInflater) NCZ_SaleInfor.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        for (int i = 0; i < listData.get(0).getParklist().size(); i++)
+        //初始化控件及数据
+        mHScrollViews = new ArrayList<CustomHorizontalScrollView_Allitem>();
+        ll_total.removeAllViews();
+        ll_park.removeAllViews();
+        int allnumber = 0;
+        LayoutInflater inflater = (LayoutInflater) NCZ_AreaSaleActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
         {
-            View view = inflater.inflate(R.layout.saleinfo_parkitem, null);
+            View view = inflater.inflate(R.layout.areasale_parkitem, null);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
-            tv_parkname.setText(listData.get(0).getParklist().get(i).getParkname());
-            tv_parkname.setTag(listData.get(0).getParklist().get(i).getParkid());
+            tv_parkname.setText(listData.get(0).getAreatabList().get(i).getareaName());
+            tv_parkname.setTag(listData.get(0).getAreatabList().get(i).getAreaid());
             tv_parkname.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    String parkid = (String) v.getTag();
-                    Intent intent = new Intent(NCZ_SaleInfor.this, NCZ_AreaSaleActivity_.class);
-                    intent.putExtra("parkid", parkid);
-                    NCZ_SaleInfor.this.startActivity(intent);
+                    String areaid = (String) v.getTag();
+                    Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_ContractSaleData_.class);
+                    intent.putExtra("areaid", areaid);
+                    NCZ_AreaSaleActivity.this.startActivity(intent);
                 }
             });
-
             ll_park.addView(view);
         }
-        for (int i = 0; i < listData.get(0).getParklist().size(); i++)
+        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
         {
-            View view = inflater.inflate(R.layout.saleinfo_totalitem, null);
+            View view = inflater.inflate(R.layout.areasale_totalitem, null);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
             tv_total.getLayoutParams().width = (screenWidth);
             int totalnumber = 0;
             for (int j = 0; j < listData.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getParklist().get(i).getNumber());
+                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllnumber());
             }
             tv_total.setText(String.valueOf(totalnumber));
             ll_total.addView(view);
@@ -242,23 +259,22 @@ public class NCZ_SaleInfor extends Activity
         }
         alltoatal.setText(String.valueOf(allnumber));
 
-        Map<String, String> data = null;
-        CustomHorizontalScrollView headerScroll = (CustomHorizontalScrollView) findViewById(R.id.item_scroll_title);
-        CustomHorizontalScrollView totalScroll = (CustomHorizontalScrollView) findViewById(R.id.totalScroll);
+//        CustomHorizontalScrollView_Allitem headerScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.item_scroll_title);
+//        CustomHorizontalScrollView_Allitem totalScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.totalScroll);
         // 添加头滑动事件
-        mHScrollViews.add(headerScroll);
+        mHScrollViews.add(item_scroll_title);
         mHScrollViews.add(totalScroll);
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
         mAdapter = new ScrollAdapter();
         mListView.setAdapter(mAdapter);
     }
 
-    public void addHViews(final CustomHorizontalScrollView hScrollView)
+    public void addHViews(final CustomHorizontalScrollView_Allitem hScrollView)
     {
         if (!mHScrollViews.isEmpty())
         {
             int size = mHScrollViews.size();
-            CustomHorizontalScrollView scrollView = mHScrollViews.get(size - 1);
+            CustomHorizontalScrollView_Allitem scrollView = mHScrollViews.get(size - 1);
             final int scrollX = scrollView.getScrollX();
             // 第一次满屏后，向下滑动，有一条数据在开始时未加入
             if (scrollX != 0)
@@ -279,7 +295,7 @@ public class NCZ_SaleInfor extends Activity
 
     public void onScrollChanged(int l, int t, int oldl, int oldt)
     {
-        for (CustomHorizontalScrollView scrollView : mHScrollViews)
+        for (CustomHorizontalScrollView_Allitem scrollView : mHScrollViews)
         {
             // 防止重复滑动
             if (mTouchView != scrollView) scrollView.smoothScrollTo(l, t);
@@ -300,7 +316,7 @@ public class NCZ_SaleInfor extends Activity
         {
             public TextView item_titlev;
             public TextView item_total;
-            public Button btn_data;
+            public TextView tv_data;
         }
 
         @Override
@@ -321,59 +337,70 @@ public class NCZ_SaleInfor extends Activity
             return 0;
         }
 
-        HashMap<Integer, View> lmap = new HashMap<Integer, View>();
-
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            // 自定义视图
-//            if (lmap.get(position) == null)
-//            {
-            // 获取list_item布局文件的视图
-            convertView = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.scrolladapter_item, null);
+            convertView = LayoutInflater.from(NCZ_AreaSaleActivity.this).inflate(R.layout.areasale_scrolladapter_item, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
             listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            listItemView.item_titlev.setText(listData.get(position).getBatchtime());
+            listItemView.item_titlev.setText(listData.get(position).getBatchTime());
             int totalnumber = 0;
-            List<ParkDataBean> list = listData.get(position).getParklist();
+            List<areatab> list = listData.get(position).getAreatabList();
             for (int j = 0; j < list.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(list.get(j).getNumber());
+                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
             }
             listItemView.item_total.setText(String.valueOf(totalnumber));
 
-            for (int i = 0; i < listData.get(position).getParklist().size(); i++)
+            for (int i = 0; i < listData.get(position).getAreatabList().size(); i++)
             {
-                View view = LayoutInflater.from(NCZ_SaleInfor.this).inflate(R.layout.saleinfo_dataitem, null);
-                listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
-                listItemView.btn_data.setText(listData.get(position).getParklist().get(i).getNumber());
-                listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                View view = LayoutInflater.from(NCZ_AreaSaleActivity.this).inflate(R.layout.areasale_dataitem, null);
+                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
+                listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllnumber());
+                listItemView.tv_data.getLayoutParams().width = (screenWidth);
                 ll_middle.addView(view);
 
-                listItemView.btn_data.requestFocusFromTouch();
-                listItemView.btn_data.setTag(R.id.tag_kg, listData.get(position).getParklist().get(i).getParkid());
-                listItemView.btn_data.setTag(R.id.tag_hg, listData.get(position).getBatchtime());
-                listItemView.btn_data.setTag(R.id.tag_parkname, listData.get(position).getParklist().get(i).getParkname());
-                listItemView.btn_data.setOnClickListener(clickListener);
+                listItemView.tv_data.requestFocusFromTouch();
+                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
+                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllnumber());
+                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getareaName());
+                listItemView.tv_data.setOnClickListener(clickListener);
 
             }
             // 第一次初始化的时候装进来
-            addHViews((CustomHorizontalScrollView) convertView.findViewById(R.id.item_chscroll_scroll));
-            // 设置控件集到convertView
-//                lmap.put(position, convertView);
-//                convertView.setTag(listItemView);
-//            } else
-//            {
-//                convertView = lmap.get(position);
-//                listItemView = (ListItemView) convertView.getTag();
-//            }
-
+            CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
+            addHViews(customHorizontalScrollView);
+            customHorizontalScrollView.setCuttomOntouch(customOntouch);
+//            addHViews((CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll));
             return convertView;
         }
+    }
+
+    @Override
+    public void customOnTouchEvent(HorizontalScrollView horizontalScrollView)
+    {
+        mTouchView = horizontalScrollView;
+    }
+
+    @Override
+    public void customOnScrollChanged(int l, int t, int oldl, int oldt)
+    {
+        for (CustomHorizontalScrollView_Allitem scrollView : mHScrollViews)
+        {
+            // 防止重复滑动
+            if (mTouchView != scrollView) scrollView.smoothScrollTo(l, t);
+        }
+    }
+
+    @Override
+    public HorizontalScrollView getmTouchView()
+    {
+        return mTouchView;
     }
 
     // 测试点击的事件
@@ -383,16 +410,22 @@ public class NCZ_SaleInfor extends Activity
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            String batchTimes = (String) v.getTag(R.id.tag_hg);
-            String parkid = (String) v.getTag(R.id.tag_kg);
-            String parkname = (String) v.getTag(R.id.tag_parkname);
-            Intent intent = new Intent(NCZ_SaleInfor.this, NCZ_AreaSaleData_.class);
-            intent.putExtra("parkid", parkid);
-            intent.putExtra("parkname", parkname);
-            intent.putExtra("batchTime", batchTimes);
-            NCZ_SaleInfor.this.startActivity(intent);
+            String number = (String) v.getTag(R.id.tag_number);
+            String batchTimes = (String) v.getTag(R.id.tag_batchtime);
+            String areaid = (String) v.getTag(R.id.tag_areaid);
+            String areaname = (String) v.getTag(R.id.tag_areaname);
+            if (number.equals("0"))
+            {
+                Toast.makeText(NCZ_AreaSaleActivity.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
+            } else
+            {
+                Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_ContractBreakOffActivity_.class);
+                intent.putExtra("areaid", areaid);
+                intent.putExtra("areaname", areaname);
+                intent.putExtra("batchTime", batchTimes);
+                NCZ_AreaSaleActivity.this.startActivity(intent);
+            }
 
-            Toast.makeText(NCZ_SaleInfor.this, parkid + "/" + batchTimes, Toast.LENGTH_SHORT).show();
         }
     };
 }

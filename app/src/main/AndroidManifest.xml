@@ -60,7 +60,13 @@
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.NCZ_JobActivity_"/>
-
+        <activity android:name=".ui.NCZ_ContractBreakOff_"/>
+        <activity android:name=".ui.NCZ_ContractSaleData_"/>
+        <activity android:name=".ui.NCZ_AreaSaleActivity_"/>
+        <activity android:name=".ui.CZ_ContractSaleData_"/>
+        <activity android:name=".ui.CZ_AreaSaleActivity_"/>
+        <activity android:name=".ui.NCZ_SelectProduct_"/>
+        <activity android:name=".ui.NCZ_ParkBreakOff_"/>
         <activity android:name=".ui.PG_GoodsUsedInCommand_"/>
         <activity android:name=".ui.NCZ_CommandActivity_"/>
         <activity android:name=".ui.NCZ_AssessActivity_"/>

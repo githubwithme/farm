@@ -23,6 +23,7 @@ public class parktab implements Parcelable
 	public String id;
 	public String uId;
 	public String regDate;
+	public String parkId;
 	public String parkName;
 	public String plantnumber;
 	public String parkAddress;
@@ -72,6 +73,17 @@ public class parktab implements Parcelable
 	public List<areatab> areatabList;
 	public List<BatchTime> batchTimeList;
 	public List<jobtab> jobtabList;
+
+
+	public void setParkId(String parkId)
+	{
+		this.parkId = parkId;
+	}
+
+	public String getParkId()
+	{
+		return parkId;
+	}
 
 	public String getAllnumber()
 	{
@@ -585,6 +597,7 @@ public class parktab implements Parcelable
 			p.setid(source.readString());
 			p.setuId(source.readString());
 			p.setregDate(source.readString());
+			p.setParkId(source.readString());
 			p.setparkName(source.readString());
 			p.setPlantnumber(source.readString());
 			p.setparkAddress(source.readString());
@@ -643,6 +656,7 @@ public class parktab implements Parcelable
 		p.writeString(id);
 		p.writeString(uId);
 		p.writeString(regDate);
+		p.writeString(parkId);
 		p.writeString(parkName);
 		p.writeString(plantnumber);
 		p.writeString(parkAddress);
