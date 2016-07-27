@@ -331,7 +331,9 @@
                             android:layout_height="wrap_content"
                             android:src="@mipmap/img_right_red"/>
 
-                        <TextView
+                        <EditText
+                            android:focusableInTouchMode="false"
+                            android:focusable="false"
                             android:paddingRight="20dip"
                             android:id="@+id/old_time"
                             android:layout_width="0dip"
@@ -383,7 +385,7 @@
                             android:layout_height="wrap_content"
                             android:src="@mipmap/img_right_red"/>
 
-                        <TextView
+                        <EditText
                             android:paddingRight="20dip"
                             android:id="@+id/old_price"
                             android:layout_width="0dip"

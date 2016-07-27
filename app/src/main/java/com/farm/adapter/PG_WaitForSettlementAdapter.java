@@ -84,6 +84,7 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
         public Button btn_editorder;
         public Button btn_showSettlement;
         public Button btn_changetime;
+        public Button btn_complete;
         public CircleImageView circleImageView;
         public LinearLayout ll_car;
         public LinearLayout ll_unfinalpay;
@@ -141,6 +142,7 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
             listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
+            listItemView.btn_complete = (Button) convertView.findViewById(R.id.btn_complete);
             listItemView.btn_showSettlement = (Button) convertView.findViewById(R.id.btn_showSettlement);
             listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
@@ -151,7 +153,16 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
-
+            listItemView.btn_complete.setTag(R.id.tag_parentpostion,sellOrder);
+            listItemView.btn_complete.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_parentpostion);
+                    updateSellOrderByuuids(sellOrders.getUuid());
+                }
+            });
 
             listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
             listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
@@ -476,6 +487,73 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
+
+    private void updateSellOrderByuuids(final String uuid)
+    {
+
+        View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "确定完成吗?", "完成", "取消", new MyDialog.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
+                    case R.id.btn_sure:
+                        updateSellOrderByuuid(uuid);
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.cancel();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
+    private void updateSellOrderByuuid(String uuid)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("strWhere","uuid='"+ uuid+"'");
+        params.addQueryStringParameter("strUpdateValues", "status='1',selltype='已完成'");
+//        params.addQueryStringParameter("action", "updateSellOrderByuuid");
+        params.addQueryStringParameter("action", "updateSellOrderByuuid");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+
+
+                    } else
+                    {
+                        listData = new ArrayList<SellOrder_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+
             }
         });
     }

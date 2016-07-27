@@ -57,12 +57,12 @@ public class PG_JSD_Adapter extends BaseAdapter
         public EditText zhushu;
         public EditText zhengpin;
         public EditText cipin;
-        public EditText jinzhong;
+//        public EditText jinzhong;
         public Button bianjie;
         public Button shanchu;
     }
 
-    public PG_JSD_Adapter(Context context, List<SellOrderDetail_New> data,String zpzl,String cpzl)
+    public PG_JSD_Adapter(Context context, List<SellOrderDetail_New> data,String zpzl,String cpzl,String issave)
     {
         this.context = context;
         this.listContainer = LayoutInflater.from(context);
@@ -89,7 +89,7 @@ public class PG_JSD_Adapter extends BaseAdapter
             listItemView.zhushu = (EditText) convertView.findViewById(R.id.zhushu);
             listItemView.zhengpin = (EditText) convertView.findViewById(R.id.zhengpin);
             listItemView.cipin = (EditText) convertView.findViewById(R.id.cipin);
-            listItemView.jinzhong = (EditText) convertView.findViewById(R.id.jinzhong);
+//            listItemView.jinzhong = (EditText) convertView.findViewById(R.id.jinzhong);
             listItemView.bianjie = (Button) convertView.findViewById(R.id.bianjie);
             listItemView.shanchu = (Button) convertView.findViewById(R.id.shanchu);
             lmap.put(position, convertView);
@@ -112,7 +112,7 @@ public class PG_JSD_Adapter extends BaseAdapter
                 showDelete(sellOrderDetai);
             }
         });
-        listItemView.jinzhong.setText(sellOrderDetail_new.getactualweight());
+//        listItemView.jinzhong.setText(sellOrderDetail_new.getactualweight());
         listItemView.zhushu.setText(sellOrderDetail_new.getactualnumber());
         listItemView.cipin.setText(sellOrderDetail_new.getplanprice());
         listItemView.zhengpin.setText(sellOrderDetail_new.getactualprice());
@@ -120,7 +120,7 @@ public class PG_JSD_Adapter extends BaseAdapter
         listItemView.jh_zhushu.setText(sellOrderDetail_new.getplannumber());
 
         shengyuliang=(TextView) convertView.findViewById(R.id.jh_zhushu);
-        getSellOrderDetailBystrWhere(sellOrderDetail_new,shengyuliang);
+//        getSellOrderDetailBystrWhere(sellOrderDetail_new,shengyuliang);//实际株树
 
         listItemView.all_cbh.setText(sellOrderDetail_new.getareaname() + "\n" + sellOrderDetail_new.getcontractname());
 
@@ -157,7 +157,7 @@ public class PG_JSD_Adapter extends BaseAdapter
                 sellOrderDetail_new.setactualnumber(listItemViews.zhushu.getText().toString());
                 sellOrderDetail_new.setplanprice(listItemViews.cipin.getText().toString());
                 sellOrderDetail_new.setactualprice(listItemViews.zhengpin.getText().toString());
-                sellOrderDetail_new.setactualweight(listItemViews.jinzhong.getText().toString());
+//                sellOrderDetail_new.setactualweight(listItemViews.jinzhong.getText().toString());
                 StringBuilder builder = new StringBuilder();
                 builder.append("{\"SellOrderDetailSeclist\": [");
                 builder.append(JSON.toJSONString(sellOrderDetail_new));
@@ -448,8 +448,6 @@ public class PG_JSD_Adapter extends BaseAdapter
                         {
                             textView.setText(listNewData.get(0).getplannumber());
                         }
-
-
                     } else
                     {
                         listNewData = new ArrayList<SellOrderDetail_New>();

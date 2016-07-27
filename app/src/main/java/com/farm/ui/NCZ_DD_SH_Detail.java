@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,6 +28,7 @@ import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_CallTip;
+import com.farm.widget.MyDateMaD;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -64,11 +68,11 @@ public class NCZ_DD_SH_Detail extends Activity
     @ViewById
     TextView dd_time;//采收时间
     @ViewById
-    TextView old_time;//旧的时间
+    EditText old_time;//旧的时间
     @ViewById
     TextView et_price;
     @ViewById
-    TextView old_price;
+    EditText old_price;
     @ViewById
     TextView by_danjia;
     @ViewById
@@ -130,6 +134,14 @@ public class NCZ_DD_SH_Detail extends Activity
         finish();
     }
 
+
+    @Click
+    void old_time()
+    {
+
+        MyDateMaD myDatepicker = new MyDateMaD(NCZ_DD_SH_Detail.this,old_time);
+        myDatepicker.getDialog().show();
+    }
     @AfterViews
     void afview()
     {
@@ -173,8 +185,41 @@ public class NCZ_DD_SH_Detail extends Activity
             dd_edit.setVisibility(View.VISIBLE);
         }
         getData();
+        old_price.addTextChangedListener(allAcutalvalue);
+        old_weight.addTextChangedListener(allAcutalvalue);
     }
+    private TextWatcher allAcutalvalue=new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
 
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable)
+        {
+            if (old_price.getText().toString().equals(""))
+            {
+//                    Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写单价", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (old_weight.getText().toString().equals(""))
+            {
+//                    Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写重量", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            double ss = Double.valueOf(old_price.getText().toString()) * Double.valueOf(old_weight.getText().toString());
+            et_values.setText(String.format("%.2f", ss));
+
+        }
+    };
     //批准免付尾款
     @Click
     void wk_pz()
@@ -228,6 +273,9 @@ public class NCZ_DD_SH_Detail extends Activity
         sellOrder_new = getIntent().getParcelableExtra("SellOrder_New");
         String a = sellOrder_new.getBuyers();
     }
+
+
+
 
     private void getData()
     {
@@ -368,34 +416,25 @@ public class NCZ_DD_SH_Detail extends Activity
 
         sellOrder = sellOrder_new;
 
-/*        if (!sellOrder.getOldCarryPrice().equals(""))
-        {
-            sellOrder.setCarryPrice(sellOrder.getOldCarryPrice());
-            sellOrder.setOldCarryPrice("");
-        }*/
         if (!sellOrder.getOldnumber().equals(""))
         {
             sellOrder.setWeight(sellOrder.getOldnumber());
             sellOrder.setOldnumber("");
-
         }
-/*        if (!sellOrder.getOldPackPrice().equals(""))
-        {
-            sellOrder.setPackPrice(sellOrder.getOldPackPrice());
-            sellOrder.setOldPackPrice("");
 
-        }*/
-        if (!sellOrder.getOldPrice().equals(""))
+   /*     if (!sellOrder.getOldPrice().equals(""))
         {
             sellOrder.setPrice(sellOrder.getOldPrice());
             sellOrder.setOldPrice("");
-        }
-        if (!sellOrder.getOldsaletime().equals(""))
+        }*/
+/*        if (!sellOrder.getOldsaletime().equals(""))
         {
             sellOrder.setSaletime(sellOrder.getOldsaletime());
             sellOrder.setOldsaletime("");
-        }
-
+        }*/
+        sellOrder.setSaletime(old_time.getText().toString());
+        sellOrder.setPrice(old_price.getText().toString());
+        sellOrder.setSumvalues(et_values.getText().toString());
         if (sellOrder.getSelltype().equals("待审批"))
         {
             sellOrder.setSelltype("待付定金");
@@ -761,4 +800,6 @@ public class NCZ_DD_SH_Detail extends Activity
             }
         });
     }
+
+
 }

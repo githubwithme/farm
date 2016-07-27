@@ -115,6 +115,17 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String paid;//已结算金额
     public String unpaid;//未结算金额
     public String buyersPhone;//采购商电话
+    public String settlestatus;// 订单审批
+
+    public String getSettlestatus()
+    {
+        return settlestatus;
+    }
+
+    public void setSettlestatus(String settlestatus)
+    {
+        this.settlestatus = settlestatus;
+    }
 
     public String getBuyersPhone()
     {
@@ -221,6 +232,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         paid = in.readString();
         unpaid = in.readString();
         buyersPhone = in.readString();
+        settlestatus = in.readString();
     }
 
     public static final Creator<SellOrder_New> CREATOR = new Creator<SellOrder_New>()
@@ -1226,5 +1238,6 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         dest.writeString(paid);
         dest.writeString(unpaid);
         dest.writeString(buyersPhone);
+        dest.writeString(settlestatus);
     }
 }

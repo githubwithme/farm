@@ -111,6 +111,11 @@ public class RecoveryDetail extends Activity
         {
 
         }*/
+
+        if (sellOrder_new.getIsReady().equals("False"))
+        {
+            btn_save.setVisibility(View.VISIBLE);
+        }
         getDetailSecBysettleId();
         getpurchaser();
     }

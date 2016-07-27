@@ -32,6 +32,8 @@ import org.androidannotations.annotations.ViewById;
 import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hasee on 2016/7/19.
@@ -130,6 +132,8 @@ public class NCZ__NeedOrder_Detail extends Activity
 
     @ViewById
     LinearLayout ll_cbhlist;//承包户
+    // @ViewById
+    LinearLayout is_jsd;//
 
     @ViewById
     LinearLayout ll_jsd;//结算单统计
@@ -144,22 +148,46 @@ public class NCZ__NeedOrder_Detail extends Activity
     SellOrder_New sellOrder_new;
 
     @Click
+    void is_jsd()
+    {
+        if (ll_jsd.isShown())
+        {
+            ll_jsd.setVisibility(View.VISIBLE);
+        }else
+        {
+            ll_jsd.setVisibility(View.GONE);
+        }
+    }
+    @Click
+    void isgoods_xx()
+    {
+        if (goods_xx.isShown())
+        {
+            goods_xx.setVisibility(View.VISIBLE);
+        }else
+        {
+            goods_xx.setVisibility(View.GONE);
+        }
+    }
+
+    @Click
     void button_yes()
     {
-        SellOrder_New sellOrder = new SellOrder_New();
+/*        SellOrder_New sellOrder = new SellOrder_New();
         sellOrder=sellOrder_new;
         sellOrder.setIsNeedAudit("1");
         StringBuilder builder = new StringBuilder();
         builder.append("{\"sellOrderSettlementlist\":[ ");
         builder.append(JSON.toJSONString(sellOrder));
         builder.append("]} ");
-        updatesellOrderSettlement(builder.toString());
+        updatesellOrderSettlement(builder.toString());*/
     }
+
     @Click
     void button_no()
     {
         SellOrder_New sellOrder = new SellOrder_New();
-        sellOrder=sellOrder_new;
+        sellOrder = sellOrder_new;
         sellOrder.setIsNeedAudit("-1");
         StringBuilder builder = new StringBuilder();
         builder.append("{\"sellOrderSettlementlist\":[ ");
@@ -168,6 +196,7 @@ public class NCZ__NeedOrder_Detail extends Activity
         updatesellOrderSettlement(builder.toString());
 
     }
+
     @AfterViews
     void afterview()
     {
@@ -211,6 +240,7 @@ public class NCZ__NeedOrder_Detail extends Activity
             utils.setListViewHeight(frame_listview_news);
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -218,6 +248,7 @@ public class NCZ__NeedOrder_Detail extends Activity
         getActionBar().hide();
         sellOrder_new = getIntent().getParcelableExtra("bean");
     }
+
     private void updatesellOrderSettlement(String data)
     {
         RequestParams params = new RequestParams();
@@ -262,6 +293,53 @@ public class NCZ__NeedOrder_Detail extends Activity
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(NCZ__NeedOrder_Detail.this, "error_connectServer");
+            }
+        });
+    }
+
+    //修改
+    private void updatesellOrderSettlement(SellOrder_New mSellOrder)
+    {
+
+
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("strWhere", "id=" + mSellOrder.getid());
+        params.addQueryStringParameter("strUpdateValues", "  qualityWaterWeight=" + mSellOrder.getQualityWaterWeight() + " , qualityNetWeight=" + mSellOrder.getQualityNetWeight() + " , defectWaterWeight=" + mSellOrder.getDefectWaterWeight() + ",defectNetWeight=" + mSellOrder.getDefectNetWeight() + " , plateNumber='" + mSellOrder.getPlateNumber()
+                + "' ");
+        params.addQueryStringParameter("action", "updatesellOrderSettlement");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+
+                    } else
+                    {
+                        listData = new ArrayList<SellOrder_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ__NeedOrder_Detail.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ__NeedOrder_Detail.this, "error_connectServer");
+
             }
         });
     }

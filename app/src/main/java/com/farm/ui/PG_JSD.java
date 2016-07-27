@@ -1423,7 +1423,7 @@ public class PG_JSD extends Activity
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
 
 
-                        pg_jsd_adapter = new PG_JSD_Adapter(PG_JSD.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight());
+                        pg_jsd_adapter = new PG_JSD_Adapter(PG_JSD.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight(),"1");
                         frame_listview_news.setAdapter(pg_jsd_adapter);
                         utils.setListViewHeight(frame_listview_news);
                         shouData(listNewData);

@@ -233,6 +233,7 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                     sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
                     Intent intent = new Intent(context, RecoveryDetail_.class);
                     intent.putExtra("uuid", sellOrder_new.getUuid());
+                    intent.putExtra("bean", sellOrder_new);
                     context.startActivity(intent);
                 }
             });
