@@ -73,7 +73,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
 
     public interface Callback
     {
-        public void click(View v);
+        void click(View v);
     }
 
     public PG_scheduleOrderAdapter(Context context, List<SellOrder_New> data, String broadcast)
@@ -116,7 +116,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_state = (TextView) convertView.findViewById(R.id.tv_state);
-            listItemView.view_top = (View) convertView.findViewById(R.id.view_top);
+            listItemView.view_top = convertView.findViewById(R.id.view_top);
             listItemView.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
             listItemView.tv_sum = (TextView) convertView.findViewById(R.id.tv_sum);
             listItemView.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
@@ -312,7 +312,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
 
     public void showDialog_addsaleinfo(final String phone)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_calltip, null);
+        final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_calltip, null);
         custom_calltip = new CustomDialog_CallTip(context, R.style.MyDialog, dialog_layout);
         TextView tv_tips = (TextView) dialog_layout.findViewById(R.id.tv_tips);
         tv_tips.setText(phone + "拨打这个电话吗?");
@@ -353,7 +353,7 @@ public class PG_scheduleOrderAdapter extends BaseAdapter
     private void showDeleteTip(final String uuid)
     {
 
-        View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
         {
             @Override

@@ -489,12 +489,8 @@ public class utils
         boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         // 通过WLAN或移动网络(3G/2G)确定的位置（也称作AGPS，辅助GPS定位。主要用于在室内或遮盖物（建筑群或茂密的深林等）密集的地方定位）
         boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        if (gps || network)
-        {
-            return true;
-        }
+        return gps || network;
 
-        return false;
     }
 
     /**
@@ -574,7 +570,7 @@ public class utils
         NumberFormat numberFormat = NumberFormat.getInstance();
         // 设置精确到小数点后2位
         numberFormat.setMaximumFractionDigits(0);
-        String result = numberFormat.format((float) a / (float) b * 100);
+        String result = numberFormat.format(a / b * 100);
         return result;
     }
 
@@ -968,9 +964,7 @@ public class utils
 
     public static boolean between(float a, float b, float target)
     {
-        if (target >= a - 0.01 && target <= b + 0.01 || target <= a + 0.01 && target >= b - 0.01)
-            return true;
-        else return false;
+        return target >= a - 0.01 && target <= b + 0.01 || target <= a + 0.01 && target >= b - 0.01;
     }
 
     public static double getDistance(float x1, float y1, float x2, float y2)

@@ -126,7 +126,7 @@ public class Event_Process extends FragmentActivity
     @Click
     void tv_delete()
     {
-        View dialog_layout = (LinearLayout) Event_Process.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = Event_Process.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(Event_Process.this, R.style.MyDialog, dialog_layout, "事件", "是否确认事件处理完成?", "是", "否", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -780,7 +780,7 @@ public class Event_Process extends FragmentActivity
 
     public void zhipairen()
     {
-        View dialog_layout = (LinearLayout) Event_Process.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = Event_Process.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(Event_Process.this, R.style.MyDialog, dialog_layout, "指派人员", "是否指派" + name + "处理这件事", "确认", "取消", new MyDialog.CustomDialogListener()
         {
             @Override

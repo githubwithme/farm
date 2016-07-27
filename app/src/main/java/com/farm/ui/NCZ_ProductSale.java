@@ -141,7 +141,7 @@ public class NCZ_ProductSale extends Activity
      */
     public interface MyTouchListener
     {
-        public void onTouchEvent(MotionEvent event);
+        void onTouchEvent(MotionEvent event);
     }
 
     /*

@@ -68,7 +68,7 @@ public class MyDialog extends Dialog implements OnClickListener
 
 	public interface CustomDialogListener
 	{
-		public void OnClick(View view);
+		void OnClick(View view);
 	}
 
 	@Override

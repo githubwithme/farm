@@ -83,7 +83,13 @@ android {
         }
         release {
             signingConfig signingConfigs.release
-//            minifyEnabled true//开启混淆
+            minifyEnabled true//开启混淆
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

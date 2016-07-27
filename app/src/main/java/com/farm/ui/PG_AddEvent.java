@@ -167,7 +167,7 @@ public class PG_AddEvent extends Activity {
     }
     public void showDialog_workday(List<String> list)
     {
-        View dialog_layout = (RelativeLayout) PG_AddEvent.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = PG_AddEvent.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(PG_AddEvent.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -210,7 +210,7 @@ public class PG_AddEvent extends Activity {
                     public void onClick(View v)
                     {
                         final int index_zp = ll_picture.indexOfChild(v);
-                        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                         myDialog = new MyDialog(PG_AddEvent.this, R.style.MyDialog, dialog_layout, "图片", "删除该图片?", "查看", "删除", new MyDialog.CustomDialogListener()
                         {
                             @Override
@@ -286,7 +286,7 @@ public class PG_AddEvent extends Activity {
                     public void onClick(View v)
                     {
                         final int index_zp = ll_video.indexOfChild(v);
-                        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                         myDialog = new MyDialog(PG_AddEvent.this, R.style.MyDialog, dialog_layout, "图片", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
                         {
                             @Override

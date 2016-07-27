@@ -50,7 +50,7 @@ public class ImageFragment extends Fragment
 	// Container Activity must implement this interface
 	public interface OnImageSelectedListener
 	{
-		public void onImageSelected(int count);
+		void onImageSelected(int count);
 	}
 
 	@Override
@@ -169,7 +169,7 @@ public class ImageFragment extends Fragment
 			{
 
 				GridViewAdapter adapter = (GridViewAdapter) parent.getAdapter();
-				MediaModel galleryModel = (MediaModel) adapter.getItem(position);
+				MediaModel galleryModel = adapter.getItem(position);
 				File file = new File(galleryModel.url);
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.setDataAndType(Uri.fromFile(file), "image/*");
@@ -186,7 +186,7 @@ public class ImageFragment extends Fragment
 			{
 				// update the mStatus of each category in the adapter
 				GridViewAdapter adapter = (GridViewAdapter) parent.getAdapter();
-				MediaModel galleryModel = (MediaModel) adapter.getItem(position);
+				MediaModel galleryModel = adapter.getItem(position);
 
 				if (!galleryModel.status)
 				{

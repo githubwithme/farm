@@ -90,7 +90,7 @@ public class ShowPlant extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        planttab = (planttab) getIntent().getParcelableExtra("bean");
+        planttab = getIntent().getParcelableExtra("bean");
         otherFragment = new OtherFragment();
         foundationFragment = new FoundationFragment();
         treeFragment = new TreeFragment_();
@@ -328,7 +328,7 @@ public class ShowPlant extends Activity
 
     private void showDeleteTip(final String plantID)
     {
-        View dialog_layout = (LinearLayout) ShowPlant.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = ShowPlant.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(ShowPlant.this, R.style.MyDialog, dialog_layout, "植株", "确定删除吗?", "删除", "取消", new CustomDialogListener()
         {
             @Override

@@ -149,7 +149,7 @@ Button btn_delete;
 
     private void showDeleteTip(final String cmdid, final String statusID)
     {
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(CommandDetail_Edit.this, R.style.MyDialog, dialog_layout, "图片", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
         {
             @Override

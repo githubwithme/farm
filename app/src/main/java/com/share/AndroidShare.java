@@ -175,7 +175,7 @@ public class AndroidShare extends Dialog implements AdapterView.OnItemClickListe
 		List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
 		for (int i = 0; i < pinfo.size(); i++)
 		{
-			if (((PackageInfo) pinfo.get(i)).packageName.equalsIgnoreCase(packageName))
+			if (pinfo.get(i).packageName.equalsIgnoreCase(packageName))
 				return true;
 		}
 		return false;
@@ -230,7 +230,7 @@ public class AndroidShare extends Dialog implements AdapterView.OnItemClickListe
 
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
-		ShareItem share = (ShareItem) this.mListData.get(position);
+		ShareItem share = this.mListData.get(position);
 		shareMsg(getContext(), "分享到...", this.msgText, this.mImgPath, share);
 	}
 
@@ -373,7 +373,7 @@ public class AndroidShare extends Dialog implements AdapterView.OnItemClickListe
 			}
 			ImageView iv = (ImageView) convertView.findViewById(image_id);
 			TextView tv = (TextView) convertView.findViewById(tv_id);
-			AndroidShare.ShareItem item = (AndroidShare.ShareItem) mListData.get(position);
+			AndroidShare.ShareItem item = mListData.get(position);
 			iv.setImageResource(item.logo);
 			tv.setText(item.title);
 			return convertView;

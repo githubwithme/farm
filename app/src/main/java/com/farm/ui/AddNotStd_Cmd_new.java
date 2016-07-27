@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.farm.R;
 import com.farm.adapter.ViewPagerAdapter_AddNotStd_Cmd;
 import com.farm.bean.SelectCmdArea;
+import com.farm.bean.commandtab_single;
 import com.farm.bean.goodslisttab;
 import com.farm.bean.goodslisttab_flsl;
 import com.farm.com.custominterface.FragmentCallBack;
@@ -104,7 +105,7 @@ public class AddNotStd_Cmd_new extends FragmentActivity implements FragmentCallB
 
     @AfterViews
     void afterOncreate() {
-        commandtab_single.getInstance().clearAll();
+        com.farm.bean.commandtab_single.getInstance().clearAll();
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_new.this, SelectCmdArea.class);
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_new.this, goodslisttab.class);
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_new.this, goodslisttab_flsl.class);
@@ -144,7 +145,7 @@ public class AddNotStd_Cmd_new extends FragmentActivity implements FragmentCallB
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         level = getIntent().getStringExtra("level");
-        commandtab_single.getInstance().clearAll();
+        com.farm.bean.commandtab_single.getInstance().clearAll();
         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_new.this, SelectCmdArea.class);
     }
 
@@ -335,14 +336,14 @@ public class AddNotStd_Cmd_new extends FragmentActivity implements FragmentCallB
     }
 
     private void showExistTip() {
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(AddNotStd_Cmd_new.this, R.style.MyDialog, dialog_layout, "取消非标准生产指令", "确定取消吗？", "是", "否", new MyDialog.CustomDialogListener() {
             @Override
             public void OnClick(View v) {
                 switch (v.getId()) {
                     case R.id.btn_sure:
                         myDialog.dismiss();
-                        commandtab_single.getInstance().clearAll();
+                        com.farm.bean.commandtab_single.getInstance().clearAll();
                         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_new.this, SelectCmdArea.class);
                         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_new.this, goodslisttab.class);
                         SqliteDb.deleteAllSelectCmdArea(AddNotStd_Cmd_new.this, goodslisttab_flsl.class);

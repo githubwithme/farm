@@ -536,7 +536,7 @@ public class NCZ_CreateNewFarmOrder extends Activity
 
     public void showDialog_workday(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) NCZ_CreateNewFarmOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = NCZ_CreateNewFarmOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(NCZ_CreateNewFarmOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -638,7 +638,7 @@ public class NCZ_CreateNewFarmOrder extends Activity
 
     private void cancleOrder()
     {
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(NCZ_CreateNewFarmOrder.this, R.style.MyDialog, dialog_layout, "取消订单", "取消订单吗？", "取消", "不取消", new MyDialog.CustomDialogListener()
         {
             @Override

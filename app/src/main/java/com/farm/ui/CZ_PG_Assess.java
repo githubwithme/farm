@@ -588,7 +588,7 @@ public class CZ_PG_Assess extends Activity
 
     public void showDialog_workday(List<String> list)
     {
-        View dialog_layout = (RelativeLayout) CZ_PG_Assess.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = CZ_PG_Assess.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(CZ_PG_Assess.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -603,7 +603,7 @@ public class CZ_PG_Assess extends Activity
 
     private void showExistTip(String score)
     {
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(CZ_PG_Assess.this, R.style.MyDialog, dialog_layout, "评分", "综合评分为" + score + "分，" + "确定评分？", "确定", "取消", new MyDialog.CustomDialogListener()
         {
             @Override

@@ -320,7 +320,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
 
     public void showDialog_flsl(final String zzs, final String goodssum)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_pg_ck, null);
+        final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_pg_ck, null);
 //        final View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_pg_cks, null);
         customDialog_flsl = new CustomDialog_FLSL(context, R.style.MyDialog, dialog_layout);
         tv_dw = (TextView) dialog_layout.findViewById(R.id.tv_dw);
@@ -332,7 +332,7 @@ public class PG_CKAdapter_goodslistdapter extends BaseAdapter
         et_flsl = (EditText) dialog_layout.findViewById(R.id.et_flsl);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         storehouse = (TextView) dialog_layout.findViewById(R.id.storehouse);
-        tv_line = (View) dialog_layout.findViewById(R.id.tv_line);
+        tv_line = dialog_layout.findViewById(R.id.tv_line);
         //
 //        btn_add= (ImageButton) dialog_layout.findViewById(R.id.btn_add);
 //        ll_bottems= (LinearLayout) dialog_layout.findViewById(R.id.ll_bottems);

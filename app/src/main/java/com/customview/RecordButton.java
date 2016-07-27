@@ -366,7 +366,7 @@ public class RecordButton extends Button
 
 	public interface RecordListener
 	{
-		public void recordEnd();
+		void recordEnd();
 	}
 
 	// 以当前时间作为文件名

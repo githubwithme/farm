@@ -59,7 +59,6 @@ WZ_Detail goods;
     @Click
     void imgbtn_back() {
         finish();
-        ;
     }
     @AfterViews
     void afteroncreate() {

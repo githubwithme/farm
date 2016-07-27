@@ -145,7 +145,7 @@ public class PG_CK extends Activity
 
     public void showDialog_workday(List<String> list)
     {
-        View dialog_layout = (RelativeLayout) PG_CK.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = PG_CK.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(PG_CK.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override

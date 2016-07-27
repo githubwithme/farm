@@ -86,8 +86,6 @@ public class BreakOff implements Parcelable
 		return xxzt;
 	}
 
-	;
-
 
 	public void setBatchTime(String batchTime)
 	{

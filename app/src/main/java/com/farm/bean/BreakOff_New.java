@@ -97,8 +97,6 @@ public class BreakOff_New implements Parcelable
 		return xxzt;
 	}
 
-	;
-
 
 	public void setBatchTime(String batchTime)
 	{

@@ -153,7 +153,7 @@ public class NCZ_EventDatails extends Activity{
     {
 
 //        delete();
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "事件删除", "是否确认删除?", "确认", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -278,7 +278,7 @@ public class NCZ_EventDatails extends Activity{
 
 
     public void showDialog_workday(List<String> list) {
-        View dialog_layout = (RelativeLayout) NCZ_EventDatails.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = NCZ_EventDatails.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener() {
             @Override
             public void OnClick(Bundle bundle) {
@@ -516,7 +516,7 @@ public class NCZ_EventDatails extends Activity{
                         public void onClick(View v)
                         {
                             final int index_zp = ll_video.indexOfChild(v);
-                            View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                            View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                             myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "取消", new MyDialog.CustomDialogListener()
                             {
                                 @Override
@@ -576,7 +576,7 @@ public class NCZ_EventDatails extends Activity{
                     public void onClick(View v)
                     {
                         final int index_zp = ll_video.indexOfChild(v);
-                        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                         myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
                         {
                             @Override
@@ -637,7 +637,7 @@ public class NCZ_EventDatails extends Activity{
                     public void onClick(View v)
                     {
                         final int index_zp = ll_picture.indexOfChild(v);
-                        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                         myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener()
                         {
                             @Override
@@ -696,7 +696,7 @@ public class NCZ_EventDatails extends Activity{
                     public void onClick(View v)
                     {
                         final int index_zp = ll_video.indexOfChild(v);
-                        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                         myDialog = new MyDialog(NCZ_EventDatails.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "删除", new MyDialog.CustomDialogListener()
                         {
                             @Override

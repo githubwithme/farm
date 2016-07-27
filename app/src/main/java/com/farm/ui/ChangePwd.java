@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -107,7 +108,7 @@ public class ChangePwd extends Activity
 
 	private void CleanLoginInfo()
 	{
-		SharedPreferences sp = ChangePwd.this.getSharedPreferences("userInfo", ChangePwd.this.MODE_PRIVATE);
+		SharedPreferences sp = ChangePwd.this.getSharedPreferences("userInfo", MODE_PRIVATE);
 		String userName = sp.getString("userName", "");
 		commembertab commembertab = (commembertab) SqliteDb.getCurrentUser(ChangePwd.this, commembertab.class, userName);
 		commembertab.setuserPwd("");

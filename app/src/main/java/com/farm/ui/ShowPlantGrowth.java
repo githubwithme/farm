@@ -67,7 +67,7 @@ public class ShowPlantGrowth extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
-		plantgrowthtab = (plantgrowthtab) getIntent().getParcelableExtra("bean");
+		plantgrowthtab = getIntent().getParcelableExtra("bean");
 		otherFragment = new OtherFragment();
 		foundationFragment = new FoundationFragment();
 	}

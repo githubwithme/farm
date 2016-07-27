@@ -874,13 +874,8 @@ public class SwipeListViewTouchListener implements View.OnTouchListener
                     } else if (opened.get(downPosition) && openedRight.get(downPosition) && swapRight)
                     {
                         swap = false;
-                    } else if (opened.get(downPosition) && !openedRight.get(downPosition) && !swapRight)
-                    {
-                        swap = false;
                     } else
-                    {
-                        swap = true;
-                    }
+                        swap = !(opened.get(downPosition) && !openedRight.get(downPosition) && !swapRight);
                 } else if (Math.abs(deltaX) > viewWidth / 2)
                 {
                     swap = true;

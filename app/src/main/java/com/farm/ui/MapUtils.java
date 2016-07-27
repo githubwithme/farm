@@ -500,7 +500,7 @@ public class MapUtils  extends FragmentActivity implements TencentLocationListen
     }
     public void showDialog_department()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MapUtils.this).inflate(R.layout.customdialog_editpolygoninfo, null);
+        final View dialog_layout = LayoutInflater.from(MapUtils.this).inflate(R.layout.customdialog_editpolygoninfo, null);
         customdialog_editpolygoninfor = new CustomDialog_EditPolygonInfo(MapUtils.this, R.style.MyDialog, dialog_layout);
         ListView lv_department = (ListView) dialog_layout.findViewById(R.id.lv_department);
         final Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -691,7 +691,7 @@ public class MapUtils  extends FragmentActivity implements TencentLocationListen
 
     public void showDialog_OperatePolygon(final String uuid)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(MapUtils.this).inflate(R.layout.customdialog_operatepolygon, null);
+        final View dialog_layout = LayoutInflater.from(MapUtils.this).inflate(R.layout.customdialog_operatepolygon, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(MapUtils.this, R.style.MyDialog, dialog_layout);
         Button btn_paint = (Button) dialog_layout.findViewById(R.id.btn_paint);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
@@ -748,7 +748,7 @@ public class MapUtils  extends FragmentActivity implements TencentLocationListen
     }
     public void showDialog_editpointinfo(final PolygonBean polygonbean)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MapUtils.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(MapUtils.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MapUtils.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         et_polygonnote.setText(polygonbean.getNote());
@@ -784,7 +784,7 @@ public class MapUtils  extends FragmentActivity implements TencentLocationListen
     }
     public void showDialog_polygonnote(final String note)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MapUtils.this).inflate(R.layout.customdialog_showpolygonifo, null);
+        final View dialog_layout = LayoutInflater.from(MapUtils.this).inflate(R.layout.customdialog_showpolygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MapUtils.this, R.style.MyDialog, dialog_layout);
         tv_note = (TextView) dialog_layout.findViewById(R.id.tv_note);
         btn_close = (Button) dialog_layout.findViewById(R.id.btn_close);
@@ -804,7 +804,7 @@ public class MapUtils  extends FragmentActivity implements TencentLocationListen
     }
     public void showDialog_deletetip(final String uuid)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MapUtils.this).inflate(R.layout.customdialog_deletetip, null);
+        final View dialog_layout = LayoutInflater.from(MapUtils.this).inflate(R.layout.customdialog_deletetip, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MapUtils.this, R.style.MyDialog, dialog_layout);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);

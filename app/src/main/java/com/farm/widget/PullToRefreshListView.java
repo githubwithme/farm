@@ -235,7 +235,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener
 				// 更新headView的size
 				if (state == PULL_To_REFRESH)
 				{
-					int topPadding = (int) ((-1 * headContentHeight + (tempY - startY)));
+					int topPadding = (-1 * headContentHeight + (tempY - startY));
 					headView.setPadding(headView.getPaddingLeft(), topPadding, headView.getPaddingRight(), headView.getPaddingBottom());
 					headView.invalidate();
 					// System.out.println("当前-下拉刷新PULL_To_REFRESH-TopPad："+topPadding);
@@ -244,7 +244,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener
 				// 更新headView的paddingTop
 				if (state == RELEASE_To_REFRESH)
 				{
-					int topPadding = (int) ((tempY - startY - headContentHeight));
+					int topPadding = (tempY - startY - headContentHeight);
 					headView.setPadding(headView.getPaddingLeft(), topPadding, headView.getPaddingRight(), headView.getPaddingBottom());
 					headView.invalidate();
 					// System.out.println("当前-释放刷新RELEASE_To_REFRESH-TopPad："+topPadding);
@@ -339,7 +339,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener
 
 	public interface OnRefreshListener
 	{
-		public void onRefresh();
+		void onRefresh();
 	}
 
 	public void onRefreshComplete(String update)

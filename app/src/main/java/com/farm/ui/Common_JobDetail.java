@@ -223,7 +223,7 @@ public class Common_JobDetail extends Activity
 
     private void showDeleteTip(final String jobID)
     {
-        View dialog_layout = (LinearLayout) Common_JobDetail.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = Common_JobDetail.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(Common_JobDetail.this, R.style.MyDialog, dialog_layout, "工作", "确定删除吗?", "删除", "取消", new CustomDialogListener()
         {
             @Override

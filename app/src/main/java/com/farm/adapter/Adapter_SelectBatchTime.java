@@ -107,7 +107,7 @@ public class Adapter_SelectBatchTime extends BaseExpandableListAdapter
             listItemView.tv_allnumber = (TextView) convertView.findViewById(R.id.tv_allnumber);
             listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
             listItemView.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
-            View view = (View) convertView.findViewById(R.id.view);
+            View view = convertView.findViewById(R.id.view);
             listItemView.ll_batchtime = (LinearLayout) convertView.findViewById(R.id.ll_batchtime);
 //            listItemView.ll_batchtime.setTag(batchTime);
 //            listItemView.ll_batchtime.setOnClickListener(new View.OnClickListener()
@@ -275,7 +275,7 @@ public class Adapter_SelectBatchTime extends BaseExpandableListAdapter
         TextView tv_allnumber = (TextView) convertView.findViewById(R.id.tv_allnumber);
         TextView tv_pb = (TextView) convertView.findViewById(R.id.tv_pb);
         ProgressBar pb = (ProgressBar) convertView.findViewById(R.id.pb);
-        View view = (View) convertView.findViewById(R.id.view);
+        View view = convertView.findViewById(R.id.view);
         view.setTag(convertView);
         view.setOnClickListener(new View.OnClickListener()
         {

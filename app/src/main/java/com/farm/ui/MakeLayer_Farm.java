@@ -1212,7 +1212,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showPop_gk()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) MakeLayer_Farm.this.getSystemService(MakeLayer_Farm.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) MakeLayer_Farm.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_zs, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {
@@ -1259,7 +1259,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showPop_addcommand()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) MakeLayer_Farm.this.getSystemService(MakeLayer_Farm.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) MakeLayer_Farm.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_zs, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {
@@ -1339,7 +1339,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_addZS()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_addzs, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_addzs, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
         et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);
@@ -1359,7 +1359,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_CXinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1436,7 +1436,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_Roadinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1515,7 +1515,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_Mianinfo(final LatLng latlng)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1592,7 +1592,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_Lineinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1675,7 +1675,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_pointinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1750,7 +1750,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_editArea(final PolygonBean polygonBean)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_editarea, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_editarea, null);
         customDialog_edtiArea = new CustomDialog_EdtiArea(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         et_numberofplant = (EditText) dialog_layout.findViewById(R.id.et_numberofplant);
         et_areanote = (EditText) dialog_layout.findViewById(R.id.et_areanote);
@@ -1810,7 +1810,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_editpointinfo(final PolygonBean polygonbean)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         et_polygonnote.setText(polygonbean.getNote());
@@ -1839,7 +1839,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_pickpointinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_pickpointinfo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_pickpointinfo, null);
         showDialog_pickpointinfo = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         tv_lng = (TextView) dialog_layout.findViewById(R.id.tv_lng);
@@ -1921,7 +1921,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_pickObservationinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_pickpointinfo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_pickpointinfo, null);
         showDialog_pickpointinfo = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         tv_lng = (TextView) dialog_layout.findViewById(R.id.tv_lng);
@@ -2003,7 +2003,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_houseinfo()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_polygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         et_polygonnote = (EditText) dialog_layout.findViewById(R.id.et_note);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -2079,7 +2079,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_polygonnote(final String note)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_showpolygonifo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_showpolygonifo, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         tv_note = (TextView) dialog_layout.findViewById(R.id.tv_note);
         btn_close = (Button) dialog_layout.findViewById(R.id.btn_close);
@@ -2100,7 +2100,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_deletetip_custom(final PolygonBean polygonbean_selected, final String type)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_deletepolygon_custom, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_deletepolygon_custom, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         TextView tv_delete = (TextView) dialog_layout.findViewById(R.id.tv_delete);
@@ -2129,7 +2129,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_deletetip(final PolygonBean polygonbean_selected, final String type)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_deletepolygontip, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_deletepolygontip, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         TextView tv_delete = (TextView) dialog_layout.findViewById(R.id.tv_delete);
@@ -2163,7 +2163,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_deleteArea(final PolygonBean polygonbean_selected)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_deletearea, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_deletearea, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         TextView tv_delete = (TextView) dialog_layout.findViewById(R.id.tv_delete);
@@ -2191,7 +2191,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_CompleteCollection()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_completecollection, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_completecollection, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -2240,7 +2240,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_SaveCollectionInfo(final LatLng latlng)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_savecollection, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_savecollection, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         et_areanote = (EditText) dialog_layout.findViewById(R.id.et_areanote);
@@ -2390,7 +2390,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_SelectOperation()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_selectoperation, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_selectoperation, null);
         customdialog_editpolygoninfor = new CustomDialog_EditPolygonInfo(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         customdialog_editpolygoninfor.setCanceledOnTouchOutside(false);
         customdialog_editpolygoninfor.setOnCancelListener(new DialogInterface.OnCancelListener()
@@ -2586,7 +2586,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_departmentList(final List<DepartmentBean> list_department, final TextView tv_belong)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_departmentlist, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_departmentlist, null);
         customdialog_editpolygoninfor = new CustomDialog_EditPolygonInfo(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         ListView lv_department = (ListView) dialog_layout.findViewById(R.id.lv_department);
         final Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -2631,7 +2631,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_department(final List<DepartmentBean> list_department)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_editpolygoninfo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_editpolygoninfo, null);
         customdialog_editpolygoninfor = new CustomDialog_EditPolygonInfo(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         ListView lv_department = (ListView) dialog_layout.findViewById(R.id.lv_department);
         final Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -3447,7 +3447,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_SelectWholePolygon(final LatLng latlng)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_selectwholepolygon, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_selectwholepolygon, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         Button btn_selectwhole = (Button) dialog_layout.findViewById(R.id.btn_selectwhole);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -3483,7 +3483,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_OperatePolygon_Custom(final PolygonBean polygonbean_selected, final String type)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_operatepolygon, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_operatepolygon, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
@@ -3530,7 +3530,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_OperatePolygon_BoundaryPoint(final CoordinatesBean coordinatesBean, final String type, final String note)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_operatepolygon_boundarypoint, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_operatepolygon_boundarypoint, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
@@ -3599,7 +3599,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 
     public void showDialog_OperatePolygon(final PolygonBean polygonbean_selected, final String type)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_operateplanmap, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_operateplanmap, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -3682,7 +3682,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 //    }
     public void showDialog_OperateArea(final PolygonBean polygonbean_selected, final String type)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_operatearea, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_operatearea, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_edit = (Button) dialog_layout.findViewById(R.id.btn_edit);
@@ -4304,7 +4304,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
     {
         Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         View view = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.marker_sale, null);
-        View view_marker = (View) view.findViewById(R.id.view_marker);
+        View view_marker = view.findViewById(R.id.view_marker);
         view_marker.setBackgroundResource(icon);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
         if (note == null || note.equals(""))
@@ -4330,7 +4330,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
     {
         Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         View view = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.marker_sale, null);
-        View view_marker = (View) view.findViewById(R.id.view_marker);
+        View view_marker = view.findViewById(R.id.view_marker);
         view_marker.setBackgroundResource(icon);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
 
@@ -5716,7 +5716,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
         currentpointmarker = null;//点
         listlatlng_park = new ArrayList<>();//线、面
         prelatLng_drawerparklayer = null;
-        ;//线、面
+        //线、面
         btn_addmore.setClickable(true);
 
         initParamAfterPaint();
@@ -5891,7 +5891,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
         currentpointmarker = null;//点
         listlatlng_park = new ArrayList<>();//线、面
         prelatLng_drawerparklayer = null;
-        ;//线、面
+        //线、面
         btn_addmore.setClickable(true);
     }
 
@@ -6057,7 +6057,7 @@ public class MakeLayer_Farm extends Activity implements TencentLocationListener,
 //    }
     public void showDialog_overlayInfo(final String note)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_showpolygonifo, null);
+        final View dialog_layout = LayoutInflater.from(MakeLayer_Farm.this).inflate(R.layout.customdialog_showpolygonifo, null);
         customDialog_overlayInfo = new CustomDialog_OverlayInfo(MakeLayer_Farm.this, R.style.MyDialog, dialog_layout);
         TextView tv_note = (TextView) dialog_layout.findViewById(R.id.tv_note);
         Button btn_close = (Button) dialog_layout.findViewById(R.id.btn_close);

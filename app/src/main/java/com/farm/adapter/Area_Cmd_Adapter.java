@@ -156,7 +156,7 @@ public class Area_Cmd_Adapter extends BaseAdapter
 
     public void showDialog_flsl(final int pos, String pi, String pn)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_inputflsl, null);
+        final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.dialog_inputflsl, null);
         customDialog_flsl = new CustomDialog_FLSL(context, R.style.MyDialog, dialog_layout);
         lv = (ListView) dialog_layout.findViewById(R.id.lv);
         btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);

@@ -265,7 +265,7 @@ public class AddStandardCommand extends Activity implements OnClickListener
 		String si = "";
 		String fn = "";
 		String sn = "";
-		if ((Bundle) tv_selectcmd.getTag() != null)
+		if (tv_selectcmd.getTag() != null)
 		{
 			fi = ((Bundle) tv_selectcmd.getTag()).getString("FI");
 			si = ((Bundle) tv_selectcmd.getTag()).getString("SI");
@@ -276,7 +276,7 @@ public class AddStandardCommand extends Activity implements OnClickListener
 			Toast.makeText(AddStandardCommand.this, "请选择命令！", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if ((Bundle) tv_importance.getTag() != null)
+		if (tv_importance.getTag() != null)
 		{
 			importance = ((Bundle) tv_importance.getTag()).getString("FI");// 濒危度
 		} else

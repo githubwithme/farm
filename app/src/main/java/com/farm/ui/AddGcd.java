@@ -194,7 +194,7 @@ public class AddGcd extends Activity implements TencentLocationListener
 
     public void showDialog_workday(List<String> list)
     {
-        View dialog_layout = (RelativeLayout) AddGcd.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = AddGcd.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(AddGcd.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override

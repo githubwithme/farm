@@ -359,7 +359,7 @@ public class CZ_MainActivity_New extends Activity
 
     private void showExistTip()
     {
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(CZ_MainActivity_New.this, R.style.MyDialog, dialog_layout, "确定退出吗？", "确定退出吗？", "退出", "取消", new CustomDialogListener()
         {
             @Override
@@ -370,7 +370,7 @@ public class CZ_MainActivity_New extends Activity
                     case R.id.btn_sure:
                         myDialog.dismiss();
                         AppManager.getAppManager().AppExit(CZ_MainActivity_New.this);
-                        NotificationManager manger = (NotificationManager) CZ_MainActivity_New.this.getSystemService(CZ_MainActivity_New.this.NOTIFICATION_SERVICE);
+                        NotificationManager manger = (NotificationManager) CZ_MainActivity_New.this.getSystemService(NOTIFICATION_SERVICE);
                         manger.cancel(101);
                         manger.cancel(100);
                         break;

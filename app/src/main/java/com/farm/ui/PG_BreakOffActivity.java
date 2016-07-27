@@ -361,7 +361,7 @@ public class PG_BreakOffActivity extends Activity
 
     public void showDialog_editBreakoffinfo(final BreakOff_New breakOff_new, final String batchtime, final String batchcolor, final String oldNumber)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(PG_BreakOffActivity.this).inflate(R.layout.customdialog_editcontractsale, null);
+        final View dialog_layout = LayoutInflater.from(PG_BreakOffActivity.this).inflate(R.layout.customdialog_editcontractsale, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(PG_BreakOffActivity.this, R.style.MyDialog, dialog_layout);
         et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);

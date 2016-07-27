@@ -555,7 +555,7 @@ public class PG_GddList extends Activity
                 {
                     try
                     {
-                        timethread.sleep(AppContext.TIME_REFRESH);
+                        sleep(AppContext.TIME_REFRESH);
                         starttime = starttime + 1000;
                         getListData(UIHelper.LISTVIEW_ACTION_REFRESH, UIHelper.LISTVIEW_DATATYPE_NEWS, frame_listview_news, listAdapter, list_foot_more, list_foot_progress, AppContext.PAGE_SIZE, 0);
                         timethread.setSleep(true);
@@ -580,7 +580,7 @@ public class PG_GddList extends Activity
 
     public void showPop_user()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) PG_GddList.this.getSystemService(PG_GddList.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) PG_GddList.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_attendance, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {

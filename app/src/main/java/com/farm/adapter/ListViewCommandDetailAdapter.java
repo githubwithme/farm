@@ -173,7 +173,7 @@ public class ListViewCommandDetailAdapter extends BaseAdapter
 
 	private void showDeleteTip(final String cmdid, final String statusID)
 	{
-		View dialog_layout = (LinearLayout) context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+		View dialog_layout = context.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
 		myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "确定删除吗?", "删除", "取消", new CustomDialogListener()
 		{
 			@Override

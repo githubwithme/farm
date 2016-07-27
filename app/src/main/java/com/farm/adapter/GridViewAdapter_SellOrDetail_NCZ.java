@@ -112,7 +112,7 @@ public class GridViewAdapter_SellOrDetail_NCZ extends BaseAdapter
 
     public void showDialog_editBreakoffinfo(final SellOrderDetail_New sellorderdetail, final CheckBox cb_select)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editsale, null);
+        final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_editsale, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
         et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
         et_number.setText(sellorderdetail.getplannumber());

@@ -291,7 +291,7 @@ public class PG_CreateOrder extends Activity
     }
     public void showDialog_carNumber(List<String> list  )
     {
-        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -775,7 +775,7 @@ public class PG_CreateOrder extends Activity
     //采购商的弹窗
     public void showDialog_workday(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -804,7 +804,7 @@ public class PG_CreateOrder extends Activity
     //包装工
     public void showDialog_bz(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -823,7 +823,7 @@ public class PG_CreateOrder extends Activity
     //搬运工
     public void showDialog_by(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -842,7 +842,7 @@ public class PG_CreateOrder extends Activity
     //产品
     public void showDialog_fcp(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -951,7 +951,7 @@ public class PG_CreateOrder extends Activity
 
     private void cancleOrder()
     {
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, "取消订单", "取消订单吗？", "取消", "不取消", new MyDialog.CustomDialogListener()
         {
             @Override

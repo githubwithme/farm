@@ -432,7 +432,7 @@ public class NCZ_CreateMoreOrder extends Activity
 
     public void showDialog_workday(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) NCZ_CreateMoreOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = NCZ_CreateMoreOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(NCZ_CreateMoreOrder.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override

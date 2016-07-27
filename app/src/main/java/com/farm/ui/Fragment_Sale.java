@@ -155,7 +155,7 @@ ImageView iv_up_selector;
     }
     public void showDialog_productbatchList()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_productlist, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_productlist, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
         btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
         lv_batch = (ListView) dialog_layout.findViewById(R.id.lv_batch);
@@ -231,7 +231,7 @@ ImageView iv_up_selector;
     }
     public void showDialog_AddOrder()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_addorder, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_addorder, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
         et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
         et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);

@@ -146,7 +146,7 @@ public class NCZ_HandleDetail extends Activity
             @Override
             public void onClick(View v) {
                 final int index_zp = ll_picture.indexOfChild(v);
-                View dialog_layout = (LinearLayout)getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                 myDialog = new MyDialog(NCZ_HandleDetail.this, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener() {
                     @Override
                     public void OnClick(View v) {
@@ -254,7 +254,7 @@ public class NCZ_HandleDetail extends Activity
                         @Override
                         public void onClick(View v) {
                             final int index_zp = ll_video.indexOfChild(v);
-                            View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                            View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                             myDialog = new MyDialog(NCZ_HandleDetail.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "取消", new MyDialog.CustomDialogListener() {
                                 @Override
                                 public void OnClick(View v) {
@@ -307,7 +307,7 @@ public class NCZ_HandleDetail extends Activity
                     @Override
                     public void onClick(View v) {
                         final int index_zp = ll_video.indexOfChild(v);
-                        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+                        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
                         myDialog = new MyDialog(NCZ_HandleDetail.this, R.style.MyDialog, dialog_layout, "视频", "查看该视频?", "查看", "取消", new MyDialog.CustomDialogListener() {
                             @Override
                             public void OnClick(View v) {

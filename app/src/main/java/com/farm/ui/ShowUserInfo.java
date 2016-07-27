@@ -195,7 +195,7 @@ public class ShowUserInfo extends Activity
 
     public void showDialog_addsaleinfo(final String phone)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(ShowUserInfo.this).inflate(R.layout.customdialog_calltip, null);
+        final View dialog_layout = LayoutInflater.from(ShowUserInfo.this).inflate(R.layout.customdialog_calltip, null);
         custom_calltip = new CustomDialog_CallTip(ShowUserInfo.this, R.style.MyDialog, dialog_layout);
         TextView tv_tips = (TextView) dialog_layout.findViewById(R.id.tv_tips);
         tv_tips.setText(phone + "拨打这个电话吗?");

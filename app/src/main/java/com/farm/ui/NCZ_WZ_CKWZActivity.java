@@ -91,7 +91,6 @@ public class NCZ_WZ_CKWZActivity extends FragmentActivity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        ;
         Wz_Storehouse = getIntent().getParcelableExtra("storehouseId");
     }
 

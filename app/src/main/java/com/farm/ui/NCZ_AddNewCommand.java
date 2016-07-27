@@ -139,7 +139,7 @@ public class NCZ_AddNewCommand extends Activity
     }
     public void showDialog_workday(List<String> list)
     {
-        View dialog_layout = (RelativeLayout) NCZ_AddNewCommand.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = NCZ_AddNewCommand.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(NCZ_AddNewCommand.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -154,7 +154,7 @@ public class NCZ_AddNewCommand extends Activity
 
     public void showDialog_selectJobType(List<String> list_name, List<String> list_id)
     {
-        View dialog_layout = (RelativeLayout) NCZ_AddNewCommand.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = NCZ_AddNewCommand.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(NCZ_AddNewCommand.this, R.style.MyDialog, dialog_layout, list_name, list_id, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override

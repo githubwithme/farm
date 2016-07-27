@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -1299,7 +1300,7 @@ public class PG_AddGcd extends Activity implements TencentLocationListener, View
 
     public void showDialog_OperateSalefor(final String uuid, final Marker marker)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_operatepolygon_salefor, null);
+        final View dialog_layout = LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_operatepolygon_salefor, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(PG_AddGcd.this, R.style.MyDialog, dialog_layout);
         Button btn_salewhole = (Button) dialog_layout.findViewById(R.id.btn_salewhole);
         Button btn_sale = (Button) dialog_layout.findViewById(R.id.btn_sale);
@@ -1908,7 +1909,7 @@ public class PG_AddGcd extends Activity implements TencentLocationListener, View
 
     public void showDialog_addsaleinfo(final LatLng centerlatLng, final List<LatLng> list_latlng_selectpart, final List<LatLng> list_latlng_notselectpart)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_addsaleifo, null);
+        final View dialog_layout = LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_addsaleifo, null);
         customDialog_addSaleInInfo = new CustomDialog_AddSaleInInfo(PG_AddGcd.this, R.style.MyDialog, dialog_layout);
         et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -2051,7 +2052,7 @@ public class PG_AddGcd extends Activity implements TencentLocationListener, View
 
     public void showPop_orderdetail()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) PG_AddGcd.this.getSystemService(PG_AddGcd.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) PG_AddGcd.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_orderdetail = layoutInflater.inflate(R.layout.pop_editorderdetail, null);// 外层
         pv_orderdetail.setOnKeyListener(new View.OnKeyListener()
         {
@@ -2212,7 +2213,7 @@ public class PG_AddGcd extends Activity implements TencentLocationListener, View
 
     public void showDialog_deletetip_shoppingcart()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_deletetip, null);
+        final View dialog_layout = LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_deletetip, null);
         customdialog_deletetip = new CustomDialog(PG_AddGcd.this, R.style.MyDialog, dialog_layout);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -2247,7 +2248,7 @@ public class PG_AddGcd extends Activity implements TencentLocationListener, View
 
     public void showDialog_OperateSalein(final SellOrderDetail sellOrderDetail, final Marker marker)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_feedbackofsale, null);
+        final View dialog_layout = LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_feedbackofsale, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(PG_AddGcd.this, R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
@@ -2285,7 +2286,7 @@ public class PG_AddGcd extends Activity implements TencentLocationListener, View
 
     public void showDialog_OperateSaleOut(final SellOrderDetail sellOrderDetail, final Marker marker)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_feedbackofsale, null);
+        final View dialog_layout = LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_feedbackofsale, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(PG_AddGcd.this, R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_change = (Button) dialog_layout.findViewById(R.id.btn_change);
@@ -2324,7 +2325,7 @@ public class PG_AddGcd extends Activity implements TencentLocationListener, View
 
     public void showDialog_overlayInfo(final String note)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_showpolygonifo, null);
+        final View dialog_layout = LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_showpolygonifo, null);
         customDialog_overlayInfo = new CustomDialog_OverlayInfo(PG_AddGcd.this, R.style.MyDialog, dialog_layout);
         TextView tv_note = (TextView) dialog_layout.findViewById(R.id.tv_note);
         Button btn_close = (Button) dialog_layout.findViewById(R.id.btn_close);
@@ -2345,7 +2346,7 @@ public class PG_AddGcd extends Activity implements TencentLocationListener, View
 
     public void showDialog_editsaleininfo(final SellOrderDetail sellOrderDetail, final Marker marker)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_editsaleininfo, null);
+        final View dialog_layout = LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.customdialog_editsaleininfo, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(PG_AddGcd.this, R.style.MyDialog, dialog_layout);
         et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
         et_note.setText(sellOrderDetail.getplannumber());
@@ -2448,7 +2449,7 @@ public class PG_AddGcd extends Activity implements TencentLocationListener, View
 
     public void showPop_batch()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) PG_AddGcd.this.getSystemService(PG_AddGcd.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) PG_AddGcd.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_batch = layoutInflater.inflate(R.layout.pop_batch, null);// 外层
         pv_batch.setOnKeyListener(new View.OnKeyListener()
         {
@@ -2576,7 +2577,7 @@ public class PG_AddGcd extends Activity implements TencentLocationListener, View
     {
         Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         View view = LayoutInflater.from(PG_AddGcd.this).inflate(R.layout.marker_sale, null);
-        View view_marker = (View) view.findViewById(R.id.view_marker);
+        View view_marker = view.findViewById(R.id.view_marker);
         view_marker.setBackgroundResource(icon);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
         if (note == null || note.equals(""))

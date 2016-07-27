@@ -297,7 +297,7 @@ public class GK_Fragment extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_addZS()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_addzs, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_addzs, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
         et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
         et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);
@@ -317,7 +317,7 @@ public class GK_Fragment extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_EditDL()
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editarea, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editarea, null);
         customdialog_editdlinfor = new CustomDialog_EditDLInfor(getActivity(), R.style.MyDialog, dialog_layout);
         et_time = (EditText) dialog_layout.findViewById(R.id.et_time);
         et_dlzs = (EditText) dialog_layout.findViewById(R.id.et_dlzs);

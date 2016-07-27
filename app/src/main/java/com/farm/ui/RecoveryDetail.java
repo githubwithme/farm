@@ -144,7 +144,7 @@ public class RecoveryDetail extends Activity
     private void showDeleteTip()
     {
 
-        View dialog_layout = (LinearLayout) RecoveryDetail.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = RecoveryDetail.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(RecoveryDetail.this, R.style.MyDialog, dialog_layout, "就绪", "所有准备工作就绪?", "确定", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
@@ -208,7 +208,7 @@ public class RecoveryDetail extends Activity
     //搬运
     public void showDialog_by(List<Purchaser> listData_BZ)
     {
-        View dialog_layout = (RelativeLayout) RecoveryDetail.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = RecoveryDetail.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_bean = new CustomDialog_Bean(RecoveryDetail.this, R.style.MyDialog, dialog_layout, listData_BZ, new CustomDialog_Bean.CustomDialogListener()
         {
             @Override
@@ -229,7 +229,7 @@ public class RecoveryDetail extends Activity
     //包装工
     public void showDialog_bz(List<Purchaser> listData_BZ)
     {
-        View dialog_layout = (RelativeLayout) RecoveryDetail.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = RecoveryDetail.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_bean = new CustomDialog_Bean(RecoveryDetail.this, R.style.MyDialog, dialog_layout, listData_BZ, new CustomDialog_Bean.CustomDialogListener()
         {
             @Override

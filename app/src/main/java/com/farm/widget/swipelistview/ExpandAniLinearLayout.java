@@ -372,15 +372,15 @@ public class ExpandAniLinearLayout extends LinearLayout implements AnimatorUpdat
 
 	public interface onItemSelectListener
 	{
-		public void onSelect(int position);
+		void onSelect(int position);
 
 	}
 
 	public interface OnLayoutAnimatListener
 	{
-		public void onAnimatEnd();
+		void onAnimatEnd();
 
-		public void onAnimatStart();
+		void onAnimatStart();
 	}
 
 	public OnLayoutAnimatListener getOnLayoutAnimatListener()

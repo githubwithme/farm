@@ -214,7 +214,7 @@ public class EdiGoodsNumberAdapter extends BaseAdapter
                         index_imageview = bundle.getInt("index_imageview");
                         ll_picture_onclick = ((ListItemView) (lmap.get(index_ll).getTag())).ll_picture;
                         final int index_zp = ll_picture_onclick.indexOfChild(v);
-                        View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
+                        View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
                         myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "图片", "查看该图片?", "查看", "删除", new MyDialog.CustomDialogListener()
                         {
                             @Override

@@ -179,7 +179,7 @@ public class AddStd_Cmd_StepSix extends Fragment
 //                        }
                         Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
                         getActivity().finish();
-                        commandtab_single.getInstance().clearAll();
+                        com.farm.bean.commandtab_single.getInstance().clearAll();
                         SqliteDb.deleteAllSelectCmdArea(getActivity(), SelectCmdArea.class);
                         SqliteDb.deleteAllSelectCmdArea(getActivity(), goodslisttab.class);
                         SqliteDb.deleteAllSelectCmdArea(getActivity(),goodslisttab_flsl.class);

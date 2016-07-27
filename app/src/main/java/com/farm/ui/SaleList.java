@@ -449,7 +449,7 @@ public class SaleList extends Activity implements OnClickListener
 
 	public void showPop_title()
 	{
-		LayoutInflater layoutInflater = (LayoutInflater) SaleList.this.getSystemService(SaleList.this.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater layoutInflater = (LayoutInflater) SaleList.this.getSystemService(LAYOUT_INFLATER_SERVICE);
 		pv_tab = layoutInflater.inflate(R.layout.popup_yq, null);// 外层
 		pv_tab.setOnKeyListener(new OnKeyListener()
 		{
@@ -502,7 +502,7 @@ public class SaleList extends Activity implements OnClickListener
 
 	public void showPop_addcommand()
 	{
-		LayoutInflater layoutInflater = (LayoutInflater) SaleList.this.getSystemService(SaleList.this.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater layoutInflater = (LayoutInflater) SaleList.this.getSystemService(LAYOUT_INFLATER_SERVICE);
 		pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
 		pv_command.setOnKeyListener(new OnKeyListener()
 		{

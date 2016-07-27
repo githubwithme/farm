@@ -229,7 +229,7 @@ public class NCZ_CreateOrder_SelectBatchTime extends Activity
 
     private void cancleOrder()
     {
-        View dialog_layout = (LinearLayout) getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
         myDialog = new MyDialog(NCZ_CreateOrder_SelectBatchTime.this, R.style.MyDialog, dialog_layout, "取消订单", "取消订单吗？", "取消", "不取消", new MyDialog.CustomDialogListener()
         {
             @Override

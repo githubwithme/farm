@@ -1267,7 +1267,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_addsaleinfo(final LatLng centerlatLng, final List<LatLng> list_latlng_selectpart, final List<LatLng> list_latlng_notselectpart)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_addsaleifo, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_addsaleifo, null);
         customDialog_addSaleInInfo = new CustomDialog_AddSaleInInfo(getActivity(), R.style.MyDialog, dialog_layout);
         et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
@@ -1423,7 +1423,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_deletetip_breakoff(final String uuid, final Marker marker)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_deletetip, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_deletetip, null);
         customdialog_deletetip = new CustomDialog(getActivity(), R.style.MyDialog, dialog_layout);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -1459,7 +1459,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_deletetip_salein(final String uuid, final Marker marker)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_deletetip, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_deletetip, null);
         customdialog_deletetip = new CustomDialog(getActivity(), R.style.MyDialog, dialog_layout);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -1496,7 +1496,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_OperateBreakoff(final String uuid, final Marker marker)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_operatepolygon, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_operatepolygon, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(getActivity(), R.style.MyDialog, dialog_layout);
         Button btn_paint = (Button) dialog_layout.findViewById(R.id.btn_paint);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
@@ -1546,7 +1546,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_OperateNotBreakoff(final String uuid, final Marker marker)
     {
-        final View dialog_layout = (RelativeLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_operatepolygon_notbreakoff, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_operatepolygon_notbreakoff, null);
         customdialog_operatepolygon = new CustomDialog_OperatePolygon(getActivity(), R.style.MyDialog, dialog_layout);
         Button btn_see = (Button) dialog_layout.findViewById(R.id.btn_see);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -1623,7 +1623,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_overlayInfo(final String note)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_showpolygonifo, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_showpolygonifo, null);
         customDialog_overlayInfo = new CustomDialog_OverlayInfo(getActivity(), R.style.MyDialog, dialog_layout);
         TextView tv_note = (TextView) dialog_layout.findViewById(R.id.tv_note);
         Button btn_close = (Button) dialog_layout.findViewById(R.id.btn_close);
@@ -1644,7 +1644,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_editBreakoffinfo(final BreakOff breakoff, final Marker marker)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editsaleininfo, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editsaleininfo, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(getActivity(), R.style.MyDialog, dialog_layout);
         et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
         et_note.setText(breakoff.getnumberofbreakoff());
@@ -1681,7 +1681,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
 
     public void showDialog_editsaleininfo(final SellOrderDetail sellOrderDetail, final Marker marker)
     {
-        final View dialog_layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editsaleininfo, null);
+        final View dialog_layout = LayoutInflater.from(getActivity()).inflate(R.layout.customdialog_editsaleininfo, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(getActivity(), R.style.MyDialog, dialog_layout);
         et_note = (EditText) dialog_layout.findViewById(R.id.et_note);
         et_note.setText(sellOrderDetail.getplannumber());
@@ -1761,7 +1761,7 @@ public class PG_BreakBud extends Fragment implements TencentLocationListener, Vi
     {
         Marker marker = tencentMap.addMarker(new MarkerOptions().position(latLng));
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.marker_sale, null);
-        View view_marker = (View) view.findViewById(R.id.view_marker);
+        View view_marker = view.findViewById(R.id.view_marker);
         view_marker.setBackgroundResource(icon);
         TextView textView = (TextView) view.findViewById(R.id.tv_note);
         if (note == null || note.equals(""))

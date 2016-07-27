@@ -324,7 +324,7 @@ public class AddNotProductCommand_CZ extends Activity implements OnClickListener
 
     public void showDialog_Importance(List<String> list_id, List<String> list)
     {
-        View dialog_layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(AddNotProductCommand_CZ.this, R.style.MyDialog, dialog_layout, list, list_id, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -340,7 +340,7 @@ public class AddNotProductCommand_CZ extends Activity implements OnClickListener
 
     public void showDialog_workday(List<String> list)
     {
-        View dialog_layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override

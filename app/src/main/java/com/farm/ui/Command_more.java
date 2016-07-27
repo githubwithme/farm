@@ -420,7 +420,7 @@ ImageView btn_back;
 
     public void showPop_addcommand()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) Command_more.this.getSystemService(Command_more.this.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) Command_more.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         pv_command = layoutInflater.inflate(R.layout.pop_addcommand, null);// 外层
         pv_command.setOnKeyListener(new View.OnKeyListener()
         {

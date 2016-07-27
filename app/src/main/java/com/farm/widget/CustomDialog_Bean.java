@@ -117,6 +117,6 @@ public class CustomDialog_Bean extends Dialog
     }
     public interface CustomDialogListener
     {
-        public void OnClick(Bundle bundle);
+        void OnClick(Bundle bundle);
     }
 }

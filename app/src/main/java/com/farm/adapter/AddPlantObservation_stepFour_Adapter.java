@@ -233,7 +233,7 @@ public class AddPlantObservation_stepFour_Adapter extends BaseExpandableListAdap
 
     public void showDialog(List<String> list)
     {
-        View dialog_layout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
