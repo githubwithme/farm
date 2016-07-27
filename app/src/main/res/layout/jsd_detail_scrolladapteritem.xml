@@ -5,6 +5,30 @@
               android:layout_height="wrap_content"
               android:background="@drawable/linearlayout_green_round_selector"
               android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="41dip"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_total"
+            android:layout_width="60dip"
+            android:layout_height="40dip"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="合计"
+            android:textColor="@color/red"
+            android:textSize="15sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray"/>
+    </LinearLayout>
+    <View
+        android:layout_width="1px"
+        android:layout_height="41dip"
+        android:background="@color/gray"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -64,25 +88,5 @@
 
 
 
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="41dip"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/item_total"
-            android:layout_width="60dip"
-            android:layout_height="40dip"
-            android:background="@color/white"
-            android:gravity="center"
-            android:text="合计"
-            android:textColor="@color/red"
-            android:textSize="15sp"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/gray"/>
-    </LinearLayout>
 </LinearLayout>

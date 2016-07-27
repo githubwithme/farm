@@ -51,6 +51,12 @@ public class MyDateMaD
         this.type = type;
     }
 
+    public MyDateMaD(Context context, TextView mDateDisplay)
+    {
+        this.context = context;
+        this.mDateDisplay = mDateDisplay;
+    }
+
     public MyDateMaD(Context context, EditText editText)
     {
         this.context = context;
@@ -93,7 +99,7 @@ public class MyDateMaD
 
     public void updateDisplay(EditText editText)
     {
-        editText.setText(new StringBuilder().append(mMonth + 1).append("/").append(mDay).append(" "));
+        editText.setText(new StringBuilder().append(mYear).append("/").append(mMonth + 1).append("/").append(mDay).append(" ").toString());
     }
 
     public DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener()
@@ -103,7 +109,14 @@ public class MyDateMaD
             mYear = year;
             mMonth = monthOfYear;
             mDay = dayOfMonth;
-            updateDisplay();
+
+            if (editText!=null)
+            {
+                updateDisplay(editText);
+            }else
+            {
+                updateDisplay();
+            }
 
         }
     };

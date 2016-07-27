@@ -1,16 +1,23 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.Charge_Settlement_Adapter;
 import com.farm.adapter.PG_JSD_Adapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
@@ -62,8 +69,7 @@ public class Charge_Settlement extends Activity
     EditText bz_nc_danjia;//包装单价
     @ViewById
     EditText by_nc_danjia;//搬运单价
-    @ViewById
-    EditText packPec;//包装规格
+
 
     @ViewById
     Button charge_save;  //保存
@@ -80,7 +86,20 @@ public class Charge_Settlement extends Activity
     CustomDialog_ListView customDialog_listViews;
     List<Purchaser> listData_BY = new ArrayList<Purchaser>();
     List<Purchaser> listData_BZ = new ArrayList<Purchaser>();
+   @ViewById
+    ListView frame_listview_news;
+    Charge_Settlement_Adapter charge_settlement_adapter;
 
+    @ViewById
+    View view1;
+    @ViewById
+    View view2;
+    @ViewById
+    LinearLayout nc_baozhuang;
+    @ViewById
+    LinearLayout ll_banyun;
+
+    String isSave="0";
 
     @Click  //包装负责人
     void bz_fzrid()
@@ -111,7 +130,13 @@ public class Charge_Settlement extends Activity
     @AfterViews
     void afterview()
     {
+        charge_save.setVisibility(View.VISIBLE);
         getsellOrderDetailBySaleId();
+
+        view1.setVisibility(View.VISIBLE);
+        view2.setVisibility(View.VISIBLE);
+        nc_baozhuang.setVisibility(View.VISIBLE);
+        ll_banyun.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -120,9 +145,20 @@ public class Charge_Settlement extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder_new = getIntent().getParcelableExtra("bean");
-
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_NEW_JSD);
+        registerReceiver(receiver_update, intentfilter_update);
+        getpurchaser();
     }
 
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getSellOrderDetailSec();
+        }
+    };
     @Click
     void charge_save()
     {
@@ -134,7 +170,6 @@ public class Charge_Settlement extends Activity
         SellOrder_New sellOrder = new SellOrder_New();
         sellOrder.setInfoId(sellOrder_new.getUuid());
         sellOrder.setUid(sellOrder_new.getUid());
-        sellOrder.setPackPec(packPec.getText().toString());//规格
         sellOrder.setPlateNumber(plateNumber.getText().toString());//车车牌号
         sellOrder.setQualityWaterWeight(zp_ds_zhong.getText().toString());//正品带水重
         sellOrder.setQualityNetWeight(zp_bds_zhong.getText().toString());//正品净重
@@ -162,7 +197,6 @@ public class Charge_Settlement extends Activity
         SellOrder_New sellOrder = new SellOrder_New();
         sellOrder.setInfoId(sellOrder_new.getUuid());
         sellOrder.setUid(sellOrder_new.getUid());
-        sellOrder.setPackPec(packPec.getText().toString());//规格
         sellOrder.setPlateNumber(plateNumber.getText().toString());//车车牌号
         sellOrder.setQualityWaterWeight(zp_ds_zhong.getText().toString());//正品带水重
         sellOrder.setQualityNetWeight(zp_bds_zhong.getText().toString());//正品净重
@@ -201,9 +235,11 @@ public class Charge_Settlement extends Activity
                     if (result.getAffectedRows() != 0)
                     {
 
+
+                        charge_save.setVisibility(View.GONE);
+                        charge_load.setVisibility(View.VISIBLE);
                         jsdId = result.getAffectedRows() + "";
                         List<SellOrderDetail_New> listAddSellData = new ArrayList<SellOrderDetail_New>();
-
                         for (int i = 0; i < listSellData.size(); i++)
                         {
                             SellOrderDetail_New sellOrderDetail_new = new SellOrderDetail_New();
@@ -275,13 +311,19 @@ public class Charge_Settlement extends Activity
 
 
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+                        for (int i=0;i<listNewData.size();i++)
+                        {
+                            listNewData.get(i).setactualnumber("");
+                        }
                         if (listNewData.size() > 0)
                         {
                             batchTime = listNewData.get(0).getBatchTime();
                         }
 
                         listSellData.addAll(listNewData);
-
+                        charge_settlement_adapter = new Charge_Settlement_Adapter(Charge_Settlement.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight(),isSave);
+                        frame_listview_news.setAdapter(charge_settlement_adapter);
+                        utils.setListViewHeight(frame_listview_news);
 
                     } else
                     {
@@ -370,15 +412,19 @@ public class Charge_Settlement extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
+
+                        Toast.makeText(Charge_Settlement.this, "保存成功", Toast.LENGTH_SHORT).show();
                  /*       btn_upload.setVisibility(View.GONE);
                         ll_cbhlist.setVisibility(View.VISIBLE);
                         ll_jsd.setVisibility(View.VISIBLE);*/
+
+                        isSave="1";
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
 
 
-                   /*     pg_jsd_adapter = new PG_JSD_Adapter(Charge_Settlement.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight());
-                        frame_listview_news.setAdapter(pg_jsd_adapter);
-                        utils.setListViewHeight(frame_listview_news);*/
+                        charge_settlement_adapter = new Charge_Settlement_Adapter(Charge_Settlement.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight(),isSave);
+                        frame_listview_news.setAdapter(charge_settlement_adapter);
+                        utils.setListViewHeight(frame_listview_news);
 //                        shouData(listNewData);
                     } else
                     {
@@ -402,7 +448,7 @@ public class Charge_Settlement extends Activity
     }
 
     //采购商，搬运工，包装工
-    private void getpurchaser(String name)
+    private void getpurchaser( )
     {
         commembertab commembertab = AppContext.getUserInfo(Charge_Settlement.this);
         RequestParams params = new RequestParams();
@@ -500,7 +546,7 @@ public class Charge_Settlement extends Activity
         });
         customDialog_listViews.show();
     }
-
+//修改
     private void updatesellOrderSettlement(SellOrder_New mSellOrder)
     {
 /*      contractorId   int     包工头
@@ -517,7 +563,9 @@ public class Charge_Settlement extends Activity
 
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("strWhere","id="+ jsdId);
-        params.addQueryStringParameter("strUpdateValues", "contractorId="+mSellOrder.getContractorId() +"and pickId="+mSellOrder.getPickId() +"and carryPrice");
+        params.addQueryStringParameter("strUpdateValues", "contractorId="+mSellOrder.getContractorId() +" , pickId="+mSellOrder.getPickId() +" , carryPrice =" +mSellOrder.getCarryPrice()+"  , packPrice="+mSellOrder.getPackPrice()+
+        "  , qualityWaterWeight="+mSellOrder.getQualityWaterWeight()+" , qualityNetWeight="+mSellOrder.getQualityNetWeight()+" , defectWaterWeight=" +mSellOrder.getDefectWaterWeight() +",defectNetWeight="+mSellOrder.getDefectNetWeight()+" , plateNumber='" +mSellOrder.getPlateNumber()
+        +"''");
 //        params.addQueryStringParameter("action", "updateSellOrderByuuid");
         params.addQueryStringParameter("action", "updatesellOrderSettlement");
         HttpUtils http = new HttpUtils();

@@ -86,11 +86,13 @@ public class JSD_Detail extends Activity
     @Click
     void button_add()
     {
-//        Intent intent = new Intent(JSD_Detail.this, PG_JSD_.class);
         Intent intent = new Intent(JSD_Detail.this, Charge_Settlement_.class);
         intent.putExtra("bean", sellOrder_new);
-//        intent.putExtra("broadcast", broadcast);
         startActivity(intent);
+/*        Intent intent = new Intent(JSD_Detail.this, RecoveryDetail_.class);
+        intent.putExtra("bean", sellOrder_new);
+        startActivity(intent);*/
+
     }
 
     @AfterViews
@@ -434,6 +436,7 @@ public class JSD_Detail extends Activity
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
             listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
@@ -451,6 +454,11 @@ public class JSD_Detail extends Activity
             listItemView.item_titlev.setText(listData.get(position).getPlateNumber());
             listItemView.item_titlev.setTag(R.id.tag_batchtime, listData.get(position));
             listItemView.item_titlev.setOnClickListener(clickListener);
+
+            listItemView.item_total.setTag(R.id.tag_batchtime, listData.get(position));
+            listItemView.item_total.setOnClickListener(clickListener);
+            listItemView.item_total.setText("结算单"+(position+1));
+
    /*         int totalnumber = 0;
             List<SellOrderDetail_New> list = listData.get(position).getDetailSecLists();
             for (int j = 0; j < list.size(); j++)
@@ -603,7 +611,7 @@ public class JSD_Detail extends Activity
         {
             SellOrder_New sellOrder_news = new SellOrder_New();
             sellOrder_news = (SellOrder_New) v.getTag(R.id.tag_batchtime);
-            Intent intent = new Intent(JSD_Detail.this, PG_JSD_Detail_.class);
+            Intent intent = new Intent(JSD_Detail.this, Charge_UpdateSettlement_.class);
             intent.putExtra("bean", sellOrder_news);
             startActivity(intent);
         }

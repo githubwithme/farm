@@ -284,6 +284,7 @@
         <activity android:name=".ui.PG_SP_EditOreder_"/>
         <activity android:name=".ui.PG_CreateOrder_SelectProduct_"/>
         <activity android:name=".ui.Charge_Settlement_"/>
+        <activity android:name=".ui.Charge_UpdateSettlement_"/>
         <!-- 共用UI -->
         <activity android:name=".chart.BarChartActivity_"/>
         <activity android:name=".ui.ObservationRecordActivity_"/>

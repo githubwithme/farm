@@ -3,6 +3,8 @@ package com.farm.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -437,17 +439,76 @@ public class NCZ_EditOrder extends Activity
         bzId = sellOrder.getContractorId();
         fzrId = sellOrder.getMainPepole();
 
-     /*   mainPepole id
-                mainPeople name*/
 
-//        tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
-   /*     adapter_editSellOrderDetail_ncz = new Adapter_EditSellOrderDetail_NCZ(NCZ_EditOrder.this);
-        lv.setAdapter(adapter_editSellOrderDetail_ncz);
-        utils.setListViewHeight(lv);*/
-//        getListData();
         showData();
         getpurchaser();
         getlistdata();
+
+
+        //计算
+        et_price.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                if (et_price.getText().toString().equals(""))
+                {
+//                    Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写单价", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (et_weight.getText().toString().equals(""))
+                {
+//                    Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写重量", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                double ss = Double.valueOf(et_price.getText().toString()) * Double.valueOf(et_weight.getText().toString());
+                et_values.setText(String.format("%.2f", ss));
+            }
+        });
+        et_weight.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                if (et_price.getText().toString().equals(""))
+                {
+//                    Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写单价", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (et_weight.getText().toString().equals(""))
+                {
+//                    Toast.makeText(NCZ_CreateMoreOrder.this, "请先填写重量", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                double ss = Double.valueOf(et_price.getText().toString()) * Double.valueOf(et_weight.getText().toString());
+                et_values.setText(String.format("%.2f", ss));
+            }
+        });
+
     }
 
     @Override

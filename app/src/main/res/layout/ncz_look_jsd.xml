@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+              android:background="@color/gray"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <RelativeLayout
@@ -63,6 +64,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:background="@color/white"
                 android:id="@+id/isgoods_xx"
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
@@ -91,11 +93,12 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-
                 android:background="@color/bg_main"/>
 
 
             <LinearLayout
+                android:visibility="gone"
+                android:background="@color/white"
                 android:id="@+id/goods_xx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,7 +114,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="正品带水重"
+                        android:text="正品带水重\n(斤/件)"
                         android:textSize="14dip"/>
 
                     <View
@@ -139,7 +142,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="次品带水重"
+                        android:text="次品带水重\n(斤/件)"
                         android:textSize="14dip"/>
 
                     <View
@@ -173,7 +176,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="正品净重     (斤/件)"
+                        android:text="正品净重\n(斤/件)"
                         android:textSize="14dip"/>
 
                     <View
@@ -203,7 +206,7 @@
                         android:background="@null"
                         android:gravity="center"
                         android:numeric="decimal"
-                        android:text="次品净重     (斤/件)"
+                        android:text="次品净重\n(斤/件)"
                         android:textSize="14dip"/>
 
                     <View
@@ -236,7 +239,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="正品单价       (元/斤)"
+                        android:text="正品单价\n(元/斤)"
                         android:textSize="14dip"/>
 
                     <View
@@ -265,7 +268,7 @@
                         android:background="@null"
                         android:gravity="center"
                         android:numeric="decimal"
-                        android:text="次品单价       (元/斤)"
+                        android:text="次品单价\n(元/斤)"
                         android:textSize="14dip"/>
 
                     <View
@@ -286,11 +289,13 @@
 
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/bg_main"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:orientation="horizontal">
@@ -422,7 +427,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="包装单价（元/件）"
+                            android:text="包装单价\n（元/件）"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_15"/>
 
@@ -445,11 +450,13 @@
                 </RelativeLayout>
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/bg_main"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:orientation="horizontal">
@@ -482,11 +489,13 @@
                 </LinearLayout>
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/bg_main"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:orientation="horizontal">
@@ -625,7 +634,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="搬运单价(元/斤)"
+                            android:text="搬运单价\n(元/斤)"
                             android:textColor="@color/bg_text"
                             android:textSize="@dimen/size_15"/>
 
@@ -666,6 +675,7 @@
 
 
                 <RelativeLayout
+                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
@@ -691,6 +701,7 @@
                     android:layout_height="1px"
                     android:background="@color/bg_main"/>
                 <ListView
+                    android:background="@color/white"
                     android:id="@+id/frame_listview_news"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -924,15 +935,17 @@
                 android:background="@color/bg_main"/>
 
 
-            <LinearLayout
-                android:id="@+id/ll_jsd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
-                android:orientation="vertical"
-                >
 
+
+            <LinearLayout
+                android:id="@+id/is_jsd"
+                android:layout_marginTop="20dip"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <TextView
+                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:layout_marginLeft="20dip"
@@ -944,6 +957,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/bg_main"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@color/white"
+                android:id="@+id/ll_jsd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+                >
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

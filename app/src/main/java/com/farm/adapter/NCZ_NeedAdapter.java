@@ -210,21 +210,24 @@ public class NCZ_NeedAdapter extends BaseAdapter
         if (sellOrder.getFreeDeposit().equals("0"))
         {
             listItemView.tv_ask.setText("申请免付定金");
-        } else if (sellOrder.getFreeFinalPay().equals("0"))
+        }
+        if (sellOrder.getFreeFinalPay().equals("0"))
         {
             listItemView.tv_ask.setText("申请免付尾款");
-        } else if (sellOrder.getIsNeedAudit().equals("0") && sellOrder.getCreatorid().equals(""))
+        }
+        if (sellOrder.getIsNeedAudit().equals("0") && sellOrder.getCreatorid().equals(""))
         {
             listItemView.tv_ask.setText("订单发生改变");
-        } else
+        }
+        if (sellOrder.getIsNeedAudit().equals("0") && !sellOrder.getCreatorid().equals(""))
         {
             listItemView.tv_ask.setText("自发订单审批");
         }
-
-        if (sellOrder.getSelltype().equals("审批结算"))
+        if (sellOrder.getSettlestatus().equals("0"))
         {
             listItemView.tv_ask.setText("审批结算单");
         }
+
         listItemView.btn_showdetail.setTag(R.id.tag_cash, sellOrder);
         listItemView.btn_showdetail.setOnClickListener(new View.OnClickListener()
         {
@@ -233,7 +236,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
             {
                 SellOrder_New sellOrdesr = new SellOrder_New();
                 sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_cash);
-                if (!sellOrdesr.getSelltype().equals("审批结算"))
+                if (!sellOrdesr.getSettlestatus().equals("0"))
                 {
                     Intent intent = new Intent(context, NCZ_DD_SH_Detail_.class);
                     intent.putExtra("SellOrder_New", sellOrdesr);
