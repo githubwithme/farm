@@ -21,7 +21,6 @@ import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
-import com.farm.com.custominterface.FragmentCallBack_AddPlantObservation;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomHorizontalScrollView_PGSale;
@@ -83,7 +82,7 @@ public class PG_SaleActivity extends Activity implements CustomHorizontalScrollV
     @Click
     void btn_createorders()
     {
-        Intent intent = new Intent(this, PG_CreateOrder_.class);
+        Intent intent = new Intent(this, PG_SelectProduct_.class);
         startActivity(intent);
     }
 

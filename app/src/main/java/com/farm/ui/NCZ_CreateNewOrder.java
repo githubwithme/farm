@@ -10,7 +10,6 @@ import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,7 +67,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_createneworder)
 public class NCZ_CreateNewOrder extends Activity
 {
-//    int num=0;
+    //    int num=0;
     String mail;
     String telphone;
     @ViewById
@@ -161,7 +160,8 @@ public class NCZ_CreateNewOrder extends Activity
         }
         showDialog_carNumber(list);
     }
-    public void showDialog_carNumber(List<String> list  )
+
+    public void showDialog_carNumber(List<String> list)
     {
         View dialog_layout = NCZ_CreateNewOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(NCZ_CreateNewOrder.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
@@ -176,6 +176,7 @@ public class NCZ_CreateNewOrder extends Activity
         });
         customDialog_listView.show();
     }
+
     @Click
     void add_jsd()
     {
@@ -332,7 +333,8 @@ public class NCZ_CreateNewOrder extends Activity
     @Click
     void btn_back()
     {
-        cancleOrder();
+//        cancleOrder();
+        finish();
     }
 
     @Click
@@ -404,7 +406,7 @@ public class NCZ_CreateNewOrder extends Activity
         //短信
         SmsManager smsMessage = SmsManager.getDefault();
 //        List<String> divideContents = smsMessage.divideMessage(message);
-        smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元,定金："+dingjin.getText().toString()+"元，采收时间："+dd_time.getText().toString(), null, null);
+        smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元,定金：" + dingjin.getText().toString() + "元，采收时间：" + dd_time.getText().toString(), null, null);
         List<String> list_uuid = new ArrayList<>();
         String batchtime = "";
         String producer = "";
@@ -611,11 +613,8 @@ public class NCZ_CreateNewOrder extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        uuid = java.util.UUID.randomUUID().toString();
-//        list_SellOrderDetail = getIntent().getParcelableArrayListExtra("list");
-//        Bundle bundle = getIntent().getExtras();
-//        ArrayList arraylist = bundle.getParcelableArrayList("list_uuid");
-//        uuids = (List<HashMap<String, String>>) arraylist.get(0);
+        uuid = getIntent().getStringExtra("uuid");
+//        uuid = java.util.UUID.randomUUID().toString();
 
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_CHE_LIANG);
         registerReceiver(receiver_update, intentfilter_update);
@@ -1010,16 +1009,16 @@ public class NCZ_CreateNewOrder extends Activity
         myDialog.show();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if (keyCode == KeyEvent.KEYCODE_BACK)
-        {
-            cancleOrder();
-        }
-        return false;
-
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event)
+//    {
+//        if (keyCode == KeyEvent.KEYCODE_BACK)
+//        {
+//            cancleOrder();
+//        }
+//        return false;
+//
+//    }
 
     //获取人员列表
     private void getlistdata()
@@ -1193,7 +1192,7 @@ public class NCZ_CreateNewOrder extends Activity
 
                     if (listNewData.size() > 0)
                     {
-                        cheliang_num.setText(listNewData.size()+"");
+                        cheliang_num.setText(listNewData.size() + "");
                     }
                     {
                         listNewData = new ArrayList<SellOrder_New>();

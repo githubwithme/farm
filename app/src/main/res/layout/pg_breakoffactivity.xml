@@ -95,7 +95,7 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/rl_note"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dip"
+        android:layout_marginBottom="60dip"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:layout_marginTop="5dip"
@@ -259,14 +259,15 @@
             android:background="@color/gray"/>
     </RelativeLayout>
 
-    <TextView
+    <Button
+        android:id="@+id/btn_addBatchTime"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dip"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dip"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="10dip"
-        android:text="注：\n1、点击单元格可以编辑数据 \n2、左滑动加载更多"
-        android:textColor="@color/gray"
-        android:textSize="13sp"/>
+        android:layout_margin="10dip"
+        android:gravity="center"
+        android:background="@color/red"
+        android:text="新增批次"
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
 </RelativeLayout>

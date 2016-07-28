@@ -118,7 +118,7 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
     @Click
     void btn_createorders()
     {
-        Intent intent = new Intent(this, PG_CreateOrder_.class);
+        Intent intent = new Intent(this, CZ_SelectProduct_.class);
         startActivity(intent);
     }
 
