@@ -586,17 +586,17 @@
                 </LinearLayout>
 
                 <View
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color"
+                    android:visibility="gone"/>
 
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -621,16 +621,16 @@
                 </LinearLayout>
 
                 <View
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -666,16 +666,16 @@
                 </RelativeLayout>
 
                 <View
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -711,16 +711,16 @@
                 </RelativeLayout>
 
                 <View
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color"
+                    android:visibility="gone"/>
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -750,16 +750,16 @@
 
 
                 <View
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color"
+                    android:visibility="gone"/>
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -789,16 +789,16 @@
 
 
                 <View
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color"/>
+                    android:background="@color/line_color"
+                    android:visibility="gone"/>
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -881,24 +881,13 @@
                         android:textColor="@color/bg_text"
                         android:textSize="18sp"/>
 
-                    <Button
-                        android:id="@+id/btn_addproduct"
-                        android:layout_width="50dip"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@color/red"
-                        android:gravity="center"
-                        android:text="添加"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"/>
 
                     <TextView
                         android:id="@+id/tv_allnumber"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
                         android:layout_marginRight="10dip"
-                        android:layout_toLeftOf="@+id/btn_addproduct"
                         android:gravity="center"
                         android:paddingRight="10dip"
                         android:text="已选择0株"

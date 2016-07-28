@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,7 +40,6 @@ import com.farm.common.utils;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDatepicker;
 import com.farm.widget.MyDialog;
-import com.guide.DensityUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -323,13 +321,13 @@ public class NCZ_CreateNewOrder extends Activity
 
         getNewSaleList();
     }
-
-    @Click
-    void btn_addproduct()
-    {
-        Intent intent = new Intent(NCZ_CreateNewOrder.this, NCZ_CreateOrder_SelectBatchTime_.class);
-        startActivity(intent);
-    }
+//
+//    @Click
+//    void btn_addproduct()
+//    {
+//        Intent intent = new Intent(NCZ_CreateNewOrder.this, NCZ_CreateOrder_SelectBatchTime_.class);
+//        startActivity(intent);
+//    }
 
     @Click
     void btn_back()

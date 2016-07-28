@@ -104,6 +104,35 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         finish();
     }
 
+    @Click
+    void btn_createorders()
+    {
+//        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_CreateNewOrder_.class);
+        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SelectProduct_.class);
+        startActivity(intent);
+    }
+
+
+    @Click
+    void btn_orders()
+    {
+        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_OrderManager_.class);
+        startActivity(intent);
+    }
+
+    @Click
+    void btn_customer()
+    {
+        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_CustomerContract_.class);
+        startActivity(intent);
+    }
+
+    @Click
+    void tv_more()
+    {
+        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SaleModuleActivity_.class);
+        startActivity(intent);
+    }
 
     @AfterViews
     void afterOncreate()

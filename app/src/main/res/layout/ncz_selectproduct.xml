@@ -55,23 +55,15 @@
         android:background="@color/line_color"/>
 
     <RelativeLayout
-        android:id="@+id/rl_view"
+        android:id="@+id/rl_upload"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
         <ProgressBar
-            android:id="@+id/pb_upload"
-            android:layout_width="60dip"
+            android:layout_width="45dip"
             android:layout_height="45dip"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="10dip"
-            android:background="@null"
-            android:gravity="center"
-            android:text="上传"
-            android:textColor="@color/white"
-            android:textSize="@dimen/titlebar_textsize"
-            />
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -339,26 +331,37 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="40dip"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="40dip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dip">
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/ic_shoppingcart"/>
+
 
         <TextView
             android:id="@+id/tv_totalnumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:text="20000"
-            android:textColor="@color/bg_text"
+            android:gravity="center"
+            android:text="已选20000株"
+            android:background="@color/gray"
+            android:textColor="@color/white"
             android:textSize="13sp"/>
-    </FrameLayout>
+
+        <Button
+            android:id="@+id/btn_createorder"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="生成订单"
+            android:background="@color/red"
+            android:textColor="@color/white"
+            android:textSize="13sp"/>
+    </LinearLayout>
 
 </RelativeLayout>
