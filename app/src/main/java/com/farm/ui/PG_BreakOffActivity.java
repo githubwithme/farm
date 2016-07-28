@@ -37,6 +37,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.entity.StringEntity;
@@ -75,6 +76,14 @@ public class PG_BreakOffActivity extends Activity
     TextView tv_bottom_left;
     @ViewById
     RelativeLayout rl_dl;
+
+    @Click
+    void btn_addBatchTime()
+    {
+        //1新增批次
+        //2刷新界面
+        AddBatchTime();
+    }
 
     @AfterViews
     void afterOncreate()
@@ -160,6 +169,48 @@ public class PG_BreakOffActivity extends Activity
                     } else
                     {
                         listData = new ArrayList<ContractBatchTimeBean>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_BreakOffActivity.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_BreakOffActivity.this, "error_connectServer");
+            }
+        });
+    }
+
+    private void AddBatchTime()
+    {
+        commembertab commembertab = AppContext.getUserInfo(PG_BreakOffActivity.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("action", "AddBatchTime");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() > 0)
+                    {
+                        Toast.makeText(PG_BreakOffActivity.this, "新增成功!", Toast.LENGTH_SHORT).show();
+                        getfarmSalesData();
+                    } else
+                    {
+                        Toast.makeText(PG_BreakOffActivity.this, "新增失败!", Toast.LENGTH_SHORT).show();
                     }
 
                 } else

@@ -2,15 +2,12 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +26,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
 import com.farm.bean.PeopelList;
 import com.farm.bean.Result;
+import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
 import com.farm.bean.parktab;
 import com.farm.common.FileHelper;
@@ -58,8 +56,8 @@ import java.util.List;
 /**
  * Created by ${hmj} on 2016/6/57.
  */
-@EActivity(R.layout.ncz_selectproduct)
-public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
+@EActivity(R.layout.pg_selectproduct)
+public class PG_SelectProduct extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
     String uuid;
     EditText et_number;
@@ -92,8 +90,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
     TextView tv_top_right;
     @ViewById
     TextView tv_bottom_left;
-    @ViewById
-    TextView tv_title;
     @ViewById
     RelativeLayout rl_upload;
     @ViewById
@@ -134,15 +130,9 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
     @Click
     void btn_createorder()
     {
-        Intent intent = new Intent(NCZ_SelectProduct.this, NCZ_CreateNewOrder_.class);
+        Intent intent = new Intent(PG_SelectProduct.this, NCZ_CreateNewOrder_.class);
         intent.putExtra("uuid", uuid);
-        NCZ_SelectProduct.this.startActivity(intent);
-    }
-
-    @Click
-    void rl_tab()
-    {
-        showPop_park();
+        PG_SelectProduct.this.startActivity(intent);
     }
 
 
@@ -153,7 +143,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
         deleNewSaleAddsalefor();
-        getParknameByUid();
+        getNewSaleList_test();
     }
 
     @Override
@@ -162,17 +152,17 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         uuid = java.util.UUID.randomUUID().toString();
-        commembertab = AppContext.getUserInfo(NCZ_SelectProduct.this);
+        commembertab = AppContext.getUserInfo(PG_SelectProduct.this);
         parkid = getIntent().getStringExtra("parkid");
     }
 
 
     private void getNewSaleList_test()
     {
-        listData = FileHelper.getAssetsData(NCZ_SelectProduct.this, "getAllContractSaleData", contractTab.class);
+        listData = FileHelper.getAssetsData(PG_SelectProduct.this, "PG_getAllContractSaleData", contractTab.class);
         if (listData != null)
         {
-            DensityUtil densityUtil = new DensityUtil(NCZ_SelectProduct.this);
+            DensityUtil densityUtil = new DensityUtil(PG_SelectProduct.this);
             screenWidth = densityUtil.getScreenWidth();
             int size = listData.get(0).getBatchTimeList().size();
             if (size == 1)
@@ -195,103 +185,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
     }
 
-    private void getParknameByUid()
-    {
-        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(NCZ_SelectProduct.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getcontractByUid");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        list_park = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
-                        tv_title.setText(list_park.get(0).getparkName());
-                        //        getBatchTimeOfPark();
-                        getNewSaleList_test();
-                    } else
-                    {
-                        list_park = new ArrayList<parktab>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(NCZ_SelectProduct.this, "error_connectDataBase");
-
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                String a = error.getMessage();
-                AppContext.makeToast(NCZ_SelectProduct.this, "error_connectServer");
-
-            }
-        });
-
-    }
-
-    public void showPop_park()
-    {
-        LayoutInflater layoutInflater = (LayoutInflater) NCZ_SelectProduct.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        pv_tab = layoutInflater.inflate(R.layout.popup_yq, null);// 外层
-        pv_tab.setOnKeyListener(new View.OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing()))
-                {
-                    pw_tab.dismiss();
-//                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
-                    return true;
-                }
-                return false;
-            }
-        });
-        pv_tab.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_tab.isShowing())
-                {
-                    pw_tab.dismiss();
-//                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
-                }
-                return false;
-            }
-        });
-        pw_tab = new PopupWindow(pv_tab, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-        pw_tab.showAsDropDown(view_line, 0, 0);
-        pw_tab.setOutsideTouchable(true);
-
-
-        ListView listview = (ListView) pv_tab.findViewById(R.id.lv_yq);
-        adapter_park = new Adapter_Park();
-        listview.setAdapter(adapter_park);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3)
-            {
-                pw_tab.dismiss();
-                tv_title.setText(list_park.get(postion).getparkName());
-                //        getBatchTimeOfPark();
-                getNewSaleList_test();
-            }
-        });
-    }
 
     public void getBatchTimeOfPark()
     {
@@ -314,7 +207,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                     if (result.getAffectedRows() > 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
-                        DensityUtil densityUtil = new DensityUtil(NCZ_SelectProduct.this);
+                        DensityUtil densityUtil = new DensityUtil(PG_SelectProduct.this);
                         screenWidth = densityUtil.getScreenWidth();
                         int size = listData.get(0).getBatchTimeList().size();
                         if (size == 1)
@@ -341,7 +234,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
                 } else
                 {
-                    AppContext.makeToast(NCZ_SelectProduct.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_SelectProduct.this, "error_connectDataBase");
                     return;
                 }
 
@@ -350,7 +243,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_SelectProduct.this, "error_connectServer");
+                AppContext.makeToast(PG_SelectProduct.this, "error_connectServer");
             }
         });
     }
@@ -362,10 +255,10 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         ll_total.removeAllViews();
         ll_park.removeAllViews();
         int allnumber = 0;
-        LayoutInflater inflater = (LayoutInflater) NCZ_SelectProduct.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) PG_SelectProduct.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < listData.get(0).getBatchTimeList().size(); i++)
         {
-            View view = inflater.inflate(R.layout.nczselectproduct_titleitem, null);
+            View view = inflater.inflate(R.layout.pgselectproduct_titleitem, null);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
             tv_parkname.setText(listData.get(0).getBatchTimeList().get(i).getBatchTime());
@@ -385,7 +278,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         }
         for (int i = 0; i < listData.get(0).getBatchTimeList().size(); i++)
         {
-            View view = inflater.inflate(R.layout.nczselectproduct_totalitem, null);
+            View view = inflater.inflate(R.layout.pgselectproduct_totalitem, null);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
             tv_total.getLayoutParams().width = (screenWidth);
             int totalnumber = 0;
@@ -477,7 +370,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            convertView = LayoutInflater.from(NCZ_SelectProduct.this).inflate(R.layout.nczselectproduct_scrolladapter_item, null);
+            convertView = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.pgselectproduct_scrolladapter_item, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
@@ -495,7 +388,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
             for (int i = 0; i < listData.get(position).getBatchTimeList().size(); i++)
             {
-                View view = LayoutInflater.from(NCZ_SelectProduct.this).inflate(R.layout.nczselectproduct_dataitem, null);
+                View view = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.pgselectproduct_dataitem, null);
                 listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
                 listItemView.tv_data.setText(listData.get(position).getBatchTimeList().get(i).getAllnumber());
                 listItemView.tv_data.getLayoutParams().width = (screenWidth);
@@ -569,7 +462,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
         public Adapter_Park()
         {
-            this.listContainer = LayoutInflater.from(NCZ_SelectProduct.this);
+            this.listContainer = LayoutInflater.from(PG_SelectProduct.this);
         }
 
         HashMap<Integer, View> lmap = new HashMap<Integer, View>();
@@ -615,8 +508,8 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
     public void showDialog_selectProduct()
     {
-        final View dialog_layout = LayoutInflater.from(NCZ_SelectProduct.this).inflate(R.layout.customdialog_editcontractsale, null);
-        customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(NCZ_SelectProduct.this, R.style.MyDialog, dialog_layout);
+        final View dialog_layout = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.customdialog_editcontractsale, null);
+        customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(PG_SelectProduct.this, R.style.MyDialog, dialog_layout);
         et_number = (EditText) dialog_layout.findViewById(R.id.et_number);
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
@@ -688,7 +581,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 } else
                 {
                     rl_upload.setVisibility(View.GONE);
-                    AppContext.makeToast(NCZ_SelectProduct.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_SelectProduct.this, "error_connectDataBase");
                     return;
                 }
 
@@ -698,16 +591,15 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             public void onFailure(HttpException error, String msg)
             {
                 rl_upload.setVisibility(View.GONE);
-                AppContext.makeToast(NCZ_SelectProduct.this, "error_connectServer");
+                AppContext.makeToast(PG_SelectProduct.this, "error_connectServer");
             }
         });
     }
 
-
     private void cancleOrder()
     {
         View dialog_layout = getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(NCZ_SelectProduct.this, R.style.MyDialog, dialog_layout, "取消订单", "取消订单吗？", "取消", "不取消", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(PG_SelectProduct.this, R.style.MyDialog, dialog_layout, "取消订单", "取消订单吗？", "取消", "不取消", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -718,7 +610,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 //                        myDialog.dismiss();
                         deleNewSaleAddsalefor();
                         DeletesellOrderSettlement();
-                        Toast.makeText(NCZ_SelectProduct.this, "已取消", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PG_SelectProduct.this, "已取消", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent();
                         intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
                         sendBroadcast(intent1);
@@ -762,7 +654,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
                 } else
                 {
-                    AppContext.makeToast(NCZ_SelectProduct.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_SelectProduct.this, "error_connectDataBase");
                     return;
                 }
 
@@ -771,7 +663,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_SelectProduct.this, "error_connectServer");
+                AppContext.makeToast(PG_SelectProduct.this, "error_connectServer");
 
             }
         });
@@ -779,7 +671,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
     private void DeletesellOrderSettlement()
     {
-        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(NCZ_SelectProduct.this);
+        commembertab commembertab = AppContext.getUserInfo(PG_SelectProduct.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("strWhere", "infoId='" + uuid + "'");
         params.addQueryStringParameter("action", "DeletesellOrderSettlement");
@@ -804,7 +696,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                     }
                 } else
                 {
-                    AppContext.makeToast(NCZ_SelectProduct.this, "error_connectDataBase");
+                    AppContext.makeToast(PG_SelectProduct.this, "error_connectDataBase");
 
                     return;
                 }
@@ -815,7 +707,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(NCZ_SelectProduct.this, "error_connectServer");
+                AppContext.makeToast(PG_SelectProduct.this, "error_connectServer");
 
             }
         });
@@ -831,4 +723,5 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         return false;
 
     }
+
 }

@@ -2,7 +2,6 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -398,21 +396,21 @@ public class CZ_ContractSaleData extends Activity implements CustomHorizontalScr
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            String number = (String) v.getTag(R.id.tag_number);
-            String batchTimes = (String) v.getTag(R.id.tag_batchtime);
-            String areaid = (String) v.getTag(R.id.tag_areaid);
-            String areaname = (String) v.getTag(R.id.tag_areaname);
-            if (number.equals("0"))
-            {
-                Toast.makeText(CZ_ContractSaleData.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
-            } else
-            {
-                Intent intent = new Intent(CZ_ContractSaleData.this, NCZ_ContractBreakOffActivity_.class);
-                intent.putExtra("areaid", areaid);
-                intent.putExtra("areaname", areaname);
-                intent.putExtra("batchTime", batchTimes);
-                CZ_ContractSaleData.this.startActivity(intent);
-            }
+//            String number = (String) v.getTag(R.id.tag_number);
+//            String batchTimes = (String) v.getTag(R.id.tag_batchtime);
+//            String areaid = (String) v.getTag(R.id.tag_areaid);
+//            String areaname = (String) v.getTag(R.id.tag_areaname);
+//            if (number.equals("0"))
+//            {
+//                Toast.makeText(CZ_ContractSaleData.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
+//            } else
+//            {
+//                Intent intent = new Intent(CZ_ContractSaleData.this, NCZ_ContractBreakOffActivity_.class);
+//                intent.putExtra("areaid", areaid);
+//                intent.putExtra("areaname", areaname);
+//                intent.putExtra("batchTime", batchTimes);
+//                CZ_ContractSaleData.this.startActivity(intent);
+//            }
 
         }
     };
