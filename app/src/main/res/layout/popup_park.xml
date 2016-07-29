@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/titlebar_top">
+
+
+        <TextView
+            android:id="@+id/tv_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_parkname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="选取你的园区"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="26.7dp"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:background="#f0f0f0"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="当前选择"
+        android:textColor="@color/text_table_horizontitle"
+        android:textSize="14sp"/>
+
+    <ListView
+        android:id="@+id/lv_yq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#f0f0f0"
+        android:dividerHeight="0.7dp"
+        android:text="所有园区"
+        android:textSize="16sp"/>
+
+
+</LinearLayout>

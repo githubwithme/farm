@@ -2,13 +2,19 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -18,7 +24,6 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
-import com.farm.adapter.NCZ_DLAdapter;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
@@ -43,6 +48,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -51,6 +57,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_areasaleactivity)
 public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
+    DialogFragment_WaitTip dialog;
     String parkid;
     @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
@@ -75,16 +82,18 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     @ViewById
     TextView tv_top_right;
     @ViewById
+    TextView tv_parkname;
+    @ViewById
     TextView tv_bottom_left;
     private String id;
     private String name;
-    List<Wz_Storehouse> listpeople = new ArrayList<Wz_Storehouse>();
+    List<Wz_Storehouse> parklist = new ArrayList<Wz_Storehouse>();
     PopupWindow pw_tab;
     View pv_tab;
     @ViewById
     View line;
     //    PG_CKofListAdapter pg_cKlistAdapter;
-    NCZ_DLAdapter ncz_dlAdapter;
+    Adapter_Park adapter_park;
     com.farm.bean.commembertab commembertab;
     MyDialog myDialog;
     Fragment mContent = new Fragment();
@@ -99,33 +108,35 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
 
 
     @Click
+    void ib_suspen_menu()
+    {
+        if (parklist.size() == 0)
+        {
+            getParkList();
+        } else
+        {
+            showPop_Menu();
+        }
+    }
+
+    @Click
+    void ll_switchpark()
+    {
+        if (parklist.size() == 0)
+        {
+            getParkList();
+        } else
+        {
+            showPop_ParkName();
+        }
+    }
+
+    @Click
     void btn_back()
     {
         finish();
     }
 
-    @Click
-    void btn_createorders()
-    {
-//        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_CreateNewOrder_.class);
-        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SelectProduct_.class);
-        startActivity(intent);
-    }
-
-
-    @Click
-    void btn_orders()
-    {
-        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_OrderManager_.class);
-        startActivity(intent);
-    }
-
-    @Click
-    void btn_customer()
-    {
-        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_CustomerContract_.class);
-        startActivity(intent);
-    }
 
     @Click
     void tv_more()
@@ -141,6 +152,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
         getNewSaleList_test();
+        getParkList();
 //        getBatchTimeOfPark();
     }
 
@@ -258,15 +270,18 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
             tv_parkname.setText(listData.get(0).getAreatabList().get(i).getareaName());
-            tv_parkname.setTag(listData.get(0).getAreatabList().get(i).getAreaid());
+            tv_parkname.setTag(R.id.tag_areaid, listData.get(0).getAreatabList().get(i).getAreaid());
+            tv_parkname.setTag(R.id.tag_areaname, listData.get(0).getAreatabList().get(i).getareaName());
             tv_parkname.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    String areaid = (String) v.getTag();
+                    String areaid = (String) v.getTag(R.id.tag_areaid);
+                    String areaname = (String) v.getTag(R.id.tag_areaname);
                     Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_ContractSaleData_.class);
                     intent.putExtra("areaid", areaid);
+                    intent.putExtra("areaname", areaname);
                     NCZ_AreaSaleActivity.this.startActivity(intent);
                 }
             });
@@ -370,6 +385,14 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         public View getView(int position, View convertView, ViewGroup parent)
         {
             convertView = LayoutInflater.from(NCZ_AreaSaleActivity.this).inflate(R.layout.areasale_scrolladapter_item, null);
+            if (position % 2 == 0)
+            {
+                convertView.setBackgroundResource(R.color.bg_table_row);
+            } else
+            {
+                convertView.setBackgroundResource(R.color.white);
+            }
+
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
@@ -448,7 +471,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 Toast.makeText(NCZ_AreaSaleActivity.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
             } else
             {
-                Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_ContractBreakOffActivity_.class);
+                Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_ContractBatchTimeSale_.class);
                 intent.putExtra("areaid", areaid);
                 intent.putExtra("areaname", areaname);
                 intent.putExtra("batchTime", batchTimes);
@@ -457,4 +480,271 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
 
         }
     };
+
+    public void showPop_ParkName()
+    {
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_AreaSaleActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        pv_tab = layoutInflater.inflate(R.layout.popup_park, null);// 外层
+        pv_tab.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing()))
+                {
+                    pw_tab.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        pv_tab.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_tab.isShowing())
+                {
+                    pw_tab.dismiss();
+                }
+                return false;
+            }
+        });
+        pw_tab = new PopupWindow(pv_tab, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+//        pw_tab.showAsDropDown(rl_tab, 0, 0);
+        //设置layout在PopupWindow中显示的位置
+        pw_tab.setAnimationStyle(R.style.bottominbottomout);
+        pw_tab.showAtLocation(getLayoutInflater().inflate(R.layout.ncz_areasaleactivity, null), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        pw_tab.setOutsideTouchable(true);
+
+        TextView tv_cancle = (TextView) pv_tab.findViewById(R.id.tv_cancle);
+        ListView listview = (ListView) pv_tab.findViewById(R.id.lv_yq);
+
+        adapter_park = new Adapter_Park(NCZ_AreaSaleActivity.this, parklist);
+        listview.setAdapter(adapter_park);
+        tv_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                pw_tab.dismiss();
+            }
+        });
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3)
+            {
+                id = parklist.get(postion).getId();
+                name = parklist.get(postion).getParkName();
+                pw_tab.dismiss();
+                tv_parkname.setText(parklist.get(postion).getParkName());
+            }
+        });
+    }
+
+    public void showPop_Menu()
+    {
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_AreaSaleActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        pv_tab = layoutInflater.inflate(R.layout.pop_salemenu, null);// 外层
+        pv_tab.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing()))
+                {
+                    pw_tab.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        pv_tab.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_tab.isShowing())
+                {
+                    pw_tab.dismiss();
+                }
+                return false;
+            }
+        });
+        pw_tab = new PopupWindow(pv_tab, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        //设置layout在PopupWindow中显示的位置
+        pw_tab.setAnimationStyle(R.style.bottominbottomout);
+        pw_tab.showAtLocation(getLayoutInflater().inflate(R.layout.ncz_areasaleactivity, null), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        pw_tab.setOutsideTouchable(true);
+
+        RelativeLayout rl_createOrder = (RelativeLayout) pv_tab.findViewById(R.id.rl_createOrder);
+        RelativeLayout rl_orderManager = (RelativeLayout) pv_tab.findViewById(R.id.rl_orderManager);
+        RelativeLayout rl_customerManager = (RelativeLayout) pv_tab.findViewById(R.id.rl_customerManager);
+        ImageView iv_cancle = (ImageView) pv_tab.findViewById(R.id.iv_cancle);
+
+        iv_cancle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                pw_tab.dismiss();
+            }
+        });
+        rl_createOrder.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                pw_tab.dismiss();
+                //        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_CreateNewOrder_.class);
+                Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SelectProduct_.class);
+                //        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SelectProduct_New_.class);
+                startActivity(intent);
+            }
+        });
+        rl_orderManager.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                pw_tab.dismiss();
+                Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_OrderManager_.class);
+                startActivity(intent);
+            }
+        });
+        rl_customerManager.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                pw_tab.dismiss();
+                Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_CustomerContract_.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void getParkList()
+    {
+        showDialog_waitTip();
+        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(NCZ_AreaSaleActivity.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getcontractByUid");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        parklist = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
+                    } else
+                    {
+                        parklist = new ArrayList<Wz_Storehouse>();
+                        Toast.makeText(NCZ_AreaSaleActivity.this, "暂无更多园区", Toast.LENGTH_SHORT).show();
+                    }
+                    tv_parkname.setText(parklist.get(0).getParkName());
+                } else
+                {
+                    AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectDataBase");
+                    return;
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectServer");
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    public class Adapter_Park extends BaseAdapter
+    {
+        private Context context;
+        private List<Wz_Storehouse> listItems;
+        private LayoutInflater listContainer;
+        Wz_Storehouse wz_storehouse;
+
+        class ListItemView
+        {
+            public TextView tv_yq;
+            public View view_select;
+        }
+
+        public Adapter_Park(Context context, List<Wz_Storehouse> data)
+        {
+            this.context = context;
+            this.listContainer = LayoutInflater.from(context);
+            this.listItems = data;
+        }
+
+        HashMap<Integer, View> lmap = new HashMap<Integer, View>();
+
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            wz_storehouse = listItems.get(position);
+            ListItemView listItemView = null;
+            if (lmap.get(position) == null)
+            {
+                convertView = listContainer.inflate(R.layout.park_item, null);
+                listItemView = new ListItemView();
+                listItemView.tv_yq = (TextView) convertView.findViewById(R.id.tv_yq);
+                listItemView.view_select = (View) convertView.findViewById(R.id.view_select);
+                lmap.put(position, convertView);
+                convertView.setTag(listItemView);
+            } else
+            {
+                convertView = lmap.get(position);
+                listItemView = (ListItemView) convertView.getTag();
+            }
+            if (tv_parkname.getText().equals(wz_storehouse.getParkName()))
+            {
+                listItemView.view_select.setVisibility(View.VISIBLE);
+            } else
+            {
+                listItemView.view_select.setVisibility(View.GONE);
+            }
+            listItemView.tv_yq.setText(wz_storehouse.getParkName() + "库存量");
+            return convertView;
+        }
+
+        @Override
+        public int getCount()
+        {
+            return listItems.size();
+        }
+
+        @Override
+        public Object getItem(int arg0)
+        {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int arg0)
+        {
+            return 0;
+        }
+    }
+
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(NCZ_AreaSaleActivity.this.getFragmentManager(), "TIP");
+    }
 }

@@ -432,7 +432,7 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
                 Toast.makeText(CZ_AreaSaleActivity.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
             } else
             {
-                Intent intent = new Intent(CZ_AreaSaleActivity.this, NCZ_ContractBreakOffActivity_.class);
+                Intent intent = new Intent(CZ_AreaSaleActivity.this, CZ_ContractBatchTimeSale_.class);
                 intent.putExtra("areaid", areaid);
                 intent.putExtra("areaname", areaname);
                 intent.putExtra("batchTime", batchTimes);
