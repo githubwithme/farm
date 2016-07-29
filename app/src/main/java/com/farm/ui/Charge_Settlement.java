@@ -99,7 +99,7 @@ public class Charge_Settlement extends Activity
     @ViewById
     LinearLayout ll_banyun;
 
-    String isSave="0";
+    String isSave="1";
 
     @Click  //包装负责人
     void bz_fzrid()

@@ -1,6 +1,10 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -64,7 +68,7 @@ public class Charge_UpdateSettlement extends Activity
     EditText zp_bds_zhong;//正品净重
     @ViewById
     EditText cp_jingzhong;//次品净重
-    String isSave;
+    String isSave="1";
 
 
     @Click
@@ -109,10 +113,21 @@ public class Charge_UpdateSettlement extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder_new = getIntent().getParcelableExtra("bean");
+
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_NEW_JSD);
+        registerReceiver(receiver_update, intentfilter_update);
         jsdId = sellOrder_new.getid();
 
     }
-
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getSellOrderDetailSec();
+        }
+    };
     private void showData()
     {
         plateNumber.setText(sellOrder_new.getPlateNumber());
