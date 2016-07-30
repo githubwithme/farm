@@ -31,7 +31,6 @@ import com.farm.bean.PeopelList;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
 import com.farm.bean.Wz_Storehouse;
-import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
 import com.farm.bean.parktab;
 import com.farm.common.FileHelper;
@@ -128,6 +127,14 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
     }
 
     @Click
+    void ll_productnumber()
+    {
+        Intent intent = new Intent(NCZ_SelectProduct.this, ProductSelectedList_.class);
+        intent.putExtra("uuid", uuid);
+        NCZ_SelectProduct.this.startActivity(intent);
+    }
+
+    @Click
     void btn_cancleorder()
     {
         cancleOrder();
@@ -198,10 +205,10 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 screenWidth = screenWidth / 3;
             } else if (size == 2)
             {
-                screenWidth = screenWidth / 4;
+                screenWidth = screenWidth / 3;
             } else
             {
-                screenWidth = screenWidth / 5;
+                screenWidth = screenWidth / 3;
             }
             tv_top_left.getLayoutParams().width = (screenWidth);
 //            tv_top_right.getLayoutParams().width = (screenWidth);
@@ -247,7 +254,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                         Toast.makeText(NCZ_SelectProduct.this, "暂无更多园区", Toast.LENGTH_SHORT).show();
                     }
                     tv_parkname.setText(parklist.get(0).getParkName());
-                    parkid=parklist.get(0).getId();
+                    parkid = parklist.get(0).getId();
                     getNCZ_getAllContractSaleData();
                 } else
                 {
@@ -360,7 +367,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             {
                 pw_tab.dismiss();
                 tv_title.setText(list_park.get(postion).getparkName());
-                parkid=list_park.get(postion).getid();
+                parkid = list_park.get(postion).getid();
                 //        getBatchTimeOfPark();
 //                getNewSaleList_test();
                 getNCZ_getAllContractSaleData();
@@ -397,10 +404,10 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                             screenWidth = screenWidth / 3;
                         } else if (size == 2)
                         {
-                            screenWidth = screenWidth / 4;
+                            screenWidth = screenWidth / 3;
                         } else
                         {
-                            screenWidth = screenWidth / 5;
+                            screenWidth = screenWidth / 3;
                         }
                         tv_top_left.getLayoutParams().width = (screenWidth);
 //                        tv_top_right.getLayoutParams().width = (screenWidth);
@@ -527,7 +534,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         class ListItemView
         {
             public TextView item_titlev;
-            public TextView item_total;
+            //            public TextView item_total;
             public TextView tv_data;
         }
 
@@ -555,11 +562,11 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             convertView = LayoutInflater.from(NCZ_SelectProduct.this).inflate(R.layout.nczselectproduct_scrolladapter_item, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+//            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-            listItemView.item_total.getLayoutParams().width = (screenWidth);
+//            listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            listItemView.item_titlev.setText(listData.get(position).getareaName() +"\n"+listData.get(position).getContractname());//problem
+            listItemView.item_titlev.setText(listData.get(position).getareaName() + "\n" + listData.get(position).getContractname());//problem
 
             int totalnumber = 0;
             List<BatchTime> list = listData.get(position).getBatchTimeList();
@@ -567,7 +574,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             {
                 totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
             }
-            listItemView.item_total.setText(String.valueOf(totalnumber));
+//            listItemView.item_total.setText(String.valueOf(totalnumber));
 
             for (int i = 0; i < listData.get(position).getBatchTimeList().size(); i++)
             {
@@ -628,12 +635,12 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             String number = (String) v.getTag(R.id.tag_number);
             String batchTimes = (String) v.getTag(R.id.tag_batchtime);
             String contractorId = (String) v.getTag(R.id.contractorId);
-            String tv_contractName= (String) v.getTag(R.id.tv_contractName);
-            String areaid= (String) v.getTag(R.id.tag_areaid);
-            String areaname= (String) v.getTag(R.id.tag_areaname);
+            String tv_contractName = (String) v.getTag(R.id.tv_contractName);
+            String areaid = (String) v.getTag(R.id.tag_areaid);
+            String areaname = (String) v.getTag(R.id.tag_areaname);
 
 
-            showDialog_selectProduct(number,batchTimes,contractorId,tv_contractName,areaid,areaname);
+            showDialog_selectProduct(number, batchTimes, contractorId, tv_contractName, areaid, areaname);
 
         }
     };
@@ -706,8 +713,9 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             return 0;
         }
     }
-//    showDialog_selectProduct(number,batchTimes,areaid,areaname);
-    public void showDialog_selectProduct(final String number ,final String batchTimes,final String contractid,final String contractname,final String areaid,final String areaname)
+
+    //    showDialog_selectProduct(number,batchTimes,areaid,areaname);
+    public void showDialog_selectProduct(final String number, final String batchTimes, final String contractid, final String contractname, final String areaid, final String areaname)
     {
         final View dialog_layout = LayoutInflater.from(NCZ_SelectProduct.this).inflate(R.layout.customdialog_editcontractsale, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(NCZ_SelectProduct.this, R.style.MyDialog, dialog_layout);
@@ -720,14 +728,14 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             public void onClick(View v)
             {
                 customDialog_editSaleInInfo.dismiss();
-                if (et_number .getText().toString().equals(""))
+                if (et_number.getText().toString().equals(""))
                 {
                     Toast.makeText(NCZ_SelectProduct.this, "请先选择产品", Toast.LENGTH_SHORT).show();
                 } else
                 {
                     list_sell = new ArrayList<>();
                     uuids = new ArrayList<>();
-                    String number_left = String.valueOf(Integer.valueOf(number) - Integer.valueOf(et_number .getText().toString()));
+                    String number_left = String.valueOf(Integer.valueOf(number) - Integer.valueOf(et_number.getText().toString()));
                     HashMap hashMap = new HashMap();
                     hashMap.put("contractid", contractid);
                     hashMap.put("year", utils.getYear());
@@ -1020,10 +1028,11 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 name = parklist.get(postion).getParkName();
                 pw_tab.dismiss();
                 tv_parkname.setText(parklist.get(postion).getParkName());
-                parkid=parklist.get(postion).getId();
+                parkid = parklist.get(postion).getId();
             }
         });
     }
+
     private void addSellOrderDetail_new(String data)
     {
         RequestParams params = new RequestParams();

@@ -176,13 +176,13 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             int size = listData.get(0).getAreatabList().size();
             if (size == 1)
             {
-                screenWidth = screenWidth / 3;
+                screenWidth = screenWidth / 4;
             } else if (size == 2)
             {
                 screenWidth = screenWidth / 4;
             } else
             {
-                screenWidth = screenWidth / 5;
+                screenWidth = screenWidth / 4;
             }
             tv_top_left.getLayoutParams().width = (screenWidth);
             tv_top_right.getLayoutParams().width = (screenWidth);
@@ -220,13 +220,13 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                         int size = listData.get(0).getAreatabList().size();
                         if (size == 1)
                         {
-                            screenWidth = screenWidth / 3;
+                            screenWidth = screenWidth / 4;
                         } else if (size == 2)
                         {
                             screenWidth = screenWidth / 4;
                         } else
                         {
-                            screenWidth = screenWidth / 5;
+                            screenWidth = screenWidth / 4;
                         }
                         tv_top_left.getLayoutParams().width = (screenWidth);
                         tv_top_right.getLayoutParams().width = (screenWidth);

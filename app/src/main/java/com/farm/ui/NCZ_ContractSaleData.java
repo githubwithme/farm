@@ -62,7 +62,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
     protected List<CustomHorizontalScrollView_Allitem> mHScrollViews = null;
     private ScrollAdapter mAdapter;
     int screenWidth = 0;
-    int screenWidth_total = 0;
+//    int screenWidth_total = 0;
     @ViewById
     LinearLayout ll_park;
     @ViewById
@@ -139,21 +139,21 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
             int size = listData.get(0).getContracttabList().size();
             if (size == 1)
             {
-                screenWidth = screenWidth / 3;
-                screenWidth_total=screenWidth/3;
+                screenWidth = screenWidth / 4;
+//                screenWidth_total=screenWidth/3;
             } else if (size == 2)
             {
                 screenWidth = screenWidth / 4;
-                screenWidth_total=screenWidth/4;
+//                screenWidth_total=screenWidth/4;
             } else
             {
                 screenWidth = screenWidth / 4;
-                screenWidth_total=screenWidth/5;
+//                screenWidth_total=screenWidth/5;
             }
             tv_top_left.getLayoutParams().width = (screenWidth);
-            tv_top_right.getLayoutParams().width = (screenWidth_total);
+            tv_top_right.getLayoutParams().width = (screenWidth);
             tv_bottom_left.getLayoutParams().width = (screenWidth);
-            alltoatal.getLayoutParams().width = (screenWidth_total);
+            alltoatal.getLayoutParams().width = (screenWidth);
             initViews();
 //            cz_startdl.setVisibility(View.GONE);
         }
@@ -186,16 +186,16 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
                         int size = listData.get(0).getContracttabList().size();
                         if (size == 1)
                         {
-                            screenWidth = screenWidth / 3;
-                            screenWidth_total=screenWidth/3;
+                            screenWidth = screenWidth / 4;
+//                            screenWidth_total=screenWidth/3;
                         } else if (size == 2)
                         {
                             screenWidth = screenWidth / 4;
-                            screenWidth_total=screenWidth/4;
+//                            screenWidth_total=screenWidth/4;
                         } else
                         {
                             screenWidth = screenWidth / 4;
-                            screenWidth_total=screenWidth/5;
+//                            screenWidth_total=screenWidth/5;
                         }
                         tv_top_left.getLayoutParams().width = (screenWidth);
                         tv_top_right.getLayoutParams().width = (screenWidth);
@@ -350,7 +350,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-            listItemView.item_total.getLayoutParams().width = (screenWidth_total);
+            listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
             listItemView.item_titlev.setText(listData.get(position).getBatchTime());
             int totalnumber = 0;
