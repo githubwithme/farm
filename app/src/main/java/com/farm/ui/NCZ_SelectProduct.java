@@ -566,7 +566,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
 //            listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            listItemView.item_titlev.setText(listData.get(position).getareaName() + "\n" + listData.get(position).getContractname());//problem
+            listItemView.item_titlev.setText(listData.get(position).getareaName() + listData.get(position).getContractname());//problem
 
             int totalnumber = 0;
             List<BatchTime> list = listData.get(position).getBatchTimeList();
