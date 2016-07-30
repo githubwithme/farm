@@ -113,9 +113,9 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
-        getNewSaleList_test();
+//        getNewSaleList_test();
         tv_title.setText(areaname + "库存量");
-//        getBatchTimeOfPark();
+        getNCZ_getContractSaleData();
     }
 
     @Override
@@ -156,7 +156,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
 
     }
 
-    public void getBatchTimeOfPark()
+    public void getNCZ_getContractSaleData()
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -332,6 +332,13 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
         public View getView(int position, View convertView, ViewGroup parent)
         {
             convertView = LayoutInflater.from(NCZ_ContractSaleData.this).inflate(R.layout.contractsale_scrolladapter_item, null);
+            if (position % 2 == 0)
+            {
+                convertView.setBackgroundResource(R.color.bg_table_row);
+            } else
+            {
+                convertView.setBackgroundResource(R.color.white);  //splitline
+            }
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);

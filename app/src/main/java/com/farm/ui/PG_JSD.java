@@ -927,6 +927,7 @@ public class PG_JSD extends Activity
                 builder.append(JSON.toJSONString(sellOrderDetail_new));
                 builder.append("]} ");
                 addSellOrderDetailSec(builder.toString());
+
                 StringBuilder builder1 = new StringBuilder();
                 builder1.append("{\"SellOrderDetail_newlist\": [");
                 builder1.append(JSON.toJSONString(sellOrderDetail_new));
