@@ -527,7 +527,7 @@ public class NCZ_CreateNewOrder extends Activity
         getpurchaser("");
         getchanpin();
         getlistdata();
-        deleNewSaleAddsalefor();
+//        deleNewSaleAddsalefor();
         et_price.addTextChangedListener(new TextWatcher()
         {
             @Override
@@ -720,6 +720,7 @@ public class NCZ_CreateNewOrder extends Activity
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("saleid", uuid);
+        params.addQueryStringParameter("createOrderTye", "1");
         params.addQueryStringParameter("action", "createOrder");
         params.setContentType("application/json");
         try
@@ -976,7 +977,7 @@ public class NCZ_CreateNewOrder extends Activity
                 {
                     case R.id.btn_sure:
 //                        myDialog.dismiss();
-                        deleNewSaleAddsalefor();
+//                        deleNewSaleAddsalefor();
                         DeletesellOrderSettlement();
                         Toast.makeText(NCZ_CreateNewOrder.this, "已取消", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent();

@@ -82,11 +82,11 @@ public class Charge_Settlement extends Activity
     String jsdId = "";
     String byId = "";
     String bzId = "";
-    String zzsl="";
+    String zzsl = "";
     CustomDialog_ListView customDialog_listViews;
     List<Purchaser> listData_BY = new ArrayList<Purchaser>();
     List<Purchaser> listData_BZ = new ArrayList<Purchaser>();
-   @ViewById
+    @ViewById
     ListView frame_listview_news;
     Charge_Settlement_Adapter charge_settlement_adapter;
 
@@ -99,9 +99,11 @@ public class Charge_Settlement extends Activity
     @ViewById
     LinearLayout ll_banyun;
 
-    String isSave="1";
+    String isSave = "1";
+    String jsdid = "";
 
-    @Click  //包装负责人
+    @Click
+        //包装负责人
     void bz_fzrid()
     {
         List<String> listdata = new ArrayList<String>();
@@ -114,7 +116,8 @@ public class Charge_Settlement extends Activity
         showDialog_bz(listdata, listid);
     }
 
-    @Click  //搬运负责人
+    @Click
+        //搬运负责人
     void by_fzrid()
     {
         List<String> listdata = new ArrayList<String>();
@@ -159,6 +162,7 @@ public class Charge_Settlement extends Activity
             getSellOrderDetailSec();
         }
     };
+
     @Click
     void charge_save()
     {
@@ -170,6 +174,9 @@ public class Charge_Settlement extends Activity
         SellOrder_New sellOrder = new SellOrder_New();
         sellOrder.setInfoId(sellOrder_new.getUuid());
         sellOrder.setUid(sellOrder_new.getUid());
+        sellOrder.setIsNeedAudit("2");
+        sellOrder.setSettlestatus("2");
+
         sellOrder.setPlateNumber(plateNumber.getText().toString());//车车牌号
         sellOrder.setQualityWaterWeight(zp_ds_zhong.getText().toString());//正品带水重
         sellOrder.setQualityNetWeight(zp_bds_zhong.getText().toString());//正品净重
@@ -185,7 +192,8 @@ public class Charge_Settlement extends Activity
         builder.append("]} ");
         addsellOrderSettlement(builder.toString());
     }
-  //修改
+
+    //修改
     @Click
     void charge_load()
     {
@@ -208,7 +216,8 @@ public class Charge_Settlement extends Activity
         sellOrder.setPickId(byId);
         updatesellOrderSettlement(sellOrder);
     }
-//添加结算单
+
+    //添加结算单
     private void addsellOrderSettlement(String data)
     {
         RequestParams params = new RequestParams();
@@ -222,7 +231,6 @@ public class Charge_Settlement extends Activity
             e.printStackTrace();
         }
         HttpUtils http = new HttpUtils();
-        http.configTimeout(60000);
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
             @Override
@@ -234,8 +242,7 @@ public class Charge_Settlement extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-
-
+                        jsdid = String.valueOf(result.getAffectedRows());
                         charge_save.setVisibility(View.GONE);
                         charge_load.setVisibility(View.VISIBLE);
                         jsdId = result.getAffectedRows() + "";
@@ -311,7 +318,7 @@ public class Charge_Settlement extends Activity
 
 
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
-                        for (int i=0;i<listNewData.size();i++)
+                        for (int i = 0; i < listNewData.size(); i++)
                         {
                             listNewData.get(i).setactualnumber("");
                         }
@@ -321,7 +328,7 @@ public class Charge_Settlement extends Activity
                         }
 
                         listSellData.addAll(listNewData);
-                        charge_settlement_adapter = new Charge_Settlement_Adapter(Charge_Settlement.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight(),isSave);
+                        charge_settlement_adapter = new Charge_Settlement_Adapter(Charge_Settlement.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight(), isSave);
                         frame_listview_news.setAdapter(charge_settlement_adapter);
                         utils.setListViewHeight(frame_listview_news);
 
@@ -418,11 +425,11 @@ public class Charge_Settlement extends Activity
                         ll_cbhlist.setVisibility(View.VISIBLE);
                         ll_jsd.setVisibility(View.VISIBLE);*/
 
-                        isSave="1";
+                        isSave = "1";
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
 
 
-                        charge_settlement_adapter = new Charge_Settlement_Adapter(Charge_Settlement.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight(),isSave);
+                        charge_settlement_adapter = new Charge_Settlement_Adapter(Charge_Settlement.this, listNewData, sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight(), isSave);
                         frame_listview_news.setAdapter(charge_settlement_adapter);
                         utils.setListViewHeight(frame_listview_news);
 //                        shouData(listNewData);
@@ -448,7 +455,7 @@ public class Charge_Settlement extends Activity
     }
 
     //采购商，搬运工，包装工
-    private void getpurchaser( )
+    private void getpurchaser()
     {
         commembertab commembertab = AppContext.getUserInfo(Charge_Settlement.this);
         RequestParams params = new RequestParams();
@@ -546,28 +553,33 @@ public class Charge_Settlement extends Activity
         });
         customDialog_listViews.show();
     }
-//修改
+
+    //修改
     private void updatesellOrderSettlement(SellOrder_New mSellOrder)
     {
-/*      contractorId   int     包工头
-        pickId         int     挑工头
-        carryPrice    float    搬运单价
-        packPrice     float    包装单价
-        qualityWaterWeight	float	正品带水重
-        qualityNetWeight	float	正品净重
-        defectWaterWeight	float	  次品带水重
-        defectNetWeight   	float	   次品净重
-        plateNumber      varchar(50)    车牌号
-        packPec	varchar(50)	       包装规格，斤/件 1
-        */
-
+  /*      sellOrder.setInfoId(sellOrder_new.getUuid());
+        sellOrder.setUid(sellOrder_new.getUid());
+        sellOrder.setPlateNumber(plateNumber.getText().toString());//车车牌号
+        sellOrder.setQualityWaterWeight(zp_ds_zhong.getText().toString());//正品带水重
+        sellOrder.setQualityNetWeight(zp_bds_zhong.getText().toString());//正品净重
+        sellOrder.setDefectWaterWeight(cp_ds_zhong.getText().toString());//次品带水重
+        sellOrder.setDefectNetWeight(cp_jingzhong.getText().toString());//次品净重
+        sellOrder.setPackPrice(bz_nc_danjia.getText().toString());//包装单价
+        sellOrder.setCarryPrice(by_nc_danjia.getText().toString());//搬运单价
+        sellOrder.setContractorId(bzId);
+        sellOrder.setPickId(byId);*/
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("strWhere","id="+ jsdId);
-        params.addQueryStringParameter("strUpdateValues", "contractorId="+mSellOrder.getContractorId() +" , pickId="+mSellOrder.getPickId() +" , carryPrice =" +mSellOrder.getCarryPrice()+"  , packPrice="+mSellOrder.getPackPrice()+
-        "  , qualityWaterWeight="+mSellOrder.getQualityWaterWeight()+" , qualityNetWeight="+mSellOrder.getQualityNetWeight()+" , defectWaterWeight=" +mSellOrder.getDefectWaterWeight() +",defectNetWeight="+mSellOrder.getDefectNetWeight()+" , plateNumber='" +mSellOrder.getPlateNumber()
-        +"''");
-//        params.addQueryStringParameter("action", "updateSellOrderByuuid");
-        params.addQueryStringParameter("action", "updatesellOrderSettlement");
+        params.addQueryStringParameter("id", jsdid);
+//        params.addQueryStringParameter("settlestatus", "2");
+//        params.addQueryStringParameter("isNeedAudit", "2");
+        params.addQueryStringParameter("contractorId", bzId);
+        params.addQueryStringParameter("pickId", byId);
+        params.addQueryStringParameter("uid", mSellOrder.getUid());
+        params.addQueryStringParameter("carryPrice", mSellOrder.getCarryPrice());
+        params.addQueryStringParameter("packPrice", mSellOrder.getPackPrice());
+        params.addQueryStringParameter("infoId", mSellOrder.getInfoId());
+        params.addQueryStringParameter("plateNumber", mSellOrder.getPlateNumber());
+        params.addQueryStringParameter("action", "changesellOrderSettlement");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

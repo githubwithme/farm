@@ -1,6 +1,7 @@
 package com.farm.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrderDetail_New;
+import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditOrderDetail;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
@@ -52,13 +54,70 @@ public class ProductSelectedList extends Activity
     {
         getActionBar().hide();
 //        saleid = getIntent().getStringExtra("saleid");
-        getsellOrderDetailBySaleId();
+//        getsellOrderDetailBySaleId();
+        getNewSaleList();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+    }
+
+    private void getNewSaleList()
+    {
+        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(ProductSelectedList.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("creatorId", commembertab.getId());
+        params.addQueryStringParameter("action", "getSellOrderDetailList");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        list_orderDetail = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+                        int allnumber = 0;
+                        for (int i = 0; i < list_orderDetail.size(); i++)
+                        {
+                            if (!list_orderDetail.get(i).getplannumber().equals(""))
+                                allnumber = allnumber + Integer.valueOf(list_orderDetail.get(i).getplannumber());
+                        }
+                    } else
+                    {
+                        list_orderDetail = new ArrayList<SellOrderDetail_New>();
+                    }
+                    if (adapterproductlist == null)
+                    {
+                        adapterproductlist = new Adapter_ProductList(ProductSelectedList.this);
+                        lv.setAdapter(adapterproductlist);
+                    } else
+                    {
+                        adapterproductlist.notifyDataSetChanged();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(ProductSelectedList.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(ProductSelectedList.this, "error_connectServer");
+            }
+        });
     }
 
     private void getsellOrderDetailBySaleId()
@@ -239,7 +298,12 @@ public class ProductSelectedList extends Activity
                             Toast.makeText(context, "修改成功！", Toast.LENGTH_SHORT).show();
                             tv_plannumber.setText(number_new);
                             list_orderDetail.get(pos_edit).setplannumber(number_new);
-                            getsellOrderDetailBySaleId();
+                            getNewSaleList();
+
+                            Intent intent1 = new Intent();
+                            intent1.setAction(AppContext.UPDATEMESSAGE_NCZ_XL_REFRESH);
+                            sendBroadcast(intent1);
+
                         } else
                         {
                             Toast.makeText(context, "改承包区该批次剩余株数不足！", Toast.LENGTH_SHORT).show();
@@ -307,7 +371,12 @@ public class ProductSelectedList extends Activity
                         {
                             Toast.makeText(context, "删除成功！", Toast.LENGTH_SHORT).show();
                             list_orderDetail.remove(pos_delete);
-                            getsellOrderDetailBySaleId();
+                            getNewSaleList();
+
+                            Intent intent1 = new Intent();
+                            intent1.setAction(AppContext.UPDATEMESSAGE_NCZ_XL_REFRESH);
+                            sendBroadcast(intent1);
+
                         } else
                         {
                             Toast.makeText(context, "删除失败！", Toast.LENGTH_SHORT).show();
