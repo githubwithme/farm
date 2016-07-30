@@ -95,7 +95,6 @@ public class NCZ_ContractBreakOff extends Activity implements CustomHorizontalSc
     @ViewById
     RelativeLayout rl_view;
 
-
     @Click
     void btn_back()
     {
@@ -109,8 +108,8 @@ public class NCZ_ContractBreakOff extends Activity implements CustomHorizontalSc
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
-        getNewSaleList_test();
-//        getBatchTimeOfPark();
+//        getNewSaleList_test();
+        getBatchTimeOfPark();
     }
 
     @Override

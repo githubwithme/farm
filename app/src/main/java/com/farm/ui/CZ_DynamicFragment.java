@@ -193,7 +193,13 @@ public class CZ_DynamicFragment extends Fragment
                     intent.setAction(AppContext.BROADCAST_NCZ_DT);
                     getActivity().sendBroadcast(intent);
                     k = 0;*/
-                    list = utils.BubbleSortArray(list);//本地不行
+
+           /*         if (list.size()>0)
+                    {
+                        list = utils.BubbleSortArray(list);//本地不行
+                    }*/
+
+
                     adapter_dynamic = new CZ_Adapter_Dynamic(getActivity(), list,listDatas);
                     lv.setAdapter(adapter_dynamic);
                    /* lv.setOnItemClickListener(new AdapterView.OnItemClickListener()

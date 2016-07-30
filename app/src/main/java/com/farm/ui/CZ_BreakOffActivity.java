@@ -107,7 +107,8 @@ public class CZ_BreakOffActivity extends Activity
                 switch (v.getId())
                 {
                     case R.id.btn_sure:
-                        getcreateBatchTime();
+//                        getcreateBatchTime();
+                        AddFirstBatchTime();
                         myDialog.dismiss();
                         break;
                     case R.id.btn_cancle:
@@ -234,7 +235,7 @@ public class CZ_BreakOffActivity extends Activity
         });
     }
 
-    public void getcreateBatchTime()
+ /*   public void getcreateBatchTime()
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_BreakOffActivity.this);
         RequestParams params = new RequestParams();
@@ -279,59 +280,54 @@ public class CZ_BreakOffActivity extends Activity
                 AppContext.makeToast(CZ_BreakOffActivity.this, "error_connectServer");
             }
         });
+    }*/
+
+    public void AddFirstBatchTime()
+    {
+        commembertab commembertab = AppContext.getUserInfo(CZ_BreakOffActivity.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("startday", tv_timelimit.getText().toString());
+        params.addQueryStringParameter("action", "AddFirstBatchTime");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<BatchTime> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() > 0)
+                    {
+
+                        cz_startdl.setVisibility(View.GONE);
+                        getBatchTimeBreakoffData();
+
+                    } else
+                    {
+                        listNewData = new ArrayList<BatchTime>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(CZ_BreakOffActivity.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(CZ_BreakOffActivity.this, "error_connectServer");
+            }
+        });
     }
-
-//    private void getAreaBreakoffData()
-//    {
-//        commembertab commembertab = AppContext.getUserInfo(CZ_BreakOffActivity.this);
-//        RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("parkid", commembertab.getparkId());
-//        params.addQueryStringParameter("year", utils.getYear());
-//        params.addQueryStringParameter("action", "CZ_getAreaBreakoffData");//jobGetList1
-//        HttpUtils http = new HttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-//        {
-//            @Override
-//            public void onSuccess(ResponseInfo<String> responseInfo)
-//            {
-//                String a = responseInfo.result;
-//                List<areatab> listNewData = null;
-//                Result result = JSON.parseObject(responseInfo.result, Result.class);
-//                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-//                {
-//                    if (result.getAffectedRows() != 0)
-//                    {
-//                        listNewData = JSON.parseArray(result.getRows().toJSONString(), areatab.class);
-//                        adapter_czBreakOff = new Adapter_CZBreakOff(CZ_BreakOffActivity.this, listNewData, expandableListView_areasaledata);
-//                        expandableListView_areasaledata.setAdapter(adapter_czBreakOff);
-//                        utils.setListViewHeight(expandableListView_areasaledata);
-//
-////                        for (int i = 0; i < listNewData.size(); i++)
-////                        {
-////                            expandableListView.expandGroup(i);//展开
-////                        }
-//
-//                    } else
-//                    {
-//                        listNewData = new ArrayList<areatab>();
-//                    }
-//
-//                } else
-//                {
-//                    AppContext.makeToast(CZ_BreakOffActivity.this, "error_connectDataBase");
-//                    return;
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(HttpException error, String msg)
-//            {
-//                AppContext.makeToast(CZ_BreakOffActivity.this, "error_connectServer");
-//            }
-//        });
-//    }
-
     private void getBatchTimeBreakoffData()
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_BreakOffActivity.this);
@@ -401,14 +397,17 @@ public class CZ_BreakOffActivity extends Activity
             tv_parkname.getLayoutParams().width = (screenWidth);
             tv_parkname.setText(listData.get(0).getAreatabList().get(i).getareaName());
             ll_park.addView(view);
-            tv_parkname.setTag(listData.get(0).getAreatabList().get(i).getAreaid());
+//            tv_parkname.setTag(listData.get(0).getAreatabList().get(i).getAreaid());
+            tv_parkname.setTag(R.id.areaname,listData.get(0).getAreatabList().get(i).getAreaid());
             tv_parkname.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    String areaid = (String) v.getTag();
-                    Intent intent = new Intent(CZ_BreakOffActivity.this, CZ_ContractSaleData_.class);
+//                    String areaid = (String) v.getTag();
+                    String areaid= (String) v.getTag(R.id.areaname);
+//                    Intent intent = new Intent(CZ_BreakOffActivity.this, CZ_ContractSaleData_.class);
+                    Intent intent = new Intent(CZ_BreakOffActivity.this, CZ_ContractBreakOff_.class);
                     intent.putExtra("areaid", areaid);
                     CZ_BreakOffActivity.this.startActivity(intent);
                 }

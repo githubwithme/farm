@@ -2,7 +2,6 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -24,7 +22,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
 import com.farm.bean.Wz_Storehouse;
-import com.farm.bean.areatab;
+import com.farm.bean.contractTab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomHorizontalScrollView_Allitem;
@@ -46,12 +44,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by ${hmj} on 2016/6/57.
+ * Created by hasee on 2016/7/28.
  */
-@EActivity(R.layout.cz_areasaleactivity)
-public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
+@EActivity(R.layout.cz_contractsaledata)
+public class CZ_ContractBreakOff  extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
-    String parkid;
+    String areaid;
     @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
     @ViewById
@@ -115,37 +113,24 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
         getBatchTimeOfPark();
     }
 
-    @Click
-    void btn_createorders()
-    {
-        Intent intent = new Intent(this, CZ_SelectProduct_.class);
-        startActivity(intent);
-    }
-
-    @Click
-    void btn_orders()
-    {
-        Intent intent = new Intent(this, PG_OrderManager_.class);
-        startActivity(intent);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        commembertab = AppContext.getUserInfo(CZ_AreaSaleActivity.this);
-        parkid =commembertab.getparkId();
+        commembertab = AppContext.getUserInfo(CZ_ContractBreakOff.this);
+        areaid = getIntent().getStringExtra("areaid");
     }
 
 
     private void getNewSaleList_test()
     {
-        listData = FileHelper.getAssetsData(CZ_AreaSaleActivity.this, "getAreaSaleData", BatchTime.class);
+        listData = FileHelper.getAssetsData(CZ_ContractBreakOff.this, "getContractSaleData", BatchTime.class);
         if (listData != null)
         {
-            DensityUtil densityUtil = new DensityUtil(CZ_AreaSaleActivity.this);
+            DensityUtil densityUtil = new DensityUtil(CZ_ContractBreakOff.this);
             screenWidth = densityUtil.getScreenWidth();
-            int size = listData.get(0).getAreatabList().size();
+            int size = listData.get(0).getContracttabList().size();
             if (size == 1)
             {
                 screenWidth = screenWidth / 3;
@@ -171,9 +156,10 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("userId", commembertab.getId());
-        params.addQueryStringParameter("parkid", parkid);
+        params.addQueryStringParameter("areaid", areaid);
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "NCZ_getAreaSaleData");
+//        params.addQueryStringParameter("action", "NCZ_getContractSaleData");
+        params.addQueryStringParameter("action", "NCZ_getContractBreakoffData");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -187,9 +173,9 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
                     if (result.getAffectedRows() > 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
-                        DensityUtil densityUtil = new DensityUtil(CZ_AreaSaleActivity.this);
+                        DensityUtil densityUtil = new DensityUtil(CZ_ContractBreakOff.this);
                         screenWidth = densityUtil.getScreenWidth();
-                        int size = listData.get(0).getAreatabList().size();
+                        int size = listData.get(0).getContracttabList().size();
                         if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
@@ -214,7 +200,7 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
 
                 } else
                 {
-                    AppContext.makeToast(CZ_AreaSaleActivity.this, "error_connectDataBase");
+                    AppContext.makeToast(CZ_ContractBreakOff.this, "error_connectDataBase");
                     return;
                 }
 
@@ -223,7 +209,7 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(CZ_AreaSaleActivity.this, "error_connectServer");
+                AppContext.makeToast(CZ_ContractBreakOff.this, "error_connectServer");
             }
         });
     }
@@ -235,36 +221,24 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
         ll_total.removeAllViews();
         ll_park.removeAllViews();
         int allnumber = 0;
-        LayoutInflater inflater = (LayoutInflater) CZ_AreaSaleActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
+        LayoutInflater inflater = (LayoutInflater) CZ_ContractBreakOff.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        for (int i = 0; i < listData.get(0).getContracttabList().size(); i++)
         {
-            View view = inflater.inflate(R.layout.cz_areasale_parkitem, null);
+            View view = inflater.inflate(R.layout.cz_contractsale_titleitem, null);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
-            tv_parkname.setText(listData.get(0).getAreatabList().get(i).getareaName());
-            tv_parkname.setTag(listData.get(0).getAreatabList().get(i).getAreaid());
-            tv_parkname.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    String areaid = (String) v.getTag();
-                    Intent intent = new Intent(CZ_AreaSaleActivity.this, CZ_ContractSaleData_.class);
-                    intent.putExtra("areaid", areaid);
-                    CZ_AreaSaleActivity.this.startActivity(intent);
-                }
-            });
+            tv_parkname.setText(listData.get(0).getContracttabList().get(i).getContractname());
             ll_park.addView(view);
         }
-        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
+        for (int i = 0; i < listData.get(0).getContracttabList().size(); i++)
         {
-            View view = inflater.inflate(R.layout.cz_areasale_totalitem, null);
+            View view = inflater.inflate(R.layout.cz_contractsale_totalitem, null);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
             tv_total.getLayoutParams().width = (screenWidth);
             int totalnumber = 0;
             for (int j = 0; j < listData.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllsalefor());
+                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getContracttabList().get(i).getAllnumber());
             }
             tv_total.setText(String.valueOf(totalnumber));
             ll_total.addView(view);
@@ -353,7 +327,7 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            convertView = LayoutInflater.from(CZ_AreaSaleActivity.this).inflate(R.layout.cz_areasale_scrolladapter_item, null);
+            convertView = LayoutInflater.from(CZ_ContractBreakOff.this).inflate(R.layout.cz_contractsale_scrolladapter_item, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
@@ -362,26 +336,26 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
             listItemView.item_titlev.setText(listData.get(position).getBatchTime());
             int totalnumber = 0;
-            List<areatab> list = listData.get(position).getAreatabList();
+            List<contractTab> list = listData.get(position).getContracttabList();
             for (int j = 0; j < list.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllsalefor());
+                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
             }
             listItemView.item_total.setText(String.valueOf(totalnumber));
 
-            for (int i = 0; i < listData.get(position).getAreatabList().size(); i++)
+            for (int i = 0; i < listData.get(position).getContracttabList().size(); i++)
             {
-                View view = LayoutInflater.from(CZ_AreaSaleActivity.this).inflate(R.layout.cz_areasale_dataitem, null);
+                View view = LayoutInflater.from(CZ_ContractBreakOff.this).inflate(R.layout.cz_contractsale_dataitem, null);
                 listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllsalefor());
+                listItemView.tv_data.setText(listData.get(position).getContracttabList().get(i).getAllnumber());
                 listItemView.tv_data.getLayoutParams().width = (screenWidth);
                 ll_middle.addView(view);
 
                 listItemView.tv_data.requestFocusFromTouch();
-                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
+                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getContracttabList().get(i).getContractid());
                 listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllsalefor());
-                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getAllsalefor());
+                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getContracttabList().get(i).getAllnumber());
+                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getContracttabList().get(i).getContractname());
                 listItemView.tv_data.setOnClickListener(clickListener);
 
             }
@@ -423,21 +397,8 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            String number = (String) v.getTag(R.id.tag_number);
-            String batchTimes = (String) v.getTag(R.id.tag_batchtime);
-            String areaid = (String) v.getTag(R.id.tag_areaid);
-            String areaname = (String) v.getTag(R.id.tag_areaname);
-            if (number.equals("0"))
-            {
-                Toast.makeText(CZ_AreaSaleActivity.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
-            } else
-            {
-                Intent intent = new Intent(CZ_AreaSaleActivity.this, CZ_ContractBatchTimeSale_.class);
-                intent.putExtra("areaid", areaid);
-                intent.putExtra("areaname", areaname);
-                intent.putExtra("batchTime", batchTimes);
-                CZ_AreaSaleActivity.this.startActivity(intent);
-            }
+
+//            }
 
         }
     };

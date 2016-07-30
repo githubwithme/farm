@@ -26,6 +26,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
+import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.farm.ui.JSD_Detail_;
 import com.farm.ui.NCZ_EditOrder_;
@@ -516,9 +517,12 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
     private void updateSellOrderByuuid(String uuid)
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("strWhere","uuid='"+ uuid+"'");
-        params.addQueryStringParameter("strUpdateValues", "status='1',selltype='已完成'");
-//        params.addQueryStringParameter("action", "updateSellOrderByuuid");
+//        commembertab commembertab = AppContext.getUserInfo(context);
+        params.addQueryStringParameter("uuid",uuid );
+        params.addQueryStringParameter("status","1" );
+        params.addQueryStringParameter("selltype","已完成" );
+//        params.addQueryStringParameter("strWhere","uuid='"+ uuid+"'");
+//        params.addQueryStringParameter("strUpdateValues", "status='1',selltype='已完成'");
         params.addQueryStringParameter("action", "updateSellOrderByuuid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

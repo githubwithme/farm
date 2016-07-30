@@ -266,6 +266,7 @@
         <activity android:name=".ui.CZ_CreateOrder_"/>
         <activity android:name=".ui.CZ_CreateOrder_SelectBatchTime_"/>
         <activity android:name=".ui.CZ_OrderManager_New_"/>
+        <activity android:name=".ui.CZ_ContractBreakOff_"/>
         <!-- 片管UI -->
         <activity android:name=".ui.PG_MainActivity_"/>
         <activity android:name=".ui.PG_PlantList_"/>
