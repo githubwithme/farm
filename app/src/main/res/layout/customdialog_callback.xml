@@ -14,8 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:background="@drawable/roundedcorner_top"
             android:text="流量提醒"
-            android:textColor="#000000"
+            android:textColor="@color/white"
             android:textSize="15sp" />
     </LinearLayout>
 
@@ -31,7 +32,7 @@
         android:layout_marginTop="10dip"
         android:padding="10dip"
         android:text="检测到网络为2/3g "
-        android:textColor="#000000"
+        android:textColor="@color/titlebar_top"
         android:textSize="15sp" />
 
     <View
@@ -50,6 +51,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:text="全部上传"
+            android:textColor="@color/titlebar_top"
             android:textSize="15sp" />
 
         <View
@@ -64,6 +66,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:text="好的"
+            android:textColor="@color/titlebar_top"
             android:textSize="15sp" />
     </LinearLayout>
 

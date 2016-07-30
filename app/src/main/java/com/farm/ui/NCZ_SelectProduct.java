@@ -97,6 +97,10 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
     @ViewById
     TextView tv_title;
     @ViewById
+    TextView tv_allnumber;
+    @ViewById
+    TextView tv_selectnumber;
+    @ViewById
     TextView tv_parkname;
     //    @ViewById
 //    RelativeLayout rl_upload;
@@ -137,6 +141,14 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         {
             showPop_ParkName();
         }
+    }
+
+    @Click
+    void ll_productnumber()
+    {
+        Intent intent = new Intent(NCZ_SelectProduct.this, ProductSelectedList_.class);
+        intent.putExtra("saleid", uuid);
+        startActivity(intent);
     }
 
     @Click
@@ -189,10 +201,10 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 screenWidth = screenWidth / 3;
             } else if (size == 2)
             {
-                screenWidth = screenWidth / 4;
+                screenWidth = screenWidth / 3;
             } else
             {
-                screenWidth = screenWidth / 5;
+                screenWidth = screenWidth / 3;
             }
             tv_top_left.getLayoutParams().width = (screenWidth);
 //            tv_top_right.getLayoutParams().width = (screenWidth);
@@ -237,7 +249,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                         parklist = new ArrayList<Wz_Storehouse>();
                         Toast.makeText(NCZ_SelectProduct.this, "暂无更多园区", Toast.LENGTH_SHORT).show();
                     }
-                    tv_parkname.setText(parklist.get(0).getParkName());
+                    tv_parkname.setText(parklist.get(0).getParkName() + "库存量");
                     getNewSaleList_test();
                 } else
                 {
@@ -385,10 +397,10 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                             screenWidth = screenWidth / 3;
                         } else if (size == 2)
                         {
-                            screenWidth = screenWidth / 4;
+                            screenWidth = screenWidth / 3;
                         } else
                         {
-                            screenWidth = screenWidth / 5;
+                            screenWidth = screenWidth / 3;
                         }
                         tv_top_left.getLayoutParams().width = (screenWidth);
 //                        tv_top_right.getLayoutParams().width = (screenWidth);
@@ -515,7 +527,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         class ListItemView
         {
             public TextView item_titlev;
-            public TextView item_total;
+            //            public TextView item_total;
             public TextView tv_data;
         }
 
@@ -541,11 +553,18 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         public View getView(int position, View convertView, ViewGroup parent)
         {
             convertView = LayoutInflater.from(NCZ_SelectProduct.this).inflate(R.layout.nczselectproduct_scrolladapter_item, null);
+            if (position % 2 == 0)
+            {
+                convertView.setBackgroundResource(R.color.bg_table_row);
+            } else
+            {
+                convertView.setBackgroundResource(R.color.white);
+            }
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+//            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-            listItemView.item_total.getLayoutParams().width = (screenWidth);
+//            listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
             listItemView.item_titlev.setText(listData.get(position).getContractname());
             int totalnumber = 0;
@@ -554,7 +573,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             {
                 totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
             }
-            listItemView.item_total.setText(String.valueOf(totalnumber));
+//            listItemView.item_total.setText(String.valueOf(totalnumber));
 
             for (int i = 0; i < listData.get(position).getBatchTimeList().size(); i++)
             {
@@ -570,7 +589,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getBatchTimeList().get(i).getAllnumber());
                 listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getContractname());
                 listItemView.tv_data.setOnClickListener(clickListener);
-
             }
             // 第一次初始化的时候装进来
             CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
@@ -658,7 +676,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 convertView = lmap.get(position);
                 listItemView = (ListItemView) convertView.getTag();
             }
-            if (tv_parkname.getText().equals(wz_storehouse.getParkName()))
+            if (tv_parkname.getText().equals(wz_storehouse.getParkName() + "库存量"))
             {
                 listItemView.view_select.setVisibility(View.VISIBLE);
             } else
@@ -956,7 +974,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 id = parklist.get(postion).getId();
                 name = parklist.get(postion).getParkName();
                 pw_tab.dismiss();
-                tv_parkname.setText(parklist.get(postion).getParkName());
+                tv_parkname.setText(parklist.get(postion).getParkName() + "库存量");
             }
         });
     }

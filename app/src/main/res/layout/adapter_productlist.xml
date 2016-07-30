@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="45dip"
+            android:layout_weight="2.3"
+            android:gravity="center"
+            android:text="承包区"
+            android:textColor="@color/titlebar_top"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tv_batchtime"
+            android:layout_width="0dip"
+            android:layout_height="45dip"
+            android:layout_weight="2.3"
+            android:gravity="center"
+            android:text="批次"
+            android:textColor="@color/titlebar_top"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_plannumber"
+            android:layout_width="0dip"
+            android:layout_height="45dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="数量"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="14sp"/>
+
+
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_editorderdetail"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/suspen_menu_close"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_deleteorderdetail"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/suspen_menu_close"/>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

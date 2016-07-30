@@ -71,6 +71,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     protected List<CustomHorizontalScrollView_Allitem> mHScrollViews = null;
     private ScrollAdapter mAdapter;
     int screenWidth = 0;
+    int screenWidth_total = 0;
     @ViewById
     LinearLayout ll_park;
     @ViewById
@@ -177,17 +178,20 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             if (size == 1)
             {
                 screenWidth = screenWidth / 3;
+                screenWidth_total=screenWidth/3;
             } else if (size == 2)
             {
                 screenWidth = screenWidth / 4;
+                screenWidth_total=screenWidth/4;
             } else
             {
-                screenWidth = screenWidth / 5;
+                screenWidth = screenWidth / 4;
+                screenWidth_total=screenWidth/5;
             }
             tv_top_left.getLayoutParams().width = (screenWidth);
-            tv_top_right.getLayoutParams().width = (screenWidth);
+            tv_top_right.getLayoutParams().width = (screenWidth_total);
             tv_bottom_left.getLayoutParams().width = (screenWidth);
-            alltoatal.getLayoutParams().width = (screenWidth);
+            alltoatal.getLayoutParams().width = (screenWidth_total);
             initViews();
             cz_startdl.setVisibility(View.GONE);
         }
@@ -221,12 +225,15 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                         if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
+                            screenWidth_total=screenWidth/3;
                         } else if (size == 2)
                         {
                             screenWidth = screenWidth / 4;
+                            screenWidth_total=screenWidth/4;
                         } else
                         {
-                            screenWidth = screenWidth / 5;
+                            screenWidth = screenWidth / 4;
+                            screenWidth_total=screenWidth/5;
                         }
                         tv_top_left.getLayoutParams().width = (screenWidth);
                         tv_top_right.getLayoutParams().width = (screenWidth);
@@ -397,7 +404,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-            listItemView.item_total.getLayoutParams().width = (screenWidth);
+            listItemView.item_total.getLayoutParams().width = (screenWidth_total);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
             listItemView.item_titlev.setText(listData.get(position).getBatchTime());
             int totalnumber = 0;
@@ -538,7 +545,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 id = parklist.get(postion).getId();
                 name = parklist.get(postion).getParkName();
                 pw_tab.dismiss();
-                tv_parkname.setText(parklist.get(postion).getParkName());
+                tv_parkname.setText(parklist.get(postion).getParkName()+ "库存量");
             }
         });
     }
@@ -651,7 +658,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                         parklist = new ArrayList<Wz_Storehouse>();
                         Toast.makeText(NCZ_AreaSaleActivity.this, "暂无更多园区", Toast.LENGTH_SHORT).show();
                     }
-                    tv_parkname.setText(parklist.get(0).getParkName());
+                    tv_parkname.setText(parklist.get(0).getParkName()+ "库存量");
                 } else
                 {
                     AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectDataBase");
@@ -710,7 +717,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 convertView = lmap.get(position);
                 listItemView = (ListItemView) convertView.getTag();
             }
-            if (tv_parkname.getText().equals(wz_storehouse.getParkName()))
+            if (tv_parkname.getText().equals(wz_storehouse.getParkName()+ "库存量"))
             {
                 listItemView.view_select.setVisibility(View.VISIBLE);
             } else
