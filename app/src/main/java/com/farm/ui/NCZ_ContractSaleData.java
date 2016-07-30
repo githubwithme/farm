@@ -11,7 +11,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -50,6 +49,7 @@ import java.util.List;
 public class NCZ_ContractSaleData extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
     String areaid;
+    String areaname;
     @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
     @ViewById
@@ -79,21 +79,23 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
     List<Wz_Storehouse> listpeople = new ArrayList<Wz_Storehouse>();
     PopupWindow pw_tab;
     View pv_tab;
-    @ViewById
-    View line;
+    //    @ViewById
+//    View line;
     //    PG_CKofListAdapter pg_cKlistAdapter;
     NCZ_DLAdapter ncz_dlAdapter;
     com.farm.bean.commembertab commembertab;
     MyDialog myDialog;
     Fragment mContent = new Fragment();
+    //    @ViewById
+//    LinearLayout cz_startdl;
+//    @ViewById
+//    TextView startdl;
     @ViewById
-    LinearLayout cz_startdl;
-    @ViewById
-    TextView startdl;
-    @ViewById
-    TextView tv_timelimit;
-    @ViewById
-    RelativeLayout rl_view;
+    TextView tv_title;
+//    @ViewById
+//    TextView tv_timelimit;
+//    @ViewById
+//    RelativeLayout rl_view;
 
 
     @Click
@@ -106,11 +108,14 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
     @AfterViews
     void afterOncreate()
     {
+        areaid = getIntent().getStringExtra("areaid");
+        areaname = getIntent().getStringExtra("areaname");
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
-//        getNewSaleList_test();
-        getBatchTimeOfPark();
+        getNewSaleList_test();
+        tv_title.setText(areaname + "库存量");
+//        getBatchTimeOfPark();
     }
 
     @Override
@@ -119,7 +124,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(NCZ_ContractSaleData.this);
-        areaid = getIntent().getStringExtra("areaid");
+
     }
 
 
@@ -146,7 +151,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
             tv_bottom_left.getLayoutParams().width = (screenWidth);
             alltoatal.getLayoutParams().width = (screenWidth);
             initViews();
-            cz_startdl.setVisibility(View.GONE);
+//            cz_startdl.setVisibility(View.GONE);
         }
 
     }
@@ -190,7 +195,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
                         tv_bottom_left.getLayoutParams().width = (screenWidth);
                         alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
-                        cz_startdl.setVisibility(View.GONE);
+//                        cz_startdl.setVisibility(View.GONE);
 
                     } else
                     {

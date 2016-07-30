@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--UI设计颜色-->
+    <color name="titlebar_top">#0E9D57</color>
+    <color name="text_title">#FFFFFF</color>
+    <color name="text_table_horizontitle">#5c6575</color>
+    <color name="bg_table_row">#f0f0f0</color>
+    <color name="splitline">#d0d0d0</color>
+
+    <!-- 颜色值-->
     <color name="defaultbackground">#eeeeee</color>
     <color name="defaultbackground_light">#f8f8f8</color>
     <color name="defaultbackground_tip">#fee7b1</color>
@@ -8,7 +16,7 @@
     <color name="explore_color">#5A89C5</color>
     <color name="semitransparent">#92bbbbbb</color>
     <color name="white">#ffffff</color>
-    <color name="color_topbar">#393a3e</color>
+    <color name="color_topbar">#0E9D57</color>
     <!-- 圆形样式颜色 -->
     <color name="base_start_color_pressed">#ff3590c4</color>
     <color name="base_end_color_pressed">#ff2570ba</color>

@@ -65,6 +65,8 @@
         <activity android:name=".ui.NCZ_AreaSaleActivity_"/>
         <activity android:name=".ui.CZ_ContractSaleData_"/>
         <activity android:name=".ui.CZ_AreaSaleActivity_"/>
+        <activity android:name=".ui.NCZ_SelectProduct_New_"/>
+        <activity android:name=".ui.NCZ_ContractBatchTimeSale_"/>
         <activity android:name=".ui.PG_SelectProduct_"/>
         <activity android:name=".ui.CZ_SelectProduct_"/>
         <activity android:name=".ui.NCZ_SelectProduct_"/>
