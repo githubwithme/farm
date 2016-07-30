@@ -181,19 +181,16 @@ public class NCZ__NeedOrder_Detail extends Activity
         builder.append(JSON.toJSONString(sellOrder));
         builder.append("]} ");
         updatesellOrderSettlement(builder.toString());*/
+
+        updatesellOrderSettlement("1","");
     }
 
     @Click
     void button_no()
     {
-        SellOrder_New sellOrder = new SellOrder_New();
-        sellOrder = sellOrder_new;
-        sellOrder.setIsNeedAudit("-1");
-        StringBuilder builder = new StringBuilder();
-        builder.append("{\"sellOrderSettlementlist\":[ ");
-        builder.append(JSON.toJSONString(sellOrder));
-        builder.append("]} ");
-        updatesellOrderSettlement(builder.toString());
+
+
+        updatesellOrderSettlement("-1","");
 
     }
 
@@ -249,64 +246,19 @@ public class NCZ__NeedOrder_Detail extends Activity
         sellOrder_new = getIntent().getParcelableExtra("bean");
     }
 
-    private void updatesellOrderSettlement(String data)
-    {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("action", "updatesellOrderSettlement");
-        params.setContentType("application/json");
-        try
-        {
-            params.setBodyEntity(new StringEntity(data, "utf-8"));
-        } catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
-        HttpUtils http = new HttpUtils();
-        http.configTimeout(60000);
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        Intent intent = new Intent();
-                        intent.setAction(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DELETE);
-                        sendBroadcast(intent);
-                        Toast.makeText(NCZ__NeedOrder_Detail.this, "保存成功", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
 
-                } else
-                {
-                    AppContext.makeToast(NCZ__NeedOrder_Detail.this, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(NCZ__NeedOrder_Detail.this, "error_connectServer");
-            }
-        });
-    }
 
     //修改
-    private void updatesellOrderSettlement(SellOrder_New mSellOrder)
+    private void updatesellOrderSettlement(String settlestatus,String isNeedAudit)
     {
 
 
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("strWhere", "id=" + mSellOrder.getid());
-        params.addQueryStringParameter("strUpdateValues", "  qualityWaterWeight=" + mSellOrder.getQualityWaterWeight() + " , qualityNetWeight=" + mSellOrder.getQualityNetWeight() + " , defectWaterWeight=" + mSellOrder.getDefectWaterWeight() + ",defectNetWeight=" + mSellOrder.getDefectNetWeight() + " , plateNumber='" + mSellOrder.getPlateNumber()
-                + "' ");
+        params.addQueryStringParameter("id", sellOrder_new.getid());
+        params.addQueryStringParameter("settlestatus",settlestatus );
+        params.addQueryStringParameter("isNeedAudit",isNeedAudit );
         params.addQueryStringParameter("action", "updatesellOrderSettlement");
+
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

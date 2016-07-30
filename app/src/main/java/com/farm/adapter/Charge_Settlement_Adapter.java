@@ -101,15 +101,12 @@ public class Charge_Settlement_Adapter extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         listItemView.zhushu.setTag(R.id.tag_cash, sellOrderDetail_new);
-        listItemView.zhushu.setTag(R.id.tag_number, "1");
         listItemView.zhushu.setOnClickListener(clickListener);
 
         listItemView.zhengpin.setTag(R.id.tag_cash, sellOrderDetail_new);
-        listItemView.zhengpin.setTag(R.id.tag_number, "2");
         listItemView.zhengpin.setOnClickListener(clickListener);
 
         listItemView.cipin.setTag(R.id.tag_cash, sellOrderDetail_new);
-        listItemView.cipin.setTag(R.id.tag_number, "3");
         listItemView.cipin.setOnClickListener(clickListener);
 
 /*        SellOrderDetail_New sellOrderDetail_new = (SellOrderDetail_New) v.getTag(R.id.tag_cash);
@@ -127,37 +124,6 @@ public class Charge_Settlement_Adapter extends BaseAdapter
 
         return convertView;
     }
-/*        if (!sellOrderDetail_new.getactualnumber().equals(""))
-        {
-            listItemView.bianjie.setText("修改");
-        }
-        listItemView.bianjie.setTag(R.id.tag_cash, sellOrderDetail_new);
-        listItemView.bianjie.setTag(R.id.tag_bean, listItemView);
-        listItemView.bianjie.setTag(R.id.sss, "1");
-        listItemView.bianjie.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                SellOrderDetail_New sellOrderDetail_new = new SellOrderDetail_New();
-                sellOrderDetail_new = (SellOrderDetail_New) view.getTag(R.id.tag_cash);
-                ListItemView listItemViews = (ListItemView) view.getTag(R.id.tag_bean);
-
-
-
-                sellOrderDetail_new.setactualnumber(listItemViews.zhushu.getText().toString());
-                sellOrderDetail_new.setplanprice(listItemViews.cipin.getText().toString());
-                sellOrderDetail_new.setactualprice(listItemViews.zhengpin.getText().toString());
-//                sellOrderDetail_new.setactualweight(listItemViews.jinzhong.getText().toString());
-                StringBuilder builder = new StringBuilder();
-                builder.append("{\"SellOrderDetailSeclist\": [");
-                builder.append(JSON.toJSONString(sellOrderDetail_new));
-                builder.append("]} ");
-                updateSellOrderDetailSec(builder.toString());
-            }
-        });
-
-    }*/
 
 
     @Override
@@ -178,13 +144,14 @@ public class Charge_Settlement_Adapter extends BaseAdapter
         return 0;
     }
 
-    private void updateSellOrderDetailSec(String id, String strUpdateValues)
+    private void updateSellOrderDetailSec(SellOrderDetail_New sellOrderDetail_new)
     {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("strWhere", "id='" + id + "'");
-        params.addQueryStringParameter("strUpdateValues", strUpdateValues);
-//        params.addQueryStringParameter("action", "updateSellOrderByuuid");
-        params.addQueryStringParameter("action", "updateSellOrderDetailSec");
+        params.addQueryStringParameter("id", sellOrderDetail_new.getid());
+        params.addQueryStringParameter("actualnumber", et_number.getText().toString());
+        params.addQueryStringParameter("actualprice", et_number.getText().toString());
+        params.addQueryStringParameter("planprice", et_number.getText().toString());
+        params.addQueryStringParameter("action", "ChangeSellOrderDetailSec");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -226,15 +193,14 @@ public class Charge_Settlement_Adapter extends BaseAdapter
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
             SellOrderDetail_New sellOrderDetail_new = (SellOrderDetail_New) v.getTag(R.id.tag_cash);
-            String type = (String) v.getTag(R.id.tag_number);
-            showDialog_editActualnumber(sellOrderDetail_new, type);
+            showDialog_editActualnumber(sellOrderDetail_new);
 
 
         }
     };
 
 
-    public void showDialog_editActualnumber(final SellOrderDetail_New sellOrderDetail_new, final String type)
+    public void showDialog_editActualnumber(final SellOrderDetail_New sellOrderDetail_new)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editcontractsale, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
@@ -256,22 +222,9 @@ public class Charge_Settlement_Adapter extends BaseAdapter
                     Toast.makeText(context, "请先填写数量", Toast.LENGTH_SHORT).show();
                 } else
                 {
-                    if (type.equals("1"))
-                    {
 
-                        updateSellOrderDetailSec(sellOrderDetail_new.getid(), "actualnumber=" + et_number.getText().toString());
-                    } else if (type.equals("2"))
-                    {
+                    updateSellOrderDetailSec(sellOrderDetail_new);
 
-                        updateSellOrderDetailSec(sellOrderDetail_new.getid(), "actualprice=" + et_number.getText().toString());
-
-                    } else if (type.equals("3"))
-                    {
-                        updateSellOrderDetailSec(sellOrderDetail_new.getid(), "planprice=" + et_number.getText().toString());
-                    } else if (type.equals("4"))
-                    {
-
-                    }
                 }
             }
         });

@@ -320,10 +320,15 @@ public class Charge_UpdateSettlement extends Activity
 
 
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("strWhere","id="+ mSellOrder.getid());
-        params.addQueryStringParameter("strUpdateValues", "  qualityWaterWeight=" + mSellOrder.getQualityWaterWeight() + " , qualityNetWeight=" + mSellOrder.getQualityNetWeight() + " , defectWaterWeight=" + mSellOrder.getDefectWaterWeight()+",defectNetWeight="+mSellOrder.getDefectNetWeight() + " , plateNumber='" + mSellOrder.getPlateNumber()
-                + "' ");
-        params.addQueryStringParameter("action", "updatesellOrderSettlement");
+        params.addQueryStringParameter("id", sellOrder_new.getid());
+//        params.addQueryStringParameter("settlestatus", "2");
+//        params.addQueryStringParameter("isNeedAudit", "2");
+        params.addQueryStringParameter("uid", mSellOrder.getUid());
+        params.addQueryStringParameter("carryPrice", mSellOrder.getCarryPrice());
+        params.addQueryStringParameter("packPrice", mSellOrder.getPackPrice());
+        params.addQueryStringParameter("infoId", mSellOrder.getInfoId());
+        params.addQueryStringParameter("plateNumber", mSellOrder.getPlateNumber());
+        params.addQueryStringParameter("action", "changesellOrderSettlement");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
