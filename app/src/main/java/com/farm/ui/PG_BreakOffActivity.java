@@ -193,6 +193,7 @@ public class PG_BreakOffActivity extends Activity
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "AddBatchTime");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

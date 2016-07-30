@@ -109,8 +109,8 @@ public class CZ_ContractSaleData extends Activity implements CustomHorizontalScr
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
-        getNewSaleList_test();
-//        getBatchTimeOfPark();
+//        getNewSaleList_test();
+        getBatchTimeOfPark();
     }
 
     @Override
@@ -159,6 +159,7 @@ public class CZ_ContractSaleData extends Activity implements CustomHorizontalScr
         params.addQueryStringParameter("areaid", areaid);
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("action", "NCZ_getContractSaleData");
+//        params.addQueryStringParameter("action", "NCZ_getContractBreakoffData");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

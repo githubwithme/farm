@@ -70,7 +70,8 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
     CustomHorizontalScrollView_Allitem totalScroll;
     CustomHorizontalScrollView_Allitem.CustomOntouch customOntouch = null;
 
-    List<contractTab> listData = null;
+//    List<contractTab> listData = null;
+List<BatchTime> listData = null;
     private ListView mListView;
     public HorizontalScrollView mTouchView;
     protected List<CustomHorizontalScrollView_Allitem> mHScrollViews = null;
@@ -143,7 +144,7 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
         deleNewSaleAddsalefor();
-        getNewSaleList_test();
+        getBatchTimeOfPark();
     }
 
     @Override
@@ -157,33 +158,8 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
     }
 
 
-    private void getNewSaleList_test()
-    {
-        listData = FileHelper.getAssetsData(PG_SelectProduct.this, "PG_getAllContractSaleData", contractTab.class);
-        if (listData != null)
-        {
-            DensityUtil densityUtil = new DensityUtil(PG_SelectProduct.this);
-            screenWidth = densityUtil.getScreenWidth();
-            int size = listData.get(0).getBatchTimeList().size();
-            if (size == 1)
-            {
-                screenWidth = screenWidth / 3;
-            } else if (size == 2)
-            {
-                screenWidth = screenWidth / 4;
-            } else
-            {
-                screenWidth = screenWidth / 5;
-            }
-            tv_top_left.getLayoutParams().width = (screenWidth);
-            tv_top_right.getLayoutParams().width = (screenWidth);
-            tv_bottom_left.getLayoutParams().width = (screenWidth);
-            alltoatal.getLayoutParams().width = (screenWidth);
-            initViews();
-            cz_startdl.setVisibility(View.GONE);
-        }
 
-    }
+
 
 
     public void getBatchTimeOfPark()
@@ -191,9 +167,10 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("userId", commembertab.getId());
-        params.addQueryStringParameter("parkid", parkid);
+        params.addQueryStringParameter("areaid", commembertab.getareaId());
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "NCZ_getAreaSaleData");
+        params.addQueryStringParameter("action", "NCZ_getContractSaleData");
+//        params.addQueryStringParameter("action", "NCZ_getContractBreakoffData");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -206,10 +183,10 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
                 {
                     if (result.getAffectedRows() > 0)
                     {
-                        listData = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
+                        listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                         DensityUtil densityUtil = new DensityUtil(PG_SelectProduct.this);
                         screenWidth = densityUtil.getScreenWidth();
-                        int size = listData.get(0).getBatchTimeList().size();
+                        int size = listData.get(0).getContracttabList().size();
                         if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
@@ -229,7 +206,7 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
 
                     } else
                     {
-                        listData = new ArrayList<contractTab>();
+                        listData = new ArrayList<BatchTime>();
                     }
 
                 } else
@@ -247,7 +224,6 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
             }
         });
     }
-
     private void initViews()
     {
         //初始化控件及数据
@@ -256,41 +232,32 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
         ll_park.removeAllViews();
         int allnumber = 0;
         LayoutInflater inflater = (LayoutInflater) PG_SelectProduct.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        for (int i = 0; i < listData.get(0).getBatchTimeList().size(); i++)
+        for (int i = 0; i < listData.get(0).getContracttabList().size(); i++)
         {
-            View view = inflater.inflate(R.layout.pgselectproduct_titleitem, null);
+            View view = inflater.inflate(R.layout.cz_contractsale_titleitem, null);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
-            tv_parkname.setText(listData.get(0).getBatchTimeList().get(i).getBatchTime());
-            tv_parkname.setTag(listData.get(0).getBatchTimeList().get(i).getBatchTime());
-            tv_parkname.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-//                    String areaid = (String) v.getTag();
-//                    Intent intent = new Intent(NCZ_SelectProduct.this, NCZ_ContractSaleData_.class);
-//                    intent.putExtra("areaid", areaid);
-//                    NCZ_SelectProduct.this.startActivity(intent);
-                }
-            });
+            tv_parkname.setText(listData.get(0).getContracttabList().get(i).getContractname());
             ll_park.addView(view);
         }
-        for (int i = 0; i < listData.get(0).getBatchTimeList().size(); i++)
+        for (int i = 0; i < listData.get(0).getContracttabList().size(); i++)
         {
-            View view = inflater.inflate(R.layout.pgselectproduct_totalitem, null);
+            View view = inflater.inflate(R.layout.cz_contractsale_totalitem, null);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
             tv_total.getLayoutParams().width = (screenWidth);
             int totalnumber = 0;
             for (int j = 0; j < listData.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getBatchTimeList().get(i).getAllnumber());
+                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getContracttabList().get(i).getAllnumber());
             }
             tv_total.setText(String.valueOf(totalnumber));
             ll_total.addView(view);
             allnumber = allnumber + totalnumber;
         }
         alltoatal.setText(String.valueOf(allnumber));
+
+//        CustomHorizontalScrollView_Allitem headerScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.item_scroll_title);
+//        CustomHorizontalScrollView_Allitem totalScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.totalScroll);
         // 添加头滑动事件
         mHScrollViews.add(item_scroll_title);
         mHScrollViews.add(totalScroll);
@@ -370,35 +337,35 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            convertView = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.pgselectproduct_scrolladapter_item, null);
+            convertView = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.cz_contractsale_scrolladapter_item, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
             listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            listItemView.item_titlev.setText(listData.get(position).getContractname());
+            listItemView.item_titlev.setText(listData.get(position).getBatchTime());
             int totalnumber = 0;
-            List<BatchTime> list = listData.get(position).getBatchTimeList();
+            List<contractTab> list = listData.get(position).getContracttabList();
             for (int j = 0; j < list.size(); j++)
             {
                 totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
             }
             listItemView.item_total.setText(String.valueOf(totalnumber));
 
-            for (int i = 0; i < listData.get(position).getBatchTimeList().size(); i++)
+            for (int i = 0; i < listData.get(position).getContracttabList().size(); i++)
             {
-                View view = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.pgselectproduct_dataitem, null);
+                View view = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.cz_contractsale_dataitem, null);
                 listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                listItemView.tv_data.setText(listData.get(position).getBatchTimeList().get(i).getAllnumber());
+                listItemView.tv_data.setText(listData.get(position).getContracttabList().get(i).getAllnumber());
                 listItemView.tv_data.getLayoutParams().width = (screenWidth);
                 ll_middle.addView(view);
 
                 listItemView.tv_data.requestFocusFromTouch();
-                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTimeList().get(i).getBatchTime());
-                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getContractid());
-                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getBatchTimeList().get(i).getAllnumber());
-                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getContractname());
+                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getContracttabList().get(i).getContractid());
+                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getContracttabList().get(i).getAllnumber());
+                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getContracttabList().get(i).getContractname());
                 listItemView.tv_data.setOnClickListener(clickListener);
 
             }

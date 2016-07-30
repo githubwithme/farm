@@ -147,12 +147,7 @@ public class CZ_FarmManagerFragment extends Fragment
         getActivity().startActivity(intent);
     }
 
-//    @Click
-//    void ll_cw()
-//    {
-//        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
-//        getActivity().startActivity(intent);
-//    }
+
 
     @Click
     void ll_dl()

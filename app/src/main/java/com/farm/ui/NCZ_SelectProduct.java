@@ -154,6 +154,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         totalScroll.setCuttomOntouch(customOntouch);
         deleNewSaleAddsalefor();
         getParknameByUid();
+
     }
 
     @Override
@@ -215,8 +216,11 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                     {
                         list_park = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
                         tv_title.setText(list_park.get(0).getparkName());
+                        parkid=list_park.get(0).getid();
                         //        getBatchTimeOfPark();
-                        getNewSaleList_test();
+//                        getNewSaleList_test();
+                        getBatchTimeOfPark();
+
                     } else
                     {
                         list_park = new ArrayList<parktab>();
@@ -285,10 +289,11 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3)
             {
+                parkid = list_park.get(postion).getid();
+                name = list_park.get(postion).getparkName();
                 pw_tab.dismiss();
                 tv_title.setText(list_park.get(postion).getparkName());
-                //        getBatchTimeOfPark();
-                getNewSaleList_test();
+                getBatchTimeOfPark();
             }
         });
     }
@@ -300,7 +305,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         params.addQueryStringParameter("userId", commembertab.getId());
         params.addQueryStringParameter("parkid", parkid);
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "NCZ_getAreaSaleData");
+        params.addQueryStringParameter("action", "NCZ_getAllContractSaleData");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -311,11 +316,12 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() > 0)
-                    {
+                  /*  if (result.getAffectedRows() > 0)
+                    {*/
                         listData = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
                         DensityUtil densityUtil = new DensityUtil(NCZ_SelectProduct.this);
                         screenWidth = densityUtil.getScreenWidth();
+//                        int size = listData.get(0).getBatchTimeList().size();
                         int size = listData.get(0).getBatchTimeList().size();
                         if (size == 1)
                         {
@@ -334,10 +340,10 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                         initViews();
                         cz_startdl.setVisibility(View.GONE);
 
-                    } else
+                 /*   } else
                     {
                         listData = new ArrayList<contractTab>();
-                    }
+                    }*/
 
                 } else
                 {
@@ -831,4 +837,5 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         return false;
 
     }
+
 }

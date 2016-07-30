@@ -111,8 +111,8 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
-        getNewSaleList_test();
-//        getBatchTimeOfPark();
+//        getNewSaleList_test();
+        getBatchTimeOfPark();
     }
 
     @Click
@@ -264,7 +264,7 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
             int totalnumber = 0;
             for (int j = 0; j < listData.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllnumber());
+                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllsalefor());
             }
             tv_total.setText(String.valueOf(totalnumber));
             ll_total.addView(view);
@@ -365,7 +365,7 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
             List<areatab> list = listData.get(position).getAreatabList();
             for (int j = 0; j < list.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
+                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllsalefor());
             }
             listItemView.item_total.setText(String.valueOf(totalnumber));
 
@@ -373,15 +373,15 @@ public class CZ_AreaSaleActivity extends Activity implements CustomHorizontalScr
             {
                 View view = LayoutInflater.from(CZ_AreaSaleActivity.this).inflate(R.layout.cz_areasale_dataitem, null);
                 listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllnumber());
+                listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllsalefor());
                 listItemView.tv_data.getLayoutParams().width = (screenWidth);
                 ll_middle.addView(view);
 
                 listItemView.tv_data.requestFocusFromTouch();
                 listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
                 listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllnumber());
-                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getareaName());
+                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllsalefor());
+                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getAllsalefor());
                 listItemView.tv_data.setOnClickListener(clickListener);
 
             }

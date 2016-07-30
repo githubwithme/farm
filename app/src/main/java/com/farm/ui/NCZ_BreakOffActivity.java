@@ -357,7 +357,7 @@ public class NCZ_BreakOffActivity extends Activity
         ll_total.removeAllViews();
         ll_park.removeAllViews();
         int allnumber = 0;
-        LayoutInflater inflater = (LayoutInflater) NCZ_BreakOffActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        final LayoutInflater inflater = (LayoutInflater) NCZ_BreakOffActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
         {
             View view = inflater.inflate(R.layout.breakoff_parkitem, null);
@@ -365,12 +365,15 @@ public class NCZ_BreakOffActivity extends Activity
             tv_parkname.getLayoutParams().width = (screenWidth);
             tv_parkname.setText(listData.get(0).getAreatabList().get(i).getareaName());
             ll_park.addView(view);
+            tv_parkname.setTag(R.id.areaname,listData.get(0).getAreatabList().get(i).getAreaid());
             tv_parkname.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
+                    String areaId= (String) v.getTag(R.id.areaname);
                     Intent intent = new Intent(NCZ_BreakOffActivity.this, NCZ_ContractBreakOff_.class);
+                    intent.putExtra("areaid",areaId);
                     NCZ_BreakOffActivity.this.startActivity(intent);
                 }
             });

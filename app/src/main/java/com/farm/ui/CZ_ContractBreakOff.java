@@ -44,10 +44,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by ${hmj} on 2016/6/57.
+ * Created by hasee on 2016/7/28.
  */
-@EActivity(R.layout.ncz_contractsaledata)
-public class NCZ_ContractSaleData extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
+@EActivity(R.layout.cz_contractsaledata)
+public class CZ_ContractBreakOff  extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
     String areaid;
     @ViewById
@@ -118,17 +118,17 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        commembertab = AppContext.getUserInfo(NCZ_ContractSaleData.this);
+        commembertab = AppContext.getUserInfo(CZ_ContractBreakOff.this);
         areaid = getIntent().getStringExtra("areaid");
     }
 
 
     private void getNewSaleList_test()
     {
-        listData = FileHelper.getAssetsData(NCZ_ContractSaleData.this, "getContractSaleData", BatchTime.class);
+        listData = FileHelper.getAssetsData(CZ_ContractBreakOff.this, "getContractSaleData", BatchTime.class);
         if (listData != null)
         {
-            DensityUtil densityUtil = new DensityUtil(NCZ_ContractSaleData.this);
+            DensityUtil densityUtil = new DensityUtil(CZ_ContractBreakOff.this);
             screenWidth = densityUtil.getScreenWidth();
             int size = listData.get(0).getContracttabList().size();
             if (size == 1)
@@ -158,7 +158,8 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
         params.addQueryStringParameter("userId", commembertab.getId());
         params.addQueryStringParameter("areaid", areaid);
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "NCZ_getContractSaleData");
+//        params.addQueryStringParameter("action", "NCZ_getContractSaleData");
+        params.addQueryStringParameter("action", "NCZ_getContractBreakoffData");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -172,7 +173,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
                     if (result.getAffectedRows() > 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
-                        DensityUtil densityUtil = new DensityUtil(NCZ_ContractSaleData.this);
+                        DensityUtil densityUtil = new DensityUtil(CZ_ContractBreakOff.this);
                         screenWidth = densityUtil.getScreenWidth();
                         int size = listData.get(0).getContracttabList().size();
                         if (size == 1)
@@ -199,7 +200,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
 
                 } else
                 {
-                    AppContext.makeToast(NCZ_ContractSaleData.this, "error_connectDataBase");
+                    AppContext.makeToast(CZ_ContractBreakOff.this, "error_connectDataBase");
                     return;
                 }
 
@@ -208,7 +209,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_ContractSaleData.this, "error_connectServer");
+                AppContext.makeToast(CZ_ContractBreakOff.this, "error_connectServer");
             }
         });
     }
@@ -220,10 +221,10 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
         ll_total.removeAllViews();
         ll_park.removeAllViews();
         int allnumber = 0;
-        LayoutInflater inflater = (LayoutInflater) NCZ_ContractSaleData.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) CZ_ContractBreakOff.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < listData.get(0).getContracttabList().size(); i++)
         {
-            View view = inflater.inflate(R.layout.contractsale_parkitem, null);
+            View view = inflater.inflate(R.layout.cz_contractsale_titleitem, null);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
             tv_parkname.setText(listData.get(0).getContracttabList().get(i).getContractname());
@@ -231,7 +232,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
         }
         for (int i = 0; i < listData.get(0).getContracttabList().size(); i++)
         {
-            View view = inflater.inflate(R.layout.contractsale_totalitem, null);
+            View view = inflater.inflate(R.layout.cz_contractsale_totalitem, null);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
             tv_total.getLayoutParams().width = (screenWidth);
             int totalnumber = 0;
@@ -326,7 +327,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            convertView = LayoutInflater.from(NCZ_ContractSaleData.this).inflate(R.layout.contractsale_scrolladapter_item, null);
+            convertView = LayoutInflater.from(CZ_ContractBreakOff.this).inflate(R.layout.cz_contractsale_scrolladapter_item, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
@@ -344,7 +345,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
 
             for (int i = 0; i < listData.get(position).getContracttabList().size(); i++)
             {
-                View view = LayoutInflater.from(NCZ_ContractSaleData.this).inflate(R.layout.contractsale_dataitem, null);
+                View view = LayoutInflater.from(CZ_ContractBreakOff.this).inflate(R.layout.cz_contractsale_dataitem, null);
                 listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
                 listItemView.tv_data.setText(listData.get(position).getContracttabList().get(i).getAllnumber());
                 listItemView.tv_data.getLayoutParams().width = (screenWidth);
@@ -396,20 +397,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-//            String number = (String) v.getTag(R.id.tag_number);
-//            String batchTimes = (String) v.getTag(R.id.tag_batchtime);
-//            String areaid = (String) v.getTag(R.id.tag_areaid);
-//            String areaname = (String) v.getTag(R.id.tag_areaname);
-//            if (number.equals("0"))
-//            {
-//                Toast.makeText(NCZ_ContractSaleData.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
-//            } else
-//            {
-//                Intent intent = new Intent(NCZ_ContractSaleData.this, NCZ_ContractBreakOffActivity_.class);
-//                intent.putExtra("areaid", areaid);
-//                intent.putExtra("areaname", areaname);
-//                intent.putExtra("batchTime", batchTimes);
-//                NCZ_ContractSaleData.this.startActivity(intent);
+
 //            }
 
         }

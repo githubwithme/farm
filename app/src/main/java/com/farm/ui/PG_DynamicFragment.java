@@ -176,100 +176,22 @@ public class PG_DynamicFragment extends Fragment
                     Iterator<DynamicBean> it = list.iterator();
                     while (it.hasNext())
                     {
-                        String value = it.next().getType();
-                        if (value.equals("GZ")||value.equals("ZL"))
+                        DynamicBean dynamicBean=new DynamicBean();
+                        dynamicBean=it.next();
+//                        String value = it.next().getType();
+                        if (dynamicBean.getType().equals("GZ")||dynamicBean.getType().equals("ZL"))
                         {
                             it.remove();
                         }
                     }
-             /*       for (int i = 0; i < list.size(); i++)
-                    {
-                        if (list.get(i).getListdata().size() != 0)
-                        {
-                            listData.add(list.get(i));
-                        }
-                    }*/
-                    list = utils.BubbleSortArray(list);//本地不行
+
+//                    list = utils.BubbleSortArray(list);//本地不行
                     adapter_dynamic = new PG_Adapter_Dynamic(getActivity(), list,listDatas);
                     lv.setAdapter(adapter_dynamic);
-                  /*
-                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                    {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                        {
 
-                            Intent intent = null;
-                            String type = listData.get(position).getType();
-                            if (type.equals("ZL"))
-                            {
-                                intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-                            } else if (type.equals("GZ"))
-                            {
-                                intent = new Intent(getActivity(), NCZ_JobActivity_.class);//0
-                            } else if (type.equals("MQ"))
-                            {
-                                intent = new Intent(getActivity(), PG_PlantList_.class);//1
-                            } else if (type.equals("XS"))
-                            {
-                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);//0
-                            } else if (type.equals("KC"))
-                            {
-                                intent = new Intent(getActivity(), Ncz_wz_ll_.class);//0
-                            } else if (type.equals("SP"))
-                            {
-                                intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);//0
-                            } else if (type.equals("SJ"))
-                            {
-                                intent = new Intent(getActivity(), PG_ListOfEvents_.class);//1
-                            } else if (type.equals("DL"))
-                            {
-                                intent = new Intent(getActivity(), PQ_DLFragment_.class);//1
-                            }
-                            getActivity().startActivity(intent);
-
-
-//                                List<DynamicEntity> list = listData.get(position).getListdata();
-//                                Intent intent = new Intent(getActivity(), DongtaiListview_.class);
-//                                String type = listData.get(position).getType();
-//                                if (type.equals("ZL"))
-//                                {
-//                                    intent.putExtra("type", "ZL");
-//                                } else if (type.equals("GZ"))
-//                                {
-//                                    intent.putExtra("type", "GZ");
-//                                } else if (type.equals("MQ"))
-//                                {
-//                                    intent.putExtra("type", "ZL");
-//                                } else if (type.equals("XS"))
-//                                {
-//                                    intent.putExtra("type", "MQ");
-//                                } else if (type.equals("KC"))
-//                                {
-//                                    intent.putExtra("type", "KC");
-//                                } else if (type.equals("SP"))
-//                                {
-//                                    intent.putExtra("type", "SP");
-//                                } else if (type.equals("SJ"))
-//                                {
-//                                    intent.putExtra("type", "SJ");
-//                                } else if (type.equals("DL"))
-//                                {
-//                                    intent.putExtra("type", "DL");
-//                                }
-//                                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
-//                                getActivity().startActivity(intent);
-                        }
-                    });*/
-//                    }
                 } else
                 {
                     Toast.makeText(getActivity(), "连接数据库异常", Toast.LENGTH_SHORT).show();
-//                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-//                    if (!ishidding && timethread != null)
-//                    {
-//                        timethread.setSleep(false);
-//                    }
                     return;
                 }
 
@@ -280,11 +202,6 @@ public class PG_DynamicFragment extends Fragment
             public void onFailure(HttpException error, String msg)
             {
                 Toast.makeText(getActivity(), "连接服务器异常", Toast.LENGTH_SHORT).show();
-//                AppContext.makeToast(getActivity(), "error_connectServer");
-//                if (!ishidding && timethread != null)
-//                {
-//                    timethread.setSleep(false);
-//                }
             }
         });
     }
@@ -535,46 +452,5 @@ public class PG_DynamicFragment extends Fragment
     }
 
 
-    private void getListData( final int PAGESIZE, int PAGEINDEX)
-    {
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("workuserid", commembertab.getId());
-        params.addQueryStringParameter("userid", commembertab.getId());
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("username", commembertab.getuserName());
-        params.addQueryStringParameter("orderby", "regDate desc");
-        params.addQueryStringParameter("strWhere", "");
-        params.addQueryStringParameter("page_size", String.valueOf(PAGESIZE));
-        params.addQueryStringParameter("page_index", String.valueOf(PAGEINDEX));
-        params.addQueryStringParameter("action", "jobGetList");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<jobtab> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    listNewData = JSON.parseArray(result.getRows().toJSONString(), jobtab.class);
-                    listDatas.addAll(listNewData);
-                } else
-                {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-                    return;
-                }
 
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
-            }
-        });
-    }
 }

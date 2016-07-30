@@ -2,11 +2,15 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -25,6 +29,7 @@ import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
 import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.areatab;
+import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomHorizontalScrollView_Allitem;
@@ -76,13 +81,17 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     TextView tv_top_right;
     @ViewById
     TextView tv_bottom_left;
-    private String id;
+
+    @ViewById
+    RelativeLayout rl_tab;
+    @ViewById
+    TextView tv_title;
     private String name;
-    List<Wz_Storehouse> listpeople = new ArrayList<Wz_Storehouse>();
+    List<Wz_Storehouse> listPark = new ArrayList<Wz_Storehouse>();
     PopupWindow pw_tab;
     View pv_tab;
     @ViewById
-    View line;
+    View view_line;
     //    PG_CKofListAdapter pg_cKlistAdapter;
     NCZ_DLAdapter ncz_dlAdapter;
     com.farm.bean.commembertab commembertab;
@@ -97,6 +106,11 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     @ViewById
     RelativeLayout rl_view;
 
+    @Click
+    void rl_tab()
+    {
+        showPark_title();
+    }
 
     @Click
     void btn_back()
@@ -140,7 +154,8 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
-        getNewSaleList_test();
+//        getNewSaleList_test();
+        getPark();
 //        getBatchTimeOfPark();
     }
 
@@ -150,7 +165,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(NCZ_AreaSaleActivity.this);
-        parkid = getIntent().getStringExtra("parkid");
+//        parkid = getIntent().getStringExtra("parkid");
     }
 
 
@@ -280,7 +295,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             int totalnumber = 0;
             for (int j = 0; j < listData.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllnumber());
+                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllsalefor());
             }
             tv_total.setText(String.valueOf(totalnumber));
             ll_total.addView(view);
@@ -381,7 +396,8 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             List<areatab> list = listData.get(position).getAreatabList();
             for (int j = 0; j < list.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
+//                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
+                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllsalefor());
             }
             listItemView.item_total.setText(String.valueOf(totalnumber));
 
@@ -389,14 +405,14 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             {
                 View view = LayoutInflater.from(NCZ_AreaSaleActivity.this).inflate(R.layout.areasale_dataitem, null);
                 listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllnumber());
+                listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllsalefor());
                 listItemView.tv_data.getLayoutParams().width = (screenWidth);
                 ll_middle.addView(view);
 
                 listItemView.tv_data.requestFocusFromTouch();
                 listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
                 listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllnumber());
+                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllsalefor());
                 listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getareaName());
                 listItemView.tv_data.setOnClickListener(clickListener);
 
@@ -457,4 +473,107 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
 
         }
     };
+
+    private void getPark()
+    {
+        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(NCZ_AreaSaleActivity.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("action", "getcontractByUid");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<Wz_Storehouse> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
+                        listPark.addAll(listNewData);
+                        parkid = listNewData.get(0).getId();
+                        name = listNewData.get(0).getParkName();
+                        tv_title.setText(listNewData.get(0).getParkName());
+                        getBatchTimeOfPark();
+
+                    } else
+                    {
+                        listNewData = new ArrayList<Wz_Storehouse>();
+                    }
+                } else
+                {
+                    AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectDataBase");
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                String a = error.getMessage();
+                AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectServer");
+            }
+        });
+
+    }
+    public void showPark_title()
+    {//LAYOUT_INFLATER_SERVICE
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_AreaSaleActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        pv_tab = layoutInflater.inflate(R.layout.popup_yq, null);// 外层
+        pv_tab.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing()))
+                {
+                    pw_tab.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        pv_tab.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_tab.isShowing())
+                {
+                    pw_tab.dismiss();
+                }
+                return false;
+            }
+        });
+        pw_tab = new PopupWindow(pv_tab, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        pw_tab.showAsDropDown(view_line, 0, 0);
+        pw_tab.setOutsideTouchable(true);
+
+
+        ListView listview = (ListView) pv_tab.findViewById(R.id.lv_yq);
+        ncz_dlAdapter = new NCZ_DLAdapter(NCZ_AreaSaleActivity.this, listPark);
+        listview.setAdapter(ncz_dlAdapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3)
+            {
+                parkid = listPark.get(postion).getId();
+                name = listPark.get(postion).getParkName();
+                pw_tab.dismiss();
+//                iv_dowm_tab.setImageResource(R.drawable.ic_down);
+                tv_title.setText(listPark.get(postion).getParkName());
+                getBatchTimeOfPark();
+
+            }
+        });
+    }
+
+
 }

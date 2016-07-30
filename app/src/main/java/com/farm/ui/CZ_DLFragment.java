@@ -76,7 +76,8 @@ public class CZ_DLFragment extends Activity
                 {
                     case R.id.btn_sure:
 //                        cz_startdl.setVisibility(View.GONE);
-                        getcreateBatchTime();
+//                        getcreateBatchTime();
+                        AddFirstBatchTime();
                         myDialog.dismiss();
                         break;
                     case R.id.btn_cancle:
@@ -183,12 +184,10 @@ public class CZ_DLFragment extends Activity
         });
     }
 
-    public void getcreateBatchTime()
-    {
 
-  /*     SimpleDateFormat formatter = new SimpleDateFormat ("yyyy");
-       Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-       String str = formatter.format(curDate);*/
+
+/*    public void getcreateBatchTime()
+    {
         commembertab commembertab = AppContext.getUserInfo(CZ_DLFragment.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -232,15 +231,53 @@ public class CZ_DLFragment extends Activity
                 AppContext.makeToast(CZ_DLFragment.this, "error_connectServer");
             }
         });
-    }
+    }*/
 
-    //测试数据
-    public void getBatchTimeOfPark_temp()
+    public void AddFirstBatchTime()
     {
-        List<BatchTime> listNewData = null;
-        listNewData = FileHelper.getAssetsData(CZ_DLFragment.this, "getDayWeatherAllHour", BatchTime.class);
-        ncz_dlExecute_adapter = new NCZ_DLExecute_Adapter(CZ_DLFragment.this, listNewData, expandableListView);
-        expandableListView.setAdapter(ncz_dlExecute_adapter);
+        commembertab commembertab = AppContext.getUserInfo(CZ_DLFragment.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("parkid", commembertab.getparkId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("startday", tv_timelimit.getText().toString());
+        params.addQueryStringParameter("action", "AddFirstBatchTime");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<BatchTime> listNewData = null;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() > 0)
+                    {
+
+                        cz_startdl.setVisibility(View.GONE);
+                        getBatchTimeOfPark();
+
+                    } else
+                    {
+                        listNewData = new ArrayList<BatchTime>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(CZ_DLFragment.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(CZ_DLFragment.this, "error_connectServer");
+            }
+        });
     }
 
     public void getBatchTimeOfPark()
