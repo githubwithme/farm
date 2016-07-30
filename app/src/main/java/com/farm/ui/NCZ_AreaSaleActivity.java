@@ -151,7 +151,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
-        getNewSaleList_test();
+//        getNewSaleList_test();
         getParkList();
 //        getBatchTimeOfPark();
     }
@@ -162,7 +162,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(NCZ_AreaSaleActivity.this);
-        parkid = getIntent().getStringExtra("parkid");
+//        parkid = getIntent().getStringExtra("parkid");
     }
 
 
@@ -295,7 +295,8 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             int totalnumber = 0;
             for (int j = 0; j < listData.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllnumber());
+//                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllnumber());
+                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllsalefor());
             }
             tv_total.setText(String.valueOf(totalnumber));
             ll_total.addView(view);
@@ -404,7 +405,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             List<areatab> list = listData.get(position).getAreatabList();
             for (int j = 0; j < list.size(); j++)
             {
-                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
+                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllsalefor());
             }
             listItemView.item_total.setText(String.valueOf(totalnumber));
 
@@ -412,14 +413,14 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             {
                 View view = LayoutInflater.from(NCZ_AreaSaleActivity.this).inflate(R.layout.areasale_dataitem, null);
                 listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllnumber());
+                listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllsalefor());
                 listItemView.tv_data.getLayoutParams().width = (screenWidth);
                 ll_middle.addView(view);
 
                 listItemView.tv_data.requestFocusFromTouch();
                 listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
                 listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllnumber());
+                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllsalefor());
                 listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getareaName());
                 listItemView.tv_data.setOnClickListener(clickListener);
 
@@ -539,6 +540,9 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 name = parklist.get(postion).getParkName();
                 pw_tab.dismiss();
                 tv_parkname.setText(parklist.get(postion).getParkName());
+                parkid = parklist.get(0).getId();
+                name=parklist.get(0).getParkName();
+                getBatchTimeOfPark();
             }
         });
     }
@@ -599,6 +603,8 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 pw_tab.dismiss();
                 //        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_CreateNewOrder_.class);
                 Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SelectProduct_.class);
+                intent.putExtra("parkid",parkid);
+                intent.putExtra("parkname",name);
                 //        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SelectProduct_New_.class);
                 startActivity(intent);
             }
@@ -652,6 +658,9 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                         Toast.makeText(NCZ_AreaSaleActivity.this, "暂无更多园区", Toast.LENGTH_SHORT).show();
                     }
                     tv_parkname.setText(parklist.get(0).getParkName());
+                    parkid = parklist.get(0).getId();
+                    name=parklist.get(0).getParkName();
+                    getBatchTimeOfPark();
                 } else
                 {
                     AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectDataBase");
