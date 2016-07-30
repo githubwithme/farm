@@ -16,58 +16,92 @@
             android:layout_width="20dip"
             android:layout_height="20dip"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dip"
-            android:background="@drawable/ic_back"/>
+            android:layout_marginLeft="10dip"
+            android:background="@mipmap/btn_return"/>
 
 
-        <LinearLayout
-
-            android:id="@+id/ll_tab"
+        <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@+id/btn_back"
-            android:orientation="horizontal">
-
-            <TextView
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="准备工作详情"
-                android:textColor="@color/white"
-                android:textSize="@dimen/titlebar_textsize"/>
-        </LinearLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:text="准备工作详情"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"/>
 
         <Button
-            android:visibility="gone"
-            android:layout_alignParentRight="true"
-            android:id="@+id/btn_save"
-            android:layout_width="100dip"
-            android:layout_height="45dip"
+            android:id="@+id/button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_margin="10dip"
-            android:background="@drawable/background_view_rounded_single"
+            android:background="@null"
             android:gravity="center"
-            android:text="准备工作就绪"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14"/>
+            android:text="添加"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
     </RelativeLayout>
 
-    <View
-        android:id="@+id/line"
+    <RelativeLayout
+        android:id="@+id/rl_nodatatip"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_color"/>
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="360px"
+            android:background="@mipmap/icon_vehicle_empty"/>
+
+        <TextView
+            android:id="@+id/tv_nodetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40px"
+            android:alpha="0.8"
+            android:gravity="center"
+            android:text="暂无准备工作详情"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_addtip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_nodetail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40px"
+            android:alpha="0.5"
+            android:gravity="center"
+            android:text="如需登记&quot;车牌号&quot;、&quot;包装工&quot;\n和&quot;搬运工&quot;资料，请点击下方按钮"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="16sp"/>
+
+        <Button
+            android:layout_width="750px"
+            android:layout_height="120px"
+            android:layout_below="@+id/tv_addtip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80px"
+            android:background="@drawable/btn_add_immediately"
+            android:text="立即添加"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/is_ready"
@@ -80,191 +114,35 @@
             android:textSize="16dip"/>
     </LinearLayout>
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="45dip">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="80dip"
-                android:layout_height="match_parent"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="10dip"
-                android:text="车牌号："
-                android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
+            <ListView
+                android:id="@+id/hlistview_scroll_list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@color/defaultbackground"
+                android:dividerHeight="80px"
+                android:fadingEdge="none"
+                android:scrollbars="none">
+            </ListView>
+        </ScrollView>
 
-            <EditText
-                android:id="@+id/CR_chanpin"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:hint="请填写车牌号"
-                android:paddingRight="20dip"
-                android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_color"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dip">
-
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="10dip"
-                android:text="包装工："
-                android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:layout_weight="2"
-                android:id="@+id/tv_bz"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:hint="请选择包装工"
-                android:paddingRight="20dip"
-                android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line_color"/>
-
-            <EditText
-                android:inputType="numberDecimal"
-                android:textSize="14dip"
-                android:id="@+id/packPrice"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:gravity="center"
-                android:layout_weight="1"
-                android:text="元/件"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_color"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dip">
-
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="10dip"
-                android:text="搬运工："
-                android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:layout_weight="2"
-                android:id="@+id/tv_by"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:hint="请选择搬运工"
-                android:paddingRight="20dip"
-                android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line_color"/>
-
-            <EditText
-                android:inputType="numberDecimal"
-                android:textSize="14dip"
-                android:id="@+id/carryPrice"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:gravity="center"
-                android:layout_weight="1"
-                android:text="元/斤"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_color"/>
         <Button
-            android:id="@+id/button_add"
+            android:id="@+id/btn_isready"
             android:layout_width="match_parent"
             android:layout_height="45dip"
             android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="10dip"
-            android:background="@drawable/background_view_rounded_single"
-            android:gravity="center"
-            android:text="添加"
-            android:textColor="@color/bg_text"
-            android:textSize="@dimen/size_14"/>
-    </LinearLayout>
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/hlistview_scroll_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/line_middle"
-
-            android:layout_marginLeft="1px"
-            android:layout_marginRight="1px"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@color/bg_text"
-            android:dividerHeight="1px"
-            android:fadingEdge="none"
-            android:scrollbars="none">
-        </ListView>
-        </LinearLayout>
-</ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
-        android:orientation="vertical">
-
-
-
-
-    </LinearLayout>
+            android:background="@color/titlebar_top"
+            android:text="设置该订单全部准备就绪"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
 
 
 </LinearLayout>

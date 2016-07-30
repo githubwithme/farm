@@ -1,16 +1,14 @@
 package com.farm.ui;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -22,7 +20,6 @@ import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
-import com.farm.common.utils;
 import com.farm.widget.CustomDialog_Bean;
 import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDialog;
@@ -46,29 +43,39 @@ import java.util.List;
 /**
  * Created by ${hmj} on 2016/6/27.
  */
-@EActivity(R.layout.recoverydetail)
-public class RecoveryDetail extends Activity
+@EActivity(R.layout.addrecovery)
+public class AddRecovery extends Activity
 {
     RecoveryDetail_Adapter recoveryDetail_adapter;
     CustomDialog_ListView customDialog_listView;
     MyDialog myDialog;
     CustomDialog_Bean customDialog_bean;
     String zzsl = "";
+
+    @ViewById
+    EditText CR_chanpin;
+    @ViewById
+    TextView tv_bz;
+    @ViewById
+    TextView tv_by;
+
+    @ViewById
+    EditText packPrice;
+    @ViewById
+    EditText carryPrice;
+
     @ViewById
     Button button_add;
     @ViewById
     RelativeLayout rl_nodatatip;
-    @ViewById
-    TextView is_ready;
-    @ViewById
-    ListView hlistview_scroll_list;
+
     Purchaser purchaser;
     String byId = "";
     String bzId = "";
-    SellOrder_New sellOrder_new = new SellOrder_New();
+    //    SellOrder_New sellOrder_new = new SellOrder_New();
     String uuid;
     @ViewById
-    Button btn_isready;
+    Button btn_save;
 
 
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
@@ -79,26 +86,23 @@ public class RecoveryDetail extends Activity
     @AfterViews
     void afterOncreate()
     {
-        if (sellOrder_new.getIsReady().equals("False"))
-        {
-            btn_isready.setVisibility(View.VISIBLE);
-        }
-        getDetailSecBysettleId();
+        getpurchaser();
     }
 
 
     @Click
 //准备就绪
-    void btn_isready()
+    void btn_save()
     {
         showDeleteTip();
+
     }
 
     private void showDeleteTip()
     {
 
-        View dialog_layout = RecoveryDetail.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(RecoveryDetail.this, R.style.MyDialog, dialog_layout, "就绪", "所有准备工作就绪?", "确定", "取消", new MyDialog.CustomDialogListener()
+        View dialog_layout = AddRecovery.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(AddRecovery.this, R.style.MyDialog, dialog_layout, "就绪", "所有准备工作就绪?", "确定", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -120,9 +124,82 @@ public class RecoveryDetail extends Activity
     @Click
     void button_add()
     {
-        Intent intent = new Intent(RecoveryDetail.this, AddRecovery_.class);
-        intent.putExtra("uuid", uuid);
-        startActivity(intent);
+        if (CR_chanpin.getText().toString().equals(""))
+        {
+            Toast.makeText(AddRecovery.this, "请填写车牌号", Toast.LENGTH_SHORT);
+            return;
+        }
+        commembertab commembertab = AppContext.getUserInfo(AddRecovery.this);
+        SellOrder_New sellOrder = new SellOrder_New();
+        sellOrder.setInfoId(uuid);//0
+        sellOrder.setPlateNumber(CR_chanpin.getText().toString());
+        sellOrder.setPickId(bzId);
+        sellOrder.setContractorId(byId);
+        sellOrder.setUid(commembertab.getuId());//0
+        sellOrder.setCarryPrice(carryPrice.getText().toString());
+        sellOrder.setPackPrice(packPrice.getText().toString());
+        sellOrder.setIsNeedAudit("2");
+        sellOrder.setIsReady("False");
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"sellOrderSettlementlist\":[ ");
+        builder.append(JSON.toJSONString(sellOrder));
+        builder.append("]} ");
+        isnewaddOrder(builder.toString());
+
+    }
+
+
+    @Click
+    void tv_bz()
+    {
+
+        showDialog_bz(listData_BZ);
+    }
+
+    @Click
+    void tv_by()
+    {
+        showDialog_by(listData_BY);
+    }
+
+    //搬运
+    public void showDialog_by(List<Purchaser> listData_BZ)
+    {
+        View dialog_layout = AddRecovery.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_bean = new CustomDialog_Bean(AddRecovery.this, R.style.MyDialog, dialog_layout, listData_BZ, new CustomDialog_Bean.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                tv_by.setText("搬运工：已落实");
+                //id也是有的
+                zzsl = bundle.getString("name");
+                tv_by.setText(zzsl);
+                purchaser = bundle.getParcelable("bean");
+                byId = purchaser.getId();
+
+            }
+        });
+        customDialog_bean.show();
+    }
+
+    //包装工
+    public void showDialog_bz(List<Purchaser> listData_BZ)
+    {
+        View dialog_layout = AddRecovery.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_bean = new CustomDialog_Bean(AddRecovery.this, R.style.MyDialog, dialog_layout, listData_BZ, new CustomDialog_Bean.CustomDialogListener()
+        {
+            @Override
+            public void OnClick(Bundle bundle)
+            {
+                //id也是有的
+                zzsl = bundle.getString("name");
+                tv_bz.setText(zzsl);
+                purchaser = bundle.getParcelable("bean");
+                bzId = purchaser.getId();
+            }
+        });
+        customDialog_bean.show();
     }
 
 
@@ -131,71 +208,13 @@ public class RecoveryDetail extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DINGDAN);
-        registerReceiver(receiver_update, intentfilter_update);
         uuid = getIntent().getStringExtra("uuid");
-        sellOrder_new = getIntent().getParcelableExtra("bean");
-
     }
 
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
-    {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            getDetailSecBysettleId();
-        }
-    };
-
-    private void newaddOrder(String data)
-    {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("action", "editOrder");
-        params.setContentType("application/json");
-        try
-        {
-            params.setBodyEntity(new StringEntity(data, "utf-8"));
-        } catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
-        HttpUtils http = new HttpUtils();
-        http.configTimeout(60000);
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-
-                    }
-
-                } else
-                {
-                    AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
-            }
-        });
-    }
 
     private void getpurchaser()
     {
-        rl_nodatatip.setVisibility(View.VISIBLE);
-        commembertab commembertab = AppContext.getUserInfo(RecoveryDetail.this);
+        commembertab commembertab = AppContext.getUserInfo(AddRecovery.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getpurchaser");//jobGetList1
@@ -233,17 +252,18 @@ public class RecoveryDetail extends Activity
                         } else
                         {
                             listNewData = new ArrayList<Purchaser>();
+                            rl_nodatatip.setVisibility(View.VISIBLE);
                         }
 
                     } else
                     {
                         listNewData = new ArrayList<Purchaser>();
-
+                        rl_nodatatip.setVisibility(View.VISIBLE);
                     }
 
                 } else
                 {
-                    AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
+                    AppContext.makeToast(AddRecovery.this, "error_connectDataBase");
                     return;
                 }
 
@@ -252,7 +272,7 @@ public class RecoveryDetail extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
+                AppContext.makeToast(AddRecovery.this, "error_connectServer");
             }
         });
     }
@@ -282,17 +302,16 @@ public class RecoveryDetail extends Activity
                 {
                     if (result.getAffectedRows() != 0)
                     {
-
-
-                        getDetailSecBysettleId();
-
-//                        Toast.makeText(RecoveryDetail.this, "添加成功！", Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(AddRecovery.this, "添加成功！", Toast.LENGTH_SHORT).show();
+                        finish();
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DINGDAN);
+                        sendBroadcast(intent);
                     }
 
                 } else
                 {
-                    AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
+                    AppContext.makeToast(AddRecovery.this, "error_connectDataBase");
                     return;
                 }
 
@@ -301,60 +320,11 @@ public class RecoveryDetail extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
+                AppContext.makeToast(AddRecovery.this, "error_connectServer");
             }
         });
     }
 
-    public void getDetailSecBysettleId()
-    {
-        rl_nodatatip.setVisibility(View.VISIBLE);
-        commembertab commembertab = AppContext.getUserInfo(RecoveryDetail.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uuid", uuid);
-        params.addQueryStringParameter("action", "getDetailSecBysettleId");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<SellOrder_New> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                    recoveryDetail_adapter = new RecoveryDetail_Adapter(RecoveryDetail.this, listNewData);
-                    hlistview_scroll_list.setAdapter(recoveryDetail_adapter);
-                    utils.setListViewHeight(hlistview_scroll_list);
-
-                    Intent intent = new Intent();
-                    intent.setAction(AppContext.UPDATEMESSAGE_CHE_LIANG);
-                    intent.putExtra("num", listNewData.size() + "");
-                    sendBroadcast(intent);
-
-                    CR_chanpin.setText("");
-                    tv_bz.setText("");
-                    tv_by.setText("");
-                    packPrice.setText("");
-                    carryPrice.setText("");
-                    rl_nodatatip.setVisibility(View.GONE);
-                } else
-                {
-                    AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
-            }
-        });
-    }
 
     private void updateSellOrderByuuid()
     {
@@ -385,7 +355,7 @@ public class RecoveryDetail extends Activity
 
                 } else
                 {
-                    AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
+                    AppContext.makeToast(AddRecovery.this, "error_connectDataBase");
                     return;
                 }
 
@@ -394,7 +364,7 @@ public class RecoveryDetail extends Activity
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
+                AppContext.makeToast(AddRecovery.this, "error_connectServer");
 
             }
         });
