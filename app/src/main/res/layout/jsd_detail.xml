@@ -132,22 +132,14 @@
                 android:layout_width="60dip"
                 android:layout_height="fill_parent">
 
-                <TextView
-                    android:layout_width="15dip"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentRight="true"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:text="结算"
-                    android:textColor="@color/bg_text"
-                    android:textSize="15sp"/>
+
                 <TextView
                     android:layout_alignParentBottom="true"
-                    android:layout_width="30dip"
-                    android:layout_height="20dip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:text="车辆"
+                    android:text="结算单"
                     android:textColor="@color/bg_text"
                     android:textSize="15sp"/>
             </RelativeLayout>
