@@ -490,10 +490,7 @@ public class CZ_CreateOrder extends Activity
     @AfterViews
     void afterOncreate()
     {
-/*        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = formatter.format(curDate);
-        dd_time.setText(str);*/
+
         dd_bz.setInputType(InputType.TYPE_NULL);
         dd_by.setInputType(InputType.TYPE_NULL);
         getpurchaser("");
@@ -570,11 +567,7 @@ public class CZ_CreateOrder extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        uuid = java.util.UUID.randomUUID().toString();
-//        list_SellOrderDetail = getIntent().getParcelableArrayListExtra("list");
-//        Bundle bundle = getIntent().getExtras();
-//        ArrayList arraylist = bundle.getParcelableArrayList("list_uuid");
-//        uuids = (List<HashMap<String, String>>) arraylist.get(0);
+        uuid =getIntent().getStringExtra("uuid");
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_CHE_LIANG);
         registerReceiver(receiver_update, intentfilter_update);
     }
@@ -584,8 +577,6 @@ public class CZ_CreateOrder extends Activity
         @Override
         public void onReceive(Context context, Intent intent)
         {
-        /* String    num=getIntent().getStringExtra("num");
-            cheliang_num.setText(num);*/
             getDetailSecBysettleId();
         }
     };

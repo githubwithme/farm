@@ -11,6 +11,7 @@ import com.farm.adapter.Adapter_ContractBatchtimeSale;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
+import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
 import com.farm.common.utils;
 import com.lidroid.xutils.HttpUtils;
@@ -64,11 +65,13 @@ public class NCZ_ContractBatchTimeSale extends Activity
 
     private void getSaleDataOfArea()
     {
+        commembertab commembertab=AppContext.getUserInfo(NCZ_ContractBatchTimeSale.this);;
         RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("areaid", areaid);
         params.addQueryStringParameter("batchtime", batchTime);
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "NCZ_getAreaBatchtimeBreakOffData");//jobGetList1
+        params.addQueryStringParameter("action", "GetAllContractSaleData");//jobGetList1
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {

@@ -69,6 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <EditText
+                    android:textSize="14dip"
                     android:gravity="center"
                     android:id="@+id/plateNumber"
                     android:layout_width="match_parent"
@@ -288,6 +289,7 @@
 
 
                 <EditText
+                    android:textSize="14dip"
                     android:id="@+id/bz_nc_danjia"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
@@ -359,6 +361,7 @@
 
 
                 <EditText
+                    android:textSize="14dip"
                     android:id="@+id/by_nc_danjia"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
@@ -430,11 +433,11 @@
                         android:text="二、承包户产量"
                         android:textSize="15dip"/>
                     <Button
+                        android:textSize="14dip"
                         android:id="@+id/button_add"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
-                        android:background="@color/white"
                         android:text="添加承包户"/>
                 </RelativeLayout>
 
@@ -593,25 +596,15 @@
                         android:background="@color/bg_main"/>
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:orientation="vertical"
                         android:layout_width="0dip"
                         android:layout_weight="1"
                         android:layout_height="match_parent">
 
+
                         <TextView
-                            android:gravity="center"
-                            android:text="净重"
-                            android:layout_weight="1.6"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1px"
-                            android:background="@color/bg_main"/>
-                        <EditText
+                            android:text="砍蕉费"
                             android:layout_weight="1"
-                            android:id="@+id/jinzhong"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"

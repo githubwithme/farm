@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="152dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="126.7dp"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rl_createOrder"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:alpha="0.8"
+                android:background="#0E9d57">
+
+                <ImageView
+                    android:id="@+id/iv_createOrder"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:background="@mipmap/pop_ups_create"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_createOrder"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="创建订单"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_orderManager"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:alpha="0.5"
+                android:background="#0E9D57">
+
+                <ImageView
+                    android:id="@+id/iv_orderManager"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:background="@mipmap/pop_ups_manage"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_orderManager"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="订单管理"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_cancle"
+            android:layout_width="53.3dp"
+            android:layout_height="53.3dp"
+            android:background="@mipmap/suspen_menu_close"/>
+    </FrameLayout>
+</LinearLayout>

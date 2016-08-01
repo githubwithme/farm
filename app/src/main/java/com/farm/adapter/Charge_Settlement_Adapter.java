@@ -62,6 +62,7 @@ public class Charge_Settlement_Adapter extends BaseAdapter
         public TextView zhushu;
         public TextView zhengpin;
         public TextView cipin;
+        public TextView other_value;
 
     }
 
@@ -92,6 +93,7 @@ public class Charge_Settlement_Adapter extends BaseAdapter
             listItemView.zhushu = (TextView) convertView.findViewById(R.id.zhushu);
             listItemView.zhengpin = (TextView) convertView.findViewById(R.id.zhengpin);
             listItemView.cipin = (TextView) convertView.findViewById(R.id.cipin);
+            listItemView.other_value = (TextView) convertView.findViewById(R.id.other_value);
 
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -101,13 +103,21 @@ public class Charge_Settlement_Adapter extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         listItemView.zhushu.setTag(R.id.tag_cash, sellOrderDetail_new);
+        listItemView.zhushu.setTag(R.id.tag_number, "1");
         listItemView.zhushu.setOnClickListener(clickListener);
 
         listItemView.zhengpin.setTag(R.id.tag_cash, sellOrderDetail_new);
+        listItemView.zhengpin.setTag(R.id.tag_number, "2");
         listItemView.zhengpin.setOnClickListener(clickListener);
 
         listItemView.cipin.setTag(R.id.tag_cash, sellOrderDetail_new);
+        listItemView.cipin.setTag(R.id.tag_number, "3");
         listItemView.cipin.setOnClickListener(clickListener);
+
+        listItemView.other_value.setTag(R.id.tag_cash, sellOrderDetail_new);
+        listItemView.other_value.setTag(R.id.tag_number, "4");
+        listItemView.other_value.setOnClickListener(clickListener);
+
 
 /*        SellOrderDetail_New sellOrderDetail_new = (SellOrderDetail_New) v.getTag(R.id.tag_cash);
         String type = (String) v.getTag(R.id.tag_number);*/
@@ -144,13 +154,13 @@ public class Charge_Settlement_Adapter extends BaseAdapter
         return 0;
     }
 
-    private void updateSellOrderDetailSec(SellOrderDetail_New sellOrderDetail_new)
+    private void ChangeSellOrderDetailSec(SellOrderDetail_New sellOrderDetail_new,String actualnumber,String actualprice, String planprice )
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("id", sellOrderDetail_new.getid());
-        params.addQueryStringParameter("actualnumber", et_number.getText().toString());
-        params.addQueryStringParameter("actualprice", et_number.getText().toString());
-        params.addQueryStringParameter("planprice", et_number.getText().toString());
+        params.addQueryStringParameter("actualnumber", actualnumber);
+        params.addQueryStringParameter("actualprice",actualprice);
+        params.addQueryStringParameter("planprice", planprice);
         params.addQueryStringParameter("action", "ChangeSellOrderDetailSec");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -193,14 +203,18 @@ public class Charge_Settlement_Adapter extends BaseAdapter
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
             SellOrderDetail_New sellOrderDetail_new = (SellOrderDetail_New) v.getTag(R.id.tag_cash);
-            showDialog_editActualnumber(sellOrderDetail_new);
+            String type = (String) v.getTag(R.id.tag_number);
+
+            showDialog_editActualnumber(sellOrderDetail_new, type);
+
+
 
 
         }
     };
 
 
-    public void showDialog_editActualnumber(final SellOrderDetail_New sellOrderDetail_new)
+    public void showDialog_editActualnumber(final SellOrderDetail_New sellOrderDetail_new, final String type)
     {
         final View dialog_layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.customdialog_editcontractsale, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(context, R.style.MyDialog, dialog_layout);
@@ -222,12 +236,22 @@ public class Charge_Settlement_Adapter extends BaseAdapter
                     Toast.makeText(context, "请先填写数量", Toast.LENGTH_SHORT).show();
                 } else
                 {
-
-                    updateSellOrderDetailSec(sellOrderDetail_new);
+                      if (type.equals(1))
+                      {
+                          ChangeSellOrderDetailSec(sellOrderDetail_new, et_number.getText().toString(), "", "");
+                      }else if (type.equals("2"))
+                      {
+                          ChangeSellOrderDetailSec(sellOrderDetail_new, "", et_number.getText().toString(), "");
+                      }
+                      else if (type.equals("3"))
+                      {
+                          ChangeSellOrderDetailSec(sellOrderDetail_new,"","",et_number.getText().toString());
+                      }
 
                 }
             }
         });
+        //zhushu zhengpin cipin
         btn_cancle.setOnClickListener(new View.OnClickListener()
         {
             @Override

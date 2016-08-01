@@ -142,7 +142,8 @@ public class CZ_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), CZ_OrderManager_.class);
 //        Intent intent = new Intent(getActivity(), CZ_SaleActivity_.class);
-        Intent intent = new Intent(getActivity(), CZ_AreaSaleActivity_.class);
+//        Intent intent = new Intent(getActivity(), CZ_AreaSaleActivity_.class);  //1
+        Intent intent = new Intent(getActivity(), CZ_NEW_AreaSaleActivty_.class);
 //        Intent intent = new Intent(getActivity(), PG_SaleActivity_.class);
         getActivity().startActivity(intent);
     }
