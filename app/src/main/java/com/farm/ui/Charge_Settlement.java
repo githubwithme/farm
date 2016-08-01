@@ -519,7 +519,7 @@ public class Charge_Settlement extends Activity
     //包装工
     public void showDialog_bz(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) Charge_Settlement.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = (LinearLayout) Charge_Settlement.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listViews = new CustomDialog_ListView(Charge_Settlement.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
@@ -538,7 +538,7 @@ public class Charge_Settlement extends Activity
     //搬运工
     public void showDialog_by(List<String> listdata, List<String> listid)
     {
-        View dialog_layout = (RelativeLayout) Charge_Settlement.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        View dialog_layout = (LinearLayout) Charge_Settlement.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listViews = new CustomDialog_ListView(Charge_Settlement.this, R.style.MyDialog, dialog_layout, listdata, listid, new CustomDialog_ListView.CustomDialogListener()
         {
             @Override
