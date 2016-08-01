@@ -73,6 +73,7 @@
         <activity android:name=".ui.CZ_SelectProduct_"/>
         <activity android:name=".ui.NCZ_SelectProduct_"/>
         <activity android:name=".ui.NCZ_ParkBreakOff_"/>
+        <activity android:name=".ui.EditRecovery_"/>
         <activity android:name=".ui.PG_GoodsUsedInCommand_"/>
         <activity android:name=".ui.NCZ_CommandActivity_"/>
         <activity android:name=".ui.NCZ_AssessActivity_"/>

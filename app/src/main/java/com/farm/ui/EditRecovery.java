@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,8 +42,9 @@ import java.util.List;
 /**
  * Created by ${hmj} on 2016/6/27.
  */
-@EActivity(R.layout.addrecovery)
-public class AddRecovery extends Activity {
+@EActivity(R.layout.editrecovery)
+public class EditRecovery extends Activity
+{
     RecoveryDetail_Adapter recoveryDetail_adapter;
     CustomDialog_ListView customDialog_listView;
     MyDialog myDialog;
@@ -81,25 +81,31 @@ public class AddRecovery extends Activity {
     List<AllType> listAlltype = new ArrayList<AllType>();
 
     @AfterViews
-    void afterOncreate() {
+    void afterOncreate()
+    {
         getpurchaser();
     }
 
 
     @Click
 //准备就绪
-    void btn_save() {
+    void btn_save()
+    {
         showDeleteTip();
 
     }
 
-    private void showDeleteTip() {
+    private void showDeleteTip()
+    {
 
-        View dialog_layout = AddRecovery.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(AddRecovery.this, R.style.MyDialog, dialog_layout, "就绪", "所有准备工作就绪?", "确定", "取消", new MyDialog.CustomDialogListener() {
+        View dialog_layout = EditRecovery.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(EditRecovery.this, R.style.MyDialog, dialog_layout, "就绪", "所有准备工作就绪?", "确定", "取消", new MyDialog.CustomDialogListener()
+        {
             @Override
-            public void OnClick(View v) {
-                switch (v.getId()) {
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
                     case R.id.btn_sure:
                         updateSellOrderByuuid();
                         break;
@@ -113,12 +119,14 @@ public class AddRecovery extends Activity {
     }
 
     @Click
-    void button_add() {
-        if (CR_chanpin.getText().toString().equals("")) {
-            Toast.makeText(AddRecovery.this, "请填写车牌号", Toast.LENGTH_SHORT);
+    void button_add()
+    {
+        if (CR_chanpin.getText().toString().equals(""))
+        {
+            Toast.makeText(EditRecovery.this, "请填写车牌号", Toast.LENGTH_SHORT);
             return;
         }
-        commembertab commembertab = AppContext.getUserInfo(AddRecovery.this);
+        commembertab commembertab = AppContext.getUserInfo(EditRecovery.this);
         SellOrder_New sellOrder = new SellOrder_New();
         sellOrder.setInfoId(uuid);//0
         sellOrder.setPlateNumber(CR_chanpin.getText().toString());
@@ -139,22 +147,27 @@ public class AddRecovery extends Activity {
 
 
     @Click
-    void tv_bz() {
+    void tv_bz()
+    {
 
         showDialog_bz(listData_BZ);
     }
 
     @Click
-    void tv_by() {
+    void tv_by()
+    {
         showDialog_by(listData_BY);
     }
 
     //搬运
-    public void showDialog_by(List<Purchaser> listData_BZ) {
-        View dialog_layout = AddRecovery.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_bean = new CustomDialog_Bean(AddRecovery.this, R.style.MyDialog, dialog_layout, listData_BZ, new CustomDialog_Bean.CustomDialogListener() {
+    public void showDialog_by(List<Purchaser> listData_BZ)
+    {
+        View dialog_layout = EditRecovery.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_bean = new CustomDialog_Bean(EditRecovery.this, R.style.MyDialog, dialog_layout, listData_BZ, new CustomDialog_Bean.CustomDialogListener()
+        {
             @Override
-            public void OnClick(Bundle bundle) {
+            public void OnClick(Bundle bundle)
+            {
                 tv_by.setText("搬运工：已落实");
                 //id也是有的
                 zzsl = bundle.getString("name");
@@ -168,11 +181,14 @@ public class AddRecovery extends Activity {
     }
 
     //包装工
-    public void showDialog_bz(List<Purchaser> listData_BZ) {
-        View dialog_layout = AddRecovery.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
-        customDialog_bean = new CustomDialog_Bean(AddRecovery.this, R.style.MyDialog, dialog_layout, listData_BZ, new CustomDialog_Bean.CustomDialogListener() {
+    public void showDialog_bz(List<Purchaser> listData_BZ)
+    {
+        View dialog_layout = EditRecovery.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
+        customDialog_bean = new CustomDialog_Bean(EditRecovery.this, R.style.MyDialog, dialog_layout, listData_BZ, new CustomDialog_Bean.CustomDialogListener()
+        {
             @Override
-            public void OnClick(Bundle bundle) {
+            public void OnClick(Bundle bundle)
+            {
                 //id也是有的
                 zzsl = bundle.getString("name");
                 tv_bz.setText(zzsl);
@@ -185,135 +201,164 @@ public class AddRecovery extends Activity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         uuid = getIntent().getStringExtra("uuid");
     }
 
 
-    private void getpurchaser() {
-        commembertab commembertab = AppContext.getUserInfo(AddRecovery.this);
+    private void getpurchaser()
+    {
+        commembertab commembertab = AppContext.getUserInfo(EditRecovery.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getpurchaser");//jobGetList1
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<Purchaser> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
-                        if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        if (result.getAffectedRows() != 0)
+                        {
                             listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
-                            for (int i = 0; i < listNewData.size(); i++) {
-                                if (listNewData.get(i).userType.equals("采购商")) {
+                            for (int i = 0; i < listNewData.size(); i++)
+                            {
+                                if (listNewData.get(i).userType.equals("采购商"))
+                                {
                                     listData_CG.add(listNewData.get(i));
-                                } else if (listNewData.get(i).userType.equals("包装工头")) {
+                                } else if (listNewData.get(i).userType.equals("包装工头"))
+                                {
                                     listData_BZ.add(listNewData.get(i));
-                                } else {
+                                } else
+                                {
                                     listData_BY.add(listNewData.get(i));
                                 }
                             }
 
-                        } else {
+                        } else
+                        {
                             listNewData = new ArrayList<Purchaser>();
                         }
 
-                    } else {
+                    } else
+                    {
                         listNewData = new ArrayList<Purchaser>();
                     }
 
-                } else {
-                    AppContext.makeToast(AddRecovery.this, "error_connectDataBase");
+                } else
+                {
+                    AppContext.makeToast(EditRecovery.this, "error_connectDataBase");
                     return;
                 }
 
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
-                AppContext.makeToast(AddRecovery.this, "error_connectServer");
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(EditRecovery.this, "error_connectServer");
             }
         });
     }
 
-    private void isnewaddOrder(String data) {
+    private void isnewaddOrder(String data)
+    {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "addsellOrderSettlement");
         params.setContentType("application/json");
-        try {
+        try
+        {
             params.setBodyEntity(new StringEntity(data, "utf-8"));
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e)
+        {
             e.printStackTrace();
         }
         HttpUtils http = new HttpUtils();
         http.configTimeout(60000);
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
-                        Toast.makeText(AddRecovery.this, "添加成功！", Toast.LENGTH_SHORT).show();
+                    if (result.getAffectedRows() != 0)
+                    {
+                        Toast.makeText(EditRecovery.this, "添加成功！", Toast.LENGTH_SHORT).show();
                         finish();
                         Intent intent = new Intent();
                         intent.setAction(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DINGDAN);
                         sendBroadcast(intent);
                     }
 
-                } else {
-                    AppContext.makeToast(AddRecovery.this, "error_connectDataBase");
+                } else
+                {
+                    AppContext.makeToast(EditRecovery.this, "error_connectDataBase");
                     return;
                 }
 
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
-                AppContext.makeToast(AddRecovery.this, "error_connectServer");
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(EditRecovery.this, "error_connectServer");
             }
         });
     }
 
 
-    private void updateSellOrderByuuid() {
+    private void updateSellOrderByuuid()
+    {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("isReady", "1");
         params.addQueryStringParameter("action", "updateSellOrderByuuid");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
 
-                    } else {
+                    } else
+                    {
                         listData = new ArrayList<SellOrder_New>();
                     }
 
-                } else {
-                    AppContext.makeToast(AddRecovery.this, "error_connectDataBase");
+                } else
+                {
+                    AppContext.makeToast(EditRecovery.this, "error_connectDataBase");
                     return;
                 }
 
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
-                AppContext.makeToast(AddRecovery.this, "error_connectServer");
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(EditRecovery.this, "error_connectServer");
 
             }
         });

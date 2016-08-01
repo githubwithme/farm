@@ -136,11 +136,11 @@
 
                     <Button
                         android:id="@+id/btn_addcg"
-                        android:layout_width="150px"
+                        android:layout_width="120px"
                         android:layout_height="150px"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@mipmap/icon_addbuyer"/>
+                        android:background="@drawable/icon_addbuyer_new"/>
                 </RelativeLayout>
 
                 <View
@@ -490,11 +490,11 @@
 
                     <Button
                         android:id="@+id/add_jsd"
-                        android:layout_width="150px"
+                        android:layout_width="120px"
                         android:layout_height="150px"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@mipmap/icon_addvehicle"/>
+                        android:background="@drawable/icon_addvehicle_new"/>
                 </RelativeLayout>
 
                 <View

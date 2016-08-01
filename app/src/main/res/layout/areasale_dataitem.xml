@@ -6,7 +6,7 @@
     <TextView
         android:id="@+id/tv_data"
         android:layout_width="83.3dp"
-        android:layout_height="40dip"
+        android:layout_height="50dip"
         android:gravity="center"
         android:text=""
         android:textColor="@color/text_table_horizontitle"
