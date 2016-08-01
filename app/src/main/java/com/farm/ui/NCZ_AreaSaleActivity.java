@@ -539,7 +539,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 id = parklist.get(postion).getId();
                 name = parklist.get(postion).getParkName();
                 pw_tab.dismiss();
-                tv_parkname.setText(parklist.get(postion).getParkName());
+                tv_parkname.setText(parklist.get(postion).getParkName() + "库存量");
                 parkid = parklist.get(0).getId();
                 name=parklist.get(0).getParkName();
                 getBatchTimeOfPark();
@@ -657,7 +657,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                         parklist = new ArrayList<Wz_Storehouse>();
                         Toast.makeText(NCZ_AreaSaleActivity.this, "暂无更多园区", Toast.LENGTH_SHORT).show();
                     }
-                    tv_parkname.setText(parklist.get(0).getParkName());
+                    tv_parkname.setText(parklist.get(0).getParkName() + "库存量");
                     parkid = parklist.get(0).getId();
                     name=parklist.get(0).getParkName();
                     getBatchTimeOfPark();
@@ -719,7 +719,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 convertView = lmap.get(position);
                 listItemView = (ListItemView) convertView.getTag();
             }
-            if (tv_parkname.getText().equals(wz_storehouse.getParkName()))
+            if (tv_parkname.getText().equals(wz_storehouse.getParkName() + "库存量"))
             {
                 listItemView.view_select.setVisibility(View.VISIBLE);
             } else

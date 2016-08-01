@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/roundedcorner_top"
+        android:gravity="center"
+        android:text="请选择"
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
 
     <ListView
         android:id="@+id/lv"
         android:layout_width="match_parent"
-        android:layout_height="300dip"
+        android:layout_height="250dip"
         android:layout_centerInParent="true"
         android:divider="@color/line_color"
         android:dividerHeight="1px"/>
-</RelativeLayout>
+</LinearLayout>

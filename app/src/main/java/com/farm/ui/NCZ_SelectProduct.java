@@ -261,7 +261,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                         parklist = new ArrayList<Wz_Storehouse>();
                         Toast.makeText(NCZ_SelectProduct.this, "暂无更多园区", Toast.LENGTH_SHORT).show();
                     }
-                    tv_parkname.setText(parklist.get(0).getParkName());
+                    tv_parkname.setText(parklist.get(0).getParkName() + "库存量");
                     parkid = parklist.get(0).getId();
                     name=parklist.get(0).getParkName();
                     getNCZ_getAllContractSaleData();
@@ -693,7 +693,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 convertView = lmap.get(position);
                 listItemView = (ListItemView) convertView.getTag();
             }
-            if (tv_parkname.getText().equals(wz_storehouse.getParkName()))
+            if (tv_parkname.getText().equals(wz_storehouse.getParkName() + "库存量"))
             {
                 listItemView.view_select.setVisibility(View.VISIBLE);
             } else
@@ -1037,7 +1037,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 id = parklist.get(postion).getId();
                 name = parklist.get(postion).getParkName();
                 pw_tab.dismiss();
-                tv_parkname.setText(parklist.get(postion).getParkName());
+                tv_parkname.setText(parklist.get(postion).getParkName() + "库存量");
                 parkid = parklist.get(postion).getId();
             }
         });

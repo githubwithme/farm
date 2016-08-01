@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -130,8 +129,6 @@ public class NCZ_CreateNewOrder extends Activity
     TextView CR_chanpin;
     @ViewById
     LinearLayout ll_more;
-    @ViewById
-    RelativeLayout rl_more_tip;
 
     String uuid = "";
     String cgId = "";
@@ -195,18 +192,6 @@ public class NCZ_CreateNewOrder extends Activity
 
     }
 
-    @Click
-    void rl_more_tip()
-    {
-        if (ll_more.isShown())
-        {
-            ll_more.setVisibility(View.GONE);
-        } else
-        {
-            ll_more.setVisibility(View.VISIBLE);
-        }
-
-    }
 
     @Click
     void btn_addcg()
@@ -337,11 +322,11 @@ public class NCZ_CreateNewOrder extends Activity
         finish();
     }
 
-    @Click
-    void btn_cancleorder()
-    {
-        cancleOrder();
-    }
+//    @Click
+//    void btn_cancleorder()
+//    {
+//        cancleOrder();
+//    }
 
     @Click
     void btn_sure()
