@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/defaultbackground"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/defaultbackground"
+    android:orientation="vertical">
 
     <RelativeLayout
 
@@ -17,7 +17,7 @@
             android:layout_height="20dip"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dip"
-            android:background="@mipmap/btn_return"/>
+            android:background="@mipmap/btn_return" />
 
 
         <TextView
@@ -31,7 +31,7 @@
             android:gravity="center"
             android:text="准备工作详情"
             android:textColor="@color/white"
-            android:textSize="@dimen/titlebar_textsize"/>
+            android:textSize="@dimen/titlebar_textsize" />
 
         <Button
             android:id="@+id/button_add"
@@ -44,7 +44,7 @@
             android:gravity="center"
             android:text="添加"
             android:textColor="@color/white"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -59,7 +59,7 @@
             android:layout_height="300px"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="360px"
-            android:background="@mipmap/icon_vehicle_empty"/>
+            android:background="@mipmap/icon_vehicle_empty" />
 
         <TextView
             android:id="@+id/tv_nodetail"
@@ -72,7 +72,7 @@
             android:gravity="center"
             android:text="暂无准备工作详情"
             android:textColor="@color/text_table_horizontitle"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_addtip"
@@ -83,19 +83,22 @@
             android:layout_marginTop="40px"
             android:alpha="0.5"
             android:gravity="center"
-            android:text="如需登记&quot;车牌号&quot;、&quot;包装工&quot;\n和&quot;搬运工&quot;资料，请点击下方按钮"
+            android:text="如需登记&quot;车牌号&quot;、&quot;包装工&quot;\n和&quot;搬运工&quot;资料，请点击上方&quot;添加&quot;按钮"
             android:textColor="@color/text_table_horizontitle"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <Button
-            android:layout_width="750px"
+            android:layout_width="match_parent"
             android:layout_height="120px"
             android:layout_below="@+id/tv_addtip"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="15dip"
             android:layout_marginTop="80px"
             android:background="@drawable/btn_add_immediately"
             android:text="立即添加"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
@@ -111,28 +114,24 @@
             android:focusableInTouchMode="true"
             android:gravity="center"
             android:text="未就绪"
-            android:textSize="16dip"/>
+            android:textSize="16dip" />
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <ListView
-                android:id="@+id/hlistview_scroll_list"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:cacheColorHint="@android:color/transparent"
-                android:divider="@color/defaultbackground"
-                android:dividerHeight="80px"
-                android:fadingEdge="none"
-                android:scrollbars="none">
-            </ListView>
-        </ScrollView>
+        <ListView
+            android:id="@+id/hlistview_scroll_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="45dip"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/transparent"
+            android:dividerHeight="0px"
+            android:fadingEdge="none"
+            android:scrollbars="none" />
 
         <Button
             android:id="@+id/btn_isready"
@@ -141,7 +140,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/titlebar_top"
             android:text="设置该订单全部准备就绪"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
     </RelativeLayout>
 
 

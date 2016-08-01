@@ -47,8 +47,7 @@ import java.util.List;
  * Created by ${hmj} on 2016/6/27.
  */
 @EActivity(R.layout.recoverydetail)
-public class RecoveryDetail extends Activity
-{
+public class RecoveryDetail extends Activity {
     RecoveryDetail_Adapter recoveryDetail_adapter;
     CustomDialog_ListView customDialog_listView;
     MyDialog myDialog;
@@ -77,10 +76,8 @@ public class RecoveryDetail extends Activity
     List<AllType> listAlltype = new ArrayList<AllType>();
 
     @AfterViews
-    void afterOncreate()
-    {
-        if (sellOrder_new.getIsReady().equals("False"))
-        {
+    void afterOncreate() {
+        if (sellOrder_new.getIsReady().equals("False")) {
             btn_isready.setVisibility(View.VISIBLE);
         }
         getDetailSecBysettleId();
@@ -89,22 +86,17 @@ public class RecoveryDetail extends Activity
 
     @Click
 //准备就绪
-    void btn_isready()
-    {
+    void btn_isready() {
         showDeleteTip();
     }
 
-    private void showDeleteTip()
-    {
+    private void showDeleteTip() {
 
         View dialog_layout = RecoveryDetail.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(RecoveryDetail.this, R.style.MyDialog, dialog_layout, "就绪", "所有准备工作就绪?", "确定", "取消", new MyDialog.CustomDialogListener()
-        {
+        myDialog = new MyDialog(RecoveryDetail.this, R.style.MyDialog, dialog_layout, "就绪", "所有准备工作就绪?", "确定", "取消", new MyDialog.CustomDialogListener() {
             @Override
-            public void OnClick(View v)
-            {
-                switch (v.getId())
-                {
+            public void OnClick(View v) {
+                switch (v.getId()) {
                     case R.id.btn_sure:
                         updateSellOrderByuuid();
                         break;
@@ -118,8 +110,7 @@ public class RecoveryDetail extends Activity
     }
 
     @Click
-    void button_add()
-    {
+    void button_add() {
         Intent intent = new Intent(RecoveryDetail.this, AddRecovery_.class);
         intent.putExtra("uuid", uuid);
         startActivity(intent);
@@ -127,57 +118,47 @@ public class RecoveryDetail extends Activity
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DINGDAN);
         registerReceiver(receiver_update, intentfilter_update);
         uuid = getIntent().getStringExtra("uuid");
         sellOrder_new = getIntent().getParcelableExtra("bean");
-
     }
 
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
-        public void onReceive(Context context, Intent intent)
-        {
+        public void onReceive(Context context, Intent intent) {
             getDetailSecBysettleId();
         }
     };
 
-    private void newaddOrder(String data)
-    {
+    private void newaddOrder(String data) {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "editOrder");
         params.setContentType("application/json");
-        try
-        {
+        try {
             params.setBodyEntity(new StringEntity(data, "utf-8"));
-        } catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         HttpUtils http = new HttpUtils();
         http.configTimeout(60000);
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
+            public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+                    if (result.getAffectedRows() != 0) {
 
                     }
 
-                } else
-                {
+                } else {
                     AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
                     return;
                 }
@@ -185,64 +166,51 @@ public class RecoveryDetail extends Activity
             }
 
             @Override
-            public void onFailure(HttpException error, String msg)
-            {
+            public void onFailure(HttpException error, String msg) {
                 AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
             }
         });
     }
 
-    private void getpurchaser()
-    {
+    private void getpurchaser() {
         rl_nodatatip.setVisibility(View.VISIBLE);
         commembertab commembertab = AppContext.getUserInfo(RecoveryDetail.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getpurchaser");//jobGetList1
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
+            public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
                 List<Purchaser> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        if (result.getAffectedRows() != 0)
-                        {
+                    if (result.getAffectedRows() != 0) {
+                        if (result.getAffectedRows() != 0) {
                             listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
-                            for (int i = 0; i < listNewData.size(); i++)
-                            {
-                                if (listNewData.get(i).userType.equals("采购商"))
-                                {
+                            for (int i = 0; i < listNewData.size(); i++) {
+                                if (listNewData.get(i).userType.equals("采购商")) {
                                     listData_CG.add(listNewData.get(i));
-                                } else if (listNewData.get(i).userType.equals("包装工头"))
-                                {
+                                } else if (listNewData.get(i).userType.equals("包装工头")) {
                                     listData_BZ.add(listNewData.get(i));
-                                } else
-                                {
+                                } else {
                                     listData_BY.add(listNewData.get(i));
                                 }
                             }
                             rl_nodatatip.setVisibility(View.GONE);
 
-                        } else
-                        {
+                        } else {
                             listNewData = new ArrayList<Purchaser>();
                         }
 
-                    } else
-                    {
+                    } else {
                         listNewData = new ArrayList<Purchaser>();
 
                     }
 
-                } else
-                {
+                } else {
                     AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
                     return;
                 }
@@ -250,38 +218,31 @@ public class RecoveryDetail extends Activity
             }
 
             @Override
-            public void onFailure(HttpException error, String msg)
-            {
+            public void onFailure(HttpException error, String msg) {
                 AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
             }
         });
     }
 
-    private void isnewaddOrder(String data)
-    {
+    private void isnewaddOrder(String data) {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "addsellOrderSettlement");
         params.setContentType("application/json");
-        try
-        {
+        try {
             params.setBodyEntity(new StringEntity(data, "utf-8"));
-        } catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         HttpUtils http = new HttpUtils();
         http.configTimeout(60000);
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
+            public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+                    if (result.getAffectedRows() != 0) {
 
 
                         getDetailSecBysettleId();
@@ -290,8 +251,7 @@ public class RecoveryDetail extends Activity
 
                     }
 
-                } else
-                {
+                } else {
                     AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
                     return;
                 }
@@ -299,26 +259,22 @@ public class RecoveryDetail extends Activity
             }
 
             @Override
-            public void onFailure(HttpException error, String msg)
-            {
+            public void onFailure(HttpException error, String msg) {
                 AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
             }
         });
     }
 
-    public void getDetailSecBysettleId()
-    {
+    public void getDetailSecBysettleId() {
         rl_nodatatip.setVisibility(View.VISIBLE);
         commembertab commembertab = AppContext.getUserInfo(RecoveryDetail.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("action", "getDetailSecBysettleId");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
+            public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
                 List<SellOrder_New> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
@@ -334,14 +290,18 @@ public class RecoveryDetail extends Activity
                     intent.putExtra("num", listNewData.size() + "");
                     sendBroadcast(intent);
 
-                    CR_chanpin.setText("");
-                    tv_bz.setText("");
-                    tv_by.setText("");
-                    packPrice.setText("");
-                    carryPrice.setText("");
-                    rl_nodatatip.setVisibility(View.GONE);
-                } else
-                {
+//                    CR_chanpin.setText("");
+//                    tv_bz.setText("");
+//                    tv_by.setText("");
+//                    packPrice.setText("");
+//                    carryPrice.setText("");
+                    if (listNewData.size() > 0) {
+                        rl_nodatatip.setVisibility(View.GONE);
+                    } else {
+                        rl_nodatatip.setVisibility(View.VISIBLE);
+                    }
+
+                } else {
                     AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
                     return;
                 }
@@ -349,42 +309,35 @@ public class RecoveryDetail extends Activity
             }
 
             @Override
-            public void onFailure(HttpException error, String msg)
-            {
+            public void onFailure(HttpException error, String msg) {
                 AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
             }
         });
     }
 
-    private void updateSellOrderByuuid()
-    {
+    private void updateSellOrderByuuid() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("isReady", "1");
         params.addQueryStringParameter("action", "updateSellOrderByuuid");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
+            public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
                 List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+                    if (result.getAffectedRows() != 0) {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
 
-                    } else
-                    {
+                    } else {
                         listData = new ArrayList<SellOrder_New>();
                     }
 
-                } else
-                {
+                } else {
                     AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
                     return;
                 }
@@ -392,8 +345,7 @@ public class RecoveryDetail extends Activity
             }
 
             @Override
-            public void onFailure(HttpException error, String msg)
-            {
+            public void onFailure(HttpException error, String msg) {
                 AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
 
             }
