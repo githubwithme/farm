@@ -68,7 +68,8 @@ import java.util.Map;
  */
 @EActivity(R.layout.cz_selectproduct)
 public class CZ_SelectProduct extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
-{  List<SellOrderDetail_New> list_SellOrderDetail;
+{
+    List<SellOrderDetail_New> list_SellOrderDetail;
     List<Wz_Storehouse> parklist = new ArrayList<Wz_Storehouse>();
     DialogFragment_WaitTip dialog;
     String uuid;
@@ -117,6 +118,7 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
     TextView tv_selectnumber;
     @ViewById
     TextView tv_allnumber;
+
     @Click
     void btn_back()
     {
@@ -138,7 +140,6 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
     }
 
 
-
     @Click
     void btn_createorder()
     {
@@ -146,8 +147,6 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
         intent.putExtra("uuid", uuid);
         CZ_SelectProduct.this.startActivity(intent);
     }
-
-
 
 
     @AfterViews
@@ -170,11 +169,14 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
 
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_NCZ_XL_REFRESH);
         registerReceiver(receiver_update, intentfilter_update);
+
+
         uuid = java.util.UUID.randomUUID().toString();
         commembertab = AppContext.getUserInfo(CZ_SelectProduct.this);
         parkid = getIntent().getStringExtra("parkid");
         name = getIntent().getStringExtra("parkname");
     }
+
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -185,13 +187,6 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
             getNCZ_getAllContractSaleData();
         }
     };
-
-
-
-
-
-
-
 
 
     public void getNCZ_getAllContractSaleData()
@@ -771,7 +766,6 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
     }
 
 
-
     private void addSellOrderDetail_new(String data)
     {
         RequestParams params = new RequestParams();
@@ -889,7 +883,7 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
 
 
                         tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
-                        tv_selectnumber.setText("已选"+list_SellOrderDetail.size()+"个，点击查看详情");
+                        tv_selectnumber.setText("已选" + list_SellOrderDetail.size() + "个，点击查看详情");
 
                     } else
                     {
@@ -911,6 +905,7 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
             }
         });
     }
+
     public int countAllNumber()
     {
         int allnumber = 0;

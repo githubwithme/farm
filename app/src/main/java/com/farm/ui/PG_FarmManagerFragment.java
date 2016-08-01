@@ -108,7 +108,8 @@ public class PG_FarmManagerFragment extends Fragment
     @Click
     void ll_xs()
     {
-        Intent intent = new Intent(getActivity(), PG_SaleActivity_.class);
+//        Intent intent = new Intent(getActivity(), PG_SaleActivity_.class);
+        Intent intent = new Intent(getActivity(), PG_New_SaleActinity_.class);
         getActivity().startActivity(intent);
     }
 

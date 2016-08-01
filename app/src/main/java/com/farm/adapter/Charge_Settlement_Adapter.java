@@ -236,7 +236,7 @@ public class Charge_Settlement_Adapter extends BaseAdapter
                     Toast.makeText(context, "请先填写数量", Toast.LENGTH_SHORT).show();
                 } else
                 {
-                      if (type.equals(1))
+                      if (type.equals("1"))
                       {
                           ChangeSellOrderDetailSec(sellOrderDetail_new, et_number.getText().toString(), "", "");
                       }else if (type.equals("2"))

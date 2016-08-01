@@ -210,7 +210,7 @@ public class JSD_Detail extends Activity
         ll_park.removeAllViews();
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) JSD_Detail.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        String[] name = new String[]{"实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
+        String[] name = new String[]{"车牌号","实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
 //        String[] name = new String[]{"实际金额", "合计金额"};
         for (int i = 0; i < name.length; i++)
         {
@@ -220,30 +220,6 @@ public class JSD_Detail extends Activity
             tv_parkname.setText(name[i]);   //最上边滑动承包区
             ll_park.addView(view);
         }
- /*       for (int i = 0; i < listData.get(0).getDetailSecLists().size(); i++)
-        {
-            View view = inflater.inflate(R.layout.pg_breakoff_contractitem, null);
-            TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
-            tv_parkname.getLayoutParams().width = (screenWidth);
-            tv_parkname.setText(listData.get(0).getDetailSecLists().get(i).getplannumber());   //最上边滑动承包区
-            ll_park.addView(view);
-        }*/
-/*        for (int i = 0; i < listData.get(0).getDetailSecLists().size(); i++)
-        {
-            View view = inflater.inflate(R.layout.pg_breakoff_totalitem, null);
-            TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
-            tv_total.getLayoutParams().width = (screenWidth);
-            int totalnumber = 0;
-            for (int j = 0; j < listData.size(); j++)
-            {
-                if (!listData.get(j).getDetailSecLists().get(i).getplannumber().equals(""))
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getDetailSecLists().get(i).getplannumber());    //最下面滑动合计
-            }
-            tv_total.setText(String.valueOf(totalnumber));
-            ll_total.addView(view);
-            allnumber = allnumber + totalnumber;
-        }*/
-//        alltoatal.setText(String.valueOf(allnumber));
 
         //最下面滑动合计
         for (int i = 0; i < name.length; i++)
@@ -255,6 +231,10 @@ public class JSD_Detail extends Activity
             switch (i)
             {
                 case 0:
+                    tv_total.setText("-");
+                    ll_total.addView(view);
+                    break;
+                case 1:
 
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -266,7 +246,7 @@ public class JSD_Detail extends Activity
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 1:
+                case 2:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -278,7 +258,7 @@ public class JSD_Detail extends Activity
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 2:
+                case 3:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -290,12 +270,12 @@ public class JSD_Detail extends Activity
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 3:
+                case 4:
 
                     tv_total.setText("-");
                     ll_total.addView(view);
                     break;
-                case 4:
+                case 5:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -307,7 +287,7 @@ public class JSD_Detail extends Activity
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 5:
+                case 6:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -319,7 +299,7 @@ public class JSD_Detail extends Activity
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 6:
+                case 7:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -331,7 +311,7 @@ public class JSD_Detail extends Activity
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 7:
+                case 8:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -343,7 +323,7 @@ public class JSD_Detail extends Activity
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 8:
+                case 9:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -434,14 +414,14 @@ public class JSD_Detail extends Activity
             // 获取list_item布局文件的视图
             convertView = LayoutInflater.from(JSD_Detail.this).inflate(R.layout.jsd_detail_scrolladapteritem, null);
             listItemView = new ListItemView();
-            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+//            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
 
-            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+//            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
             listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
 
-            if (listData.get(position).getIsNeedAudit().equals("0"))
+/*            if (listData.get(position).getIsNeedAudit().equals("0"))
             {
 
             } else if (listData.get(position).getIsNeedAudit().equals("1"))
@@ -453,8 +433,17 @@ public class JSD_Detail extends Activity
             }
             listItemView.item_titlev.setText(listData.get(position).getPlateNumber());
             listItemView.item_titlev.setTag(R.id.tag_batchtime, listData.get(position));
-            listItemView.item_titlev.setOnClickListener(clickListener);
+            listItemView.item_titlev.setOnClickListener(clickListener);*/
+            if (listData.get(position).getIsNeedAudit().equals("0"))
+            {
 
+            } else if (listData.get(position).getIsNeedAudit().equals("1"))
+            {
+                listItemView.item_total.setTextColor(JSD_Detail.this.getResources().getColor(R.color.green));
+            } else if (listData.get(position).getIsNeedAudit().equals("-1"))
+            {
+                listItemView.item_total.setTextColor(JSD_Detail.this.getResources().getColor(R.color.red));
+            }
             listItemView.item_total.setTag(R.id.tag_batchtime, listData.get(position));
             listItemView.item_total.setOnClickListener(clickListener);
             listItemView.item_total.setText("结算单"+(position+1));
@@ -487,7 +476,7 @@ public class JSD_Detail extends Activity
 
             }*/
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 9; i++)
             {
                 View view = LayoutInflater.from(JSD_Detail.this).inflate(R.layout.pg_breakoff_dataitem, null);
                 listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
@@ -495,28 +484,36 @@ public class JSD_Detail extends Activity
 
                 switch (i)
                 {
+
                     case 0:
-                        listItemView.btn_data.setText(listData.get(position).getActualMoney());
+                        listItemView.btn_data.setText(listData.get(position).getPlateNumber());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
                     case 1:
-                        listItemView.btn_data.setText(listData.get(position).getTotalFee());
+                        listItemView.btn_data.setText(listData.get(position).getActualMoney());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
                     case 2:
-                        listItemView.btn_data.setText(listData.get(position).getTotalWeight());
+                        listItemView.btn_data.setText(listData.get(position).getTotalFee());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
                     case 3:
+                        listItemView.btn_data.setText(listData.get(position).getTotalWeight());
+                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        ll_middle.addView(view);
+                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.btn_data.setOnClickListener(clickListener);
+                        break;
+                    case 4:
                         if (listData.get(position).getIsNeedAudit().equals("0"))
                         {
                             listItemView.btn_data.setText("待审批");
@@ -533,35 +530,35 @@ public class JSD_Detail extends Activity
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
-                    case 4:
+                    case 5:
                         listItemView.btn_data.setText(listData.get(position).getQualityBalance());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
-                    case 5:
+                    case 6:
                         listItemView.btn_data.setText(listData.get(position).getActualprice());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
-                    case 6:
+                    case 7:
                         listItemView.btn_data.setText(listData.get(position).getQualityTotalWeight());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
-                    case 7:
+                    case 8:
                         listItemView.btn_data.setText(listData.get(position).getPackFee());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
-                    case 8:
+                    case 9:
                         listItemView.btn_data.setText(listData.get(position).getCarryFee());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);

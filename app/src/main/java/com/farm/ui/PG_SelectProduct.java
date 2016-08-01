@@ -2,7 +2,10 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -26,6 +29,8 @@ import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
 import com.farm.bean.PeopelList;
 import com.farm.bean.Result;
+import com.farm.bean.SellOrderDetail_New;
+import com.farm.bean.Wz_Storehouse;
 import com.farm.bean.commembertab;
 import com.farm.bean.contractTab;
 import com.farm.bean.parktab;
@@ -52,6 +57,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ${hmj} on 2016/6/57.
@@ -59,6 +65,9 @@ import java.util.List;
 @EActivity(R.layout.pg_selectproduct)
 public class PG_SelectProduct extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
+    List<SellOrderDetail_New> list_SellOrderDetail;
+    List<Wz_Storehouse> parklist = new ArrayList<Wz_Storehouse>();
+    DialogFragment_WaitTip dialog;
     String uuid;
     EditText et_number;
     CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
@@ -66,12 +75,12 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
     String parkid;
     @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
-    @ViewById
-    CustomHorizontalScrollView_Allitem totalScroll;
+//    @ViewById
+//    CustomHorizontalScrollView_Allitem totalScroll;
+
     CustomHorizontalScrollView_Allitem.CustomOntouch customOntouch = null;
 
-//    List<contractTab> listData = null;
-List<BatchTime> listData = null;
+    List<BatchTime> listData = null;
     private ListView mListView;
     public HorizontalScrollView mTouchView;
     protected List<CustomHorizontalScrollView_Allitem> mHScrollViews = null;
@@ -82,43 +91,42 @@ List<BatchTime> listData = null;
     @ViewById
     View view_line;
     @ViewById
-    LinearLayout ll_total;
-    @ViewById
-    TextView alltoatal;
-    @ViewById
     TextView tv_top_left;
     @ViewById
-    TextView tv_top_right;
+    TextView tv_title;
     @ViewById
-    TextView tv_bottom_left;
-    @ViewById
-    RelativeLayout rl_upload;
-    @ViewById
-    TextView tv_totalnumber;
+    TextView tv_parkname;
     private String id;
     private String name;
     PopupWindow pw_tab;
     View pv_tab;
-    @ViewById
-    View line;
-    //    PG_CKofListAdapter pg_cKlistAdapter;
     Adapter_Park adapter_park;
     com.farm.bean.commembertab commembertab;
     MyDialog myDialog;
     Fragment mContent = new Fragment();
+
     @ViewById
-    LinearLayout cz_startdl;
+    TextView tv_nodatatip;
+    List<Map<String, String>> uuids;
+    List<SellOrderDetail_New> list_sell;
+
     @ViewById
-    TextView startdl;
+    TextView tv_selectnumber;
     @ViewById
-    TextView tv_timelimit;
-    @ViewById
-    RelativeLayout rl_view;
+    TextView tv_allnumber;
 
     @Click
     void btn_back()
     {
         cancleOrder();
+    }
+
+    @Click
+    void ll_productnumber()
+    {
+        Intent intent = new Intent(PG_SelectProduct.this, ProductSelectedList_.class);
+        intent.putExtra("uuid", uuid);
+        PG_SelectProduct.this.startActivity(intent);
     }
 
     @Click
@@ -131,7 +139,7 @@ List<BatchTime> listData = null;
     @Click
     void btn_createorder()
     {
-        Intent intent = new Intent(PG_SelectProduct.this, NCZ_CreateNewOrder_.class);
+        Intent intent = new Intent(PG_SelectProduct.this, PG_CreateOrder_.class);
         intent.putExtra("uuid", uuid);
         PG_SelectProduct.this.startActivity(intent);
     }
@@ -142,9 +150,10 @@ List<BatchTime> listData = null;
     {
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
-        totalScroll.setCuttomOntouch(customOntouch);
         deleNewSaleAddsalefor();
-        getBatchTimeOfPark();
+//        getParkList();
+        tv_parkname.setText(commembertab.getareaName());
+        NCZ_getContractSaleData();
     }
 
     @Override
@@ -152,17 +161,29 @@ List<BatchTime> listData = null;
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+
+
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_NCZ_XL_REFRESH);
+        registerReceiver(receiver_update, intentfilter_update);
+
+
         uuid = java.util.UUID.randomUUID().toString();
         commembertab = AppContext.getUserInfo(PG_SelectProduct.this);
-        parkid = getIntent().getStringExtra("parkid");
     }
 
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getNewSaleList();
+            NCZ_getContractSaleData();
+        }
+    };
 
 
-
-
-
-    public void getBatchTimeOfPark()
+    public void NCZ_getContractSaleData()
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -170,7 +191,6 @@ List<BatchTime> listData = null;
         params.addQueryStringParameter("areaid", commembertab.getareaId());
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("action", "NCZ_getContractSaleData");
-//        params.addQueryStringParameter("action", "NCZ_getContractBreakoffData");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -192,17 +212,14 @@ List<BatchTime> listData = null;
                             screenWidth = screenWidth / 3;
                         } else if (size == 2)
                         {
-                            screenWidth = screenWidth / 4;
+                            screenWidth = screenWidth / 3;
                         } else
                         {
-                            screenWidth = screenWidth / 5;
+                            screenWidth = screenWidth / 3;
                         }
                         tv_top_left.getLayoutParams().width = (screenWidth);
-                        tv_top_right.getLayoutParams().width = (screenWidth);
-                        tv_bottom_left.getLayoutParams().width = (screenWidth);
-                        alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
-                        cz_startdl.setVisibility(View.GONE);
+                        tv_nodatatip.setVisibility(View.GONE);
 
                     } else
                     {
@@ -224,43 +241,38 @@ List<BatchTime> listData = null;
             }
         });
     }
+
     private void initViews()
     {
         //初始化控件及数据
         mHScrollViews = new ArrayList<CustomHorizontalScrollView_Allitem>();
-        ll_total.removeAllViews();
+//        ll_total.removeAllViews();
         ll_park.removeAllViews();
         int allnumber = 0;
         LayoutInflater inflater = (LayoutInflater) PG_SelectProduct.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < listData.get(0).getContracttabList().size(); i++)
         {
-            View view = inflater.inflate(R.layout.cz_contractsale_titleitem, null);
+            View view = inflater.inflate(R.layout.nczselectproduct_titleitem, null);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
             tv_parkname.setText(listData.get(0).getContracttabList().get(i).getContractname());
+            tv_parkname.setTag(listData.get(0).getContracttabList().get(i).getContractid());
+            tv_parkname.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+//                    String areaid = (String) v.getTag();
+//                    Intent intent = new Intent(NCZ_SelectProduct.this, NCZ_ContractSaleData_.class);
+//                    intent.putExtra("areaid", areaid);
+//                    NCZ_SelectProduct.this.startActivity(intent);
+                }
+            });
             ll_park.addView(view);
         }
-        for (int i = 0; i < listData.get(0).getContracttabList().size(); i++)
-        {
-            View view = inflater.inflate(R.layout.cz_contractsale_totalitem, null);
-            TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
-            tv_total.getLayoutParams().width = (screenWidth);
-            int totalnumber = 0;
-            for (int j = 0; j < listData.size(); j++)
-            {
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getContracttabList().get(i).getAllnumber());
-            }
-            tv_total.setText(String.valueOf(totalnumber));
-            ll_total.addView(view);
-            allnumber = allnumber + totalnumber;
-        }
-        alltoatal.setText(String.valueOf(allnumber));
 
-//        CustomHorizontalScrollView_Allitem headerScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.item_scroll_title);
-//        CustomHorizontalScrollView_Allitem totalScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.totalScroll);
         // 添加头滑动事件
         mHScrollViews.add(item_scroll_title);
-        mHScrollViews.add(totalScroll);
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
         mAdapter = new ScrollAdapter();
         mListView.setAdapter(mAdapter);
@@ -312,7 +324,7 @@ List<BatchTime> listData = null;
         class ListItemView
         {
             public TextView item_titlev;
-            public TextView item_total;
+            //            public TextView item_total;
             public TextView tv_data;
         }
 
@@ -337,12 +349,10 @@ List<BatchTime> listData = null;
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            convertView = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.cz_contractsale_scrolladapter_item, null);
+            convertView = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.nczselectproduct_scrolladapter_item, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-            listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
             listItemView.item_titlev.setText(listData.get(position).getBatchTime());
             int totalnumber = 0;
@@ -351,21 +361,21 @@ List<BatchTime> listData = null;
             {
                 totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
             }
-            listItemView.item_total.setText(String.valueOf(totalnumber));
+//            listItemView.item_total.setText(String.valueOf(totalnumber));
 
             for (int i = 0; i < listData.get(position).getContracttabList().size(); i++)
             {
-                View view = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.cz_contractsale_dataitem, null);
+                View view = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.nczselectproduct_dataitem, null);
                 listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
                 listItemView.tv_data.setText(listData.get(position).getContracttabList().get(i).getAllnumber());
                 listItemView.tv_data.getLayoutParams().width = (screenWidth);
                 ll_middle.addView(view);
 
                 listItemView.tv_data.requestFocusFromTouch();
-                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getContracttabList().get(i).getContractid());
+                listItemView.tv_data.setTag(R.id.contractorId, listData.get(position).getContracttabList().get(i).getContractid());
                 listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
                 listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getContracttabList().get(i).getAllnumber());
-                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getContracttabList().get(i).getContractname());
+                listItemView.tv_data.setTag(R.id.tv_contractName, listData.get(position).getContracttabList().get(i).getContractname());
                 listItemView.tv_data.setOnClickListener(clickListener);
 
             }
@@ -409,40 +419,50 @@ List<BatchTime> listData = null;
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
             String number = (String) v.getTag(R.id.tag_number);
             String batchTimes = (String) v.getTag(R.id.tag_batchtime);
-            String areaid = (String) v.getTag(R.id.tag_areaid);
-            String areaname = (String) v.getTag(R.id.tag_areaname);
-            showDialog_selectProduct();
+            String contractorId = (String) v.getTag(R.id.contractorId);
+            String tv_contractName = (String) v.getTag(R.id.tv_contractName);
+ /*              listItemView.tv_data.setTag(R.id.contractorId, listData.get(position).getContracttabList().get(i).getContractid());
+                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getContracttabList().get(i).getAllnumber());
+                listItemView.tv_data.setTag(R.id.tv_contractName, listData.get(position).getContracttabList().get(i).getContractname());*/
+
+            showDialog_selectProduct(number, batchTimes, contractorId, tv_contractName);
 
         }
     };
 
     public class Adapter_Park extends BaseAdapter
     {
+        private Context context;
+        private List<Wz_Storehouse> listItems;
         private LayoutInflater listContainer;
-
-        parktab parktab;
+        Wz_Storehouse wz_storehouse;
 
         class ListItemView
         {
             public TextView tv_yq;
+            public View view_select;
         }
 
-        public Adapter_Park()
+        public Adapter_Park(Context context, List<Wz_Storehouse> data)
         {
-            this.listContainer = LayoutInflater.from(PG_SelectProduct.this);
+            this.context = context;
+            this.listContainer = LayoutInflater.from(context);
+            this.listItems = data;
         }
 
         HashMap<Integer, View> lmap = new HashMap<Integer, View>();
 
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            parktab = list_park.get(position);
+            wz_storehouse = listItems.get(position);
             ListItemView listItemView = null;
             if (lmap.get(position) == null)
             {
-                convertView = listContainer.inflate(R.layout.yq_item, null);
+                convertView = listContainer.inflate(R.layout.park_item, null);
                 listItemView = new ListItemView();
                 listItemView.tv_yq = (TextView) convertView.findViewById(R.id.tv_yq);
+                listItemView.view_select = (View) convertView.findViewById(R.id.view_select);
                 lmap.put(position, convertView);
                 convertView.setTag(listItemView);
             } else
@@ -450,14 +470,21 @@ List<BatchTime> listData = null;
                 convertView = lmap.get(position);
                 listItemView = (ListItemView) convertView.getTag();
             }
-            listItemView.tv_yq.setText(parktab.getparkName());
+            if (tv_parkname.getText().equals(wz_storehouse.getParkName()))
+            {
+                listItemView.view_select.setVisibility(View.VISIBLE);
+            } else
+            {
+                listItemView.view_select.setVisibility(View.GONE);
+            }
+            listItemView.tv_yq.setText(wz_storehouse.getParkName() + "库存量");
             return convertView;
         }
 
         @Override
         public int getCount()
         {
-            return list_park.size();
+            return listItems.size();
         }
 
         @Override
@@ -473,7 +500,8 @@ List<BatchTime> listData = null;
         }
     }
 
-    public void showDialog_selectProduct()
+    //    showDialog_selectProduct(number,batchTimes,areaid,areaname);
+    public void showDialog_selectProduct(final String number, final String batchTimes, final String contractid, final String contractname)
     {
         final View dialog_layout = LayoutInflater.from(PG_SelectProduct.this).inflate(R.layout.customdialog_editcontractsale, null);
         customDialog_editSaleInInfo = new CustomDialog_EditSaleInInfo(PG_SelectProduct.this, R.style.MyDialog, dialog_layout);
@@ -486,21 +514,67 @@ List<BatchTime> listData = null;
             public void onClick(View v)
             {
                 customDialog_editSaleInInfo.dismiss();
-//                if (allnumber == 0)
-//                {
-//                    Toast.makeText(NCZ_SelectProduct.this, "请先选择产品", Toast.LENGTH_SHORT).show();
-//                } else if (number_select != 0)
-//                {
-//                    pb_upload.setVisibility(View.VISIBLE);
-//                    setData();
-//                    StringBuilder builder = new StringBuilder();
-//                    builder.append("{\"SellOrderDetailList\": ");
-//                    builder.append(JSON.toJSONString(list_sell));
-//                    builder.append(", \"uuids\": ");
-//                    builder.append(JSON.toJSONString(uuids));
-//                    builder.append("} ");
-//                    CreateOrder(builder.toString());
-//                }
+                if (et_number.getText().toString().equals(""))
+                {
+                    Toast.makeText(PG_SelectProduct.this, "请先选择产品", Toast.LENGTH_SHORT).show();
+                } else
+                {
+                    list_sell = new ArrayList<>();
+                    uuids = new ArrayList<>();
+                    String number_left = String.valueOf(Integer.valueOf(number) - Integer.valueOf(et_number.getText().toString()));
+                    HashMap hashMap = new HashMap();
+                    hashMap.put("contractid", contractid);
+                    hashMap.put("year", utils.getYear());
+                    hashMap.put("batchTime", batchTimes);
+                    hashMap.put("number_difference", number_left);
+                    uuids.add(hashMap);
+                    com.farm.bean.commembertab commembertab = AppContext.getUserInfo(PG_SelectProduct.this);
+                    String uuid = java.util.UUID.randomUUID().toString();
+                    SellOrderDetail_New sellorderdetail_newsale = new SellOrderDetail_New();
+                    sellorderdetail_newsale.setuid(commembertab.getuId());
+                    sellorderdetail_newsale.setCreatorId(commembertab.getId());
+
+                    sellorderdetail_newsale.setUuid(uuid);
+                    sellorderdetail_newsale.setactuallat("");
+                    sellorderdetail_newsale.setactuallatlngsize("");
+                    sellorderdetail_newsale.setactuallng("");
+                    sellorderdetail_newsale.setactualnote("");
+                    sellorderdetail_newsale.setactualnumber("");
+                    sellorderdetail_newsale.setactualprice("");
+                    sellorderdetail_newsale.setactualweight("");
+                    /*sellorderdetail_newsale.setareaid(areaid);
+                    sellorderdetail_newsale.setareaname(areaname);*/
+                    sellorderdetail_newsale.setareaid(commembertab.getareaId());
+                    sellorderdetail_newsale.setareaname(commembertab.getareaName());
+                    sellorderdetail_newsale.setBatchTime(batchTimes);
+                    sellorderdetail_newsale.setcontractid(contractid);
+                    sellorderdetail_newsale.setcontractname(contractname);
+                    sellorderdetail_newsale.setisSoldOut("0");
+                    sellorderdetail_newsale.setparkid(commembertab.getparkId());
+                    sellorderdetail_newsale.setparkname(commembertab.getparkName());
+                    sellorderdetail_newsale.setPlanlat("");
+                    sellorderdetail_newsale.setplanlng("");
+                    sellorderdetail_newsale.setplanlatlngsize("");
+                    sellorderdetail_newsale.setplannote("");
+                    sellorderdetail_newsale.setplannumber(et_number.getText().toString());
+                    sellorderdetail_newsale.setplanprice("");
+                    sellorderdetail_newsale.setplanweight("");
+                    sellorderdetail_newsale.setreg(utils.getTime());
+                    sellorderdetail_newsale.setstatus("0");
+                    sellorderdetail_newsale.setType("newsale");
+                    sellorderdetail_newsale.setsaleid("");
+                    sellorderdetail_newsale.setXxzt("0");
+                    sellorderdetail_newsale.setYear(utils.getYear());
+                    list_sell.add(sellorderdetail_newsale);
+
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("{\"SellOrderDetailList\": ");
+                    builder.append(JSON.toJSONString(list_sell));
+                    builder.append(", \"uuids\": ");
+                    builder.append(JSON.toJSONString(uuids));
+                    builder.append("} ");
+                    CreateOrder(builder.toString());
+                }
 
             }
         });
@@ -515,53 +589,54 @@ List<BatchTime> listData = null;
         customDialog_editSaleInInfo.show();
     }
 
-    private void CreateOrder(String data)
-    {
-        RequestParams params = new RequestParams();
-        params.setContentType("application/json");
-        try
-        {
-            params.setBodyEntity(new StringEntity(data, "utf-8"));
-        } catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
-        params.addQueryStringParameter("action", "saveSellOrderDetailList");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        rl_upload.setVisibility(View.GONE);
-                        Intent intent1 = new Intent();
-                        intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
-                        sendBroadcast(intent1);
-                        finish();
-                    }
-                } else
-                {
-                    rl_upload.setVisibility(View.GONE);
-                    AppContext.makeToast(PG_SelectProduct.this, "error_connectDataBase");
-                    return;
-                }
+//    private void CreateOrder(String data)
+//    {
+//        RequestParams params = new RequestParams();
+//        params.setContentType("application/json");
+//        try
+//        {
+//            params.setBodyEntity(new StringEntity(data, "utf-8"));
+//        } catch (UnsupportedEncodingException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        params.addQueryStringParameter("action", "saveSellOrderDetailList");
+//        HttpUtils http = new HttpUtils();
+//        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+//        {
+//            @Override
+//            public void onSuccess(ResponseInfo<String> responseInfo)
+//            {
+//                String a = responseInfo.result;
+//                Result result = JSON.parseObject(responseInfo.result, Result.class);
+//                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+//                {
+//                    if (result.getAffectedRows() != 0)
+//                    {
+//                        rl_upload.setVisibility(View.GONE);
+//                        Intent intent1 = new Intent();
+//                        intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
+//                        sendBroadcast(intent1);
+//                        finish();
+//                    }
+//                } else
+//                {
+//                    rl_upload.setVisibility(View.GONE);
+//                    AppContext.makeToast(NCZ_SelectProduct.this, "error_connectDataBase");
+//                    return;
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(HttpException error, String msg)
+//            {
+//                rl_upload.setVisibility(View.GONE);
+//                AppContext.makeToast(NCZ_SelectProduct.this, "error_connectServer");
+//            }
+//        });
+//    }
 
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                rl_upload.setVisibility(View.GONE);
-                AppContext.makeToast(PG_SelectProduct.this, "error_connectServer");
-            }
-        });
-    }
 
     private void cancleOrder()
     {
@@ -610,14 +685,6 @@ List<BatchTime> listData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-               /* if (result.getAffectedRows() != 0)
-                {
-                    listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-
-                } else
-                {
-                    listData = new ArrayList<SellOrder_New>();
-                }*/
 
                 } else
                 {
@@ -638,7 +705,7 @@ List<BatchTime> listData = null;
 
     private void DeletesellOrderSettlement()
     {
-        commembertab commembertab = AppContext.getUserInfo(PG_SelectProduct.this);
+        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(PG_SelectProduct.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("strWhere", "infoId='" + uuid + "'");
         params.addQueryStringParameter("action", "DeletesellOrderSettlement");
@@ -689,6 +756,157 @@ List<BatchTime> listData = null;
         }
         return false;
 
+    }
+
+
+    private void addSellOrderDetail_new(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("action", "addSellOrderDetail_new");
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        HttpUtils http = new HttpUtils();
+        http.configTimeout(60000);
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_SelectProduct.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_SelectProduct.this, "error_connectServer");
+            }
+        });
+    }
+
+
+    private void CreateOrder(String data)
+    {
+        RequestParams params = new RequestParams();
+        params.setContentType("application/json");
+        try
+        {
+            params.setBodyEntity(new StringEntity(data, "utf-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        params.addQueryStringParameter("action", "saveSellOrderDetailList");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+
+
+                        Intent intent1 = new Intent();
+                        intent1.setAction(AppContext.UPDATEMESSAGE_NCZ_XL_REFRESH);
+                        sendBroadcast(intent1);
+
+                    }
+                } else
+                {
+                    AppContext.makeToast(PG_SelectProduct.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_SelectProduct.this, "error_connectServer");
+            }
+        });
+    }
+
+
+    private void getNewSaleList()
+    {
+        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(PG_SelectProduct.this);
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uid", commembertab.getuId());
+        params.addQueryStringParameter("year", utils.getYear());
+        params.addQueryStringParameter("creatorId", commembertab.getId());
+        params.addQueryStringParameter("action", "getSellOrderDetailList");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+                    if (result.getAffectedRows() != 0)
+                    {
+                        list_SellOrderDetail = JSON.parseArray(result.getRows().toJSONString(), SellOrderDetail_New.class);
+
+
+                        tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
+                        tv_selectnumber.setText("已选" + list_SellOrderDetail.size() + "个，点击查看详情");
+
+                    } else
+                    {
+                        list_SellOrderDetail = new ArrayList<SellOrderDetail_New>();
+                    }
+
+                } else
+                {
+                    AppContext.makeToast(PG_SelectProduct.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(PG_SelectProduct.this, "error_connectServer");
+            }
+        });
+    }
+
+    public int countAllNumber()
+    {
+        int allnumber = 0;
+        for (int i = 0; i < list_SellOrderDetail.size(); i++)
+        {
+            allnumber = allnumber + Integer.valueOf(list_SellOrderDetail.get(i).getplannumber());
+        }
+        return allnumber;
     }
 
 }
