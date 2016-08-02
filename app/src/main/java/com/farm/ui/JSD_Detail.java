@@ -421,19 +421,7 @@ public class JSD_Detail extends Activity
             listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
 
-/*            if (listData.get(position).getIsNeedAudit().equals("0"))
-            {
 
-            } else if (listData.get(position).getIsNeedAudit().equals("1"))
-            {
-                listItemView.item_titlev.setTextColor(JSD_Detail.this.getResources().getColor(R.color.green));
-            } else if (listData.get(position).getIsNeedAudit().equals("-1"))
-            {
-                listItemView.item_titlev.setTextColor(JSD_Detail.this.getResources().getColor(R.color.red));
-            }
-            listItemView.item_titlev.setText(listData.get(position).getPlateNumber());
-            listItemView.item_titlev.setTag(R.id.tag_batchtime, listData.get(position));
-            listItemView.item_titlev.setOnClickListener(clickListener);*/
             if (listData.get(position).getIsNeedAudit().equals("0"))
             {
 
@@ -448,34 +436,6 @@ public class JSD_Detail extends Activity
             listItemView.item_total.setOnClickListener(clickListener);
             listItemView.item_total.setText("结算单"+(position+1));
 
-   /*         int totalnumber = 0;
-            List<SellOrderDetail_New> list = listData.get(position).getDetailSecLists();
-            for (int j = 0; j < list.size(); j++)
-            {
-                if (!list.get(j).getplannumber().equals(""))
-                    totalnumber = totalnumber + Integer.valueOf(list.get(j).getplannumber());
-            }
-            listItemView.item_total.setText(String.valueOf(totalnumber));*/
-
-
-            //listview数据
-/*            for (int i = 0; i < listData.get(position).getDetailSecLists().size(); i++)
-            {
-                View view = LayoutInflater.from(JSD_Detail.this).inflate(R.layout.pg_breakoff_dataitem, null);
-                listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
-                listItemView.btn_data.setText(listData.get(position).getDetailSecLists().get(i).getplannumber());
-                listItemView.btn_data.getLayoutParams().width = (screenWidth);
-                ll_middle.addView(view);
-
-                listItemView.btn_data.requestFocusFromTouch();
-                listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                listItemView.btn_data.setTag(R.id.tag_batchcolor, listData.get(position).getYear());
-                listItemView.btn_data.setTag(R.id.tag_number, listData.get(position).getDetailSecLists().get(i).getplannumber());
-                listItemView.btn_data.setTag(R.id.tag_breakoff, listData.get(position).getDetailSecLists().get(i));
-//                listItemView.btn_data.setOnClickListener(clickListener);
-
-            }*/
-
             for (int i = 0; i < 9; i++)
             {
                 View view = LayoutInflater.from(JSD_Detail.this).inflate(R.layout.pg_breakoff_dataitem, null);
@@ -487,6 +447,7 @@ public class JSD_Detail extends Activity
 
                     case 0:
                         listItemView.btn_data.setText(listData.get(position).getPlateNumber());
+                        String a=listData.get(position).getPlateNumber();
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
@@ -494,6 +455,7 @@ public class JSD_Detail extends Activity
                         break;
                     case 1:
                         listItemView.btn_data.setText(listData.get(position).getActualMoney());
+                        String b=listData.get(position).getActualMoney();
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
@@ -613,4 +575,6 @@ public class JSD_Detail extends Activity
             startActivity(intent);
         }
     };
+
+
 }

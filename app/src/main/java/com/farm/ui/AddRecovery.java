@@ -261,10 +261,11 @@ public class AddRecovery extends Activity {
                 {
                     if (result.getAffectedRows() != 0) {
                         Toast.makeText(AddRecovery.this, "添加成功！", Toast.LENGTH_SHORT).show();
-                        finish();
                         Intent intent = new Intent();
                         intent.setAction(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DINGDAN);
                         sendBroadcast(intent);
+                        finish();
+
                     }
 
                 } else {

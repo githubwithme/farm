@@ -31,6 +31,7 @@
         android:background="@color/gray"/>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="41dip"
         android:orientation="vertical">

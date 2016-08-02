@@ -134,6 +134,7 @@
             android:scrollbars="none" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_isready"
             android:layout_width="match_parent"
             android:layout_height="45dip"
