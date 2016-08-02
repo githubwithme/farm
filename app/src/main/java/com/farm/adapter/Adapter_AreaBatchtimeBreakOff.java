@@ -57,14 +57,7 @@ public class Adapter_AreaBatchtimeBreakOff extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            if (position == 0)
-            {
-                convertView = listContainer.inflate(R.layout.adapter_areabatchtimebreakofftop, null);
-            } else
-            {
-                convertView = listContainer.inflate(R.layout.adapter_areabatchtimebreakoff, null);
-            }
-
+            convertView = listContainer.inflate(R.layout.adapter_areabatchtimebreakoff, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);
@@ -84,6 +77,7 @@ public class Adapter_AreaBatchtimeBreakOff extends BaseAdapter
         listItemView.tv_allnumber.setText(contractTab.getAllnumber());
         return convertView;
     }
+
 
 
 }

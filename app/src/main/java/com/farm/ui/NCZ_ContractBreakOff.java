@@ -86,14 +86,14 @@ public class NCZ_ContractBreakOff extends Activity implements CustomHorizontalSc
     com.farm.bean.commembertab commembertab;
     MyDialog myDialog;
     Fragment mContent = new Fragment();
-    @ViewById
-    LinearLayout cz_startdl;
+//    @ViewById
+//    LinearLayout cz_startdl;
     @ViewById
     TextView startdl;
     @ViewById
     TextView tv_timelimit;
-    @ViewById
-    RelativeLayout rl_view;
+//    @ViewById
+//    RelativeLayout rl_view;
 
     @Click
     void btn_back()
@@ -132,20 +132,19 @@ public class NCZ_ContractBreakOff extends Activity implements CustomHorizontalSc
             int size = listData.get(0).getContracttabList().size();
             if (size == 1)
             {
-                screenWidth = screenWidth / 3;
+                screenWidth = screenWidth / 4;
             } else if (size == 2)
             {
                 screenWidth = screenWidth / 4;
             } else
             {
-                screenWidth = screenWidth / 5;
+                screenWidth = screenWidth / 4;
             }
             tv_top_left.getLayoutParams().width = (screenWidth);
             tv_top_right.getLayoutParams().width = (screenWidth);
             tv_bottom_left.getLayoutParams().width = (screenWidth);
             alltoatal.getLayoutParams().width = (screenWidth);
             initViews();
-            cz_startdl.setVisibility(View.GONE);
         }
 
     }
@@ -176,20 +175,19 @@ public class NCZ_ContractBreakOff extends Activity implements CustomHorizontalSc
                         int size = listData.get(0).getContracttabList().size();
                         if (size == 1)
                         {
-                            screenWidth = screenWidth / 3;
+                            screenWidth = screenWidth / 4;
                         } else if (size == 2)
                         {
                             screenWidth = screenWidth / 4;
                         } else
                         {
-                            screenWidth = screenWidth / 5;
+                            screenWidth = screenWidth / 4;
                         }
                         tv_top_left.getLayoutParams().width = (screenWidth);
                         tv_top_right.getLayoutParams().width = (screenWidth);
                         tv_bottom_left.getLayoutParams().width = (screenWidth);
                         alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
-                        cz_startdl.setVisibility(View.GONE);
 
                     } else
                     {

@@ -39,7 +39,7 @@ public class NCZ_ContractBreakOffActivity extends Activity
     @ViewById
     ListView lv;
     @ViewById
-    TextView tv_note;
+    TextView tv_batchtime;
     Adapter_ContractBreakOff_NCZ adapter_contractBreakOff_ncz;
 
     @AfterViews
@@ -49,7 +49,7 @@ public class NCZ_ContractBreakOffActivity extends Activity
         areaid = getIntent().getStringExtra("areaid");
         areaname = getIntent().getStringExtra("areaname");
         batchTime = getIntent().getStringExtra("batchTime");
-        tv_note.setText(areaname + batchTime + "批次的承包区断蕾情况");
+        tv_batchtime.setText(batchTime);
         getSaleDataOfArea();
     }
 

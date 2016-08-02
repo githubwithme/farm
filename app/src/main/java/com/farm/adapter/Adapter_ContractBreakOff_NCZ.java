@@ -22,7 +22,7 @@ public class Adapter_ContractBreakOff_NCZ extends BaseAdapter
 
     static class ListItemView
     {
-        public TextView tv_allsale;
+        public TextView tv_allnumber;
         public TextView tv_contractname;
     }
 
@@ -57,18 +57,11 @@ public class Adapter_ContractBreakOff_NCZ extends BaseAdapter
         if (lmap.get(position) == null)
         {
             // 获取list_item布局文件的视图
-            if (position == 0)
-            {
-                convertView = listContainer.inflate(R.layout.adapter_contractbreakofftop, null);
-            } else
-            {
-                convertView = listContainer.inflate(R.layout.adapter_contractbreakoff, null);
-            }
-
+            convertView = listContainer.inflate(R.layout.adapter_contractbreakoff, null);
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);
-            listItemView.tv_allsale = (TextView) convertView.findViewById(R.id.tv_allsale);
+            listItemView.tv_allnumber = (TextView) convertView.findViewById(R.id.tv_allnumber);
 
             // 设置控件集到convertView
             lmap.put(position, convertView);
@@ -81,9 +74,8 @@ public class Adapter_ContractBreakOff_NCZ extends BaseAdapter
         // 设置文字和图片
 
         listItemView.tv_contractname.setText(contractTab.getContractname());
-        listItemView.tv_allsale.setText(contractTab.getAllnumber());
+        listItemView.tv_allnumber.setText(contractTab.getAllnumber());
         return convertView;
     }
-
 
 }

@@ -39,7 +39,7 @@ public class CZ_AreaBatchTimeBreakOff extends Activity
     @ViewById
     ListView lv;
     @ViewById
-    TextView tv_note;
+    TextView tv_batchtime;
     Adapter_AreaBatchtimeBreakOff adapter_areaBatchtimeBreakOff;
 
     @AfterViews
@@ -49,7 +49,7 @@ public class CZ_AreaBatchTimeBreakOff extends Activity
         batchtime = getIntent().getStringExtra("batchTime");//注意要区分大小写
         areaid = getIntent().getStringExtra("areaid");
         areaname = getIntent().getStringExtra("areaname");
-        tv_note.setText(areaname +"     "+batchtime+ "批次的断蕾情况");
+        tv_batchtime.setText(batchtime);
         getSaleDataOfArea();
     }
 
