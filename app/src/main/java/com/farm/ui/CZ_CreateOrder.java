@@ -134,12 +134,12 @@ public class CZ_CreateOrder extends Activity
     List<AllType> listAlltype = new ArrayList<AllType>();
 
 
-    @ViewById
-    RelativeLayout rl_more_tip;
+//    @ViewById
+//    RelativeLayout rl_more_tip;
     @ViewById
     LinearLayout ll_more;
     @ViewById
-    EditText cheliang_num;
+    TextView cheliang_num;
 
     String uuid;
 
@@ -156,17 +156,17 @@ public class CZ_CreateOrder extends Activity
         startActivity(intent);
     }
 
-    @Click
-    void rl_more_tip()
-    {
-        if (ll_more.isShown())
-        {
-            ll_more.setVisibility(View.GONE);
-        } else
-        {
-            ll_more.setVisibility(View.VISIBLE);
-        }
-    }
+//    @Click
+//    void rl_more_tip()
+//    {
+//        if (ll_more.isShown())
+//        {
+//            ll_more.setVisibility(View.GONE);
+//        } else
+//        {
+//            ll_more.setVisibility(View.VISIBLE);
+//        }
+//    }
 
     @Click
     void btn_addcg()

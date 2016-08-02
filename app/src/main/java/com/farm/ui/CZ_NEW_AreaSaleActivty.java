@@ -110,13 +110,13 @@ public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontal
     @Click
     void ib_suspen_menu()
     {
-        if (listData.size() == 0)
-        {
-            getBatchTimeOfPark();
-        } else
-        {
-            showPop_Menu();
-        }
+//        if (listData.size() == 0)
+//        {
+//            getBatchTimeOfPark();
+//        } else
+//        {
+        showPop_Menu();
+//        }
     }
 
 

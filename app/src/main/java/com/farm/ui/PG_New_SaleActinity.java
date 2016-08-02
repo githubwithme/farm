@@ -110,13 +110,13 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
     @Click
     void ib_suspen_menu()
     {
-        if (listData.size() == 0)
-        {
-            NCZ_getContractSaleData();
-        } else
-        {
+//        if (listData.size() == 0)
+//        {
+//            NCZ_getContractSaleData();
+//        } else
+//        {
             showPop_Menu();
-        }
+//        }
     }
 
 
@@ -413,21 +413,21 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            String number = (String) v.getTag(R.id.tag_number);
-            String batchTimes = (String) v.getTag(R.id.tag_batchtime);
-            String areaid = (String) v.getTag(R.id.tag_areaid);
-            String areaname = (String) v.getTag(R.id.tag_areaname);
-            if (number.equals("0"))
-            {
-                Toast.makeText(PG_New_SaleActinity.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
-            } else
-            {
-                Intent intent = new Intent(PG_New_SaleActinity.this, NCZ_ContractBatchTimeSale_.class);
-                intent.putExtra("areaid", areaid);
-                intent.putExtra("areaname", areaname);
-                intent.putExtra("batchTime", batchTimes);
-                PG_New_SaleActinity.this.startActivity(intent);
-            }
+//            String number = (String) v.getTag(R.id.tag_number);
+//            String batchTimes = (String) v.getTag(R.id.tag_batchtime);
+//            String areaid = (String) v.getTag(R.id.tag_areaid);
+//            String areaname = (String) v.getTag(R.id.tag_areaname);
+//            if (number.equals("0"))
+//            {
+//                Toast.makeText(PG_New_SaleActinity.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
+//            } else
+//            {
+//                Intent intent = new Intent(PG_New_SaleActinity.this, NCZ_ContractBatchTimeSale_.class);
+//                intent.putExtra("areaid", areaid);
+//                intent.putExtra("areaname", areaname);
+//                intent.putExtra("batchTime", batchTimes);
+//                PG_New_SaleActinity.this.startActivity(intent);
+//            }
 
         }
     };

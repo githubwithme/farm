@@ -110,13 +110,13 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     @Click
     void ib_suspen_menu()
     {
-        if (parklist.size() == 0)
-        {
-            getParkList();
-        } else
-        {
+//        if (parklist.size() == 0)
+//        {
+//            getParkList();
+//        } else
+//        {
             showPop_Menu();
-        }
+//        }
     }
 
     @Click

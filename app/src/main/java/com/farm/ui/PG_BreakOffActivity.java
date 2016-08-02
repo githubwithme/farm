@@ -27,7 +27,7 @@ import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomDialog_EditSaleInInfo;
-import com.farm.widget.CustomHorizontalScrollView_PGBreakOff;
+import com.farm.widget.CustomHorizontalScrollView_Allitem;
 import com.guide.DensityUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -52,14 +52,19 @@ import java.util.Map;
  * Created by ${hmj} on 2016/6/57.
  */
 @EActivity(R.layout.pg_breakoffactivity)
-public class PG_BreakOffActivity extends Activity
+public class PG_BreakOffActivity extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
+    CustomHorizontalScrollView_Allitem.CustomOntouch customOntouch = null;
+    @ViewById
+    CustomHorizontalScrollView_Allitem totalScroll;
+    @ViewById
+    CustomHorizontalScrollView_Allitem item_scroll_title;
     EditText et_number;
     List<ContractBatchTimeBean> listData = null;
     CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
     private ListView mListView;
     public HorizontalScrollView mTouchView;
-    protected List<CustomHorizontalScrollView_PGBreakOff> mHScrollViews = new ArrayList<CustomHorizontalScrollView_PGBreakOff>();
+    protected List<CustomHorizontalScrollView_Allitem> mHScrollViews = new ArrayList<CustomHorizontalScrollView_Allitem>();
     private ScrollAdapter mAdapter;
     int screenWidth = 0;
     @ViewById
@@ -74,8 +79,8 @@ public class PG_BreakOffActivity extends Activity
     TextView tv_top_right;
     @ViewById
     TextView tv_bottom_left;
-    @ViewById
-    RelativeLayout rl_dl;
+//    @ViewById
+//    RelativeLayout rl_dl;
 
     @Click
     void btn_addBatchTime()
@@ -88,6 +93,9 @@ public class PG_BreakOffActivity extends Activity
     @AfterViews
     void afterOncreate()
     {
+        customOntouch = this;
+        item_scroll_title.setCuttomOntouch(customOntouch);
+        totalScroll.setCuttomOntouch(customOntouch);
         getActionBar().hide();
         getfarmSalesData();
 //        getNewSaleList_test();
@@ -110,13 +118,13 @@ public class PG_BreakOffActivity extends Activity
             int size = listData.get(0).getContractTabList().size();
             if (size == 1)
             {
-                screenWidth = screenWidth / 3;
+                screenWidth = screenWidth / 4;
             } else if (size == 2)
             {
                 screenWidth = screenWidth / 4;
             } else
             {
-                screenWidth = screenWidth / 5;
+                screenWidth = screenWidth / 4;
             }
             tv_top_left.getLayoutParams().width = (screenWidth);
             tv_top_right.getLayoutParams().width = (screenWidth);
@@ -146,20 +154,19 @@ public class PG_BreakOffActivity extends Activity
                 {
                     if (result.getAffectedRows() > 0)
                     {
-                        rl_dl.setVisibility(View.GONE);
                         listData = JSON.parseArray(result.getRows().toJSONString(), ContractBatchTimeBean.class);
                         DensityUtil densityUtil = new DensityUtil(PG_BreakOffActivity.this);
                         screenWidth = densityUtil.getScreenWidth();
                         int size = listData.get(0).getContractTabList().size();
                         if (size == 1)
                         {
-                            screenWidth = screenWidth / 3;
+                            screenWidth = screenWidth / 4;
                         } else if (size == 2)
                         {
                             screenWidth = screenWidth / 4;
                         } else
                         {
-                            screenWidth = screenWidth / 5;
+                            screenWidth = screenWidth / 4;
                         }
                         tv_top_left.getLayoutParams().width = (screenWidth);
                         tv_top_right.getLayoutParams().width = (screenWidth);
@@ -173,6 +180,7 @@ public class PG_BreakOffActivity extends Activity
 
                 } else
                 {
+
                     AppContext.makeToast(PG_BreakOffActivity.this, "error_connectDataBase");
                     return;
                 }
@@ -233,7 +241,8 @@ public class PG_BreakOffActivity extends Activity
     private void initViews()
     {
         int allnumber = 0;
-        mHScrollViews.clear();
+//        mHScrollViews.clear();
+        mHScrollViews = new ArrayList<CustomHorizontalScrollView_Allitem>();
         ll_park.removeAllViews();
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) PG_BreakOffActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -262,22 +271,22 @@ public class PG_BreakOffActivity extends Activity
         alltoatal.setText(String.valueOf(allnumber));
 
         Map<String, String> data = null;
-        CustomHorizontalScrollView_PGBreakOff headerScroll = (CustomHorizontalScrollView_PGBreakOff) findViewById(R.id.item_scroll_title);
-        CustomHorizontalScrollView_PGBreakOff totalScroll = (CustomHorizontalScrollView_PGBreakOff) findViewById(R.id.totalScroll);
+//        CustomHorizontalScrollView_Allitem headerScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.item_scroll_title);
+//        CustomHorizontalScrollView_Allitem totalScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.totalScroll);
         // 添加头滑动事件
-        mHScrollViews.add(headerScroll);
+        mHScrollViews.add(item_scroll_title);
         mHScrollViews.add(totalScroll);
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
         mAdapter = new ScrollAdapter();
         mListView.setAdapter(mAdapter);
     }
 
-    public void addHViews(final CustomHorizontalScrollView_PGBreakOff hScrollView)
+    public void addHViews(final CustomHorizontalScrollView_Allitem hScrollView)
     {
         if (!mHScrollViews.isEmpty())
         {
             int size = mHScrollViews.size();
-            CustomHorizontalScrollView_PGBreakOff scrollView = mHScrollViews.get(size - 1);
+            CustomHorizontalScrollView_Allitem scrollView = mHScrollViews.get(size - 1);
             final int scrollX = scrollView.getScrollX();
             // 第一次满屏后，向下滑动，有一条数据在开始时未加入
             if (scrollX != 0)
@@ -298,11 +307,33 @@ public class PG_BreakOffActivity extends Activity
 
     public void onScrollChanged(int l, int t, int oldl, int oldt)
     {
-        for (CustomHorizontalScrollView_PGBreakOff scrollView : mHScrollViews)
+        for (CustomHorizontalScrollView_Allitem scrollView : mHScrollViews)
         {
             // 防止重复滑动
             if (mTouchView != scrollView) scrollView.smoothScrollTo(l, t);
         }
+    }
+
+    @Override
+    public void customOnTouchEvent(HorizontalScrollView horizontalScrollView)
+    {
+        mTouchView = horizontalScrollView;
+    }
+
+    @Override
+    public void customOnScrollChanged(int l, int t, int oldl, int oldt)
+    {
+        for (CustomHorizontalScrollView_Allitem scrollView : mHScrollViews)
+        {
+            // 防止重复滑动
+            if (mTouchView != scrollView) scrollView.smoothScrollTo(l, t);
+        }
+    }
+
+    @Override
+    public HorizontalScrollView getmTouchView()
+    {
+        return mTouchView;
     }
 
     class ScrollAdapter extends BaseAdapter
@@ -319,7 +350,7 @@ public class PG_BreakOffActivity extends Activity
         {
             public TextView item_titlev;
             public TextView item_total;
-            public Button btn_data;
+            public TextView tv_data;
         }
 
         @Override
@@ -368,21 +399,23 @@ public class PG_BreakOffActivity extends Activity
             for (int i = 0; i < listData.get(position).getContractTabList().size(); i++)
             {
                 View view = LayoutInflater.from(PG_BreakOffActivity.this).inflate(R.layout.pg_breakoff_dataitem, null);
-                listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
-                listItemView.btn_data.setText(listData.get(position).getContractTabList().get(i).getAllnumber());
-                listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
+                listItemView.tv_data.setText(listData.get(position).getContractTabList().get(i).getAllnumber());
+                listItemView.tv_data.getLayoutParams().width = (screenWidth);
                 ll_middle.addView(view);
 
-                listItemView.btn_data.requestFocusFromTouch();
-                listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                listItemView.btn_data.setTag(R.id.tag_batchcolor, listData.get(position).getBatchColor());
-                listItemView.btn_data.setTag(R.id.tag_number, listData.get(position).getContractTabList().get(i).getAllnumber());
-                listItemView.btn_data.setTag(R.id.tag_breakoff, listData.get(position).getContractTabList().get(i));
-                listItemView.btn_data.setOnClickListener(clickListener);
+                listItemView.tv_data.requestFocusFromTouch();
+                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                listItemView.tv_data.setTag(R.id.tag_batchcolor, listData.get(position).getBatchColor());
+                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getContractTabList().get(i).getAllnumber());
+                listItemView.tv_data.setTag(R.id.tag_breakoff, listData.get(position).getContractTabList().get(i));
+                listItemView.tv_data.setOnClickListener(clickListener);
 
             }
             // 第一次初始化的时候装进来
-            addHViews((CustomHorizontalScrollView_PGBreakOff) convertView.findViewById(R.id.item_chscroll_scroll));
+            CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
+            addHViews(customHorizontalScrollView);
+            customHorizontalScrollView.setCuttomOntouch(customOntouch);
             // 设置控件集到convertView
 //                lmap.put(position, convertView);
 //                convertView.setTag(listItemView);
