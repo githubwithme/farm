@@ -77,9 +77,9 @@ public class RecoveryDetail extends Activity {
 
     @AfterViews
     void afterOncreate() {
-        if (sellOrder_new.getIsReady().equals("False")) {
+ /*       if (sellOrder_new.getIsReady().equals("False")) {
             btn_isready.setVisibility(View.VISIBLE);
-        }
+        }*/
         getDetailSecBysettleId();
     }
 
@@ -136,134 +136,10 @@ public class RecoveryDetail extends Activity {
         }
     };
 
-    private void newaddOrder(String data) {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("action", "editOrder");
-        params.setContentType("application/json");
-        try {
-            params.setBodyEntity(new StringEntity(data, "utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        HttpUtils http = new HttpUtils();
-        http.configTimeout(60000);
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                String a = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0) {
-
-                    }
-
-                } else {
-                    AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg) {
-                AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
-            }
-        });
-    }
-
-    private void getpurchaser() {
-        rl_nodatatip.setVisibility(View.VISIBLE);
-        commembertab commembertab = AppContext.getUserInfo(RecoveryDetail.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("action", "getpurchaser");//jobGetList1
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                String a = responseInfo.result;
-                List<Purchaser> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0) {
-                        if (result.getAffectedRows() != 0) {
-                            listNewData = JSON.parseArray(result.getRows().toJSONString(), Purchaser.class);
-                            for (int i = 0; i < listNewData.size(); i++) {
-                                if (listNewData.get(i).userType.equals("采购商")) {
-                                    listData_CG.add(listNewData.get(i));
-                                } else if (listNewData.get(i).userType.equals("包装工头")) {
-                                    listData_BZ.add(listNewData.get(i));
-                                } else {
-                                    listData_BY.add(listNewData.get(i));
-                                }
-                            }
-                            rl_nodatatip.setVisibility(View.GONE);
-
-                        } else {
-                            listNewData = new ArrayList<Purchaser>();
-                        }
-
-                    } else {
-                        listNewData = new ArrayList<Purchaser>();
-
-                    }
-
-                } else {
-                    AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg) {
-                AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
-            }
-        });
-    }
-
-    private void isnewaddOrder(String data) {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("action", "addsellOrderSettlement");
-        params.setContentType("application/json");
-        try {
-            params.setBodyEntity(new StringEntity(data, "utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        HttpUtils http = new HttpUtils();
-        http.configTimeout(60000);
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                String a = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0) {
 
 
-                        getDetailSecBysettleId();
 
-//                        Toast.makeText(RecoveryDetail.this, "添加成功！", Toast.LENGTH_SHORT).show();
 
-                    }
-
-                } else {
-                    AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg) {
-                AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
-            }
-        });
-    }
 
     public void getDetailSecBysettleId() {
         rl_nodatatip.setVisibility(View.VISIBLE);
@@ -290,11 +166,7 @@ public class RecoveryDetail extends Activity {
                     intent.putExtra("num", listNewData.size() + "");
                     sendBroadcast(intent);
 
-//                    CR_chanpin.setText("");
-//                    tv_bz.setText("");
-//                    tv_by.setText("");
-//                    packPrice.setText("");
-//                    carryPrice.setText("");
+
                     if (listNewData.size() > 0) {
                         rl_nodatatip.setVisibility(View.GONE);
                     } else {

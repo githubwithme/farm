@@ -63,7 +63,6 @@ public class RecoveryDetail_Adapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         sellOrder_new = listData.get(position);
-        int num = position + 1;
         ListItemView listItemView = null;
         if (lmap.get(position) == null) {
             convertView = layoutInflater.inflate(R.layout.recoverydetail_adapter, null);
@@ -104,6 +103,7 @@ public class RecoveryDetail_Adapter extends BaseAdapter {
                 SellOrder_New sellOrder = new SellOrder_New();
                 sellOrder = (SellOrder_New) view.getTag(R.id.tag_bean);
                 Intent intent = new Intent(context, EditRecovery_.class);
+                intent.putExtra("jsd",sellOrder);
 //                intent.putExtra("","");
                 context.startActivity(intent);
 

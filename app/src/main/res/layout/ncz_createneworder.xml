@@ -335,41 +335,7 @@
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/line_color"/>
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="50dip"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:layout_width="100dip"
-                        android:layout_height="match_parent"
-                        android:alpha="0.8"
-                        android:gravity="left|center_vertical"
-                        android:paddingLeft="10dip"
-                        android:text="* 订单负责人"
-                        android:textColor="@color/titlebar_top"
-                        android:textSize="14sp"/>
-
-
-                    <EditText
-                        android:id="@+id/dd_fzr"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:alpha="0.5"
-                        android:background="@null"
-                        android:gravity="right|center_vertical"
-                        android:hint="请选择负责人"
-                        android:paddingRight="20dip"
-                        android:textColor="@color/titlebar_top"
-                        android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp"/>
-                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -457,7 +423,41 @@
                         android:textSize="14sp"/>
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color"/>
 
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dip"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="100dip"
+                        android:layout_height="match_parent"
+                        android:alpha="0.8"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="10dip"
+                        android:text=" 订单负责人"
+                        android:textColor="@color/titlebar_top"
+                        android:textSize="14sp"/>
+
+
+                    <EditText
+                        android:id="@+id/dd_fzr"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.5"
+                        android:background="@null"
+                        android:gravity="right|center_vertical"
+                        android:hint="请选择负责人"
+                        android:paddingRight="20dip"
+                        android:textColor="@color/titlebar_top"
+                        android:textColorHint="@color/text_table_horizontitle"
+                        android:textSize="14sp"/>
+                </LinearLayout>
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"

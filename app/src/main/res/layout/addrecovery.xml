@@ -199,7 +199,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dip"
                 android:gravity="center"
-                android:text="搬运工费用(元/件)"/>
+                android:text="搬运工费用(元/斤)"/>
 
             <EditText
                 android:id="@+id/carryPrice"

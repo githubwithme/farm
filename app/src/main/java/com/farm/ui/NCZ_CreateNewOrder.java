@@ -145,7 +145,7 @@ public class NCZ_CreateNewOrder extends Activity
     TextView cheliang_num;
 
 
-    @Click
+/*    @Click
     void cheliang_num()
     {
         JSONObject jsonObject = utils.parseJsonFile(NCZ_CreateNewOrder.this, "dictionary.json");
@@ -156,7 +156,7 @@ public class NCZ_CreateNewOrder extends Activity
             list.add(jsonArray.getString(i));
         }
         showDialog_carNumber(list);
-    }
+    }*/
 
     public void showDialog_carNumber(List<String> list)
     {
@@ -337,11 +337,11 @@ public class NCZ_CreateNewOrder extends Activity
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (dd_fzr.getText().toString().equals(""))
+    /*    if (dd_fzr.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
         if (dd_time.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();

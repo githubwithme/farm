@@ -45,6 +45,8 @@ import java.util.List;
 @EActivity(R.layout.editrecovery)
 public class EditRecovery extends Activity
 {
+
+    SellOrder_New sellOrder = new SellOrder_New();
     RecoveryDetail_Adapter recoveryDetail_adapter;
     CustomDialog_ListView customDialog_listView;
     MyDialog myDialog;
@@ -83,40 +85,24 @@ public class EditRecovery extends Activity
     @AfterViews
     void afterOncreate()
     {
+        showData();
         getpurchaser();
     }
 
-
-    @Click
-//准备就绪
-    void btn_save()
+    private void showData()
     {
-        showDeleteTip();
-
+        CR_chanpin.setText(sellOrder.getPlateNumber());
+        tv_bz.setText(sellOrder.getContractorName());
+        packPrice.setText(sellOrder.getPackPrice());
+        tv_by.setText(sellOrder.getPickName());
+        carryPrice.setText(sellOrder.getCarryPrice());
+        byId = sellOrder.getPickId();
+        bzId = sellOrder.getContractorId();
     }
 
-    private void showDeleteTip()
-    {
 
-        View dialog_layout = EditRecovery.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(EditRecovery.this, R.style.MyDialog, dialog_layout, "就绪", "所有准备工作就绪?", "确定", "取消", new MyDialog.CustomDialogListener()
-        {
-            @Override
-            public void OnClick(View v)
-            {
-                switch (v.getId())
-                {
-                    case R.id.btn_sure:
-                        updateSellOrderByuuid();
-                        break;
-                    case R.id.btn_cancle:
-                        myDialog.cancel();
-                        break;
-                }
-            }
-        });
-        myDialog.show();
-    }
+
+
 
     @Click
     void button_add()
@@ -126,22 +112,8 @@ public class EditRecovery extends Activity
             Toast.makeText(EditRecovery.this, "请填写车牌号", Toast.LENGTH_SHORT);
             return;
         }
-        commembertab commembertab = AppContext.getUserInfo(EditRecovery.this);
-        SellOrder_New sellOrder = new SellOrder_New();
-        sellOrder.setInfoId(uuid);//0
-        sellOrder.setPlateNumber(CR_chanpin.getText().toString());
-        sellOrder.setPickId(bzId);
-        sellOrder.setContractorId(byId);
-        sellOrder.setUid(commembertab.getuId());//0
-        sellOrder.setCarryPrice(carryPrice.getText().toString());
-        sellOrder.setPackPrice(packPrice.getText().toString());
-        sellOrder.setIsNeedAudit("2");
-        sellOrder.setIsReady("False");
-        StringBuilder builder = new StringBuilder();
-        builder.append("{\"sellOrderSettlementlist\":[ ");
-        builder.append(JSON.toJSONString(sellOrder));
-        builder.append("]} ");
-        isnewaddOrder(builder.toString());
+
+        changesellOrderSettlement();
 
     }
 
@@ -205,7 +177,7 @@ public class EditRecovery extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        uuid = getIntent().getStringExtra("uuid");
+        sellOrder = getIntent().getParcelableExtra("jsd");
     }
 
 
@@ -271,20 +243,19 @@ public class EditRecovery extends Activity
         });
     }
 
-    private void isnewaddOrder(String data)
+    private void changesellOrderSettlement()
     {
+
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("action", "addsellOrderSettlement");
-        params.setContentType("application/json");
-        try
-        {
-            params.setBodyEntity(new StringEntity(data, "utf-8"));
-        } catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
+        params.addQueryStringParameter("id",sellOrder.getid() );
+        params.addQueryStringParameter("contractorId",bzId );
+        params.addQueryStringParameter("pickId",byId );
+        params.addQueryStringParameter("carryPrice",carryPrice.getText().toString() );
+        params.addQueryStringParameter("packPrice",packPrice.getText().toString() );
+        params.addQueryStringParameter("plateNumber",CR_chanpin.getText().toString() );
+        params.addQueryStringParameter("action", "changesellOrderSettlement");
+
         HttpUtils http = new HttpUtils();
-        http.configTimeout(60000);
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
             @Override
@@ -320,47 +291,5 @@ public class EditRecovery extends Activity
     }
 
 
-    private void updateSellOrderByuuid()
-    {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uuid", uuid);
-        params.addQueryStringParameter("isReady", "1");
-        params.addQueryStringParameter("action", "updateSellOrderByuuid");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
-
-                    } else
-                    {
-                        listData = new ArrayList<SellOrder_New>();
-                    }
-
-                } else
-                {
-                    AppContext.makeToast(EditRecovery.this, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(EditRecovery.this, "error_connectServer");
-
-            }
-        });
-    }
 }

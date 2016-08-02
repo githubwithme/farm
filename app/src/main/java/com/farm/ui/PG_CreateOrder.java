@@ -272,12 +272,10 @@ public class PG_CreateOrder extends Activity
     @Click
     void btn_addproduct()
     {
-//        Intent intent = new Intent(PG_CreateOrder.this, NCZ_CreateOrder_SelectBatchTime_.class);
-//        Intent intent = new Intent(PG_CreateOrder.this, PG_CreateOrder_SelectBatchTime_.class);
         Intent intent = new Intent(PG_CreateOrder.this, PG_CreateOrder_SelectProduct_.class);
         startActivity(intent);
     }
-    @Click
+/*    @Click
     void cheliang_num()
     {
         JSONObject jsonObject = utils.parseJsonFile(PG_CreateOrder.this, "dictionary.json");
@@ -288,7 +286,7 @@ public class PG_CreateOrder extends Activity
             list.add(jsonArray.getString(i));
         }
         showDialog_carNumber(list);
-    }
+    }*/
     public void showDialog_carNumber(List<String> list  )
     {
         View dialog_layout = PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
