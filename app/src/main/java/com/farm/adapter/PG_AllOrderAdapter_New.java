@@ -68,7 +68,7 @@ public class PG_AllOrderAdapter_New extends BaseAdapter
     {
         public TextView tv_mainpeple;
         public TextView tv_parkname;
-        public TextView tv_prepareworkStatus;
+//        public TextView tv_prepareworkStatus;
         public TextView tv_buyer;
         public TextView tv_orderstate;
         public TextView tv_product;
@@ -122,7 +122,7 @@ public class PG_AllOrderAdapter_New extends BaseAdapter
             // 获取控件对象
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
-            listItemView.tv_prepareworkStatus = (TextView) convertView.findViewById(R.id.tv_prepareworkStatus);
+//            listItemView.tv_prepareworkStatus = (TextView) convertView.findViewById(R.id.tv_prepareworkStatus);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);

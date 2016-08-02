@@ -51,7 +51,10 @@ import java.util.Map;
 @EActivity(R.layout.ncz_new_jsdandplan_detail)
 public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
-
+    @ViewById
+    CustomHorizontalScrollView_Allitem item_scroll_title;
+    @ViewById
+    CustomHorizontalScrollView_Allitem totalScroll;
     @ViewById
     TextView tv_cbh;
     Adapter_New_SellDetail adapter_sellOrderDetail;
@@ -145,14 +148,19 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         goodsName.setText(sellOrder_new.getProduct());
         tv_finalpayment.setText(sellOrder_new.getAddress());
     }
-
+    @AfterViews
+    void afterOncreate()
+    {
+        customOntouch = this;
+        item_scroll_title.setCuttomOntouch(customOntouch);
+        totalScroll.setCuttomOntouch(customOntouch);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder_new = getIntent().getParcelableExtra("bean");
-
     }
 
     @Override
@@ -387,12 +395,12 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         }
 
         Map<String, String> data = null;
-        CustomHorizontalScrollView_Allitem headerScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.item_scroll_title);
-        headerScroll.setCuttomOntouch(customOntouch);
-        CustomHorizontalScrollView_Allitem totalScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.totalScroll);
+//        CustomHorizontalScrollView_Allitem headerScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.item_scroll_title);
+        item_scroll_title.setCuttomOntouch(customOntouch);
+//        CustomHorizontalScrollView_Allitem totalScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.totalScroll);
         totalScroll.setCuttomOntouch(customOntouch);
         // 添加头滑动事件
-        mHScrollViews.add(headerScroll);
+        mHScrollViews.add(item_scroll_title);
         mHScrollViews.add(totalScroll);
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
 
@@ -439,7 +447,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         {
             public TextView item_titlev;
             public TextView item_total;
-            public Button btn_data;
+            public TextView tv_data;
         }
 
         @Override
@@ -501,84 +509,84 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
             // 第一次初始化的时候装进来
             for (int i = 0; i < 8; i++)
             {
-                View view = LayoutInflater.from(NCZ_All_OneOrder_Detail.this).inflate(R.layout.pg_breakoff_dataitem, null);
-                listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
+                View view = LayoutInflater.from(NCZ_All_OneOrder_Detail.this).inflate(R.layout.ncz_orderdetail_dataitem, null);
+                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
 
 
                 switch (i)
                 {
                     case 0:
-                        listItemView.btn_data.setText(listData.get(position).getActualMoney());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getActualMoney());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 1:
-                        listItemView.btn_data.setText(listData.get(position).getTotalFee());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getTotalFee());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 2:
-                        listItemView.btn_data.setText(listData.get(position).getTotalWeight());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getTotalWeight());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 3:
                         if (listData.get(position).getIsNeedAudit().equals("0"))
                         {
-                            listItemView.btn_data.setText("待审批");
+                            listItemView.tv_data.setText("待审批");
                         } else if (listData.get(position).getIsNeedAudit().equals("1"))
                         {
-                            listItemView.btn_data.setText("审批通过");
+                            listItemView.tv_data.setText("审批通过");
                         } else if (listData.get(position).getIsNeedAudit().equals("-1"))
                         {
-                            listItemView.btn_data.setText("审批不通过");
+                            listItemView.tv_data.setText("审批不通过");
                         }
 
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 4:
-                        listItemView.btn_data.setText(listData.get(position).getQualityBalance());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getQualityBalance());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 5:
-                        listItemView.btn_data.setText(listData.get(position).getActualprice());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getActualprice());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 6:
-                        listItemView.btn_data.setText(listData.get(position).getQualityTotalWeight());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getQualityTotalWeight());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 7:
-                        listItemView.btn_data.setText(listData.get(position).getPackFee());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getPackFee());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 8:
-                        listItemView.btn_data.setText(listData.get(position).getCarryFee());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getCarryFee());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                 }
 //            String [] name=new String []{"实际金额","合计金额","总净重",,"正品结算金额","正品单价","正品净重","总包装费","总搬运费"};

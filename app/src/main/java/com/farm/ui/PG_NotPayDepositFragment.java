@@ -110,7 +110,7 @@ public class PG_NotPayDepositFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_notpaydepositfragment, container, false);
+        View rootView = inflater.inflate(R.layout.pg_notpaydepositfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_FARMMANAGER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
@@ -187,17 +187,17 @@ public class PG_NotPayDepositFragment extends Fragment
                         }
                         listAdapter = new PG_NotPayDepositAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                        {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                            {
-//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                                Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
-                                intent.putExtra("bean", listData.get(position));
-                                getActivity().startActivity(intent);
-                            }
-                        });
+//                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//                        {
+//                            @Override
+//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//                            {
+////                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+//                                Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
+//                                intent.putExtra("bean", listData.get(position));
+//                                getActivity().startActivity(intent);
+//                            }
+//                        });
 
                     } else
                     {

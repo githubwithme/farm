@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/defaultbackground"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/defaultbackground"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,20 +21,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:gravity="center|center_horizontal"/>
+                android:gravity="center|center_horizontal" />
 
             <View
                 android:layout_width="13dip"
                 android:layout_height="13dip"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="5dip"
-                android:background="@drawable/downward"/>
+                android:background="@mipmap/icon_arrow_down" />
         </FrameLayout>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color"/>
+            android:background="@color/line_color" />
 
         <FrameLayout
             android:layout_width="0dip"
@@ -46,20 +46,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:gravity="center|center_horizontal"/>
+                android:gravity="center|center_horizontal" />
 
             <View
                 android:layout_width="13dip"
                 android:layout_height="13dip"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="5dip"
-                android:background="@drawable/downward"/>
+                android:background="@mipmap/icon_arrow_down" />
         </FrameLayout>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color"/>
+            android:background="@color/line_color" />
 
         <FrameLayout
             android:layout_width="0dip"
@@ -71,14 +71,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:gravity="center|center_horizontal"/>
+                android:gravity="center|center_horizontal" />
 
             <View
                 android:layout_width="13dip"
                 android:layout_height="13dip"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="5dip"
-                android:background="@drawable/downward"/>
+                android:background="@mipmap/icon_arrow_down" />
         </FrameLayout>
 
         <FrameLayout
@@ -91,22 +91,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:gravity="center|center_horizontal"/>
+                android:gravity="center|center_horizontal" />
 
             <View
                 android:layout_width="13dip"
                 android:layout_height="13dip"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="5dip"
-                android:background="@drawable/downward"/>
+                android:background="@mipmap/icon_arrow_down" />
         </FrameLayout>
 
 
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:background="@color/blue"/>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -114,20 +111,19 @@
         android:orientation="vertical">
 
 
-
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <View
                 android:layout_width="5dip"
                 android:layout_height="5dip"
                 android:layout_gravity="top"
                 android:layout_marginTop="10dip"
-                android:background="@color/gray"/>
+                android:background="@color/gray" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -142,7 +138,7 @@
                     android:gravity="center"
                     android:text="乐丰园区：1单；双桥园区：1单"
                     android:textColor="@color/gray"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -151,7 +147,7 @@
                     android:gravity="center"
                     android:text="华兴园区：1单"
                     android:textColor="@color/gray"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -165,7 +161,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/transparent"
-        android:dividerHeight="0dip"/>
+        android:dividerHeight="0dip"
+        android:scrollbars="none" />
 
 
 </LinearLayout>

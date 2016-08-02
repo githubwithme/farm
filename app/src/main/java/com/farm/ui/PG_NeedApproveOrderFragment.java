@@ -108,7 +108,7 @@ public class PG_NeedApproveOrderFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.cz_allorderfarment, container, false);
+        View rootView = inflater.inflate(R.layout.pg_needapproveorderfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_FARMMANAGER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);

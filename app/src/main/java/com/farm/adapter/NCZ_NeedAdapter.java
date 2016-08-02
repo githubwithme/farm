@@ -61,9 +61,12 @@ public class NCZ_NeedAdapter extends BaseAdapter
     {
 //        public CircleImageView circle_img;
         public TextView tv_parkname;
+        public View view_mainpeople_call;
+        public View view_buyer_call;
         public TextView tv_mainpeople;
         public TextView tv_buyer;
         public TextView tv_preparestatus;
+        public TextView tv_product;
         public TextView tv_orderstate;
 //        public TextView tv_price;
 //        public TextView tv_sum;
@@ -76,7 +79,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
 //        public Button btn_pizhun;
 //        public Button btn_bohui;
         public Button btn_showdetail;
-        public LinearLayout ll_mainpeople;
+//        public LinearLayout ll_mainpeople;
         public CircleImageView circleImageView;
 
     }
@@ -117,10 +120,13 @@ public class NCZ_NeedAdapter extends BaseAdapter
             convertView = listContainer.inflate(R.layout.adapter_nczneedapprove, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.view_buyer_call = (View) convertView.findViewById(R.id.view_buyer_call);
+            listItemView.view_mainpeople_call = (View) convertView.findViewById(R.id.view_mainpeople_call);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
             listItemView.tv_preparestatus = (TextView) convertView.findViewById(R.id.tv_preparestatus);
+            listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
 //            listItemView.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
 //            listItemView.tv_sum = (TextView) convertView.findViewById(R.id.tv_sum);
 //            listItemView.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
@@ -134,7 +140,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
 //            listItemView.btn_pizhun = (Button) convertView.findViewById(R.id.btn_pizhun);
 //            listItemView.btn_bohui = (Button) convertView.findViewById(R.id.btn_bohui);
             listItemView.btn_showdetail = (Button) convertView.findViewById(R.id.btn_showdetail);
-            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
+//            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -182,12 +188,20 @@ public class NCZ_NeedAdapter extends BaseAdapter
                 showDialog_addsaleinfo("15989154871");
             }
         });
-        listItemView.ll_mainpeople.setTag(R.id.tag_czdl, sellOrder.getMainPeoplePhone());
-        listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener()
+        listItemView.view_mainpeople_call.setTag(R.id.tag_czdl, sellOrder.getMainPeoplePhone());
+        listItemView.view_mainpeople_call.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                String phone = (String) v.getTag(R.id.tag_czdl);
+                showDialog_addsaleinfo(phone);
+            }
+        });
+        listItemView.view_buyer_call.setTag(R.id.tag_czdl, sellOrder.getBuyersPhone());
+        listItemView.view_buyer_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 String phone = (String) v.getTag(R.id.tag_czdl);
                 showDialog_addsaleinfo(phone);
             }
@@ -277,6 +291,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
 //            listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
 //        }
         listItemView.tv_orderstate.setText(sellOrder.getSelltype());
+        listItemView.tv_product.setText(sellOrder.getProduct());
 /*        if (sellOrder.getDeposit().equals("0"))
         {
             listItemView.tv_orderstate.setText("等待买家付定金");

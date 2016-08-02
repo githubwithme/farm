@@ -28,7 +28,7 @@
                 android:layout_height="13dip"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="5dip"
-                android:background="@drawable/downward"/>
+                android:background="@mipmap/icon_arrow_down"/>
         </FrameLayout>
 
         <View
@@ -53,7 +53,7 @@
                 android:layout_height="13dip"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="5dip"
-                android:background="@drawable/downward"/>
+                android:background="@mipmap/icon_arrow_down"/>
         </FrameLayout>
 
         <View
@@ -78,7 +78,7 @@
                 android:layout_height="13dip"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="5dip"
-                android:background="@drawable/downward"/>
+                android:background="@mipmap/icon_arrow_down"/>
         </FrameLayout>
 
 
@@ -141,6 +141,7 @@
         style="@style/widget_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="none"
         android:divider="@color/transparent"
         android:dividerHeight="0dip"/>
 

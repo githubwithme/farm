@@ -3,6 +3,10 @@ package com.farm.ui;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -85,7 +89,14 @@ public class PG_OrderManager extends Activity
     FrameLayout fl_allorder;
     @ViewById
     TextView tv_allorder_tip;
-
+    @ViewById
+    TextView tv_number_needapprove;
+    @ViewById
+    TextView tv_number_notpaydeposit;
+    @ViewById
+    TextView tv_number_waitingForHarvest;
+    @ViewById
+    TextView tv_number_waitingForSettlement;
     @Click
     void btn_back()
     {
@@ -156,8 +167,48 @@ public class PG_OrderManager extends Activity
         pg_waitForHarvestFragment = new PG_WaitForHarvestFragment_();
         pg_waitForSettlementFragment = new PG_WaitForSettlementFragment_();
         pg_allOrderFragment_new = new PG_AllOrderFragment_New_();
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATELISTNUMBER);
+        registerReceiver(receiver_update, intentfilter_update);
     }
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String type = intent.getStringExtra("type");
+            int number = intent.getIntExtra("number", 0);
+            if (type.equals(AppContext.order_waitForApprove)) {
+                if (number > 0) {
+                    tv_number_needapprove.setVisibility(View.VISIBLE);
+                    tv_number_needapprove.setText("(" + number + ")");
+                } else {
+                    tv_number_needapprove.setVisibility(View.GONE);
+                }
 
+            } else if (type.equals(AppContext.order_waitForDeposit)) {
+                if (number > 0) {
+                    tv_number_notpaydeposit.setVisibility(View.VISIBLE);
+                    tv_number_notpaydeposit.setText("(" + number + ")");
+                } else {
+                    tv_number_notpaydeposit.setVisibility(View.GONE);
+                }
+            } else if (type.equals(AppContext.order_waitForHarvest)) {
+                if (number > 0) {
+                    tv_number_waitingForHarvest.setVisibility(View.VISIBLE);
+                    tv_number_waitingForHarvest.setText("(" + number + ")");
+                } else {
+                    tv_number_waitingForHarvest.setVisibility(View.GONE);
+                }
+            } else if (type.equals(AppContext.order_waitForSettlement)) {
+                if (number > 0) {
+                    tv_number_waitingForSettlement.setVisibility(View.VISIBLE);
+                    tv_number_waitingForSettlement.setText("(" + number + ")");
+                } else {
+                    tv_number_waitingForSettlement.setVisibility(View.GONE);
+                }
+            }
+        }
+    };
     public void switchContent(Fragment from, Fragment to)
     {
         if (mContent != to)
@@ -191,37 +242,37 @@ public class PG_OrderManager extends Activity
         tv_waitingForSettlement.setBackgroundResource(R.color.white);
         tv_allorder.setBackgroundResource(R.color.white);
 
-        tv_schedule.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_pending.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_notpaydeposit.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_waitingForHarvest.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_waitingForSettlement.setTextColor(getResources().getColor(R.color.menu_textcolor));
-        tv_allorder.setTextColor(getResources().getColor(R.color.menu_textcolor));
+        tv_schedule.setTextColor(getResources().getColor(R.color.titlebar_top));
+        tv_pending.setTextColor(getResources().getColor(R.color.titlebar_top));
+        tv_notpaydeposit.setTextColor(getResources().getColor(R.color.titlebar_top));
+        tv_waitingForHarvest.setTextColor(getResources().getColor(R.color.titlebar_top));
+        tv_waitingForSettlement.setTextColor(getResources().getColor(R.color.titlebar_top));
+        tv_allorder.setTextColor(getResources().getColor(R.color.titlebar_top));
         switch (pos)
         {
             case 0:
                 tv_schedule.setSelected(false);
-                tv_schedule.setTextColor(getResources().getColor(R.color.red));
+//                tv_schedule.setTextColor(getResources().getColor(R.color.red));
                 tv_schedule.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 1:
                 tv_pending.setSelected(false);
-                tv_pending.setTextColor(getResources().getColor(R.color.red));
+//                tv_pending.setTextColor(getResources().getColor(R.color.red));
                 tv_pending.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 2:
                 tv_notpaydeposit.setSelected(false);
-                tv_notpaydeposit.setTextColor(getResources().getColor(R.color.red));
+//                tv_notpaydeposit.setTextColor(getResources().getColor(R.color.red));
                 tv_notpaydeposit.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 3:
                 tv_waitingForHarvest.setSelected(false);
-                tv_waitingForHarvest.setTextColor(getResources().getColor(R.color.red));
+//                tv_waitingForHarvest.setTextColor(getResources().getColor(R.color.red));
                 tv_waitingForHarvest.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 4:
                 tv_waitingForSettlement.setSelected(false);
-                tv_waitingForSettlement.setTextColor(getResources().getColor(R.color.red));
+//                tv_waitingForSettlement.setTextColor(getResources().getColor(R.color.red));
                 tv_waitingForSettlement.setBackgroundResource(R.drawable.red_bottom);
                 break;
             case 5:
