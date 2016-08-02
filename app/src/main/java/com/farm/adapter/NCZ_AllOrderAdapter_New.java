@@ -55,7 +55,8 @@ import java.util.List;
 /**
  * Created by hasee on 2016/6/29.
  */
-public class NCZ_AllOrderAdapter_New extends BaseAdapter {
+public class NCZ_AllOrderAdapter_New extends BaseAdapter
+{
     String zzsl;
     CustomDialog_ListView customDialog_listView;
     static String name = "";
@@ -67,7 +68,8 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
     private LayoutInflater listContainer;// 视图容器
     SellOrder_New sellOrder;
 
-    static class ListItemView {
+    static class ListItemView
+    {
         public TextView tv_mainpeople;
         public TextView tv_depositStatus;
         public View view_buyer_call;
@@ -76,16 +78,16 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
         public View view_cardetail;
         public CheckBox cb_AllowRelease;
         public TextView tv_parkname;
-//        public TextView tv_prepareworkStatus;
+        //        public TextView tv_prepareworkStatus;
         public TextView tv_buyer;
         public TextView tv_orderstate;
         public TextView tv_product;
         public TextView tv_car;
         public Button btn_orderdetail;
         public Button btn_cancleorder;
-//        public Button btn_preparework;
+        //        public Button btn_preparework;
         public Button btn_editorder;
-//        public Button btn_changetime;
+        //        public Button btn_changetime;
         public CircleImageView circleImageView;
         //        public LinearLayout ll_car;
 //        public LinearLayout ll_undeposit;
@@ -93,32 +95,38 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
 //        public LinearLayout ll_mainpeople;
     }
 
-    public NCZ_AllOrderAdapter_New(Context context, List<SellOrder_New> data, String broadcast) {
+    public NCZ_AllOrderAdapter_New(Context context, List<SellOrder_New> data, String broadcast)
+    {
         this.context = context;
         this.listContainer = LayoutInflater.from(context); // 创建视图容器并设置上下文
         this.listItems = data;
         this.broadcast = broadcast;
     }
 
-    public int getCount() {
+    public int getCount()
+    {
         return listItems.size();
     }
 
-    public Object getItem(int arg0) {
+    public Object getItem(int arg0)
+    {
         return null;
     }
 
-    public long getItemId(int arg0) {
+    public long getItemId(int arg0)
+    {
         return 0;
     }
 
     HashMap<Integer, View> lmap = new HashMap<Integer, View>();
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         sellOrder = listItems.get(position);
         // 自定义视图
         ListItemView listItemView = null;
-        if (lmap.get(position) == null) {
+        if (lmap.get(position) == null)
+        {
             // 获取list_item布局文件的视图
             convertView = listContainer.inflate(R.layout.adapter_nczallorder_new, null);
             listItemView = new ListItemView();
@@ -151,14 +159,18 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-            if (sellOrder.getFreeDeposit().equals("1")) {
+            if (sellOrder.getFreeDeposit().equals("1"))
+            {
                 listItemView.tv_depositStatus.setText("免付定金");
-            } else {
+            } else
+            {
                 listItemView.tv_depositStatus.setText("未知");
             }
-            if (sellOrder.getFreeFinalPay().equals("1")) {
+            if (sellOrder.getFreeFinalPay().equals("1"))
+            {
                 listItemView.cb_AllowRelease.setSelected(true);
-            } else {
+            } else
+            {
                 listItemView.cb_AllowRelease.setSelected(false);
             }
             listItemView.tv_orderstate.setText(sellOrder.getSelltype());
@@ -167,17 +179,21 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
             listItemView.tv_car.setText(sellOrder.getCarNumber());
 
             listItemView.view_buyer_call.setTag(sellOrder.getBuyersPhone());
-            listItemView.view_buyer_call.setOnClickListener(new View.OnClickListener() {
+            listItemView.view_buyer_call.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     String phone = (String) v.getTag();
                     showDialog_addsaleinfo(phone);
                 }
             });
             listItemView.btn_orderdetail.setTag(sellOrder);
-            listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener() {
+            listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag();
                     Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
                     intent.putExtra("bean", sellOrder_new);
@@ -185,9 +201,11 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
                 }
             });
             listItemView.view_cardetail.setTag(sellOrder);
-            listItemView.view_cardetail.setOnClickListener(new View.OnClickListener() {
+            listItemView.view_cardetail.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag();
                     Intent intent = new Intent(context, RecoveryDetail_.class);
                     intent.putExtra("uuid", sellOrder_new.getUuid());
@@ -195,9 +213,11 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
                 }
             });
             listItemView.view_showSettlement.setTag(sellOrder);
-            listItemView.view_showSettlement.setOnClickListener(new View.OnClickListener() {
+            listItemView.view_showSettlement.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag();
                     Intent intent = new Intent(context, NCZ_Look_JSD_.class);
                     intent.putExtra("zbstudio", sellOrder_new);
@@ -205,9 +225,11 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
                 }
             });
             listItemView.view_mainpeople_call.setTag(sellOrder.getMainPeople());
-            listItemView.view_mainpeople_call.setOnClickListener(new View.OnClickListener() {
+            listItemView.view_mainpeople_call.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     String phone = (String) v.getTag();
                     showDialog_addsaleinfo(phone);
                 }
@@ -261,18 +283,22 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
 //            });
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.btn_cancleorder.setTag(R.id.tag_cash, sellOrder);
-            listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener() {
+            listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_cash);
                     showDeleteTip(sellOrder_new.getUuid());
                 }
             });
             listItemView.btn_editorder.setTag(R.id.tag_postion, position);
             listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
-            listItemView.btn_editorder.setOnClickListener(new View.OnClickListener() {
+            listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     int pos = (int) v.getTag(R.id.tag_postion);
                     SellOrder_New sellOrder = (SellOrder_New) v.getTag(R.id.tag_bean);
                     Intent intent = new Intent(context, NCZ_EditOrder_.class);
@@ -281,27 +307,33 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
                     context.startActivity(intent);
                 }
             });
-        } else {
+        } else
+        {
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
-        if (listItems.get(position).getFlashStr().equals("0")) {
+        if (listItems.get(position).getFlashStr().equals("0"))
+        {
             listItemView.circleImageView.setVisibility(View.INVISIBLE);
-        } else {
+        } else
+        {
             listItemView.circleImageView.setVisibility(View.VISIBLE);
         }
         return convertView;
     }
 
-    private void deleteSellOrderAndDetail(String uuid) {
+    private void deleteSellOrderAndDetail(String uuid)
+    {
 
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("action", "deleteSellOrderAndDetail");//jobGetList1
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
@@ -320,7 +352,8 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
                     listData = new ArrayList<SellOrder_New>();
                 }*/
 
-                } else {
+                } else
+                {
                     AppContext.makeToast(context, "error_connectDataBase");
                     return;
                 }
@@ -328,26 +361,31 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 AppContext.makeToast(context, "error_connectServer");
 
             }
         });
     }
 
-    public void showDialog_addsaleinfo(final String phone) {
+    public void showDialog_addsaleinfo(final String phone)
+    {
         final View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_calltip, null);
         custom_calltip = new CustomDialog_CallTip(context, R.style.MyDialog, dialog_layout);
         TextView tv_tips = (TextView) dialog_layout.findViewById(R.id.tv_tips);
         tv_tips.setText(phone + "拨打这个电话吗?");
         Button btn_sure = (Button) dialog_layout.findViewById(R.id.btn_sure);
         Button btn_cancle = (Button) dialog_layout.findViewById(R.id.btn_cancle);
-        btn_sure.setOnClickListener(new View.OnClickListener() {
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 custom_calltip.dismiss();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
@@ -360,22 +398,28 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-        btn_cancle.setOnClickListener(new View.OnClickListener() {
+        btn_cancle.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 custom_calltip.dismiss();
             }
         });
         custom_calltip.show();
     }
 
-    private void showDeleteTip(final String uuid) {
+    private void showDeleteTip(final String uuid)
+    {
 
         View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener() {
+        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener()
+        {
             @Override
-            public void OnClick(View v) {
-                switch (v.getId()) {
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
                     case R.id.btn_sure:
                         deleteSellOrderAndDetail(uuid);
                         break;
@@ -388,11 +432,14 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
         myDialog.show();
     }
 
-    public void showDialog_workday(List<String> list, final SellOrder_New sellOrder_new) {
+    public void showDialog_workday(List<String> list, final SellOrder_New sellOrder_new)
+    {
         View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
-        customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener() {
+        customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
+        {
             @Override
-            public void OnClick(Bundle bundle) {
+            public void OnClick(Bundle bundle)
+            {
                 zzsl = bundle.getString("name");
                 SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
                 sellOrder_new.setActualweight(zzsl);
@@ -408,25 +455,31 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
         customDialog_listView.show();
     }
 
-    private void newaddOrder(String data) {
+    private void newaddOrder(String data)
+    {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "editOrder");
         params.setContentType("application/json");
-        try {
+        try
+        {
             params.setBodyEntity(new StringEntity(data, "utf-8"));
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e)
+        {
             e.printStackTrace();
         }
         HttpUtils http = new HttpUtils();
         http.configTimeout(60000);
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         Toast.makeText(context, "订单修改成功！", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent();
@@ -436,7 +489,8 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
 
                     }
 
-                } else {
+                } else
+                {
                     AppContext.makeToast(context, "error_connectDataBase");
                     return;
                 }
@@ -444,7 +498,8 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter {
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 AppContext.makeToast(context, "error_connectServer");
             }
         });
