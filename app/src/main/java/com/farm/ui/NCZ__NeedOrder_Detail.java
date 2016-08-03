@@ -145,26 +145,61 @@ public class NCZ__NeedOrder_Detail extends Activity
     @ViewById
     ListView frame_listview_news;
 
+    SellOrder_New sellOrder;
     SellOrder_New sellOrder_new;
+
+
+    @ViewById
+    TextView Order_price;//订单单价
+    @ViewById
+    TextView Order_weight;//订单重量
+    @ViewById
+    TextView Order_deposit; //定金
+    @ViewById
+    TextView Order_waitdeposit;//待付定金
+    @ViewById
+    TextView Order_Value;//总价
+    @ViewById
+    TextView Order_Saletime;//采收时间
+    @ViewById
+    TextView tv_order;
+
+    @ViewById
+    LinearLayout ll_order;
+
+    @Click
+    void tv_order()
+    {
+
+        if (!ll_order.isShown())
+        {
+            ll_order.setVisibility(View.VISIBLE);
+        } else
+        {
+            ll_order.setVisibility(View.GONE);
+        }
+    }
+
 
     @Click
     void is_jsd()
     {
-        if (ll_jsd.isShown())
+        if (!ll_jsd.isShown())
         {
             ll_jsd.setVisibility(View.VISIBLE);
-        }else
+        } else
         {
             ll_jsd.setVisibility(View.GONE);
         }
     }
+
     @Click
     void isgoods_xx()
     {
-        if (goods_xx.isShown())
+        if (!goods_xx.isShown())
         {
             goods_xx.setVisibility(View.VISIBLE);
-        }else
+        } else
         {
             goods_xx.setVisibility(View.GONE);
         }
@@ -182,7 +217,21 @@ public class NCZ__NeedOrder_Detail extends Activity
         builder.append("]} ");
         updatesellOrderSettlement(builder.toString());*/
 
-        updatesellOrderSettlement("1","");
+
+//        isNeedAudit    varchar(50)   -1未通过  0要审核  1通过审核   2 默认（折扣金额审批结果）
+//        settlestatus  int 审批结算单  0是待审批，1是审批通过，-1审批部通过， 2会计收到,3默认  （费用审批结算单）
+        String isNeedAudit = "";
+        String settlestatus = "";
+
+        if (sellOrder.getIsNeedAudit().equals("0"))
+        {
+            isNeedAudit = "1";
+        }
+        if (sellOrder.getSettlestatus().equals("0"))
+        {
+            settlestatus = "1";
+        }
+        updatesellOrderSettlement(isNeedAudit, settlestatus);
     }
 
     @Click
@@ -190,7 +239,18 @@ public class NCZ__NeedOrder_Detail extends Activity
     {
 
 
-        updatesellOrderSettlement("-1","");
+        String isNeedAudit = "";
+        String settlestatus = "";
+
+        if (sellOrder.getIsNeedAudit().equals("0"))
+        {
+            isNeedAudit = "-1";
+        }
+        if (sellOrder.getSettlestatus().equals("0"))
+        {
+            settlestatus = "-1";
+        }
+        updatesellOrderSettlement(isNeedAudit, settlestatus);
 
     }
 
@@ -204,35 +264,51 @@ public class NCZ__NeedOrder_Detail extends Activity
 
     private void showData()
     {
-        plateNumber.setText(sellOrder_new.getPlateNumber());
-        bz_nc_danjia.setText(sellOrder_new.getPackPrice());
-        by_nc_danjia.setText(sellOrder_new.getCarryPrice());
-        by_fzrid.setText(sellOrder_new.getContractorName());
-        bz_fzrid.setText(sellOrder_new.getPickName());
-        jsd_zpprice.setText(sellOrder_new.getActualprice());
-        actualMoney.setText(sellOrder_new.getActualMoney());
-        packPec.setText(sellOrder_new.getPackPec());
-        packFee.setText(sellOrder_new.getPackFee());
-        carryFee.setText(sellOrder_new.getCarryFee());
-        cp_jsje.setText(sellOrder_new.getDefectBalance());
-        zp_jsje.setText(sellOrder_new.getQualityBalance());
-        cp_jingzhong.setText(sellOrder_new.getDefectNetWeight());
-        zp_bds_zhong.setText(sellOrder_new.getQualityNetWeight());
-        cp_ds_zhong.setText(sellOrder_new.getDefectWaterWeight());
-        zp_ds_zhong.setText(sellOrder_new.getQualityWaterWeight());
-        cp_jianshu.setText(sellOrder_new.getDefectNum());
-        zp_jianshu.setText(sellOrder_new.getActualnumber());
-        jsd_cpprice.setText(sellOrder_new.getDefectPrice());
-        jsd_cpzjs.setText(sellOrder_new.getDefectTotalWeight());
-        jsd_zpjz.setText(sellOrder_new.getQualityTotalWeight());
-        jsd_zongjingzhong.setText(sellOrder_new.getTotalWeight());
-        jsd_zongjianshu.setText(sellOrder_new.getTotal());
-        totalFee.setText(sellOrder_new.getTotalFee());
+
+   /*     TextView Order_price;//订单单价
+        TextView Order_weight;//订单重量
+        TextView Order_deposit; //定金
+        TextView Order_waitdeposit;//待付定金
+        TextView Order_Value;//总价
+        TextView Order_Saletime;//采收时间*/
+        //订单
+        Order_price.setText(sellOrder_new.getPrice());
+        Order_weight.setText(sellOrder_new.getWeight());
+        Order_deposit.setText(sellOrder_new.getDeposit());
+        Order_waitdeposit.setText(sellOrder_new.getWaitDeposit());
+        Order_Value.setText(sellOrder_new.getSumvalues());
+        Order_Saletime.setText(sellOrder_new.getSaletime());
+
+        //结算单
+        plateNumber.setText(sellOrder.getPlateNumber());
+        bz_nc_danjia.setText(sellOrder.getPackPrice());
+        by_nc_danjia.setText(sellOrder.getCarryPrice());
+        by_fzrid.setText(sellOrder.getContractorName());
+        bz_fzrid.setText(sellOrder.getPickName());
+        jsd_zpprice.setText(sellOrder.getActualprice());
+        actualMoney.setText(sellOrder.getActualMoney());
+        packPec.setText(sellOrder.getPackPec());
+        packFee.setText(sellOrder.getPackFee());
+        carryFee.setText(sellOrder.getCarryFee());
+        cp_jsje.setText(sellOrder.getDefectBalance());
+        zp_jsje.setText(sellOrder.getQualityBalance());
+        cp_jingzhong.setText(sellOrder.getDefectNetWeight());
+        zp_bds_zhong.setText(sellOrder.getQualityNetWeight());
+        cp_ds_zhong.setText(sellOrder.getDefectWaterWeight());
+        zp_ds_zhong.setText(sellOrder.getQualityWaterWeight());
+        cp_jianshu.setText(sellOrder.getDefectNum());
+        zp_jianshu.setText(sellOrder.getActualnumber());
+        jsd_cpprice.setText(sellOrder.getDefectPrice());
+        jsd_cpzjs.setText(sellOrder.getDefectTotalWeight());
+        jsd_zpjz.setText(sellOrder.getQualityTotalWeight());
+        jsd_zongjingzhong.setText(sellOrder.getTotalWeight());
+        jsd_zongjianshu.setText(sellOrder.getTotal());
+        totalFee.setText(sellOrder.getTotalFee());
 
 
-        if (sellOrder_new.getDetailSecLists().size() > 0)
+        if (sellOrder.getDetailSecLists().size() > 0)
         {
-            ncz_look_jsd_adapter = new NCZ_Look_JSD_Adapter(NCZ__NeedOrder_Detail.this, sellOrder_new.getDetailSecLists(), sellOrder_new.getQualityNetWeight(), sellOrder_new.getDefectNetWeight());
+            ncz_look_jsd_adapter = new NCZ_Look_JSD_Adapter(NCZ__NeedOrder_Detail.this, sellOrder.getDetailSecLists(), sellOrder.getQualityNetWeight(), sellOrder.getDefectNetWeight());
             frame_listview_news.setAdapter(ncz_look_jsd_adapter);
             utils.setListViewHeight(frame_listview_news);
         }
@@ -243,21 +319,21 @@ public class NCZ__NeedOrder_Detail extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        sellOrder_new = getIntent().getParcelableExtra("bean");
+        sellOrder = getIntent().getParcelableExtra("bean");
+        sellOrder_new = getIntent().getParcelableExtra("sellOrder_new");
     }
 
 
-
     //修改
-    private void updatesellOrderSettlement(String settlestatus,String isNeedAudit)
+    private void updatesellOrderSettlement(String isNeedAudit, String settlestatus)
     {
 
 
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("id", sellOrder_new.getid());
-        params.addQueryStringParameter("settlestatus",settlestatus );
-        params.addQueryStringParameter("isNeedAudit",isNeedAudit );
-        params.addQueryStringParameter("action", "updatesellOrderSettlement");
+        params.addQueryStringParameter("id", sellOrder.getid());
+        params.addQueryStringParameter("settlestatus", settlestatus);
+        params.addQueryStringParameter("isNeedAudit", isNeedAudit);
+        params.addQueryStringParameter("action", "changesellOrderSettlement");
 
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -273,7 +349,7 @@ public class NCZ__NeedOrder_Detail extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-
+                        finish();
                     } else
                     {
                         listData = new ArrayList<SellOrder_New>();

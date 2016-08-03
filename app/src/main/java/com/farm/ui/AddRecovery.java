@@ -120,6 +120,14 @@ public class AddRecovery extends Activity {
         }
         commembertab commembertab = AppContext.getUserInfo(AddRecovery.this);
         SellOrder_New sellOrder = new SellOrder_New();
+
+        if (bzId.equals("")||byId.equals("")||CR_chanpin.getText().toString().equals("")||carryPrice.getText().toString().equals("")||packPrice.getText().toString().equals(""))
+        {
+            sellOrder.setIsReady("0");
+        }else
+        {
+            sellOrder.setIsReady("1");
+        }
         sellOrder.setInfoId(uuid);//0
         sellOrder.setPlateNumber(CR_chanpin.getText().toString());
         sellOrder.setPickId(bzId);
@@ -127,8 +135,7 @@ public class AddRecovery extends Activity {
         sellOrder.setUid(commembertab.getuId());//0
         sellOrder.setCarryPrice(carryPrice.getText().toString());
         sellOrder.setPackPrice(packPrice.getText().toString());
-        sellOrder.setIsNeedAudit("2");
-        sellOrder.setIsReady("False");
+        sellOrder.setIsNeedAudit("3");
         StringBuilder builder = new StringBuilder();
         builder.append("{\"sellOrderSettlementlist\":[ ");
         builder.append(JSON.toJSONString(sellOrder));
@@ -139,7 +146,8 @@ public class AddRecovery extends Activity {
 
 
     @Click
-    void tv_bz() {
+    void tv_bz()
+    {
 
         showDialog_bz(listData_BZ);
     }
@@ -261,6 +269,9 @@ public class AddRecovery extends Activity {
                 {
                     if (result.getAffectedRows() != 0) {
                         Toast.makeText(AddRecovery.this, "添加成功！", Toast.LENGTH_SHORT).show();
+
+
+
                         Intent intent = new Intent();
                         intent.setAction(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DINGDAN);
                         sendBroadcast(intent);

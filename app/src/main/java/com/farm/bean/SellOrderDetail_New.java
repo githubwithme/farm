@@ -59,8 +59,19 @@ public class SellOrderDetail_New implements Parcelable
 	public String type;
 	public String year;
 	public String creatorId;
+	public String cutBananaFee;  //砍蕉费
 	public List<CoordinatesBean> coordinatesBeanList;
 
+
+	public String getCutBananaFee()
+	{
+		return cutBananaFee;
+	}
+
+	public void setCutBananaFee(String cutBananaFee)
+	{
+		this.cutBananaFee = cutBananaFee;
+	}
 
 	public String getSettlementId()
 	{
@@ -464,6 +475,7 @@ public class SellOrderDetail_New implements Parcelable
          p.setType(source.readString());
          p.setYear(source.readString());
          p.setCreatorId(source.readString());
+         p.setCutBananaFee(source.readString());
 		  p.coordinatesBeanList = source.readArrayList(sellOrderDetailTab.class.getClassLoader());
          return p;
       }  
@@ -512,6 +524,7 @@ public class SellOrderDetail_New implements Parcelable
          p.writeString(type);
          p.writeString(year);
          p.writeString(creatorId);
+         p.writeString(cutBananaFee);
 		p.writeList(coordinatesBeanList);
 	}
     @Override

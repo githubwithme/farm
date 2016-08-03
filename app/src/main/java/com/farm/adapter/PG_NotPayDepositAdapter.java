@@ -26,6 +26,7 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.common.utils;
+import com.farm.ui.NCZ_All_OneOrder_Detail_;
 import com.farm.ui.PG_EditOrder_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
@@ -81,9 +82,7 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
         public Button btn_preparework;
         public Button btn_editorder;
         public CircleImageView circleImageView;
-//        public LinearLayout ll_car;
-//        public LinearLayout ll_mainpeople;
-//        public FrameLayout fl_dynamic;
+        public  Button btn_showdetail;
 
     }
 
@@ -132,10 +131,9 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
+            listItemView.btn_showdetail = (Button) convertView.findViewById(R.id.btn_showdetail);
             listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
-//            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
-//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.btn_changetime = (TextView) convertView.findViewById(R.id.btn_changetime);
             // 设置控件集到convertView
@@ -153,16 +151,18 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
             {
                 listItemView.tv_car.setText(sellOrder.getCarNumber());
             }
-//            listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
-//            listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    String phone = (String) v.getTag();
-//                    showDialog_addsaleinfo(phone);
-//                }
-//            });
+            listItemView.btn_showdetail.setTag(R.id.tag_bean, sellOrder);
+            listItemView.btn_showdetail.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
+                    Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
+                    intent.putExtra("bean", sellOrder_new);
+                    context.startActivity(intent);
+                }
+            });
             listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
             listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
             listItemView.btn_changetime.setOnClickListener(new View.OnClickListener()

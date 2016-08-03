@@ -221,8 +221,8 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() > 0)
-                    {
+                   /* if (result.getAffectedRows() > 0)
+                    {*/
                         listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                         DensityUtil densityUtil = new DensityUtil(NCZ_AreaSaleActivity.this);
                         screenWidth = densityUtil.getScreenWidth();
@@ -244,10 +244,10 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                         initViews();
                         cz_startdl.setVisibility(View.GONE);
 
-                    } else
+        /*            } else
                     {
                         listData = new ArrayList<BatchTime>();
-                    }
+                    }*/
 
                 } else
                 {

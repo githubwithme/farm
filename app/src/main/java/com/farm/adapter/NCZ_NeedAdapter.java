@@ -59,7 +59,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
 
     static class ListItemView
     {
-//        public CircleImageView circle_img;
+        //        public CircleImageView circle_img;
         public TextView tv_parkname;
         public View view_mainpeople_call;
         public View view_buyer_call;
@@ -68,7 +68,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
         public TextView tv_preparestatus;
         public TextView tv_product;
         public TextView tv_orderstate;
-//        public TextView tv_price;
+        //        public TextView tv_price;
 //        public TextView tv_sum;
 //        public TextView tv_from;
         public TextView tv_ask;
@@ -76,10 +76,10 @@ public class NCZ_NeedAdapter extends BaseAdapter
 //        public Button btn_editorder;
 
         public RelativeLayout fl_dynamic;
-//        public Button btn_pizhun;
+        //        public Button btn_pizhun;
 //        public Button btn_bohui;
         public Button btn_showdetail;
-//        public LinearLayout ll_mainpeople;
+        //        public LinearLayout ll_mainpeople;
         public CircleImageView circleImageView;
 
     }
@@ -127,21 +127,12 @@ public class NCZ_NeedAdapter extends BaseAdapter
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
             listItemView.tv_preparestatus = (TextView) convertView.findViewById(R.id.tv_preparestatus);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
-//            listItemView.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
-//            listItemView.tv_sum = (TextView) convertView.findViewById(R.id.tv_sum);
-//            listItemView.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
             listItemView.tv_ask = (TextView) convertView.findViewById(R.id.tv_ask);
-//            listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
-//            listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.fl_dynamic = (RelativeLayout) convertView.findViewById(R.id.fl_dynamic);
             listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
-//            listItemView.circle_img = (CircleImageView) convertView.findViewById(R.id.circle_img);
-//            listItemView.btn_pizhun = (Button) convertView.findViewById(R.id.btn_pizhun);
-//            listItemView.btn_bohui = (Button) convertView.findViewById(R.id.btn_bohui);
             listItemView.btn_showdetail = (Button) convertView.findViewById(R.id.btn_showdetail);
-//            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
-            // 设置控件集到convertView
+            // 设置控件集到convertViews
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
@@ -150,7 +141,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
-        listItemView.fl_dynamic.setTag(R.id.tag_fi,sellOrder.getBuyersPhone());
+        listItemView.fl_dynamic.setTag(R.id.tag_fi, sellOrder.getBuyersPhone());
         listItemView.fl_dynamic.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -173,7 +164,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
         if (sellOrder.getIsReady().equals("False"))
         {
             listItemView.tv_preparestatus.setText("未就绪");
-        }else
+        } else
         {
             listItemView.tv_preparestatus.setText("就绪");
         }
@@ -199,45 +190,30 @@ public class NCZ_NeedAdapter extends BaseAdapter
             }
         });
         listItemView.view_buyer_call.setTag(R.id.tag_czdl, sellOrder.getBuyersPhone());
-        listItemView.view_buyer_call.setOnClickListener(new View.OnClickListener() {
+        listItemView.view_buyer_call.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 String phone = (String) v.getTag(R.id.tag_czdl);
                 showDialog_addsaleinfo(phone);
             }
         });
 
-//        SpannableString spanStr_buyer = new SpannableString("就绪");
-//        spanStr_buyer.setSpan(new UnderlineSpan(), 0, spanStr_buyer.length(), 0);
-        //下划线跳转
-/*            listItemView.tv_ask.setText(spanStr_buyer);
-            listItemView.tv_ask.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent intent = new Intent(context, RecoveryDetail_.class);
-                    context.startActivity(intent);
-                }
-            });*/
 
         if (sellOrder.getFreeDeposit().equals("0"))
         {
             listItemView.tv_ask.setText("申请免付定金");
-        }
-        if (sellOrder.getFreeFinalPay().equals("0"))
+        } else if (sellOrder.getFreeFinalPay().equals("0"))
         {
             listItemView.tv_ask.setText("申请免付尾款");
-        }
-        if (sellOrder.getIsNeedAudit().equals("0") && sellOrder.getCreatorid().equals(""))
+        } else if (sellOrder.getIsNeedAudit().equals("0") && sellOrder.getCreatorid().equals(""))
         {
             listItemView.tv_ask.setText("订单发生改变");
-        }
-        if (sellOrder.getIsNeedAudit().equals("0") && !sellOrder.getCreatorid().equals(""))
+        } else if (sellOrder.getIsNeedAudit().equals("0") && !sellOrder.getCreatorid().equals(""))
         {
             listItemView.tv_ask.setText("自发订单审批");
-        }
-        if (sellOrder.getSettlestatus().equals("0"))
+        } else if (sellOrder.getSettlestatus().equals("0"))
         {
             listItemView.tv_ask.setText("审批结算单");
         }
@@ -248,8 +224,10 @@ public class NCZ_NeedAdapter extends BaseAdapter
             @Override
             public void onClick(View view)
             {
-                SellOrder_New sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_cash);
-                if (!sellOrdesr.getSettlestatus().equals("0"))
+                SellOrder_New sellOrdesr = new SellOrder_New();
+                sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_cash);
+//                if (!sellOrdesr.getSettlestatus().equals("0"))
+                if (sellOrder.getFreeDeposit().equals("0") || sellOrder.getFreeFinalPay().equals("0") || sellOrder.getIsNeedAudit().equals("0"))
                 {
                     Intent intent = new Intent(context, NCZ_DD_SH_Detail_.class);
                     intent.putExtra("SellOrder_New", sellOrdesr);

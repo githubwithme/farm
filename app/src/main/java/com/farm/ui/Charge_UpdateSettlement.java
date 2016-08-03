@@ -88,6 +88,8 @@ public class Charge_UpdateSettlement extends Activity
         sellOrder=sellOrder_new;
         sellOrder.setInfoId(sellOrder_new.getUuid());
         sellOrder.setUid(sellOrder_new.getUid());
+        sellOrder.setIsNeedAudit("2");
+        sellOrder.setSettlestatus("2");
         sellOrder.setPlateNumber(plateNumber.getText().toString());//车车牌号
         sellOrder.setQualityWaterWeight(zp_ds_zhong.getText().toString());//正品带水重
         sellOrder.setQualityNetWeight(zp_bds_zhong.getText().toString());//正品净重
@@ -321,8 +323,8 @@ public class Charge_UpdateSettlement extends Activity
 
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("id", sellOrder_new.getid());
-//        params.addQueryStringParameter("settlestatus", "2");
-//        params.addQueryStringParameter("isNeedAudit", "2");
+        params.addQueryStringParameter("settlestatus", "2");
+        params.addQueryStringParameter("isNeedAudit", "2");
         params.addQueryStringParameter("uid", mSellOrder.getUid());
         params.addQueryStringParameter("carryPrice", mSellOrder.getCarryPrice());
         params.addQueryStringParameter("packPrice", mSellOrder.getPackPrice());

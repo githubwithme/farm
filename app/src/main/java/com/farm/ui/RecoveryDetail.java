@@ -98,7 +98,7 @@ public class RecoveryDetail extends Activity {
             public void OnClick(View v) {
                 switch (v.getId()) {
                     case R.id.btn_sure:
-                        updateSellOrderByuuid();
+                        updateSellOrderByuuid("");
                         break;
                     case R.id.btn_cancle:
                         myDialog.cancel();
@@ -161,6 +161,7 @@ public class RecoveryDetail extends Activity {
                     hlistview_scroll_list.setAdapter(recoveryDetail_adapter);
                     utils.setListViewHeight(hlistview_scroll_list);
 
+//                    updateSellOrderByuuid(String.valueOf(listNewData.size()));
                     Intent intent = new Intent();
                     intent.setAction(AppContext.UPDATEMESSAGE_CHE_LIANG);
                     intent.putExtra("num", listNewData.size() + "");
@@ -187,10 +188,11 @@ public class RecoveryDetail extends Activity {
         });
     }
 
-    private void updateSellOrderByuuid() {
+    private void updateSellOrderByuuid(String num) {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("isReady", "1");
+        params.addQueryStringParameter("plateNumber", num);
         params.addQueryStringParameter("action", "updateSellOrderByuuid");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {

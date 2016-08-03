@@ -142,7 +142,7 @@ public class PG_OrderPlanFragment extends Fragment
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
-                String a = responseInfo.result;
+                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {

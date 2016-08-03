@@ -717,7 +717,7 @@
                 android:layout_marginTop="10dip"
                 android:background="@color/white"
                 android:gravity="left|center"
-                android:text="承包户"
+                android:text="承包户产量"
                 android:textSize="@dimen/size_16"/>
 
             <LinearLayout
@@ -841,7 +841,7 @@
                                 android:layout_toLeftOf="@+id/lines"
                                 android:id="@+id/tv_jingzhong"
                                 android:gravity="center"
-                                android:text="净重"
+                                android:text="总净重"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"/>
 
@@ -920,7 +920,7 @@
                         android:layout_height="fill_parent"
                         android:background="@color/white"
                         android:gravity="center"
-                        android:text="批次/承包区"
+                        android:text=""
                         android:textColor="@color/bg_text"
                         android:textSize="15sp"/>
 

@@ -225,31 +225,12 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
-                    Intent intent = new Intent(context, NCZ_Look_JSD_.class);
-                    intent.putExtra("zbstudio", sellOrder_new);
+                    Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
+                    intent.putExtra("bean", sellOrder_new);
                     context.startActivity(intent);
                 }
             });
-//            listItemView.ll_car.setTag(R.id.tag_contract, sellOrder);
-//            listItemView.ll_car.setTag(R.id.tag_batchtime, listItemView);
-//            listItemView.ll_car.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_contract);
-//                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
-//                    JSONArray jsonArray = null;
-//                    try {
-//                        jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
-//                    } catch (Exception e) {
-//
-//                    }
-//                    List<String> list = new ArrayList<String>();
-//                    for (int i = 0; i < jsonArray.size(); i++) {
-//                        list.add(jsonArray.getString(i));
-//                    }
-//                    showDialog_workday(list, sellOrder_new);
-//                }
-//            });
+
             listItemView.view_mainpeople_call.setTag(sellOrder.getMainPeoplePhone());
             listItemView.view_mainpeople_call.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -254,47 +254,8 @@ public class PG_EditOrder extends Activity
             return;
         }
         List<String> list_uuid = new ArrayList<>();
-        String batchtime = "";
-        String producer = "";
-        List<String> list_batchtime = new ArrayList<>();
-        List<String> list_producer = new ArrayList<>();
-        for (int i = 0; i < list_orderDetail.size(); i++)
-        {
-            list_uuid.add(list_orderDetail.get(i).getUuid());
-            if (i == 0)
-            {
-                list_batchtime.add(list_orderDetail.get(0).getBatchTime());
-                batchtime = batchtime + list_orderDetail.get(0).getBatchTime() + ";";
-            }
-            if (i == 0)
-            {
-                list_producer.add(list_orderDetail.get(0).getparkname());
-                producer = producer + list_orderDetail.get(0).getparkname() + ";";
-            }
-            for (int j = 0; j < list_batchtime.size(); j++)
-            {
-                if (list_orderDetail.get(i).getBatchTime().equals(list_batchtime.get(j)))
-                {
-                    break;
-                } else if (i == list_batchtime.size() - 1)
-                {
-                    list_batchtime.add(list_orderDetail.get(i).getBatchTime());
-                    batchtime = batchtime + list_orderDetail.get(i).getBatchTime() + ";";
-                }
-            }
-            for (int j = 0; j < list_producer.size(); j++)
-            {
-                if (list_orderDetail.get(i).getparkname().equals(list_producer.get(j)))
-                {
-                    break;
-                } else if (i == list_producer.size() - 1)
-                {
-                    list_producer.add(list_orderDetail.get(i).getparkname());
-                    producer = producer + list_orderDetail.get(i).getparkname() + ";";
-                }
-            }
 
-        }
+
 
         SellOrder_New sellOrders = new SellOrder_New();
         sellOrders = sellOrder;
@@ -398,10 +359,7 @@ public class PG_EditOrder extends Activity
         builder.append("], \"sellorderlistadd\": [");
         builder.append(JSON.toJSONString(sellOrder_new_first));
         builder.append("]} ");
-   /*     StringBuilder builder = new StringBuilder();
-        builder.append("{\"SellOrder_new\": [");
-        builder.append(JSON.toJSONString(sellOrders));
-        builder.append("]} ");*/
+
         newaddOrder(builder.toString());
     }
 

@@ -390,7 +390,7 @@ public class NCZ_DD_SH_Detail extends Activity
     {
 
         View dialog_layout = LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "驳回", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -510,7 +510,7 @@ public class NCZ_DD_SH_Detail extends Activity
     {
 
         View dialog_layout = LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "订单申请免付尾款", "批准", "驳回", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "订单申请免付尾款", "批准", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -676,7 +676,7 @@ public class NCZ_DD_SH_Detail extends Activity
     {
 
         View dialog_layout = LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "驳回", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)
@@ -722,7 +722,7 @@ public class NCZ_DD_SH_Detail extends Activity
     {
 
         View dialog_layout = LayoutInflater.from(NCZ_DD_SH_Detail.this).inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "驳回", new MyDialog.CustomDialogListener()
+        myDialog = new MyDialog(NCZ_DD_SH_Detail.this, R.style.MyDialog, dialog_layout, "订单", "是否通过申请?", "批准", "取消", new MyDialog.CustomDialogListener()
         {
             @Override
             public void OnClick(View v)

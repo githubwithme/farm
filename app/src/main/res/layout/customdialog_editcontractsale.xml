@@ -10,7 +10,7 @@
         android:layout_height="50dp"
         android:background="@drawable/roundedcorner_top"
         android:gravity="center"
-        android:text="请输入你需要的株数"
+        android:text="请填写数量"
         android:textColor="@color/white" />
 
 
