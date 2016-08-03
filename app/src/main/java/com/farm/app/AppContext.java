@@ -21,8 +21,11 @@ import com.lidroid.xutils.http.client.HttpRequest;
  * 2015-8-6 下午1:50:43
  * 全局应用程序类：用于保存和调用全局应用配置及访问网络数据
  */
-public class AppContext extends Application
-{
+public class AppContext extends Application {
+    public final static String order_waitForApprove = "待审批";
+    public final static String order_waitForDeposit = "待付定金";
+    public final static String order_waitForHarvest = "待采收";
+    public final static String order_waitForSettlement = "待结算";
     public final static String BELONG_ADD_CMD_AREA = "BELONG_ADD_CMD_AREA";
     public final static String ACTION_CURRENTITEM = "ACTION_CURRENTITEM";
     public final static String ACTION_REFRESH_ANIMAL = "REFRESH_ANIMAL";
@@ -34,14 +37,15 @@ public class AppContext extends Application
     public final static String BROADCAST_OPENDL = "OPENDL";
     public final static String BROADCAST_UPDATEBREAKOFFINFO = "UPDATEBREAKOFFINFO";
     public final static String BROADCAST_UPDATEPLANT = "UPDATEPLANT";
-    public final static String BROADCAST_UPDATEAllORDER= "BROADCAST_UPDATEAllORDER";
-    public final static String BROADCAST_UPDATENEWSALELIST= "BROADCAST_UPDATENEWSALELIST";
-    public final static String BROADCAST_UPDATESELLORDER= "BROADCAST_UPDATESELLORDER";
-    public final static String BROADCAST_FINISHSELECTBATCHTIME= "BROADCAST_FINISHSELECTBATCHTIME";
-    public final static String BROADCAST_FINISH= "BROADCAST_FINISH";
-    public final static String BROADCAST_UPDATESALENUMBER= "BROADCAST_UPDATESALENUMBER";
-    public final static String BROADCAST_UPDATENOTPAYORDER= "BROADCAST_UPDATENOTPAYORDER";
-    public final static String BROADCAST_UPDATEDEALINGORDER= "BROADCAST_UPDATEDEALINGORDER";
+    public final static String BROADCAST_UPDATEAllORDER = "BROADCAST_UPDATEAllORDER";
+    public final static String BROADCAST_UPDATELISTNUMBER = "BROADCAST_UPDATELISTNUMBER";
+    public final static String BROADCAST_UPDATENEWSALELIST = "BROADCAST_UPDATENEWSALELIST";
+    public final static String BROADCAST_UPDATESELLORDER = "BROADCAST_UPDATESELLORDER";
+    public final static String BROADCAST_FINISHSELECTBATCHTIME = "BROADCAST_FINISHSELECTBATCHTIME";
+    public final static String BROADCAST_FINISH = "BROADCAST_FINISH";
+    public final static String BROADCAST_UPDATESALENUMBER = "BROADCAST_UPDATESALENUMBER";
+    public final static String BROADCAST_UPDATENOTPAYORDER = "BROADCAST_UPDATENOTPAYORDER";
+    public final static String BROADCAST_UPDATEDEALINGORDER = "BROADCAST_UPDATEDEALINGORDER";
     //	public final static String BROADCAST_UPDATECMD_SELECT = "UPDATECMD_SELECT";
     public final static String BROADCAST_UPDATEPCMD_SORT = "UPDATEPCMD_SORT";
     public final static String BROADCAST_UPDATEORDER = "BROADCAST_UPDATEORDER";
@@ -60,14 +64,14 @@ public class AppContext extends Application
     public final static String BROADCAST_NCZ_XSTJ = "NCZ_SXTJ";
     public final static String BROADCAST_NCZ_WZ_ParkId = "NCZ_WZ_ParkId";
     public final static String BROADCAST_DD_REFASH = "DD_REFASH";
-    public final static String UPDATEMESSAGE_FARMMANAGER= "UPDATEMESSAGE_FARMMANAGER";
-    public final static String UPDATEMESSAGE_PG_JSD= "PG_JSD";
-    public final static String UPDATEMESSAGE_PG_UPDATE_DELETE= "PG_UPDATE_DELETE";
-    public final static String UPDATEMESSAGE_PGDETAIL_UPDATE_DELETE= "PGDETAIL_UPDATE_DELETE";
-    public final static String UPDATEMESSAGE_PGDETAIL_UPDATE_DINGDAN= "PGDETAIL_UPDATE_DINGDAN";
-    public final static String UPDATEMESSAGE_CHE_LIANG= "CHE_LIANG";
-    public final static String UPDATEMESSAGE_NEW_JSD= "NEW_JSD";
-    public final static String UPDATEMESSAGE_NCZ_XL_REFRESH= "NCZ_XL_REFRESH";
+    public final static String UPDATEMESSAGE_FARMMANAGER = "UPDATEMESSAGE_FARMMANAGER";
+    public final static String UPDATEMESSAGE_PG_JSD = "PG_JSD";
+    public final static String UPDATEMESSAGE_PG_UPDATE_DELETE = "PG_UPDATE_DELETE";
+    public final static String UPDATEMESSAGE_PGDETAIL_UPDATE_DELETE = "PGDETAIL_UPDATE_DELETE";
+    public final static String UPDATEMESSAGE_PGDETAIL_UPDATE_DINGDAN = "PGDETAIL_UPDATE_DINGDAN";
+    public final static String UPDATEMESSAGE_CHE_LIANG = "CHE_LIANG";
+    public final static String UPDATEMESSAGE_NEW_JSD = "NEW_JSD";
+    public final static String UPDATEMESSAGE_NCZ_XL_REFRESH = "NCZ_XL_REFRESH";
 
     public final static int TIME_REFRESH = 30000;
     public final static int TIME_GZ = 60000;
@@ -81,8 +85,7 @@ public class AppContext extends Application
     String LOCATION_Y = "";// 当前坐标
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
         AppException appException = AppException.getInstance();
         // 注册crashHandler
@@ -91,23 +94,19 @@ public class AppContext extends Application
 //        appException.sendPreviousReportsToServer();
     }
 
-    public void setLOCATION_X(String lOCATION_X)
-    {
+    public void setLOCATION_X(String lOCATION_X) {
         LOCATION_X = lOCATION_X;
     }
 
-    public String getLOCATION_X()
-    {
+    public String getLOCATION_X() {
         return LOCATION_X;
     }
 
-    public void setLOCATION_Y(String lOCATION_Y)
-    {
+    public void setLOCATION_Y(String lOCATION_Y) {
         LOCATION_Y = lOCATION_Y;
     }
 
-    public String getLOCATION_Y()
-    {
+    public String getLOCATION_Y() {
         return LOCATION_Y;
     }
 
@@ -116,8 +115,7 @@ public class AppContext extends Application
      *
      * @return
      */
-    public boolean isAppSound()
-    {
+    public boolean isAppSound() {
         return isAudioNormal() && isVoice();
     }
 
@@ -126,8 +124,7 @@ public class AppContext extends Application
      *
      * @return
      */
-    public boolean isAudioNormal()
-    {
+    public boolean isAudioNormal() {
         AudioManager mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
         return mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL;
     }
@@ -137,16 +134,14 @@ public class AppContext extends Application
      *
      * @return
      */
-    public boolean isVoice()
-    {
+    public boolean isVoice() {
         String perf_voice = getProperty(AppConfig.CONF_VOICE);
         // 默认是开启提示声音
         if (StringUtils.isEmpty(perf_voice)) return true;
         else return StringUtils.toBool(perf_voice);
     }
 
-    public String getProperty(String key)
-    {
+    public String getProperty(String key) {
         return AppConfig.getAppConfig(this).get(key);
     }
 
@@ -156,48 +151,37 @@ public class AppContext extends Application
      * @description:提示信息
      * @createTime：2015-8-11 上午10:43:42
      */
-    public static void makeToast(Context ctx, String type)
-    {
-        if (type.equals("load_error"))
-        {
+    public static void makeToast(Context ctx, String type) {
+        if (type.equals("load_error")) {
             Toast.makeText(ctx, "加载异常!", Toast.LENGTH_SHORT).show();
-        } else if (type.equals("error_connectDataBase"))
-        {
+        } else if (type.equals("error_connectDataBase")) {
             Toast.makeText(ctx, "连接数据库异常！", Toast.LENGTH_SHORT).show();
-        } else if (type.equals("error_connectServer"))
-        {
+        } else if (type.equals("error_connectServer")) {
             Toast.makeText(ctx, "连接服务器异常！", Toast.LENGTH_SHORT).show();
-        } else if (type.equals("exception_network"))
-        {
+        } else if (type.equals("exception_network")) {
             Toast.makeText(ctx, "网络异常！", Toast.LENGTH_SHORT).show();
-        } else if (type.equals(""))
-        {
+        } else if (type.equals("")) {
             Toast.makeText(ctx, "", Toast.LENGTH_SHORT).show();
-        } else if (type.equals(""))
-        {
+        } else if (type.equals("")) {
             Toast.makeText(ctx, "", Toast.LENGTH_SHORT).show();
-        } else if (type.equals(""))
-        {
+        } else if (type.equals("")) {
             Toast.makeText(ctx, "", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public static commembertab getUserInfo(Context context)
-    {
+    public static commembertab getUserInfo(Context context) {
         SharedPreferences sp = context.getSharedPreferences("userInfo", MODE_PRIVATE);
         String userName = sp.getString("userName", "");
         commembertab commembertab = (commembertab) SqliteDb.getCurrentUser(context, commembertab.class, userName);
         return commembertab;
     }
 
-    public static Typeface getTypeface(Context context, String front)
-    {
+    public static Typeface getTypeface(Context context, String front) {
         Typeface customFont = Typeface.createFromAsset(context.getAssets(), front);
         return customFont;
     }
 
-    public static void updateStatus(Context context, String comLX, String jobID, String comID, String workuserid)
-    {
+    public static void updateStatus(Context context, String comLX, String jobID, String comID, String workuserid) {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("workuserid", workuserid);
         params.addQueryStringParameter("comID", comID);
@@ -205,44 +189,37 @@ public class AppContext extends Application
         params.addQueryStringParameter("comLX", comLX);
         params.addQueryStringParameter("action", "updateView");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
+            public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
 
             }
 
             @Override
-            public void onFailure(HttpException arg0, String arg1)
-            {
+            public void onFailure(HttpException arg0, String arg1) {
             }
         });
     }
 
 
-    public static void eventStatus(Context context, String type, String eventID, String userID )
-    {
+    public static void eventStatus(Context context, String type, String eventID, String userID) {
         //
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("type", type);
-        params.addQueryStringParameter("id", eventID );
+        params.addQueryStringParameter("id", eventID);
         params.addQueryStringParameter("userId", userID);
         params.addQueryStringParameter("action", "deleteflashStr");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
+            public void onSuccess(ResponseInfo<String> responseInfo) {
                 String a = responseInfo.result;
 
             }
 
             @Override
-            public void onFailure(HttpException arg0, String arg1)
-            {
+            public void onFailure(HttpException arg0, String arg1) {
             }
         });
     }

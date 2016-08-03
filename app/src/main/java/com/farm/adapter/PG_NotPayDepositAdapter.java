@@ -67,7 +67,9 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
         //        public CircleImageView circle_img;
         public TextView tv_car;
         public TextView btn_changetime;
-        public TextView tv_mainpeple;
+        public TextView tv_mainpeople;
+        public View view_buyer_call;
+        public View view_mainpeople_call;
         public TextView tv_parkname;
         public TextView tv_buyer;
         public TextView tv_orderstate;
@@ -79,8 +81,8 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
         public Button btn_preparework;
         public Button btn_editorder;
         public CircleImageView circleImageView;
-        public LinearLayout ll_car;
-        public LinearLayout ll_mainpeople;
+//        public LinearLayout ll_car;
+//        public LinearLayout ll_mainpeople;
 //        public FrameLayout fl_dynamic;
 
     }
@@ -121,6 +123,8 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
             convertView = listContainer.inflate(R.layout.adapter_pgnotpaydeposit, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.view_buyer_call = (View) convertView.findViewById(R.id.view_buyer_call);
+            listItemView.view_mainpeople_call = (View) convertView.findViewById(R.id.view_mainpeople_call);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
@@ -128,10 +132,10 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
-            listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
+            listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
-            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
-            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
+//            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
+//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.btn_changetime = (TextView) convertView.findViewById(R.id.btn_changetime);
             // 设置控件集到convertView
@@ -141,7 +145,7 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.tv_buyer.setText(sellOrder.getBuyersName());
             listItemView.tv_parkname.setText(sellOrder.getParkname());
-            listItemView.tv_mainpeple.setText(sellOrder.getMainPeople());
+            listItemView.tv_mainpeople.setText(sellOrder.getMainPeople());
             if (sellOrder.getCarNumber().equals(""))
             {
                 listItemView.tv_car.setText("0辆");
@@ -149,16 +153,16 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
             {
                 listItemView.tv_car.setText(sellOrder.getCarNumber());
             }
-            listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
-            listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    String phone = (String) v.getTag();
-                    showDialog_addsaleinfo(phone);
-                }
-            });
+//            listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
+//            listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    String phone = (String) v.getTag();
+//                    showDialog_addsaleinfo(phone);
+//                }
+//            });
             listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
             listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
             listItemView.btn_changetime.setOnClickListener(new View.OnClickListener()
@@ -172,33 +176,43 @@ public class PG_NotPayDepositAdapter extends BaseAdapter
                     myDatepicker.getDialog().show();
                 }
             });
-            listItemView.ll_car.setTag(R.id.tag_contract, sellOrder);
-            listItemView.ll_car.setTag(R.id.tag_batchtime, listItemView);
-            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
+//            listItemView.ll_car.setTag(R.id.tag_contract, sellOrder);
+//            listItemView.ll_car.setTag(R.id.tag_batchtime, listItemView);
+//            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_contract);
+//                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
+//                    JSONArray jsonArray = null;
+//                    try
+//                    {
+//                        jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+//                    } catch (Exception e)
+//                    {
+//
+//                    }
+//                    List<String> list = new ArrayList<String>();
+//                    for (int i = 0; i < jsonArray.size(); i++)
+//                    {
+//                        list.add(jsonArray.getString(i));
+//                    }
+//                    showDialog_workday(list, sellOrder_new);
+//                }
+//            });
+            listItemView.view_buyer_call.setTag(sellOrder.getBuyersPhone());
+            listItemView.view_buyer_call.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_contract);
-                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
-                    JSONArray jsonArray = null;
-                    try
-                    {
-                        jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
-                    } catch (Exception e)
-                    {
-
-                    }
-                    List<String> list = new ArrayList<String>();
-                    for (int i = 0; i < jsonArray.size(); i++)
-                    {
-                        list.add(jsonArray.getString(i));
-                    }
-                    showDialog_workday(list, sellOrder_new);
+                    String phone = (String) v.getTag();
+                    showDialog_addsaleinfo(phone);
                 }
             });
-            listItemView.ll_mainpeople.setTag(sellOrder.getMainPeoplePhone());
-            listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener()
+            listItemView.view_mainpeople_call.setTag(sellOrder.getMainPeoplePhone());
+            listItemView.view_mainpeople_call.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)

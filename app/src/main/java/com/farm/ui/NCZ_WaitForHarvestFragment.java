@@ -181,17 +181,22 @@ public class NCZ_WaitForHarvestFragment extends Fragment
 
                         listAdapter = new NCZ_WaitForHarvestAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                        {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                            {
-//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                                Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
-                                intent.putExtra("bean", listData.get(position));
-                                getActivity().startActivity(intent);
-                            }
-                        });
+                    Intent intent = new Intent();
+                    intent.setAction(AppContext.BROADCAST_UPDATELISTNUMBER);
+                    intent.putExtra("type", AppContext.order_waitForHarvest);
+                    intent.putExtra("number", listData.size());
+                    getActivity().sendBroadcast(intent);
+//                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//                        {
+//                            @Override
+//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//                            {
+////                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
+//                                Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
+//                                intent.putExtra("bean", listData.get(position));
+//                                getActivity().startActivity(intent);
+//                            }
+//                        });
 
 
 

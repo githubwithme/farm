@@ -28,6 +28,7 @@ import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.common.utils;
 import com.farm.ui.JSD_Detail_;
+import com.farm.ui.NCZ_All_OneOrder_Detail_;
 import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.PG_EditOrder_;
 import com.farm.ui.RecoveryDetail_;
@@ -67,23 +68,26 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
 
     static class ListItemView
     {
-        public TextView tv_mainpeple;
+        public TextView tv_mainpeople;
         public TextView tv_parkname;
-        public TextView tv_prepareworkStatus;
+        public TextView tv_preparestatus;
         public TextView tv_buyer;
         public TextView tv_orderstate;
         public TextView tv_product;
+        public TextView tv_depositStatus;
         public TextView tv_car;
         public Button btn_cancleorder;
-        public Button btn_preparework;
+        public View view_cardetail;
         public Button btn_editorder;
         public Button btn_changetime;
         public Button btn_addjsd;
+        public Button btn_orderdetail;
         public CircleImageView circleImageView;
-        public LinearLayout ll_car;
-        public LinearLayout ll_undeposit;
-        public LinearLayout ll_mainpeople;
-        public LinearLayout ll_buyer;
+//        public LinearLayout ll_car;
+//        public LinearLayout ll_undeposit;
+        public View view_mainpeople_call;
+        public View view_buyer_call;
+//        public LinearLayout ll_buyer;
     }
 
     public PG_WaitForHarvestAdapter(Context context, List<SellOrder_New> data, String broadcast)
@@ -123,56 +127,76 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
+            listItemView.tv_depositStatus = (TextView) convertView.findViewById(R.id.tv_depositStatus);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
-            listItemView.tv_prepareworkStatus = (TextView) convertView.findViewById(R.id.tv_prepareworkStatus);
+            listItemView.tv_preparestatus = (TextView) convertView.findViewById(R.id.tv_preparestatus);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
+            listItemView.btn_orderdetail = (Button) convertView.findViewById(R.id.btn_orderdetail);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
-            listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
+            listItemView.view_cardetail = (View) convertView.findViewById(R.id.view_cardetail);
             listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
-            listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
+            listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.btn_addjsd = (Button) convertView.findViewById(R.id.btn_addjsd);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
-            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
-            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
-            listItemView.ll_undeposit = (LinearLayout) convertView.findViewById(R.id.ll_undeposit);
-            listItemView.ll_buyer = (LinearLayout) convertView.findViewById(R.id.ll_buyer);
+            listItemView.view_mainpeople_call = (View) convertView.findViewById(R.id.view_mainpeople_call);
+            listItemView.view_buyer_call = (View) convertView.findViewById(R.id.view_buyer_call);
+//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
+//            listItemView.ll_undeposit = (LinearLayout) convertView.findViewById(R.id.ll_undeposit);
+//            listItemView.ll_buyer = (LinearLayout) convertView.findViewById(R.id.ll_buyer);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-            listItemView.ll_buyer.setTag(R.id.tag_fi,sellOrder.getBuyersPhone());
-            listItemView.ll_buyer.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    String phone = (String) v.getTag(R.id.tag_fi);
-                    showDialog_addsaleinfo(phone);
-                }
-            });
+//            listItemView.ll_buyer.setTag(R.id.tag_fi,sellOrder.getBuyersPhone());
+//            listItemView.ll_buyer.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    String phone = (String) v.getTag(R.id.tag_fi);
+//                    showDialog_addsaleinfo(phone);
+//                }
+//            });
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.tv_parkname.setText(sellOrder.getParkname());
-            listItemView.tv_mainpeple.setText(sellOrder.getMainPeople());
+            listItemView.tv_mainpeople.setText(sellOrder.getMainPeople());
             listItemView.tv_car.setText(sellOrder.getCarNumber());
-            listItemView.ll_car.setTag(R.id.tag_bean, sellOrder);
-            listItemView.ll_car.setTag(R.id.tag_text, listItemView.tv_car);
-            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
+//            listItemView.ll_car.setTag(R.id.tag_bean, sellOrder);
+//            listItemView.ll_car.setTag(R.id.tag_text, listItemView.tv_car);
+//            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
+//                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
+//                    JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+//                    List<String> list = new ArrayList<String>();
+//                    for (int i = 0; i < jsonArray.size(); i++)
+//                    {
+//                        list.add(jsonArray.getString(i));
+//                    }
+//                    showDialog_carNumber(list,sellOrder_new);
+//                }
+//            });
+            if (sellOrder.getFreeDeposit().equals("1"))
             {
+                listItemView.tv_depositStatus.setText("免付定金");
+            } else
+            {
+                listItemView.tv_depositStatus.setText("已付定金");
+            }
+            listItemView.btn_orderdetail.setTag(R.id.tag_bean, sellOrder);
+            listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
-                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
-                    JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
-                    List<String> list = new ArrayList<String>();
-                    for (int i = 0; i < jsonArray.size(); i++)
-                    {
-                        list.add(jsonArray.getString(i));
-                    }
-                    showDialog_carNumber(list,sellOrder_new);
+                    Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
+                    intent.putExtra("bean", sellOrder_new);
+                    context.startActivity(intent);
                 }
             });
             listItemView.btn_addjsd.setTag(R.id.tag_eventlisttp, sellOrder);
@@ -200,16 +224,16 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());*/
                 }
             });
-            listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
-            listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    String phone = (String) v.getTag();
-                    showDialog_addsaleinfo(phone);
-                }
-            });
+//            listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
+//            listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    String phone = (String) v.getTag();
+//                    showDialog_addsaleinfo(phone);
+//                }
+//            });
             listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
             listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
             listItemView.btn_changetime.setOnClickListener(new View.OnClickListener()
@@ -223,8 +247,8 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                     myDatepicker.getDialog().show();
                 }
             });
-            listItemView.btn_preparework.setTag(R.id.tag_danwei, sellOrder);
-            listItemView.btn_preparework.setOnClickListener(new View.OnClickListener()
+            listItemView.view_cardetail.setTag(R.id.tag_danwei, sellOrder);
+            listItemView.view_cardetail.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -237,33 +261,43 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                     context.startActivity(intent);
                 }
             });
-            listItemView.ll_car.setTag(R.id.tag_contract, sellOrder);
-            listItemView.ll_car.setTag(R.id.tag_batchtime, listItemView);
-            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
+//            listItemView.ll_car.setTag(R.id.tag_contract, sellOrder);
+//            listItemView.ll_car.setTag(R.id.tag_batchtime, listItemView);
+//            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_contract);
+//                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
+//                    JSONArray jsonArray = null;
+//                    try
+//                    {
+//                        jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+//                    } catch (Exception e)
+//                    {
+//
+//                    }
+//                    List<String> list = new ArrayList<String>();
+//                    for (int i = 0; i < jsonArray.size(); i++)
+//                    {
+//                        list.add(jsonArray.getString(i));
+//                    }
+//                    showDialog_workday(list, sellOrder_new);
+//                }
+//            });
+            listItemView.view_buyer_call.setTag(sellOrder.getBuyersPhone());
+            listItemView.view_buyer_call.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_contract);
-                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
-                    JSONArray jsonArray = null;
-                    try
-                    {
-                        jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
-                    } catch (Exception e)
-                    {
-
-                    }
-                    List<String> list = new ArrayList<String>();
-                    for (int i = 0; i < jsonArray.size(); i++)
-                    {
-                        list.add(jsonArray.getString(i));
-                    }
-                    showDialog_workday(list, sellOrder_new);
+                    String phone = (String) v.getTag();
+                    showDialog_addsaleinfo(phone);
                 }
             });
-            listItemView.ll_mainpeople.setTag(sellOrder.getMainPeoplePhone());
-            listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener()
+            listItemView.view_mainpeople_call.setTag(sellOrder.getMainPeoplePhone());
+            listItemView.view_mainpeople_call.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)

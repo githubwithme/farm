@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -107,22 +108,26 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
 
     static class ListItemView
     {
-        public LinearLayout ll_buyer;
-        public LinearLayout ll_mainpeople;
-        public LinearLayout ll_car;
+//        public LinearLayout ll_buyer;
+//        public LinearLayout ll_mainpeople;
+//        public LinearLayout ll_car;
+        public View view_cardetail;
+        public View view_buyer_call;
+        public View view_mainpeople_call;
         public TextView tv_buyer;
         public TextView tv_preparestatus;
         public TextView tv_car;
         public TextView tv_orderstate;
-        public TextView tv_mainpeple;
+        public TextView tv_mainpeople;
         public TextView tv_product;
         public TextView tv_parkname;
         public Button btn_cancleorder;
-        public Button btn_preparework;
+        //        public Button btn_preparework;
+        public Button btn_orderdetail;
         public Button btn_editorder;
         public Button btn_changetime;
         public CircleImageView circleImageView;
-        public RelativeLayout weijiuxu;
+//        public RelativeLayout weijiuxu;
     }
 
     //设置子item的组件
@@ -142,34 +147,38 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.adapter_pgorderplan_child, null);
             listItemView = new ListItemView();
-            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
-            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
-            listItemView.ll_buyer = (LinearLayout) convertView.findViewById(R.id.ll_buyer);
+//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
+            listItemView.view_buyer_call = (View) convertView.findViewById(R.id.view_buyer_call);
+            listItemView.view_mainpeople_call = (View) convertView.findViewById(R.id.view_mainpeople_call);
+            listItemView.view_cardetail = (View) convertView.findViewById(R.id.view_cardetail);
+//            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
+//            listItemView.ll_buyer = (LinearLayout) convertView.findViewById(R.id.ll_buyer);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_preparestatus = (TextView) convertView.findViewById(R.id.tv_preparestatus);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
-            listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
+            listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
-            listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
+//            listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
+            listItemView.btn_orderdetail = (Button) convertView.findViewById(R.id.btn_orderdetail);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
-            listItemView.weijiuxu = (RelativeLayout) convertView.findViewById(R.id.weijiuxu);
-            convertView.setTag(listItemView);
-            convertView.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
-                    intent.putExtra("bean", sellOrder_new);
-                    context.startActivity(intent);
-
-                }
-            });
+//            listItemView.weijiuxu = (RelativeLayout) convertView.findViewById(R.id.weijiuxu);
+//            listItemView.btn_orderdetail.setTag(listItemView);
+//            listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
+//                    intent.putExtra("bean", sellOrder_new);
+//                    context.startActivity(intent);
+//
+//                }
+//            });
             listItemView.btn_cancleorder.setTag(R.id.tag_cash, sellOrder_new);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
@@ -182,8 +191,8 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
             });
 
 
-            listItemView.btn_preparework.setTag(R.id.tag_danwei, sellOrder_new);
-            listItemView.btn_preparework.setOnClickListener(new View.OnClickListener()
+            listItemView.view_cardetail.setTag(R.id.tag_danwei, sellOrder_new);
+            listItemView.view_cardetail.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -191,6 +200,18 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
                     Intent intent = new Intent(context, RecoveryDetail_.class);
                     intent.putExtra("uuid", sellOrder_new.getUuid());
+                    context.startActivity(intent);
+                }
+            });
+            listItemView.btn_orderdetail.setTag(R.id.tag_bean, sellOrder_new);
+            listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
+                    Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
+                    intent.putExtra("bean", sellOrder_new);
                     context.startActivity(intent);
                 }
             });
@@ -219,25 +240,25 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
             });*/
-            listItemView.ll_car.setTag(R.id.tag_bean, sellOrder_new);
-            listItemView.ll_car.setTag(R.id.tag_text, listItemView.tv_car);
-            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
-                    tv_car = (TextView) v.getTag(R.id.tag_text);
-                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
-                    JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
-                    List<String> list = new ArrayList<String>();
-                    for (int i = 0; i < jsonArray.size(); i++)
-                    {
-                        list.add(jsonArray.getString(i));
-                    }
-                    showDialog_carNumber(list, sellOrder_new);
-                }
-            });
+//            listItemView.ll_car.setTag(R.id.tag_bean, sellOrder_new);
+//            listItemView.ll_car.setTag(R.id.tag_text, listItemView.tv_car);
+//            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
+//                    tv_car = (TextView) v.getTag(R.id.tag_text);
+//                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
+//                    JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+//                    List<String> list = new ArrayList<String>();
+//                    for (int i = 0; i < jsonArray.size(); i++)
+//                    {
+//                        list.add(jsonArray.getString(i));
+//                    }
+//                    showDialog_carNumber(list, sellOrder_new);
+//                }
+//            });
             listItemView.btn_editorder.setTag(R.id.tag_postion, childPosition);
             listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder_new);
             listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
@@ -265,8 +286,8 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
                 }
             });
 
-            listItemView.ll_buyer.setTag(R.id.tag_fi, sellOrder_new.getBuyersPhone());
-            listItemView.ll_buyer.setOnClickListener(new View.OnClickListener()
+            listItemView.view_buyer_call.setTag(R.id.tag_fi, sellOrder_new.getBuyersPhone());
+            listItemView.view_buyer_call.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -275,8 +296,8 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
                     showDialog_addsaleinfo(phone);
                 }
             });
-            listItemView.ll_mainpeople.setTag(R.id.tag_czdl, sellOrder_new.getMainPeoplePhone());
-            listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener()
+            listItemView.view_mainpeople_call.setTag(R.id.tag_czdl, sellOrder_new.getMainPeoplePhone());
+            listItemView.view_mainpeople_call.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -304,19 +325,19 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
 
             listItemView.tv_buyer.setText(sellOrder_new.getBuyersName());
             listItemView.tv_orderstate.setText(sellOrder_new.getSelltype());
-            listItemView.tv_mainpeple.setText(sellOrder_new.getMainPeople());
+            listItemView.tv_mainpeople.setText(sellOrder_new.getMainPeople());
             if (sellOrder_new.getSelltype().equals("已付定金"))
             {
-                listItemView.tv_orderstate.setTextColor(context.getResources().getColor(R.color.gray));
+//                listItemView.tv_orderstate.setTextColor(context.getResources().getColor(R.color.gray));
                 listItemView.tv_preparestatus.setTextColor(context.getResources().getColor(R.color.red));
                 if (sellOrder_new.getIsReady().equals("False"))
                 {
                     listItemView.tv_preparestatus.setText("未就绪");
-                    listItemView.weijiuxu.setVisibility(View.INVISIBLE);
+//                    listItemView.weijiuxu.setVisibility(View.INVISIBLE);
                 } else
                 {
                     listItemView.tv_preparestatus.setText("已就绪");
-                    listItemView.weijiuxu.setVisibility(View.GONE);
+//                    listItemView.weijiuxu.setVisibility(View.GONE);
                 }
 
             } else
@@ -411,31 +432,41 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.adapter_pgorderplan_parent, null);
             TextView tv_ordernumber = (TextView) convertView.findViewById(R.id.tv_ordernumber);
-            GridView gv = (GridView) convertView.findViewById(R.id.gv);
-            TextView tv_datenote = (TextView) convertView.findViewById(R.id.tv_datenote);
+//            GridView gv = (GridView) convertView.findViewById(R.id.gv);
+//            TextView tv_datenote = (TextView) convertView.findViewById(R.id.tv_datenote);
             TextView tv_carnumber = (TextView) convertView.findViewById(R.id.tv_carnumber);
             TextView tv_notPayDepositNumber = (TextView) convertView.findViewById(R.id.tv_notPayDepositNumber);
             TextView tv_paidDepositNumber = (TextView) convertView.findViewById(R.id.tv_paidDepositNumber);
             TextView tv_notreadyNumber = (TextView) convertView.findViewById(R.id.tv_notreadyNumber);
             TextView tv_readyNumber = (TextView) convertView.findViewById(R.id.tv_readyNumber);
-            TextView tv_date = (TextView) convertView.findViewById(R.id.tv_date);
-
-
-            String date = listData.get(groupPosition).getDate();
-            tv_date.setText(date);
-            if (date.equals(utils.getToday().toString()))
+//            TextView tv_date = (TextView) convertView.findViewById(R.id.tv_date);
+            TextView tv_day = (TextView) convertView.findViewById(R.id.tv_day);
+            TextView tv_year = (TextView) convertView.findViewById(R.id.tv_year);
+            FrameLayout fl_year = (FrameLayout) convertView.findViewById(R.id.fl_year);
+            TextView tv_month = (TextView) convertView.findViewById(R.id.tv_month);
+            if (groupPosition == 0)
             {
-                tv_datenote.setText("今天");
-            } else
-            {
-                tv_datenote.setText(utils.OffSetOfDate_OrderDate(utils.getToday(), date));
+                fl_year.setVisibility(View.VISIBLE);
+                tv_year.setText(utils.getYear());
             }
-            tv_notPayDepositNumber.setText(listData.get(groupPosition).getNotPayDepositNumber() + "单");
-            tv_paidDepositNumber.setText(listData.get(groupPosition).getPaidDepositNumber() + "单");
-            tv_notreadyNumber.setText(listData.get(groupPosition).getNotreadyNumber() + "单");
-            tv_readyNumber.setText(listData.get(groupPosition).getReadyNumber() + "单");
-            tv_carnumber.setText("合计" + listData.get(groupPosition).getCarNumber() + "车");
-            tv_ordernumber.setText("合计" + listData.get(groupPosition).getOrderNumber() + "单");
+            String date = listData.get(groupPosition).getDate();
+            tv_month.setText(date.substring(5, 7) + "月");
+            tv_day.setText(date.substring(date.lastIndexOf("-") + 1, date.length()));
+//            String date = listData.get(groupPosition).getDate();
+//            tv_date.setText(date);
+//            if (date.equals(utils.getToday().toString()))
+//            {
+//                tv_datenote.setText("今天");
+//            } else
+//            {
+//                tv_datenote.setText(utils.OffSetOfDate_OrderDate(utils.getToday(), date));
+//            }
+            tv_notPayDepositNumber.setText(listData.get(groupPosition).getNotPayDepositNumber());
+            tv_paidDepositNumber.setText(listData.get(groupPosition).getPaidDepositNumber());
+            tv_notreadyNumber.setText(listData.get(groupPosition).getNotreadyNumber());
+            tv_readyNumber.setText(listData.get(groupPosition).getReadyNumber());
+            tv_carnumber.setText(listData.get(groupPosition).getCarNumber());
+            tv_ordernumber.setText(listData.get(groupPosition).getOrderNumber());
 //            Adapter_OrderPlan_Parentitem adapter_orderPlan_parentitem = new Adapter_OrderPlan_Parentitem(context, listData.get(groupPosition).getOrderPlanList());
 //            gv.setAdapter(adapter_orderPlan_parentitem);
 //            utils.setGridViewHeight(gv);
@@ -496,7 +527,7 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
         custom_calltip.show();
     }
 
-    public void showDialog_carNumber(List<String> list,final SellOrder_New sellOrder_new)
+    public void showDialog_carNumber(List<String> list, final SellOrder_New sellOrder_new)
     {
         View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(context, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()

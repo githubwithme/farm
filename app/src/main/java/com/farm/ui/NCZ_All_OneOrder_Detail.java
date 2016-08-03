@@ -51,7 +51,10 @@ import java.util.Map;
 @EActivity(R.layout.ncz_new_jsdandplan_detail)
 public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
-
+    @ViewById
+    CustomHorizontalScrollView_Allitem item_scroll_title;
+    @ViewById
+    CustomHorizontalScrollView_Allitem totalScroll;
     @ViewById
     TextView tv_cbh;
     Adapter_New_SellDetail adapter_sellOrderDetail;
@@ -145,14 +148,19 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         goodsName.setText(sellOrder_new.getProduct());
         tv_finalpayment.setText(sellOrder_new.getAddress());
     }
-
+    @AfterViews
+    void afterOncreate()
+    {
+        customOntouch = this;
+        item_scroll_title.setCuttomOntouch(customOntouch);
+        totalScroll.setCuttomOntouch(customOntouch);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder_new = getIntent().getParcelableExtra("bean");
-
     }
 
     @Override
@@ -203,8 +211,8 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
 
                         DensityUtil densityUtil = new DensityUtil(NCZ_All_OneOrder_Detail.this);
                         screenWidth = densityUtil.getScreenWidth();
-                        int size = 3;
-                        if (size == 2)
+                        int size = 2;
+                        if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
                         } else if (size == 2)
@@ -220,7 +228,21 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                         alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
 
+      /*                  pg_cbf_adapter = new PG_CBF_CLAdapyer(JSD_Detail.this, listNewData, "", "");
+                        liat_jsd.setAdapter(pg_cbf_adapter);
+                        utils.setListViewHeight(liat_jsd);
 
+                        liat_jsd.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                        {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                            {
+                                SellOrder_New sellOrder_news=listData.get(i);
+                                Intent intent = new Intent(JSD_Detail.this, PG_JSD_Detail_.class);
+                                intent.putExtra("bean", sellOrder_news);
+                                startActivity(intent);
+                            }
+                        });*/
 
                     } else
                     {
@@ -250,7 +272,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         ll_park.removeAllViews();
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) NCZ_All_OneOrder_Detail.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        String[] name = new String[]{"车牌号","实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
+        String[] name = new String[]{"实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
 //        String[] name = new String[]{"实际金额", "合计金额"};
         for (int i = 0; i < name.length; i++)
         {
@@ -268,12 +290,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
             double totalnumber = 0;
             switch (i)
             {
-
                 case 0:
-                    tv_total.setText("-");
-                    ll_total.addView(view);
-                    break;
-                case 1:
 
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -285,7 +302,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 2:
+                case 1:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -297,7 +314,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 3:
+                case 2:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -309,12 +326,12 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 4:
+                case 3:
 
                     tv_total.setText("-");
                     ll_total.addView(view);
                     break;
-                case 5:
+                case 4:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -326,7 +343,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 6:
+                case 5:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -338,7 +355,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 7:
+                case 6:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -350,7 +367,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 8:
+                case 7:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -362,7 +379,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 9:
+                case 8:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -378,17 +395,18 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         }
 
         Map<String, String> data = null;
-        CustomHorizontalScrollView_Allitem headerScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.item_scroll_title);
-        headerScroll.setCuttomOntouch(customOntouch);
-        CustomHorizontalScrollView_Allitem totalScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.totalScroll);
+//        CustomHorizontalScrollView_Allitem headerScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.item_scroll_title);
+        item_scroll_title.setCuttomOntouch(customOntouch);
+//        CustomHorizontalScrollView_Allitem totalScroll = (CustomHorizontalScrollView_Allitem) findViewById(R.id.totalScroll);
         totalScroll.setCuttomOntouch(customOntouch);
         // 添加头滑动事件
-        mHScrollViews.add(headerScroll);
+        mHScrollViews.add(item_scroll_title);
         mHScrollViews.add(totalScroll);
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
 
         mAdapter = new ScrollAdapter();
         mListView.setAdapter(mAdapter);
+        utils.setListViewHeight(mListView);
     }
 
     public void addHViews(final CustomHorizontalScrollView_Allitem hScrollView)
@@ -429,7 +447,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         {
             public TextView item_titlev;
             public TextView item_total;
-            public TextView btn_data;
+            public TextView tv_data;
         }
 
         @Override
@@ -462,13 +480,18 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
             convertView = LayoutInflater.from(NCZ_All_OneOrder_Detail.this).inflate(R.layout.customhorizontscrollview_allitem, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-//            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-//            listItemView.item_total.getLayoutParams().width = (screenWidth);
+            listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
 
 
-            listItemView.item_titlev.setText("结算单"+(position+1));
+            listItemView.item_titlev.setText(listData.get(position).getBatchTime());
+            listItemView = new ListItemView();
+            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+            listItemView.item_total.getLayoutParams().width = (screenWidth);
 
             if (listData.get(position).getIsNeedAudit().equals("0"))
             {
@@ -484,94 +507,89 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
             listItemView.item_titlev.setTag(R.id.tag_batchtime, listData.get(position));
             listItemView.item_titlev.setOnClickListener(clickListener);
             // 第一次初始化的时候装进来
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 8; i++)
             {
-                View view = LayoutInflater.from(NCZ_All_OneOrder_Detail.this).inflate(R.layout.pg_breakoff_dataitem, null);
-                listItemView.btn_data = (TextView) view.findViewById(R.id.tv_data);
+                View view = LayoutInflater.from(NCZ_All_OneOrder_Detail.this).inflate(R.layout.ncz_orderdetail_dataitem, null);
+                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
+
 
                 switch (i)
                 {
                     case 0:
-                        listItemView.btn_data.setText(listData.get(position).getPlateNumber());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getActualMoney());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 1:
-                        listItemView.btn_data.setText(listData.get(position).getActualMoney());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getTotalFee());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 2:
-                        listItemView.btn_data.setText(listData.get(position).getTotalFee());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getTotalWeight());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 3:
-                        listItemView.btn_data.setText(listData.get(position).getTotalWeight());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
-                        ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
-                        break;
-                    case 4:
                         if (listData.get(position).getIsNeedAudit().equals("0"))
                         {
-                            listItemView.btn_data.setText("待审批");
+                            listItemView.tv_data.setText("待审批");
                         } else if (listData.get(position).getIsNeedAudit().equals("1"))
                         {
-                            listItemView.btn_data.setText("审批通过");
+                            listItemView.tv_data.setText("审批通过");
                         } else if (listData.get(position).getIsNeedAudit().equals("-1"))
                         {
-                            listItemView.btn_data.setText("审批不通过");
+                            listItemView.tv_data.setText("审批不通过");
                         }
 
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
+                        break;
+                    case 4:
+                        listItemView.tv_data.setText(listData.get(position).getQualityBalance());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
+                        ll_middle.addView(view);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 5:
-                        listItemView.btn_data.setText(listData.get(position).getQualityBalance());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getActualprice());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 6:
-                        listItemView.btn_data.setText(listData.get(position).getActualprice());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getQualityTotalWeight());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 7:
-                        listItemView.btn_data.setText(listData.get(position).getQualityTotalWeight());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getPackFee());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 8:
-                        listItemView.btn_data.setText(listData.get(position).getPackFee());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        listItemView.tv_data.setText(listData.get(position).getCarryFee());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
-                        break;
-                    case 9:
-                        listItemView.btn_data.setText(listData.get(position).getCarryFee());
-                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
-                        ll_middle.addView(view);
-                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
-                        listItemView.btn_data.setOnClickListener(clickListener);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                 }
+//            String [] name=new String []{"实际金额","合计金额","总净重",,"正品结算金额","正品单价","正品净重","总包装费","总搬运费"};
             }
             // 第一次初始化的时候装进来
             CustomHorizontalScrollView_Allitem customHorizontalScrollView_pgSale = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);

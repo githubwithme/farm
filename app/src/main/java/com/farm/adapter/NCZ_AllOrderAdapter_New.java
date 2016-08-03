@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,7 +28,9 @@ import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
 import com.farm.common.utils;
+import com.farm.ui.NCZ_All_OneOrder_Detail_;
 import com.farm.ui.NCZ_EditOrder_;
+import com.farm.ui.NCZ_Look_JSD_;
 import com.farm.ui.RecoveryDetail_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
@@ -35,6 +38,7 @@ import com.farm.widget.CustomDialog_ListView;
 import com.farm.widget.MyDateMaD;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.db.annotation.Check;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -66,22 +70,29 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter
 
     static class ListItemView
     {
-        public TextView tv_mainpeple;
+        public TextView tv_mainpeople;
+        public TextView tv_depositStatus;
+        public View view_buyer_call;
+        public View view_mainpeople_call;
+        public View view_showSettlement;
+        public View view_cardetail;
+        public CheckBox cb_AllowRelease;
         public TextView tv_parkname;
-        public TextView tv_prepareworkStatus;
+        //        public TextView tv_prepareworkStatus;
         public TextView tv_buyer;
         public TextView tv_orderstate;
         public TextView tv_product;
         public TextView tv_car;
+        public Button btn_orderdetail;
         public Button btn_cancleorder;
-        public Button btn_preparework;
+        //        public Button btn_preparework;
         public Button btn_editorder;
-        public Button btn_changetime;
+        //        public Button btn_changetime;
         public CircleImageView circleImageView;
-        public LinearLayout ll_car;
-        public LinearLayout ll_undeposit;
-        public LinearLayout ll_unfinalpay;
-        public LinearLayout ll_mainpeople;
+        //        public LinearLayout ll_car;
+//        public LinearLayout ll_undeposit;
+        //        public LinearLayout ll_unfinalpay;
+//        public LinearLayout ll_mainpeople;
     }
 
     public NCZ_AllOrderAdapter_New(Context context, List<SellOrder_New> data, String broadcast)
@@ -120,48 +131,55 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter
             convertView = listContainer.inflate(R.layout.adapter_nczallorder_new, null);
             listItemView = new ListItemView();
             // 获取控件对象
+            listItemView.cb_AllowRelease = (CheckBox) convertView.findViewById(R.id.cb_AllowRelease);
+            listItemView.view_cardetail = (View) convertView.findViewById(R.id.view_cardetail);
+            listItemView.view_showSettlement = (View) convertView.findViewById(R.id.view_showSettlement);
+            listItemView.view_mainpeople_call = (View) convertView.findViewById(R.id.view_mainpeople_call);
+            listItemView.view_buyer_call = (View) convertView.findViewById(R.id.view_buyer_call);
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
-            listItemView.tv_prepareworkStatus = (TextView) convertView.findViewById(R.id.tv_prepareworkStatus);
+//            listItemView.tv_prepareworkStatus = (TextView) convertView.findViewById(R.id.tv_prepareworkStatus);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
-            listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
-            listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
+//            listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
+            listItemView.btn_orderdetail = (Button) convertView.findViewById(R.id.btn_orderdetail);
+//            listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
-            listItemView.tv_mainpeple = (TextView) convertView.findViewById(R.id.tv_mainpeple);
+            listItemView.tv_depositStatus = (TextView) convertView.findViewById(R.id.tv_depositStatus);
+            listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
-            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
-            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
-            listItemView.ll_unfinalpay = (LinearLayout) convertView.findViewById(R.id.ll_unfinalpay);
-            listItemView.ll_undeposit = (LinearLayout) convertView.findViewById(R.id.ll_undeposit);
-            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
+//            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
+//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
+//            listItemView.ll_unfinalpay = (LinearLayout) convertView.findViewById(R.id.ll_unfinalpay);
+//            listItemView.ll_undeposit = (LinearLayout) convertView.findViewById(R.id.ll_undeposit);
+//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
             if (sellOrder.getFreeDeposit().equals("1"))
             {
-                listItemView.ll_undeposit.setVisibility(View.VISIBLE);
+                listItemView.tv_depositStatus.setText("免付定金");
             } else
             {
-                listItemView.ll_undeposit.setVisibility(View.GONE);
+                listItemView.tv_depositStatus.setText("未知");
             }
             if (sellOrder.getFreeFinalPay().equals("1"))
             {
-                listItemView.ll_unfinalpay.setVisibility(View.VISIBLE);
+                listItemView.cb_AllowRelease.setSelected(true);
             } else
             {
-                listItemView.ll_unfinalpay.setVisibility(View.GONE);
+                listItemView.cb_AllowRelease.setSelected(false);
             }
             listItemView.tv_orderstate.setText(sellOrder.getSelltype());
             listItemView.tv_parkname.setText(sellOrder.getParkname());
-            listItemView.tv_mainpeple.setText(sellOrder.getMainPeople());
+            listItemView.tv_mainpeople.setText(sellOrder.getMainPeople());
             listItemView.tv_car.setText(sellOrder.getCarNumber());
 
-    /*        listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
-            listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
+            listItemView.view_buyer_call.setTag(sellOrder.getBuyersPhone());
+            listItemView.view_buyer_call.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -169,57 +187,45 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter
                     String phone = (String) v.getTag();
                     showDialog_addsaleinfo(phone);
                 }
-            });*/
-            listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
-            listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
-            listItemView.btn_changetime.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
-                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
-                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "1");
-                    myDatepicker.getDialog().show();
-                }
             });
-            listItemView.btn_preparework.setTag(R.id.tag_danwei, sellOrder);
-            listItemView.btn_preparework.setOnClickListener(new View.OnClickListener()
+            listItemView.btn_orderdetail.setTag(sellOrder);
+            listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    Intent intent = new Intent(context, RecoveryDetail_.class);
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag();
+                    Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
+                    intent.putExtra("bean", sellOrder_new);
                     context.startActivity(intent);
                 }
             });
-            listItemView.ll_car.setTag(R.id.tag_contract, sellOrder);
-            listItemView.ll_car.setTag(R.id.tag_batchtime, listItemView);
-            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
+            listItemView.view_cardetail.setTag(sellOrder);
+            listItemView.view_cardetail.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_contract);
-                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
-                    JSONArray jsonArray = null;
-                    try
-                    {
-                        jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
-                    } catch (Exception e)
-                    {
-
-                    }
-                    List<String> list = new ArrayList<String>();
-                    for (int i = 0; i < jsonArray.size(); i++)
-                    {
-                        list.add(jsonArray.getString(i));
-                    }
-                    showDialog_workday(list, sellOrder_new);
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag();
+                    Intent intent = new Intent(context, RecoveryDetail_.class);
+                    intent.putExtra("uuid", sellOrder_new.getUuid());
+                    context.startActivity(intent);
                 }
             });
-            listItemView.ll_mainpeople.setTag(sellOrder.getMainPeoplePhone());
-            listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener()
+            listItemView.view_showSettlement.setTag(sellOrder);
+            listItemView.view_showSettlement.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag();
+                    Intent intent = new Intent(context, NCZ_Look_JSD_.class);
+                    intent.putExtra("zbstudio", sellOrder_new);
+                    context.startActivity(intent);
+                }
+            });
+            listItemView.view_mainpeople_call.setTag(sellOrder.getMainPeople());
+            listItemView.view_mainpeople_call.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -228,6 +234,53 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter
                     showDialog_addsaleinfo(phone);
                 }
             });
+//            listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
+//            listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
+//            listItemView.btn_changetime.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    SellOrder_New sellOrders = (SellOrder_New) view.getTag(R.id.tag_hg);
+//                    ListItemView listItemView2 = (ListItemView) view.getTag(R.id.tag_kg);
+//                    MyDateMaD myDatepicker = new MyDateMaD(context, sellOrders, "1");
+//                    myDatepicker.getDialog().show();
+//                }
+//            });
+//            listItemView.btn_preparework.setTag(R.id.tag_danwei, sellOrder);
+//            listItemView.btn_preparework.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(context, RecoveryDetail_.class);
+//                    context.startActivity(intent);
+//                }
+//            });
+//            listItemView.ll_car.setTag(R.id.tag_contract, sellOrder);
+//            listItemView.ll_car.setTag(R.id.tag_batchtime, listItemView);
+//            listItemView.ll_car.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_contract);
+//                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
+//                    JSONArray jsonArray = null;
+//                    try {
+//                        jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+//                    } catch (Exception e) {
+//
+//                    }
+//                    List<String> list = new ArrayList<String>();
+//                    for (int i = 0; i < jsonArray.size(); i++) {
+//                        list.add(jsonArray.getString(i));
+//                    }
+//                    showDialog_workday(list, sellOrder_new);
+//                }
+//            });
+//            listItemView.ll_mainpeople.setTag(sellOrder.getMainPeoplePhone());
+//            listItemView.ll_mainpeople.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    String phone = (String) v.getTag();
+//                    showDialog_addsaleinfo(phone);
+//                }
+//            });
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.btn_cancleorder.setTag(R.id.tag_cash, sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()

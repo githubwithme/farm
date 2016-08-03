@@ -185,16 +185,16 @@ public class NCZ_AllOrderFragment_New extends Fragment
                     listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                     listAdapter = new NCZ_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                     lv.setAdapter(listAdapter);
-                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                    {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                        {
-                            Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
-                            intent.putExtra("bean", listData.get(position));
-                            getActivity().startActivity(intent);
-                        }
-                    });
+//                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//                    {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//                        {
+//                            Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
+//                            intent.putExtra("bean", listData.get(position));
+//                            getActivity().startActivity(intent);
+//                        }
+//                    });
 
 
                 } else

@@ -110,7 +110,7 @@ public class PG_WaitForSettlementFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.ncz_waitforsettlementfragment, container, false);
+        View rootView = inflater.inflate(R.layout.pg_waitforsettlementfragment, container, false);
         appContext = (AppContext) getActivity().getApplication();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_FARMMANAGER);
         getActivity().registerReceiver(receiver_update, intentfilter_update);
