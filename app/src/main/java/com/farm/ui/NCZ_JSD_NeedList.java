@@ -183,7 +183,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
         ll_park.removeAllViews();
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) NCZ_JSD_NeedList.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        String[] name = new String[]{"实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
+        String[] name = new String[]{"结算单","实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
 //        String[] name = new String[]{"实际金额", "合计金额"};
         for (int i = 0; i < name.length; i++)
         {
@@ -203,6 +203,13 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
             {
                 case 0:
 
+
+                    tv_total.setText("-");
+                    ll_total.addView(view);
+                    break;
+
+                case 1:
+
                     for (int j = 0; j < listData.size(); j++)
                     {
                         if (!listData.get(j).getActualMoney().equals(""))
@@ -213,7 +220,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 1:
+                case 2:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -225,7 +232,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 2:
+                case 3:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -237,12 +244,12 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 3:
+                case 4:
 
                     tv_total.setText("-");
                     ll_total.addView(view);
                     break;
-                case 4:
+                case 5:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -254,7 +261,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 5:
+                case 6:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -266,7 +273,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 6:
+                case 7:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -278,7 +285,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 7:
+                case 8:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -290,7 +297,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 8:
+                case 9:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -356,7 +363,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
         {
             public TextView item_titlev;
             public TextView item_total;
-            public Button btn_data;
+            public TextView btn_data;
         }
 
         @Override
@@ -402,50 +409,58 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
             listItemView.item_total.getLayoutParams().width = (screenWidth);
 
-            if (listData.get(position).getIsNeedAudit().equals("0"))
+            if (listData.get(position).getIsNeedAudit().equals("0")||listData.get(position).getSettlestatus().equals("0"))
             {
 
-            } else if (listData.get(position).getIsNeedAudit().equals("1"))
+            } else if (listData.get(position).getIsNeedAudit().equals("1")||listData.get(position).getSettlestatus().equals("1"))
             {
                 listItemView.item_titlev.setTextColor(NCZ_JSD_NeedList.this.getResources().getColor(R.color.green));
-            } else if (listData.get(position).getIsNeedAudit().equals("-1"))
+            } else if (listData.get(position).getIsNeedAudit().equals("-1")||listData.get(position).getSettlestatus().equals("-1"))
             {
                 listItemView.item_titlev.setTextColor(NCZ_JSD_NeedList.this.getResources().getColor(R.color.red));
             }
-            listItemView.item_titlev.setText(listData.get(position).getPlateNumber());
+            listItemView.item_titlev.setText("结算单"+(position+1));
             listItemView.item_titlev.setTag(R.id.tag_batchtime, listData.get(position));
             listItemView.item_titlev.setOnClickListener(clickListener);
             // 第一次初始化的时候装进来
             for (int i = 0; i < 8; i++)
             {
                 View view = LayoutInflater.from(NCZ_JSD_NeedList.this).inflate(R.layout.pg_breakoff_dataitem, null);
-                listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
+                listItemView.btn_data = (TextView) view.findViewById(R.id.tv_data);
 
 
                 switch (i)
                 {
+
                     case 0:
-                        listItemView.btn_data.setText(listData.get(position).getActualMoney());
+                        listItemView.btn_data.setText(listData.get(position).getPlateNumber());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
                     case 1:
-                        listItemView.btn_data.setText(listData.get(position).getTotalFee());
+                        listItemView.btn_data.setText(listData.get(position).getActualMoney());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
                     case 2:
-                        listItemView.btn_data.setText(listData.get(position).getTotalWeight());
+                        listItemView.btn_data.setText(listData.get(position).getTotalFee());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
                     case 3:
+                        listItemView.btn_data.setText(listData.get(position).getTotalWeight());
+                        listItemView.btn_data.getLayoutParams().width = (screenWidth);
+                        ll_middle.addView(view);
+                        listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.btn_data.setOnClickListener(clickListener);
+                        break;
+                    case 4:
                         if (listData.get(position).getIsNeedAudit().equals("0"))
                         {
                             listItemView.btn_data.setText("待审批");
@@ -462,35 +477,35 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
-                    case 4:
+                    case 5:
                         listItemView.btn_data.setText(listData.get(position).getQualityBalance());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
-                    case 5:
+                    case 6:
                         listItemView.btn_data.setText(listData.get(position).getActualprice());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
-                    case 6:
+                    case 7:
                         listItemView.btn_data.setText(listData.get(position).getQualityTotalWeight());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
-                    case 7:
+                    case 8:
                         listItemView.btn_data.setText(listData.get(position).getPackFee());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
-                    case 8:
+                    case 9:
                         listItemView.btn_data.setText(listData.get(position).getCarryFee());
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
@@ -521,8 +536,8 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
             sellOrder_neww= (SellOrder_New) v.getTag(R.id.tag_batchtime);
             Intent intent = new Intent(NCZ_JSD_NeedList.this, NCZ__NeedOrder_Detail_.class);
             intent.putExtra("bean", sellOrder_neww);
-//            intent.putExtra("parkname", parkname);
-//            intent.putExtra("batchTime", batchTimes);
+            intent.putExtra("sellOrder_new", sellOrder_new);
+
             NCZ_JSD_NeedList.this.startActivity(intent);
 
         }

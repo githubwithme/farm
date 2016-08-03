@@ -151,16 +151,10 @@ public class NCZ_WaitForSettlementFragment extends Fragment {
     private void getAllOrders() {
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("year", utils.getYear());
-//        params.addQueryStringParameter("type", "0");
-//        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//jobGetList1
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("parkid", parkId);
         params.addQueryStringParameter("productname", cpname);
         params.addQueryStringParameter("buyer", cgsId);
-
-
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("status", "0");
         params.addQueryStringParameter("action", "NCZ_getWaitForSettlementOrder");

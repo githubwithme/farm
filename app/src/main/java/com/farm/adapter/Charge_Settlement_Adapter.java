@@ -126,6 +126,7 @@ public class Charge_Settlement_Adapter extends BaseAdapter
         listItemView.cipin.setText(sellOrderDetail_new.getplanprice());
         listItemView.zhengpin.setText(sellOrderDetail_new.getactualprice());
         listItemView.zhushu.setText(sellOrderDetail_new.getactualnumber());
+        listItemView.other_value.setText(sellOrderDetail_new.getCutBananaFee());
 
 
         shengyuliang = (TextView) convertView.findViewById(R.id.jh_zhushu);
@@ -154,13 +155,14 @@ public class Charge_Settlement_Adapter extends BaseAdapter
         return 0;
     }
 
-    private void ChangeSellOrderDetailSec(SellOrderDetail_New sellOrderDetail_new,String actualnumber,String actualprice, String planprice )
+    private void ChangeSellOrderDetailSec(SellOrderDetail_New sellOrderDetail_new,String actualnumber,String actualprice, String planprice,String cutBananaFee )
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("id", sellOrderDetail_new.getid());
         params.addQueryStringParameter("actualnumber", actualnumber);
         params.addQueryStringParameter("actualprice",actualprice);
         params.addQueryStringParameter("planprice", planprice);
+        params.addQueryStringParameter("cutBananaFee", cutBananaFee);
         params.addQueryStringParameter("action", "ChangeSellOrderDetailSec");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
@@ -238,14 +240,17 @@ public class Charge_Settlement_Adapter extends BaseAdapter
                 {
                       if (type.equals("1"))
                       {
-                          ChangeSellOrderDetailSec(sellOrderDetail_new, et_number.getText().toString(), "", "");
+                          ChangeSellOrderDetailSec(sellOrderDetail_new, et_number.getText().toString(), "", "","");
                       }else if (type.equals("2"))
                       {
-                          ChangeSellOrderDetailSec(sellOrderDetail_new, "", et_number.getText().toString(), "");
+                          ChangeSellOrderDetailSec(sellOrderDetail_new, "", et_number.getText().toString(), "","");
                       }
                       else if (type.equals("3"))
                       {
-                          ChangeSellOrderDetailSec(sellOrderDetail_new,"","",et_number.getText().toString());
+                          ChangeSellOrderDetailSec(sellOrderDetail_new,"","",et_number.getText().toString(),"");
+                      }else if(type.equals("4"))
+                      {
+                          ChangeSellOrderDetailSec(sellOrderDetail_new,"","","",et_number.getText().toString());
                       }
 
                 }

@@ -230,6 +230,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
             });
+/*
             listItemView.tv_car.setTag(R.id.tag_bean, sellOrder_new);
             listItemView.tv_car.setTag(R.id.tag_text, listItemView.tv_car);
             listItemView.tv_car.setOnClickListener(new View.OnClickListener()
@@ -248,7 +249,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
                     }
                     showDialog_carNumber(list, sellOrder_new);
                 }
-            });
+            });*/
             listItemView.btn_editorder.setTag(R.id.tag_postion, childPosition);
             listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder_new);
             listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
@@ -304,6 +305,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
 
             //数据添加
 
+/*
             if (sellOrder_new.getCarNumber().equals(""))
             {
                 listItemView.tv_car.setText("0车");
@@ -311,6 +313,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             {
                 listItemView.tv_car.setText(sellOrder_new.getCarNumber() + "车");
             }
+*/
 
             listItemView.tv_buyer.setText(sellOrder_new.getBuyersName());
             listItemView.tv_orderstate.setText(sellOrder_new.getSelltype());

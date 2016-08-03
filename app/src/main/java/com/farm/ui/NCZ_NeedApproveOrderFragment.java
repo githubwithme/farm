@@ -152,13 +152,6 @@ public class NCZ_NeedApproveOrderFragment extends Fragment {
         params.addQueryStringParameter("type", "0");
         params.addQueryStringParameter("isApprove", "1");//不为空
         params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
-//        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("parkid", "-1");
-//        params.addQueryStringParameter("productname","-1");
-//        params.addQueryStringParameter("buyer","-1");
-//        params.addQueryStringParameter("year", utils.getYear());
-//        params.addQueryStringParameter("status", "0");
-//        params.addQueryStringParameter("action", "NCZ_getOrderPlan");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
             @Override

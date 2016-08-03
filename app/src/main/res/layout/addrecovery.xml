@@ -50,7 +50,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="80px"
         android:background="@color/white">
 
 
@@ -218,6 +217,8 @@
 
         </RelativeLayout>
     </LinearLayout>
+
+
 
 
 </LinearLayout>

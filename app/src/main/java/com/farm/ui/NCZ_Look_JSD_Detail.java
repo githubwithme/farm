@@ -2,6 +2,7 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -14,6 +15,7 @@ import com.farm.bean.SellOrder_New;
 import com.farm.common.utils;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -21,7 +23,7 @@ import org.androidannotations.annotations.ViewById;
  * Created by hasee on 2016/7/19.
  */
 
-@EActivity(R.layout.ncz_look_jsd)
+@EActivity(R.layout.ncz_look_jsd_detail)
 public class NCZ_Look_JSD_Detail extends Activity
 {
     NCZ_Look_JSD_Adapter ncz_look_jsd_adapter;
@@ -122,9 +124,34 @@ public class NCZ_Look_JSD_Detail extends Activity
 
     SellOrder_New sellOrder_new;
 
+
+    @Click
+    void is_jsd()
+    {
+        if (!ll_jsd.isShown())
+        {
+            ll_jsd.setVisibility(View.VISIBLE);
+        } else
+        {
+            ll_jsd.setVisibility(View.GONE);
+        }
+    }
+
+    @Click
+    void isgoods_xx()
+    {
+        if (!goods_xx.isShown())
+        {
+            goods_xx.setVisibility(View.VISIBLE);
+        } else
+        {
+            goods_xx.setVisibility(View.GONE);
+        }
+    }
     @AfterViews
     void afterview()
     {
+
         showData();
     }
 

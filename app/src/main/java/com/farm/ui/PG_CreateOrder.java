@@ -305,13 +305,13 @@ public class PG_CreateOrder extends Activity
     @Click
     void btn_back()
     {
-        cancleOrder();
+//        cancleOrder();
     }
 
     @Click
     void btn_cancleorder()
     {
-        cancleOrder();
+//        cancleOrder();
     }
 
     @Click
@@ -522,6 +522,7 @@ public class PG_CreateOrder extends Activity
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String str = formatter.format(curDate);
         dd_time.setText(str);*/
+        getNewSaleList();
         dd_bz.setInputType(InputType.TYPE_NULL);
         dd_by.setInputType(InputType.TYPE_NULL);
         getpurchaser("");
@@ -976,7 +977,7 @@ public class PG_CreateOrder extends Activity
         });
         myDialog.show();
     }
-
+/*
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
@@ -986,7 +987,7 @@ public class PG_CreateOrder extends Activity
         }
         return false;
 
-    }
+    }*/
 
     //获取人员列表
     private void getlistdata()

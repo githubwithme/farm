@@ -272,7 +272,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         ll_park.removeAllViews();
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) NCZ_All_OneOrder_Detail.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        String[] name = new String[]{"实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
+        String[] name = new String[]{"结算单","实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
 //        String[] name = new String[]{"实际金额", "合计金额"};
         for (int i = 0; i < name.length; i++)
         {
@@ -292,6 +292,12 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
             {
                 case 0:
 
+
+                    tv_total.setText("-");
+                    ll_total.addView(view);
+                    break;
+                case 1:
+
                     for (int j = 0; j < listData.size(); j++)
                     {
                         if (!listData.get(j).getActualMoney().equals(""))
@@ -302,7 +308,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 1:
+                case 2:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -314,7 +320,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 2:
+                case 3:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -326,12 +332,12 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 3:
+                case 4:
 
                     tv_total.setText("-");
                     ll_total.addView(view);
                     break;
-                case 4:
+                case 5:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -343,7 +349,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 5:
+                case 6:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -355,7 +361,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 6:
+                case 7:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -367,7 +373,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 7:
+                case 8:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -379,7 +385,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                     tv_total.setText(String.valueOf(totalnumber));
                     ll_total.addView(view);
                     break;
-                case 8:
+                case 9:
                     totalnumber = 0;
                     for (int j = 0; j < listData.size(); j++)
                     {
@@ -480,18 +486,18 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
             convertView = LayoutInflater.from(NCZ_All_OneOrder_Detail.this).inflate(R.layout.customhorizontscrollview_allitem, null);
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+//            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-            listItemView.item_total.getLayoutParams().width = (screenWidth);
+//            listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
 
 
             listItemView.item_titlev.setText(listData.get(position).getBatchTime());
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+//            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-            listItemView.item_total.getLayoutParams().width = (screenWidth);
+//            listItemView.item_total.getLayoutParams().width = (screenWidth);
 
             if (listData.get(position).getIsNeedAudit().equals("0"))
             {
@@ -503,7 +509,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
             {
                 listItemView.item_titlev.setTextColor(NCZ_All_OneOrder_Detail.this.getResources().getColor(R.color.red));
             }
-            listItemView.item_titlev.setText(listData.get(position).getPlateNumber());
+            listItemView.item_titlev.setText("结算单"+(position+1));
             listItemView.item_titlev.setTag(R.id.tag_batchtime, listData.get(position));
             listItemView.item_titlev.setOnClickListener(clickListener);
             // 第一次初始化的时候装进来
@@ -515,28 +521,36 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
 
                 switch (i)
                 {
+
                     case 0:
-                        listItemView.tv_data.setText(listData.get(position).getActualMoney());
+                        listItemView.tv_data.setText(listData.get(position).getPlateNumber());
                         listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 1:
-                        listItemView.tv_data.setText(listData.get(position).getTotalFee());
+                        listItemView.tv_data.setText(listData.get(position).getActualMoney());
                         listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 2:
-                        listItemView.tv_data.setText(listData.get(position).getTotalWeight());
+                        listItemView.tv_data.setText(listData.get(position).getTotalFee());
                         listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 3:
+                        listItemView.tv_data.setText(listData.get(position).getTotalWeight());
+                        listItemView.tv_data.getLayoutParams().width = (screenWidth);
+                        ll_middle.addView(view);
+                        listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
+                        listItemView.tv_data.setOnClickListener(clickListener);
+                        break;
+                    case 4:
                         if (listData.get(position).getIsNeedAudit().equals("0"))
                         {
                             listItemView.tv_data.setText("待审批");
@@ -553,35 +567,35 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                         listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.tv_data.setOnClickListener(clickListener);
                         break;
-                    case 4:
+                    case 5:
                         listItemView.tv_data.setText(listData.get(position).getQualityBalance());
                         listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.tv_data.setOnClickListener(clickListener);
                         break;
-                    case 5:
+                    case 6:
                         listItemView.tv_data.setText(listData.get(position).getActualprice());
                         listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.tv_data.setOnClickListener(clickListener);
                         break;
-                    case 6:
+                    case 7:
                         listItemView.tv_data.setText(listData.get(position).getQualityTotalWeight());
                         listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.tv_data.setOnClickListener(clickListener);
                         break;
-                    case 7:
+                    case 8:
                         listItemView.tv_data.setText(listData.get(position).getPackFee());
                         listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));
                         listItemView.tv_data.setOnClickListener(clickListener);
                         break;
-                    case 8:
+                    case 9:
                         listItemView.tv_data.setText(listData.get(position).getCarryFee());
                         listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
@@ -610,7 +624,8 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
             SellOrder_New sellOrder_news = new SellOrder_New();
             sellOrder_news = (SellOrder_New) v.getTag(R.id.tag_batchtime);
-            Intent intent = new Intent(NCZ_All_OneOrder_Detail.this, PG_JSD_Detail_.class);
+
+            Intent intent = new Intent(NCZ_All_OneOrder_Detail.this, NCZ_Look_JSD_Detail_.class);
             intent.putExtra("bean", sellOrder_news);
             startActivity(intent);
 

@@ -307,13 +307,13 @@ public class CZ_CreateOrder extends Activity
     @Click
     void btn_back()
     {
-        cancleOrder();
+//        cancleOrder();
     }
 
     @Click
     void btn_cancleorder()
     {
-        cancleOrder();
+//        cancleOrder();
     }
 
     @Click
@@ -496,6 +496,7 @@ public class CZ_CreateOrder extends Activity
         getpurchaser("");
         getchanpin();
         getlistdata();
+        getNewSaleList();
         deleNewSaleAddsalefor();
         et_price.addTextChangedListener(new TextWatcher()
         {
@@ -939,7 +940,7 @@ public class CZ_CreateOrder extends Activity
         myDialog.show();
     }
 
-    @Override
+/*    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
         if (keyCode == KeyEvent.KEYCODE_BACK)
@@ -948,7 +949,7 @@ public class CZ_CreateOrder extends Activity
         }
         return false;
 
-    }
+    }*/
 
     //获取人员列表
     private void getlistdata()
