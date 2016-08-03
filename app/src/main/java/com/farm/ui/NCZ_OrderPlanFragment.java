@@ -110,21 +110,7 @@ public class NCZ_OrderPlanFragment extends Fragment
         }
     };
 
-    private void getNewSaleList_test()
-    {
-        listNewData = FileHelper.getAssetsData(getActivity(), "getOrderPlanList", OrderPlanBean.class);
-        if (listNewData != null)
-        {
-            adapter_orderPlan = new Adapter_OrderPlan(getActivity(), listNewData, AppContext.BROADCAST_UPDATEAllORDER, expandableListView);
-            expandableListView.setAdapter(adapter_orderPlan);
 
-//            for (int i = 0; i < listNewData.size(); i++)
-//            {
-//                expandableListView.expandGroup(i);//展开
-//            }
-        }
-
-    }
 
     private void getOrderPlan()
     {

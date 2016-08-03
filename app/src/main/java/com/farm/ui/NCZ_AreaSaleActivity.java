@@ -540,8 +540,8 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 name = parklist.get(postion).getParkName();
                 pw_tab.dismiss();
                 tv_parkname.setText(parklist.get(postion).getParkName() + "库存量");
-                parkid = parklist.get(0).getId();
-                name=parklist.get(0).getParkName();
+                parkid = parklist.get(postion).getId();
+                name=parklist.get(postion).getParkName();
                 getBatchTimeOfPark();
             }
         });

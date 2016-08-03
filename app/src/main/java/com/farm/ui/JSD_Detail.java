@@ -166,21 +166,7 @@ public class JSD_Detail extends Activity
                     alltoatal.getLayoutParams().width = (screenWidth);
                     initViews();
 
-      /*                  pg_cbf_adapter = new PG_CBF_CLAdapyer(JSD_Detail.this, listNewData, "", "");
-                        liat_jsd.setAdapter(pg_cbf_adapter);
-                        utils.setListViewHeight(liat_jsd);
 
-                        liat_jsd.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                        {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-                            {
-                                SellOrder_New sellOrder_news=listData.get(i);
-                                Intent intent = new Intent(JSD_Detail.this, PG_JSD_Detail_.class);
-                                intent.putExtra("bean", sellOrder_news);
-                                startActivity(intent);
-                            }
-                        });*/
 
 //                    } else
                     {
@@ -211,7 +197,6 @@ public class JSD_Detail extends Activity
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) JSD_Detail.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         String[] name = new String[]{"车牌号","实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
-//        String[] name = new String[]{"实际金额", "合计金额"};
         for (int i = 0; i < name.length; i++)
         {
             View view = inflater.inflate(R.layout.pg_breakoff_contractitem, null);
@@ -347,17 +332,7 @@ public class JSD_Detail extends Activity
         mListView = (ListView) findViewById(R.id.hlistview_scroll_list);
         mAdapter = new ScrollAdapter();
         mListView.setAdapter(mAdapter);
-/*        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-            {
-                SellOrder_New sellOrder_news=listData.get(i);
-                Intent intent = new Intent(JSD_Detail.this, PG_JSD_Detail_.class);
-                intent.putExtra("bean", sellOrder_news);
-                startActivity(intent);
-            }
-        });*/
+
     }
 
 
@@ -384,7 +359,7 @@ public class JSD_Detail extends Activity
         {
             public TextView item_titlev;
             public TextView item_total;
-            public Button btn_data;
+            public TextView btn_data;
         }
 
         @Override
@@ -439,8 +414,7 @@ public class JSD_Detail extends Activity
             for (int i = 0; i < 9; i++)
             {
                 View view = LayoutInflater.from(JSD_Detail.this).inflate(R.layout.pg_breakoff_dataitem, null);
-                listItemView.btn_data = (Button) view.findViewById(R.id.btn_data);
-
+                listItemView.btn_data = (TextView) view.findViewById(R.id.tv_data);
 
                 switch (i)
                 {
@@ -528,7 +502,6 @@ public class JSD_Detail extends Activity
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
                 }
-//            String [] name=new String []{"实际金额","合计金额","总净重",,"正品结算金额","正品单价","正品净重","总包装费","总搬运费"};
             }
             // 第一次初始化的时候装进来
             addHViews((CustomHorizontalScrollView_JSDDetail) convertView.findViewById(R.id.item_chscroll_scroll));
