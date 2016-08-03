@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,7 +59,7 @@ import java.util.List;
 @EActivity(R.layout.ncz_areasaleactivity)
 public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
-    DialogFragment_WaitTip dialog;
+
     String parkid;
     @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
@@ -106,6 +108,14 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     @ViewById
     RelativeLayout rl_view;
 
+    DialogFragment_WaitTip dialog;
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(NCZ_AreaSaleActivity.this.getFragmentManager(), "TIP");
+    }
 
     @Click
     void ib_suspen_menu()
@@ -115,7 +125,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
 //            getParkList();
 //        } else
 //        {
-            showPop_Menu();
+        showPop_Menu();
 //        }
     }
 
@@ -148,12 +158,11 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     @AfterViews
     void afterOncreate()
     {
+        showDialog_waitTip();
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
-//        getNewSaleList_test();
         getParkList();
-//        getBatchTimeOfPark();
     }
 
     @Override
@@ -541,7 +550,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 pw_tab.dismiss();
                 tv_parkname.setText(parklist.get(postion).getParkName() + "库存量");
                 parkid = parklist.get(postion).getId();
-                name=parklist.get(postion).getParkName();
+                name = parklist.get(postion).getParkName();
                 getBatchTimeOfPark();
             }
         });
@@ -603,8 +612,8 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 pw_tab.dismiss();
                 //        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_CreateNewOrder_.class);
                 Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SelectProduct_.class);
-                intent.putExtra("parkid",parkid);
-                intent.putExtra("parkname",name);
+                intent.putExtra("parkid", parkid);
+                intent.putExtra("parkname", name);
                 //        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SelectProduct_New_.class);
                 startActivity(intent);
             }
@@ -634,7 +643,6 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
 
     private void getParkList()
     {
-        showDialog_waitTip();
         com.farm.bean.commembertab commembertab = AppContext.getUserInfo(NCZ_AreaSaleActivity.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -659,13 +667,16 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                     }
                     tv_parkname.setText(parklist.get(0).getParkName() + "库存量");
                     parkid = parklist.get(0).getId();
-                    name=parklist.get(0).getParkName();
+                    name = parklist.get(0).getParkName();
                     getBatchTimeOfPark();
                 } else
                 {
                     AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectDataBase");
+//                    loadingTip(getText(R.string.error_data).toString());
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
+//                fl_loadingtip.setVisibility(View.GONE);
                 dialog.dismiss();
             }
 
@@ -674,7 +685,8 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             {
                 String a = error.getMessage();
                 AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectServer");
-                dialog.dismiss();
+//                loadingTip(getText(R.string.error_network).toString());
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
 
@@ -749,11 +761,5 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         }
     }
 
-    public void showDialog_waitTip()
-    {
-        dialog = new DialogFragment_WaitTip();
-        Bundle bundle1 = new Bundle();
-        dialog.setArguments(bundle1);
-        dialog.show(NCZ_AreaSaleActivity.this.getFragmentManager(), "TIP");
-    }
+
 }

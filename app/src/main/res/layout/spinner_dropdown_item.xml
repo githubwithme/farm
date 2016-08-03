@@ -7,7 +7,8 @@
         android:id="@+id/tv_dropdown"
         android:layout_width="match_parent"
         android:layout_height="45dip"
+        android:alpha="0.5"
         android:gravity="center"
-        android:textColor="@color/bg_text"
+        android:textColor="@color/text_table_horizontitle"
         android:textSize="13sp"/>
 </LinearLayout>

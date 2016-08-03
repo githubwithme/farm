@@ -306,10 +306,10 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
 
             if (sellOrder_new.getCarNumber().equals(""))
             {
-                listItemView.tv_car.setText("0车");
+                listItemView.tv_car.setText("共0车；");
             } else
             {
-                listItemView.tv_car.setText(sellOrder_new.getCarNumber() + "车");
+                listItemView.tv_car.setText("共"+sellOrder_new.getCarNumber() + "车；");
             }
 
             listItemView.tv_buyer.setText(sellOrder_new.getBuyersName());
@@ -428,6 +428,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
 //            GridView gv = (GridView) convertView.findViewById(R.id.gv);
 //            TextView tv_datenote = (TextView) convertView.findViewById(R.id.tv_datenote);
             TextView tv_carnumber = (TextView) convertView.findViewById(R.id.tv_carnumber);
+            View view_dottedline = (View) convertView.findViewById(R.id.view_dottedline);
             TextView tv_notPayDepositNumber = (TextView) convertView.findViewById(R.id.tv_notPayDepositNumber);
             TextView tv_paidDepositNumber = (TextView) convertView.findViewById(R.id.tv_paidDepositNumber);
             TextView tv_notreadyNumber = (TextView) convertView.findViewById(R.id.tv_notreadyNumber);
@@ -435,7 +436,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             TextView tv_day = (TextView) convertView.findViewById(R.id.tv_day);
             TextView tv_month = (TextView) convertView.findViewById(R.id.tv_month);
 //            TextView tv_date = (TextView) convertView.findViewById(R.id.tv_date);
-
+            view_dottedline.setLayerType(View.LAYER_TYPE_SOFTWARE, null);//关闭硬件加速，显示虚线正常
             if (groupPosition == 0)
             {
                 fl_year.setVisibility(View.VISIBLE);
@@ -445,12 +446,6 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             String date = listData.get(groupPosition).getDate();
             tv_month.setText(date.substring(5, 7) + "月");
             tv_day.setText(date.substring(date.lastIndexOf("-") + 1, date.length()));
-//            tv_date.setText(date);
-//            if (date.equals(utils.getToday().toString())) {
-//                tv_datenote.setText("今天");
-//            } else {
-//                tv_datenote.setText(utils.OffSetOfDate_OrderDate(utils.getToday(), date));
-//            }
 
             tv_notPayDepositNumber.setText(listData.get(groupPosition).getNotPayDepositNumber());
             tv_paidDepositNumber.setText(listData.get(groupPosition).getPaidDepositNumber());

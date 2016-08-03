@@ -248,8 +248,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
             @Override
             public void onClick(View view)
             {
-                SellOrder_New sellOrdesr = new SellOrder_New();
-                sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_cash);
+                SellOrder_New sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_cash);
                 if (!sellOrdesr.getSettlestatus().equals("0"))
                 {
                     Intent intent = new Intent(context, NCZ_DD_SH_Detail_.class);

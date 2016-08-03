@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                         android:text="1"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        android:visibility="gone" />
+                        android:visibility="gone"/>
 
                     <View
                         android:id="@+id/view_user"
@@ -54,7 +54,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dip"
                         android:layout_toRightOf="@+id/tv_number"
-                        android:background="@mipmap/icon_buyyer" />
+                        android:background="@mipmap/icon_buyyer"/>
 
                     <LinearLayout
                         android:id="@+id/ll_buyer"
@@ -73,7 +73,7 @@
                             android:gravity="center"
                             android:text="李总"
                             android:textColor="@color/text_table_horizontitle"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"/>
 
                         <View
                             android:id="@+id/view_buyer_call"
@@ -81,7 +81,7 @@
                             android:layout_height="20dip"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dip"
-                            android:background="@mipmap/icon_phone" />
+                            android:background="@mipmap/icon_phone"/>
                     </LinearLayout>
 
 
@@ -94,7 +94,7 @@
                         android:src="@color/red"
                         android:visibility="gone"
                         app:border_color="@color/red"
-                        app:border_width="0dp" />
+                        app:border_width="0dp"/>
 
                 </RelativeLayout>
 
@@ -106,11 +106,11 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dip"
-                    android:background="@mipmap/icon_vehicle_empty"
+                    android:background="@drawable/btn_vehicle_delete_green"
                     android:gravity="center"
                     android:minWidth="60dip"
                     android:textColor="@color/gray"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <Button
                     android:id="@+id/btn_editorder"
@@ -119,17 +119,17 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dip"
                     android:layout_toLeftOf="@+id/btn_cancleorder"
-                    android:background="@mipmap/icon_vehicle_empty"
+                    android:background="@drawable/btn_vehicle_edit_green"
                     android:gravity="center"
                     android:minWidth="60dip"
                     android:textColor="@color/gray"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color" />
+                android:background="@color/line_color"/>
 
 
             <RelativeLayout
@@ -146,7 +146,7 @@
                     android:gravity="center"
                     android:text="订单状态"
                     android:textColor="@color/text_table_horizontitle"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/tv_orderstate"
@@ -159,14 +159,14 @@
                     android:paddingRight="10dip"
                     android:text="待结算"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/line_color"
-                android:visibility="gone" />/>
+                android:visibility="gone"/>/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -183,7 +183,7 @@
                     android:gravity="center"
                     android:text="准备状态"
                     android:textColor="@color/text_table_horizontitle"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
 
                 <TextView
@@ -197,14 +197,14 @@
                     android:paddingRight="10dip"
                     android:text="未就绪"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/line_color"
-                android:visibility="gone" />/>
+                android:visibility="gone"/>/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -221,7 +221,7 @@
                     android:gravity="center"
                     android:text="产品"
                     android:textColor="@color/text_table_horizontitle"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/tv_product"
@@ -234,13 +234,13 @@
                     android:paddingRight="10dip"
                     android:text="香蕉"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color" />/>
+                android:background="@color/line_color"/>/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -256,7 +256,7 @@
                     android:gravity="center"
                     android:text="区域"
                     android:textColor="@color/text_table_horizontitle"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/tv_parkname"
@@ -269,13 +269,13 @@
                     android:paddingRight="10dip"
                     android:text="一号园区"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color" />/>
+                android:background="@color/line_color"/>/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -291,7 +291,7 @@
                     android:gravity="center"
                     android:text="车辆"
                     android:textColor="@color/text_table_horizontitle"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -308,7 +308,7 @@
                         android:gravity="center"
                         android:text="共3车；"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -319,7 +319,7 @@
                         android:gravity="center"
                         android:text="已就绪："
                         android:textColor="@color/titlebar_top"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:id="@+id/tv_readynumber"
@@ -331,7 +331,7 @@
                         android:gravity="center"
                         android:text="1车；"
                         android:textColor="@color/text_table_horizontitle"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -342,7 +342,7 @@
                         android:gravity="center"
                         android:text="未就绪："
                         android:textColor="@color/titlebar_top"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:id="@+id/tv_notreadynumber"
@@ -354,7 +354,7 @@
                         android:gravity="center"
                         android:text="2车"
                         android:textColor="@color/text_table_horizontitle"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
 
                     <View
@@ -363,7 +363,7 @@
                         android:layout_height="20dip"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dip"
-                        android:background="@mipmap/icon_arrow_left_red" />
+                        android:background="@mipmap/icon_arrow_left_red"/>
 
                 </LinearLayout>
 
@@ -373,7 +373,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color" />/>
+                android:background="@color/line_color"/>/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -389,7 +389,7 @@
                     android:gravity="center"
                     android:text="允许先行放车"
                     android:textColor="@color/text_table_horizontitle"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <CheckBox
                     android:id="@+id/cb_AllowRelease"
@@ -402,13 +402,13 @@
                     android:gravity="center"
                     android:paddingRight="10dip"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color" />/>
+                android:background="@color/line_color"/>/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -424,7 +424,7 @@
                     android:gravity="center"
                     android:text="定金"
                     android:textColor="@color/text_table_horizontitle"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/tv_depositStatus"
@@ -437,14 +437,14 @@
                     android:paddingRight="10dip"
                     android:text="免付定金"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </RelativeLayout>
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color" />/>
+                android:background="@color/line_color"/>/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -460,7 +460,7 @@
                     android:gravity="center"
                     android:text="结算单"
                     android:textColor="@color/text_table_horizontitle"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -477,7 +477,7 @@
                         android:gravity="center"
                         android:text="已上报3份；"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
 
                     <TextView
@@ -489,7 +489,7 @@
                         android:gravity="center"
                         android:text="结算成功："
                         android:textColor="@color/titlebar_top"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:id="@+id/tv_settlement_successnumber"
@@ -501,7 +501,7 @@
                         android:gravity="center"
                         android:text="1份；"
                         android:textColor="@color/text_table_horizontitle"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -512,7 +512,7 @@
                         android:gravity="center"
                         android:text="等待结算："
                         android:textColor="@color/titlebar_top"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:id="@+id/tv_waitforsettlementnumber"
@@ -524,7 +524,7 @@
                         android:gravity="center"
                         android:text="2份"
                         android:textColor="@color/text_table_horizontitle"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
 
                     <View
@@ -533,7 +533,7 @@
                         android:layout_height="20dip"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dip"
-                        android:background="@mipmap/icon_arrow_left_red" />
+                        android:background="@mipmap/icon_arrow_left_red"/>
 
                 </LinearLayout>
 
@@ -543,7 +543,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/titlebar_top" />/>
+                android:background="@color/titlebar_top"/>/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -559,7 +559,7 @@
                     android:gravity="left"
                     android:text="负责人："
                     android:textColor="@color/text_table_horizontitle"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/tv_mainpeople"
@@ -570,7 +570,7 @@
                     android:gravity="left"
                     android:text="暂无"
                     android:textColor="@color/text_table_horizontitle"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <View
                     android:id="@+id/view_mainpeople_call"
@@ -580,7 +580,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dip"
                     android:layout_toRightOf="@+id/tv_mainpeople"
-                    android:background="@mipmap/icon_phone" />/>
+                    android:background="@mipmap/icon_phone"/>/>
 
 
                 <Button
@@ -594,14 +594,14 @@
                     android:minWidth="60dip"
                     android:text="订单详情"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <View
                     android:id="@+id/view_line1"
                     android:layout_width="1px"
                     android:layout_height="match_parent"
                     android:layout_toLeftOf="@+id/btn_orderdetail"
-                    android:background="@color/line_color" />/>
+                    android:background="@color/line_color"/>/>
 
 
                 <Button
@@ -617,14 +617,14 @@
                     android:paddingRight="5dip"
                     android:text="查看结算单"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <View
                     android:id="@+id/view_line2"
                     android:layout_width="1px"
                     android:layout_height="match_parent"
                     android:layout_toLeftOf="@+id/btn_showSettlement"
-                    android:background="@color/line_color" />/>
+                    android:background="@color/line_color"/>/>
 
 
                 <Button
@@ -640,7 +640,7 @@
                     android:paddingRight="5dip"
                     android:text="完成订单"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
 
             </RelativeLayout>

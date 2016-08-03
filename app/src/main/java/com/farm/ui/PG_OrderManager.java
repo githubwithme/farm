@@ -97,6 +97,7 @@ public class PG_OrderManager extends Activity
     TextView tv_number_waitingForHarvest;
     @ViewById
     TextView tv_number_waitingForSettlement;
+
     @Click
     void btn_back()
     {
@@ -170,45 +171,60 @@ public class PG_OrderManager extends Activity
         IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATELISTNUMBER);
         registerReceiver(receiver_update, intentfilter_update);
     }
+
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Context context, Intent intent)
+        {
             String type = intent.getStringExtra("type");
             int number = intent.getIntExtra("number", 0);
-            if (type.equals(AppContext.order_waitForApprove)) {
-                if (number > 0) {
+            if (type.equals(AppContext.order_waitForApprove))
+            {
+                if (number > 0)
+                {
                     tv_number_needapprove.setVisibility(View.VISIBLE);
                     tv_number_needapprove.setText("(" + number + ")");
-                } else {
+                } else
+                {
                     tv_number_needapprove.setVisibility(View.GONE);
                 }
 
-            } else if (type.equals(AppContext.order_waitForDeposit)) {
-                if (number > 0) {
+            } else if (type.equals(AppContext.order_waitForDeposit))
+            {
+                if (number > 0)
+                {
                     tv_number_notpaydeposit.setVisibility(View.VISIBLE);
                     tv_number_notpaydeposit.setText("(" + number + ")");
-                } else {
+                } else
+                {
                     tv_number_notpaydeposit.setVisibility(View.GONE);
                 }
-            } else if (type.equals(AppContext.order_waitForHarvest)) {
-                if (number > 0) {
+            } else if (type.equals(AppContext.order_waitForHarvest))
+            {
+                if (number > 0)
+                {
                     tv_number_waitingForHarvest.setVisibility(View.VISIBLE);
                     tv_number_waitingForHarvest.setText("(" + number + ")");
-                } else {
+                } else
+                {
                     tv_number_waitingForHarvest.setVisibility(View.GONE);
                 }
-            } else if (type.equals(AppContext.order_waitForSettlement)) {
-                if (number > 0) {
+            } else if (type.equals(AppContext.order_waitForSettlement))
+            {
+                if (number > 0)
+                {
                     tv_number_waitingForSettlement.setVisibility(View.VISIBLE);
                     tv_number_waitingForSettlement.setText("(" + number + ")");
-                } else {
+                } else
+                {
                     tv_number_waitingForSettlement.setVisibility(View.GONE);
                 }
             }
         }
     };
+
     public void switchContent(Fragment from, Fragment to)
     {
         if (mContent != to)

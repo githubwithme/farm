@@ -106,7 +106,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dip"
-                    android:background="@mipmap/icon_vehicle_empty"
+                    android:background="@drawable/btn_vehicle_delete_green"
                     android:gravity="center"
                     android:minWidth="60dip"
                     android:textColor="@color/gray"
@@ -119,7 +119,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dip"
                     android:layout_toLeftOf="@+id/btn_cancleorder"
-                    android:background="@mipmap/icon_vehicle_empty"
+                    android:background="@drawable/btn_vehicle_edit_green"
                     android:gravity="center"
                     android:minWidth="60dip"
                     android:textColor="@color/gray"
@@ -306,7 +306,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="共3车；"
+                        android:text="共0车；"
                         android:textColor="@color/titlebar_top"
                         android:textSize="12sp" />
 
@@ -329,7 +329,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="1车；"
+                        android:text="0车；"
                         android:textColor="@color/text_table_horizontitle"
                         android:textSize="12sp" />
 
@@ -352,7 +352,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="2车"
+                        android:text="0车"
                         android:textColor="@color/text_table_horizontitle"
                         android:textSize="12sp" />
 

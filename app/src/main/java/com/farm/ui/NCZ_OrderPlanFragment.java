@@ -140,7 +140,7 @@ public class NCZ_OrderPlanFragment extends Fragment
 //                    {
 //                        expandableListView.expandGroup(i);//展开
 //                    }
-                    
+
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");

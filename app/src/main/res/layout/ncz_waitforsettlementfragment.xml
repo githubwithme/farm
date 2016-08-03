@@ -34,10 +34,12 @@
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:background="@color/line_color"/>
 
         <FrameLayout
             android:layout_width="0dip"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_weight="1">
 

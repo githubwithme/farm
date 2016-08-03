@@ -34,12 +34,14 @@
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/line_color"/>
+            android:background="@color/line_color"
+            android:visibility="gone"/>
 
         <FrameLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:visibility="gone">
 
             <Spinner
                 android:id="@+id/citySpinner"
@@ -91,13 +93,12 @@
         android:orientation="vertical">
 
 
-
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <View
                 android:layout_width="5dip"
@@ -142,8 +143,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/transparent"
-        android:scrollbars="none"
-        android:dividerHeight="0dip"/>
+        android:dividerHeight="0dip"
+        android:scrollbars="none"/>
 
 
 </LinearLayout>

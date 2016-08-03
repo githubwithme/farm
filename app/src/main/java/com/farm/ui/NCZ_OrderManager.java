@@ -7,20 +7,36 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.Adapter_FilferData_Sale;
+import com.farm.adapter.Adapter_SelectProduct;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.FilferBean_Sale;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
+import com.farm.common.FileHelper;
 import com.farm.common.utils;
+import com.farm.widget.CustomExpandableListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -41,7 +57,11 @@ import java.util.List;
  * Created by ${hmj} on 2016/5/16.
  */
 @EActivity(R.layout.ncz_ordermanager)
-public class NCZ_OrderManager extends Activity {
+public class NCZ_OrderManager extends Activity
+{
+    List<FilferBean_Sale> list_filferbean;
+    PopupWindow pw_tab;
+    View pv_tab;
     //    NCZ_AllOrderFragment ncz_allOrderFragment;//删除
     //    NCZ_DealingOrderFragment ncz_dealingOrderFragment;//完成
 //    NCZ_ScheduleOrderFragment ncz_scheduleOrderFragment;//排单
@@ -55,6 +75,8 @@ public class NCZ_OrderManager extends Activity {
     Fragment mContent = new Fragment();
     @ViewById
     Button btn_back;
+    @ViewById
+    View view_topline;
     @ViewById
     TextView tv_allorder;//全部订单
     @ViewById
@@ -102,46 +124,62 @@ public class NCZ_OrderManager extends Activity {
     TextView tv_number_waitingForSettlement;
 
     @Click
-    void btn_back() {
+    void btn_back()
+    {
         finish();
     }
 
     @Click
-    void btn_filfer() {
+    void btn_filfer()
+    {
+        if (list_filferbean == null)
+        {
+            getSaleFilferData();
+        } else
+        {
+            showPop_Filfer();
+        }
+
     }
 
     @Click
-    void tv_schedule() {
+    void tv_schedule()
+    {
         setBackground(0);
         switchContent(mContent, ncz_orderPlanFragment);
     }
 
     @Click
-    void tv_pending() {
+    void tv_pending()
+    {
         setBackground(1);
         switchContent(mContent, ncz_needApproveOrderFragment);
     }
 
     @Click
-    void tv_notpaydeposit() {
+    void tv_notpaydeposit()
+    {
         setBackground(2);
         switchContent(mContent, ncz_notPayDepositFragment);
     }
 
     @Click
-    void tv_waitingForHarvest() {
+    void tv_waitingForHarvest()
+    {
         setBackground(3);
         switchContent(mContent, ncz_waitForHarvestFragment);
     }
 
     @Click
-    void tv_waitingForSettlement() {
+    void tv_waitingForSettlement()
+    {
         setBackground(4);
         switchContent(mContent, ncz_waitForSettlementFragment);
     }
 
     @Click
-    void tv_allorder() {
+    void tv_allorder()
+    {
         setBackground(5);
         switchContent(mContent, ncz_allOrderFragment_new);
 
@@ -149,15 +187,18 @@ public class NCZ_OrderManager extends Activity {
 
 
     @AfterViews
-    void afterOncreate() {
+    void afterOncreate()
+    {
 //        getNeedOrders();
 //        getAllOrders();
         setBackground(0);
         switchContent(mContent, ncz_orderPlanFragment);
+        getSaleFilferData();
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         ncz_orderPlanFragment = new NCZ_OrderPlanFragment_();
@@ -170,59 +211,82 @@ public class NCZ_OrderManager extends Activity {
         registerReceiver(receiver_update, intentfilter_update);
     }
 
+    private void getSaleFilferData()
+    {
+        list_filferbean = FileHelper.getAssetsData(NCZ_OrderManager.this, "getSaleFilferData", FilferBean_Sale.class);
+    }
+
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Context context, Intent intent)
+        {
             String type = intent.getStringExtra("type");
             int number = intent.getIntExtra("number", 0);
-            if (type.equals(AppContext.order_waitForApprove)) {
-                if (number > 0) {
+            if (type.equals(AppContext.order_waitForApprove))
+            {
+                if (number > 0)
+                {
                     tv_number_needapprove.setVisibility(View.VISIBLE);
                     tv_number_needapprove.setText("(" + number + ")");
-                } else {
+                } else
+                {
                     tv_number_needapprove.setVisibility(View.GONE);
                 }
 
-            } else if (type.equals(AppContext.order_waitForDeposit)) {
-                if (number > 0) {
+            } else if (type.equals(AppContext.order_waitForDeposit))
+            {
+                if (number > 0)
+                {
                     tv_number_notpaydeposit.setVisibility(View.VISIBLE);
                     tv_number_notpaydeposit.setText("(" + number + ")");
-                } else {
+                } else
+                {
                     tv_number_notpaydeposit.setVisibility(View.GONE);
                 }
-            } else if (type.equals(AppContext.order_waitForHarvest)) {
-                if (number > 0) {
+            } else if (type.equals(AppContext.order_waitForHarvest))
+            {
+                if (number > 0)
+                {
                     tv_number_waitingForHarvest.setVisibility(View.VISIBLE);
                     tv_number_waitingForHarvest.setText("(" + number + ")");
-                } else {
+                } else
+                {
                     tv_number_waitingForHarvest.setVisibility(View.GONE);
                 }
-            } else if (type.equals(AppContext.order_waitForSettlement)) {
-                if (number > 0) {
+            } else if (type.equals(AppContext.order_waitForSettlement))
+            {
+                if (number > 0)
+                {
                     tv_number_waitingForSettlement.setVisibility(View.VISIBLE);
                     tv_number_waitingForSettlement.setText("(" + number + ")");
-                } else {
+                } else
+                {
                     tv_number_waitingForSettlement.setVisibility(View.GONE);
                 }
             }
         }
     };
 
-    public void switchContent(Fragment from, Fragment to) {
-        if (mContent != to) {
+    public void switchContent(Fragment from, Fragment to)
+    {
+        if (mContent != to)
+        {
             mContent = to;
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if (!to.isAdded()) { // 先判断是否被add过
+            if (!to.isAdded())
+            { // 先判断是否被add过
                 transaction.hide(from).add(R.id.fl_container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-            } else {
+            } else
+            {
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
         }
     }
 
-    private void setBackground(int pos) {
+    private void setBackground(int pos)
+    {
         tv_schedule.setSelected(false);
         tv_pending.setSelected(false);
         tv_notpaydeposit.setSelected(false);
@@ -244,7 +308,8 @@ public class NCZ_OrderManager extends Activity {
         tv_waitingForHarvest.setTextColor(getResources().getColor(R.color.titlebar_top));
         tv_waitingForSettlement.setTextColor(getResources().getColor(R.color.titlebar_top));
         tv_allorder.setTextColor(getResources().getColor(R.color.titlebar_top));
-        switch (pos) {
+        switch (pos)
+        {
             case 0:
                 tv_schedule.setSelected(false);
 //                tv_schedule.setTextColor(getResources().getColor(R.color.red));
@@ -280,7 +345,8 @@ public class NCZ_OrderManager extends Activity {
     }
 
 
-    private void getAllOrders() {
+    private void getAllOrders()
+    {
         commembertab commembertab = AppContext.getUserInfo(NCZ_OrderManager.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -288,45 +354,56 @@ public class NCZ_OrderManager extends Activity {
         params.addQueryStringParameter("type", "0");
         params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         Iterator<SellOrder_New> it = listData.iterator();
-                        while (it.hasNext()) {
+                        while (it.hasNext())
+                        {
                             String value = it.next().getSelltype();
-                            if (value.equals("已完成") || value.equals("待审批")) {
+                            if (value.equals("已完成") || value.equals("待审批"))
+                            {
                                 it.remove();
                             }
                         }
 
                         int b = 0;
-                        if (listData.size() > 0) {
-                            for (int j = 0; j < listData.size(); j++) {
-                                if (listData.get(j).getFlashStr().equals("1")) {
+                        if (listData.size() > 0)
+                        {
+                            for (int j = 0; j < listData.size(); j++)
+                            {
+                                if (listData.get(j).getFlashStr().equals("1"))
+                                {
                                     b++;
                                 }
                             }
                         }
 
-                        if (b > 0) {
+                        if (b > 0)
+                        {
                             fl_schedule.setVisibility(View.VISIBLE);
                             tv_schedule_tip.setText(b + "");
 //                            fl_.setVisibility(View.VISIBLE);
 //                            tv_jyz.setText(b + "");
                         }
 
-                    } else {
+                    } else
+                    {
                         listData = new ArrayList<SellOrder_New>();
                     }
 
-                } else {
+                } else
+                {
                     AppContext.makeToast(NCZ_OrderManager.this, "error_connectDataBase");
                     return;
                 }
@@ -334,14 +411,16 @@ public class NCZ_OrderManager extends Activity {
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 AppContext.makeToast(NCZ_OrderManager.this, "error_connectServer");
 
             }
         });
     }
 
-    private void getNeedOrders() {
+    private void getNeedOrders()
+    {
         commembertab commembertab = AppContext.getUserInfo(NCZ_OrderManager.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -350,35 +429,44 @@ public class NCZ_OrderManager extends Activity {
         params.addQueryStringParameter("isApprove", "1");//不为空
         params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
                         int b = 0;
-                        if (listData.size() > 0) {
-                            for (int j = 0; j < listData.size(); j++) {
-                                if (listData.get(j).getFlashStr().equals("1")) {
+                        if (listData.size() > 0)
+                        {
+                            for (int j = 0; j < listData.size(); j++)
+                            {
+                                if (listData.get(j).getFlashStr().equals("1"))
+                                {
                                     b++;
                                 }
                             }
                         }
-                        if (b > 0) {
+                        if (b > 0)
+                        {
                             fl_waitingForSettlement.setVisibility(View.VISIBLE);
                             tv_waitingForSettlement_tip.setText(b + "");
                         }
 
-                    } else {
+                    } else
+                    {
                         listData = new ArrayList<SellOrder_New>();
                     }
 
-                } else {
+                } else
+                {
                     AppContext.makeToast(NCZ_OrderManager.this, "error_connectDataBase");
                     return;
                 }
@@ -386,11 +474,94 @@ public class NCZ_OrderManager extends Activity {
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 AppContext.makeToast(NCZ_OrderManager.this, "error_connectServer");
 
             }
         });
     }
 
+    public void showPop_Filfer()
+    {
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_OrderManager.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        pv_tab = layoutInflater.inflate(R.layout.pop_salefilfer, null);// 外层
+        pv_tab.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing()))
+                {
+                    pw_tab.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        pv_tab.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_tab.isShowing())
+                {
+                    pw_tab.dismiss();
+                }
+                return false;
+            }
+        });
+        pw_tab = new PopupWindow(pv_tab, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+        //设置layout在PopupWindow中显示的位置
+        pw_tab.setAnimationStyle(R.style.rightinrightout);
+        pw_tab.showAsDropDown(view_topline, 0, 0);//置于顶部线下方
+        pw_tab.showAtLocation(getLayoutInflater().inflate(R.layout.ncz_ordermanager, null), Gravity.RIGHT | Gravity.TOP, 0, 0);
+        pw_tab.setOutsideTouchable(true);
+        //关闭事件
+        pw_tab.setOnDismissListener(new popupDismissListener());
+        //设置背景半透明
+        backgroundAlpha(0.5f);
+        ColorDrawable dw = new ColorDrawable(0xffffffff);
+        pw_tab.setBackgroundDrawable(dw);
+
+        Button btn_sure = (Button) pv_tab.findViewById(R.id.btn_sure);
+        CustomExpandableListView expandableListView = (CustomExpandableListView) pv_tab.findViewById(R.id.expandableListView);
+        Adapter_FilferData_Sale adapter_filfer_sale = new Adapter_FilferData_Sale(NCZ_OrderManager.this, list_filferbean, expandableListView);
+        expandableListView.setAdapter(adapter_filfer_sale);
+        utils.setListViewHeight(expandableListView);
+        for (int i = 0; i < list_filferbean.size(); i++)
+        {
+            expandableListView.expandGroup(i);//展开
+        }
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                pw_tab.dismiss();
+            }
+        });
+    }
+    /**
+     * 设置添加屏幕的背景透明度
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+    /**
+     * 添加新笔记时弹出的popWin关闭的事件，主要是为了将背景透明度改回来
+     *
+     */
+    class popupDismissListener implements PopupWindow.OnDismissListener{
+
+        @Override
+        public void onDismiss() {
+            backgroundAlpha(1f);
+        }
+
+    }
 }

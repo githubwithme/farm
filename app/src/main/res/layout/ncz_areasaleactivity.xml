@@ -54,10 +54,10 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dip"
             android:gravity="center"
-            android:visibility="gone"
             android:text="查看更多"
             android:textColor="@color/text_title"
-            android:textSize="@dimen/text_titlebar"/>
+            android:textSize="@dimen/text_titlebar"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -285,5 +285,108 @@
             android:background="@mipmap/suspen_menu"/>
     </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/fl_loadingtip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_errortip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="360px"
+                android:background="@drawable/sorry_notfound"/>
+
+            <TextView
+                android:id="@+id/tv_nodetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30px"
+                android:alpha="0.8"
+                android:gravity="center"
+                android:text="哎呀，加载失败了!"
+                android:textColor="@color/text_table_horizontitle"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tv_errortip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_nodetail"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30px"
+                android:alpha="0.5"
+                android:gravity="center"
+                android:text="@string/error_network"
+                android:textColor="@color/text_table_horizontitle"
+                android:textSize="13sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="35dip"
+                android:layout_below="@+id/tv_errortip"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dip"
+                android:layout_marginTop="15dip"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_refresh"
+                    android:layout_width="100dip"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/round_gray"
+                    android:text="刷新试试"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+
+                <Button
+                    android:id="@+id/btn_close"
+                    android:layout_width="100dip"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dip"
+                    android:background="@drawable/round_gray"
+                    android:text="关闭页面"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_loadingtip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <ProgressBar
+                android:id="@+id/pb"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pb"
+                android:layout_centerHorizontal="true"
+                android:text="正在加载中"
+                android:textColor="@color/gray"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+    </FrameLayout>
 
 </RelativeLayout>
