@@ -149,6 +149,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         goodsName.setText(sellOrder_new.getProduct());
         tv_finalpayment.setText(sellOrder_new.getAddress());
     }
+
     @AfterViews
     void afterOncreate()
     {
@@ -156,6 +157,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -206,12 +208,11 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                 {
                 /*    if (result.getAffectedRows() != 0)
                     {*/
-
                     listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
-                        DensityUtil densityUtil = new DensityUtil(NCZ_All_OneOrder_Detail.this);
+                    DensityUtil densityUtil = new DensityUtil(NCZ_All_OneOrder_Detail.this);
 
-                    if (listData.size()>0)
+                    if (listData.size() > 0)
                     {
                         screenWidth = densityUtil.getScreenWidth();
                         int size = 3;
@@ -277,7 +278,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         ll_park.removeAllViews();
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) NCZ_All_OneOrder_Detail.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        String[] name = new String[]{"结算单","实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
+        String[] name = new String[]{"结算单", "实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
 //        String[] name = new String[]{"实际金额", "合计金额"};
         for (int i = 0; i < name.length; i++)
         {
@@ -298,7 +299,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                 case 0:
 
 
-                    tv_total.setText("-");
+                    tv_total.setText(listData.size() + "辆");
                     ll_total.addView(view);
                     break;
                 case 1:
@@ -522,7 +523,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
             {
                 listItemView.item_titlev.setTextColor(NCZ_All_OneOrder_Detail.this.getResources().getColor(R.color.red));
             }
-            listItemView.item_titlev.setText("结算单"+(position+1));
+            listItemView.item_titlev.setText("结算单" + (position + 1));
             listItemView.item_titlev.setTag(R.id.tag_batchtime, listData.get(position));
             listItemView.item_titlev.setOnClickListener(clickListener);
             // 第一次初始化的时候装进来

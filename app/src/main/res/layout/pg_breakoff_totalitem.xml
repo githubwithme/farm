@@ -10,7 +10,7 @@
         android:layout_height="@dimen/height_bottomcolumn"
         android:gravity="center"
         android:text=""
-        android:background="@color/color_topbar"
+      android:textColor="@color/color_topbar"
         android:textSize="15sp"/>
 
 

@@ -1006,7 +1006,7 @@
                         android:background="@color/white"
                         android:gravity="center"
                         android:text="合计"
-                        android:textColor="@color/bg_text"
+                        android:textColor="@color/color_topbar"
                         android:textSize="15sp"/>
 
                     <View

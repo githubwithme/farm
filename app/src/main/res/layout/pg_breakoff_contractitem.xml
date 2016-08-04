@@ -10,7 +10,7 @@
         android:layout_height="@dimen/height_totalcolumn"
         android:gravity="center"
         android:text=""
-        android:textColor="@color/text_table_horizontitle"
+        android:textColor="@color/color_topbar"
         android:textSize="15sp"/>
 
 
