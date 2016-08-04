@@ -143,7 +143,18 @@ public class NCZ_CreateNewOrder extends Activity
 
     @ViewById
     TextView cheliang_num;
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
 
 /*    @Click
     void cheliang_num()
@@ -521,6 +532,7 @@ public class NCZ_CreateNewOrder extends Activity
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String str = formatter.format(curDate);
         dd_time.setText(str);*/
+        showDialog_waitTip();
         dd_bz.setInputType(InputType.TYPE_NULL);
         dd_by.setInputType(InputType.TYPE_NULL);
         dd_fzr.setInputType(InputType.TYPE_NULL);
@@ -956,15 +968,17 @@ public class NCZ_CreateNewOrder extends Activity
                 } else
                 {
                     AppContext.makeToast(NCZ_CreateNewOrder.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(NCZ_CreateNewOrder.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }

@@ -134,7 +134,7 @@ public class CZ_CreateOrder extends Activity
     List<AllType> listAlltype = new ArrayList<AllType>();
 
 
-//    @ViewById
+    //    @ViewById
 //    RelativeLayout rl_more_tip;
     @ViewById
     LinearLayout ll_more;
@@ -142,7 +142,18 @@ public class CZ_CreateOrder extends Activity
     TextView cheliang_num;
 
     String uuid;
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
 
     @Click
     void add_jsd()
@@ -150,7 +161,7 @@ public class CZ_CreateOrder extends Activity
 
         Intent intent = new Intent(CZ_CreateOrder.this, RecoveryDetail_.class);
         intent.putExtra("uuid", uuid);
-        SellOrder_New sellOrder_new=new SellOrder_New();
+        SellOrder_New sellOrder_new = new SellOrder_New();
         sellOrder_new.setIsReady("True");
         intent.putExtra("bean", sellOrder_new);
         startActivity(intent);
@@ -211,6 +222,7 @@ public class CZ_CreateOrder extends Activity
         }
         showDialog_fcp(listdata, listid);
     }
+
     @Click
     void cheliang_num()
     {
@@ -223,7 +235,8 @@ public class CZ_CreateOrder extends Activity
         }
         showDialog_carNumber(list);
     }
-    public void showDialog_carNumber(List<String> list  )
+
+    public void showDialog_carNumber(List<String> list)
     {
         View dialog_layout = CZ_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(CZ_CreateOrder.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
@@ -238,6 +251,7 @@ public class CZ_CreateOrder extends Activity
         });
         customDialog_listView.show();
     }
+
     @Click
     void et_name()
     {
@@ -491,6 +505,7 @@ public class CZ_CreateOrder extends Activity
     void afterOncreate()
     {
 
+        showDialog_waitTip();
         dd_bz.setInputType(InputType.TYPE_NULL);
         dd_by.setInputType(InputType.TYPE_NULL);
         getpurchaser("");
@@ -568,10 +583,11 @@ public class CZ_CreateOrder extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        uuid =getIntent().getStringExtra("uuid");
+        uuid = getIntent().getStringExtra("uuid");
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_CHE_LIANG);
         registerReceiver(receiver_update, intentfilter_update);
     }
+
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -581,6 +597,7 @@ public class CZ_CreateOrder extends Activity
             getDetailSecBysettleId();
         }
     };
+
     public int countAllNumber()
     {
         int allnumber = 0;
@@ -897,15 +914,17 @@ public class CZ_CreateOrder extends Activity
                 } else
                 {
                     AppContext.makeToast(CZ_CreateOrder.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(CZ_CreateOrder.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }
@@ -1060,6 +1079,7 @@ public class CZ_CreateOrder extends Activity
         });
 
     }
+
     public void getDetailSecBysettleId()
     {
         commembertab commembertab = AppContext.getUserInfo(CZ_CreateOrder.this);
@@ -1085,7 +1105,7 @@ public class CZ_CreateOrder extends Activity
 
                     if (listNewData.size() > 0)
                     {
-                        cheliang_num.setText(listNewData.size()+"");
+                        cheliang_num.setText(listNewData.size() + "");
                     }
                     {
                         listNewData = new ArrayList<SellOrder_New>();

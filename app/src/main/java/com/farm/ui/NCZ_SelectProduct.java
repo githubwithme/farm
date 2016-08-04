@@ -71,7 +71,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
     List<SellOrderDetail_New> list_SellOrderDetail;
     List<Wz_Storehouse> parklist = new ArrayList<Wz_Storehouse>();
-    DialogFragment_WaitTip dialog;
     String uuid;
     EditText et_number;
     CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
@@ -118,6 +117,18 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
     TextView tv_selectnumber;
     @ViewById
     TextView tv_allnumber;
+    DialogFragment_WaitTip dialog;
+
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
     @Click
     void btn_back()
     {
@@ -170,6 +181,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
     {
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
+        showDialog_waitTip();
         deleNewSaleAddsalefor();
 //        getParkList();
     }
@@ -188,6 +200,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         parkid = getIntent().getStringExtra("parkid");
         name = getIntent().getStringExtra("parkname");
     }
+
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -224,17 +237,9 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
     }
 
-    public void showDialog_waitTip()
-    {
-        dialog = new DialogFragment_WaitTip();
-        Bundle bundle1 = new Bundle();
-        dialog.setArguments(bundle1);
-        dialog.show(NCZ_SelectProduct.this.getFragmentManager(), "TIP");
-    }
 
     private void getParkList()
     {
-        showDialog_waitTip();
         com.farm.bean.commembertab commembertab = AppContext.getUserInfo(NCZ_SelectProduct.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
@@ -259,14 +264,13 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                     }
                     tv_parkname.setText(parklist.get(0).getParkName() + "库存量");
                     parkid = parklist.get(0).getId();
-                    name=parklist.get(0).getParkName();
+                    name = parklist.get(0).getParkName();
                     getNCZ_getAllContractSaleData();
                 } else
                 {
                     AppContext.makeToast(NCZ_SelectProduct.this, "error_connectDataBase");
                     return;
                 }
-                dialog.dismiss();
             }
 
             @Override
@@ -274,7 +278,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             {
                 String a = error.getMessage();
                 AppContext.makeToast(NCZ_SelectProduct.this, "error_connectServer");
-                dialog.dismiss();
             }
         });
 
@@ -384,15 +387,17 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 } else
                 {
                     AppContext.makeToast(NCZ_SelectProduct.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(NCZ_SelectProduct.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }
@@ -519,46 +524,60 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            convertView = LayoutInflater.from(NCZ_SelectProduct.this).inflate(R.layout.nczselectproduct_scrolladapter_item, null);
-            listItemView = new ListItemView();
-            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-//            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
-            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-//            listItemView.item_total.getLayoutParams().width = (screenWidth);
-            LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            listItemView.item_titlev.setText(listData.get(position).getareaName() + listData.get(position).getContractname());//problem
-
-            int totalnumber = 0;
-            List<BatchTime> list = listData.get(position).getBatchTimeList();
-            for (int j = 0; j < list.size(); j++)
+            if (convertView == null)
             {
-                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
-            }
+                convertView = LayoutInflater.from(NCZ_SelectProduct.this).inflate(R.layout.nczselectproduct_scrolladapter_item, null);
+                if (position % 2 == 0)
+                {
+                    convertView.setBackgroundResource(R.color.bg_table_row);
+                } else
+                {
+                    convertView.setBackgroundResource(R.color.white);
+                }
+                listItemView = new ListItemView();
+                listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+//            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+                listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+//            listItemView.item_total.getLayoutParams().width = (screenWidth);
+                LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
+                listItemView.item_titlev.setText(listData.get(position).getareaName() + listData.get(position).getContractname());//problem
+
+                int totalnumber = 0;
+                List<BatchTime> list = listData.get(position).getBatchTimeList();
+                for (int j = 0; j < list.size(); j++)
+                {
+                    totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
+                }
 //            listItemView.item_total.setText(String.valueOf(totalnumber));
 
-            for (int i = 0; i < listData.get(position).getBatchTimeList().size(); i++)
-            {
-                View view = LayoutInflater.from(NCZ_SelectProduct.this).inflate(R.layout.nczselectproduct_dataitem, null);
-                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                listItemView.tv_data.setText(listData.get(position).getBatchTimeList().get(i).getAllnumber());
-                listItemView.tv_data.getLayoutParams().width = (screenWidth);
-                ll_middle.addView(view);
+                for (int i = 0; i < listData.get(position).getBatchTimeList().size(); i++)
+                {
+                    View view = LayoutInflater.from(NCZ_SelectProduct.this).inflate(R.layout.nczselectproduct_dataitem, null);
+                    listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
+                    listItemView.tv_data.setText(listData.get(position).getBatchTimeList().get(i).getAllnumber());
+                    listItemView.tv_data.getLayoutParams().width = (screenWidth);
+                    ll_middle.addView(view);
 
-                listItemView.tv_data.requestFocusFromTouch();
-                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTimeList().get(i).getBatchTime());
-                listItemView.tv_data.setTag(R.id.contractorId, listData.get(position).getContractid());
-                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getBatchTimeList().get(i).getAllnumber());
-                listItemView.tv_data.setTag(R.id.tv_contractName, listData.get(position).getContractname());
-                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreaId());
-                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getareaName());
-                listItemView.tv_data.setOnClickListener(clickListener);
+                    listItemView.tv_data.requestFocusFromTouch();
+                    listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTimeList().get(i).getBatchTime());
+                    listItemView.tv_data.setTag(R.id.contractorId, listData.get(position).getContractid());
+                    listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getBatchTimeList().get(i).getAllnumber());
+                    listItemView.tv_data.setTag(R.id.tv_contractName, listData.get(position).getContractname());
+                    listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreaId());
+                    listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getareaName());
+                    listItemView.tv_data.setOnClickListener(clickListener);
+
+                }
+                // 第一次初始化的时候装进来
+                CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
+                addHViews(customHorizontalScrollView);
+                customHorizontalScrollView.setCuttomOntouch(customOntouch);
+//            addHViews((CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll));
+            } else
+            {
 
             }
-            // 第一次初始化的时候装进来
-            CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
-            addHViews(customHorizontalScrollView);
-            customHorizontalScrollView.setCuttomOntouch(customOntouch);
-//            addHViews((CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll));
+
             return convertView;
         }
     }
@@ -857,7 +876,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-
                     getParkList();
                 } else
                 {
@@ -1111,9 +1129,9 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
 
                         tv_allnumber.setText("共售" + String.valueOf(countAllNumber()) + "株");
-                    tv_selectnumber.setText("已选"+list_SellOrderDetail.size()+"个，点击查看详情");
+                        tv_selectnumber.setText("已选" + list_SellOrderDetail.size() + "个，点击查看详情");
 
-                } else
+                    } else
                     {
                         list_SellOrderDetail = new ArrayList<SellOrderDetail_New>();
                     }
@@ -1133,6 +1151,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             }
         });
     }
+
     public int countAllNumber()
     {
         int allnumber = 0;

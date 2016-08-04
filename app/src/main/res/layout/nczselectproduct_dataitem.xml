@@ -13,7 +13,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:textColor="@color/text_table_horizontitle"
-        android:textSize="16sp"/>
+        android:textSize="15sp"/>
 
 
 

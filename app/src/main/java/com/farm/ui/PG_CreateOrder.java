@@ -57,7 +57,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 /**
  * Created by hasee on 2016/7/4.
  */
@@ -130,32 +129,46 @@ public class PG_CreateOrder extends Activity
     String byId = "";
     String bzId = "";
     String fzrId = "";
-    String cpid="";
+    String cpid = "";
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Purchaser> listData_BY = new ArrayList<Purchaser>();
     List<Purchaser> listData_BZ = new ArrayList<Purchaser>();
     List<AllType> listAlltype = new ArrayList<AllType>();
 
 
-//    @ViewById
+    //    @ViewById
 //    RelativeLayout rl_more_tip;
     @ViewById
     LinearLayout ll_more;
     @ViewById
     TextView cheliang_num;
     String uuid;
+
+    DialogFragment_WaitTip dialog;
+
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
     @Click
     void add_jsd()
     {
 
         Intent intent = new Intent(PG_CreateOrder.this, RecoveryDetail_.class);
         intent.putExtra("uuid", uuid);
-        SellOrder_New sellOrder_new=new SellOrder_New();
+        SellOrder_New sellOrder_new = new SellOrder_New();
         sellOrder_new.setIsReady("True");
         intent.putExtra("bean", sellOrder_new);
         startActivity(intent);
     }
-//    @Click
+
+    //    @Click
 //    void rl_more_tip()
 //    {
 //        if (ll_more.isShown())
@@ -275,19 +288,20 @@ public class PG_CreateOrder extends Activity
         Intent intent = new Intent(PG_CreateOrder.this, PG_CreateOrder_SelectProduct_.class);
         startActivity(intent);
     }
-/*    @Click
-    void cheliang_num()
-    {
-        JSONObject jsonObject = utils.parseJsonFile(PG_CreateOrder.this, "dictionary.json");
-        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
-        List<String> list = new ArrayList<String>();
-        for (int i = 0; i < jsonArray.size(); i++)
+
+    /*    @Click
+        void cheliang_num()
         {
-            list.add(jsonArray.getString(i));
-        }
-        showDialog_carNumber(list);
-    }*/
-    public void showDialog_carNumber(List<String> list  )
+            JSONObject jsonObject = utils.parseJsonFile(PG_CreateOrder.this, "dictionary.json");
+            JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
+            List<String> list = new ArrayList<String>();
+            for (int i = 0; i < jsonArray.size(); i++)
+            {
+                list.add(jsonArray.getString(i));
+            }
+            showDialog_carNumber(list);
+        }*/
+    public void showDialog_carNumber(List<String> list)
     {
         View dialog_layout = PG_CreateOrder.this.getLayoutInflater().inflate(R.layout.customdialog_listview, null);
         customDialog_listView = new CustomDialog_ListView(PG_CreateOrder.this, R.style.MyDialog, dialog_layout, list, list, new CustomDialog_ListView.CustomDialogListener()
@@ -302,6 +316,7 @@ public class PG_CreateOrder extends Activity
         });
         customDialog_listView.show();
     }
+
     @Click
     void btn_back()
     {
@@ -379,7 +394,7 @@ public class PG_CreateOrder extends Activity
         //短信
         SmsManager smsMessage = SmsManager.getDefault();
 //        List<String> divideContents = smsMessage.divideMessage(message);
-        smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元,定金："+dingjin.getText().toString()+"元，采收时间："+dd_time.getText().toString(), null, null);
+        smsMessage.sendTextMessage(telphone, null, "单价:" + et_price.getText().toString() + "元,重量:" + et_weight.getText().toString() + "斤,总价:" + et_values.getText().toString() + "元,定金：" + dingjin.getText().toString() + "元，采收时间：" + dd_time.getText().toString(), null, null);
         List<String> list_uuid = new ArrayList<>();
         String batchtime = "";
         String producer = "";
@@ -392,13 +407,13 @@ public class PG_CreateOrder extends Activity
             {
                 /*list_batchtime.add(list_SellOrderDetail.get(0).getBatchTime());
                 batchtime = batchtime + list_SellOrderDetail.get(0).getBatchTime() + ";";*/
-                batchtime= batchtime + list_SellOrderDetail.get(i).getBatchTime();
+                batchtime = batchtime + list_SellOrderDetail.get(i).getBatchTime();
             }
             if (i == 0)
             {
               /*  list_producer.add(list_SellOrderDetail.get(0).getparkname());
                 producer = producer + list_SellOrderDetail.get(0).getparkname() + ";";*/
-                producer=list_SellOrderDetail.get(i).getparkname();
+                producer = list_SellOrderDetail.get(i).getparkname();
             }
             for (int j = 0; j < list_batchtime.size(); j++)
             {
@@ -409,7 +424,7 @@ public class PG_CreateOrder extends Activity
                 {
                   /*  list_batchtime.add(list_SellOrderDetail.get(i).getBatchTime());
                     batchtime = batchtime + list_SellOrderDetail.get(i).getBatchTime() + ";";*/
-                    batchtime= batchtime + list_SellOrderDetail.get(i).getBatchTime();
+                    batchtime = batchtime + list_SellOrderDetail.get(i).getBatchTime();
                 }
             }
             for (int j = 0; j < list_producer.size(); j++)
@@ -421,7 +436,7 @@ public class PG_CreateOrder extends Activity
                 {
                     /*list_producer.add(list_SellOrderDetail.get(i).getparkname());
                     producer = producer + list_SellOrderDetail.get(i).getparkname() + ";";*/
-                    producer=list_SellOrderDetail.get(i).getparkname();
+                    producer = list_SellOrderDetail.get(i).getparkname();
                 }
             }
 
@@ -442,7 +457,6 @@ public class PG_CreateOrder extends Activity
         sellOrder.setGoodsname(CR_chanpin.getText().toString());
         sellOrder.setEmail(et_email.getText().toString());
         sellOrder.setPhone(et_phone.getText().toString());
-
 
 
         sellOrder.setSumvalues(et_values.getText().toString());
@@ -522,6 +536,7 @@ public class PG_CreateOrder extends Activity
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String str = formatter.format(curDate);
         dd_time.setText(str);*/
+        showDialog_waitTip();
         getNewSaleList();
         dd_bz.setInputType(InputType.TYPE_NULL);
         dd_by.setInputType(InputType.TYPE_NULL);
@@ -599,7 +614,7 @@ public class PG_CreateOrder extends Activity
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-         uuid = java.util.UUID.randomUUID().toString();
+        uuid = java.util.UUID.randomUUID().toString();
 //        list_SellOrderDetail = getIntent().getParcelableArrayListExtra("list");
 //        Bundle bundle = getIntent().getExtras();
 //        ArrayList arraylist = bundle.getParcelableArrayList("list_uuid");
@@ -608,6 +623,7 @@ public class PG_CreateOrder extends Activity
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_CHE_LIANG);
         registerReceiver(receiver_update, intentfilter_update);
     }
+
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -619,6 +635,7 @@ public class PG_CreateOrder extends Activity
             getDetailSecBysettleId();
         }
     };
+
     public int countAllNumber()
     {
         int allnumber = 0;
@@ -935,15 +952,17 @@ public class PG_CreateOrder extends Activity
                 } else
                 {
                     AppContext.makeToast(PG_CreateOrder.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(PG_CreateOrder.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }
@@ -1044,7 +1063,6 @@ public class PG_CreateOrder extends Activity
     }
 
 
-
     private void getchanpin()
     {
         commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
@@ -1091,6 +1109,7 @@ public class PG_CreateOrder extends Activity
         });
 
     }
+
     public void getDetailSecBysettleId()
     {
         commembertab commembertab = AppContext.getUserInfo(PG_CreateOrder.this);
@@ -1116,7 +1135,7 @@ public class PG_CreateOrder extends Activity
 
                     if (listNewData.size() > 0)
                     {
-                        cheliang_num.setText(listNewData.size()+"");
+                        cheliang_num.setText(listNewData.size() + "");
                     }
                     {
                         listNewData = new ArrayList<SellOrder_New>();

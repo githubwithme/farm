@@ -57,7 +57,6 @@ import java.util.List;
 @EActivity(R.layout.pg_new_areasaleactivity)
 public class PG_New_SaleActinity extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
-    DialogFragment_WaitTip dialog;
     String parkid;
     @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
@@ -106,7 +105,18 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
     @ViewById
     RelativeLayout rl_view;
 
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
     @Click
     void ib_suspen_menu()
     {
@@ -115,10 +125,9 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
 //            NCZ_getContractSaleData();
 //        } else
 //        {
-            showPop_Menu();
+        showPop_Menu();
 //        }
     }
-
 
 
     @Click
@@ -138,6 +147,7 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
     @AfterViews
     void afterOncreate()
     {
+        showDialog_waitTip();
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
@@ -153,8 +163,6 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(PG_New_SaleActinity.this);
     }
-
-
 
 
     public void NCZ_getContractSaleData()
@@ -206,15 +214,17 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
                 } else
                 {
                     AppContext.makeToast(PG_New_SaleActinity.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(PG_New_SaleActinity.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }
@@ -433,7 +443,6 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
     };
 
 
-
     public void showPop_Menu()
     {
         LayoutInflater layoutInflater = (LayoutInflater) PG_New_SaleActinity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -508,7 +517,6 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
     }
 
 
-
     public class Adapter_Park extends BaseAdapter
     {
         private Context context;
@@ -578,12 +586,5 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
         }
     }
 
-    public void showDialog_waitTip()
-    {
-        dialog = new DialogFragment_WaitTip();
-        Bundle bundle1 = new Bundle();
-        dialog.setArguments(bundle1);
-        dialog.show(PG_New_SaleActinity.this.getFragmentManager(), "TIP");
-    }
 
 }

@@ -103,10 +103,16 @@ public class DialogFragment_WaitTip extends DialogFragment
             @Override
             public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent)
             {
-                if (i == KeyEvent.KEYCODE_SEARCH)
-                    return true; // pretend we've processed it
+                if (i == KeyEvent.KEYCODE_BACK)
+                {
+                    getActivity().finish();
+                    return true;
+                }// pretend we've processed it
                 else
-                    return false; // pass on to be processed as normal
+                {
+                    return false;
+                }// pass on to be processed as normal
+
             }
         });
         return rootView;

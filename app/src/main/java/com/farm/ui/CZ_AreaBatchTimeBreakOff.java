@@ -41,11 +41,23 @@ public class CZ_AreaBatchTimeBreakOff extends Activity
     @ViewById
     TextView tv_batchtime;
     Adapter_AreaBatchtimeBreakOff adapter_areaBatchtimeBreakOff;
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
     @AfterViews
     void afterOncreate()
     {
         getActionBar().hide();
+        showDialog_waitTip();
         batchtime = getIntent().getStringExtra("batchTime");//注意要区分大小写
         areaid = getIntent().getStringExtra("areaid");
         areaname = getIntent().getStringExtra("areaname");
@@ -90,15 +102,18 @@ public class CZ_AreaBatchTimeBreakOff extends Activity
                 } else
                 {
                     AppContext.makeToast(CZ_AreaBatchTimeBreakOff.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(CZ_AreaBatchTimeBreakOff.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
+
             }
         });
     }

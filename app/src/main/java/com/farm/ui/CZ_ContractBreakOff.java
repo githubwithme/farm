@@ -47,7 +47,7 @@ import java.util.List;
  * Created by hasee on 2016/7/28.
  */
 @EActivity(R.layout.cz_contractsaledata)
-public class CZ_ContractBreakOff  extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
+public class CZ_ContractBreakOff extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
     String areaid;
     @ViewById
@@ -95,7 +95,18 @@ public class CZ_ContractBreakOff  extends Activity implements CustomHorizontalSc
     @ViewById
     RelativeLayout rl_view;
 
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
     @Click
     void btn_back()
     {
@@ -106,6 +117,7 @@ public class CZ_ContractBreakOff  extends Activity implements CustomHorizontalSc
     @AfterViews
     void afterOncreate()
     {
+        showDialog_waitTip();
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
@@ -201,15 +213,17 @@ public class CZ_ContractBreakOff  extends Activity implements CustomHorizontalSc
                 } else
                 {
                     AppContext.makeToast(CZ_ContractBreakOff.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(CZ_ContractBreakOff.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }
@@ -327,43 +341,57 @@ public class CZ_ContractBreakOff  extends Activity implements CustomHorizontalSc
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            convertView = LayoutInflater.from(CZ_ContractBreakOff.this).inflate(R.layout.cz_contractsale_scrolladapter_item, null);
-            listItemView = new ListItemView();
-            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
-            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-            listItemView.item_total.getLayoutParams().width = (screenWidth);
-            LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            listItemView.item_titlev.setText(listData.get(position).getBatchTime());
-            int totalnumber = 0;
-            List<contractTab> list = listData.get(position).getContracttabList();
-            for (int j = 0; j < list.size(); j++)
+            if (convertView == null)
             {
-                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
-            }
-            listItemView.item_total.setText(String.valueOf(totalnumber));
+                convertView = LayoutInflater.from(CZ_ContractBreakOff.this).inflate(R.layout.cz_contractsale_scrolladapter_item, null);
+                if (position % 2 == 0)
+                {
+                    convertView.setBackgroundResource(R.color.bg_table_row);
+                } else
+                {
+                    convertView.setBackgroundResource(R.color.white);
+                }
+                listItemView = new ListItemView();
+                listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+                listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+                listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+                listItemView.item_total.getLayoutParams().width = (screenWidth);
+                LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
+                listItemView.item_titlev.setText(listData.get(position).getBatchTime());
+                int totalnumber = 0;
+                List<contractTab> list = listData.get(position).getContracttabList();
+                for (int j = 0; j < list.size(); j++)
+                {
+                    totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
+                }
+                listItemView.item_total.setText(String.valueOf(totalnumber));
 
-            for (int i = 0; i < listData.get(position).getContracttabList().size(); i++)
-            {
-                View view = LayoutInflater.from(CZ_ContractBreakOff.this).inflate(R.layout.cz_contractsale_dataitem, null);
-                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                listItemView.tv_data.setText(listData.get(position).getContracttabList().get(i).getAllnumber());
-                listItemView.tv_data.getLayoutParams().width = (screenWidth);
-                ll_middle.addView(view);
+                for (int i = 0; i < listData.get(position).getContracttabList().size(); i++)
+                {
+                    View view = LayoutInflater.from(CZ_ContractBreakOff.this).inflate(R.layout.cz_contractsale_dataitem, null);
+                    listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
+                    listItemView.tv_data.setText(listData.get(position).getContracttabList().get(i).getAllnumber());
+                    listItemView.tv_data.getLayoutParams().width = (screenWidth);
+                    ll_middle.addView(view);
 
-                listItemView.tv_data.requestFocusFromTouch();
-                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getContracttabList().get(i).getContractid());
-                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getContracttabList().get(i).getAllnumber());
-                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getContracttabList().get(i).getContractname());
-                listItemView.tv_data.setOnClickListener(clickListener);
+                    listItemView.tv_data.requestFocusFromTouch();
+                    listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getContracttabList().get(i).getContractid());
+                    listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                    listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getContracttabList().get(i).getAllnumber());
+                    listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getContracttabList().get(i).getContractname());
+                    listItemView.tv_data.setOnClickListener(clickListener);
 
-            }
-            // 第一次初始化的时候装进来
-            CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
-            addHViews(customHorizontalScrollView);
-            customHorizontalScrollView.setCuttomOntouch(customOntouch);
+                }
+                // 第一次初始化的时候装进来
+                CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
+                addHViews(customHorizontalScrollView);
+                customHorizontalScrollView.setCuttomOntouch(customOntouch);
 //            addHViews((CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll));
+            } else
+            {
+
+            }
+
             return convertView;
         }
     }

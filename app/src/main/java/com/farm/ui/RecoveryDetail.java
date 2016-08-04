@@ -47,7 +47,8 @@ import java.util.List;
  * Created by ${hmj} on 2016/6/27.
  */
 @EActivity(R.layout.recoverydetail)
-public class RecoveryDetail extends Activity {
+public class RecoveryDetail extends Activity
+{
     RecoveryDetail_Adapter recoveryDetail_adapter;
     CustomDialog_ListView customDialog_listView;
     MyDialog myDialog;
@@ -69,6 +70,17 @@ public class RecoveryDetail extends Activity {
     @ViewById
     Button btn_isready;
 
+    DialogFragment_WaitTip dialog;
+
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+//    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
 
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Purchaser> listData_BY = new ArrayList<Purchaser>();
@@ -76,27 +88,34 @@ public class RecoveryDetail extends Activity {
     List<AllType> listAlltype = new ArrayList<AllType>();
 
     @AfterViews
-    void afterOncreate() {
+    void afterOncreate()
+    {
  /*       if (sellOrder_new.getIsReady().equals("False")) {
             btn_isready.setVisibility(View.VISIBLE);
         }*/
+        showDialog_waitTip();
         getDetailSecBysettleId();
     }
 
 
     @Click
 //准备就绪
-    void btn_isready() {
+    void btn_isready()
+    {
         showDeleteTip();
     }
 
-    private void showDeleteTip() {
+    private void showDeleteTip()
+    {
 
         View dialog_layout = RecoveryDetail.this.getLayoutInflater().inflate(R.layout.customdialog_callback, null);
-        myDialog = new MyDialog(RecoveryDetail.this, R.style.MyDialog, dialog_layout, "就绪", "所有准备工作就绪?", "确定", "取消", new MyDialog.CustomDialogListener() {
+        myDialog = new MyDialog(RecoveryDetail.this, R.style.MyDialog, dialog_layout, "就绪", "所有准备工作就绪?", "确定", "取消", new MyDialog.CustomDialogListener()
+        {
             @Override
-            public void OnClick(View v) {
-                switch (v.getId()) {
+            public void OnClick(View v)
+            {
+                switch (v.getId())
+                {
                     case R.id.btn_sure:
                         updateSellOrderByuuid("");
                         break;
@@ -110,7 +129,8 @@ public class RecoveryDetail extends Activity {
     }
 
     @Click
-    void button_add() {
+    void button_add()
+    {
         Intent intent = new Intent(RecoveryDetail.this, AddRecovery_.class);
         intent.putExtra("uuid", uuid);
         startActivity(intent);
@@ -118,7 +138,8 @@ public class RecoveryDetail extends Activity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DINGDAN);
@@ -131,26 +152,26 @@ public class RecoveryDetail extends Activity {
     {
         @SuppressWarnings("deprecation")
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Context context, Intent intent)
+        {
             getDetailSecBysettleId();
         }
     };
 
 
-
-
-
-
-    public void getDetailSecBysettleId() {
+    public void getDetailSecBysettleId()
+    {
         rl_nodatatip.setVisibility(View.VISIBLE);
         commembertab commembertab = AppContext.getUserInfo(RecoveryDetail.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("action", "getDetailSecBysettleId");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<SellOrder_New> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
@@ -168,50 +189,62 @@ public class RecoveryDetail extends Activity {
                     sendBroadcast(intent);
 
 
-                    if (listNewData.size() > 0) {
+                    if (listNewData.size() > 0)
+                    {
                         rl_nodatatip.setVisibility(View.GONE);
-                    } else {
+                    } else
+                    {
                         rl_nodatatip.setVisibility(View.VISIBLE);
                     }
 
-                } else {
+                } else
+                {
                     AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }
 
-    private void updateSellOrderByuuid(String num) {
+    private void updateSellOrderByuuid(String num)
+    {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uuid", uuid);
         params.addQueryStringParameter("isReady", "1");
         params.addQueryStringParameter("plateNumber", num);
         params.addQueryStringParameter("action", "updateSellOrderByuuid");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
 
-                    } else {
+                    } else
+                    {
                         listData = new ArrayList<SellOrder_New>();
                     }
 
-                } else {
+                } else
+                {
                     AppContext.makeToast(RecoveryDetail.this, "error_connectDataBase");
                     return;
                 }
@@ -219,7 +252,8 @@ public class RecoveryDetail extends Activity {
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 AppContext.makeToast(RecoveryDetail.this, "error_connectServer");
 
             }

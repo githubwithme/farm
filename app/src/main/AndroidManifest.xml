@@ -60,6 +60,7 @@
             android:name=".ui.AddPlantObservation_"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.NCZ_JobActivity_"/>
+        <activity android:name=".ui.NCZ_ParkSaleActivity_"/>
         <activity android:name=".ui.NCZ_ContractBreakOff_"/>
         <activity android:name=".ui.NCZ_ContractSaleData_"/>
         <activity android:name=".ui.NCZ_AreaSaleActivity_"/>

@@ -62,7 +62,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
     protected List<CustomHorizontalScrollView_Allitem> mHScrollViews = null;
     private ScrollAdapter mAdapter;
     int screenWidth = 0;
-//    int screenWidth_total = 0;
+    //    int screenWidth_total = 0;
     @ViewById
     LinearLayout ll_park;
     @ViewById
@@ -98,7 +98,18 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
 //    @ViewById
 //    RelativeLayout rl_view;
 
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
     @Click
     void btn_back()
     {
@@ -109,6 +120,7 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
     @AfterViews
     void afterOncreate()
     {
+        showDialog_waitTip();
         areaid = getIntent().getStringExtra("areaid");
         areaname = getIntent().getStringExtra("areaname");
         customOntouch = this;
@@ -212,15 +224,17 @@ public class NCZ_ContractSaleData extends Activity implements CustomHorizontalSc
                 } else
                 {
                     AppContext.makeToast(NCZ_ContractSaleData.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(NCZ_ContractSaleData.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }

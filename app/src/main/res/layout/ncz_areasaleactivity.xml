@@ -42,7 +42,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
-                android:background="@mipmap/btn_drop_down"/>
+                android:background="@mipmap/btn_drop_down"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
@@ -147,6 +148,14 @@
                     android:layout_height="match_parent"
                     android:background="@color/splitline"/>
 
+
+                <ImageView
+                    android:layout_width="10dip"
+                    android:layout_height="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:src="@mipmap/icon_arrow_left"/>
+
                 <com.farm.widget.CustomHorizontalScrollView_Allitem
                     android:id="@+id/item_scroll_title"
                     android:layout_width="fill_parent"
@@ -165,10 +174,18 @@
                     </LinearLayout>
                 </com.farm.widget.CustomHorizontalScrollView_Allitem>
 
+                <ImageView
+                    android:layout_width="10dip"
+                    android:layout_height="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:src="@mipmap/icon_arrow_right"/>
+
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
                     android:background="@color/splitline"/>
+
 
                 <TextView
                     android:id="@+id/tv_top_right"
@@ -282,7 +299,8 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="70dp"
             android:layout_marginLeft="15dp"
-            android:background="@mipmap/suspen_menu"/>
+            android:background="@mipmap/suspen_menu"
+            android:visibility="gone"/>
     </FrameLayout>
 
     <FrameLayout

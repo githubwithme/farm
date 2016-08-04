@@ -219,7 +219,7 @@ public class NCZ_DLExecute_Adapter extends BaseExpandableListAdapter
                 if (batchTime.getFlashStr().equals("1"))
                 {
                     commembertab commembertab = AppContext.getUserInfo(context);
-                    AppContext.eventStatus(context, "7", batchTime.getid(), commembertab.getId());
+                    AppContext.eventStatus(context, "7", batchTime.getId(), commembertab.getId());
                 }
 
             }
