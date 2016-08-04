@@ -128,7 +128,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/line_middle"
-                android:layout_marginBottom="52dip"
+                android:layout_marginBottom="55dip"
                 android:layout_marginLeft="1px"
                 android:layout_marginRight="1px"
                 android:cacheColorHint="@android:color/transparent"
@@ -141,7 +141,7 @@
             <RelativeLayout
                 android:id="@+id/rl_menu"
                 android:layout_width="match_parent"
-                android:layout_height="150px"
+                android:layout_height="55dip"
                 android:layout_alignParentBottom="true"
                 android:background="@color/white"
                 android:orientation="horizontal">

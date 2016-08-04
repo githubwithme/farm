@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -27,7 +26,6 @@ import com.farm.bean.areatab;
 import com.farm.bean.commembertab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
-import com.farm.widget.CustomHorizontalScrollView_Allitem;
 import com.farm.widget.CustomHorizontalScrollView_Allitem;
 import com.farm.widget.MyDatepicker;
 import com.farm.widget.MyDialog;
@@ -518,71 +516,50 @@ public class CZ_BreakOffActivity extends Activity implements CustomHorizontalScr
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            // 自定义视图
-//            if (lmap.get(position) == null)
-//            {
-            // 获取list_item布局文件的视图
-            if (convertView == null)
+            convertView = LayoutInflater.from(CZ_BreakOffActivity.this).inflate(R.layout.cz_breakoff_scrolladapteritem, null);
+            if (position % 2 == 0)
             {
-                convertView = LayoutInflater.from(CZ_BreakOffActivity.this).inflate(R.layout.cz_breakoff_scrolladapteritem, null);
-                if (position % 2 == 0)
-                {
-                    convertView.setBackgroundResource(R.color.bg_table_row);
-                } else
-                {
-                    convertView.setBackgroundResource(R.color.white);
-                }
-                listItemView = new ListItemView();
-                listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-                listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
-                listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-                listItemView.item_total.getLayoutParams().width = (screenWidth);
-                LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-                listItemView.item_titlev.setText(listData.get(position).getBatchTime());
-                int totalnumber = 0;
-                List<areatab> list = listData.get(position).getAreatabList();
-                for (int j = 0; j < list.size(); j++)
-                {
-                    totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
-                }
-                listItemView.item_total.setText(String.valueOf(totalnumber));
-
-                for (int i = 0; i < listData.get(position).getAreatabList().size(); i++)
-                {
-                    View view = LayoutInflater.from(CZ_BreakOffActivity.this).inflate(R.layout.cz_breakoff_dataitem, null);
-                    listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                    listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllnumber());
-                    listItemView.tv_data.getLayoutParams().width = (screenWidth);
-                    ll_middle.addView(view);
-
-                    listItemView.tv_data.requestFocusFromTouch();
-                    listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
-                    listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                    listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getareaName());
-                    listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllnumber());
-                    listItemView.tv_data.setOnClickListener(clickListener);
-
-                }
-                // 第一次初始化的时候装进来
-                // 第一次初始化的时候装进来
-                CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
-                addHViews(customHorizontalScrollView);
-                customHorizontalScrollView.setCuttomOntouch(customOntouch);
-//            addHViews((CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll));
-                // 设置控件集到convertView
-//                lmap.put(position, convertView);
-//                convertView.setTag(listItemView);
-//            } else
-//            {
-//                convertView = lmap.get(position);
-//                listItemView = (ListItemView) convertView.getTag();
-//            }
-
+                convertView.setBackgroundResource(R.color.bg_table_row);
             } else
             {
+                convertView.setBackgroundResource(R.color.white);
+            }
+            listItemView = new ListItemView();
+            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+            listItemView.item_total.getLayoutParams().width = (screenWidth);
+            LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
+            listItemView.item_titlev.setText(listData.get(position).getBatchTime());
+            int totalnumber = 0;
+            List<areatab> list = listData.get(position).getAreatabList();
+            for (int j = 0; j < list.size(); j++)
+            {
+                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
+            }
+            listItemView.item_total.setText(String.valueOf(totalnumber));
+
+            for (int i = 0; i < listData.get(position).getAreatabList().size(); i++)
+            {
+                View view = LayoutInflater.from(CZ_BreakOffActivity.this).inflate(R.layout.cz_breakoff_dataitem, null);
+                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
+                listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllnumber());
+                listItemView.tv_data.getLayoutParams().width = (screenWidth);
+                ll_middle.addView(view);
+
+                listItemView.tv_data.requestFocusFromTouch();
+                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
+                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getareaName());
+                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllnumber());
+                listItemView.tv_data.setOnClickListener(clickListener);
 
             }
-
+            // 第一次初始化的时候装进来
+            // 第一次初始化的时候装进来
+            CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
+            addHViews(customHorizontalScrollView);
+            customHorizontalScrollView.setCuttomOntouch(customOntouch);
             return convertView;
         }
     }

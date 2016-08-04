@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/defaultbackground"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/defaultbackground"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_height="20dip"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dip"
-            android:background="@drawable/ic_back" />
+            android:background="@drawable/ic_back"/>
 
         <Button
             android:id="@+id/btn_sure"
@@ -28,7 +28,7 @@
             android:background="@null"
             android:text="发布"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <View
             android:id="@+id/view"
@@ -37,7 +37,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn_sure"
             android:background="@color/white"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btn_cancleorder"
@@ -50,7 +50,7 @@
             android:text="取消订单"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
 
         <TextView
@@ -61,13 +61,13 @@
             android:gravity="center"
             android:text="发布订单"
             android:textColor="@color/white"
-            android:textSize="@dimen/titlebar_textsize" />
+            android:textSize="@dimen/titlebar_textsize"/>
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/line_color" />
+        android:background="@color/line_color"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -85,8 +85,7 @@
                 android:background="@color/white"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:orientation="vertical"
-                android:visibility="visible">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -96,7 +95,7 @@
                     android:paddingLeft="10dip"
                     android:text="注：* 为必填项目"
                     android:textColor="@color/text_table_horizontitle"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
 
                 <RelativeLayout
@@ -116,7 +115,7 @@
                         android:paddingLeft="10dip"
                         android:text="* 采购商"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
                     <!--AutoCompleteTextView-->
                     <!--android:completionThreshold-->
                     <TextView
@@ -132,7 +131,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
                     <Button
                         android:id="@+id/btn_addcg"
@@ -140,14 +139,14 @@
                         android:layout_height="150px"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/icon_addbuyer_new" />
+                        android:background="@drawable/icon_addbuyer_new"/>
                 </RelativeLayout>
 
                 <View
                     android:id="@+id/line"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color" />
+                    android:background="@color/line_color"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -163,7 +162,7 @@
                         android:paddingLeft="10dip"
                         android:text="* 产品"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <TextView
@@ -176,7 +175,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                 </LinearLayout>
@@ -185,7 +184,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color" />
+                    android:background="@color/line_color"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -201,7 +200,7 @@
                         android:paddingLeft="10dip"
                         android:text="* 单价(元)"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -216,7 +215,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                 </LinearLayout>
@@ -224,7 +223,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color" />
+                    android:background="@color/line_color"/>
 
 
                 <LinearLayout
@@ -241,7 +240,7 @@
                         android:paddingLeft="10dip"
                         android:text="* 重量(斤)"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -257,13 +256,13 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color" />
+                    android:background="@color/line_color"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -278,7 +277,7 @@
                         android:paddingLeft="10dip"
                         android:text="* 总价(元)"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <TextView
@@ -292,7 +291,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                 </LinearLayout>
@@ -300,7 +299,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color" />
+                    android:background="@color/line_color"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -315,7 +314,7 @@
                         android:paddingLeft="10dip"
                         android:text="* 定金(元)"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -330,22 +329,22 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                 </LinearLayout>
 
                 <View
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color" />
+                    android:background="@color/line_color"
+                    android:visibility="gone"/>
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -356,7 +355,7 @@
                         android:paddingLeft="10dip"
                         android:text="* 订单负责人"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -370,13 +369,13 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color" />
+                    android:background="@color/line_color"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -392,7 +391,7 @@
                         android:paddingLeft="10dip"
                         android:text="* 采收时间"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <TextView
@@ -405,14 +404,14 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color" />
+                    android:background="@color/line_color"/>
 
             </LinearLayout>
 
@@ -442,7 +441,7 @@
                         android:paddingLeft="10dip"
                         android:text="* 采购商电话"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -456,7 +455,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
 
@@ -474,7 +473,7 @@
                         android:paddingLeft="10dip"
                         android:text="车辆数"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <TextView
@@ -488,7 +487,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
                     <Button
                         android:id="@+id/add_jsd"
@@ -496,13 +495,13 @@
                         android:layout_height="150px"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/icon_addvehicle_new" />
+                        android:background="@drawable/icon_addvehicle_new"/>
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color" />
+                    android:background="@color/line_color"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -518,7 +517,7 @@
                         android:paddingLeft="10dip"
                         android:text="发往城市"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -532,14 +531,14 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -555,7 +554,7 @@
                         android:paddingLeft="10dip"
                         android:text="* 采购商邮箱"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -569,14 +568,14 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
 
                 <LinearLayout
@@ -593,7 +592,7 @@
                         android:paddingLeft="10dip"
                         android:text="车辆"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -606,14 +605,14 @@
                         android:hint="请输入车牌号（多辆请用逗号隔开）"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
@@ -630,7 +629,7 @@
                         android:paddingLeft="10dip"
                         android:text="包装工"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <TextView
@@ -645,7 +644,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
                     <Button
                         android:id="@+id/btn_addbz"
@@ -653,14 +652,14 @@
                         android:layout_height="30dip"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@mipmap/ic_add" />
+                        android:background="@mipmap/ic_add"/>
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
@@ -677,7 +676,7 @@
                         android:paddingLeft="10dip"
                         android:text="搬运工"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <TextView
@@ -692,7 +691,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
                     <Button
                         android:id="@+id/btn_addby"
@@ -700,14 +699,14 @@
                         android:layout_height="30dip"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@mipmap/ic_add" />
+                        android:background="@mipmap/ic_add"/>
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -723,7 +722,7 @@
                         android:paddingLeft="10dip"
                         android:text="搬运单价\n(元/件)"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -738,7 +737,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                 </LinearLayout>
@@ -748,7 +747,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -764,7 +763,7 @@
                         android:paddingLeft="10dip"
                         android:text="包装规格   （斤/件）"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -779,7 +778,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                 </LinearLayout>
@@ -789,7 +788,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/line_color"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -805,7 +804,7 @@
                         android:paddingLeft="10dip"
                         android:text="包装单价\n(件/元)"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -820,7 +819,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                 </LinearLayout>
@@ -828,7 +827,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_color" />
+                    android:background="@color/line_color"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -843,7 +842,7 @@
                         android:paddingLeft="10dip"
                         android:text="备注"
                         android:textColor="@color/titlebar_top"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
 
                     <EditText
@@ -858,7 +857,7 @@
                         android:paddingRight="20dip"
                         android:textColor="@color/titlebar_top"
                         android:textColorHint="@color/text_table_horizontitle"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -877,12 +876,12 @@
                     <TextView
                         android:id="@+id/tv_product_tip"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:paddingLeft="10dip"
                         android:text="销售明细"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"/>
 
 
                     <TextView
@@ -895,13 +894,52 @@
                         android:paddingRight="10dip"
                         android:text="合计0株"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/size_sp_16" />
+                        android:textSize="@dimen/size_sp_16"/>
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/gray" />
+                    android:background="@color/gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="承包区"
+                        android:textColor="@color/titlebar_top"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="承包区"
+                        android:textColor="@color/titlebar_top"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="出售株数"
+                        android:textColor="@color/titlebar_top"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color"/>
 
                 <ListView
                     android:id="@+id/lv"
@@ -909,8 +947,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="25dip"
                     android:background="@color/white"
-                    android:divider="@color/light_gray"
-                    android:dividerHeight="7dip" />
+                    android:divider="@color/transparent"
+                    android:dividerHeight="0dip"/>
             </LinearLayout>
 
 

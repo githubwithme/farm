@@ -338,6 +338,13 @@ public class NCZ_ContractBreakOff extends Activity implements CustomHorizontalSc
         public View getView(int position, View convertView, ViewGroup parent)
         {
             convertView = LayoutInflater.from(NCZ_ContractBreakOff.this).inflate(R.layout.contractbreakoff_scrolladapter_item, null);
+            if (position % 2 == 0)
+            {
+                convertView.setBackgroundResource(R.color.bg_table_row);
+            } else
+            {
+                convertView.setBackgroundResource(R.color.white);
+            }
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);

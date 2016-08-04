@@ -63,8 +63,6 @@ import java.util.List;
 @EActivity(R.layout.cz_pg_create_order)
 public class PG_CreateOrder extends Activity
 {
-
-
     String mail;
     String telphone;
     @ViewById

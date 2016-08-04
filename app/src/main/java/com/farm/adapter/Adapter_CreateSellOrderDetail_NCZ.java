@@ -73,27 +73,24 @@ public class Adapter_CreateSellOrderDetail_NCZ extends BaseAdapter
     {
         SellOrderDetail = listItems.get(position);
         // 自定义视图
-        ListItemView listItemView = null;
-        if (lmap.get(position) == null)
+        // 获取list_item布局文件的视图
+        convertView = listContainer.inflate(R.layout.adapter_directcreateorder, null);
+        if (position % 2 == 0)
         {
-            // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.adapter_directcreateorder, null);
-            listItemView = new ListItemView();
-            // 获取控件对象
-            listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
-            listItemView.tv_plannumber = (TextView) convertView.findViewById(R.id.tv_plannumber);
-            listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
-            // 设置控件集到convertView
-            lmap.put(position, convertView);
-            convertView.setTag(listItemView);
+            convertView.setBackgroundResource(R.color.bg_table_row);
         } else
         {
-            convertView = lmap.get(position);
-            listItemView = (ListItemView) convertView.getTag();
+            convertView.setBackgroundResource(R.color.white);
         }
+        ListItemView listItemView = new ListItemView();
+        // 获取控件对象
+        listItemView.tv_area = (TextView) convertView.findViewById(R.id.tv_area);
+        listItemView.tv_plannumber = (TextView) convertView.findViewById(R.id.tv_plannumber);
+        listItemView.tv_batchtime = (TextView) convertView.findViewById(R.id.tv_batchtime);
+
         // 设置文字和图片
-        listItemView.tv_plannumber.setText(SellOrderDetail.getplannumber() + "株");
-        listItemView.tv_batchtime.setText(SellOrderDetail.getBatchTime() + "批次");
+        listItemView.tv_plannumber.setText(SellOrderDetail.getplannumber());
+        listItemView.tv_batchtime.setText(SellOrderDetail.getBatchTime());
         listItemView.tv_area.setText(SellOrderDetail.getparkname() + SellOrderDetail.getareaname() + SellOrderDetail.getcontractname());
         return convertView;
     }

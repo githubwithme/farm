@@ -7,76 +7,39 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
+        android:layout_height="45dip"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/tv_area"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="乐丰园区"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="14sp"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip">
+        <TextView
+            android:id="@+id/tv_batchtime"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="07-05至07-10"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="14sp"/>
 
-            <TextView
-                android:id="@+id/tv_area"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:gravity="center"
-                android:text="乐丰园区"
-                android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
-
-
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dip"
-            android:layout_marginTop="5dip"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:id="@+id/tv_saletip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dip"
-                android:gravity="center"
-                android:text="出售"
-                android:textColor="@color/bg_text"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/tv_batchtime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_saletip"
-                android:layout_marginLeft="5dip"
-                android:gravity="center"
-                android:text="05-15至04-20"
-                android:textColor="@color/red"
-                android:textSize="16sp"/>
-            <TextView
-                android:id="@+id/tv_plannumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/tv_batchtime"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="100000"
-                android:textColor="@color/red"
-                android:textSize="14sp"/>
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_plannumber"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="150000"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="14sp"/>
     </LinearLayout>
 
 
