@@ -109,6 +109,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     RelativeLayout rl_view;
 
     DialogFragment_WaitTip dialog;
+
     public void showDialog_waitTip()
     {
         dialog = new DialogFragment_WaitTip();
@@ -223,9 +224,13 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 {
                    /* if (result.getAffectedRows() > 0)
                     {*/
-                        listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
-                        DensityUtil densityUtil = new DensityUtil(NCZ_AreaSaleActivity.this);
-                        screenWidth = densityUtil.getScreenWidth();
+
+
+                    listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
+                    DensityUtil densityUtil = new DensityUtil(NCZ_AreaSaleActivity.this);
+                    screenWidth = densityUtil.getScreenWidth();
+                    if (listData.size() > 0)
+                    {
                         int size = listData.get(0).getAreatabList().size();
                         if (size == 1)
                         {
@@ -242,7 +247,10 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                         tv_bottom_left.getLayoutParams().width = (screenWidth);
                         alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
-                        cz_startdl.setVisibility(View.GONE);
+                    }
+
+
+                    cz_startdl.setVisibility(View.GONE);
 
         /*            } else
                     {

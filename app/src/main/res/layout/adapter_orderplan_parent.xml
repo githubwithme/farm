@@ -193,7 +193,7 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:text="2"
+                                        android:text="-1"
                                         android:textColor="@color/text_table_horizontitle"
                                         android:textSize="12sp"/>
                                 </LinearLayout>
@@ -231,7 +231,7 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:text="1"
+                                        android:text="-1"
                                         android:textColor="@color/titlebar_top"
                                         android:textSize="12sp"/>
                                 </LinearLayout>
@@ -330,7 +330,7 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:text="2"
+                                        android:text="-1"
                                         android:textColor="@color/text_table_horizontitle"
                                         android:textSize="12sp"/>
                                 </LinearLayout>
@@ -368,7 +368,7 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:text="1"
+                                        android:text="-1"
                                         android:textColor="@color/titlebar_top"
                                         android:textSize="12sp"/>
                                 </LinearLayout>

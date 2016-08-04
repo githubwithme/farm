@@ -141,7 +141,7 @@
 
     <ListView
         android:id="@+id/lv"
-        style="@style/widget_listview"
+        style="@style/white_select_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/transparent"

@@ -50,6 +50,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.swipelistview.SwipeLayout;
 
 import org.apache.http.entity.StringEntity;
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -127,6 +128,8 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
         public Button btn_editorder;
         public Button btn_changetime;
         public CircleImageView circleImageView;
+        public TextView tv_readynumber;
+        public TextView tv_notreadynumber;
 //        public RelativeLayout weijiux;
     }
 
@@ -167,6 +170,9 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
+
+            listItemView.tv_readynumber= (TextView) convertView.findViewById(R.id.tv_readynumber);
+            listItemView.tv_notreadynumber= (TextView) convertView.findViewById(R.id.tv_notreadynumber);
 //            listItemView.weijiux = (RelativeLayout) convertView.findViewById(R.id.weijiux);
 
             listItemView.tv_number.setText(String.valueOf(childPosition + 1));
@@ -230,6 +236,12 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
 //                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
                 }
             });
+
+            listItemView.tv_readynumber.setText(sellOrder_new.getReadyPlate() + "车;");
+            listItemView.tv_notreadynumber.setText(sellOrder_new.getNotReadyPlate()+"车");
+            listItemView.tv_car.setText("共"+(Integer.valueOf(sellOrder_new.getReadyPlate())+Integer.valueOf(sellOrder_new.getNotReadyPlate()))+";");
+
+
 /*
             listItemView.tv_car.setTag(R.id.tag_bean, sellOrder_new);
             listItemView.tv_car.setTag(R.id.tag_text, listItemView.tv_car);
@@ -265,17 +277,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
                     context.startActivity(intent);
                 }
             });
-/*            convertView.setTag(R.id.tag_fi, listData.get(groupPosition).getDate());
-            convertView.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-//                    Intent intent = new Intent(context,tv_name.getid());// 因为list中添加了头部,因此要去掉一个
-//                    intent.putExtra("type",type);// 因为list中添加了头部,因此要去掉一个
-//                    context.startActivity(intent);
-                }
-            });*/
+
             listItemView.view_buyer_call.setTag(R.id.tag_fi, sellOrder_new.getBuyersPhone());
             listItemView.view_buyer_call.setOnClickListener(new View.OnClickListener()
             {
@@ -453,8 +455,16 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             tv_notPayDepositNumber.setText(listData.get(groupPosition).getNotPayDepositNumber());
             tv_paidDepositNumber.setText(listData.get(groupPosition).getPaidDepositNumber());
             tv_notreadyNumber.setText(listData.get(groupPosition).getNotreadyNumber());
-            tv_readyNumber.setText(listData.get(groupPosition).getReadyNumber());
-            tv_carnumber.setText(listData.get(groupPosition).getCarNumber());
+
+
+            if (listData.get(groupPosition).getOrderPlanList().size() > 0)
+            {
+                tv_carnumber.setText(String.valueOf((Integer.valueOf(listData.get(groupPosition).getOrderPlanList().get(0).getReadyPlate()) + listData.get(groupPosition).getOrderPlanList().get(0).getNotReadyPlate())));
+                tv_readyNumber.setText(listData.get(groupPosition).getOrderPlanList().get(0).getReadyPlate());
+                tv_notreadyNumber.setText(listData.get(groupPosition).getOrderPlanList().get(0).getNotReadyPlate());
+            }
+
+
             tv_ordernumber.setText(listData.get(groupPosition).getOrderNumber());
 //            Adapter_OrderPlan_Parentitem adapter_orderPlan_parentitem = new Adapter_OrderPlan_Parentitem(context, listData.get(groupPosition).getOrderPlanList());
 //            gv.setAdapter(adapter_orderPlan_parentitem);

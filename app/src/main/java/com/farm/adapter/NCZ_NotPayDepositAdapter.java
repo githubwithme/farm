@@ -26,6 +26,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
+import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.farm.ui.NCZ_All_OneOrder_Detail_;
 import com.farm.ui.NCZ_EditOrder_;
@@ -156,7 +157,10 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter {
             listItemView.btn_showdetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    AppContext.eventStatus(context, "8", sellOrder_new.getUuid(), commembertab.getId());
                     Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
                     intent.putExtra("bean", sellOrder_new);
                     context.startActivity(intent);
@@ -196,26 +200,7 @@ public class NCZ_NotPayDepositAdapter extends BaseAdapter {
                     myDatepicker.getDialog().show();
                 }
             });
-//            listItemView.ll_car.setTag(R.id.tag_contract, sellOrder);
-//            listItemView.ll_car.setTag(R.id.tag_batchtime, listItemView);
-//            listItemView.ll_car.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_contract);
-//                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
-//                    JSONArray jsonArray = null;
-//                    try {
-//                        jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
-//                    } catch (Exception e) {
-//
-//                    }
-//                    List<String> list = new ArrayList<String>();
-//                    for (int i = 0; i < jsonArray.size(); i++) {
-//                        list.add(jsonArray.getString(i));
-//                    }
-//                    showDialog_workday(list, sellOrder_new);
-//                }
-//            });
+
             listItemView.view_mainpeople_call.setTag(sellOrder.getMainPeoplePhone());
             listItemView.view_mainpeople_call.setOnClickListener(new View.OnClickListener() {
                 @Override

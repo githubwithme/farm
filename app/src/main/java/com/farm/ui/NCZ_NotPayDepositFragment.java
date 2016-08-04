@@ -182,42 +182,26 @@ public class NCZ_NotPayDepositFragment extends Fragment
                 {
                /*     if (result.getAffectedRows() != 0)
                     {*/
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-//                        Iterator<SellOrder_New> it = listData.iterator();
-//                        while (it.hasNext())
-//                        {
-//                            String value = it.next().getSelltype();
-//                            if (value.equals("已完成") || value.equals("待审批"))
-//                            {
-//                                it.remove();
-//                            }
-//                        }
+                    listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
 
-                        listAdapter = new NCZ_NotPayDepositAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
-                        lv.setAdapter(listAdapter);
+                    listAdapter = new NCZ_NotPayDepositAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+                    lv.setAdapter(listAdapter);
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                    {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                        {
+                            commembertab commembertab = AppContext.getUserInfo(getActivity());
+                            AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
+                        }
+                    });
                     Intent intent = new Intent();
                     intent.setAction(AppContext.BROADCAST_UPDATELISTNUMBER);
                     intent.putExtra("type", AppContext.order_waitForDeposit);
                     intent.putExtra("number", listData.size());
                     getActivity().sendBroadcast(intent);
-//                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-//                        {
-//                            @Override
-//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-//                            {
-////                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-////                                Intent intent = new Intent(getActivity(), NCZ_NewOrderDetail_.class);
-//                                Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
-//                                intent.putExtra("bean", listData.get(position));
-//                                getActivity().startActivity(intent);
-//                            }
-//                        });
 
-          /*          } else
-                    {
-                        listData = new ArrayList<SellOrder_New>();
-                    }*/
 
                 } else
                 {
@@ -420,7 +404,7 @@ public class NCZ_NotPayDepositFragment extends Fragment
                                 if (listdata_cp.get(i).getProductName().equals("全部产品"))
                                 {
                                     cpname = "-1";
-                                }else
+                                } else
                                 {
                                     cpname = listdata_cp.get(i).getProductName();
                                 }

@@ -477,13 +477,13 @@ public class NCZ_CreateNewOrder extends Activity
         sellOrder.setCarryPrice(by_danjia.getText().toString());
         sellOrder.setPackPrice(bz_danjia.getText().toString());
         sellOrder.setPackPec(bz_guige.getText().toString());
-        sellOrder.setWaitDeposit(dingjin.getText().toString());
+        sellOrder.setWaitDeposit(dingjin.getText().toString());   //订单表
         sellOrder.setIsNeedAudit("1");
         sellOrder.setFreeFinalPay("2");
         sellOrder.setFreeDeposit("2");
         List<SellOrder_New> SellOrderList = new ArrayList<>();
         SellOrderList.add(sellOrder);
-        SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();
+        SellOrder_New_First sellOrder_new_first = new SellOrder_New_First();  //附加表
         sellOrder_new_first.setSellOrderId(uuid);
         sellOrder_new_first.setQualityWaterWeight("");
         sellOrder_new_first.setQualityNetWeight("");
@@ -744,13 +744,17 @@ public class NCZ_CreateNewOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         Toast.makeText(NCZ_CreateNewOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
-                        Intent intent1 = new Intent();
+                 /*       Intent intent1 = new Intent();
                         intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
-                        sendBroadcast(intent1);
+                        sendBroadcast(intent1);*/
 
                         Intent intent2 = new Intent();
                         intent2.setAction(AppContext.BROADCAST_FINISH);
                         sendBroadcast(intent2);
+
+                        Intent intent3 = new Intent();
+                        intent3.setAction(AppContext.UPDATEMESSAGE_NCZ_XL_REFRESH);
+                        sendBroadcast(intent3);
                         finish();
                     }
 

@@ -11,6 +11,8 @@ public class OrderPlan implements Parcelable
     String orderNumber;//该园区订单数
     String carNumber;//该园区该天车辆数
     String parkname;//园区名称
+    String readyPlate;//就绪车辆数
+    String notReadyPlate;//未就绪车辆数
 
     public OrderPlan()
     {
@@ -22,6 +24,28 @@ public class OrderPlan implements Parcelable
         orderNumber = in.readString();
         carNumber = in.readString();
         parkname = in.readString();
+        readyPlate = in.readString();
+        readyPlate = in.readString();
+    }
+
+    public String getReadyPlate()
+    {
+        return readyPlate;
+    }
+
+    public void setReadyPlate(String readyPlate)
+    {
+        this.readyPlate = readyPlate;
+    }
+
+    public String getNotReadyPlate()
+    {
+        return notReadyPlate;
+    }
+
+    public void setNotReadyPlate(String notReadyPlate)
+    {
+        this.notReadyPlate = notReadyPlate;
     }
 
     public static final Creator<OrderPlan> CREATOR = new Creator<OrderPlan>()
@@ -81,5 +105,7 @@ public class OrderPlan implements Parcelable
         dest.writeString(orderNumber);
         dest.writeString(carNumber);
         dest.writeString(parkname);
+        dest.writeString(readyPlate);
+        dest.writeString(notReadyPlate);
     }
 }

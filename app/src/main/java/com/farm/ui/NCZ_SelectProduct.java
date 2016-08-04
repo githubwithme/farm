@@ -180,7 +180,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         super.onCreate(savedInstanceState);
         getActionBar().hide();
 
-//        UPDATEMESSAGE_NCZ_XL_REFRESH
 
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_NCZ_XL_REFRESH);
         registerReceiver(receiver_update, intentfilter_update);
@@ -219,9 +218,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 screenWidth = screenWidth / 3;
             }
             tv_top_left.getLayoutParams().width = (screenWidth);
-//            tv_top_right.getLayoutParams().width = (screenWidth);
-//            tv_bottom_left.getLayoutParams().width = (screenWidth);
-//            alltoatal.getLayoutParams().width = (screenWidth);
             initViews();
             tv_nodatatip.setVisibility(View.GONE);
         }
@@ -284,51 +280,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
     }
 
-//    private void getParknameByUid()
-//    {
-//        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(NCZ_SelectProduct.this);
-//        RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("action", "getcontractByUid");
-//        HttpUtils http = new HttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-//        {
-//            @Override
-//            public void onSuccess(ResponseInfo<String> responseInfo)
-//            {
-//                String a = responseInfo.result;
-//                Result result = JSON.parseObject(responseInfo.result, Result.class);
-//                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-//                {
-//                    if (result.getAffectedRows() != 0)
-//                    {
-//                        list_park = JSON.parseArray(result.getRows().toJSONString(), parktab.class);
-//                        tv_title.setText(list_park.get(0).getparkName());
-//                        //        getBatchTimeOfPark();
-//                        getNewSaleList_test();
-//                    } else
-//                    {
-//                        list_park = new ArrayList<parktab>();
-//                    }
-//                } else
-//                {
-//                    AppContext.makeToast(NCZ_SelectProduct.this, "error_connectDataBase");
-//
-//                    return;
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(HttpException error, String msg)
-//            {
-//                String a = error.getMessage();
-//                AppContext.makeToast(NCZ_SelectProduct.this, "error_connectServer");
-//
-//            }
-//        });
-//
-//    }
 
     public void showPop_park()
     {
