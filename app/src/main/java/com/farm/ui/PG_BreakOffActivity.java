@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -56,6 +57,10 @@ public class PG_BreakOffActivity extends Activity implements CustomHorizontalScr
 {
     CustomHorizontalScrollView_Allitem.CustomOntouch customOntouch = null;
     @ViewById
+    RelativeLayout rl_NotStartBreakoff;
+    @ViewById
+    FrameLayout fl_table;
+    @ViewById
     CustomHorizontalScrollView_Allitem totalScroll;
     @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
@@ -82,6 +87,16 @@ public class PG_BreakOffActivity extends Activity implements CustomHorizontalScr
 //    @ViewById
 //    RelativeLayout rl_dl;
 
+    DialogFragment_WaitTip dialog;
+
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
     @Click
     void btn_addBatchTime()
     {
@@ -93,6 +108,7 @@ public class PG_BreakOffActivity extends Activity implements CustomHorizontalScr
     @AfterViews
     void afterOncreate()
     {
+        showDialog_waitTip();
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
@@ -152,8 +168,10 @@ public class PG_BreakOffActivity extends Activity implements CustomHorizontalScr
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() > 0)
+                    if (result.getRows().size() > 0)
                     {
+                        fl_table.setVisibility(View.VISIBLE);
+                        rl_NotStartBreakoff.setVisibility(View.GONE);
                         listData = JSON.parseArray(result.getRows().toJSONString(), ContractBatchTimeBean.class);
                         DensityUtil densityUtil = new DensityUtil(PG_BreakOffActivity.this);
                         screenWidth = densityUtil.getScreenWidth();
@@ -176,21 +194,26 @@ public class PG_BreakOffActivity extends Activity implements CustomHorizontalScr
                     } else
                     {
                         listData = new ArrayList<ContractBatchTimeBean>();
+                        fl_table.setVisibility(View.GONE);
+                        rl_NotStartBreakoff.setVisibility(View.VISIBLE);
+
                     }
 
                 } else
                 {
 
                     AppContext.makeToast(PG_BreakOffActivity.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(PG_BreakOffActivity.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }

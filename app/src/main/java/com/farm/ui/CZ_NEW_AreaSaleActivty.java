@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,6 +59,10 @@ import java.util.List;
 public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
     String parkid;
+    @ViewById
+    RelativeLayout rl_NotStartBreakoff;
+    @ViewById
+    FrameLayout fl_table;
     @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
     @ViewById
@@ -150,7 +155,6 @@ public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontal
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
-//        getNewSaleList_test();
         getBatchTimeOfPark();
         tv_parkname.setText(commembertab.getparkName());
     }
@@ -211,8 +215,10 @@ public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontal
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() > 0)
+                    if (result.getRows().size() > 0)
                     {
+                        rl_NotStartBreakoff.setVisibility(View.GONE);
+                        fl_table.setVisibility(View.VISIBLE);
                         listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                         DensityUtil densityUtil = new DensityUtil(CZ_NEW_AreaSaleActivty.this);
                         screenWidth = densityUtil.getScreenWidth();
@@ -237,6 +243,8 @@ public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontal
                     } else
                     {
                         listData = new ArrayList<BatchTime>();
+                        rl_NotStartBreakoff.setVisibility(View.VISIBLE);
+                        fl_table.setVisibility(View.GONE);
                     }
 
                 } else

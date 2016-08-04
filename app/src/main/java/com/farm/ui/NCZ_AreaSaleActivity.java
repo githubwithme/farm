@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -72,6 +73,10 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     private ScrollAdapter mAdapter;
     int screenWidth = 0;
     @ViewById
+    RelativeLayout rl_NotStartBreakoff;
+    @ViewById
+    FrameLayout fl_table;
+    @ViewById
     LinearLayout ll_park;
     @ViewById
     LinearLayout ll_total;
@@ -97,12 +102,6 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     com.farm.bean.commembertab commembertab;
     MyDialog myDialog;
     Fragment mContent = new Fragment();
-    @ViewById
-    LinearLayout cz_startdl;
-    @ViewById
-    TextView startdl;
-    @ViewById
-    TextView tv_timelimit;
     @ViewById
     RelativeLayout rl_view;
 
@@ -200,7 +199,6 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             tv_bottom_left.getLayoutParams().width = (screenWidth);
             alltoatal.getLayoutParams().width = (screenWidth);
             initViews();
-            cz_startdl.setVisibility(View.GONE);
         }
 
     }
@@ -223,33 +221,34 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                   /* if (result.getAffectedRows() > 0)
-                    {*/
-                    listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
-                    DensityUtil densityUtil = new DensityUtil(NCZ_AreaSaleActivity.this);
-                    screenWidth = densityUtil.getScreenWidth();
-                    int size = listData.get(0).getAreatabList().size();
-                    if (size == 1)
+                    if (result.getRows().size() > 0)
                     {
-                        screenWidth = screenWidth / 4;
-                    } else if (size == 2)
-                    {
-                        screenWidth = screenWidth / 4;
+                        fl_table.setVisibility(View.VISIBLE);
+                        rl_NotStartBreakoff.setVisibility(View.GONE);
+                        listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
+                        DensityUtil densityUtil = new DensityUtil(NCZ_AreaSaleActivity.this);
+                        screenWidth = densityUtil.getScreenWidth();
+                        int size = listData.get(0).getAreatabList().size();
+                        if (size == 1)
+                        {
+                            screenWidth = screenWidth / 4;
+                        } else if (size == 2)
+                        {
+                            screenWidth = screenWidth / 4;
+                        } else
+                        {
+                            screenWidth = screenWidth / 4;
+                        }
+                        tv_top_left.getLayoutParams().width = (screenWidth);
+                        tv_top_right.getLayoutParams().width = (screenWidth);
+                        tv_bottom_left.getLayoutParams().width = (screenWidth);
+                        alltoatal.getLayoutParams().width = (screenWidth);
+                        initViews();
                     } else
                     {
-                        screenWidth = screenWidth / 4;
+                        fl_table.setVisibility(View.GONE);
+                        rl_NotStartBreakoff.setVisibility(View.VISIBLE);
                     }
-                    tv_top_left.getLayoutParams().width = (screenWidth);
-                    tv_top_right.getLayoutParams().width = (screenWidth);
-                    tv_bottom_left.getLayoutParams().width = (screenWidth);
-                    alltoatal.getLayoutParams().width = (screenWidth);
-                    initViews();
-                    cz_startdl.setVisibility(View.GONE);
-
-        /*            } else
-                    {
-                        listData = new ArrayList<BatchTime>();
-                    }*/
 
                 } else
                 {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_titlebar"
@@ -62,63 +62,66 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_NotStartBreakoff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="360px"
+            android:background="@mipmap/icon_inventory_empty"/>
+
+        <TextView
+            android:id="@+id/tv_nodetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40px"
+            android:alpha="0.8"
+            android:gravity="center"
+            android:text="暂无香蕉库存量"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_addtip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_nodetail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40px"
+            android:alpha="0.5"
+            android:gravity="center"
+            android:text="片区管理员还未录入\n &quot;香蕉断蕾批次&quot;和&quot;香蕉断蕾量&quot;"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="14sp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_below="@+id/tv_addtip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="15dip"
+            android:layout_marginTop="80px"
+            android:background="@drawable/btn_add_immediately"
+            android:text="立即添加"
+            android:textColor="@color/white"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
     <FrameLayout
+        android:id="@+id/fl_table"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rl_titlebar"
         android:background="@color/white"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_tip"
-            android:layout_width="match_parent"
-            android:layout_height="45dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
-            android:layout_marginTop="10dip"
-            android:background="@color/white"
-            android:gravity="center"
-            android:text="农场断蕾情况"
-            android:textColor="@color/bg_text"
-            android:textSize="16sp"
-            android:visibility="gone"/>
-
-
-        <LinearLayout
-            android:id="@+id/cz_startdl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_timelimit"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_colum"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:hint="开始时间"
-                    android:textSize="@dimen/size_20"
-                    android:visibility="gone"/>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/startdl"
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:gravity="center"
-                android:text="该园区还没有开始断蕾"/>
-
-
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -303,108 +306,5 @@
             android:visibility="gone"/>
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/fl_loadingtip"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:visibility="gone">
 
-
-        <RelativeLayout
-            android:id="@+id/rl_errortip"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white">
-
-            <ImageView
-                android:id="@+id/iv"
-                android:layout_width="200px"
-                android:layout_height="200px"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="360px"
-                android:background="@drawable/sorry_notfound"/>
-
-            <TextView
-                android:id="@+id/tv_nodetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/iv"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30px"
-                android:alpha="0.8"
-                android:gravity="center"
-                android:text="哎呀，加载失败了!"
-                android:textColor="@color/text_table_horizontitle"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:id="@+id/tv_errortip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_nodetail"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30px"
-                android:alpha="0.5"
-                android:gravity="center"
-                android:text="@string/error_network"
-                android:textColor="@color/text_table_horizontitle"
-                android:textSize="13sp"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="35dip"
-                android:layout_below="@+id/tv_errortip"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="20dip"
-                android:layout_marginTop="15dip"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_refresh"
-                    android:layout_width="100dip"
-                    android:layout_height="match_parent"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/round_gray"
-                    android:text="刷新试试"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"/>
-
-                <Button
-                    android:id="@+id/btn_close"
-                    android:layout_width="100dip"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dip"
-                    android:background="@drawable/round_gray"
-                    android:text="关闭页面"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_loadingtip"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white">
-
-            <ProgressBar
-                android:id="@+id/pb"
-                android:layout_width="30dip"
-                android:layout_height="30dip"
-                android:layout_centerInParent="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/pb"
-                android:layout_centerHorizontal="true"
-                android:text="正在加载中"
-                android:textColor="@color/gray"
-                android:textSize="16sp"/>
-        </RelativeLayout>
-    </FrameLayout>
-
-</RelativeLayout>
+</LinearLayout>

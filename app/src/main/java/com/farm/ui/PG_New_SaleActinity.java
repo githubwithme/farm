@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,6 +60,10 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
 {
     String parkid;
     @ViewById
+    RelativeLayout rl_NotStartBreakoff;
+    @ViewById
+    FrameLayout fl_table;
+    @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
     @ViewById
     CustomHorizontalScrollView_Allitem totalScroll;
@@ -96,12 +101,12 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
     com.farm.bean.commembertab commembertab;
     MyDialog myDialog;
     Fragment mContent = new Fragment();
-    @ViewById
-    LinearLayout cz_startdl;
-    @ViewById
-    TextView startdl;
-    @ViewById
-    TextView tv_timelimit;
+    //    @ViewById
+//    LinearLayout cz_startdl;
+//    @ViewById
+//    TextView startdl;
+//    @ViewById
+//    TextView tv_timelimit;
     @ViewById
     RelativeLayout rl_view;
 
@@ -183,8 +188,10 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() > 0)
+                    if (result.getRows().size() > 0)
                     {
+                        rl_NotStartBreakoff.setVisibility(View.GONE);
+                        fl_table.setVisibility(View.VISIBLE);
                         listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                         DensityUtil densityUtil = new DensityUtil(PG_New_SaleActinity.this);
                         screenWidth = densityUtil.getScreenWidth();
@@ -204,11 +211,11 @@ public class PG_New_SaleActinity extends Activity implements CustomHorizontalScr
                         tv_bottom_left.getLayoutParams().width = (screenWidth);
                         alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
-                        cz_startdl.setVisibility(View.GONE);
-
                     } else
                     {
                         listData = new ArrayList<BatchTime>();
+                        rl_NotStartBreakoff.setVisibility(View.VISIBLE);
+                        fl_table.setVisibility(View.GONE);
                     }
 
                 } else

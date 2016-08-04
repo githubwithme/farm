@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -57,6 +58,8 @@ import java.util.Map;
 public class CZ_BreakOffActivity extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
     @ViewById
+    ImageButton btn_back;
+    @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
     @ViewById
     CustomHorizontalScrollView_Allitem totalScroll;
@@ -93,6 +96,11 @@ public class CZ_BreakOffActivity extends Activity implements CustomHorizontalScr
     @ViewById
     TextView tv_starttime;
     DialogFragment_WaitTip dialog;
+
+    public void btn_back()
+    {
+        finish();
+    }
 
     public void showDialog_waitTip()
     {
@@ -232,6 +240,9 @@ public class CZ_BreakOffActivity extends Activity implements CustomHorizontalScr
                     {
                         rl_NotStartBreakoff.setVisibility(View.GONE);
                         getBatchTimeBreakoffData();
+                    } else
+                    {
+                        rl_NotStartBreakoff.setVisibility(View.VISIBLE);
                     }
                 } else
                 {
@@ -239,7 +250,7 @@ public class CZ_BreakOffActivity extends Activity implements CustomHorizontalScr
                     dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override

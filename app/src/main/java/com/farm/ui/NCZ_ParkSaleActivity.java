@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -85,6 +86,10 @@ public class NCZ_ParkSaleActivity extends Activity implements CustomHorizontalSc
     TextView tv_parkname;
     @ViewById
     TextView tv_bottom_left;
+    @ViewById
+    FrameLayout fl_table;
+    @ViewById
+    RelativeLayout rl_NotStartBreakoff;
     private String id;
     private String name;
     List<Wz_Storehouse> parklist = new ArrayList<Wz_Storehouse>();
@@ -97,12 +102,8 @@ public class NCZ_ParkSaleActivity extends Activity implements CustomHorizontalSc
     com.farm.bean.commembertab commembertab;
     MyDialog myDialog;
     Fragment mContent = new Fragment();
-    @ViewById
-    LinearLayout cz_startdl;
-    @ViewById
-    TextView startdl;
-    @ViewById
-    TextView tv_timelimit;
+//    @ViewById
+//    LinearLayout cz_startdl;
     @ViewById
     RelativeLayout rl_view;
 
@@ -115,6 +116,7 @@ public class NCZ_ParkSaleActivity extends Activity implements CustomHorizontalSc
         dialog.setArguments(bundle1);
         dialog.show(getFragmentManager(), "TIP");
     }
+//    dialog.loadingTip(getText(R.string.error_data).toString());
 
     @Click
     void ib_suspen_menu()
@@ -196,7 +198,6 @@ public class NCZ_ParkSaleActivity extends Activity implements CustomHorizontalSc
             tv_bottom_left.getLayoutParams().width = (screenWidth);
             alltoatal.getLayoutParams().width = (screenWidth);
             initViews();
-            cz_startdl.setVisibility(View.GONE);
         }
 
     }
@@ -219,33 +220,34 @@ public class NCZ_ParkSaleActivity extends Activity implements CustomHorizontalSc
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                   /* if (result.getAffectedRows() > 0)
-                    {*/
-                    listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
-                    DensityUtil densityUtil = new DensityUtil(NCZ_ParkSaleActivity.this);
-                    screenWidth = densityUtil.getScreenWidth();
-                    int size = listData.get(0).getParklist().size();
-                    if (size == 1)
+                    if (result.getRows().size() > 0)
                     {
-                        screenWidth = screenWidth / 4;
-                    } else if (size == 2)
-                    {
-                        screenWidth = screenWidth / 4;
+                        rl_NotStartBreakoff.setVisibility(View.GONE);
+                        fl_table.setVisibility(View.VISIBLE);
+                        listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
+                        DensityUtil densityUtil = new DensityUtil(NCZ_ParkSaleActivity.this);
+                        screenWidth = densityUtil.getScreenWidth();
+                        int size = listData.get(0).getParklist().size();
+                        if (size == 1)
+                        {
+                            screenWidth = screenWidth / 4;
+                        } else if (size == 2)
+                        {
+                            screenWidth = screenWidth / 4;
+                        } else
+                        {
+                            screenWidth = screenWidth / 4;
+                        }
+                        tv_top_left.getLayoutParams().width = (screenWidth);
+                        tv_top_right.getLayoutParams().width = (screenWidth);
+                        tv_bottom_left.getLayoutParams().width = (screenWidth);
+                        alltoatal.getLayoutParams().width = (screenWidth);
+                        initViews();
                     } else
                     {
-                        screenWidth = screenWidth / 4;
+                        rl_NotStartBreakoff.setVisibility(View.VISIBLE);
+                        fl_table.setVisibility(View.GONE);
                     }
-                    tv_top_left.getLayoutParams().width = (screenWidth);
-                    tv_top_right.getLayoutParams().width = (screenWidth);
-                    tv_bottom_left.getLayoutParams().width = (screenWidth);
-                    alltoatal.getLayoutParams().width = (screenWidth);
-                    initViews();
-                    cz_startdl.setVisibility(View.GONE);
-
-        /*            } else
-                    {
-                        listData = new ArrayList<BatchTime>();
-                    }*/
 
                 } else
                 {
