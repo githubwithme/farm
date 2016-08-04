@@ -73,25 +73,22 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter {
         public TextView tv_parkname;
         public TextView tv_buyer;
         public TextView tv_orderstate;
-        public TextView tv_car;
-        //        public TextView tv_unpaid;
         public TextView tv_product;
         public TextView tv_settlementnumber;
         public TextView tv_settlement_successnumber;
         public TextView tv_waitforsettlementnumber;
         public Button btn_cancleorder;
-//        public Button btn_preparework;
         public View view_cardetail;
         public Button btn_editorder;
         public Button btn_orderdetail;
         public View view_showSettlement;
         public CircleImageView circleImageView;
-//        public LinearLayout ll_car;
-        //        public LinearLayout ll_unfinalpay;
-//        public LinearLayout ll_undeposit;
-//        public LinearLayout ll_mainpeople;
         public RelativeLayout fl_dynamic;
         public CheckBox cb_AllowRelease;
+
+        public TextView tv_car;
+        public TextView tv_readynumber;
+        public TextView tv_notreadynumber;
 
     }
 
@@ -132,7 +129,6 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter {
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
-            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_waitforsettlementnumber = (TextView) convertView.findViewById(R.id.tv_waitforsettlementnumber);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
 //            listItemView.tv_unpaid = (TextView) convertView.findViewById(R.id.tv_unpaid);
@@ -147,14 +143,17 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter {
             listItemView.tv_depositStatus = (TextView) convertView.findViewById(R.id.tv_depositStatus);
             listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
-//            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
-//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
-//            listItemView.ll_unfinalpay = (LinearLayout) convertView.findViewById(R.id.ll_unfinalpay);
-//            listItemView.ll_undeposit = (LinearLayout) convertView.findViewById(R.id.ll_undeposit);
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
+            listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
+            listItemView.tv_notreadynumber = (TextView) convertView.findViewById(R.id.tv_notreadynumber);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
+            //车辆
+            listItemView.tv_readynumber.setText(sellOrder.getReadyPlate() + "车;");
+            listItemView.tv_notreadynumber.setText(sellOrder.getNotReadyPlate() + "车");
+            listItemView.tv_car.setText("共" + (Integer.valueOf(sellOrder.getReadyPlate()) + Integer.valueOf(sellOrder.getNotReadyPlate())) + "车;");
 
             listItemView.fl_dynamic.setTag(R.id.tag_fi, sellOrder.getBuyersPhone());
             listItemView.fl_dynamic.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +187,6 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter {
 //            }
 
             listItemView.tv_parkname.setText(sellOrder.getParkname());
-            listItemView.tv_car.setText(sellOrder.getCarNumber());
             listItemView.tv_buyer.setText(sellOrder.getBuyersName());
             listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener() {

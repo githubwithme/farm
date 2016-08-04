@@ -75,22 +75,19 @@ public class PG_AllOrderAdapter_New extends BaseAdapter
         public TextView tv_mainpeople;
         public TextView tv_depositStatus;
         public TextView tv_parkname;
-        //        public TextView tv_prepareworkStatus;
         public TextView tv_buyer;
         public TextView tv_orderstate;
         public TextView tv_product;
-        public TextView tv_car;
         public Button btn_cancleorder;
-//        public Button btn_preparework;
         public Button btn_orderdetail;
         public Button btn_editorder;
-//        public Button btn_changetime;
         public CheckBox cb_AllowRelease;
         public CircleImageView circleImageView;
-        //        public LinearLayout ll_car;
-//        public LinearLayout ll_undeposit;
-//        public LinearLayout ll_unfinalpay;
         public View view_mainpeople_call;
+
+        public TextView tv_car;
+        public TextView tv_readynumber;
+        public TextView tv_notreadynumber;
     }
 
     public PG_AllOrderAdapter_New(Context context, List<SellOrder_New> data, String broadcast)
@@ -132,30 +129,32 @@ public class PG_AllOrderAdapter_New extends BaseAdapter
             listItemView.view_cardetail = (View) convertView.findViewById(R.id.view_cardetail);
             listItemView.view_showSettlement = (View) convertView.findViewById(R.id.view_showSettlement);
             listItemView.view_buyer_call = (View) convertView.findViewById(R.id.view_buyer_call);
-            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_depositStatus = (TextView) convertView.findViewById(R.id.tv_depositStatus);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
-//            listItemView.tv_prepareworkStatus = (TextView) convertView.findViewById(R.id.tv_prepareworkStatus);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             listItemView.btn_orderdetail = (Button) convertView.findViewById(R.id.btn_orderdetail);
-//            listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
             listItemView.cb_AllowRelease = (CheckBox) convertView.findViewById(R.id.cb_AllowRelease);
 //            listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
             listItemView.view_mainpeople_call = (View) convertView.findViewById(R.id.view_mainpeople_call);
-//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
-//            listItemView.ll_unfinalpay = (LinearLayout) convertView.findViewById(R.id.ll_unfinalpay);
-//            listItemView.ll_undeposit = (LinearLayout) convertView.findViewById(R.id.ll_undeposit);
-//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
+            listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
+            listItemView.tv_notreadynumber = (TextView) convertView.findViewById(R.id.tv_notreadynumber);
+
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
+
+            //车辆
+            listItemView.tv_readynumber.setText(sellOrder.getReadyPlate() + "车;");
+            listItemView.tv_notreadynumber.setText(sellOrder.getNotReadyPlate() + "车");
+            listItemView.tv_car.setText("共" + (Integer.valueOf(sellOrder.getReadyPlate()) + Integer.valueOf(sellOrder.getNotReadyPlate())) + "车;");
 //            if (sellOrder.getFreeDeposit().equals("1"))
 //            {
 //                listItemView.ll_undeposit.setVisibility(View.VISIBLE);
@@ -180,7 +179,6 @@ public class PG_AllOrderAdapter_New extends BaseAdapter
             listItemView.tv_orderstate.setText(sellOrder.getSelltype());
             listItemView.tv_parkname.setText(sellOrder.getParkname());
             listItemView.tv_mainpeople.setText(sellOrder.getMainPeople());
-            listItemView.tv_car.setText(sellOrder.getCarNumber());
             listItemView.btn_orderdetail.setTag(sellOrder);
             listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener()
             {

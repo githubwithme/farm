@@ -68,19 +68,15 @@ public class NCZ_NeedAdapter extends BaseAdapter
         public TextView tv_preparestatus;
         public TextView tv_product;
         public TextView tv_orderstate;
-        //        public TextView tv_price;
-//        public TextView tv_sum;
-//        public TextView tv_from;
         public TextView tv_ask;
-//        public Button btn_cancleorder;
-//        public Button btn_editorder;
 
         public RelativeLayout fl_dynamic;
-        //        public Button btn_pizhun;
-//        public Button btn_bohui;
         public Button btn_showdetail;
-        //        public LinearLayout ll_mainpeople;
         public CircleImageView circleImageView;
+
+        public TextView tv_car;
+        public TextView tv_readynumber;
+        public TextView tv_notreadynumber;
 
     }
 
@@ -132,6 +128,9 @@ public class NCZ_NeedAdapter extends BaseAdapter
             listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
             listItemView.btn_showdetail = (Button) convertView.findViewById(R.id.btn_showdetail);
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
+            listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
+            listItemView.tv_notreadynumber = (TextView) convertView.findViewById(R.id.tv_notreadynumber);
             // 设置控件集到convertViews
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -141,6 +140,11 @@ public class NCZ_NeedAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
+         //车辆
+        listItemView.tv_readynumber.setText(sellOrder.getReadyPlate() + "车;");
+        listItemView.tv_notreadynumber.setText(sellOrder.getNotReadyPlate() + "车");
+        listItemView.tv_car.setText("共" + (Integer.valueOf(sellOrder.getReadyPlate()) + Integer.valueOf(sellOrder.getNotReadyPlate())) + "车;");
+
         listItemView.fl_dynamic.setTag(R.id.tag_fi, sellOrder.getBuyersPhone());
         listItemView.fl_dynamic.setOnClickListener(new View.OnClickListener()
         {

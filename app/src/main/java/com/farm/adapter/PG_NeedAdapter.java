@@ -67,27 +67,22 @@ public class PG_NeedAdapter extends BaseAdapter
     {
 
 
-        //        public TextView tv_importance;
         public TextView tv_mainpeople;
         public TextView tv_buyer;
-        //        public TextView tv_price;
-//        public TextView tv_sum;
-//        public TextView tv_from;
         public TextView tv_ask;
         public TextView tv_parkname;
-
         public RelativeLayout fl_dynamic;
-        //        public Button btn_pizhun;
         public Button btn_editorder;
         public Button btn_cancleorder;
         public Button btn_showdetail;
-
         public View view_buyer_call;
         public View view_mainpeople_call;
         public TextView tv_preparestatus;
         public TextView tv_orderstate;
-//        public LinearLayout ll_mainpeople;
 
+        public TextView tv_car;
+        public TextView tv_readynumber;
+        public TextView tv_notreadynumber;
     }
 
     public PG_NeedAdapter(Context context, List<SellOrder_New> data, String broadcast)
@@ -132,17 +127,15 @@ public class PG_NeedAdapter extends BaseAdapter
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
-//            listItemView.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
-//            listItemView.tv_sum = (TextView) convertView.findViewById(R.id.tv_sum);
-//            listItemView.tv_from = (TextView) convertView.findViewById(R.id.tv_from);
             listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.tv_ask = (TextView) convertView.findViewById(R.id.tv_ask);
             listItemView.fl_dynamic = (RelativeLayout) convertView.findViewById(R.id.fl_dynamic);
-//            listItemView.tv_importance = (TextView) convertView.findViewById(R.id.tv_importance);
             listItemView.btn_showdetail = (Button) convertView.findViewById(R.id.btn_showdetail);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
-//            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
+            listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
+            listItemView.tv_notreadynumber = (TextView) convertView.findViewById(R.id.tv_notreadynumber);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -152,6 +145,12 @@ public class PG_NeedAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
+
+        //车辆
+        listItemView.tv_readynumber.setText(sellOrder.getReadyPlate() + "车;");
+        listItemView.tv_notreadynumber.setText(sellOrder.getNotReadyPlate() + "车");
+        listItemView.tv_car.setText("共" + (Integer.valueOf(sellOrder.getReadyPlate()) + Integer.valueOf(sellOrder.getNotReadyPlate())) + "车;");
+
         if (sellOrder.getIsReady().equals("False"))
         {
             listItemView.tv_preparestatus.setText("未就绪");

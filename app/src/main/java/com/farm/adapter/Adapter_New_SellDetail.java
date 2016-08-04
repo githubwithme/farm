@@ -66,6 +66,7 @@ public class Adapter_New_SellDetail extends BaseAdapter
         {
             // 获取list_item布局文件的视图
             convertView = listContainer.inflate(R.layout.adapter_new_order, null);
+
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_address = (TextView) convertView.findViewById(R.id.tv_address);
@@ -81,6 +82,14 @@ public class Adapter_New_SellDetail extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
         // 设置文字和图片
+        //颜色
+        if (position % 2 == 0)
+        {
+            convertView.setBackgroundResource(R.color.light_gray);
+        } else
+        {
+            convertView.setBackgroundResource(R.color.white);
+        }
         listItemView.tv_plan.setText(SellOrderDetail.getplannumber());
         if (SellOrderDetail.getactualnumber().equals(""))
         {

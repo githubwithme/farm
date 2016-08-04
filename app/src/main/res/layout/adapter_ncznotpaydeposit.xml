@@ -301,7 +301,7 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:paddingRight="10dip"
-                    android:text="3车"
+                    android:text="-1车"
                     android:textColor="@color/titlebar_top"
                     android:textSize="12sp" />
             </RelativeLayout>

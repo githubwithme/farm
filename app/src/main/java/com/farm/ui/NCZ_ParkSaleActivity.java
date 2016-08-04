@@ -222,27 +222,37 @@ public class NCZ_ParkSaleActivity extends Activity implements CustomHorizontalSc
                 {
                     if (result.getRows().size() > 0)
                     {
-                        rl_NotStartBreakoff.setVisibility(View.GONE);
-                        fl_table.setVisibility(View.VISIBLE);
+
                         listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
-                        DensityUtil densityUtil = new DensityUtil(NCZ_ParkSaleActivity.this);
-                        screenWidth = densityUtil.getScreenWidth();
-                        int size = listData.get(0).getParklist().size();
-                        if (size == 1)
+
+                        if (listData.size()>0)
                         {
-                            screenWidth = screenWidth / 4;
-                        } else if (size == 2)
+                            rl_NotStartBreakoff.setVisibility(View.GONE);
+                            fl_table.setVisibility(View.VISIBLE);
+                            DensityUtil densityUtil = new DensityUtil(NCZ_ParkSaleActivity.this);
+                            screenWidth = densityUtil.getScreenWidth();
+                            int size = listData.get(0).getParklist().size();
+                            if (size == 1)
+                            {
+                                screenWidth = screenWidth / 4;
+                            } else if (size == 2)
+                            {
+                                screenWidth = screenWidth / 4;
+                            } else
+                            {
+                                screenWidth = screenWidth / 4;
+                            }
+                            tv_top_left.getLayoutParams().width = (screenWidth);
+                            tv_top_right.getLayoutParams().width = (screenWidth);
+                            tv_bottom_left.getLayoutParams().width = (screenWidth);
+                            alltoatal.getLayoutParams().width = (screenWidth);
+                            initViews();
+                        }else
                         {
-                            screenWidth = screenWidth / 4;
-                        } else
-                        {
-                            screenWidth = screenWidth / 4;
+                            rl_NotStartBreakoff.setVisibility(View.VISIBLE);
+                            fl_table.setVisibility(View.GONE);
                         }
-                        tv_top_left.getLayoutParams().width = (screenWidth);
-                        tv_top_right.getLayoutParams().width = (screenWidth);
-                        tv_bottom_left.getLayoutParams().width = (screenWidth);
-                        alltoatal.getLayoutParams().width = (screenWidth);
-                        initViews();
+
                     } else
                     {
                         rl_NotStartBreakoff.setVisibility(View.VISIBLE);
@@ -306,7 +316,6 @@ public class NCZ_ParkSaleActivity extends Activity implements CustomHorizontalSc
             int totalnumber = 0;
             for (int j = 0; j < listData.size(); j++)
             {
-//                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getParklist().get(i).getAllnumber());
                 totalnumber = totalnumber + Integer.valueOf(listData.get(j).getParklist().get(i).getNumber());
             }
             tv_total.setText(String.valueOf(totalnumber));
