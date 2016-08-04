@@ -376,47 +376,56 @@ public class PG_BreakOffActivity extends Activity implements CustomHorizontalScr
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            // 自定义视图
+            if (convertView == null)
+            {
+                // 自定义视图
 //            if (lmap.get(position) == null)
 //            {
-            // 获取list_item布局文件的视图
-            convertView = LayoutInflater.from(PG_BreakOffActivity.this).inflate(R.layout.pg_breakoff_scrolladapteritem, null);
-            listItemView = new ListItemView();
-            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
-            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-            listItemView.item_total.getLayoutParams().width = (screenWidth);
-            LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            listItemView.item_titlev.setText(listData.get(position).getBatchTime());
-            int totalnumber = 0;
-            List<BreakOff_New> list = listData.get(position).getContractTabList();
-            for (int j = 0; j < list.size(); j++)
-            {
-                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
-            }
-            listItemView.item_total.setText(String.valueOf(totalnumber));
+                // 获取list_item布局文件的视图
+                convertView = LayoutInflater.from(PG_BreakOffActivity.this).inflate(R.layout.pg_breakoff_scrolladapteritem, null);
+                if (position % 2 == 0)
+                {
+                    convertView.setBackgroundResource(R.color.bg_table_row);
+                } else
+                {
+                    convertView.setBackgroundResource(R.color.white);
+                }
+                listItemView = new ListItemView();
+                listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+                listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+                listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+                listItemView.item_total.getLayoutParams().width = (screenWidth);
+                LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
+                listItemView.item_titlev.setText(listData.get(position).getBatchTime());
+                int totalnumber = 0;
+                List<BreakOff_New> list = listData.get(position).getContractTabList();
+                for (int j = 0; j < list.size(); j++)
+                {
+                    totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
+                }
+                listItemView.item_total.setText(String.valueOf(totalnumber));
 
-            for (int i = 0; i < listData.get(position).getContractTabList().size(); i++)
-            {
-                View view = LayoutInflater.from(PG_BreakOffActivity.this).inflate(R.layout.pg_breakoff_dataitem, null);
-                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                listItemView.tv_data.setText(listData.get(position).getContractTabList().get(i).getAllnumber());
-                listItemView.tv_data.getLayoutParams().width = (screenWidth);
-                ll_middle.addView(view);
+                for (int i = 0; i < listData.get(position).getContractTabList().size(); i++)
+                {
+                    View view = LayoutInflater.from(PG_BreakOffActivity.this).inflate(R.layout.pg_breakoff_dataitem, null);
+                    listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
+                    listItemView.tv_data.setText(listData.get(position).getContractTabList().get(i).getAllnumber());
+                    listItemView.tv_data.getLayoutParams().width = (screenWidth);
+                    ll_middle.addView(view);
 
-                listItemView.tv_data.requestFocusFromTouch();
-                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                listItemView.tv_data.setTag(R.id.tag_batchcolor, listData.get(position).getBatchColor());
-                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getContractTabList().get(i).getAllnumber());
-                listItemView.tv_data.setTag(R.id.tag_breakoff, listData.get(position).getContractTabList().get(i));
-                listItemView.tv_data.setOnClickListener(clickListener);
+                    listItemView.tv_data.requestFocusFromTouch();
+                    listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                    listItemView.tv_data.setTag(R.id.tag_batchcolor, listData.get(position).getBatchColor());
+                    listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getContractTabList().get(i).getAllnumber());
+                    listItemView.tv_data.setTag(R.id.tag_breakoff, listData.get(position).getContractTabList().get(i));
+                    listItemView.tv_data.setOnClickListener(clickListener);
 
-            }
-            // 第一次初始化的时候装进来
-            CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
-            addHViews(customHorizontalScrollView);
-            customHorizontalScrollView.setCuttomOntouch(customOntouch);
-            // 设置控件集到convertView
+                }
+                // 第一次初始化的时候装进来
+                CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
+                addHViews(customHorizontalScrollView);
+                customHorizontalScrollView.setCuttomOntouch(customOntouch);
+                // 设置控件集到convertView
 //                lmap.put(position, convertView);
 //                convertView.setTag(listItemView);
 //            } else
@@ -424,7 +433,10 @@ public class PG_BreakOffActivity extends Activity implements CustomHorizontalScr
 //                convertView = lmap.get(position);
 //                listItemView = (ListItemView) convertView.getTag();
 //            }
+            } else
+            {
 
+            }
             return convertView;
         }
     }

@@ -71,7 +71,6 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
 {
     List<SellOrderDetail_New> list_SellOrderDetail;
     List<Wz_Storehouse> parklist = new ArrayList<Wz_Storehouse>();
-    DialogFragment_WaitTip dialog;
     String uuid;
     EditText et_number;
     CustomDialog_EditSaleInInfo customDialog_editSaleInInfo;
@@ -118,7 +117,18 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
     TextView tv_selectnumber;
     @ViewById
     TextView tv_allnumber;
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
     @Click
     void btn_back()
     {
@@ -152,6 +162,7 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
     @AfterViews
     void afterOncreate()
     {
+        showDialog_waitTip();
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         deleNewSaleAddsalefor();
@@ -235,15 +246,17 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
                 } else
                 {
                     AppContext.makeToast(CZ_SelectProduct.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(CZ_SelectProduct.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }
@@ -356,44 +369,58 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            convertView = LayoutInflater.from(CZ_SelectProduct.this).inflate(R.layout.nczselectproduct_scrolladapter_item, null);
-            listItemView = new ListItemView();
-            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-            LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            listItemView.item_titlev.setText(listData.get(position).getareaName() + listData.get(position).getContractname());//problem
-
-            int totalnumber = 0;
-            List<BatchTime> list = listData.get(position).getBatchTimeList();
-            for (int j = 0; j < list.size(); j++)
+            if (convertView == null)
             {
-                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
-            }
+                convertView = LayoutInflater.from(CZ_SelectProduct.this).inflate(R.layout.nczselectproduct_scrolladapter_item, null);
+                if (position % 2 == 0)
+                {
+                    convertView.setBackgroundResource(R.color.bg_table_row);
+                } else
+                {
+                    convertView.setBackgroundResource(R.color.white);
+                }
+                listItemView = new ListItemView();
+                listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+                listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+                LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
+                listItemView.item_titlev.setText(listData.get(position).getareaName() + listData.get(position).getContractname());//problem
+
+                int totalnumber = 0;
+                List<BatchTime> list = listData.get(position).getBatchTimeList();
+                for (int j = 0; j < list.size(); j++)
+                {
+                    totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
+                }
 //            listItemView.item_total.setText(String.valueOf(totalnumber));
 
-            for (int i = 0; i < listData.get(position).getBatchTimeList().size(); i++)
-            {
-                View view = LayoutInflater.from(CZ_SelectProduct.this).inflate(R.layout.nczselectproduct_dataitem, null);
-                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                listItemView.tv_data.setText(listData.get(position).getBatchTimeList().get(i).getAllnumber());
-                listItemView.tv_data.getLayoutParams().width = (screenWidth);
-                ll_middle.addView(view);
+                for (int i = 0; i < listData.get(position).getBatchTimeList().size(); i++)
+                {
+                    View view = LayoutInflater.from(CZ_SelectProduct.this).inflate(R.layout.nczselectproduct_dataitem, null);
+                    listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
+                    listItemView.tv_data.setText(listData.get(position).getBatchTimeList().get(i).getAllnumber());
+                    listItemView.tv_data.getLayoutParams().width = (screenWidth);
+                    ll_middle.addView(view);
 
-                listItemView.tv_data.requestFocusFromTouch();
-                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTimeList().get(i).getBatchTime());
-                listItemView.tv_data.setTag(R.id.contractorId, listData.get(position).getContractid());
-                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getBatchTimeList().get(i).getAllnumber());
-                listItemView.tv_data.setTag(R.id.tv_contractName, listData.get(position).getContractname());
-                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreaId());
-                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getareaName());
-                listItemView.tv_data.setOnClickListener(clickListener);
+                    listItemView.tv_data.requestFocusFromTouch();
+                    listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTimeList().get(i).getBatchTime());
+                    listItemView.tv_data.setTag(R.id.contractorId, listData.get(position).getContractid());
+                    listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getBatchTimeList().get(i).getAllnumber());
+                    listItemView.tv_data.setTag(R.id.tv_contractName, listData.get(position).getContractname());
+                    listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreaId());
+                    listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getareaName());
+                    listItemView.tv_data.setOnClickListener(clickListener);
+
+                }
+                // 第一次初始化的时候装进来
+                CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
+                addHViews(customHorizontalScrollView);
+                customHorizontalScrollView.setCuttomOntouch(customOntouch);
+//            addHViews((CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll));
+            } else
+            {
 
             }
-            // 第一次初始化的时候装进来
-            CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
-            addHViews(customHorizontalScrollView);
-            customHorizontalScrollView.setCuttomOntouch(customOntouch);
-//            addHViews((CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll));
+
             return convertView;
         }
     }

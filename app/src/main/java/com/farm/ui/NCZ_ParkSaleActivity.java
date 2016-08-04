@@ -29,7 +29,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.BatchTime;
 import com.farm.bean.Result;
 import com.farm.bean.Wz_Storehouse;
-import com.farm.bean.areatab;
+import com.farm.bean.parktab;
 import com.farm.common.FileHelper;
 import com.farm.common.utils;
 import com.farm.widget.CustomHorizontalScrollView_Allitem;
@@ -54,8 +54,8 @@ import java.util.List;
 /**
  * Created by ${hmj} on 2016/6/57.
  */
-@EActivity(R.layout.ncz_areasaleactivity)
-public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
+@EActivity(R.layout.ncz_parksaleactivity)
+public class NCZ_ParkSaleActivity extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
 
     String parkid;
@@ -113,10 +113,8 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         dialog = new DialogFragment_WaitTip_();
         Bundle bundle1 = new Bundle();
         dialog.setArguments(bundle1);
-        dialog.show(NCZ_AreaSaleActivity.this.getFragmentManager(), "TIP");
+        dialog.show(getFragmentManager(), "TIP");
     }
-//    dialog.loadingTip(getText(R.string.error_data).toString());
-//    dialog.loadingTip(getText(R.string.error_network).toString());
 
     @Click
     void ib_suspen_menu()
@@ -152,7 +150,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     @Click
     void tv_more()
     {
-        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SaleModuleActivity_.class);
+        Intent intent = new Intent(NCZ_ParkSaleActivity.this, NCZ_SaleModuleActivity_.class);
         startActivity(intent);
     }
 
@@ -163,7 +161,6 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
-//        getParkList();
         getBatchTimeOfPark();
     }
 
@@ -172,19 +169,18 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
-        commembertab = AppContext.getUserInfo(NCZ_AreaSaleActivity.this);
-        parkid = getIntent().getStringExtra("parkid");
+        commembertab = AppContext.getUserInfo(NCZ_ParkSaleActivity.this);
     }
 
 
     private void getNewSaleList_test()
     {
-        listData = FileHelper.getAssetsData(NCZ_AreaSaleActivity.this, "getAreaSaleData", BatchTime.class);
+        listData = FileHelper.getAssetsData(NCZ_ParkSaleActivity.this, "getAreaSaleData", BatchTime.class);
         if (listData != null)
         {
-            DensityUtil densityUtil = new DensityUtil(NCZ_AreaSaleActivity.this);
+            DensityUtil densityUtil = new DensityUtil(NCZ_ParkSaleActivity.this);
             screenWidth = densityUtil.getScreenWidth();
-            int size = listData.get(0).getAreatabList().size();
+            int size = listData.get(0).getParklist().size();
             if (size == 1)
             {
                 screenWidth = screenWidth / 4;
@@ -212,7 +208,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         params.addQueryStringParameter("userId", commembertab.getId());
         params.addQueryStringParameter("parkid", parkid);
         params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("action", "NCZ_getAreaSaleData");
+        params.addQueryStringParameter("action", "getfarmSalesData");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -226,9 +222,9 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                    /* if (result.getAffectedRows() > 0)
                     {*/
                     listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
-                    DensityUtil densityUtil = new DensityUtil(NCZ_AreaSaleActivity.this);
+                    DensityUtil densityUtil = new DensityUtil(NCZ_ParkSaleActivity.this);
                     screenWidth = densityUtil.getScreenWidth();
-                    int size = listData.get(0).getAreatabList().size();
+                    int size = listData.get(0).getParklist().size();
                     if (size == 1)
                     {
                         screenWidth = screenWidth / 4;
@@ -253,7 +249,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
 
                 } else
                 {
-                    AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_ParkSaleActivity.this, "error_connectDataBase");
                     dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
@@ -263,7 +259,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             @Override
             public void onFailure(HttpException error, String msg)
             {
-                AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectServer");
+                AppContext.makeToast(NCZ_ParkSaleActivity.this, "error_connectServer");
                 dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
@@ -276,31 +272,31 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         ll_total.removeAllViews();
         ll_park.removeAllViews();
         int allnumber = 0;
-        LayoutInflater inflater = (LayoutInflater) NCZ_AreaSaleActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
+        LayoutInflater inflater = (LayoutInflater) NCZ_ParkSaleActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        for (int i = 0; i < listData.get(0).getParklist().size(); i++)
         {
             View view = inflater.inflate(R.layout.areasale_parkitem, null);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
-            tv_parkname.setText(listData.get(0).getAreatabList().get(i).getareaName());
-            tv_parkname.setTag(R.id.tag_areaid, listData.get(0).getAreatabList().get(i).getAreaid());
-            tv_parkname.setTag(R.id.tag_areaname, listData.get(0).getAreatabList().get(i).getareaName());
+            tv_parkname.setText(listData.get(0).getParklist().get(i).getparkName());
+            tv_parkname.setTag(R.id.tag_id, listData.get(0).getParklist().get(i).getParkId());
+            tv_parkname.setTag(R.id.tag_name, listData.get(0).getParklist().get(i).getparkName());
             tv_parkname.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    String areaid = (String) v.getTag(R.id.tag_areaid);
-                    String areaname = (String) v.getTag(R.id.tag_areaname);
-                    Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_ContractSaleData_.class);
-                    intent.putExtra("areaid", areaid);
-                    intent.putExtra("areaname", areaname);
-                    NCZ_AreaSaleActivity.this.startActivity(intent);
+                    String parkid = (String) v.getTag(R.id.tag_id);
+                    String parkname = (String) v.getTag(R.id.tag_name);
+                    Intent intent = new Intent(NCZ_ParkSaleActivity.this, NCZ_AreaSaleActivity_.class);
+                    intent.putExtra("parkid", parkid);
+                    intent.putExtra("parkname", parkname);
+                    NCZ_ParkSaleActivity.this.startActivity(intent);
                 }
             });
             ll_park.addView(view);
         }
-        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
+        for (int i = 0; i < listData.get(0).getParklist().size(); i++)
         {
             View view = inflater.inflate(R.layout.areasale_totalitem, null);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
@@ -308,8 +304,8 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             int totalnumber = 0;
             for (int j = 0; j < listData.size(); j++)
             {
-//                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllnumber());
-                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllsalefor());
+//                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getParklist().get(i).getAllnumber());
+                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getParklist().get(i).getNumber());
             }
             tv_total.setText(String.valueOf(totalnumber));
             ll_total.addView(view);
@@ -398,51 +394,58 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            convertView = LayoutInflater.from(NCZ_AreaSaleActivity.this).inflate(R.layout.areasale_scrolladapter_item, null);
-            if (position % 2 == 0)
+            if (convertView == null)
             {
-                convertView.setBackgroundResource(R.color.bg_table_row);
+                convertView = LayoutInflater.from(NCZ_ParkSaleActivity.this).inflate(R.layout.areasale_scrolladapter_item, null);
+                if (position % 2 == 0)
+                {
+                    convertView.setBackgroundResource(R.color.bg_table_row);
+                } else
+                {
+                    convertView.setBackgroundResource(R.color.white);
+                }
+
+                listItemView = new ListItemView();
+                listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+                listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+                listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+                listItemView.item_total.getLayoutParams().width = (screenWidth);
+                LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
+                listItemView.item_titlev.setText(listData.get(position).getBatchTime());
+                int totalnumber = 0;
+                List<parktab> list = listData.get(position).getParklist();
+                for (int j = 0; j < list.size(); j++)
+                {
+                    totalnumber = totalnumber + Integer.valueOf(list.get(j).getNumber());
+                }
+                listItemView.item_total.setText(String.valueOf(totalnumber));
+
+                for (int i = 0; i < listData.get(position).getParklist().size(); i++)
+                {
+                    View view = LayoutInflater.from(NCZ_ParkSaleActivity.this).inflate(R.layout.areasale_dataitem, null);
+                    listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
+                    listItemView.tv_data.setText(listData.get(position).getParklist().get(i).getNumber());
+                    listItemView.tv_data.getLayoutParams().width = (screenWidth);
+                    ll_middle.addView(view);
+
+                    listItemView.tv_data.requestFocusFromTouch();
+                    listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getParklist().get(i).getParkId());
+                    listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                    listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getParklist().get(i).getNumber());
+                    listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getParklist().get(i).getparkName());
+                    listItemView.tv_data.setOnClickListener(clickListener);
+
+                }
+                // 第一次初始化的时候装进来
+                CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
+                addHViews(customHorizontalScrollView);
+                customHorizontalScrollView.setCuttomOntouch(customOntouch);
+//            addHViews((CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll));
             } else
             {
-                convertView.setBackgroundResource(R.color.white);
-            }
-
-            listItemView = new ListItemView();
-            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
-            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-            listItemView.item_total.getLayoutParams().width = (screenWidth);
-            LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-            listItemView.item_titlev.setText(listData.get(position).getBatchTime());
-            int totalnumber = 0;
-            List<areatab> list = listData.get(position).getAreatabList();
-            for (int j = 0; j < list.size(); j++)
-            {
-                totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllsalefor());
-            }
-            listItemView.item_total.setText(String.valueOf(totalnumber));
-
-            for (int i = 0; i < listData.get(position).getAreatabList().size(); i++)
-            {
-                View view = LayoutInflater.from(NCZ_AreaSaleActivity.this).inflate(R.layout.areasale_dataitem, null);
-                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllsalefor());
-                listItemView.tv_data.getLayoutParams().width = (screenWidth);
-                ll_middle.addView(view);
-
-                listItemView.tv_data.requestFocusFromTouch();
-                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getAreatabList().get(i).getAreaid());
-                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getAreatabList().get(i).getAllsalefor());
-                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getAreatabList().get(i).getareaName());
-                listItemView.tv_data.setOnClickListener(clickListener);
 
             }
-            // 第一次初始化的时候装进来
-            CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
-            addHViews(customHorizontalScrollView);
-            customHorizontalScrollView.setCuttomOntouch(customOntouch);
-//            addHViews((CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll));
+
             return convertView;
         }
     }
@@ -476,28 +479,28 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            String number = (String) v.getTag(R.id.tag_number);
-            String batchTimes = (String) v.getTag(R.id.tag_batchtime);
-            String areaid = (String) v.getTag(R.id.tag_areaid);
-            String areaname = (String) v.getTag(R.id.tag_areaname);
-            if (number.equals("0"))
-            {
-                Toast.makeText(NCZ_AreaSaleActivity.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
-            } else
-            {
-                Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_ContractBatchTimeSale_.class);
-                intent.putExtra("areaid", areaid);
-                intent.putExtra("areaname", areaname);
-                intent.putExtra("batchTime", batchTimes);
-                NCZ_AreaSaleActivity.this.startActivity(intent);
-            }
+//            String number = (String) v.getTag(R.id.tag_number);
+//            String batchTimes = (String) v.getTag(R.id.tag_batchtime);
+//            String areaid = (String) v.getTag(R.id.tag_areaid);
+//            String areaname = (String) v.getTag(R.id.tag_areaname);
+//            if (number.equals("0"))
+//            {
+//                Toast.makeText(NCZ_ParkSaleActivity.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
+//            } else
+//            {
+//                Intent intent = new Intent(NCZ_ParkSaleActivity.this, NCZ_ContractBatchTimeSale_.class);
+//                intent.putExtra("areaid", areaid);
+//                intent.putExtra("areaname", areaname);
+//                intent.putExtra("batchTime", batchTimes);
+//                NCZ_ParkSaleActivity.this.startActivity(intent);
+//            }
 
         }
     };
 
     public void showPop_ParkName()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) NCZ_AreaSaleActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_ParkSaleActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         pv_tab = layoutInflater.inflate(R.layout.popup_park, null);// 外层
         pv_tab.setOnKeyListener(new View.OnKeyListener()
         {
@@ -534,7 +537,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
         TextView tv_cancle = (TextView) pv_tab.findViewById(R.id.tv_cancle);
         ListView listview = (ListView) pv_tab.findViewById(R.id.lv_yq);
 
-        adapter_park = new Adapter_Park(NCZ_AreaSaleActivity.this, parklist);
+        adapter_park = new Adapter_Park(NCZ_ParkSaleActivity.this, parklist);
         listview.setAdapter(adapter_park);
         tv_cancle.setOnClickListener(new View.OnClickListener()
         {
@@ -562,7 +565,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
 
     public void showPop_Menu()
     {
-        LayoutInflater layoutInflater = (LayoutInflater) NCZ_AreaSaleActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) NCZ_ParkSaleActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         pv_tab = layoutInflater.inflate(R.layout.pop_salemenu, null);// 外层
         pv_tab.setOnKeyListener(new View.OnKeyListener()
         {
@@ -615,7 +618,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             {
                 pw_tab.dismiss();
                 //        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_CreateNewOrder_.class);
-                Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SelectProduct_.class);
+                Intent intent = new Intent(NCZ_ParkSaleActivity.this, NCZ_SelectProduct_.class);
                 intent.putExtra("parkid", parkid);
                 intent.putExtra("parkname", name);
                 //        Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_SelectProduct_New_.class);
@@ -628,7 +631,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             public void onClick(View v)
             {
                 pw_tab.dismiss();
-                Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_OrderManager_.class);
+                Intent intent = new Intent(NCZ_ParkSaleActivity.this, NCZ_OrderManager_.class);
                 startActivity(intent);
             }
         });
@@ -638,7 +641,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             public void onClick(View v)
             {
                 pw_tab.dismiss();
-                Intent intent = new Intent(NCZ_AreaSaleActivity.this, NCZ_CustomerContract_.class);
+                Intent intent = new Intent(NCZ_ParkSaleActivity.this, NCZ_CustomerContract_.class);
                 startActivity(intent);
             }
         });
@@ -647,7 +650,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
 
     private void getParkList()
     {
-        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(NCZ_AreaSaleActivity.this);
+        com.farm.bean.commembertab commembertab = AppContext.getUserInfo(NCZ_ParkSaleActivity.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getcontractByUid");
@@ -667,7 +670,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                     } else
                     {
                         parklist = new ArrayList<Wz_Storehouse>();
-                        Toast.makeText(NCZ_AreaSaleActivity.this, "暂无更多园区", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NCZ_ParkSaleActivity.this, "暂无更多园区", Toast.LENGTH_SHORT).show();
                     }
                     tv_parkname.setText(parklist.get(0).getParkName() + "库存量");
                     parkid = parklist.get(0).getId();
@@ -675,7 +678,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                     getBatchTimeOfPark();
                 } else
                 {
-                    AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectDataBase");
+                    AppContext.makeToast(NCZ_ParkSaleActivity.this, "error_connectDataBase");
 //                    loadingTip(getText(R.string.error_data).toString());
                     dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
@@ -688,7 +691,7 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
             public void onFailure(HttpException error, String msg)
             {
                 String a = error.getMessage();
-                AppContext.makeToast(NCZ_AreaSaleActivity.this, "error_connectServer");
+                AppContext.makeToast(NCZ_ParkSaleActivity.this, "error_connectServer");
 //                loadingTip(getText(R.string.error_network).toString());
                 dialog.loadingTip(getText(R.string.error_network).toString());
             }

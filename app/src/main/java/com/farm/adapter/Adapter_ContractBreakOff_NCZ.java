@@ -58,6 +58,13 @@ public class Adapter_ContractBreakOff_NCZ extends BaseAdapter
         {
             // 获取list_item布局文件的视图
             convertView = listContainer.inflate(R.layout.adapter_contractbreakoff, null);
+            if (position % 2 == 0)
+            {
+                convertView.setBackgroundResource(R.color.bg_table_row);
+            } else
+            {
+                convertView.setBackgroundResource(R.color.white);
+            }
             listItemView = new ListItemView();
             // 获取控件对象
             listItemView.tv_contractname = (TextView) convertView.findViewById(R.id.tv_contractname);

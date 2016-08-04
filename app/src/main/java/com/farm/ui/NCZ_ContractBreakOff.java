@@ -86,15 +86,26 @@ public class NCZ_ContractBreakOff extends Activity implements CustomHorizontalSc
     com.farm.bean.commembertab commembertab;
     MyDialog myDialog;
     Fragment mContent = new Fragment();
-//    @ViewById
+    //    @ViewById
 //    LinearLayout cz_startdl;
     @ViewById
     TextView startdl;
     @ViewById
     TextView tv_timelimit;
-//    @ViewById
+    //    @ViewById
 //    RelativeLayout rl_view;
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
     @Click
     void btn_back()
     {
@@ -105,6 +116,7 @@ public class NCZ_ContractBreakOff extends Activity implements CustomHorizontalSc
     @AfterViews
     void afterOncreate()
     {
+        showDialog_waitTip();
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
@@ -197,15 +209,17 @@ public class NCZ_ContractBreakOff extends Activity implements CustomHorizontalSc
                 } else
                 {
                     AppContext.makeToast(NCZ_ContractBreakOff.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(NCZ_ContractBreakOff.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }

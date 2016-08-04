@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/rl_titlebar"
         android:layout_width="match_parent"
@@ -48,10 +49,10 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dip"
             android:gravity="center"
-            android:visibility="gone"
             android:text="查看更多"
             android:textColor="@color/text_title"
-            android:textSize="@dimen/text_titlebar"/>
+            android:textSize="@dimen/text_titlebar"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -141,6 +142,13 @@
                     android:layout_height="match_parent"
                     android:background="@color/splitline"/>
 
+                <ImageView
+                    android:layout_width="10dip"
+                    android:layout_height="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:src="@mipmap/icon_arrow_left"/>
+
                 <com.farm.widget.CustomHorizontalScrollView_Allitem
                     android:id="@+id/item_scroll_title"
                     android:layout_width="fill_parent"
@@ -158,6 +166,13 @@
 
                     </LinearLayout>
                 </com.farm.widget.CustomHorizontalScrollView_Allitem>
+
+                <ImageView
+                    android:layout_width="10dip"
+                    android:layout_height="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:src="@mipmap/icon_arrow_right"/>
 
                 <View
                     android:layout_width="1px"

@@ -20,7 +20,7 @@
     <com.farm.widget.CustomHorizontalScrollView_Allitem
         android:id="@+id/item_chscroll_scroll"
         android:layout_width="fill_parent"
-        android:layout_height="150px"
+        android:layout_height="50dp"
         android:scrollbars="none">
 
         <LinearLayout

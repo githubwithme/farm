@@ -42,7 +42,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
-                android:background="@mipmap/btn_drop_down"/>
+                android:background="@mipmap/btn_drop_down"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
@@ -298,7 +299,8 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="70dp"
             android:layout_marginLeft="15dp"
-            android:background="@mipmap/suspen_menu"/>
+            android:background="@mipmap/suspen_menu"
+            android:visibility="gone"/>
     </FrameLayout>
 
     <FrameLayout

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_titlebar"
@@ -18,7 +18,7 @@
             android:layout_margin="10dp"
             android:background="@null"
             android:contentDescription=""
-            android:src="@mipmap/btn_return" />
+            android:src="@mipmap/btn_return"/>
 
         <LinearLayout
             android:id="@+id/ll_switchpark"
@@ -36,7 +36,7 @@
                 android:gravity="center"
                 android:text="承包区断蕾情况"
                 android:textColor="@color/text_title"
-                android:textSize="@dimen/text_titlebar" />
+                android:textSize="@dimen/text_titlebar"/>
 
         </LinearLayout>
 
@@ -52,7 +52,7 @@
             android:text="查看更多"
             android:textColor="@color/text_title"
             android:textSize="@dimen/text_titlebar"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -76,7 +76,7 @@
             android:text="农场断蕾情况"
             android:textColor="@color/bg_text"
             android:textSize="16sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
 
         <LinearLayout
@@ -101,7 +101,7 @@
                     android:gravity="center"
                     android:hint="开始时间"
                     android:textSize="@dimen/size_20"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <TextView
@@ -109,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dip"
                 android:gravity="center"
-                android:text="该园区还没有开始断蕾" />
+                android:text="该园区还没有开始断蕾"/>
 
 
         </LinearLayout>
@@ -126,6 +126,7 @@
                 android:id="@+id/ll_top"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/height_totalcolumn"
+                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <TextView
@@ -136,12 +137,19 @@
                     android:gravity="center"
                     android:text="批次"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/splitline" />
+                    android:background="@color/splitline"/>
+
+                <ImageView
+                    android:layout_width="10dip"
+                    android:layout_height="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:src="@mipmap/icon_arrow_left"/>
 
                 <com.farm.widget.CustomHorizontalScrollView_Allitem
                     android:id="@+id/item_scroll_title"
@@ -161,10 +169,17 @@
                     </LinearLayout>
                 </com.farm.widget.CustomHorizontalScrollView_Allitem>
 
+                <ImageView
+                    android:layout_width="10dip"
+                    android:layout_height="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:src="@mipmap/icon_arrow_right"/>
+
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/splitline" />
+                    android:background="@color/splitline"/>
 
                 <TextView
                     android:id="@+id/tv_top_right"
@@ -174,7 +189,7 @@
                     android:gravity="center"
                     android:text="合计"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
             </LinearLayout>
 
             <View
@@ -182,7 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_below="@+id/ll_top"
-                android:background="@color/splitline" />
+                android:background="@color/splitline"/>
 
             <ListView
                 android:id="@+id/hlistview_scroll_list"
@@ -213,12 +228,12 @@
                     android:gravity="center"
                     android:text="合计"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/splitline" />
+                    android:background="@color/splitline"/>
 
                 <com.farm.widget.CustomHorizontalScrollView_Allitem
                     android:id="@+id/totalScroll"
@@ -241,7 +256,7 @@
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/splitline" />
+                    android:background="@color/splitline"/>
 
                 <TextView
                     android:id="@+id/alltoatal"
@@ -251,7 +266,7 @@
                     android:gravity="center"
                     android:text="总量"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
 
             </LinearLayout>
@@ -261,13 +276,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_above="@+id/ll_bottom"
-                android:background="@color/splitline" />
+                android:background="@color/splitline"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_alignParentBottom="true"
-                android:background="@color/splitline" />
+                android:background="@color/splitline"/>
         </RelativeLayout>
 
 

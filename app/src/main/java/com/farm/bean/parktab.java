@@ -8,13 +8,13 @@ import com.lidroid.xutils.db.annotation.Table;
 import java.util.List;
 
 /**
- * 
+ *
  * Description: parktab 实体类</p>
- * 
+ *
  * Copyright: Copyright (c) 2015
- * 
+ *
  * Company: 广州海川信息科技有限公司
- * 
+ *
  * @version 1.0
  */
 @Table(name = "parktab")
@@ -70,10 +70,21 @@ public class parktab implements Parcelable
 	public String allsalefor;
 	public String allnewsale;
 	public String allnumber;
+	public String number;
 	public List<areatab> areatabList;
 	public List<BatchTime> batchTimeList;
 	public List<jobtab> jobtabList;
 
+
+	public String getNumber()
+	{
+		return number;
+	}
+
+	public void setNumber(String number)
+	{
+		this.number = number;
+	}
 
 	public void setParkId(String parkId)
 	{
@@ -637,6 +648,7 @@ public class parktab implements Parcelable
 			p.setAllsalefor(source.readString());
 			p.setAllnewsale(source.readString());
 			p.setAllnumber(source.readString());
+			p.setNumber(source.readString());
 			p.areatabList = source.readArrayList(areatab.class.getClassLoader());
 			p.batchTimeList = source.readArrayList(areatab.class.getClassLoader());
 			p.jobtabList = source.readArrayList(areatab.class.getClassLoader());
@@ -696,6 +708,7 @@ public class parktab implements Parcelable
 		p.writeString(allsalefor);
 		p.writeString(allnewsale);
 		p.writeString(allnumber);
+		p.writeString(number);
 		p.writeList(areatabList);
 		p.writeList(batchTimeList);
 		p.writeList(jobtabList);

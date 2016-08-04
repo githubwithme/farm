@@ -57,7 +57,6 @@ import java.util.List;
 @EActivity(R.layout.cz_new_areasaleactivity)
 public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
-    DialogFragment_WaitTip dialog;
     String parkid;
     @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
@@ -105,8 +104,18 @@ public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontal
     TextView tv_timelimit;
     @ViewById
     RelativeLayout rl_view;
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
 
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
     @Click
     void ib_suspen_menu()
     {
@@ -118,7 +127,6 @@ public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontal
         showPop_Menu();
 //        }
     }
-
 
 
     @Click
@@ -138,6 +146,7 @@ public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontal
     @AfterViews
     void afterOncreate()
     {
+        showDialog_waitTip();
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
@@ -233,15 +242,17 @@ public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontal
                 } else
                 {
                     AppContext.makeToast(CZ_NEW_AreaSaleActivty.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(CZ_NEW_AreaSaleActivty.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }
@@ -474,7 +485,6 @@ public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontal
     };
 
 
-
     public void showPop_Menu()
     {
         LayoutInflater layoutInflater = (LayoutInflater) CZ_NEW_AreaSaleActivty.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -551,7 +561,6 @@ public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontal
     }
 
 
-
     public class Adapter_Park extends BaseAdapter
     {
         private Context context;
@@ -621,11 +630,4 @@ public class CZ_NEW_AreaSaleActivty extends Activity implements CustomHorizontal
         }
     }
 
-    public void showDialog_waitTip()
-    {
-        dialog = new DialogFragment_WaitTip();
-        Bundle bundle1 = new Bundle();
-        dialog.setArguments(bundle1);
-        dialog.show(CZ_NEW_AreaSaleActivty.this.getFragmentManager(), "TIP");
-    }
 }

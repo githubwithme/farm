@@ -58,8 +58,9 @@ import java.util.List;
  * Created by ${hmj} on 2016/6/57.
  */
 @EActivity(R.layout.ncz_breakoffactivity)
-public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch {
-    DialogFragment_WaitTip dialog;
+public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
+{
+    //    DialogFragment_WaitTip dialog;
     String parkid;
     @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
@@ -108,30 +109,48 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
     @ViewById
     RelativeLayout rl_view;
 
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
     @Click
-    void ll_switchpark() {
-        if (parklist.size() == 0) {
+    void ll_switchpark()
+    {
+        if (parklist.size() == 0)
+        {
             getParkList();
-        } else {
+        } else
+        {
             showPop_ParkName();
         }
     }
 
     @Click
-    void btn_back() {
+    void btn_back()
+    {
         finish();
     }
 
 
     @Click
-    void tv_more() {
+    void tv_more()
+    {
         Intent intent = new Intent(NCZ_BreakOffActivity.this, NCZ_SaleModuleActivity_.class);
         startActivity(intent);
     }
 
     @AfterViews
-    void afterOncreate() {
+    void afterOncreate()
+    {
+        showDialog_waitTip();
         customOntouch = this;
         item_scroll_title.setCuttomOntouch(customOntouch);
         totalScroll.setCuttomOntouch(customOntouch);
@@ -139,7 +158,8 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         commembertab = AppContext.getUserInfo(NCZ_BreakOffActivity.this);
@@ -147,17 +167,22 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
     }
 
 
-    private void getNewSaleList_test() {
+    private void getNewSaleList_test()
+    {
         listData = FileHelper.getAssetsData(NCZ_BreakOffActivity.this, "getAreaSaleData", BatchTime.class);
-        if (listData != null) {
+        if (listData != null)
+        {
             DensityUtil densityUtil = new DensityUtil(NCZ_BreakOffActivity.this);
             screenWidth = densityUtil.getScreenWidth();
             int size = listData.get(0).getAreatabList().size();
-            if (size == 1) {
+            if (size == 1)
+            {
                 screenWidth = screenWidth / 4;
-            } else if (size == 2) {
+            } else if (size == 2)
+            {
                 screenWidth = screenWidth / 4;
-            } else {
+            } else
+            {
                 screenWidth = screenWidth / 4;
             }
             tv_top_left.getLayoutParams().width = (screenWidth);
@@ -170,7 +195,8 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
 
     }
 
-    public void getBatchTimeOfPark() {
+    public void getBatchTimeOfPark()
+    {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("userId", commembertab.getId());
@@ -178,23 +204,29 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("action", "NCZ_getBreakOffData");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() > 0) {
+                    if (result.getAffectedRows() > 0)
+                    {
                         listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                         DensityUtil densityUtil = new DensityUtil(NCZ_BreakOffActivity.this);
                         screenWidth = densityUtil.getScreenWidth();
                         int size = listData.get(0).getAreatabList().size();
-                        if (size == 1) {
+                        if (size == 1)
+                        {
                             screenWidth = screenWidth / 4;
-                        } else if (size == 2) {
+                        } else if (size == 2)
+                        {
                             screenWidth = screenWidth / 4;
-                        } else {
+                        } else
+                        {
                             screenWidth = screenWidth / 4;
                         }
                         tv_top_left.getLayoutParams().width = (screenWidth);
@@ -204,41 +236,50 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
                         initViews();
                         cz_startdl.setVisibility(View.GONE);
 
-                    } else {
+                    } else
+                    {
                         listData = new ArrayList<BatchTime>();
                     }
 
-                } else {
+                } else
+                {
                     AppContext.makeToast(NCZ_BreakOffActivity.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 AppContext.makeToast(NCZ_BreakOffActivity.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }
 
-    private void initViews() {
+    private void initViews()
+    {
         //初始化控件及数据
         mHScrollViews = new ArrayList<CustomHorizontalScrollView_Allitem>();
         ll_total.removeAllViews();
         ll_park.removeAllViews();
         int allnumber = 0;
         LayoutInflater inflater = (LayoutInflater) NCZ_BreakOffActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++) {
+        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
+        {
             View view = inflater.inflate(R.layout.areasale_parkitem, null);
             TextView tv_parkname = (TextView) view.findViewById(R.id.tv_parkname);
             tv_parkname.getLayoutParams().width = (screenWidth);
             tv_parkname.setText(listData.get(0).getAreatabList().get(i).getareaName());
             tv_parkname.setTag(R.id.tag_areaid, listData.get(0).getAreatabList().get(i).getAreaid());
             tv_parkname.setTag(R.id.tag_areaname, listData.get(0).getAreatabList().get(i).getareaName());
-            tv_parkname.setOnClickListener(new View.OnClickListener() {
+            tv_parkname.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     String areaid = (String) v.getTag(R.id.tag_areaid);
                     String areaname = (String) v.getTag(R.id.tag_areaname);
                     Intent intent = new Intent(NCZ_BreakOffActivity.this, NCZ_ContractBreakOff_.class);
@@ -249,12 +290,14 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
             });
             ll_park.addView(view);
         }
-        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++) {
+        for (int i = 0; i < listData.get(0).getAreatabList().size(); i++)
+        {
             View view = inflater.inflate(R.layout.areasale_totalitem, null);
             TextView tv_total = (TextView) view.findViewById(R.id.tv_total);
             tv_total.getLayoutParams().width = (screenWidth);
             int totalnumber = 0;
-            for (int j = 0; j < listData.size(); j++) {
+            for (int j = 0; j < listData.size(); j++)
+            {
 //                totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllnumber());
                 totalnumber = totalnumber + Integer.valueOf(listData.get(j).getAreatabList().get(i).getAllnumber());
             }
@@ -274,16 +317,21 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
         mListView.setAdapter(mAdapter);
     }
 
-    public void addHViews(final CustomHorizontalScrollView_Allitem hScrollView) {
-        if (!mHScrollViews.isEmpty()) {
+    public void addHViews(final CustomHorizontalScrollView_Allitem hScrollView)
+    {
+        if (!mHScrollViews.isEmpty())
+        {
             int size = mHScrollViews.size();
             CustomHorizontalScrollView_Allitem scrollView = mHScrollViews.get(size - 1);
             final int scrollX = scrollView.getScrollX();
             // 第一次满屏后，向下滑动，有一条数据在开始时未加入
-            if (scrollX != 0) {
-                mListView.post(new Runnable() {
+            if (scrollX != 0)
+            {
+                mListView.post(new Runnable()
+                {
                     @Override
-                    public void run() {
+                    public void run()
+                    {
                         // 当listView刷新完成之后，把该条移动到最终位置
                         hScrollView.scrollTo(scrollX, 0);
                     }
@@ -293,48 +341,59 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
         mHScrollViews.add(hScrollView);
     }
 
-    public void onScrollChanged(int l, int t, int oldl, int oldt) {
-        for (CustomHorizontalScrollView_Allitem scrollView : mHScrollViews) {
+    public void onScrollChanged(int l, int t, int oldl, int oldt)
+    {
+        for (CustomHorizontalScrollView_Allitem scrollView : mHScrollViews)
+        {
             // 防止重复滑动
             if (mTouchView != scrollView) scrollView.smoothScrollTo(l, t);
         }
     }
 
-    class ScrollAdapter extends BaseAdapter {
+    class ScrollAdapter extends BaseAdapter
+    {
 
-        public ScrollAdapter() {
+        public ScrollAdapter()
+        {
 
         }
 
         ListItemView listItemView = null;
 
-        class ListItemView {
+        class ListItemView
+        {
             public TextView item_titlev;
             public TextView item_total;
             public TextView tv_data;
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return listData.size();
         }
 
         @Override
-        public Object getItem(int position) {
+        public Object getItem(int position)
+        {
             return null;
         }
 
         @Override
-        public long getItemId(int position) {
+        public long getItemId(int position)
+        {
             return 0;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
             convertView = LayoutInflater.from(NCZ_BreakOffActivity.this).inflate(R.layout.breakoff_scrolladapter_item, null);
-            if (position % 2 == 0) {
+            if (position % 2 == 0)
+            {
                 convertView.setBackgroundResource(R.color.bg_table_row);
-            } else {
+            } else
+            {
                 convertView.setBackgroundResource(R.color.white);
             }
 
@@ -347,12 +406,14 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
             listItemView.item_titlev.setText(listData.get(position).getBatchTime());
             int totalnumber = 0;
             List<areatab> list = listData.get(position).getAreatabList();
-            for (int j = 0; j < list.size(); j++) {
+            for (int j = 0; j < list.size(); j++)
+            {
                 totalnumber = totalnumber + Integer.valueOf(list.get(j).getAllnumber());
             }
             listItemView.item_total.setText(String.valueOf(totalnumber));
 
-            for (int i = 0; i < listData.get(position).getAreatabList().size(); i++) {
+            for (int i = 0; i < listData.get(position).getAreatabList().size(); i++)
+            {
                 View view = LayoutInflater.from(NCZ_BreakOffActivity.this).inflate(R.layout.breakoff_dataitem, null);
                 listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
                 listItemView.tv_data.setText(listData.get(position).getAreatabList().get(i).getAllnumber());
@@ -377,35 +438,43 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
     }
 
     @Override
-    public void customOnTouchEvent(HorizontalScrollView horizontalScrollView) {
+    public void customOnTouchEvent(HorizontalScrollView horizontalScrollView)
+    {
         mTouchView = horizontalScrollView;
     }
 
     @Override
-    public void customOnScrollChanged(int l, int t, int oldl, int oldt) {
-        for (CustomHorizontalScrollView_Allitem scrollView : mHScrollViews) {
+    public void customOnScrollChanged(int l, int t, int oldl, int oldt)
+    {
+        for (CustomHorizontalScrollView_Allitem scrollView : mHScrollViews)
+        {
             // 防止重复滑动
             if (mTouchView != scrollView) scrollView.smoothScrollTo(l, t);
         }
     }
 
     @Override
-    public HorizontalScrollView getmTouchView() {
+    public HorizontalScrollView getmTouchView()
+    {
         return mTouchView;
     }
 
     // 测试点击的事件
-    protected View.OnClickListener clickListener = new View.OnClickListener() {
+    protected View.OnClickListener clickListener = new View.OnClickListener()
+    {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
             String number = (String) v.getTag(R.id.tag_number);
             String batchTimes = (String) v.getTag(R.id.tag_batchtime);
             String areaid = (String) v.getTag(R.id.tag_areaid);
             String areaname = (String) v.getTag(R.id.tag_areaname);
-            if (number.equals("0")) {
+            if (number.equals("0"))
+            {
                 Toast.makeText(NCZ_BreakOffActivity.this, "该片区该批次暂无断蕾数据", Toast.LENGTH_SHORT).show();
-            } else {
+            } else
+            {
                 Intent intent = new Intent(NCZ_BreakOffActivity.this, NCZ_ContractBreakOffActivity_.class);
                 intent.putExtra("areaid", areaid);
                 intent.putExtra("areaname", areaname);
@@ -416,23 +485,30 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
         }
     };
 
-    public void showPop_ParkName() {
+    public void showPop_ParkName()
+    {
         LayoutInflater layoutInflater = (LayoutInflater) NCZ_BreakOffActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         pv_tab = layoutInflater.inflate(R.layout.popup_park, null);// 外层
-        pv_tab.setOnKeyListener(new View.OnKeyListener() {
+        pv_tab.setOnKeyListener(new View.OnKeyListener()
+        {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing())) {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing()))
+                {
                     pw_tab.dismiss();
                     return true;
                 }
                 return false;
             }
         });
-        pv_tab.setOnTouchListener(new View.OnTouchListener() {
+        pv_tab.setOnTouchListener(new View.OnTouchListener()
+        {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (pw_tab.isShowing()) {
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_tab.isShowing())
+                {
                     pw_tab.dismiss();
                 }
                 return false;
@@ -450,15 +526,19 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
 
         adapter_park = new Adapter_Park(NCZ_BreakOffActivity.this, parklist);
         listview.setAdapter(adapter_park);
-        tv_cancle.setOnClickListener(new View.OnClickListener() {
+        tv_cancle.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 pw_tab.dismiss();
             }
         });
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3) {
+            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3)
+            {
                 id = parklist.get(postion).getId();
                 name = parklist.get(postion).getParkName();
                 pw_tab.dismiss();
@@ -471,23 +551,27 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
     }
 
 
-    private void getParkList() {
-        showDialog_waitTip();
+    private void getParkList()
+    {
         com.farm.bean.commembertab commembertab = AppContext.getUserInfo(NCZ_BreakOffActivity.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("action", "getcontractByUid");
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
                 String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0) {
+                    if (result.getAffectedRows() != 0)
+                    {
                         parklist = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
-                    } else {
+                    } else
+                    {
                         parklist = new ArrayList<Wz_Storehouse>();
                         Toast.makeText(NCZ_BreakOffActivity.this, "暂无更多园区", Toast.LENGTH_SHORT).show();
                     }
@@ -495,35 +579,38 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
                     parkid = parklist.get(0).getId();
                     name = parklist.get(0).getParkName();
                     getBatchTimeOfPark();
-                } else {
+                } else
+                {
                     AppContext.makeToast(NCZ_BreakOffActivity.this, "error_connectDataBase");
                     return;
                 }
-                dialog.dismiss();
             }
 
             @Override
-            public void onFailure(HttpException error, String msg) {
+            public void onFailure(HttpException error, String msg)
+            {
                 String a = error.getMessage();
                 AppContext.makeToast(NCZ_BreakOffActivity.this, "error_connectServer");
-                dialog.dismiss();
             }
         });
 
     }
 
-    public class Adapter_Park extends BaseAdapter {
+    public class Adapter_Park extends BaseAdapter
+    {
         private Context context;
         private List<Wz_Storehouse> listItems;
         private LayoutInflater listContainer;
         Wz_Storehouse wz_storehouse;
 
-        class ListItemView {
+        class ListItemView
+        {
             public TextView tv_yq;
             public View view_select;
         }
 
-        public Adapter_Park(Context context, List<Wz_Storehouse> data) {
+        public Adapter_Park(Context context, List<Wz_Storehouse> data)
+        {
             this.context = context;
             this.listContainer = LayoutInflater.from(context);
             this.listItems = data;
@@ -531,21 +618,25 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
 
         HashMap<Integer, View> lmap = new HashMap<Integer, View>();
 
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
             wz_storehouse = listItems.get(position);
             ListItemView listItemView = null;
-            if (lmap.get(position) == null) {
+            if (lmap.get(position) == null)
+            {
                 convertView = listContainer.inflate(R.layout.park_item, null);
                 listItemView = new ListItemView();
                 listItemView.tv_yq = (TextView) convertView.findViewById(R.id.tv_yq);
                 listItemView.view_select = (View) convertView.findViewById(R.id.view_select);
                 lmap.put(position, convertView);
                 convertView.setTag(listItemView);
-            } else {
+            } else
+            {
                 convertView = lmap.get(position);
                 listItemView = (ListItemView) convertView.getTag();
             }
-            if (tv_parkname.getText().equals(wz_storehouse.getParkName() + "断蕾量")) {
+            if (tv_parkname.getText().equals(wz_storehouse.getParkName() + "断蕾量"))
+            {
                 listItemView.view_select.setVisibility(View.VISIBLE);
             } else
             {
@@ -556,25 +647,21 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return listItems.size();
         }
 
         @Override
-        public Object getItem(int arg0) {
+        public Object getItem(int arg0)
+        {
             return null;
         }
 
         @Override
-        public long getItemId(int arg0) {
+        public long getItemId(int arg0)
+        {
             return 0;
         }
-    }
-
-    public void showDialog_waitTip() {
-        dialog = new DialogFragment_WaitTip();
-        Bundle bundle1 = new Bundle();
-        dialog.setArguments(bundle1);
-        dialog.show(NCZ_BreakOffActivity.this.getFragmentManager(), "TIP");
     }
 }

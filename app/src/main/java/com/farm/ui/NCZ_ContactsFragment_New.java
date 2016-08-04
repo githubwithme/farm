@@ -48,7 +48,17 @@ public class NCZ_ContactsFragment_New extends Fragment
     ImageButton imgbtn;
     @ViewById
     TextView et_goodsname;
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
     @Click
     void et_goodsname()
     {
@@ -65,6 +75,7 @@ public class NCZ_ContactsFragment_New extends Fragment
     @AfterViews
     void afterOncreate()
     {
+        showDialog_waitTip();
         getBreakOffInfoOfContract();
 //        getNewSaleList_test();
     }
@@ -121,15 +132,17 @@ public class NCZ_ContactsFragment_New extends Fragment
                 } else
                 {
                     AppContext.makeToast(getActivity(), "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(getActivity(), "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }

@@ -44,16 +44,28 @@ public class NCZ_ContractBatchTimeSale extends Activity
     @ViewById
     TextView tv_title;
     Adapter_ContractBatchtimeSale adapter_contractBreakOff_ncz;
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
+//    dialog.loadingTip(getText(R.string.error_network).toString());
     @AfterViews
     void afterOncreate()
     {
         getActionBar().hide();
+        showDialog_waitTip();
         areaid = getIntent().getStringExtra("areaid");
         areaname = getIntent().getStringExtra("areaname");
         batchTime = getIntent().getStringExtra("batchTime");
         tv_batchtime.setText(batchTime);
-        tv_title.setText(areaname+"库存量");
+        tv_title.setText(areaname + "库存量");
         getSaleDataOfArea();
     }
 
@@ -65,7 +77,8 @@ public class NCZ_ContractBatchTimeSale extends Activity
 
     private void getSaleDataOfArea()
     {
-        commembertab commembertab=AppContext.getUserInfo(NCZ_ContractBatchTimeSale.this);;
+        commembertab commembertab = AppContext.getUserInfo(NCZ_ContractBatchTimeSale.this);
+        ;
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
         params.addQueryStringParameter("areaid", areaid);
@@ -96,15 +109,17 @@ public class NCZ_ContractBatchTimeSale extends Activity
                 } else
                 {
                     AppContext.makeToast(NCZ_ContractBatchTimeSale.this, "error_connectDataBase");
+                    dialog.loadingTip(getText(R.string.error_data).toString());
                     return;
                 }
-
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(NCZ_ContractBatchTimeSale.this, "error_connectServer");
+                dialog.loadingTip(getText(R.string.error_network).toString());
             }
         });
     }

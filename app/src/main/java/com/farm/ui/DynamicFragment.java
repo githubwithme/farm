@@ -69,7 +69,17 @@ public class DynamicFragment extends Fragment
     View view;
 
     int k = 0;
+    DialogFragment_WaitTip dialog;
 
+    public void showDialog_waitTip()
+    {
+        dialog = new DialogFragment_WaitTip_();
+        Bundle bundle1 = new Bundle();
+        dialog.setArguments(bundle1);
+        dialog.show(getFragmentManager(), "TIP");
+    }
+
+    //    dialog.loadingTip(getText(R.string.error_data).toString());
     @Click
     void btn_add()
     {
@@ -125,6 +135,7 @@ public class DynamicFragment extends Fragment
     @AfterViews
     void afterOncrete()
     {
+        showDialog_waitTip();
 //        getDynamicData_temp();
         getDynamicData();
 //        getNewSaleList_test(
@@ -266,6 +277,7 @@ public class DynamicFragment extends Fragment
                 } else
                 {
                     Toast.makeText(getActivity(), "连接数据库异常", Toast.LENGTH_SHORT).show();
+                    dialog.loadingTip(getText(R.string.error_data).toString());
 //                    AppContext.makeToast(getActivity(), "error_connectDataBase");
 //                    if (!ishidding && timethread != null)
 //                    {
@@ -273,8 +285,7 @@ public class DynamicFragment extends Fragment
 //                    }
                     return;
                 }
-
-
+                dialog.dismiss();
             }
 
             @Override
@@ -282,6 +293,7 @@ public class DynamicFragment extends Fragment
             {
                 String a = msg;
                 Toast.makeText(getActivity(), "连接服务器异常", Toast.LENGTH_SHORT).show();
+                dialog.loadingTip(getText(R.string.error_network).toString());
 //                AppContext.makeToast(getActivity(), "error_connectServer");
 //                if (!ishidding && timethread != null)
 //                {

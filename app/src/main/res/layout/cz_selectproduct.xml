@@ -64,6 +64,7 @@
                 android:id="@+id/ll_top"
                 android:layout_width="fill_parent"
                 android:layout_height="40dp"
+                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <TextView
@@ -80,6 +81,13 @@
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:background="@color/splitline"/>
+
+                <ImageView
+                    android:layout_width="10dip"
+                    android:layout_height="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:src="@mipmap/icon_arrow_left"/>
 
                 <com.farm.widget.CustomHorizontalScrollView_Allitem
                     android:id="@+id/item_scroll_title"
@@ -100,7 +108,14 @@
                 </com.farm.widget.CustomHorizontalScrollView_Allitem>
 
 
+                <ImageView
+                    android:layout_width="10dip"
+                    android:layout_height="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:src="@mipmap/icon_arrow_right"/>
             </LinearLayout>
+
 
             <View
                 android:id="@+id/line_middle"
@@ -128,8 +143,8 @@
                 android:id="@+id/rl_menu"
                 android:layout_width="match_parent"
                 android:layout_height="150px"
-                android:background="@color/white"
                 android:layout_alignParentBottom="true"
+                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -154,9 +169,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dip"
                         android:layout_below="@+id/tv_allnumber"
+                        android:layout_marginBottom="5dip"
                         android:layout_weight="1"
                         android:alpha="80"
-                        android:layout_marginBottom="5dip"
                         android:gravity="center"
                         android:text="已选0个，点击查看详情"
                         android:textColor="@color/text_table_horizontitle"
