@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_titlebar"
@@ -18,7 +18,7 @@
             android:layout_margin="10dp"
             android:background="@null"
             android:contentDescription=""
-            android:src="@mipmap/btn_return" />
+            android:src="@mipmap/btn_return"/>
 
 
         <TextView
@@ -30,7 +30,7 @@
             android:gravity="center"
             android:text="断蕾情况"
             android:textColor="@color/text_title"
-            android:textSize="@dimen/text_titlebar" />
+            android:textSize="@dimen/text_titlebar"/>
 
         <ImageButton
             android:id="@+id/btn_addBatchTime"
@@ -39,7 +39,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dip"
-            android:background="@mipmap/icon_addvehicle" />
+            android:background="@mipmap/icon_addvehicle"/>
 
         <TextView
             android:id="@+id/tv_more"
@@ -52,67 +52,71 @@
             android:text="查看更多"
             android:textColor="@color/text_title"
             android:textSize="@dimen/text_titlebar"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_NotStartBreakoff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="360px"
+            android:background="@mipmap/icon_disconnect_empty"/>
+
+        <TextView
+            android:id="@+id/tv_nodetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40px"
+            android:alpha="0.8"
+            android:gravity="center"
+            android:text="暂无香蕉断蕾量"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_addtip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_nodetail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40px"
+            android:alpha="0.5"
+            android:gravity="center"
+            android:text="片区管理员还未录入\n &quot;香蕉断蕾批次&quot;和&quot;香蕉断蕾量&quot;"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="14sp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_below="@+id/tv_addtip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="15dip"
+            android:layout_marginTop="80px"
+            android:background="@drawable/btn_add_immediately"
+            android:text="立即添加"
+            android:textColor="@color/white"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 
     <FrameLayout
+        android:id="@+id/fl_table"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rl_titlebar"
         android:background="@color/white"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_tip"
-            android:layout_width="match_parent"
-            android:layout_height="45dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
-            android:layout_marginTop="10dip"
-            android:background="@color/white"
-            android:gravity="center"
-            android:text="农场断蕾情况"
-            android:textColor="@color/bg_text"
-            android:textSize="16sp"
-            android:visibility="gone" />
-
-
-        <LinearLayout
-            android:id="@+id/cz_startdl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_timelimit"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_colum"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:hint="开始时间"
-                    android:textSize="@dimen/size_20"
-                    android:visibility="gone" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/startdl"
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:gravity="center"
-                android:text="该园区还没有开始断蕾" />
-
-
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -135,18 +139,20 @@
                     android:gravity="center"
                     android:text="批次"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/splitline" />
+                    android:background="@color/splitline"/>
+
                 <ImageView
                     android:layout_width="10dip"
                     android:layout_height="10dip"
                     android:layout_gravity="center_vertical"
                     android:background="@color/transparent"
                     android:src="@mipmap/icon_arrow_left"/>
+
                 <com.farm.widget.CustomHorizontalScrollView_Allitem
                     android:id="@+id/item_scroll_title"
                     android:layout_width="fill_parent"
@@ -164,16 +170,18 @@
 
                     </LinearLayout>
                 </com.farm.widget.CustomHorizontalScrollView_Allitem>
+
                 <ImageView
                     android:layout_width="10dip"
                     android:layout_height="10dip"
                     android:layout_gravity="center_vertical"
                     android:background="@color/transparent"
                     android:src="@mipmap/icon_arrow_right"/>
+
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/splitline" />
+                    android:background="@color/splitline"/>
 
                 <TextView
                     android:id="@+id/tv_top_right"
@@ -183,7 +191,7 @@
                     android:gravity="center"
                     android:text="合计"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
             </LinearLayout>
 
             <View
@@ -191,7 +199,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_below="@+id/ll_top"
-                android:background="@color/splitline" />
+                android:background="@color/splitline"/>
 
             <ListView
                 android:id="@+id/hlistview_scroll_list"
@@ -222,12 +230,12 @@
                     android:gravity="center"
                     android:text="合计"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/splitline" />
+                    android:background="@color/splitline"/>
 
                 <com.farm.widget.CustomHorizontalScrollView_Allitem
                     android:id="@+id/totalScroll"
@@ -250,7 +258,7 @@
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/splitline" />
+                    android:background="@color/splitline"/>
 
                 <TextView
                     android:id="@+id/alltoatal"
@@ -260,7 +268,7 @@
                     android:gravity="center"
                     android:text="总量"
                     android:textColor="@color/titlebar_top"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
 
             </LinearLayout>
@@ -270,15 +278,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_above="@+id/ll_bottom"
-                android:background="@color/splitline" />
+                android:background="@color/splitline"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_alignParentBottom="true"
-                android:background="@color/splitline" />
+                android:background="@color/splitline"/>
         </RelativeLayout>
 
 
     </FrameLayout>
-</RelativeLayout>
+</LinearLayout>

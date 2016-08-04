@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -83,6 +84,8 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
     @ViewById
     TextView tv_top_left;
     @ViewById
+    FrameLayout fl_table;
+    @ViewById
     TextView tv_top_right;
     @ViewById
     TextView tv_parkname;
@@ -101,11 +104,10 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
     MyDialog myDialog;
     Fragment mContent = new Fragment();
     @ViewById
-    LinearLayout cz_startdl;
-    @ViewById
-    TextView startdl;
-    @ViewById
-    TextView tv_timelimit;
+    RelativeLayout rl_NotStartBreakoff;
+//    @ViewById
+//    LinearLayout cz_startdl;
+
     @ViewById
     RelativeLayout rl_view;
 
@@ -190,7 +192,12 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
             tv_bottom_left.getLayoutParams().width = (screenWidth);
             alltoatal.getLayoutParams().width = (screenWidth);
             initViews();
-            cz_startdl.setVisibility(View.GONE);
+            rl_NotStartBreakoff.setVisibility(View.GONE);
+            fl_table.setVisibility(View.VISIBLE);
+        } else
+        {
+            rl_NotStartBreakoff.setVisibility(View.VISIBLE);
+            fl_table.setVisibility(View.GONE);
         }
 
     }
@@ -213,8 +220,10 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() > 0)
+                    if (result.getRows().size() > 0)
                     {
+                        rl_NotStartBreakoff.setVisibility(View.GONE);
+                        fl_table.setVisibility(View.VISIBLE);
                         listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                         DensityUtil densityUtil = new DensityUtil(NCZ_BreakOffActivity.this);
                         screenWidth = densityUtil.getScreenWidth();
@@ -234,11 +243,11 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
                         tv_bottom_left.getLayoutParams().width = (screenWidth);
                         alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
-                        cz_startdl.setVisibility(View.GONE);
-
                     } else
                     {
                         listData = new ArrayList<BatchTime>();
+                        rl_NotStartBreakoff.setVisibility(View.VISIBLE);
+                        fl_table.setVisibility(View.GONE);
                     }
 
                 } else
@@ -543,8 +552,8 @@ public class NCZ_BreakOffActivity extends Activity implements CustomHorizontalSc
                 name = parklist.get(postion).getParkName();
                 pw_tab.dismiss();
                 tv_parkname.setText(parklist.get(postion).getParkName() + "断蕾量");
-                parkid = parklist.get(0).getId();
-                name = parklist.get(0).getParkName();
+                parkid = parklist.get(postion).getId();
+                name = parklist.get(postion).getParkName();
                 getBatchTimeOfPark();
             }
         });
