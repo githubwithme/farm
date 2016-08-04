@@ -48,7 +48,8 @@ import java.util.Map;
 /**
  * Created by hasee on 2016/7/18.
  */
-@EActivity(R.layout.ncz_new_jsdandplan_detail)
+//@EActivity(R.layout.ncz_new_jsdandplan_detail)
+@EActivity(R.layout.ncz_look_jsddetail)
 public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizontalScrollView_Allitem.CustomOntouch
 {
     @ViewById
@@ -61,7 +62,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
     @ViewById
     ListView lv;
     @ViewById
-    TextView is_setveiw;
+    LinearLayout is_setveiw;
     @ViewById
     LinearLayout ll_detail;
     List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
@@ -203,15 +204,17 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+                /*    if (result.getAffectedRows() != 0)
+                    {*/
 
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        listData.addAll(listNewData);
+                    listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
                         DensityUtil densityUtil = new DensityUtil(NCZ_All_OneOrder_Detail.this);
+
+                    if (listData.size()>0)
+                    {
                         screenWidth = densityUtil.getScreenWidth();
-                        int size = 2;
+                        int size = 3;
                         if (size == 1)
                         {
                             screenWidth = screenWidth / 3;
@@ -227,6 +230,8 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                         tv_bottom_left.getLayoutParams().width = (screenWidth);
                         alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
+                    }
+
 
       /*                  pg_cbf_adapter = new PG_CBF_CLAdapyer(JSD_Detail.this, listNewData, "", "");
                         liat_jsd.setAdapter(pg_cbf_adapter);
@@ -244,10 +249,10 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                             }
                         });*/
 
-                    } else
+          /*          } else
                     {
                         listNewData = new ArrayList<SellOrder_New>();
-                    }
+                    }*/
 
                 } else
                 {
@@ -499,6 +504,14 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
 //            listItemView.item_total.getLayoutParams().width = (screenWidth);
 
+            //颜色
+            if (position % 2 == 0)
+            {
+                convertView.setBackgroundResource(R.color.light_gray);
+            } else
+            {
+                convertView.setBackgroundResource(R.color.white);
+            }
             if (listData.get(position).getIsNeedAudit().equals("0"))
             {
 

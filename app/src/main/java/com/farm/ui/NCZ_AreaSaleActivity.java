@@ -228,22 +228,26 @@ public class NCZ_AreaSaleActivity extends Activity implements CustomHorizontalSc
                     listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                     DensityUtil densityUtil = new DensityUtil(NCZ_AreaSaleActivity.this);
                     screenWidth = densityUtil.getScreenWidth();
-                    int size = listData.get(0).getAreatabList().size();
-                    if (size == 1)
+                    if (listData.size()>0)
                     {
-                        screenWidth = screenWidth / 4;
-                    } else if (size == 2)
-                    {
-                        screenWidth = screenWidth / 4;
-                    } else
-                    {
-                        screenWidth = screenWidth / 4;
+                        int size = listData.get(0).getAreatabList().size();
+                        if (size == 1)
+                        {
+                            screenWidth = screenWidth / 4;
+                        } else if (size == 2)
+                        {
+                            screenWidth = screenWidth / 4;
+                        } else
+                        {
+                            screenWidth = screenWidth / 4;
+                        }
+                        tv_top_left.getLayoutParams().width = (screenWidth);
+                        tv_top_right.getLayoutParams().width = (screenWidth);
+                        tv_bottom_left.getLayoutParams().width = (screenWidth);
+                        alltoatal.getLayoutParams().width = (screenWidth);
+                        initViews();
                     }
-                    tv_top_left.getLayoutParams().width = (screenWidth);
-                    tv_top_right.getLayoutParams().width = (screenWidth);
-                    tv_bottom_left.getLayoutParams().width = (screenWidth);
-                    alltoatal.getLayoutParams().width = (screenWidth);
-                    initViews();
+
                     cz_startdl.setVisibility(View.GONE);
 
         /*            } else

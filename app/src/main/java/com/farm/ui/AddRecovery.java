@@ -114,19 +114,19 @@ public class AddRecovery extends Activity {
 
     @Click
     void button_add() {
-        if (CR_chanpin.getText().toString().equals("")) {
+   /*     if (CR_chanpin.getText().toString().equals("")) {
             Toast.makeText(AddRecovery.this, "请填写车牌号", Toast.LENGTH_SHORT);
             return;
-        }
+        }*/
         commembertab commembertab = AppContext.getUserInfo(AddRecovery.this);
         SellOrder_New sellOrder = new SellOrder_New();
 
         if (bzId.equals("")||byId.equals("")||CR_chanpin.getText().toString().equals("")||carryPrice.getText().toString().equals("")||packPrice.getText().toString().equals(""))
         {
-            sellOrder.setIsReady("0");
+            sellOrder.setIsReady("False");
         }else
         {
-            sellOrder.setIsReady("1");
+            sellOrder.setIsReady("True");
         }
         sellOrder.setInfoId(uuid);//0
         sellOrder.setPlateNumber(CR_chanpin.getText().toString());

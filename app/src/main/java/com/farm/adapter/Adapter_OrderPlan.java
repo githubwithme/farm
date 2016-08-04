@@ -459,7 +459,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
 
             if (listData.get(groupPosition).getOrderPlanList().size() > 0)
             {
-                tv_carnumber.setText(String.valueOf((Integer.valueOf(listData.get(groupPosition).getOrderPlanList().get(0).getReadyPlate()) + listData.get(groupPosition).getOrderPlanList().get(0).getNotReadyPlate())));
+                tv_carnumber.setText(String.valueOf((Integer.valueOf(listData.get(groupPosition).getOrderPlanList().get(0).getReadyPlate()) + Integer.valueOf(listData.get(groupPosition).getOrderPlanList().get(0).getNotReadyPlate()))));
                 tv_readyNumber.setText(listData.get(groupPosition).getOrderPlanList().get(0).getReadyPlate());
                 tv_notreadyNumber.setText(listData.get(groupPosition).getOrderPlanList().get(0).getNotReadyPlate());
             }
