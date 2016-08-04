@@ -108,26 +108,26 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
 
     static class ListItemView
     {
-//        public LinearLayout ll_buyer;
-//        public LinearLayout ll_mainpeople;
-//        public LinearLayout ll_car;
+
         public View view_cardetail;
         public View view_buyer_call;
         public View view_mainpeople_call;
         public TextView tv_buyer;
         public TextView tv_preparestatus;
-        public TextView tv_car;
         public TextView tv_orderstate;
         public TextView tv_mainpeople;
         public TextView tv_product;
         public TextView tv_parkname;
         public Button btn_cancleorder;
-        //        public Button btn_preparework;
         public Button btn_orderdetail;
         public Button btn_editorder;
         public Button btn_changetime;
         public CircleImageView circleImageView;
-//        public RelativeLayout weijiuxu;
+
+        public TextView tv_car;
+        public TextView tv_readynumber;
+        public TextView tv_notreadynumber;
+
     }
 
     //设置子item的组件
@@ -147,38 +147,25 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.adapter_pgorderplan_child, null);
             listItemView = new ListItemView();
-//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
             listItemView.view_buyer_call = (View) convertView.findViewById(R.id.view_buyer_call);
             listItemView.view_mainpeople_call = (View) convertView.findViewById(R.id.view_mainpeople_call);
             listItemView.view_cardetail = (View) convertView.findViewById(R.id.view_cardetail);
-//            listItemView.ll_mainpeople = (LinearLayout) convertView.findViewById(R.id.ll_mainpeople);
-//            listItemView.ll_buyer = (LinearLayout) convertView.findViewById(R.id.ll_buyer);
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_preparestatus = (TextView) convertView.findViewById(R.id.tv_preparestatus);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
             listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
-            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
-//            listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
             listItemView.btn_orderdetail = (Button) convertView.findViewById(R.id.btn_orderdetail);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
-//            listItemView.weijiuxu = (RelativeLayout) convertView.findViewById(R.id.weijiuxu);
-//            listItemView.btn_orderdetail.setTag(listItemView);
-//            listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
-//                    intent.putExtra("bean", sellOrder_new);
-//                    context.startActivity(intent);
-//
-//                }
-//            });
+
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
+            listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
+            listItemView.tv_notreadynumber = (TextView) convertView.findViewById(R.id.tv_notreadynumber);
+
             listItemView.btn_cancleorder.setTag(R.id.tag_cash, sellOrder_new);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {
@@ -190,6 +177,11 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
                 }
             });
 
+
+            //车辆
+            listItemView.tv_readynumber.setText(sellOrder_new.getReadyPlate() + "车;");
+            listItemView.tv_notreadynumber.setText(sellOrder_new.getNotReadyPlate() + "车");
+            listItemView.tv_car.setText("共" + (Integer.valueOf(sellOrder_new.getReadyPlate()) + Integer.valueOf(sellOrder_new.getNotReadyPlate())) + "车;");
 
             listItemView.view_cardetail.setTag(R.id.tag_danwei, sellOrder_new);
             listItemView.view_cardetail.setOnClickListener(new View.OnClickListener()
@@ -452,20 +444,28 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
             String date = listData.get(groupPosition).getDate();
             tv_month.setText(date.substring(5, 7) + "月");
             tv_day.setText(date.substring(date.lastIndexOf("-") + 1, date.length()));
-//            String date = listData.get(groupPosition).getDate();
-//            tv_date.setText(date);
-//            if (date.equals(utils.getToday().toString()))
-//            {
-//                tv_datenote.setText("今天");
-//            } else
-//            {
-//                tv_datenote.setText(utils.OffSetOfDate_OrderDate(utils.getToday(), date));
-//            }
+
+
+
+            if (listData.get(groupPosition).getSellOrderList().size() > 0)
+            {
+
+                int ready_car=0;
+                int notready_car=0;
+
+                for (int i=0;i<listData.get(groupPosition).getSellOrderList().size();i++)
+                {
+                    ready_car=ready_car+Integer.valueOf(listData.get(groupPosition).getSellOrderList().get(i).getReadyPlate());
+                    notready_car=notready_car+Integer.valueOf(listData.get(groupPosition).getSellOrderList().get(i).getNotReadyPlate());
+
+                }
+                tv_carnumber.setText(String.valueOf(ready_car + notready_car));
+                tv_readyNumber.setText(ready_car);
+                tv_notreadyNumber.setText(notready_car);
+            }
+
             tv_notPayDepositNumber.setText(listData.get(groupPosition).getNotPayDepositNumber());
             tv_paidDepositNumber.setText(listData.get(groupPosition).getPaidDepositNumber());
-            tv_notreadyNumber.setText(listData.get(groupPosition).getNotreadyNumber());
-            tv_readyNumber.setText(listData.get(groupPosition).getReadyNumber());
-            tv_carnumber.setText(listData.get(groupPosition).getCarNumber());
             tv_ordernumber.setText(listData.get(groupPosition).getOrderNumber());
 //            Adapter_OrderPlan_Parentitem adapter_orderPlan_parentitem = new Adapter_OrderPlan_Parentitem(context, listData.get(groupPosition).getOrderPlanList());
 //            gv.setAdapter(adapter_orderPlan_parentitem);

@@ -77,8 +77,6 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
         public View view_buyer_call;
         public TextView tv_buyer;
         public TextView tv_orderstate;
-        public TextView tv_car;
-//        public TextView tv_unpaid;
         public TextView tv_product;
         public TextView tv_settlementnumber;
         public TextView tv_settlement_successnumber;
@@ -87,18 +85,16 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
         public Button btn_cancleorder;
         public View view_showSettlement;
         public Button btn_orderdetail;
-//        public Button btn_preparework;
         public Button btn_editorder;
         public CheckBox cb_AllowRelease;
         public Button btn_showSettlement;
-//        public Button btn_changetime;
         public Button btn_complete;
         public CircleImageView circleImageView;
-//        public LinearLayout ll_car;
-//        public LinearLayout ll_unfinalpay;
-//        public LinearLayout ll_undeposit;
         public View view_mainpeople_call;
 
+        public TextView tv_car;
+        public TextView tv_readynumber;
+        public TextView tv_notreadynumber;
     }
 
     public PG_WaitForSettlementAdapter(Context context, List<SellOrder_New> data, String broadcast)
@@ -141,28 +137,24 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.view_buyer_call = (View) convertView.findViewById(R.id.view_buyer_call);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
-            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_waitforsettlementnumber = (TextView) convertView.findViewById(R.id.tv_waitforsettlementnumber);
             listItemView.tv_product = (TextView) convertView.findViewById(R.id.tv_product);
-//            listItemView.tv_unpaid = (TextView) convertView.findViewById(R.id.tv_unpaid);
             listItemView.tv_depositStatus = (TextView) convertView.findViewById(R.id.tv_depositStatus);
             listItemView.tv_settlement_successnumber = (TextView) convertView.findViewById(R.id.tv_settlement_successnumber);
             listItemView.tv_settlementnumber = (TextView) convertView.findViewById(R.id.tv_settlementnumber);
             listItemView.btn_orderdetail = (Button) convertView.findViewById(R.id.btn_orderdetail);
             listItemView.view_showSettlement = (View) convertView.findViewById(R.id.view_showSettlement);
             listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
-//            listItemView.btn_preparework = (Button) convertView.findViewById(R.id.btn_preparework);
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.cb_AllowRelease = (CheckBox) convertView.findViewById(R.id.cb_AllowRelease);
-//            listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.btn_complete = (Button) convertView.findViewById(R.id.btn_complete);
             listItemView.btn_showSettlement = (Button) convertView.findViewById(R.id.btn_showSettlement);
             listItemView.tv_mainpeople = (TextView) convertView.findViewById(R.id.tv_mainpeople);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
             listItemView.view_mainpeople_call = (View) convertView.findViewById(R.id.view_mainpeople_call);
-//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
-//            listItemView.ll_unfinalpay = (LinearLayout) convertView.findViewById(R.id.ll_unfinalpay);
-//            listItemView.ll_undeposit = (LinearLayout) convertView.findViewById(R.id.ll_undeposit);
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
+            listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
+            listItemView.tv_notreadynumber = (TextView) convertView.findViewById(R.id.tv_notreadynumber);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -176,6 +168,10 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
                     updateSellOrderByuuids(sellOrders.getUuid());
                 }
             });
+            //车辆
+            listItemView.tv_readynumber.setText(sellOrder.getReadyPlate() + "车;");
+            listItemView.tv_notreadynumber.setText(sellOrder.getNotReadyPlate() + "车");
+            listItemView.tv_car.setText("共" + (Integer.valueOf(sellOrder.getReadyPlate()) + Integer.valueOf(sellOrder.getNotReadyPlate())) + "车;");
 
 //            listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
 //            listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
@@ -228,9 +224,11 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
 //                listItemView.tv_unpaid.setText("待结算" + sellOrder.getUnpaid() + "元");
 //            }
             listItemView.btn_orderdetail.setTag(R.id.tag_bean, sellOrder);
-            listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener() {
+            listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
                     Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
                     intent.putExtra("bean", sellOrder_new);
@@ -238,16 +236,17 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
                 }
             });
             listItemView.view_showSettlement.setTag(R.id.tag_danwei, sellOrder);
-            listItemView.view_showSettlement.setOnClickListener(new View.OnClickListener() {
+            listItemView.view_showSettlement.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_danwei);
                     Intent intent = new Intent(context, NCZ_Look_JSD_.class);
                     intent.putExtra("zbstudio", sellOrder_new);
                     context.startActivity(intent);
                 }
             });
-            listItemView.tv_car.setText(sellOrder.getCarNumber());
             listItemView.tv_buyer.setText(sellOrder.getBuyersName());
             listItemView.view_buyer_call.setTag(sellOrder.getBuyersPhone());
             listItemView.view_buyer_call.setOnClickListener(new View.OnClickListener()

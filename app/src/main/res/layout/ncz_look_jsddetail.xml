@@ -887,6 +887,7 @@
                 android:layout_height="40dip"
                android:paddingLeft="20dip"
                 android:layout_marginRight="10dip"
+                android:layout_marginLeft="10dip"
                 android:layout_marginTop="10dip"
                 android:background="@color/color_topbar"
                 android:gravity="center|left"

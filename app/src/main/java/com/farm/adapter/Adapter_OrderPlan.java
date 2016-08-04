@@ -239,7 +239,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
 
             listItemView.tv_readynumber.setText(sellOrder_new.getReadyPlate() + "车;");
             listItemView.tv_notreadynumber.setText(sellOrder_new.getNotReadyPlate()+"车");
-            listItemView.tv_car.setText("共"+(Integer.valueOf(sellOrder_new.getReadyPlate())+Integer.valueOf(sellOrder_new.getNotReadyPlate()))+";");
+            listItemView.tv_car.setText("共"+(Integer.valueOf(sellOrder_new.getReadyPlate())+Integer.valueOf(sellOrder_new.getNotReadyPlate()))+"车;");
 
 
 /*
