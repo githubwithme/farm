@@ -254,7 +254,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
+                    if (result.getRows().size() > 0)
                     {
                         parklist = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
                     } else
@@ -356,7 +356,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() > 0)
+                    if (result.getRows().size() > 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
                         DensityUtil densityUtil = new DensityUtil(NCZ_SelectProduct.this);

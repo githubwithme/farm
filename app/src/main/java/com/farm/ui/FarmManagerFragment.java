@@ -14,12 +14,27 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.app.AppConfig;
+import com.farm.app.AppContext;
+import com.farm.bean.Result;
+import com.farm.bean.contractTab;
+import com.farm.common.utils;
+import com.guide.DensityUtil;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
 
 /**
  * Created by ${hmj} on 2016/5/26.
@@ -41,6 +56,7 @@ public class FarmManagerFragment extends Fragment
     @AfterViews
     void afterOncrete()
     {
+//        getNCZ_getAllContractSaleData();
     }
 
     @Click
@@ -56,7 +72,7 @@ public class FarmManagerFragment extends Fragment
         getActivity().startActivity(intent);
     }
 
-//    @Click
+    //    @Click
 //    void ce_tq()//测试天气
 //    {
 //        Intent intent = new Intent(getActivity(), NC_Weater_.class);
@@ -250,4 +266,64 @@ public class FarmManagerFragment extends Fragment
         lp.alpha = 0.7f;
         getActivity().getWindow().setAttributes(lp);
     }
+//    public void getNCZ_getAllContractSaleData()
+//    {
+//        RequestParams params = new RequestParams();
+//        params.addQueryStringParameter("action", "NCZ_getAllContractSaleData");
+//        HttpUtils http = new HttpUtils();
+////        http://m.weather.com.cn/atad/"+citycode+".html
+//        http.send(HttpRequest.HttpMethod.POST,"http://www.weather.com.cn/data/zs/101010100.html", params, new RequestCallBack<String>()
+//        {
+//            @Override
+//            public void onSuccess(ResponseInfo<String> responseInfo)
+//            {
+//                String a = responseInfo.result;
+//                Result result = JSON.parseObject(responseInfo.result, Result.class);
+//                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+//                {
+////                    if (result.getRows().size() > 0)
+////                    {
+////                        listData = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
+////                        DensityUtil densityUtil = new DensityUtil(getActivity());
+////                        screenWidth = densityUtil.getScreenWidth();
+////                        int size = listData.get(0).getBatchTimeList().size();
+////                        if (size == 1)
+////                        {
+////                            screenWidth = screenWidth / 3;
+////                        } else if (size == 2)
+////                        {
+////                            screenWidth = screenWidth / 3;
+////                        } else
+////                        {
+////                            screenWidth = screenWidth / 3;
+////                        }
+////                        tv_top_left.getLayoutParams().width = (screenWidth);
+//////                        tv_top_right.getLayoutParams().width = (screenWidth);
+//////                        tv_bottom_left.getLayoutParams().width = (screenWidth);
+//////                        alltoatal.getLayoutParams().width = (screenWidth);
+////                        initViews();
+////                        tv_nodatatip.setVisibility(View.GONE);
+////
+////                    } else
+////                    {
+////                        listData = new ArrayList<contractTab>();
+////                    }
+//
+//                } else
+//                {
+//                    AppContext.makeToast(getActivity(), "error_connectDataBase");
+////                    dialog.loadingTip(getText(R.string.error_data).toString());
+//                    return;
+//                }
+////                dialog.dismiss();
+//            }
+//
+//            @Override
+//            public void onFailure(HttpException error, String msg)
+//            {
+//                AppContext.makeToast(getActivity(), "error_connectServer");
+////                dialog.loadingTip(getText(R.string.error_network).toString());
+//            }
+//        });
+//    }
 }
