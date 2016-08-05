@@ -48,6 +48,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/line_color_new"
         android:descendantFocusability="afterDescendants">
 
         <LinearLayout
@@ -67,6 +68,7 @@
                     android:layout_marginBottom="10dip"
                     android:layout_marginLeft="10dip"
                     android:layout_marginRight="10dip"
+                    android:layout_marginTop="30dip"
                     android:background="@color/white"
                     android:orientation="vertical">
 
@@ -75,14 +77,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dip"
                         android:background="@color/color_topbar">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="40dip"
-                        android:gravity="center|left"
-                        android:paddingLeft="10dip"
-                        android:text="订单"
-                        android:textColor="@color/bg_text"
-                        android:textSize="@dimen/size_16"/>
+
+                        <TextView
+                            android:id="@+id/tv_clicks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dip"
+                            android:gravity="center"
+                            android:text="采收时间:"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/size_16"/>
+
+
+                        <TextView
+                            android:id="@+id/saletime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="10dip"
+                            android:text="暂无"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/size_16"/>
                     </LinearLayout>
 
                     <View
@@ -109,9 +125,9 @@
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="left|center_vertical"
-                                android:paddingLeft="10dip"
-                                android:text="采购商"
+                                android:gravity="right|center_vertical"
+                                android:paddingRight="10dip"
+                                android:text="采购商:"
                                 android:textColor="@color/bg_text"
                                 android:textSize="@dimen/size_14"/>
 
@@ -121,9 +137,9 @@
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="right|center_vertical"
+                                android:gravity="left|center_vertical"
                                 android:inputType="numberDecimal"
-                                android:paddingRight="10dip"
+                                android:paddingLeft="10dip"
                                 android:text="暂无"
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
@@ -137,9 +153,9 @@
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="left|center_vertical"
-                                android:paddingLeft="10dip"
-                                android:text="负责人"
+                                android:gravity="right|center_vertical"
+                                android:paddingRight="10dip"
+                                android:text="负责人:"
                                 android:textColor="@color/bg_text"
                                 android:textSize="@dimen/size_14"/>
 
@@ -149,9 +165,8 @@
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="right|center_vertical"
-                                android:inputType="numberDecimal"
-                                android:paddingRight="10dip"
+                                android:gravity="left|center_vertical"
+                                android:paddingLeft="10dip"
                                 android:text="暂无"
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
@@ -163,129 +178,114 @@
                             android:layout_height="1px"
                             android:background="@color/line_color"/>
 
-
                         <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="40dip"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dip"
+                            android:background="@color/light_gray"
                             android:orientation="horizontal">
-
 
                             <TextView
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="left|center_vertical"
-                                android:paddingLeft="10dip"
-                                android:text="单价(元)"
-                                android:textColor="@color/bg_text"
+                                android:gravity="center"
+                                android:text="产品"/>
+
+                            <View
+                                android:layout_width="1dip"
+                                android:layout_height="match_parent"
+                                android:background="@color/line_color"/>
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="单价(元)"/>
+
+                            <View
+                                android:layout_width="1dip"
+                                android:layout_height="match_parent"
+                                android:background="@color/line_color"/>
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="重量(斤)"/>
+
+                            <View
+                                android:layout_width="1dip"
+                                android:layout_height="match_parent"
+                                android:background="@color/line_color"/>
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="总价(元)"/>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dip"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/goodsName"
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="暂无"
+                                android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
 
+                            <View
+                                android:layout_width="1dip"
+                                android:layout_height="match_parent"
+                                android:background="@color/line_color"/>
 
                             <TextView
                                 android:id="@+id/price"
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="right|center_vertical"
-                                android:inputType="numberDecimal"
-                                android:paddingRight="10dip"
+                                android:gravity="center"
                                 android:text="暂无"
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
 
                             <View
-                                android:layout_width="1px"
+                                android:layout_width="1dip"
                                 android:layout_height="match_parent"
                                 android:background="@color/line_color"/>
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="left|center_vertical"
-                                android:paddingLeft="10dip"
-                                android:text="采收时间"
-                                android:textColor="@color/bg_text"
-                                android:textSize="@dimen/size_14"/>
-
-
-                            <TextView
-                                android:id="@+id/saletime"
-                                android:layout_width="0dip"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="right|center_vertical"
-                                android:inputType="numberDecimal"
-                                android:paddingRight="10dip"
-                                android:text="暂无"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/size_14"/>
-                        </LinearLayout>
-
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1px"
-                            android:background="@color/line_color"/>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1px"
-                            android:background="@color/line_color"/>
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="40dip"
-                            android:orientation="horizontal">
-
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="left|center_vertical"
-                                android:paddingLeft="10dip"
-                                android:text="重量(斤)"
-                                android:textColor="@color/bg_text"
-                                android:textSize="@dimen/size_14"/>
-
 
                             <TextView
                                 android:id="@+id/tv_planweight"
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="right|center_vertical"
-                                android:inputType="numberDecimal"
-                                android:paddingRight="10dip"
+                                android:gravity="center"
                                 android:text="暂无"
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
 
                             <View
-                                android:layout_width="1px"
+                                android:layout_width="1dip"
                                 android:layout_height="match_parent"
                                 android:background="@color/line_color"/>
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="left|center_vertical"
-                                android:paddingLeft="10dip"
-                                android:text="总价(元)"
-                                android:textColor="@color/bg_text"
-                                android:textSize="@dimen/size_14"/>
-
 
                             <TextView
                                 android:id="@+id/tv_plansumvalues"
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="right|center_vertical"
-                                android:inputType="numberDecimal"
-                                android:paddingRight="10dip"
+                                android:gravity="center"
                                 android:text="暂无"
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
@@ -297,6 +297,7 @@
                             android:layout_height="1px"
                             android:background="@color/line_color"/>
 
+
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="40dip"
@@ -307,9 +308,9 @@
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="left|center_vertical"
-                                android:paddingLeft="10dip"
-                                android:text="定金(元)"
+                                android:gravity="right|center_vertical"
+                                android:paddingRight="10dip"
+                                android:text="定金(元):"
                                 android:textColor="@color/bg_text"
                                 android:textSize="@dimen/size_14"/>
 
@@ -319,9 +320,9 @@
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="right|center_vertical"
+                                android:gravity="left|center_vertical"
                                 android:inputType="numberDecimal"
-                                android:paddingRight="10dip"
+                                android:paddingLeft="10dip"
                                 android:text="暂无"
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
@@ -336,9 +337,8 @@
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="left|center_vertical"
-                                android:paddingLeft="10dip"
-                                android:text="已付定金（元）"
+                                android:gravity="right|center"
+                                android:text="已付定金(元):"
                                 android:textColor="@color/bg_text"
                                 android:textSize="@dimen/size_14"/>
 
@@ -348,9 +348,9 @@
                                 android:layout_width="0dip"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="right|center_vertical"
+                                android:gravity="left|center_vertical"
                                 android:inputType="numberDecimal"
-                                android:paddingRight="10dip"
+                                android:paddingLeft="10dip"
                                 android:text="暂无"
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
@@ -367,29 +367,6 @@
                             android:orientation="horizontal">
 
 
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="left|center_vertical"
-                                android:paddingLeft="10dip"
-                                android:text="产品"
-                                android:textColor="@color/bg_text"
-                                android:textSize="@dimen/size_14"/>
-
-
-                            <TextView
-                                android:id="@+id/goodsName"
-                                android:layout_width="0dip"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="right|center_vertical"
-                                android:inputType="numberDecimal"
-                                android:paddingRight="10dip"
-                                android:text="暂无"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/size_14"/>
-
                             <View
                                 android:layout_width="1px"
                                 android:layout_height="match_parent"
@@ -401,7 +378,7 @@
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
                                 android:paddingLeft="10dip"
-                                android:text="发往城市"
+                                android:text="发往城市:"
                                 android:textColor="@color/bg_text"
                                 android:textSize="@dimen/size_14"/>
 
@@ -599,7 +576,7 @@
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
                                 android:paddingLeft="10dip"
-                                android:text="备注"
+                                android:text="备注:"
                                 android:textColor="@color/bg_text"
                                 android:textSize="@dimen/size_14"/>
 
@@ -722,9 +699,11 @@
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="10dip"
-                android:background="@color/white"
+                android:background="@color/color_topbar"
                 android:gravity="left|center"
+                android:paddingLeft="20dip"
                 android:text="承包户产量"
+                android:textColor="@color/white"
                 android:textSize="@dimen/size_16"/>
 
             <LinearLayout
@@ -777,6 +756,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/white"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -791,7 +771,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="承包户"/>
+                                android:text="承包户"
+                                android:textColor="@color/color_topbar"/>
 
 
                         </LinearLayout>
@@ -805,6 +786,7 @@
                             android:layout_width="60dip"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:background="@color/white"
                             android:orientation="vertical">
 
                             <TextView
@@ -812,7 +794,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="计划株树"/>
+                                android:text="计划株树"
+                                android:textColor="@color/color_topbar"/>
 
 
                         </LinearLayout>
@@ -833,7 +816,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="实际株数"/>
+                                android:text="实际株数"
+                                android:textColor="@color/color_topbar"/>
 
                         </LinearLayout>
 
@@ -854,7 +838,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_toLeftOf="@+id/lines"
                                 android:gravity="center"
-                                android:text="总净重"/>
+                                android:text="总净重"
+                                android:textColor="@color/color_topbar"/>
 
                             <View
                                 android:id="@+id/lines"
@@ -900,9 +885,11 @@
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="10dip"
-                android:background="@color/white"
+                android:background="@color/color_topbar"
                 android:gravity="center|left"
-                android:text="销售情况明细"
+                android:paddingLeft="20dip"
+                android:text="结算单情况"
+                android:textColor="@color/white"
                 android:textSize="@dimen/size_16"/>
 
             <RelativeLayout
@@ -932,8 +919,8 @@
                         android:layout_height="fill_parent"
                         android:background="@color/white"
                         android:gravity="center"
-                        android:text=""
-                        android:textColor="@color/bg_text"
+                        android:text="结算单"
+                        android:textColor="@color/color_topbar"
                         android:textSize="15sp"/>
 
                     <View
@@ -972,7 +959,7 @@
                         android:background="@color/white"
                         android:gravity="center"
                         android:text="合计"
-                        android:textColor="@color/bg_text"
+                        android:textColor="@color/color_topbar"
                         android:textSize="15sp"
                         android:visibility="gone"/>
                 </LinearLayout>
@@ -987,7 +974,7 @@
                 <ListView
                     android:id="@+id/hlistview_scroll_list"
                     android:layout_width="fill_parent"
-                    android:layout_height="300dip"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/line_middle"
                     android:layout_marginBottom="42dip"
                     android:layout_marginLeft="1px"
@@ -1017,7 +1004,7 @@
                         android:background="@color/white"
                         android:gravity="center"
                         android:text="合计"
-                        android:textColor="@color/bg_text"
+                        android:textColor="@color/color_topbar"
                         android:textSize="15sp"/>
 
                     <View

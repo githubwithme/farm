@@ -24,6 +24,7 @@ import com.farm.adapter.PG_AllOrderAdapter_New;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.AllType;
+import com.farm.bean.OrderPlanBean;
 import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
@@ -61,7 +62,7 @@ public class PG_AllOrderFragment_New extends Fragment
     //    private NCZ_OrderAdapter listAdapter;
     private PG_AllOrderAdapter_New listAdapter;
     private int listSumData;
-    private List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
+    private List<OrderPlanBean> listData = new ArrayList<OrderPlanBean>();
     private AppContext appContext;
     private View list_footer;
     private TextView list_foot_more;
@@ -133,30 +134,7 @@ public class PG_AllOrderFragment_New extends Fragment
     };
 
 
-    private void getNewSaleList_test()
-    {
-        listData = FileHelper.getAssetsData(getActivity(), "getOrderList", SellOrder_New.class);
-        if (listData != null)
-        {
-//            listAdapter = new NCZ_NotpayAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
-            listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData, AppContext.UPDATEMESSAGE_FARMMANAGER);
-            lv.setAdapter(listAdapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-            {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                {
-                    commembertab commembertab = AppContext.getUserInfo(getActivity());
-                    AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-//                    Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                    Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
-                    intent.putExtra("bean", listData.get(position));
-                    getActivity().startActivity(intent);
-                }
-            });
-        }
 
-    }
 
     private void getAllOrders()
     {
@@ -167,7 +145,8 @@ public class PG_AllOrderFragment_New extends Fragment
         params.addQueryStringParameter("buyer", cgsId);
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("payStatus", "-1");
-        params.addQueryStringParameter("action", "MainPeople_getAllOrderWithStatus");
+        params.addQueryStringParameter("action", "MAinPeople_getOrderPlan");
+//        params.addQueryStringParameter("action", "MainPeople_getAllOrderWithStatus");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -180,8 +159,9 @@ public class PG_AllOrderFragment_New extends Fragment
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        Iterator<SellOrder_New> it = listData.iterator();
+//                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+                        listData = JSON.parseArray(result.getRows().toJSONString(), OrderPlanBean.class);
+        /*                Iterator<SellOrder_New> it = listData.iterator();
                         while (it.hasNext())
                         {
                             String value = it.next().getSelltype();
@@ -189,10 +169,10 @@ public class PG_AllOrderFragment_New extends Fragment
                             {
                                 it.remove();
                             }
-                        }
-                        listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+                        }*/
+                        listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData.get(0).getSellOrderList(), AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+   /*                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -202,11 +182,11 @@ public class PG_AllOrderFragment_New extends Fragment
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }
-                        });
+                        });*/
 
                     } else
                     {
-                        listData = new ArrayList<SellOrder_New>();
+                        listData = new ArrayList<OrderPlanBean>();
                     }
 
                 } else

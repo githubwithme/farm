@@ -310,14 +310,6 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
 
             //数据添加
 
-            if (sellOrder_new.getCarNumber().equals(""))
-            {
-                listItemView.tv_car.setText("0车");
-            } else
-            {
-                listItemView.tv_car.setText(sellOrder_new.getCarNumber() + "车");
-            }
-
             listItemView.tv_buyer.setText(sellOrder_new.getBuyersName());
             listItemView.tv_orderstate.setText(sellOrder_new.getSelltype());
             listItemView.tv_mainpeople.setText(sellOrder_new.getMainPeople());

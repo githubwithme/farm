@@ -54,6 +54,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
         android:orientation="vertical">
 
 
@@ -67,16 +69,21 @@
                 android:id="@+id/tv_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:layout_marginTop="20dip"
+                android:background="@color/color_topbar"
                 android:orientation="vertical">
 
-                <TextView
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip">  <TextView
+                    android:textSize="16dip"
                     android:layout_width="wrap_content"
                     android:layout_height="40dip"
                     android:layout_marginLeft="20dip"
                     android:gravity="center|left"
-                    android:text="一、订单"/>
+                    android:text="采收时间"
+                    android:textColor="@color/white"/>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -89,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                   >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -918,22 +925,25 @@
                         android:text="添加承包户"
                         android:visibility="gone"/>
                 </RelativeLayout>
+
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
                     android:layout_marginRight="10dip"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:background="@color/bg_main"/>
 
                 </LinearLayout>
+
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="40dip">
+                    android:layout_height="40dip"
+                    android:orientation="horizontal">
 
 
                     <View
@@ -943,18 +953,18 @@
 
                     <LinearLayout
 
-                        android:orientation="vertical"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
                         <TextView
-                            android:text="承包区"
-                            android:textSize="15dip"
-                            android:layout_weight="1.6"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center"/>
-
+                            android:layout_weight="1.6"
+                            android:gravity="center"
+                            android:text="承包区"
+                            android:textSize="15dip"/>
 
 
                     </LinearLayout>
@@ -966,26 +976,26 @@
                         android:background="@color/bg_main"/>
 
 
-
                     <LinearLayout
-                        android:background="@color/white"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
                         <LinearLayout
 
-                            android:layout_weight="1"
-                            android:orientation="vertical"
                             android:layout_width="60dip"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
                             >
+
                             <TextView
                                 android:id="@+id/tv_address"
-                                android:gravity="center"
-                                android:text="承包户"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"/>
-
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="承包户"/>
 
 
                         </LinearLayout>
@@ -996,17 +1006,17 @@
                             android:background="@color/bg_main"/>
 
                         <LinearLayout
-                            android:layout_weight="1"
-                            android:orientation="vertical"
                             android:layout_width="60dip"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/tv_plan"
-                                android:gravity="center"
-                                android:text="实际株树"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"/>
-
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="实际株树"/>
 
 
                         </LinearLayout>
@@ -1017,72 +1027,73 @@
                             android:background="@color/bg_main"/>
 
                         <LinearLayout
-                            android:layout_weight="1"
-                            android:orientation="vertical"
                             android:layout_width="60dip"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/tv_actual"
-                                android:gravity="center"
-                                android:text="正品件数"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"/>
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="正品件数"/>
 
                         </LinearLayout>
+
                         <View
                             android:layout_width="1px"
                             android:layout_height="match_parent"
                             android:background="@color/bg_main"/>
 
                         <RelativeLayout
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
                             android:layout_width="60dip"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:layout_toLeftOf="@+id/lines"
                                 android:id="@+id/tv_jingzhong"
-                                android:gravity="center"
-                                android:text="次品件数"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"/>
+                                android:layout_height="match_parent"
+                                android:layout_toLeftOf="@+id/lines"
+                                android:gravity="center"
+                                android:text="次品件数"/>
 
                             <View
-                                android:layout_alignParentRight="true"
                                 android:id="@+id/lines"
                                 android:layout_width="3px"
                                 android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
                                 android:background="@color/bg_main"/>
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
                             android:layout_width="60dip"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:gravity="center"
-                                android:text="总净重"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"/>
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="总净重"/>
 
                             <View
-                                android:layout_alignParentRight="true"
                                 android:layout_width="3px"
                                 android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
                                 android:background="@color/bg_main"/>
                         </RelativeLayout>
                     </LinearLayout>
 
 
                     <View
-                        android:layout_marginRight="1dip"
                         android:layout_width="3px"
                         android:layout_height="match_parent"
+                        android:layout_marginRight="1dip"
                         android:background="@color/bg_main"/>
-
 
 
                 </LinearLayout>
@@ -1091,6 +1102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/bg_main"/>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
@@ -1730,7 +1742,6 @@
                     android:background="@color/bg_main"/>
 
                 <Button
-                    android:visibility="gone"
                     android:id="@+id/button_save"
                     android:layout_width="match_parent"
                     android:layout_height="45dip"
@@ -1739,7 +1750,8 @@
                     android:gravity="center"
                     android:text="保存"
                     android:textColor="@color/bg_text"
-                    android:textSize="@dimen/size_14"/>
+                    android:textSize="@dimen/size_14"
+                    android:visibility="gone"/>
 
                 <View
                     android:layout_width="match_parent"

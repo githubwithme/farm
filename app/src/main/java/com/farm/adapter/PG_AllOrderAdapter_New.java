@@ -153,9 +153,9 @@ public class PG_AllOrderAdapter_New extends BaseAdapter
 
 
             //车辆
-            listItemView.tv_readynumber.setText(sellOrder.getReadyPlate() + "车;");
+/*            listItemView.tv_readynumber.setText(sellOrder.getReadyPlate() + "车;");
             listItemView.tv_notreadynumber.setText(sellOrder.getNotReadyPlate() + "车");
-            listItemView.tv_car.setText("共" + (Integer.valueOf(sellOrder.getReadyPlate()) + Integer.valueOf(sellOrder.getNotReadyPlate())) + "车;");
+            listItemView.tv_car.setText("共" + (Integer.valueOf(sellOrder.getReadyPlate()) + Integer.valueOf(sellOrder.getNotReadyPlate())) + "车;");*/
 //            if (sellOrder.getFreeDeposit().equals("1"))
 //            {
 //                listItemView.ll_undeposit.setVisibility(View.VISIBLE);
@@ -172,10 +172,10 @@ public class PG_AllOrderAdapter_New extends BaseAdapter
 //            }
             if (sellOrder.getFreeFinalPay().equals("1"))
             {
-                listItemView.cb_AllowRelease.setSelected(true);
+                listItemView.cb_AllowRelease.setChecked(true);
             } else
             {
-                listItemView.cb_AllowRelease.setSelected(false);
+                listItemView.cb_AllowRelease.setChecked(false);
             }
             listItemView.tv_orderstate.setText(sellOrder.getSelltype());
             listItemView.tv_parkname.setText(sellOrder.getParkname());
@@ -231,9 +231,12 @@ public class PG_AllOrderAdapter_New extends BaseAdapter
             if (sellOrder.getFreeDeposit().equals("1"))
             {
                 listItemView.tv_depositStatus.setText("免付定金");
-            } else
+            } else if (!sellOrder.getDeposit().equals(""))
             {
-                listItemView.tv_depositStatus.setText("未知");
+                listItemView.tv_depositStatus.setText("已付定金");
+            }else
+            {
+                listItemView.tv_depositStatus.setText("未付定金");
             }
 //            listItemView.btn_changetime.setTag(R.id.tag_kg, listItemView);
 //            listItemView.btn_changetime.setTag(R.id.tag_hg, sellOrder);
