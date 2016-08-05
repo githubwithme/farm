@@ -85,8 +85,7 @@
                 android:background="@color/white"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:orientation="vertical"
-                android:visibility="visible">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -336,7 +335,6 @@
                 </LinearLayout>
 
 
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
@@ -458,6 +456,7 @@
                         android:textColorHint="@color/text_table_horizontitle"
                         android:textSize="14sp"/>
                 </LinearLayout>
+
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="50dip"
@@ -875,9 +874,8 @@
                     <TextView
                         android:id="@+id/tv_product_tip"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:paddingLeft="10dip"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:text="销售明细"
                         android:textColor="@color/white"
                         android:textSize="16sp"/>
@@ -899,7 +897,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/gray"/>
+                    android:background="@color/line_color"/>
 
                 <ListView
                     android:id="@+id/lv"
@@ -907,8 +905,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="25dip"
                     android:background="@color/white"
-                    android:divider="@color/light_gray"
-                    android:dividerHeight="7dip"/>
+                    android:divider="@color/transparent"
+                    android:dividerHeight="0dip"/>
             </LinearLayout>
 
 

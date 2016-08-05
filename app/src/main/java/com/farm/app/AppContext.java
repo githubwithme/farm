@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.AudioManager;
+import android.support.multidex.MultiDex;
 import android.widget.Toast;
 
 import com.farm.bean.commembertab;
@@ -87,6 +88,7 @@ public class AppContext extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
         AppException appException = AppException.getInstance();
         // 注册crashHandler
         appException.init(getApplicationContext());

@@ -47,6 +47,9 @@ public class DialogFragment_WaitTip extends DialogFragment
     Button btn_refresh;
     @ViewById
     Button btn_close;
+    @ViewById
+    TextView tv_note;
+
 
     @Click
     void btn_refresh()
@@ -96,7 +99,6 @@ public class DialogFragment_WaitTip extends DialogFragment
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;   //设置宽度充满屏幕
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(lp);
-
 
         dialog.setOnKeyListener(new DialogInterface.OnKeyListener()
         {

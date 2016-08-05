@@ -102,7 +102,7 @@ public class NCZ_ParkSaleActivity extends Activity implements CustomHorizontalSc
     com.farm.bean.commembertab commembertab;
     MyDialog myDialog;
     Fragment mContent = new Fragment();
-//    @ViewById
+    //    @ViewById
 //    LinearLayout cz_startdl;
     @ViewById
     RelativeLayout rl_view;
@@ -405,57 +405,53 @@ public class NCZ_ParkSaleActivity extends Activity implements CustomHorizontalSc
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            if (convertView == null)
+
+            convertView = LayoutInflater.from(NCZ_ParkSaleActivity.this).inflate(R.layout.areasale_scrolladapter_item, null);
+            if (position % 2 == 0)
             {
-                convertView = LayoutInflater.from(NCZ_ParkSaleActivity.this).inflate(R.layout.areasale_scrolladapter_item, null);
-                if (position % 2 == 0)
-                {
-                    convertView.setBackgroundResource(R.color.bg_table_row);
-                } else
-                {
-                    convertView.setBackgroundResource(R.color.white);
-                }
-
-                listItemView = new ListItemView();
-                listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
-                listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
-                listItemView.item_titlev.getLayoutParams().width = (screenWidth);
-                listItemView.item_total.getLayoutParams().width = (screenWidth);
-                LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-                listItemView.item_titlev.setText(listData.get(position).getBatchTime());
-                int totalnumber = 0;
-                List<parktab> list = listData.get(position).getParklist();
-                for (int j = 0; j < list.size(); j++)
-                {
-                    totalnumber = totalnumber + Integer.valueOf(list.get(j).getNumber());
-                }
-                listItemView.item_total.setText(String.valueOf(totalnumber));
-
-                for (int i = 0; i < listData.get(position).getParklist().size(); i++)
-                {
-                    View view = LayoutInflater.from(NCZ_ParkSaleActivity.this).inflate(R.layout.areasale_dataitem, null);
-                    listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
-                    listItemView.tv_data.setText(listData.get(position).getParklist().get(i).getNumber());
-                    listItemView.tv_data.getLayoutParams().width = (screenWidth);
-                    ll_middle.addView(view);
-
-                    listItemView.tv_data.requestFocusFromTouch();
-                    listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getParklist().get(i).getParkId());
-                    listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
-                    listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getParklist().get(i).getNumber());
-                    listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getParklist().get(i).getparkName());
-                    listItemView.tv_data.setOnClickListener(clickListener);
-
-                }
-                // 第一次初始化的时候装进来
-                CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
-                addHViews(customHorizontalScrollView);
-                customHorizontalScrollView.setCuttomOntouch(customOntouch);
-//            addHViews((CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll));
+                convertView.setBackgroundResource(R.color.bg_table_row);
             } else
             {
+                convertView.setBackgroundResource(R.color.white);
+            }
+
+            listItemView = new ListItemView();
+            listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
+            listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
+            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
+            listItemView.item_total.getLayoutParams().width = (screenWidth);
+            LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
+            listItemView.item_titlev.setText(listData.get(position).getBatchTime());
+            int totalnumber = 0;
+            List<parktab> list = listData.get(position).getParklist();
+            for (int j = 0; j < list.size(); j++)
+            {
+                totalnumber = totalnumber + Integer.valueOf(list.get(j).getNumber());
+            }
+            listItemView.item_total.setText(String.valueOf(totalnumber));
+
+            for (int i = 0; i < listData.get(position).getParklist().size(); i++)
+            {
+                View view = LayoutInflater.from(NCZ_ParkSaleActivity.this).inflate(R.layout.areasale_dataitem, null);
+                listItemView.tv_data = (TextView) view.findViewById(R.id.tv_data);
+                listItemView.tv_data.setText(listData.get(position).getParklist().get(i).getNumber());
+                listItemView.tv_data.getLayoutParams().width = (screenWidth);
+                ll_middle.addView(view);
+
+                listItemView.tv_data.requestFocusFromTouch();
+                listItemView.tv_data.setTag(R.id.tag_areaid, listData.get(position).getParklist().get(i).getParkId());
+                listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position).getBatchTime());
+                listItemView.tv_data.setTag(R.id.tag_number, listData.get(position).getParklist().get(i).getNumber());
+                listItemView.tv_data.setTag(R.id.tag_areaname, listData.get(position).getParklist().get(i).getparkName());
+                listItemView.tv_data.setOnClickListener(clickListener);
 
             }
+            // 第一次初始化的时候装进来
+            CustomHorizontalScrollView_Allitem customHorizontalScrollView = (CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll);
+            addHViews(customHorizontalScrollView);
+            customHorizontalScrollView.setCuttomOntouch(customOntouch);
+//            addHViews((CustomHorizontalScrollView_Allitem) convertView.findViewById(R.id.item_chscroll_scroll));
+
 
             return convertView;
         }

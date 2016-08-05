@@ -74,7 +74,7 @@ public class NCZ_ContractSaleActivity extends Activity
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
+                    if (result.getRows().size() >0)
                     {
                         listNewData = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
                         adapter_contractSale_ncz = new Adapter_ContractSale_NCZ(NCZ_ContractSaleActivity.this, listNewData);
