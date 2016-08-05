@@ -213,9 +213,9 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
             }
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.tv_mainpeople.setText(sellOrder.getMainPeople());
-            listItemView.tv_settlementnumber.setText(sellOrder.getSettlementNumber());
-            listItemView.tv_settlement_successnumber.setText(sellOrder.getPaidSettlementNumber());
-            listItemView.tv_waitforsettlementnumber.setText(sellOrder.getNotPaySettlementNumber());
+            listItemView.tv_settlementnumber.setText("以上报"+sellOrder.getSettlementNumber()+"份;");
+            listItemView.tv_settlement_successnumber.setText(sellOrder.getPaidSettlementNumber()+"份");
+            listItemView.tv_waitforsettlementnumber.setText(sellOrder.getNotPaySettlementNumber()+"份");
 //            if (sellOrder.getUnpaid().equals(""))
 //            {
 //                listItemView.tv_unpaid.setText("待结算0元");
@@ -230,6 +230,8 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
                 public void onClick(View v)
                 {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    AppContext.eventStatus(context, "8", sellOrder_new.getUuid(), commembertab.getId());
                     Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
                     intent.putExtra("bean", sellOrder_new);
                     context.startActivity(intent);

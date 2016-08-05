@@ -112,6 +112,30 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
     TextView tv_note;
 
     @Click
+    void tv_clicks()
+    {
+        if (ll_detail.isShown())
+        {
+            ll_detail.setVisibility(View.GONE);
+        } else
+        {
+            ll_detail.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Click
+    void saletime()
+    {
+        if (ll_detail.isShown())
+        {
+            ll_detail.setVisibility(View.GONE);
+        } else
+        {
+            ll_detail.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Click
     void is_setveiw()
     {
         if (ll_detail.isShown())
@@ -135,7 +159,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
     private void showData()
     {
         buyers.setText(sellOrder_new.getBuyersName());
-        mainPepole.setText(sellOrder_new.getMainPepole());
+        mainPepole.setText(sellOrder_new.getMainPeople());
         price.setText(sellOrder_new.getPrice());
         if (!sellOrder_new.getSaletime().equals(""))
         {
@@ -641,6 +665,8 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
 
             Intent intent = new Intent(NCZ_All_OneOrder_Detail.this, NCZ_Look_JSD_Detail_.class);
             intent.putExtra("bean", sellOrder_news);
+            intent.putExtra("goodsname", sellOrder_new.getProduct());
+
             startActivity(intent);
 
         }

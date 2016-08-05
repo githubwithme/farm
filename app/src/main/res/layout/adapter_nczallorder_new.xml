@@ -306,7 +306,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="共3车；"
+                        android:text="共-1车；"
                         android:textColor="@color/titlebar_top"
                         android:textSize="12sp"/>
 
@@ -329,7 +329,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="1车；"
+                        android:text="-1车；"
                         android:textColor="@color/text_table_horizontitle"
                         android:textSize="12sp"/>
 
@@ -352,7 +352,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="2车"
+                        android:text="-1车"
                         android:textColor="@color/text_table_horizontitle"
                         android:textSize="12sp"/>
 

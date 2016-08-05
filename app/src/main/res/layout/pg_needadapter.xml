@@ -448,7 +448,18 @@
                     android:layout_marginLeft="5dip"
                     android:layout_toRightOf="@+id/tv_mainpeople"
                     android:background="@mipmap/icon_phone" />/>
-
+                <Button
+                    android:layout_marginRight="5dip"
+                    android:layout_toLeftOf="@+id/btn_showdetail"
+                    android:id="@+id/btn_updatedetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/titlebar_top"
+                    android:gravity="center"
+                    android:minWidth="60dip"
+                    android:text="审批详情"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
                 <Button
                     android:id="@+id/btn_showdetail"
                     android:layout_width="wrap_content"
@@ -458,7 +469,7 @@
                     android:background="@color/titlebar_top"
                     android:gravity="center"
                     android:minWidth="60dip"
-                    android:text="查看详情"
+                    android:text="订单详情"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 

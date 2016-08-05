@@ -17,10 +17,12 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,6 +79,10 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
     List<parktab> list_park = null;
     String parkid;
     @ViewById
+    FrameLayout fl_table;
+    @ViewById
+    RelativeLayout rl_NotStartBreakoff;
+    @ViewById
     CustomHorizontalScrollView_Allitem item_scroll_title;
 //    @ViewById
 //    CustomHorizontalScrollView_Allitem totalScroll;
@@ -108,8 +114,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
     MyDialog myDialog;
     Fragment mContent = new Fragment();
 
-    @ViewById
-    TextView tv_nodatatip;
     List<Map<String, String>> uuids;
     List<SellOrderDetail_New> list_sell;
 
@@ -169,12 +173,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
         NCZ_SelectProduct.this.startActivity(intent);
     }
 
-    @Click
-    void rl_tab()
-    {
-        showPop_park();
-    }
-
 
     @AfterViews
     void afterOncreate()
@@ -195,12 +193,24 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_NCZ_XL_REFRESH);
         registerReceiver(receiver_update, intentfilter_update);
+
+        IntentFilter intentfilter_finsh = new IntentFilter(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
+        registerReceiver(intentfilter_finshs, intentfilter_finsh);
         uuid = java.util.UUID.randomUUID().toString();
         commembertab = AppContext.getUserInfo(NCZ_SelectProduct.this);
         parkid = getIntent().getStringExtra("parkid");
         name = getIntent().getStringExtra("parkname");
     }
 
+    BroadcastReceiver intentfilter_finshs = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            finish();
+        }
+    };
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -232,7 +242,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
             }
             tv_top_left.getLayoutParams().width = (screenWidth);
             initViews();
-            tv_nodatatip.setVisibility(View.GONE);
         }
 
     }
@@ -283,61 +292,6 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 
     }
 
-
-    public void showPop_park()
-    {
-        LayoutInflater layoutInflater = (LayoutInflater) NCZ_SelectProduct.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        pv_tab = layoutInflater.inflate(R.layout.popup_yq, null);// 外层
-        pv_tab.setOnKeyListener(new View.OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing()))
-                {
-                    pw_tab.dismiss();
-//                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
-                    return true;
-                }
-                return false;
-            }
-        });
-        pv_tab.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_tab.isShowing())
-                {
-                    pw_tab.dismiss();
-//                    iv_dowm_tab.setImageResource(R.drawable.ic_down);
-                }
-                return false;
-            }
-        });
-        pw_tab = new PopupWindow(pv_tab, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-        pw_tab.showAsDropDown(view_line, 0, 0);
-        pw_tab.setOutsideTouchable(true);
-
-
-        ListView listview = (ListView) pv_tab.findViewById(R.id.lv_yq);
-        adapter_park = new Adapter_Park(NCZ_SelectProduct.this, parklist);
-        listview.setAdapter(adapter_park);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int postion, long arg3)
-            {
-                pw_tab.dismiss();
-                tv_title.setText(list_park.get(postion).getparkName());
-                parkid = list_park.get(postion).getid();
-                //        getBatchTimeOfPark();
-//                getNewSaleList_test();
-                getNCZ_getAllContractSaleData();
-            }
-        });
-    }
-
     public void getNCZ_getAllContractSaleData()
     {
         RequestParams params = new RequestParams();
@@ -358,6 +312,8 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 {
                     if (result.getRows().size() > 0)
                     {
+                        rl_NotStartBreakoff.setVisibility(View.GONE);
+                        fl_table.setVisibility(View.VISIBLE);
                         listData = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
                         DensityUtil densityUtil = new DensityUtil(NCZ_SelectProduct.this);
                         screenWidth = densityUtil.getScreenWidth();
@@ -377,11 +333,12 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
 //                        tv_bottom_left.getLayoutParams().width = (screenWidth);
 //                        alltoatal.getLayoutParams().width = (screenWidth);
                         initViews();
-                        tv_nodatatip.setVisibility(View.GONE);
 
                     } else
                     {
                         listData = new ArrayList<contractTab>();
+                        rl_NotStartBreakoff.setVisibility(View.VISIBLE);
+                        fl_table.setVisibility(View.GONE);
                     }
 
                 } else
@@ -842,7 +799,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                     case R.id.btn_sure:
 //                        myDialog.dismiss();
                         deleNewSaleAddsalefor();
-                        DeletesellOrderSettlement();
+//                        DeletesellOrderSettlement();
                         Toast.makeText(NCZ_SelectProduct.this, "已取消", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent();
                         intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
@@ -1008,6 +965,7 @@ public class NCZ_SelectProduct extends Activity implements CustomHorizontalScrol
                 pw_tab.dismiss();
                 tv_parkname.setText(parklist.get(postion).getParkName() + "库存量");
                 parkid = parklist.get(postion).getId();
+                getNCZ_getAllContractSaleData();
             }
         });
     }

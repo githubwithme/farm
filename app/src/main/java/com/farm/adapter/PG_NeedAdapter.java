@@ -26,10 +26,12 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.commembertab;
 import com.farm.ui.NCZ_All_OneOrder_Detail_;
 import com.farm.ui.NCZ_DD_SH_Detail_;
 import com.farm.ui.NCZ_EditOrder_;
 import com.farm.ui.PG_EditOrder_;
+import com.farm.ui.PG_Need_Orderdetail_;
 import com.farm.ui.PG_SP_EditOreder_;
 import com.farm.widget.CircleImageView;
 import com.farm.widget.CustomDialog_CallTip;
@@ -83,6 +85,7 @@ public class PG_NeedAdapter extends BaseAdapter
         public TextView tv_car;
         public TextView tv_readynumber;
         public TextView tv_notreadynumber;
+        public Button btn_updatedetail;
     }
 
     public PG_NeedAdapter(Context context, List<SellOrder_New> data, String broadcast)
@@ -136,6 +139,7 @@ public class PG_NeedAdapter extends BaseAdapter
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
             listItemView.tv_notreadynumber = (TextView) convertView.findViewById(R.id.tv_notreadynumber);
+            listItemView.btn_updatedetail = (Button) convertView.findViewById(R.id.btn_updatedetail);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -208,6 +212,27 @@ public class PG_NeedAdapter extends BaseAdapter
                 context.startActivity(intent);
             }
         });
+        listItemView.btn_updatedetail.setTag(R.id.tag_eventlisttp, sellOrder);
+        listItemView.btn_updatedetail.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+                SellOrder_New sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_eventlisttp);
+                commembertab commembertab = AppContext.getUserInfo(context);
+                AppContext.eventStatus(context, "8", sellOrdesr.getUuid(), commembertab.getId());
+                Intent intent = new Intent(context, PG_Need_Orderdetail_.class);
+                intent.putExtra("bean",sellOrdesr );
+                context.startActivity(intent);
+            }
+        });
+        /*        commembertab commembertab = AppContext.getUserInfo(getActivity());
+        AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
+        Intent intent = new Intent(getActivity(), PG_Need_Orderdetail_.class);
+        intent.putExtra("bean", listData.get(position));
+        getActivity().startActivity(intent);*/
+
         //片管修改订单
         listItemView.btn_editorder.setTag(R.id.tag_danxuan, sellOrder);
         listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
@@ -234,6 +259,7 @@ public class PG_NeedAdapter extends BaseAdapter
                 showDeleteTip(sellOrdesr.getUuid());
             }
         });
+
 
 
         listItemView.tv_buyer.setText(sellOrder.getPurchaName());

@@ -54,7 +54,7 @@ public class NCZ_NeedApproveOrderFragment extends Fragment {
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
-    String parkname = "";
+    String parkname = "-1";
     String parkId = "-1";
     String cpname = "-1";
     String cgsname = "";

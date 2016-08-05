@@ -334,6 +334,7 @@ public class Charge_UpdateSettlement extends Activity
         params.addQueryStringParameter("qualityNetWeight", mSellOrder.getQualityNetWeight());
         params.addQueryStringParameter("defectWaterWeight", mSellOrder.getDefectNetWeight());
         params.addQueryStringParameter("defectNetWeight", mSellOrder.getDefectNetWeight());
+        params.addQueryStringParameter("isReady","True");
         params.addQueryStringParameter("action", "changesellOrderSettlement");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

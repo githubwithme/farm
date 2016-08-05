@@ -78,7 +78,7 @@
                         android:background="@color/color_topbar">
 
                         <TextView
-
+                            android:id="@+id/tv_clicks"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="20dip"
@@ -240,7 +240,6 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:paddingRight="10dip"
                                 android:text="暂无"
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
@@ -256,7 +255,6 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:paddingRight="10dip"
                                 android:text="暂无"
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
@@ -272,7 +270,6 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:paddingRight="10dip"
                                 android:text="暂无"
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
@@ -288,7 +285,6 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:paddingRight="10dip"
                                 android:text="暂无"
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/size_14"/>
@@ -885,12 +881,12 @@
                 android:id="@+id/tcss"
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
-               android:paddingLeft="20dip"
-                android:layout_marginRight="10dip"
                 android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
                 android:layout_marginTop="10dip"
                 android:background="@color/color_topbar"
                 android:gravity="center|left"
+                android:paddingLeft="20dip"
                 android:text="结算单情况"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_16"/>

@@ -26,6 +26,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
+import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.farm.ui.JSD_Detail_;
 import com.farm.ui.NCZ_All_OneOrder_Detail_;
@@ -75,7 +76,6 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
         public TextView tv_orderstate;
         public TextView tv_product;
         public TextView tv_depositStatus;
-        public TextView tv_car;
         public Button btn_cancleorder;
         public View view_cardetail;
         public Button btn_editorder;
@@ -88,6 +88,10 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
         public View view_mainpeople_call;
         public View view_buyer_call;
 //        public LinearLayout ll_buyer;
+
+        public TextView tv_car;
+        public TextView tv_readynumber;
+        public TextView tv_notreadynumber;
     }
 
     public PG_WaitForHarvestAdapter(Context context, List<SellOrder_New> data, String broadcast)
@@ -126,7 +130,6 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
             convertView = listContainer.inflate(R.layout.adapter_pgwaitforharvest, null);
             listItemView = new ListItemView();
             // 获取控件对象
-            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_depositStatus = (TextView) convertView.findViewById(R.id.tv_depositStatus);
             listItemView.tv_parkname = (TextView) convertView.findViewById(R.id.tv_parkname);
             listItemView.tv_preparestatus = (TextView) convertView.findViewById(R.id.tv_preparestatus);
@@ -143,45 +146,24 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
             listItemView.view_mainpeople_call = (View) convertView.findViewById(R.id.view_mainpeople_call);
             listItemView.view_buyer_call = (View) convertView.findViewById(R.id.view_buyer_call);
-//            listItemView.ll_car = (LinearLayout) convertView.findViewById(R.id.ll_car);
-//            listItemView.ll_undeposit = (LinearLayout) convertView.findViewById(R.id.ll_undeposit);
-//            listItemView.ll_buyer = (LinearLayout) convertView.findViewById(R.id.ll_buyer);
+
+            listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
+            listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
+            listItemView.tv_notreadynumber = (TextView) convertView.findViewById(R.id.tv_notreadynumber);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
 
-//            listItemView.ll_buyer.setTag(R.id.tag_fi,sellOrder.getBuyersPhone());
-//            listItemView.ll_buyer.setOnClickListener(new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    String phone = (String) v.getTag(R.id.tag_fi);
-//                    showDialog_addsaleinfo(phone);
-//                }
-//            });
+            //车辆
+            listItemView.tv_readynumber.setText(sellOrder.getReadyPlate() + "车;");
+            listItemView.tv_notreadynumber.setText(sellOrder.getNotReadyPlate() + "车");
+            listItemView.tv_car.setText("共" + (Integer.valueOf(sellOrder.getReadyPlate()) + Integer.valueOf(sellOrder.getNotReadyPlate())) + "车;");
+
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.tv_parkname.setText(sellOrder.getParkname());
             listItemView.tv_mainpeople.setText(sellOrder.getMainPeople());
             listItemView.tv_car.setText(sellOrder.getCarNumber());
-//            listItemView.ll_car.setTag(R.id.tag_bean, sellOrder);
-//            listItemView.ll_car.setTag(R.id.tag_text, listItemView.tv_car);
-//            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
-//                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
-//                    JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
-//                    List<String> list = new ArrayList<String>();
-//                    for (int i = 0; i < jsonArray.size(); i++)
-//                    {
-//                        list.add(jsonArray.getString(i));
-//                    }
-//                    showDialog_carNumber(list,sellOrder_new);
-//                }
-//            });
+
             if (sellOrder.getFreeDeposit().equals("1"))
             {
                 listItemView.tv_depositStatus.setText("免付定金");
@@ -194,6 +176,8 @@ public class PG_WaitForHarvestAdapter extends BaseAdapter
                 @Override
                 public void onClick(View v) {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    AppContext.eventStatus(context, "8", sellOrder_new.getUuid(), commembertab.getId());
                     Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
                     intent.putExtra("bean", sellOrder_new);
                     context.startActivity(intent);

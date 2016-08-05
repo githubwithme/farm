@@ -214,6 +214,7 @@ public class Charge_Settlement extends Activity
         sellOrder.setCarryPrice(by_nc_danjia.getText().toString());//搬运单价
         sellOrder.setContractorId(bzId);
         sellOrder.setPickId(byId);
+        sellOrder.setIsReady("True");
         updatesellOrderSettlement(sellOrder);
     }
 

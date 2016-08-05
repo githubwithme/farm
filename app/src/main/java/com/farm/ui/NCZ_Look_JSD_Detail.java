@@ -27,6 +27,8 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.ncz_look_jsd_newdetail)
 public class NCZ_Look_JSD_Detail extends Activity
 {
+
+    String goodsnames;
     NCZ_Look_JSD_Adapter ncz_look_jsd_adapter;
     @ViewById
     TextView zp_jingzhong;
@@ -123,6 +125,31 @@ public class NCZ_Look_JSD_Detail extends Activity
 
     SellOrder_New sellOrder_new;
 
+    @ViewById
+    LinearLayout cbh_isshow;
+
+    @ViewById
+    TextView goodsname;
+    @ViewById
+    TextView goodsname2;
+    @ViewById
+    TextView bz_nc_danjia1;
+    @ViewById
+    TextView jsd_zongjianshu1;
+
+
+
+    @Click
+    void ll_cbhlist()
+    {
+        if (!cbh_isshow.isShown())
+        {
+            cbh_isshow.setVisibility(View.VISIBLE);
+        } else
+        {
+            cbh_isshow.setVisibility(View.GONE);
+        }
+    }
 
     @Click
     void is_jsd()
@@ -147,6 +174,7 @@ public class NCZ_Look_JSD_Detail extends Activity
             goods_xx.setVisibility(View.GONE);
         }
     }
+
     @AfterViews
     void afterview()
     {
@@ -157,13 +185,12 @@ public class NCZ_Look_JSD_Detail extends Activity
     private void showData()
     {
         plateNumber.setText(sellOrder_new.getPlateNumber());
-        bz_nc_danjia.setText(sellOrder_new.getPackPrice()+"元/件");
-        by_nc_danjia.setText(sellOrder_new.getCarryPrice()+"元/斤");
+        bz_nc_danjia.setText(sellOrder_new.getPackPrice() + "元/件");
+        by_nc_danjia.setText(sellOrder_new.getCarryPrice() + "元/斤");
         by_fzrid.setText(sellOrder_new.getContractorName());
         bz_fzrid.setText(sellOrder_new.getPickName());
         jsd_zpprice.setText(sellOrder_new.getActualprice());
         actualMoney.setText(sellOrder_new.getActualMoney());
-        packPec.setText(sellOrder_new.getPackPec());
         packFee.setText(sellOrder_new.getPackFee());
         carryFee.setText(sellOrder_new.getCarryFee());
         cp_jsje.setText(sellOrder_new.getDefectBalance());
@@ -188,12 +215,18 @@ public class NCZ_Look_JSD_Detail extends Activity
             frame_listview_news.setAdapter(ncz_look_jsd_adapter);
             utils.setListViewHeight(frame_listview_news);
         }
+
+
+        goodsname.setText(goodsnames);
+        goodsname2.setText(goodsnames);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         sellOrder_new = getIntent().getParcelableExtra("bean");
+        goodsnames = getIntent().getParcelableExtra("goodsname");
     }
 }

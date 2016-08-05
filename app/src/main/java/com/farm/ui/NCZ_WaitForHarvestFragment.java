@@ -53,7 +53,7 @@ public class NCZ_WaitForHarvestFragment extends Fragment
     List<AllType> listdata_cp = new ArrayList<AllType>();
     List<Purchaser> listData_CG = new ArrayList<Purchaser>();
     List<Wz_Storehouse> listpark = new ArrayList<Wz_Storehouse>();
-    String parkname = "";
+    String parkname = "-1";
     String parkId = "-1";
     String cpname = "-1";
     String cgsname = "-1";
@@ -161,7 +161,7 @@ public class NCZ_WaitForHarvestFragment extends Fragment
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("parkid", parkId);
+        params.addQueryStringParameter("parkid", parkname);
         params.addQueryStringParameter("productname", cpname);
         params.addQueryStringParameter("buyer", cgsId);
         params.addQueryStringParameter("year", utils.getYear());
@@ -315,14 +315,20 @@ public class NCZ_WaitForHarvestFragment extends Fragment
 //        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
                         provinceAdapter = new CustomArrayAdapter(getActivity(), park);
                         provinceSpinner.setAdapter(provinceAdapter);
-                        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
+                        provinceSpinner.setSelection(1, true);  //设置默认选中项，此处为默认选中第4个值
                         provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
                         {
                             @Override
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                             {
 
-                                parkname = listpark.get(i).getParkName();
+                                if (listpark.get(i).getParkName().equals("全部分场"))
+                                {
+                                    parkname="-1";
+                                }else
+                                {
+                                    parkname = listpark.get(i).getParkName();
+                                }
                                 parkId=listpark.get(i).getId();
                                 getAllOrders();
                             }
