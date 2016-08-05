@@ -74,33 +74,26 @@
     </ScrollView>
 
     <RelativeLayout
+        android:layout_marginTop="40dip"
         android:id="@+id/rl_note"
         android:layout_width="match_parent"
         android:layout_height="45dip"
         android:layout_below="@+id/rl_title"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
-        android:background="@color/white">
+        android:background="@color/color_topbar">
 
         <TextView
+            android:paddingLeft="20dip"
             android:layout_width="wrap_content"
             android:layout_height="30dip"
             android:layout_centerVertical="true"
             android:gravity="center"
             android:text="结算单情况"
-            android:textColor="@color/bg_text"
+            android:textColor="@color/white"
             android:textSize="16sp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:gravity="center"
-            android:text="单位：株"
-            android:textColor="@color/gray"
-            android:textSize="13sp"/>
+
 
 
     </RelativeLayout>
@@ -140,7 +133,7 @@
                     android:background="@color/white"
                     android:gravity="center"
                     android:text="结算单"
-                    android:textColor="@color/bg_text"
+                    android:textColor="@color/color_topbar"
                     android:textSize="15sp"/>
             </RelativeLayout>
 
@@ -226,7 +219,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:text="合计"
-                android:textColor="@color/bg_text"
+                android:textColor="@color/color_topbar"
                 android:textSize="15sp"/>
 
             <View

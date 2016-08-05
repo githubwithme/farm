@@ -23,7 +23,8 @@ import org.androidannotations.annotations.ViewById;
  * Created by hasee on 2016/7/19.
  */
 
-@EActivity(R.layout.ncz_look_jsd_detail)
+//@EActivity(R.layout.ncz_look_jsd_detail)
+@EActivity(R.layout.ncz_look_jsd_newdetail)
 public class NCZ_Look_JSD_Detail extends Activity
 {
     NCZ_Look_JSD_Adapter ncz_look_jsd_adapter;
@@ -49,15 +50,13 @@ public class NCZ_Look_JSD_Detail extends Activity
     @ViewById
     TextView all_jinzhong;
 
-    @ViewById
-    TextView bz_khnote; //包装客户自带说明
+
     @ViewById
     TextView bz_nc_danjia;//包装农场  包装单价
     @ViewById
     TextView bz_fzrid;//包装负责人Id
 
-    @ViewById
-    TextView by_khnote; //搬运客户自带说明
+
     @ViewById
     TextView by_nc_danjia;//搬运农场  搬运单价
     @ViewById
@@ -158,8 +157,8 @@ public class NCZ_Look_JSD_Detail extends Activity
     private void showData()
     {
         plateNumber.setText(sellOrder_new.getPlateNumber());
-        bz_nc_danjia.setText(sellOrder_new.getPackPrice());
-        by_nc_danjia.setText(sellOrder_new.getCarryPrice());
+        bz_nc_danjia.setText(sellOrder_new.getPackPrice()+"元/件");
+        by_nc_danjia.setText(sellOrder_new.getCarryPrice()+"元/斤");
         by_fzrid.setText(sellOrder_new.getContractorName());
         bz_fzrid.setText(sellOrder_new.getPickName());
         jsd_zpprice.setText(sellOrder_new.getActualprice());

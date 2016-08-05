@@ -102,6 +102,15 @@ public class Charge_Settlement_Adapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
+
+        //颜色
+        if (position % 2 == 0)
+        {
+            convertView.setBackgroundResource(R.color.light_gray);
+        } else
+        {
+            convertView.setBackgroundResource(R.color.white);
+        }
         listItemView.zhushu.setTag(R.id.tag_cash, sellOrderDetail_new);
         listItemView.zhushu.setTag(R.id.tag_number, "1");
         listItemView.zhushu.setOnClickListener(clickListener);

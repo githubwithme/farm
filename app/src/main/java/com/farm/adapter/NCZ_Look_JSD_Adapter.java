@@ -91,7 +91,13 @@ public class NCZ_Look_JSD_Adapter extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
 
-
+        if (position % 2 == 0)
+        {
+            convertView.setBackgroundResource(R.color.light_gray);
+        } else
+        {
+            convertView.setBackgroundResource(R.color.white);
+        }
 
         listItemView.jinzhong.setText(sellOrderDetail_new.getactualweight());
         listItemView.zhushu.setText(sellOrderDetail_new.getactualnumber());
