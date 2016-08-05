@@ -3,6 +3,7 @@ package com.farm.ui;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,17 +12,17 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
-import com.farm.bean.contractTab;
-import com.farm.common.utils;
-import com.guide.DensityUtil;
+import com.farm.bean.WeatherInfo;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -34,7 +35,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ${hmj} on 2016/5/26.
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 @EFragment
 public class FarmManagerFragment extends Fragment
 {
+    WeatherInfo weather;
     PopupWindow pw_command;
     View pv_command;
     @ViewById
@@ -52,11 +54,75 @@ public class FarmManagerFragment extends Fragment
     GridView gv;
     @ViewById
     View view;
+    @ViewById
+    TextView tv_cityname;
+    @ViewById
+    TextView tv_wind_windspeed;
+    @ViewById
+    TextView tv_weatherinfo0;
+    @ViewById
+    TextView tv_weatherinfo1;
+    @ViewById
+    TextView tv_weatherinfo2;
+    @ViewById
+    TextView tv_weatherinfo3;
+    @ViewById
+    TextView tv_weatherinfo4;
+    @ViewById
+    TextView tv_weatherinfo5;
+    @ViewById
+    TextView tv_weatherinfo6;
+    @ViewById
+    TextView tv_wind_power;
+    @ViewById
+    TextView tv_wind_direct;
+    @ViewById
+    TextView tv_temperature0;
+    @ViewById
+    TextView tv_temperature1;
+    @ViewById
+    TextView tv_temperature2;
+    @ViewById
+    TextView tv_temperature3;
+    @ViewById
+    TextView tv_temperature4;
+    @ViewById
+    TextView tv_temperature5;
+    @ViewById
+    TextView tv_temperature6;
+    @ViewById
+    TextView tv_date0;
+    @ViewById
+    TextView tv_date1;
+    @ViewById
+    TextView tv_date2;
+    @ViewById
+    TextView tv_date3;
+    @ViewById
+    TextView tv_date4;
+    @ViewById
+    TextView tv_date5;
+    @ViewById
+    TextView tv_date6;
+    @ViewById
+    ImageView img0;
+    @ViewById
+    ImageView img1;
+    @ViewById
+    ImageView img2;
+    @ViewById
+    ImageView img3;
+    @ViewById
+    ImageView img4;
+    @ViewById
+    ImageView img5;
+    @ViewById
+    ImageView img6;
 
     @AfterViews
     void afterOncrete()
     {
-//        getNCZ_getAllContractSaleData();
+        getNCZ_getAllContractSaleData();
     }
 
     @Click
@@ -266,64 +332,87 @@ public class FarmManagerFragment extends Fragment
         lp.alpha = 0.7f;
         getActivity().getWindow().setAttributes(lp);
     }
-//    public void getNCZ_getAllContractSaleData()
-//    {
-//        RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("action", "NCZ_getAllContractSaleData");
-//        HttpUtils http = new HttpUtils();
-////        http://m.weather.com.cn/atad/"+citycode+".html
-//        http.send(HttpRequest.HttpMethod.POST,"http://www.weather.com.cn/data/zs/101010100.html", params, new RequestCallBack<String>()
-//        {
-//            @Override
-//            public void onSuccess(ResponseInfo<String> responseInfo)
-//            {
-//                String a = responseInfo.result;
-//                Result result = JSON.parseObject(responseInfo.result, Result.class);
-//                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-//                {
-////                    if (result.getRows().size() > 0)
-////                    {
-////                        listData = JSON.parseArray(result.getRows().toJSONString(), contractTab.class);
-////                        DensityUtil densityUtil = new DensityUtil(getActivity());
-////                        screenWidth = densityUtil.getScreenWidth();
-////                        int size = listData.get(0).getBatchTimeList().size();
-////                        if (size == 1)
-////                        {
-////                            screenWidth = screenWidth / 3;
-////                        } else if (size == 2)
-////                        {
-////                            screenWidth = screenWidth / 3;
-////                        } else
-////                        {
-////                            screenWidth = screenWidth / 3;
-////                        }
-////                        tv_top_left.getLayoutParams().width = (screenWidth);
-//////                        tv_top_right.getLayoutParams().width = (screenWidth);
-//////                        tv_bottom_left.getLayoutParams().width = (screenWidth);
-//////                        alltoatal.getLayoutParams().width = (screenWidth);
-////                        initViews();
-////                        tv_nodatatip.setVisibility(View.GONE);
-////
-////                    } else
-////                    {
-////                        listData = new ArrayList<contractTab>();
-////                    }
-//
-//                } else
-//                {
-//                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-////                    dialog.loadingTip(getText(R.string.error_data).toString());
-//                    return;
-//                }
-////                dialog.dismiss();
-//            }
-//
-//            @Override
-//            public void onFailure(HttpException error, String msg)
-//            {
-//                AppContext.makeToast(getActivity(), "error_connectServer");
-////                dialog.loadingTip(getText(R.string.error_network).toString());
-//            }
-//        });
-//    }
+
+    public void getNCZ_getAllContractSaleData()
+    {
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("key", "a408788d6a2703d75f3bc7f970b046a2");
+        params.addBodyParameter("cityname", "南宁市");
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.weatherurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String info = responseInfo.result;
+                WeatherInfo wea = JSON.parseObject(info, WeatherInfo.class);
+                Log.e("TAG", wea.toString() + "==");
+                //今日天气的适配
+                WeatherInfo.ResultBean.DataBean.RealtimeBean realtimeBean = wea.getResult().getData().getRealtime();
+                if (realtimeBean != null)
+                {
+                    tv_cityname.setText(realtimeBean.getCity_name());
+                    tv_date0.setText(realtimeBean.getDate().substring(5, realtimeBean.getDate().length()));
+                    tv_temperature0.setText(realtimeBean.getWeather().getTemperature() + "℃");
+                    tv_weatherinfo0.setText(realtimeBean.getWeather().getInfo());
+                    tv_wind_windspeed.setText(realtimeBean.getWind().getWindspeed() + "m/s");
+                    tv_wind_power.setText(realtimeBean.getWind().getPower());
+                    tv_wind_direct.setText(realtimeBean.getWind().getDirect());
+                }
+                //未来天气的适配
+                List<WeatherInfo.ResultBean.DataBean.WeatherBean> list_weatherBean = wea.getResult().getData().getWeather();
+                for (int i = 0; i < list_weatherBean.size(); i++)
+                {
+                    WeatherInfo.ResultBean.DataBean.WeatherBean weatherbean = list_weatherBean.get(i);
+                    switch (i)
+                    {
+                        case 1:
+                            tv_date1.setText("明天");
+                            tv_temperature1.setText(weatherbean.getInfo().getDay().get(2) + "℃");
+                            tv_weatherinfo1.setText(weatherbean.getInfo().getDay().get(1));
+                            if (weatherbean == null)
+                            {
+
+                            }
+                            break;
+                        case 2:
+                            tv_date2.setText("后天");
+                            tv_temperature2.setText(weatherbean.getInfo().getDay().get(2) + "℃");
+                            tv_weatherinfo2.setText(weatherbean.getInfo().getDay().get(1));
+
+                            break;
+                        case 3:
+                            tv_date3.setText("周" + weatherbean.getWeek());
+                            tv_temperature3.setText(weatherbean.getInfo().getDay().get(2) + "℃");
+                            tv_weatherinfo3.setText(weatherbean.getInfo().getDay().get(1));
+                            break;
+                        case 4:
+                            tv_date4.setText("周" + weatherbean.getWeek());
+                            tv_temperature4.setText(weatherbean.getInfo().getDay().get(2) + "℃");
+                            tv_weatherinfo4.setText(weatherbean.getInfo().getDay().get(1));
+                            break;
+                        case 5:
+                            tv_date5.setText("周" + weatherbean.getWeek());
+                            tv_temperature5.setText(weatherbean.getInfo().getDay().get(2) + "℃");
+                            tv_weatherinfo5.setText(weatherbean.getInfo().getDay().get(1));
+
+                            break;
+                        case 6:
+                            tv_date6.setText("周" + weatherbean.getWeek());
+                            tv_temperature6.setText(weatherbean.getInfo().getDay().get(2) + "℃");
+                            tv_weatherinfo6.setText(weatherbean.getInfo().getDay().get(1));
+                            break;
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(getActivity(), "error_connectServer");
+//                dialog.loadingTip(getText(R.string.error_network).toString());
+            }
+        });
+    }
 }
