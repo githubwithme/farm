@@ -43,44 +43,52 @@
 
 
         <LinearLayout
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
             android:background="@color/defaultbackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
-               android:background="@color/white"
+                android:layout_marginTop="40dip"
+               android:background="@color/color_topbar"
                 android:id="@+id/isgoods_xx"
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
                 >
 
                 <TextView
+                    android:textColor="@color/white"
+                    android:textSize="16dip"
                     android:id="@+id/tv_isgood"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dip"
                     android:gravity="center|left"
-                    android:text="一、产品信息"/>
+                    android:text="产品信息"/>
 
-                <TextView
-                    android:layout_marginLeft="30dip"
-                    android:text="车牌号:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <EditText
-                    android:textSize="14dip"
-                    android:gravity="center"
-                    android:id="@+id/plateNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-
-                android:background="@color/bg_main"/>
+         <LinearLayout
+             android:background="@color/white"
+             android:layout_width="match_parent"
+             android:layout_height="40dip">
+             <TextView
+                 android:layout_weight="1"
+                 android:layout_marginLeft="30dip"
+                 android:text="车牌号:"
+                 android:layout_width="0dip"
+                 android:layout_height="wrap_content"/>
+             <EditText
+                 android:layout_weight="1"
+                 android:textSize="14dip"
+                 android:gravity="center"
+                 android:id="@+id/plateNumber"
+                 android:layout_width="0dip"
+                 android:layout_height="match_parent"/>
+         </LinearLayout>
 
 
             <LinearLayout
@@ -91,6 +99,50 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dip"
+                    android:background="@color/light_gray"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:textSize="12dip"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="产品"/>
+
+                    <View
+                        android:layout_width="1dip"
+                        android:layout_height="match_parent"
+                        android:background="@color/line_color"/>
+
+                    <TextView
+                        android:textSize="12dip"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="正品带水重(斤)"/>
+
+                    <View
+                        android:layout_width="1dip"
+                        android:layout_height="match_parent"
+                        android:background="@color/line_color"/>
+
+                    <TextView
+                        android:textSize="12dip"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="正品净重(斤/件)"/>
+
+
+
+                </LinearLayout>
+                <LinearLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="40dip">
@@ -100,13 +152,13 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="正品带水重\n(斤/件)"
+                        android:text="香蕉"
                         android:textSize="14dip"/>
 
                     <View
                         android:layout_width="1px"
                         android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
+                        android:background="@color/line_color"/>
 
                     <EditText
                         android:id="@+id/zp_ds_zhong"
@@ -118,40 +170,66 @@
                         android:text=""
                         android:textSize="14dip"/>
 
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
-
-                    <TextView
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="次品带水重\n(斤/件)"
-                        android:textSize="14dip"/>
 
                     <View
                         android:layout_width="1px"
                         android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
-
+                        android:background="@color/line_color"/>
                     <EditText
-                        android:id="@+id/cp_ds_zhong"
+                        android:id="@+id/zp_bds_zhong"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:numeric="decimal"
-                        android:text=""
                         android:textSize="14dip"/>
 
-                </LinearLayout>
 
-                <View
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/bg_main"/>
+                    android:layout_height="20dip"
+                    android:background="@color/light_gray"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:textSize="12dip"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="产品"/>
+
+                    <View
+                        android:layout_width="1dip"
+                        android:layout_height="match_parent"
+                        android:background="@color/line_color"/>
+
+                    <TextView
+                        android:textSize="12dip"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="次品带水重(斤)"/>
+
+                    <View
+                        android:layout_width="1dip"
+                        android:layout_height="match_parent"
+                        android:background="@color/line_color"/>
+
+                    <TextView
+                        android:textSize="12dip"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="次品净重(斤/件)"/>
+
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -162,43 +240,29 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="正品净重\n(斤/件)"
+                        android:text="香蕉"
                         android:textSize="14dip"/>
 
                     <View
                         android:layout_width="1px"
                         android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
+                        android:background="@color/line_color"/>
 
                     <EditText
-                        android:id="@+id/zp_bds_zhong"
+                        android:id="@+id/cp_ds_zhong"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:numeric="decimal"
+                        android:text=""
                         android:textSize="14dip"/>
-
                     <View
                         android:layout_width="1px"
                         android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
+                        android:background="@color/line_color"/>
 
-                    <TextView
-                        android:id="@+id/zp_jingzhong"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:gravity="center"
-                        android:numeric="decimal"
-                        android:text="次品净重\n(斤/件)"
-                        android:textSize="14dip"/>
 
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
 
                     <EditText
                         android:id="@+id/cp_jingzhong"
@@ -209,18 +273,8 @@
                         android:numeric="decimal"
                         android:textSize="14dip"/>
 
+
                 </LinearLayout>
-
-
-
-
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/bg_main"/>
-
 
 
 
@@ -232,7 +286,7 @@
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/bg_main"/>
+                android:background="@color/line_color"/>
             <LinearLayout
                 android:visibility="gone"
                 android:background="@color/white"
@@ -242,19 +296,18 @@
                 android:orientation="horizontal">
 
                 <TextView
-
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="包装负责人"
+                    android:text="包装工"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/bg_main"/>
+                    android:background="@color/line_color"/>
 
 
                 <TextView
@@ -270,7 +323,7 @@
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/bg_main"/>
+                    android:background="@color/line_color"/>
 
                 <TextView
 
@@ -278,14 +331,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="包装单价\n（元/件）"
+                    android:text="费用（元/件）"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14"/>
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/bg_main"/>
+                    android:background="@color/line_color"/>
 
 
                 <EditText
@@ -304,7 +357,7 @@
                 android:id="@+id/view1"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/bg_main"/>
+                android:background="@color/line_color"/>
             <LinearLayout
                 android:visibility="gone"
                 android:background="@color/white"
@@ -319,14 +372,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="搬运负责人"
+                    android:text="搬运工"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_15"/>
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/bg_main"/>
+                    android:background="@color/line_color"/>
 
 
                 <TextView
@@ -342,7 +395,7 @@
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/bg_main"/>
+                    android:background="@color/line_color"/>
 
                 <TextView
 
@@ -350,14 +403,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="搬运单价\n(元/斤)"
+                    android:text="费用(元/斤)"
                     android:textColor="@color/bg_text"
                     android:textSize="@dimen/size_14"/>
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/bg_main"/>
+                    android:background="@color/line_color"/>
 
 
                 <EditText
@@ -375,7 +428,7 @@
                 android:id="@+id/btn_view"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/bg_main"/>
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -405,10 +458,7 @@
             </RelativeLayout>
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/bg_main"/>
+
 
 
             <LinearLayout
@@ -423,22 +473,26 @@
 
 
                 <RelativeLayout
+                    android:background="@color/color_topbar"
                     android:layout_width="match_parent"
                     android:layout_height="45dip">
                     <TextView
+                        android:textColor="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dip"
                         android:gravity="center|left"
-                        android:text="二、承包户产量"
+                        android:text="承包户产量"
                         android:textSize="15dip"/>
                     <Button
+                        android:textColor="@color/white"
+                        android:background="@null"
                         android:textSize="14dip"
                         android:id="@+id/button_add"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
-                        android:text="添加承包户"/>
+                        android:text="添加"/>
                 </RelativeLayout>
 
 
@@ -456,10 +510,6 @@
                     android:layout_height="50dip">
 
 
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -469,6 +519,7 @@
 
 
                         <TextView
+                            android:textColor="@color/color_topbar"
                             android:text="承包区"
                             android:id="@+id/all_cbh"
                             android:layout_weight="1"
@@ -479,11 +530,6 @@
                     </LinearLayout>
 
 
-                    <View
-                        android:visibility="gone"
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
 
 
                     <LinearLayout
@@ -517,10 +563,6 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -529,6 +571,7 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:textColor="@color/color_topbar"
                             android:text="实际株树"
                             android:layout_weight="1"
                             android:id="@+id/zhushu"
@@ -543,10 +586,6 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -555,6 +594,7 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:textColor="@color/color_topbar"
                             android:text="正品件数"
                             android:layout_weight="1"
                             android:id="@+id/zhengpin"
@@ -566,10 +606,7 @@
                             android:numeric="decimal"
                             android:textSize="14dip"/>
                     </LinearLayout>
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
+
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -579,6 +616,7 @@
 
 
                         <TextView
+                            android:textColor="@color/color_topbar"
                             android:text="次品件数"
                             android:layout_weight="1"
                             android:id="@+id/cipin"
@@ -590,10 +628,7 @@
                             android:numeric="decimal"
                             android:textSize="14dip"/>
                     </LinearLayout>
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
+
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -603,6 +638,7 @@
 
 
                         <TextView
+                            android:textColor="@color/color_topbar"
                             android:text="砍蕉费"
                             android:layout_weight="1"
                             android:layout_width="match_parent"
@@ -615,16 +651,9 @@
                     </LinearLayout>
 
 
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/bg_main"/>
 
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/bg_main"/>
+
                 <ListView
                     android:id="@+id/frame_listview_news"
                     android:layout_width="match_parent"

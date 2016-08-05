@@ -23,6 +23,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
+import com.farm.bean.commembertab;
 import com.farm.ui.NCZ_DD_SH_Detail_;
 import com.farm.ui.NCZ_JSD_NeedList_;
 import com.farm.ui.NCZ_Need_JSD_;
@@ -230,6 +231,8 @@ public class NCZ_NeedAdapter extends BaseAdapter
             {
                 SellOrder_New sellOrdesr = new SellOrder_New();
                 sellOrdesr = (SellOrder_New) view.getTag(R.id.tag_cash);
+                commembertab commembertab = AppContext.getUserInfo(context);
+                AppContext.eventStatus(context, "8", sellOrdesr.getUuid(), commembertab.getId());
 //                if (!sellOrdesr.getSettlestatus().equals("0"))
                 if (sellOrder.getFreeDeposit().equals("0") || sellOrder.getFreeFinalPay().equals("0") || sellOrder.getIsNeedAudit().equals("0"))
                 {

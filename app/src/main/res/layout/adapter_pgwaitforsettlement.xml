@@ -306,7 +306,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="共3车；"
+                        android:text="共-1车；"
                         android:textColor="@color/titlebar_top"
                         android:textSize="12sp"/>
 
@@ -329,7 +329,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="1车；"
+                        android:text="-1车；"
                         android:textColor="@color/text_table_horizontitle"
                         android:textSize="12sp"/>
 
@@ -352,7 +352,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="2车"
+                        android:text="-1车"
                         android:textColor="@color/text_table_horizontitle"
                         android:textSize="12sp"/>
 
@@ -475,7 +475,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="已上报3份；"
+                        android:text="已上报-1份；"
                         android:textColor="@color/titlebar_top"
                         android:textSize="12sp"/>
 
@@ -499,7 +499,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="1份；"
+                        android:text="-1份；"
                         android:textColor="@color/text_table_horizontitle"
                         android:textSize="12sp"/>
 
@@ -522,12 +522,13 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="2份"
+                        android:text="-1份"
                         android:textColor="@color/text_table_horizontitle"
                         android:textSize="12sp"/>
 
 
                     <View
+                        android:visibility="gone"
                         android:id="@+id/view_showSettlement"
                         android:layout_width="20dip"
                         android:layout_height="20dip"

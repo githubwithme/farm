@@ -322,14 +322,19 @@ public class Charge_UpdateSettlement extends Activity
 
 
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("id", sellOrder_new.getid());
+        params.addQueryStringParameter("id", mSellOrder.getid());
         params.addQueryStringParameter("settlestatus", "2");
         params.addQueryStringParameter("isNeedAudit", "2");
         params.addQueryStringParameter("uid", mSellOrder.getUid());
-        params.addQueryStringParameter("carryPrice", mSellOrder.getCarryPrice());
+/*        params.addQueryStringParameter("carryPrice", mSellOrder.getCarryPrice());
         params.addQueryStringParameter("packPrice", mSellOrder.getPackPrice());
         params.addQueryStringParameter("infoId", mSellOrder.getInfoId());
-        params.addQueryStringParameter("plateNumber", mSellOrder.getPlateNumber());
+        params.addQueryStringParameter("plateNumber", mSellOrder.getPlateNumber());*/
+        params.addQueryStringParameter("qualityWaterWeight", mSellOrder.getQualityWaterWeight());
+        params.addQueryStringParameter("qualityNetWeight", mSellOrder.getQualityNetWeight());
+        params.addQueryStringParameter("defectWaterWeight", mSellOrder.getDefectNetWeight());
+        params.addQueryStringParameter("defectNetWeight", mSellOrder.getDefectNetWeight());
+        params.addQueryStringParameter("isReady","True");
         params.addQueryStringParameter("action", "changesellOrderSettlement");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

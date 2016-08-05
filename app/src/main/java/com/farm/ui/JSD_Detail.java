@@ -216,7 +216,7 @@ public class JSD_Detail extends Activity
             switch (i)
             {
                 case 0:
-                    tv_total.setText("-");
+                    tv_total.setText(listData.size()+"车");
                     ll_total.addView(view);
                     break;
                 case 1:
@@ -395,7 +395,13 @@ public class JSD_Detail extends Activity
 //            listItemView.item_titlev.getLayoutParams().width = (screenWidth);
             listItemView.item_total.getLayoutParams().width = (screenWidth);
             LinearLayout ll_middle = (LinearLayout) convertView.findViewById(R.id.ll_middle);
-
+            if (position % 2 == 0)
+            {
+                convertView.setBackgroundResource(R.color.light_gray);
+            } else
+            {
+                convertView.setBackgroundResource(R.color.white);
+            }
 
             if (listData.get(position).getIsNeedAudit().equals("0"))
             {

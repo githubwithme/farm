@@ -756,9 +756,9 @@ public class NCZ_CreateNewOrder extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         Toast.makeText(NCZ_CreateNewOrder.this, "订单创建成功！", Toast.LENGTH_SHORT).show();
-                 /*       Intent intent1 = new Intent();
+                        Intent intent1 = new Intent();
                         intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
-                        sendBroadcast(intent1);*/
+                        sendBroadcast(intent1);
 
                         Intent intent2 = new Intent();
                         intent2.setAction(AppContext.BROADCAST_FINISH);

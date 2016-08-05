@@ -3,19 +3,12 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/bg_main"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dip">
 
 
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/bg_main"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -34,10 +27,7 @@
         </LinearLayout>
 
 
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/bg_main"/>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dip"
@@ -53,10 +43,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"/>
         </LinearLayout>
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/bg_main"/>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dip"
@@ -72,10 +59,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"/>
         </LinearLayout>
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/bg_main"/>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dip"
@@ -90,10 +74,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"/>
         </LinearLayout>
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/bg_main"/>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dip"
@@ -109,16 +90,9 @@
                 android:gravity="center"/>
         </LinearLayout>
 
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/bg_main"/>
 
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/bg_main"/>
+
 </LinearLayout>

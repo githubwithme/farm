@@ -409,6 +409,15 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
             listItemView.item_titlev.getLayoutParams().width = (screenWidth);
             listItemView.item_total.getLayoutParams().width = (screenWidth);
 
+
+            if (position % 2 == 0)
+            {
+                convertView.setBackgroundResource(R.color.light_gray);
+            } else
+            {
+                convertView.setBackgroundResource(R.color.white);
+            }
+
             if (listData.get(position).getIsNeedAudit().equals("0")||listData.get(position).getSettlestatus().equals("0"))
             {
 

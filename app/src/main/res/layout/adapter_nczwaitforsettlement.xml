@@ -475,7 +475,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="已上报3份；"
+                        android:text="已上报-1份；"
                         android:textColor="@color/titlebar_top"
                         android:textSize="12sp" />
 
@@ -499,7 +499,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="1份；"
+                        android:text="-1份；"
                         android:textColor="@color/text_table_horizontitle"
                         android:textSize="12sp" />
 
@@ -522,7 +522,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="2份"
+                        android:text="-1份"
                         android:textColor="@color/text_table_horizontitle"
                         android:textSize="12sp" />
 

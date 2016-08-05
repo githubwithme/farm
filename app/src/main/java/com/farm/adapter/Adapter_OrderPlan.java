@@ -31,6 +31,7 @@ import com.farm.bean.OrderPlanBean;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.SellOrder_New_First;
+import com.farm.bean.commembertab;
 import com.farm.common.utils;
 import com.farm.ui.NCZ_All_OneOrder_Detail_;
 import com.farm.ui.NCZ_EditOrder_;
@@ -183,6 +184,8 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
                 public void onClick(View v)
                 {
                     SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
+                    commembertab commembertab = AppContext.getUserInfo(context);
+                    AppContext.eventStatus(context, "8", sellOrder_new.getUuid(), commembertab.getId());
                     Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
                     intent.putExtra("bean", sellOrder_new);
                     context.startActivity(intent);

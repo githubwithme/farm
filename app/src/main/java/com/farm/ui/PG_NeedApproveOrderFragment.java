@@ -171,7 +171,7 @@ public class PG_NeedApproveOrderFragment extends Fragment
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         listAdapter = new PG_NeedAdapter(getActivity(), listData, AppContext.UPDATEMESSAGE_FARMMANAGER);
                         lv.setAdapter(listAdapter);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+/*                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -179,12 +179,11 @@ public class PG_NeedApproveOrderFragment extends Fragment
 
                                 commembertab commembertab = AppContext.getUserInfo(getActivity());
                                 AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
                                 Intent intent = new Intent(getActivity(), PG_Need_Orderdetail_.class);
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }
-                        });
+                        });*/
 
                     } else
                     {

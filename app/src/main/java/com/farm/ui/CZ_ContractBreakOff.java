@@ -182,7 +182,7 @@ public class CZ_ContractBreakOff extends Activity implements CustomHorizontalScr
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() > 0)
+                    if (result.getRows().size() > 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), BatchTime.class);
                         DensityUtil densityUtil = new DensityUtil(CZ_ContractBreakOff.this);

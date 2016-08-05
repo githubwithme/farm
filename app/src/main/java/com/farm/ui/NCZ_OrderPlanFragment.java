@@ -60,7 +60,7 @@ public class NCZ_OrderPlanFragment extends Fragment
     Spinner citySpinner;
     @ViewById
     Spinner countySpinner;
-    String parkname = "";
+    String parkname = "-1";
     String parkId = "-1";
     String cpname = "-1";
     String cgsname = "";
@@ -117,7 +117,7 @@ public class NCZ_OrderPlanFragment extends Fragment
         commembertab commembertab = AppContext.getUserInfo(getActivity());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("parkid", parkId);
+        params.addQueryStringParameter("parkid", parkname);
         params.addQueryStringParameter("productname", cpname);
         params.addQueryStringParameter("buyer", cgsId);
         params.addQueryStringParameter("year", utils.getYear());
@@ -381,8 +381,15 @@ public class NCZ_OrderPlanFragment extends Fragment
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                             {
 
-                                parkname = listpark.get(i).getParkName();
-                                parkname = listpark.get(i).getId();
+                                if (listpark.get(i).getParkName().equals("全部分场"))
+                                {
+                                    parkname="-1";
+                                }else
+                                {
+                                    parkname = listpark.get(i).getParkName();
+                                }
+
+                                parkId = listpark.get(i).getId();
                                 getOrderPlan();
                             }
 

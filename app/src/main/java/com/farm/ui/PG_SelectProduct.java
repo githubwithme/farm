@@ -670,7 +670,7 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
                     case R.id.btn_sure:
 //                        myDialog.dismiss();
                         deleNewSaleAddsalefor();
-                        DeletesellOrderSettlement();
+//                        DeletesellOrderSettlement();
                         Toast.makeText(PG_SelectProduct.this, "已取消", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent();
                         intent1.setAction(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
