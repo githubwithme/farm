@@ -187,7 +187,7 @@ public class CZ_FarmManagerFragment extends Fragment
         Intent intent = new Intent(getActivity(), CZ_JobFragment_.class);
         getActivity().startActivity(intent);
     }    @Click
-    void ll_sk()
+    void rl_sk()
     {
         Intent intent = new Intent(getActivity(), NCZ_FarmMapActivity_.class);
         intent.putExtra("parkid", "80");

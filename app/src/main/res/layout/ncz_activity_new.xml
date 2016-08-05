@@ -35,9 +35,9 @@
 
                 <ImageButton
                     android:id="@+id/imgbtn_home"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
-                    android:layout_gravity="center"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_gravity="bottom|center_horizontal"
                     android:background="@drawable/btn_message_selector"
                     android:clickable="false"
                     android:contentDescription=""/>
@@ -79,17 +79,17 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="动态"
-                android:textColor="@color/menu_textcolor"
-                android:textSize="@dimen/home_menu_textsize"/>
+                android:textColor="@color/menu_normal"
+                android:textSize="13sp"/>
         </TableLayout>
 
         <TableLayout
             android:id="@+id/tl_farmlive"
             android:layout_width="0dip"
-            android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:visibility="gone"
             >
 
             <RelativeLayout
@@ -99,8 +99,8 @@
 
                 <ImageButton
                     android:id="@+id/imgbtn_farmlive"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
                     android:layout_centerInParent="true"
                     android:background="@drawable/btn_work_selector"
                     android:clickable="false"
@@ -141,7 +141,7 @@
                 android:gravity="center_horizontal"
                 android:text="农场工作"
                 android:textColor="@color/menu_textcolor"
-                android:textSize="@dimen/home_menu_textsize"/>
+                android:textSize="13sp"/>
         </TableLayout>
 
         <TableLayout
@@ -158,9 +158,10 @@
 
                 <ImageButton
                     android:id="@+id/imgbtn_product"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
-                    android:layout_centerInParent="true"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:background="@drawable/btn_home_selector"
                     android:clickable="false"
                     android:contentDescription=""/>
@@ -199,8 +200,8 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="农场管理"
-                android:textColor="@color/menu_textcolor"
-                android:textSize="@dimen/home_menu_textsize"/>
+                android:textColor="@color/menu_normal"
+                android:textSize="13sp"/>
         </TableLayout>
 
 
@@ -219,9 +220,10 @@
 
                 <ImageButton
                     android:id="@+id/imgbtn_sale"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
-                    android:layout_centerInParent="true"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:background="@drawable/btn_contacts_selector"
                     android:clickable="false"
                     android:contentDescription=""/>
@@ -234,8 +236,8 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="联系人"
-                android:textColor="@color/menu_textcolor"
-                android:textSize="@dimen/home_menu_textsize"/>
+                android:textColor="@color/menu_normal"
+                android:textSize="13sp"/>
         </TableLayout>
 
 
@@ -253,9 +255,10 @@
 
                 <ImageButton
                     android:id="@+id/imgbtn_me"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
-                    android:layout_centerInParent="true"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:background="@drawable/selector_message"
                     android:clickable="false"
                     android:contentDescription=""/>
@@ -268,8 +271,8 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="我的"
-                android:textColor="@color/menu_textcolor"
-                android:textSize="@dimen/home_menu_textsize"/>
+                android:textColor="@color/menu_normal"
+                android:textSize="13sp"/>
         </TableLayout>
     </LinearLayout>
 

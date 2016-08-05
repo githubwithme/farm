@@ -16,7 +16,8 @@
     <color name="explore_color">#5A89C5</color>
     <color name="semitransparent">#92bbbbbb</color>
     <color name="white">#ffffff</color>
-    <color name="color_topbar">#0E9D57</color>
+    <color name="menu_normal">#868c97</color>
+    <color name="color_topbar">#10bc68</color>
     <!-- 圆形样式颜色 -->
     <color name="base_start_color_pressed">#ff3590c4</color>
     <color name="base_end_color_pressed">#ff2570ba</color>

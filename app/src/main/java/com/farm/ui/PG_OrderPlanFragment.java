@@ -142,7 +142,7 @@ public class PG_OrderPlanFragment extends Fragment
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
-                 String a = responseInfo.result;
+                String a = responseInfo.result;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
@@ -212,13 +212,13 @@ public class PG_OrderPlanFragment extends Fragment
 
                                 if (listdata_cp.get(i).getProductName().equals("全部产品"))
                                 {
-                                    cpname="-1";
-                                }else
+                                    cpname = "-1";
+                                } else
                                 {
                                     cpname = listdata_cp.get(i).getProductName();
                                 }
 
-                               getOrderPlan();
+                                getOrderPlan();
                             }
 
                             @Override
@@ -309,7 +309,7 @@ public class PG_OrderPlanFragment extends Fragment
                                 {
                                     cgsname = listData_CG.get(i).getName();
                                     cgsId = listData_CG.get(i).getId();
-                                            getOrderPlan();
+                                    getOrderPlan();
 
                                 }
 
