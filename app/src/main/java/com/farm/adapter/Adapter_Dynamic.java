@@ -123,15 +123,15 @@ public class Adapter_Dynamic extends BaseAdapter
             listItemView.circle_img.setBackgroundResource(R.drawable.icon_instruction);
         } else if (type.equals("GZ"))
         {
-//            listItemView.tv_title.setText("工作");
-//            if (dynamicBean.getListdata().size()>0)
-//            {
-//                listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-//            }else
-//            {
-//                listItemView.tv_note.setText("无");
-//            }
-//            listItemView.circle_img.setBackgroundResource(R.drawable.logo1);
+            listItemView.tv_title.setText("工作");
+            if (dynamicBean.getListdata().size()>0)
+            {
+                listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
+            }else
+            {
+                listItemView.tv_note.setText("无");
+            }
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_instruction);
         } else if (type.equals("MQ"))
         {
             listItemView.tv_title.setText("苗情");
@@ -229,12 +229,15 @@ public class Adapter_Dynamic extends BaseAdapter
                 if (type.equals("ZL"))
                 {
                     intent = new Intent(context, NCZ_CommandListActivity_.class);
+                    return;
                 } else if (type.equals("GZ"))
                 {
                     intent = new Intent(context, NCZ_JobActivity_.class);
+                    return;
                 } else if (type.equals("MQ"))
                 {
                     intent = new Intent(context, NCZ_MQActivity_.class);
+                    return;
                 } else if (type.equals("XS"))
                 {
 //                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
@@ -242,12 +245,15 @@ public class Adapter_Dynamic extends BaseAdapter
                 } else if (type.equals("KC"))
                 {
                     intent = new Intent(context, Ncz_wz_ll_.class);
+                    return;
                 } else if (type.equals("SP"))
                 {
                     intent = new Intent(context, NCZ_CommandListActivity_.class);
+                    return;
                 } else if (type.equals("SJ"))
                 {
                     intent = new Intent(context, NCZ_SJActivity_.class);
+                    return;
                 } else if (type.equals("DL"))
                 {
                     intent = new Intent(context, NCZ_DLdatail_.class);

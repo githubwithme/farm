@@ -80,6 +80,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_weather"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_topbar"
@@ -94,7 +95,7 @@
                         android:id="@+id/ll_weatherinfo"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="30dip"
+                        android:layout_marginLeft="20dip"
                         android:orientation="vertical">
 
                         <ImageView
@@ -111,6 +112,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10dip"
                         android:layout_toRightOf="@+id/ll_weatherinfo"
                         android:orientation="vertical">
 
@@ -151,7 +153,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginLeft="5dip"
                             android:text="08-05"
-                            android:textColor="@color/white"
+                            android:textColor="@color/line_color"
                             android:textSize="11sp"/>
 
                         <TextView
@@ -161,7 +163,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginLeft="5dip"
                             android:text="农历七月初三"
-                            android:textColor="@color/white"
+                            android:textColor="@color/line_color"
                             android:textSize="11sp"/>
 
 
@@ -172,7 +174,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="5dip"
                             android:text="风向：无"
-                            android:textColor="@color/white"
+                            android:textColor="@color/line_color"
                             android:textSize="11sp"/>
 
 
@@ -182,7 +184,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:text="风力：0级"
-                            android:textColor="@color/white"
+                            android:textColor="@color/line_color"
                             android:textSize="11sp"/>
 
 
@@ -220,7 +222,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:text="今天"
-                            android:textColor="@color/white"
+                            android:textColor="@color/line_color"
                             android:textSize="11sp"/>
 
                         <ImageView
@@ -249,7 +251,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:text="28"
-                            android:textColor="@color/white"
+                            android:textColor="@color/line_color"
                             android:textSize="11sp"/>
                     </LinearLayout>
 
@@ -267,7 +269,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:text="今天"
-                            android:textColor="@color/white"
+                            android:textColor="@color/line_color"
                             android:textSize="11sp"/>
 
                         <ImageView
@@ -296,7 +298,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:text="28"
-                            android:textColor="@color/white"
+                            android:textColor="@color/line_color"
                             android:textSize="11sp"/>
                     </LinearLayout>
 
@@ -314,7 +316,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:text="今天"
-                            android:textColor="@color/white"
+                            android:textColor="@color/line_color"
                             android:textSize="11sp"/>
 
                         <ImageView
@@ -343,7 +345,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:text="28"
-                            android:textColor="@color/white"
+                            android:textColor="@color/line_color"
                             android:textSize="11sp"/>
                     </LinearLayout>
 
@@ -545,7 +547,7 @@
                             android:gravity="center"
                             android:text="销售管理"
                             android:textColor="@color/text_table_horizontitle"
-                            android:textSize="12sp"/>
+                            android:textSize="14sp"/>
                     </RelativeLayout>
 
                     <View
@@ -578,7 +580,7 @@
                             android:gravity="center"
                             android:text="订单管理"
                             android:textColor="@color/text_table_horizontitle"
-                            android:textSize="12sp"/>
+                            android:textSize="14sp"/>
                     </RelativeLayout>
 
                     <View
@@ -611,7 +613,7 @@
                             android:gravity="center"
                             android:text="合同管理"
                             android:textColor="@color/text_table_horizontitle"
-                            android:textSize="12sp"/>
+                            android:textSize="14sp"/>
                     </RelativeLayout>
 
 
@@ -653,7 +655,7 @@
                             android:gravity="center"
                             android:text="断蕾管理"
                             android:textColor="@color/text_table_horizontitle"
-                            android:textSize="12sp"/>
+                            android:textSize="14sp"/>
                     </RelativeLayout>
 
                     <View
@@ -693,7 +695,7 @@
                             android:gravity="center"
                             android:text="财务管理"
                             android:textColor="@color/text_table_horizontitle"
-                            android:textSize="12sp"/>
+                            android:textSize="14sp"/>
                     </RelativeLayout>
 
                     <View
@@ -733,7 +735,7 @@
                             android:gravity="center"
                             android:text="统计分析"
                             android:textColor="@color/text_table_horizontitle"
-                            android:textSize="12sp"/>
+                            android:textSize="14sp"/>
                     </RelativeLayout>
 
 
@@ -812,7 +814,7 @@
                                 android:gravity="center"
                                 android:text="指令"
                                 android:textColor="@color/text_table_horizontitle"
-                                android:textSize="12sp"/>
+                                android:textSize="14sp"/>
                         </RelativeLayout>
 
 
@@ -838,7 +840,7 @@
                                 android:gravity="center"
                                 android:text="工作"
                                 android:textColor="@color/text_table_horizontitle"
-                                android:textSize="12sp"/>
+                                android:textSize="14sp"/>
                         </LinearLayout>
 
                         <View
@@ -879,7 +881,7 @@
                                 android:gravity="center"
                                 android:text="苗情"
                                 android:textColor="@color/text_table_horizontitle"
-                                android:textSize="12sp"/>
+                                android:textSize="14sp"/>
                         </RelativeLayout>
 
                         <View
@@ -920,7 +922,7 @@
                                 android:gravity="center"
                                 android:text="事件"
                                 android:textColor="@color/text_table_horizontitle"
-                                android:textSize="12sp"/>
+                                android:textSize="14sp"/>
                         </RelativeLayout>
 
 
@@ -971,7 +973,7 @@
                             android:gravity="center"
                             android:text="物资管理"
                             android:textColor="@color/text_table_horizontitle"
-                            android:textSize="12sp"/>
+                            android:textSize="14sp"/>
                     </RelativeLayout>
 
                     <View
@@ -1011,7 +1013,7 @@
                             android:gravity="center"
                             android:text="农场实况"
                             android:textColor="@color/text_table_horizontitle"
-                            android:textSize="12sp"/>
+                            android:textSize="14sp"/>
                     </RelativeLayout>
 
                     <View
@@ -1051,7 +1053,7 @@
                             android:gravity="center"
                             android:text="地图应用"
                             android:textColor="@color/text_table_horizontitle"
-                            android:textSize="12sp"/>
+                            android:textSize="14sp"/>
                     </RelativeLayout>
 
 
@@ -1076,7 +1078,7 @@
                             android:gravity="center"
                             android:text="审批"
                             android:textColor="@color/text_table_horizontitle"
-                            android:textSize="12sp"/>
+                            android:textSize="14sp"/>
                     </LinearLayout>
                 </LinearLayout>
 

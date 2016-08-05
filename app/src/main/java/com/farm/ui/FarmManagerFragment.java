@@ -256,6 +256,14 @@ public class FarmManagerFragment extends Fragment
     }
 
     @Click
+    void ll_weather()
+    {
+        Intent intent = new Intent(getActivity(), WeatherActivity_.class);
+        intent.putExtra("parkid", "80");
+        getActivity().startActivity(intent);
+    }
+
+    @Click
     void rl_more()
     {
         Intent intent = new Intent(getActivity(), NCZ_MoreModule_.class);
