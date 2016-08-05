@@ -579,6 +579,11 @@ public class Charge_Settlement extends Activity
         params.addQueryStringParameter("packPrice", mSellOrder.getPackPrice());
         params.addQueryStringParameter("infoId", mSellOrder.getInfoId());
         params.addQueryStringParameter("plateNumber", mSellOrder.getPlateNumber());
+
+        params.addQueryStringParameter("qualityWaterWeight", mSellOrder.getQualityWaterWeight());
+        params.addQueryStringParameter("qualityNetWeight", mSellOrder.getQualityNetWeight());
+        params.addQueryStringParameter("defectWaterWeight", mSellOrder.getDefectNetWeight());
+        params.addQueryStringParameter("defectNetWeight", mSellOrder.getDefectNetWeight());
         params.addQueryStringParameter("action", "changesellOrderSettlement");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()

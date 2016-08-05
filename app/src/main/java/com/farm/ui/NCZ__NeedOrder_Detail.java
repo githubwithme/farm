@@ -162,7 +162,7 @@ public class NCZ__NeedOrder_Detail extends Activity
     @ViewById
     TextView Order_Saletime;//采收时间
     @ViewById
-    TextView tv_order;
+    LinearLayout tv_order;
 
     @ViewById
     LinearLayout ll_order;
@@ -324,7 +324,7 @@ public class NCZ__NeedOrder_Detail extends Activity
     }
 
 
-    //修改
+    //修改结算单
     private void updatesellOrderSettlement(String isNeedAudit, String settlestatus)
     {
 
@@ -349,11 +349,54 @@ public class NCZ__NeedOrder_Detail extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        finish();
+                        changesellOrder_newAdd();
+
                     } else
                     {
                         listData = new ArrayList<SellOrder_New>();
                     }
+
+                } else
+                {
+                    AppContext.makeToast(NCZ__NeedOrder_Detail.this, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(NCZ__NeedOrder_Detail.this, "error_connectServer");
+
+            }
+        });
+    }
+
+
+    //修改结算单
+    private void changesellOrder_newAdd()
+    {
+
+
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uuid", sellOrder_new.getUuid());
+        params.addQueryStringParameter("settlestatus", "1");
+        params.addQueryStringParameter("action", "changesellOrder_newAdd");
+
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+
+                        finish();
 
                 } else
                 {

@@ -139,18 +139,7 @@
                         android:gravity="center"
                         android:text="正品净重(斤/件)"/>
 
-                    <View
-                        android:layout_width="1dip"
-                        android:layout_height="match_parent"
-                        android:background="@color/line_color"/>
 
-                    <TextView
-                        android:textSize="12dip"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="正品单价(元/斤)"/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -194,17 +183,7 @@
                         android:gravity="center"
                         android:numeric="decimal"
                         android:textSize="14dip"/>
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/line_color"/>
-                    <TextView
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text=""
-                        android:textSize="14dip"/>
+
 
                 </LinearLayout>
                 <LinearLayout
@@ -248,18 +227,7 @@
                         android:gravity="center"
                         android:text="次品净重(斤/件)"/>
 
-                    <View
-                        android:layout_width="1dip"
-                        android:layout_height="match_parent"
-                        android:background="@color/line_color"/>
 
-                    <TextView
-                        android:textSize="12dip"
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="次品单价(元/斤)"/>
 
                 </LinearLayout>
 
@@ -304,13 +272,7 @@
                         android:gravity="center"
                         android:numeric="decimal"
                         android:textSize="14dip"/>
-                    <TextView
-                        android:layout_width="0dip"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text=""
-                        android:textSize="14dip"/>
+
 
                 </LinearLayout>
 

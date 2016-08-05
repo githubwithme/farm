@@ -135,7 +135,8 @@ public class AddRecovery extends Activity {
         sellOrder.setUid(commembertab.getuId());//0
         sellOrder.setCarryPrice(carryPrice.getText().toString());
         sellOrder.setPackPrice(packPrice.getText().toString());
-        sellOrder.setIsNeedAudit("3");
+        sellOrder.setSettlestatus("3");
+        sellOrder.setIsNeedAudit("2");
         StringBuilder builder = new StringBuilder();
         builder.append("{\"sellOrderSettlementlist\":[ ");
         builder.append(JSON.toJSONString(sellOrder));

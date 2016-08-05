@@ -460,8 +460,8 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
 
                 }
                 tv_carnumber.setText(String.valueOf(ready_car + notready_car));
-                tv_readyNumber.setText(ready_car);
-                tv_notreadyNumber.setText(notready_car);
+                tv_readyNumber.setText(String.valueOf(ready_car));
+                tv_notreadyNumber.setText(String.valueOf(notready_car));
             }
 
             tv_notPayDepositNumber.setText(listData.get(groupPosition).getNotPayDepositNumber());
