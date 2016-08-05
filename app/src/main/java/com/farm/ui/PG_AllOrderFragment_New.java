@@ -167,7 +167,8 @@ public class PG_AllOrderFragment_New extends Fragment
         params.addQueryStringParameter("buyer", cgsId);
         params.addQueryStringParameter("year", utils.getYear());
         params.addQueryStringParameter("payStatus", "-1");
-        params.addQueryStringParameter("action", "MainPeople_getAllOrderWithStatus");
+        params.addQueryStringParameter("action", "MAinPeople_getOrderPlan");
+//        params.addQueryStringParameter("action", "MainPeople_getAllOrderWithStatus");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -181,7 +182,7 @@ public class PG_AllOrderFragment_New extends Fragment
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        Iterator<SellOrder_New> it = listData.iterator();
+        /*                Iterator<SellOrder_New> it = listData.iterator();
                         while (it.hasNext())
                         {
                             String value = it.next().getSelltype();
@@ -189,10 +190,10 @@ public class PG_AllOrderFragment_New extends Fragment
                             {
                                 it.remove();
                             }
-                        }
+                        }*/
                         listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+   /*                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -202,7 +203,7 @@ public class PG_AllOrderFragment_New extends Fragment
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }
-                        });
+                        });*/
 
                     } else
                     {

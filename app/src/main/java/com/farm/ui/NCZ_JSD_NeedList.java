@@ -183,7 +183,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
         ll_park.removeAllViews();
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) NCZ_JSD_NeedList.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        String[] name = new String[]{"结算单","实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
+        String[] name = new String[]{"车辆","实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
 //        String[] name = new String[]{"实际金额", "合计金额"};
         for (int i = 0; i < name.length; i++)
         {
@@ -470,15 +470,18 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
                     case 4:
-                        if (listData.get(position).getIsNeedAudit().equals("0"))
+                        if (listData.get(position).getIsNeedAudit().equals("0")||listData.get(position).getSettlestatus().equals("0"))
                         {
                             listItemView.btn_data.setText("待审批");
-                        } else if (listData.get(position).getIsNeedAudit().equals("1"))
-                        {
-                            listItemView.btn_data.setText("审批通过");
-                        } else if (listData.get(position).getIsNeedAudit().equals("-1"))
+                        } else if (listData.get(position).getIsNeedAudit().equals("-1")||listData.get(position).getSettlestatus().equals("-1"))
                         {
                             listItemView.btn_data.setText("审批不通过");
+                        } else if (listData.get(position).getIsNeedAudit().equals("1")||listData.get(position).getSettlestatus().equals("1"))
+                        {
+                            listItemView.btn_data.setText("审批通过");
+                        }else
+                        {
+                            listItemView.btn_data.setText("未反馈");
                         }
 
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);

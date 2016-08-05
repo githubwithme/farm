@@ -163,16 +163,19 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter
             if (sellOrder.getFreeDeposit().equals("1"))
             {
                 listItemView.tv_depositStatus.setText("免付定金");
-            } else
+            } else if(!sellOrder.getDeposit().equals(""))
             {
-                listItemView.tv_depositStatus.setText("未知");
+                listItemView.tv_depositStatus.setText("已付定金");
+            }else
+            {
+                listItemView.tv_depositStatus.setText("未付定金");
             }
             if (sellOrder.getFreeFinalPay().equals("1"))
             {
-                listItemView.cb_AllowRelease.setSelected(true);
+                listItemView.cb_AllowRelease.setChecked(true);
             } else
             {
-                listItemView.cb_AllowRelease.setSelected(false);
+                listItemView.cb_AllowRelease.setChecked(false);
             }
             listItemView.tv_orderstate.setText(sellOrder.getSelltype());
             listItemView.tv_parkname.setText(sellOrder.getParkname());

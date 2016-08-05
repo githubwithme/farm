@@ -52,7 +52,7 @@
                 android:id="@+id/isgoods_xx"
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
-                android:layout_marginTop="40dip"
+                android:layout_marginTop="20dip"
                 android:background="@color/color_topbar"
                 >
 
@@ -949,7 +949,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="总净重"/>
+                        android:text="总净重(斤)"/>
 
                     <View
                         android:layout_width="1dip"
@@ -962,7 +962,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="正品总净重"/>
+                        android:text="正品总净重(斤)"/>
 
                     <View
                         android:layout_width="1dip"
@@ -975,7 +975,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="次品总净重"/>
+                        android:text="次品总净重(斤)"/>
 
                 </LinearLayout>
 
@@ -1028,7 +1028,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="其他费用"/>
+                        android:text="其他费用(元)"/>
 
                     <View
                         android:layout_width="1dip"
@@ -1041,7 +1041,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="正品总金额"/>
+                        android:text="正品总金额(元)"/>
 
                     <View
                         android:layout_width="1dip"
@@ -1054,7 +1054,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="次品总金额"/>
+                        android:text="次品总金额(元)"/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -1163,7 +1163,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/line_color"/>
                     <TextView
-                        android:id="@id/bz_nc_danjia1"
+                        android:id="@+id/bz_nc_danjia1"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -1231,6 +1231,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/line_color"/>
                     <TextView
+                        android:id="@+id/all_weight1"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -1243,6 +1244,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/line_color"/>
                     <TextView
+                        android:id="@+id/by_nc_danjia1"
                         android:layout_width="0dip"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

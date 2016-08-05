@@ -207,13 +207,13 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
                 listItemView.tv_depositStatus.setText("已付定金");
             }
             if (sellOrder.getFreeFinalPay().equals("1")) {
-                listItemView.cb_AllowRelease.setSelected(true);
+                listItemView.cb_AllowRelease.setChecked(true);
             } else {
-                listItemView.cb_AllowRelease.setSelected(false);
+                listItemView.cb_AllowRelease.setChecked(false);
             }
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.tv_mainpeople.setText(sellOrder.getMainPeople());
-            listItemView.tv_settlementnumber.setText("以上报"+sellOrder.getSettlementNumber()+"份;");
+            listItemView.tv_settlementnumber.setText("共"+sellOrder.getSettlementNumber()+"份;");
             listItemView.tv_settlement_successnumber.setText(sellOrder.getPaidSettlementNumber()+"份");
             listItemView.tv_waitforsettlementnumber.setText(sellOrder.getNotPaySettlementNumber()+"份");
 //            if (sellOrder.getUnpaid().equals(""))

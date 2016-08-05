@@ -23,8 +23,8 @@ import org.androidannotations.annotations.ViewById;
  * Created by hasee on 2016/7/19.
  */
 
-//@EActivity(R.layout.ncz_look_jsd_detail)
-@EActivity(R.layout.ncz_look_jsd_newdetail)
+@EActivity(R.layout.ncz_look_jsd_detail)
+//@EActivity(R.layout.ncz_look_jsd_newdetail)
 public class NCZ_Look_JSD_Detail extends Activity
 {
 
@@ -115,8 +115,8 @@ public class NCZ_Look_JSD_Detail extends Activity
 
     @ViewById
     LinearLayout ll_jsd;//结算单统计
-    @ViewById
-    TextView tv_isgood;
+/*    @ViewById
+    TextView tv_isgood;*/
     @ViewById
     TextView plateNumber;
 
@@ -136,6 +136,10 @@ public class NCZ_Look_JSD_Detail extends Activity
     TextView bz_nc_danjia1;
     @ViewById
     TextView jsd_zongjianshu1;
+    @ViewById
+    TextView all_weight1;
+    @ViewById
+    TextView by_nc_danjia1;
 
 
 
@@ -151,7 +155,7 @@ public class NCZ_Look_JSD_Detail extends Activity
         }
     }
 
-    @Click
+/*    @Click
     void is_jsd()
     {
         if (!ll_jsd.isShown())
@@ -161,7 +165,7 @@ public class NCZ_Look_JSD_Detail extends Activity
         {
             ll_jsd.setVisibility(View.GONE);
         }
-    }
+    }*/
 
     @Click
     void isgoods_xx()
@@ -219,6 +223,10 @@ public class NCZ_Look_JSD_Detail extends Activity
 
         goodsname.setText(goodsnames);
         goodsname2.setText(goodsnames);
+        bz_nc_danjia1.setText(sellOrder_new.getPackPrice() + "元/件");
+        jsd_zongjianshu1.setText(sellOrder_new.getTotal());
+        by_nc_danjia1.setText(sellOrder_new.getCarryPrice() + "元/斤");
+        all_weight1.setText(sellOrder_new.getTotalWeight());
     }
 
     @Override

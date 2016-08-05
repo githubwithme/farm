@@ -171,9 +171,9 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter {
             }
 
             if (sellOrder.getFreeFinalPay().equals("1")) {
-                listItemView.cb_AllowRelease.setSelected(true);
+                listItemView.cb_AllowRelease.setChecked(true);
             } else {
-                listItemView.cb_AllowRelease.setSelected(false);
+                listItemView.cb_AllowRelease.setChecked(false);
             }
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.tv_mainpeople.setText(sellOrder.getMainPeople());
