@@ -167,8 +167,23 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         }
 
         tv_planweight.setText(sellOrder_new.getWeight());
-        tv_deposit.setText(sellOrder_new.getWaitDeposit());
-        deposit.setText(sellOrder_new.getDeposit());
+
+        if (!sellOrder_new.getWaitDeposit().equals(""))
+        {
+            tv_deposit.setText(sellOrder_new.getWaitDeposit());
+        }else
+        {
+            tv_deposit.setText(sellOrder_new.getUnpaid());
+        }
+        if (!sellOrder_new.getDeposit().equals(""))
+        {
+            deposit.setText(sellOrder_new.getDeposit());
+        }else
+        {
+            tv_deposit.setText(sellOrder_new.getPaid());
+        }
+
+
         tv_plansumvalues.setText(sellOrder_new.getSumvalues());
         goodsName.setText(sellOrder_new.getProduct());
         tv_finalpayment.setText(sellOrder_new.getAddress());
@@ -302,7 +317,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
         ll_park.removeAllViews();
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) NCZ_All_OneOrder_Detail.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        String[] name = new String[]{"结算单", "实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
+        String[] name = new String[]{"车牌号", "实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
 //        String[] name = new String[]{"实际金额", "合计金额"};
         for (int i = 0; i < name.length; i++)
         {
@@ -537,13 +552,13 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
             {
                 convertView.setBackgroundResource(R.color.white);
             }
-            if (listData.get(position).getIsNeedAudit().equals("0"))
+            if (listData.get(position).getIsNeedAudit().equals("0")||listData.get(position).getSettlestatus().equals("0"))
             {
 
-            } else if (listData.get(position).getIsNeedAudit().equals("1"))
+            } else if (listData.get(position).getIsNeedAudit().equals("1")||listData.get(position).getSettlestatus().equals("1"))
             {
                 listItemView.item_titlev.setTextColor(NCZ_All_OneOrder_Detail.this.getResources().getColor(R.color.green));
-            } else if (listData.get(position).getIsNeedAudit().equals("-1"))
+            } else if (listData.get(position).getIsNeedAudit().equals("-1")||listData.get(position).getSettlestatus().equals("-1"))
             {
                 listItemView.item_titlev.setTextColor(NCZ_All_OneOrder_Detail.this.getResources().getColor(R.color.red));
             }
@@ -589,16 +604,20 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                         listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 4:
-                        if (listData.get(position).getIsNeedAudit().equals("0"))
+                        if (listData.get(position).getIsNeedAudit().equals("0")||listData.get(position).getSettlestatus().equals("0"))
                         {
                             listItemView.tv_data.setText("待审批");
-                        } else if (listData.get(position).getIsNeedAudit().equals("1"))
-                        {
-                            listItemView.tv_data.setText("审批通过");
-                        } else if (listData.get(position).getIsNeedAudit().equals("-1"))
+                        } else if (listData.get(position).getIsNeedAudit().equals("-1")||listData.get(position).getSettlestatus().equals("-1"))
                         {
                             listItemView.tv_data.setText("审批不通过");
+                        } else if (listData.get(position).getIsNeedAudit().equals("1")||listData.get(position).getSettlestatus().equals("1"))
+                        {
+                            listItemView.tv_data.setText("审批通过");
+                        }else
+                        {
+                            listItemView.tv_data.setText("未反馈");
                         }
+
 
                         listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);

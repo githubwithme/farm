@@ -181,7 +181,8 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_NCZ_XL_REFRESH);
         registerReceiver(receiver_update, intentfilter_update);
 
-
+        IntentFilter intentfilter_finish = new IntentFilter(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
+        registerReceiver(receiver_finish, intentfilter_finish);
         uuid = java.util.UUID.randomUUID().toString();
         commembertab = AppContext.getUserInfo(CZ_SelectProduct.this);
         parkid = getIntent().getStringExtra("parkid");
@@ -199,7 +200,15 @@ public class CZ_SelectProduct extends Activity implements CustomHorizontalScroll
         }
     };
 
-
+    BroadcastReceiver receiver_finish = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+           finish();
+        }
+    };
     public void getNCZ_getAllContractSaleData()
     {
         RequestParams params = new RequestParams();

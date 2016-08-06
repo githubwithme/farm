@@ -223,9 +223,9 @@ public class NCZ_Look_JSD_Detail extends Activity
 
         goodsname.setText(goodsnames);
         goodsname2.setText(goodsnames);
-        bz_nc_danjia1.setText(sellOrder_new.getPackPrice() + "元/件");
+        bz_nc_danjia1.setText(sellOrder_new.getPackPrice() );
         jsd_zongjianshu1.setText(sellOrder_new.getTotal());
-        by_nc_danjia1.setText(sellOrder_new.getCarryPrice() + "元/斤");
+        by_nc_danjia1.setText(sellOrder_new.getCarryPrice() );
         all_weight1.setText(sellOrder_new.getTotalWeight());
     }
 
