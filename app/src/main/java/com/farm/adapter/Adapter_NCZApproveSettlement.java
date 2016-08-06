@@ -37,7 +37,7 @@ public class Adapter_NCZApproveSettlement extends BaseAdapter
     private LayoutInflater listContainer;// 视图容器
     SellOrder_New sellOrder_new;
 
-    static class ListItemView
+    class ListItemView
     {
         public TextView tv_settlementnumber;
         public TextView tv_carnumber;
@@ -76,41 +76,29 @@ public class Adapter_NCZApproveSettlement extends BaseAdapter
         return 0;
     }
 
-    HashMap<Integer, View> lmap = new HashMap<Integer, View>();
 
     public View getView(int position, View convertView, ViewGroup parent)
     {
         sellOrder_new = listItems.get(position);
         // 自定义视图
         ListItemView listItemView = null;
-        if (lmap.get(position) == null)
-        {
-            // 获取list_item布局文件的视图
-            convertView = listContainer.inflate(R.layout.adapter_nczapprovesettelment, null);
-            listItemView = new ListItemView();
-            // 获取控件对象
-            listItemView.tv_settlementnumber = (TextView) convertView.findViewById(R.id.tv_settlementnumber);
-            listItemView.tv_carnumber = (TextView) convertView.findViewById(R.id.tv_carnumber);
-            listItemView.tv_packagesnumber = (TextView) convertView.findViewById(R.id.tv_packagesnumber);
-            listItemView.tv_packagesnumber_good = (TextView) convertView.findViewById(R.id.tv_packagesnumber_good);
-            listItemView.tv_packagesnumber_notgood = (TextView) convertView.findViewById(R.id.tv_packagesnumber_notgood);
-            listItemView.tv_price_good = (TextView) convertView.findViewById(R.id.tv_price_good);
-            listItemView.tv_price_notgood = (TextView) convertView.findViewById(R.id.tv_price_notgood);
-            listItemView.tv_price_packages = (TextView) convertView.findViewById(R.id.tv_price_packages);
-            listItemView.tv_price_carry = (TextView) convertView.findViewById(R.id.tv_price_carry);
-            listItemView.tv_allvalues = (TextView) convertView.findViewById(R.id.tv_allvalues);
-            listItemView.btn_Approval = (Button) convertView.findViewById(R.id.btn_Approval);
-            listItemView.btn_reject = (Button) convertView.findViewById(R.id.btn_reject);
-            listItemView.btn_showSettlementDetail = (Button) convertView.findViewById(R.id.btn_showSettlementDetail);
-            // 设置控件集到convertView
-            lmap.put(position, convertView);
-            convertView.setTag(listItemView);
-
-        } else
-        {
-            convertView = lmap.get(position);
-            listItemView = (ListItemView) convertView.getTag();
-        }
+        // 获取list_item布局文件的视图
+        convertView = listContainer.inflate(R.layout.adapter_nczapprovesettelment, null);
+        listItemView = new ListItemView();
+        // 获取控件对象
+        listItemView.tv_settlementnumber = (TextView) convertView.findViewById(R.id.tv_settlementnumber);
+        listItemView.tv_carnumber = (TextView) convertView.findViewById(R.id.tv_carnumber);
+        listItemView.tv_packagesnumber = (TextView) convertView.findViewById(R.id.tv_packagesnumber);
+        listItemView.tv_packagesnumber_good = (TextView) convertView.findViewById(R.id.tv_packagesnumber_good);
+        listItemView.tv_packagesnumber_notgood = (TextView) convertView.findViewById(R.id.tv_packagesnumber_notgood);
+        listItemView.tv_price_good = (TextView) convertView.findViewById(R.id.tv_price_good);
+        listItemView.tv_price_notgood = (TextView) convertView.findViewById(R.id.tv_price_notgood);
+        listItemView.tv_price_packages = (TextView) convertView.findViewById(R.id.tv_price_packages);
+        listItemView.tv_price_carry = (TextView) convertView.findViewById(R.id.tv_price_carry);
+        listItemView.tv_allvalues = (TextView) convertView.findViewById(R.id.tv_allvalues);
+        listItemView.btn_Approval = (Button) convertView.findViewById(R.id.btn_Approval);
+        listItemView.btn_reject = (Button) convertView.findViewById(R.id.btn_reject);
+        listItemView.btn_showSettlementDetail = (Button) convertView.findViewById(R.id.btn_showSettlementDetail);
         listItemView.tv_settlementnumber.setText("结算单" + (position + 1));
         listItemView.tv_carnumber.setText(sellOrder_new.getPlateNumber());
         listItemView.tv_packagesnumber.setText(sellOrder_new.getTotal());
@@ -152,6 +140,7 @@ public class Adapter_NCZApproveSettlement extends BaseAdapter
                 context.startActivity(intent);
             }
         });
+        convertView.setTag(listItemView);
         return convertView;
     }
 

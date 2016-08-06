@@ -181,7 +181,6 @@ public class DynamicFragment extends Fragment
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     list = JSON.parseArray(result.getRows().toJSONString(), DynamicBean.class);
-
                     for (int i = 0; i < list.size(); i++)
                     {
                         if (list.get(i).getListdata().size() != 0)
@@ -204,85 +203,10 @@ public class DynamicFragment extends Fragment
                     k = 0;
                     adapter_dynamic = new Adapter_Dynamic(getActivity(), list);
                     lv.setAdapter(adapter_dynamic);
-                   /* lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                    {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                        {
-
-                            Intent intent = null;
-                            String type = listData.get(position).getType();
-                            if (type.equals("ZL"))
-                            {
-                                intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-                            } else if (type.equals("GZ"))
-                            {
-                                intent = new Intent(getActivity(), NCZ_JobActivity_.class);
-                            } else if (type.equals("MQ"))
-                            {
-                                intent = new Intent(getActivity(), NCZ_MQActivity_.class);
-                            } else if (type.equals("XS"))
-                            {
-//                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
-                                intent = new Intent(getActivity(), NCZ_OrderManager_.class);
-                            } else if (type.equals("KC"))
-                            {
-                                intent = new Intent(getActivity(), Ncz_wz_ll_.class);
-                            } else if (type.equals("SP"))
-                            {
-                                intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-                            } else if (type.equals("SJ"))
-                            {
-                                intent = new Intent(getActivity(), NCZ_SJActivity_.class);
-                            } else if (type.equals("DL"))
-                            {
-                                intent = new Intent(getActivity(), NCZ_DLdatail_.class);
-                            }
-                            getActivity().startActivity(intent);
-
-
-//                                List<DynamicEntity> list = listData.get(position).getListdata();
-//                                Intent intent = new Intent(getActivity(), DongtaiListview_.class);
-//                                String type = listData.get(position).getType();
-//                                if (type.equals("ZL"))
-//                                {
-//                                    intent.putExtra("type", "ZL");
-//                                } else if (type.equals("GZ"))
-//                                {
-//                                    intent.putExtra("type", "GZ");
-//                                } else if (type.equals("MQ"))
-//                                {
-//                                    intent.putExtra("type", "ZL");
-//                                } else if (type.equals("XS"))
-//                                {
-//                                    intent.putExtra("type", "MQ");
-//                                } else if (type.equals("KC"))
-//                                {
-//                                    intent.putExtra("type", "KC");
-//                                } else if (type.equals("SP"))
-//                                {
-//                                    intent.putExtra("type", "SP");
-//                                } else if (type.equals("SJ"))
-//                                {
-//                                    intent.putExtra("type", "SJ");
-//                                } else if (type.equals("DL"))
-//                                {
-//                                    intent.putExtra("type", "DL");
-//                                }
-//                                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
-//                                getActivity().startActivity(intent);
-                        }
-                    });*/
-//                    }
                 } else
                 {
                     Toast.makeText(getActivity(), "连接数据库异常", Toast.LENGTH_SHORT).show();
                     dialog.loadingTip(getText(R.string.error_data).toString());
-//                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-//                    if (!ishidding && timethread != null)
-//                    {
-//                        timethread.setSleep(false);
-//                    }
                     return;
                 }
                 dialog.dismiss();
