@@ -39,6 +39,7 @@ public class Adapter_NCZApproveSettlement extends BaseAdapter
 
     class ListItemView
     {
+        public TextView tv_settlementstatus;
         public TextView tv_settlementnumber;
         public TextView tv_carnumber;
         public TextView tv_packagesnumber;
@@ -87,6 +88,7 @@ public class Adapter_NCZApproveSettlement extends BaseAdapter
         listItemView = new ListItemView();
         // 获取控件对象
         listItemView.tv_settlementnumber = (TextView) convertView.findViewById(R.id.tv_settlementnumber);
+        listItemView.tv_settlementstatus = (TextView) convertView.findViewById(R.id.tv_settlementstatus);
         listItemView.tv_carnumber = (TextView) convertView.findViewById(R.id.tv_carnumber);
         listItemView.tv_packagesnumber = (TextView) convertView.findViewById(R.id.tv_packagesnumber);
         listItemView.tv_packagesnumber_good = (TextView) convertView.findViewById(R.id.tv_packagesnumber_good);
@@ -110,6 +112,15 @@ public class Adapter_NCZApproveSettlement extends BaseAdapter
         listItemView.tv_price_carry.setText(sellOrder_new.getCarryPrice());
         listItemView.tv_allvalues.setText(sellOrder_new.getTotalFee());
 
+        if (sellOrder_new.getSettlestatus().equals("0"))
+        {
+            listItemView.tv_settlementstatus.setText("待审批");
+            listItemView.btn_showSettlementDetail.setText("进入审批");
+        } else
+        {
+            listItemView.tv_settlementstatus.setText("已审批");
+            listItemView.btn_showSettlementDetail.setText("查看详情");
+        }
         listItemView.btn_Approval.setTag(sellOrder_new);
         listItemView.btn_Approval.setOnClickListener(new View.OnClickListener()
         {
