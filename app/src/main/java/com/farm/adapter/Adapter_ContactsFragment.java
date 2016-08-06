@@ -39,7 +39,7 @@ public class Adapter_ContactsFragment extends BaseExpandableListAdapter
 
     public Adapter_ContactsFragment(Context context, List<ContactsBean> listData, ExpandableListView mainlistview)
     {
-        color = new int[]{R.color.bg_ask, R.color.bg_work, R.color.gray, R.color.green, R.color.bg_job, R.color.gray, R.color.green, R.color.bg_job, R.color.bg_plant, R.color.bg_text_small, R.color.bg_job, R.color.bg_plant, R.color.bg_text_small, R.color.bg_job, R.color.bg_plant, R.color.bg_text_small};
+        color = new int[]{R.color.gray, R.color.line_color, R.color.defaultbackground,R.color.gray, R.color.line_color, R.color.defaultbackground,R.color.gray, R.color.line_color, R.color.defaultbackground,R.color.gray, R.color.line_color, R.color.defaultbackground,R.color.gray, R.color.line_color, R.color.defaultbackground,R.color.gray, R.color.line_color, R.color.defaultbackground};
         this.mainlistview = mainlistview;
         this.listData = listData;
         this.context = context;
@@ -124,8 +124,9 @@ public class Adapter_ContactsFragment extends BaseExpandableListAdapter
             }
 
             //数据添加
-            listItemView.circle_img.setImageResource(color[childPosition]);
-            listItemView.tv_phone.setText(commembertab.getuserCell());
+//            listItemView.circle_img.setImageResource(color[childPosition]);
+            listItemView.circle_img.setImageResource(R.color.line_color);
+            listItemView.tv_phone.setText(commembertab.getrealName());
             listItemView.tv_name.setText(commembertab.getrealName());
             int length = commembertab.getrealName().length();
             if (length == 1 || length == 2)

@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
@@ -33,8 +34,11 @@ import com.farm.bean.Apk;
 import com.farm.bean.BreakOff;
 import com.farm.bean.Result;
 import com.farm.bean.commembertab;
+import com.farm.common.BitmapHelper;
 import com.farm.common.SqliteDb;
 import com.farm.common.utils;
+import com.farm.widget.CircleImageView;
+import com.farm.widget.CustomImageView;
 import com.farm.widget.MyDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -70,63 +74,14 @@ public class IFragment extends Fragment
     private PendingIntent pendingIntent;
     private Intent intent;
     MyDialog myDialog;
-    //	TimeThread timethread;
     Fragment mContent = new Fragment();
     @ViewById
     FrameLayout fl_new;
     @ViewById
-    TextView tv_exist;
-    @ViewById
-    TextView tv_makemap;
-    @ViewById
     RelativeLayout rl_userinfo;
-    //    @ViewById
-//    TextView tv_username;
     @ViewById
-    LinearLayout ll_startBreakoff;
-    //    @ViewById
-//    CircleImageView circle_img;
-    @ViewById
-    TextView tv_changepwd;
-//    @ViewById
-//    LinearLayout ll_edituser;
+    CircleImageView circle_img;
 
-//    @Click
-//    void tv_detail()
-//    {
-//        Intent intent = new Intent(getActivity(), ShowUserInfo_.class);
-//        startActivity(intent);
-//    }
-
-    @Click
-    void tv_makemap()
-    {
-        Intent intent = new Intent(getActivity(), MakeLayer_Farm_.class);
-        startActivity(intent);
-
-//		Intent intent = new Intent(getActivity(), MapUtils_.class);
-//		startActivity(intent);
-    }
-
-    //	@Click
-//	void tv_resetMapData()
-//	{
-//		startBreakoff();
-//		commembertab commembertab = AppContext.getUserInfo(getActivity());
-//		SqliteDb.resetmapdata(getActivity());
-//        SqliteDb.initPark(getActivity());
-//        SqliteDb.initArea(getActivity());
-//        SqliteDb.initContract(getActivity());
-//		Toast.makeText(getActivity(), "重置成功！", Toast.LENGTH_SHORT).show();
-//	}
-    @Click
-    void tv_startBreakoff()
-    {
-        startBreakoff();
-//		commembertab commembertab = AppContext.getUserInfo(getActivity());
-//        SqliteDb.startBreakoff(getActivity(), commembertab.getuId());
-//		Toast.makeText(getActivity(), "已经初始化断蕾图层成功！", Toast.LENGTH_SHORT).show();
-    }
 
     @Click
     void rl_userinfo()
@@ -159,7 +114,7 @@ public class IFragment extends Fragment
     }
 
     @Click
-    void rl_share()
+    void btn_share()
     {
         // Intent inte = new Intent(Intent.ACTION_SEND);
         // inte.setType("image/*");
@@ -192,7 +147,7 @@ public class IFragment extends Fragment
     }
 
     @Click
-    void rl_exist()
+    void btn_exist()
     {
         CleanLoginInfo();
         AppManager.getAppManager().AppExit(getActivity());
@@ -210,6 +165,7 @@ public class IFragment extends Fragment
         {
             ll_startBreakoff.setVisibility(View.VISIBLE);
         }*/
+        BitmapHelper.setImageViewBackground(getActivity(), circle_img, AppConfig.baseurl + commembertab.getimgurl());
         getNew();
     }
 

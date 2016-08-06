@@ -145,7 +145,7 @@ public class FarmManagerFragment extends Fragment
 //        getActivity().startActivity(intent);
 //    }
     @Click
-    void ll_zl()
+    void rl_zl()
     {
 //        Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
         Intent intent = new Intent(getActivity(), NCZ_CommandActivity_.class);
@@ -154,28 +154,42 @@ public class FarmManagerFragment extends Fragment
     }
 
     @Click
-    void ll_gz()
+    void rl_gz()
     {
         Intent intent = new Intent(getActivity(), NCZ_JobActivity_.class);
         getActivity().startActivity(intent);
     }
 
     @Click
-    void ll_mq()
+    void rl_mq()
     {
         Intent intent = new Intent(getActivity(), NCZ_MQActivity_.class);
         getActivity().startActivity(intent);
     }
 
     @Click
-    void ll_sj()
+    void rl_sj()
     {
         Intent intent = new Intent(getActivity(), NCZ_SJActivity_.class);
         getActivity().startActivity(intent);
     }
 
     @Click
-    void ll_kc()
+    void rl_dd()
+    {
+        Intent intent = new Intent(getActivity(), NCZ_OrderManager_.class);
+        getActivity().startActivity(intent);
+    }
+
+    @Click
+    void rl_ht()
+    {
+        Intent intent = new Intent(getActivity(), NCZ_CustomerContract_.class);
+        getActivity().startActivity(intent);
+    }
+
+    @Click
+    void rl_kc()
     {
 //        Intent intent = new Intent(getActivity(), Ncz_wz_ll_.class);
         Intent intent = new Intent(getActivity(), NCZ_GoogdsManagerActivity_.class);
@@ -183,7 +197,7 @@ public class FarmManagerFragment extends Fragment
     }
 
     @Click
-    void ll_xs()
+    void rl_xs()
     {
 //        Intent intent = new Intent(getActivity(), NCZ_SaleChart_.class);
 //        getActivity().startActivity(intent);
@@ -196,14 +210,14 @@ public class FarmManagerFragment extends Fragment
     }
 
     @Click
-    void ll_cw()
+    void rl_cw()
     {
         Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
         getActivity().startActivity(intent);
     }
 
     @Click
-    void ll_dl()
+    void rl_dl()
     {
         Intent intent = new Intent(getActivity(), NCZ_BreakOffActivity_.class);
 //        Intent intent = new Intent(getActivity(), NCZ_DLdatail_.class);
@@ -218,23 +232,23 @@ public class FarmManagerFragment extends Fragment
     }
 
     @Click
-    void ll_tj()
+    void rl_tj()
     {
 //        Intent intent = new Intent(getActivity(), NCZ_Statistics_.class);
         Intent intent = new Intent(getActivity(), NCZ_AnalysisModule_.class);
         getActivity().startActivity(intent);
     }
 
-    @Click
-    void ll_tq()
-    {
-        Intent intent = new Intent(getActivity(), WeatherActivity_.class);
-        intent.putExtra("parkid", "80");
-        getActivity().startActivity(intent);
-    }
+//    @Click
+//    void ll_tq()
+//    {
+//        Intent intent = new Intent(getActivity(), WeatherActivity_.class);
+//        intent.putExtra("parkid", "80");
+//        getActivity().startActivity(intent);
+//    }
 
     @Click
-    void ll_sk()
+    void rl_sk()
     {
         Intent intent = new Intent(getActivity(), NCZ_FarmMapActivity_.class);
         intent.putExtra("parkid", "80");
@@ -242,7 +256,15 @@ public class FarmManagerFragment extends Fragment
     }
 
     @Click
-    void ll_more()
+    void ll_weather()
+    {
+        Intent intent = new Intent(getActivity(), WeatherActivity_.class);
+        intent.putExtra("parkid", "80");
+        getActivity().startActivity(intent);
+    }
+
+    @Click
+    void rl_more()
     {
         Intent intent = new Intent(getActivity(), NCZ_MoreModule_.class);
         intent.putExtra("parkid", "80");
@@ -356,8 +378,8 @@ public class FarmManagerFragment extends Fragment
                     tv_temperature0.setText(realtimeBean.getWeather().getTemperature() + "℃");
                     tv_weatherinfo0.setText(realtimeBean.getWeather().getInfo());
                     tv_wind_windspeed.setText(realtimeBean.getWind().getWindspeed() + "m/s");
-                    tv_wind_power.setText(realtimeBean.getWind().getPower());
-                    tv_wind_direct.setText(realtimeBean.getWind().getDirect());
+                    tv_wind_power.setText("风力：" + realtimeBean.getWind().getPower());
+                    tv_wind_direct.setText("风向：" + realtimeBean.getWind().getDirect());
                 }
                 //未来天气的适配
                 List<WeatherInfo.ResultBean.DataBean.WeatherBean> list_weatherBean = wea.getResult().getData().getWeather();

@@ -6,19 +6,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dip"
-        android:layout_marginTop="10dip"
-        android:background="@color/white">
+        android:layout_height="40dip">
 
         <TextView
             android:id="@+id/tv_type"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
             android:gravity="center_vertical|left"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
             android:text="hellow"
-            android:textColor="@color/gray"
-            android:textSize="16sp"/>
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="14sp"/>
     </LinearLayout>
 </LinearLayout>

@@ -8,20 +8,20 @@
     <LinearLayout
         android:id="@+id/ll_select"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dip"
+        android:layout_height="60dip"
+        android:layout_marginLeft="5dip"
         android:layout_marginRight="10dip"
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="60dip"
-            android:layout_height="60dip"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
             android:layout_gravity="center_vertical"
             android:orientation="vertical">
 
             <FrameLayout
-                android:layout_width="40dip"
-                android:layout_height="40dip"
+                android:layout_width="28dip"
+                android:layout_height="28dip"
                 android:layout_centerInParent="true">
 
                 <com.farm.widget.CircleImageView
@@ -53,8 +53,8 @@
 
             <FrameLayout
                 android:id="@+id/fl_new_item"
-                android:layout_width="13dip"
-                android:layout_height="13dip"
+                android:layout_width="10dip"
+                android:layout_height="10dip"
                 android:layout_alignParentRight="true"
                 android:layout_margin="2dip"
                 android:visibility="gone"
@@ -70,8 +70,8 @@
 
                 <TextView
                     android:id="@+id/tv_new_item"
-                    android:layout_width="13dip"
-                    android:layout_height="13dip"
+                    android:layout_width="10dip"
+                    android:layout_height="10dip"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text=""
@@ -103,9 +103,10 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dip"
+                        android:alpha="0.5"
                         android:gravity="center"
                         android:text=""
-                        android:textColor="@color/gray"
+                        android:textColor="@color/text_table_horizontitle"
                         android:textSize="12sp"/>
 
                     <TextView
@@ -115,8 +116,8 @@
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:text="指令"
-                        android:textColor="@color/bg_text"
-                        android:textSize="16sp"/>
+                        android:textColor="@color/text_table_horizontitle"
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/tv_newnumber"
@@ -144,10 +145,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:alpha="0.5"
                         android:gravity="center"
                         android:text="ddddd"
-                        android:textColor="@color/gray"
-                        android:textSize="13sp"/>
+                        android:textColor="@color/text_table_horizontitle"
+                        android:textSize="12sp"/>
 
 
                 </RelativeLayout>
