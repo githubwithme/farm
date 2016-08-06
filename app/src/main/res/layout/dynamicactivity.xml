@@ -14,10 +14,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:gravity="center"
             android:text="农场易"
-            android:layout_centerInParent="true"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 
@@ -27,12 +27,12 @@
             android:layout_height="27dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:visibility="gone"
             android:layout_marginRight="10dip"
             android:background="@mipmap/icon_add"
             android:gravity="center"
             android:textColor="@color/bg_text"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btn_search"
@@ -43,9 +43,9 @@
             android:layout_toLeftOf="@+id/btn_add"
             android:background="@drawable/ic_search"
             android:gravity="center"
-            android:visibility="gone"
             android:textColor="@color/bg_text"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:visibility="gone"/>
 
         <View
             android:id="@+id/view"

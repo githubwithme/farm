@@ -7,21 +7,32 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
+import com.farm.adapter.Adapter_FilferData_Sale;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
-import com.farm.bean.OrderTypeNum;
+import com.farm.bean.FilferBean_Sale;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
+import com.farm.common.FileHelper;
 import com.farm.common.utils;
+import com.farm.widget.CustomExpandableListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -44,6 +55,9 @@ import java.util.List;
 @EActivity(R.layout.pg_ordermanager)
 public class PG_OrderManager extends Activity
 {
+    List<FilferBean_Sale> list_filferbean;
+    PopupWindow pw_tab;
+    View pv_tab;
     PG_NeedApproveOrderFragment pg_needApproveOrderFragment;//审批
     PG_OrderPlanFragment pg_orderPlanFragment;//订单排班
     PG_NotPayDepositFragment pg_notPayDepositFragment;//待付定金
@@ -98,11 +112,26 @@ public class PG_OrderManager extends Activity
     TextView tv_number_waitingForHarvest;
     @ViewById
     TextView tv_number_waitingForSettlement;
+    @ViewById
+    View view_topline;
 
     @Click
     void btn_back()
     {
         finish();
+    }
+
+    @Click
+    void btn_filfer()
+    {
+        if (list_filferbean == null)
+        {
+            getSaleFilferData();
+        } else
+        {
+            showPop_Filfer();
+        }
+
     }
 
     @Click
@@ -152,7 +181,6 @@ public class PG_OrderManager extends Activity
     @AfterViews
     void afterOncreate()
     {
-        orderTypeNum();
 //        getNeedOrders();
 //        getAllOrders();
         setBackground(0);
@@ -170,11 +198,16 @@ public class PG_OrderManager extends Activity
         pg_waitForHarvestFragment = new PG_WaitForHarvestFragment_();
         pg_waitForSettlementFragment = new PG_WaitForSettlementFragment_();
         pg_allOrderFragment_new = new PG_AllOrderFragment_New_();
-   /*     IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATELISTNUMBER);
-        registerReceiver(receiver_update, intentfilter_update);*/
+        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATELISTNUMBER);
+        registerReceiver(receiver_update, intentfilter_update);
     }
 
-/*    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    private void getSaleFilferData()
+    {
+        list_filferbean = FileHelper.getAssetsData(PG_OrderManager.this, "getSaleFilferData", FilferBean_Sale.class);
+    }
+
+    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
@@ -225,87 +258,8 @@ public class PG_OrderManager extends Activity
                 }
             }
         }
-    };*/
-private void orderTypeNum()
-{
-    commembertab commembertab = AppContext.getUserInfo(PG_OrderManager.this);
-    RequestParams params = new RequestParams();
-    params.addQueryStringParameter("uid", commembertab.getuId());
-    params.addQueryStringParameter("userId", commembertab.getId());
-    params.addQueryStringParameter("action", "orderTypeNum");//
-    HttpUtils http = new HttpUtils();
-    http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-            {
-                @Override
-                public void onSuccess(ResponseInfo<String> responseInfo)
-                {
-                    String a = responseInfo.result;
-                    List<OrderTypeNum> listData = new ArrayList<OrderTypeNum>();
-                    Result result = JSON.parseObject(responseInfo.result, Result.class);
-                    if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                    {
-                        if (result.getAffectedRows() != 0)
-                        {
-                            OrderTypeNum orderTypeNum = new OrderTypeNum();
-                            listData = JSON.parseArray(result.getRows().toJSONString(), OrderTypeNum.class);
-                            if (listData.size() > 0)
-                            {
-                                orderTypeNum = listData.get(0);
-                            }
-                            //1
-                            if (!orderTypeNum.getTypeNum1().equals("0"))
-                            {
-                                tv_number_needapprove.setVisibility(View.VISIBLE);
-                                tv_number_needapprove.setText("(" + orderTypeNum.getTypeNum1() + ")");
-                            } else
-                            {
-                                tv_number_needapprove.setVisibility(View.GONE);
-                            }
-//2
-                            if (!orderTypeNum.getTypeNum2().equals("0"))
-                            {
-                                tv_number_notpaydeposit.setVisibility(View.VISIBLE);
-                                tv_number_notpaydeposit.setText("(" + orderTypeNum.getTypeNum2() + ")");
-                            } else
-                            {
-                                tv_number_notpaydeposit.setVisibility(View.GONE);
-                            }
+    };
 
-//3
-                            if (!orderTypeNum.getTypeNum3().equals("0"))
-                            {
-                                tv_number_waitingForHarvest.setVisibility(View.VISIBLE);
-                                tv_number_waitingForHarvest.setText("(" + orderTypeNum.getTypeNum3() + ")");
-                            } else
-                            {
-                                tv_number_waitingForHarvest.setVisibility(View.GONE);
-                            }
-//4
-                            if (!orderTypeNum.getTypeNum4().equals("0"))
-                            {
-                                tv_number_waitingForSettlement.setVisibility(View.VISIBLE);
-                                tv_number_waitingForSettlement.setText("(" + orderTypeNum.getTypeNum4() + ")");
-                            } else
-                            {
-                                tv_number_waitingForSettlement.setVisibility(View.GONE);
-                            }
-                        }
-
-
-                    }
-
-                }
-
-                @Override
-                public void onFailure (HttpException error, String msg)
-                {
-                    AppContext.makeToast(PG_OrderManager.this, "error_connectServer");
-
-                }
-            }
-
-    );
-}
     public void switchContent(Fragment from, Fragment to)
     {
         if (mContent != to)
@@ -517,6 +471,93 @@ private void orderTypeNum()
 
             }
         });
+    }
+
+    public void showPop_Filfer()
+    {
+        LayoutInflater layoutInflater = (LayoutInflater) PG_OrderManager.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        pv_tab = layoutInflater.inflate(R.layout.pop_salefilfer, null);// 外层
+        pv_tab.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_tab.isShowing()))
+                {
+                    pw_tab.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        pv_tab.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (pw_tab.isShowing())
+                {
+                    pw_tab.dismiss();
+                }
+                return false;
+            }
+        });
+        pw_tab = new PopupWindow(pv_tab, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+        //设置layout在PopupWindow中显示的位置
+        pw_tab.setAnimationStyle(R.style.rightinrightout);
+        pw_tab.showAsDropDown(view_topline, 0, 0);//置于顶部线下方
+        pw_tab.showAtLocation(getLayoutInflater().inflate(R.layout.cz_ordermanager, null), Gravity.RIGHT | Gravity.TOP, 0, 0);
+        pw_tab.setOutsideTouchable(true);
+        //关闭事件
+        pw_tab.setOnDismissListener(new popupDismissListener());
+        //设置背景半透明
+        backgroundAlpha(0.5f);
+        ColorDrawable dw = new ColorDrawable(0xffffffff);
+        pw_tab.setBackgroundDrawable(dw);
+
+        Button btn_sure = (Button) pv_tab.findViewById(R.id.btn_sure);
+        CustomExpandableListView expandableListView = (CustomExpandableListView) pv_tab.findViewById(R.id.expandableListView);
+        Adapter_FilferData_Sale adapter_filfer_sale = new Adapter_FilferData_Sale(PG_OrderManager.this, list_filferbean, expandableListView);
+        expandableListView.setAdapter(adapter_filfer_sale);
+        utils.setListViewHeight(expandableListView);
+        for (int i = 0; i < list_filferbean.size(); i++)
+        {
+            expandableListView.expandGroup(i);//展开
+        }
+        btn_sure.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                pw_tab.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     *
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+
+    /**
+     * 添加新笔记时弹出的popWin关闭的事件，主要是为了将背景透明度改回来
+     */
+    class popupDismissListener implements PopupWindow.OnDismissListener
+    {
+
+        @Override
+        public void onDismiss()
+        {
+            backgroundAlpha(1f);
+        }
+
     }
 
 }

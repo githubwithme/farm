@@ -137,7 +137,7 @@ public class PG_Adapter_Dynamic extends BaseAdapter
                 listItemView.tv_note.setText("无");
             }
 
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_cmd);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_instruction);
         } else if (type.equals("GZ"))
         {
             listItemView.tv_title.setText("工作");
@@ -148,7 +148,7 @@ public class PG_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.logo1);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_instruction);
         } else if (type.equals("MQ"))
         {
             listItemView.tv_title.setText("苗情");
@@ -160,7 +160,7 @@ public class PG_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_plant);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_seedlings);
         } else if (type.equals("XS"))
         {
             listItemView.tv_title.setText("销售");
@@ -172,7 +172,7 @@ public class PG_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_sale1);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_sales_management);
         } else if (type.equals("KC"))
         {
             listItemView.tv_title.setText("库存");
@@ -184,7 +184,7 @@ public class PG_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_googs);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_warehouse_supplies);
         } else if (type.equals("SP"))
         {
             listItemView.tv_title.setText("审批");
@@ -196,7 +196,7 @@ public class PG_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_sale1);
+            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_money);
         } else if (type.equals("SJ"))
         {
             listItemView.tv_title.setText("事件");
@@ -208,7 +208,7 @@ public class PG_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_event);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_emergencies);
         } else if (type.equals("DL"))
         {
             listItemView.tv_title.setText("断蕾");
@@ -220,7 +220,7 @@ public class PG_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_plant);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_bud_break);
         }
 
         if(dynamicBean.getListdata().size()>0)

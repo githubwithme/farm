@@ -176,17 +176,24 @@ public class PG_DynamicFragment extends Fragment
                     Iterator<DynamicBean> it = list.iterator();
                     while (it.hasNext())
                     {
-                        DynamicBean dynamicBean=new DynamicBean();
-                        dynamicBean=it.next();
-//                        String value = it.next().getType();
-                        if (dynamicBean.getType().equals("GZ")||dynamicBean.getType().equals("ZL"))
+                        DynamicBean dynamicBean = new DynamicBean();
+                        dynamicBean = it.next();
+                        if (dynamicBean.getType().equals("GZ") || dynamicBean.getType().equals("ZL"))
                         {
                             it.remove();
                         }
                     }
 
-//                    list = utils.BubbleSortArray(list);//本地不行
-                    adapter_dynamic = new PG_Adapter_Dynamic(getActivity(), list,listDatas);
+                    List<DynamicBean> list_new = new ArrayList();
+                    for (int i = 0; i < list.size(); i++)
+                    {
+                        String type = list.get(i).getType();
+                        if (type.equals("DL") || type.equals("XS"))
+                        {
+                            list_new.add(list.get(i));
+                        }
+                    }
+                    adapter_dynamic = new PG_Adapter_Dynamic(getActivity(), list_new, listDatas);
                     lv.setAdapter(adapter_dynamic);
 
                 } else
@@ -450,7 +457,6 @@ public class PG_DynamicFragment extends Fragment
             this.stop = stop;
         }
     }
-
 
 
 }

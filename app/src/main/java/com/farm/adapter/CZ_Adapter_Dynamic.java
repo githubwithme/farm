@@ -21,11 +21,14 @@ import com.farm.bean.Result;
 import com.farm.bean.commembertab;
 import com.farm.bean.jobtab;
 import com.farm.common.utils;
+import com.farm.ui.CZ_BreakOffActivity;
+import com.farm.ui.CZ_BreakOffActivity_;
 import com.farm.ui.CZ_CommandListActivity_;
 import com.farm.ui.CZ_DLFragment_;
 import com.farm.ui.CZ_JobActivity_;
 import com.farm.ui.CZ_MQActivity_;
 import com.farm.ui.CZ_OrderManager_;
+import com.farm.ui.CZ_OrderManager_New_;
 import com.farm.ui.Ncz_wz_ll_;
 import com.farm.ui.PG_ListOfEvents_;
 import com.farm.ui.SelectorCommand_;
@@ -140,7 +143,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
                 listItemView.tv_note.setText("无");
             }
 
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_cmd);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_instruction);
         }else if (type.equals("ZL"))
         {
             listItemView.tv_title.setText("指令");
@@ -152,7 +155,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_cmd);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_instruction);
         }
         else if (type.equals("GZ"))
         {
@@ -165,7 +168,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.logo1);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_instruction);
         } else if (type.equals("MQ"))
         {
             listItemView.tv_title.setText("苗情");
@@ -177,7 +180,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_plant);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_seedlings);
         } else if (type.equals("XS"))
         {
             listItemView.tv_title.setText("销售");
@@ -189,7 +192,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_sale1);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_sales_management);
         } else if (type.equals("KC"))
         {
             listItemView.tv_title.setText("库存");
@@ -201,7 +204,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_googs);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_warehouse_supplies);
         } else if (type.equals("SP"))
         {
             listItemView.tv_title.setText("审批");
@@ -213,7 +216,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_sale1);
+            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_money);
         } else if (type.equals("SJ"))
         {
             listItemView.tv_title.setText("事件");
@@ -225,7 +228,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_event);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_emergencies);
         } else if (type.equals("DL"))
         {
             listItemView.tv_title.setText("断蕾");
@@ -237,7 +240,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
             {
                 listItemView.tv_note.setText("无");
             }
-            listItemView.circle_img.setBackgroundResource(R.drawable.newicon_plant);
+            listItemView.circle_img.setBackgroundResource(R.drawable.icon_bud_break);
         }
 
         if(dynamicBean.getListdata().size()>0)
@@ -279,7 +282,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
                 } else if (type.equals("XS"))
                 {
 //                                intent = new Intent(getActivity(), NCZ_FarmSale_.class);
-                    intent = new Intent(context, CZ_OrderManager_.class);//1
+                    intent = new Intent(context, CZ_OrderManager_New_.class);//1
                     context.startActivity(intent);
                 } else if (type.equals("KC"))
                 {
@@ -295,7 +298,7 @@ public class CZ_Adapter_Dynamic extends BaseAdapter
                     context.startActivity(intent);
                 } else if (type.equals("DL"))
                 {
-                    intent = new Intent(context, CZ_DLFragment_.class);//1
+                    intent = new Intent(context, CZ_BreakOffActivity_.class);//1
                     context.startActivity(intent);
                 }
 

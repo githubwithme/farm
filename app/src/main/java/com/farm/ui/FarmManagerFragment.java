@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -134,8 +135,9 @@ public class FarmManagerFragment extends Fragment
     @Click
     void btn_search()
     {
-        Intent intent = new Intent(getActivity(), SearchAllInformation_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), SearchAllInformation_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     //    @Click
@@ -148,30 +150,35 @@ public class FarmManagerFragment extends Fragment
     void rl_zl()
     {
 //        Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-        Intent intent = new Intent(getActivity(), NCZ_CommandActivity_.class);
-//        Intent intent = new Intent(getActivity(), PG_CommandActivity_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_CommandActivity_.class);
+////        Intent intent = new Intent(getActivity(), PG_CommandActivity_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+
     }
 
     @Click
     void rl_gz()
     {
-        Intent intent = new Intent(getActivity(), NCZ_JobActivity_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_JobActivity_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
     void rl_mq()
     {
-        Intent intent = new Intent(getActivity(), NCZ_MQActivity_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_MQActivity_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
     void rl_sj()
     {
-        Intent intent = new Intent(getActivity(), NCZ_SJActivity_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_SJActivity_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -192,8 +199,15 @@ public class FarmManagerFragment extends Fragment
     void rl_kc()
     {
 //        Intent intent = new Intent(getActivity(), Ncz_wz_ll_.class);
-        Intent intent = new Intent(getActivity(), NCZ_GoogdsManagerActivity_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_GoogdsManagerActivity_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Click
+    void img_location()
+    {
+        Toast.makeText(getActivity(), "该农场暂无其他城市分布!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -212,8 +226,9 @@ public class FarmManagerFragment extends Fragment
     @Click
     void rl_cw()
     {
-        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -227,16 +242,18 @@ public class FarmManagerFragment extends Fragment
     @Click
     void ll_sp()
     {
-        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
     void rl_tj()
     {
 //        Intent intent = new Intent(getActivity(), NCZ_Statistics_.class);
-        Intent intent = new Intent(getActivity(), NCZ_AnalysisModule_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_AnalysisModule_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
 //    @Click
@@ -250,25 +267,27 @@ public class FarmManagerFragment extends Fragment
     @Click
     void rl_sk()
     {
-        Intent intent = new Intent(getActivity(), NCZ_FarmMapActivity_.class);
-        intent.putExtra("parkid", "80");
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_FarmMapActivity_.class);
+//        intent.putExtra("parkid", "80");
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
     void ll_weather()
     {
-        Intent intent = new Intent(getActivity(), WeatherActivity_.class);
-        intent.putExtra("parkid", "80");
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), WeatherActivity_.class);
+//        intent.putExtra("parkid", "80");
+//        getActivity().startActivity(intent);
     }
 
     @Click
     void rl_more()
     {
-        Intent intent = new Intent(getActivity(), NCZ_MoreModule_.class);
-        intent.putExtra("parkid", "80");
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_MoreModule_.class);
+//        intent.putExtra("parkid", "80");
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

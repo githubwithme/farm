@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.farm.R;
 
@@ -49,22 +50,26 @@ public class PG_FarmManagerFragment extends Fragment
 //        showPop_add();
     }
 
+    //    @Click
+//    void ll_workplan()
+//    {
+//        Intent intent = new Intent(getActivity(), PG_Workplan_.class);
+//        getActivity().startActivity(intent);
+//    }
     @Click
-    void ll_workplan()
+    void rl_zl()
     {
-        Intent intent = new Intent(getActivity(), PG_Workplan_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), PG_CommandActivity_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
+
     @Click
-    void ll_zl()
-    {
-        Intent intent = new Intent(getActivity(), PG_CommandActivity_.class);
-        getActivity().startActivity(intent);
-    }    @Click
     void ll_gz()
     {
-        Intent intent = new Intent(getActivity(), PG_JobFragment_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), PG_JobFragment_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
 //    @Click
@@ -79,34 +84,38 @@ public class PG_FarmManagerFragment extends Fragment
     @Click
     void btn_search()
     {
-        Intent intent = new Intent(getActivity(), SearchAllInformation_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), SearchAllInformation_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
 
     @Click
-    void ll_mq()
+    void rl_mq()
     {
-        Intent intent = new Intent(getActivity(), PG_GddList_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), PG_GddList_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
-    void ll_sj()
+    void rl_sj()
     {
-        Intent intent = new Intent(getActivity(), PG_ListOfEvents_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), PG_ListOfEvents_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
-    void ll_kc()
+    void rl_kc()
     {
-        Intent intent = new Intent(getActivity(), PG_CKList_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), PG_CKList_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
-    void ll_xs()
+    void rl_xs()
     {
 //        Intent intent = new Intent(getActivity(), PG_SaleActivity_.class);
         Intent intent = new Intent(getActivity(), PG_New_SaleActinity_.class);
@@ -114,14 +123,15 @@ public class PG_FarmManagerFragment extends Fragment
     }
 
     @Click
-    void ll_cw()
+    void rl_cw()
     {
-        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
-    void ll_dl()
+    void rl_dl()
     {
 //        Intent intent = new Intent(getActivity(), PQ_DLFragment_.class);
         Intent intent = new Intent(getActivity(), PG_BreakOffActivity_.class);
@@ -130,21 +140,51 @@ public class PG_FarmManagerFragment extends Fragment
 
 
     @Click
-    void ll_tj()
+    void rl_tj()
     {
 //        Intent intent = new Intent(getActivity(), NCZ_Statistics_.class);
-        Intent intent = new Intent(getActivity(), NCZ_AnalysisModule_.class);
+//        Intent intent = new Intent(getActivity(), NCZ_AnalysisModule_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Click
+    void rl_more()
+    {
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+    }
+    @Click
+    void img_location()
+    {
+        Toast.makeText(getActivity(), "该农场暂无其他城市分布!", Toast.LENGTH_SHORT).show();
+    }
+    @Click
+    void rl_sk()
+    {
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+    }
+
+//    @Click
+//    void ll_tq()
+//    {
+//        Intent intent = new Intent(getActivity(), WeatherActivity_.class);
+//        intent.putExtra("parkid", "80");
+//        getActivity().startActivity(intent);
+//    }
+
+    @Click
+    void rl_dd()
+    {
+        Intent intent = new Intent(getActivity(), PG_OrderManager_.class);
         getActivity().startActivity(intent);
     }
 
     @Click
-    void ll_tq()
+    void rl_ht()
     {
-        Intent intent = new Intent(getActivity(), WeatherActivity_.class);
-        intent.putExtra("parkid", "80");
+        Intent intent = new Intent(getActivity(), NCZ_CustomerContract_.class);
         getActivity().startActivity(intent);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

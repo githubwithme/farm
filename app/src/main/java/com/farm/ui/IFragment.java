@@ -81,6 +81,8 @@ public class IFragment extends Fragment
     RelativeLayout rl_userinfo;
     @ViewById
     CircleImageView circle_img;
+    @ViewById
+    TextView tv_name;
 
 
     @Click
@@ -160,11 +162,7 @@ public class IFragment extends Fragment
     void afterOncreate()
     {
         commembertab = AppContext.getUserInfo(getActivity());
-//        tv_username.setText(commembertab.getparkName() + commembertab.getareaName() + "-" + commembertab.getuserlevelName() + ":" + commembertab.getrealName());
-    /*    if (commembertab.getnlevel().equals("0"))
-        {
-            ll_startBreakoff.setVisibility(View.VISIBLE);
-        }*/
+        tv_name.setText(commembertab.getrealName() + "【" + commembertab.getuserlevelName() + "】");
         BitmapHelper.setImageViewBackground(getActivity(), circle_img, AppConfig.baseurl + commembertab.getimgurl());
         getNew();
     }

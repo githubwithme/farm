@@ -104,10 +104,15 @@ public class RecoveryDetail extends Activity
 
 
     @Click
-//准备就绪
     void btn_isready()
     {
         showDeleteTip();
+    }
+
+    @Click
+    void btn_back()
+    {
+        finish();
     }
 
     private void showDeleteTip()

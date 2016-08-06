@@ -3,7 +3,7 @@
 
   "getGoods":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":["钾肥","磷肥","羊粪","氮肥"],"other":[]},
 
-  "getSaleFilferData":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"type":"产品","listdata":["香蕉","柑橘","芒果"]}],"other":[]},
+  "getSaleFilferData":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"type":"产品","listdata":["香蕉"]}],"other":[]},
 
   "getParkAndArea":{"ResultCode":1,"Exception":"null","AffectedRows":"1","Rows":[{"parkName":"乐丰分场","areatabList":[{"areaName":"一号片区"},{"areaName":"二号片区"},{"areaName":"三号片区"}]},{"parkName":"双桥分场","areatabList":[{"areaName":"一号片区"},{"areaName":"二号片区"},{"areaName":"三号片区"}]},{"parkName":"华兴分场","areatabList":[{"areaName":"一号片区"},{"areaName":"二号片区"},{"areaName":"三号片区"}]}],"other":[]},
 

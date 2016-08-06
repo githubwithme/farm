@@ -170,61 +170,73 @@ public class DynamicFragment extends Fragment
         params.addQueryStringParameter("action", "GetDynamicData1");
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String aa = responseInfo.result;
-                List<DynamicBean> list = null;
-                listData = new ArrayList<DynamicBean>();
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    list = JSON.parseArray(result.getRows().toJSONString(), DynamicBean.class);
-                    for (int i = 0; i < list.size(); i++)
+                    @Override
+                    public void onSuccess(ResponseInfo<String> responseInfo)
                     {
-                        if (list.get(i).getListdata().size() != 0)
+                        String aa = responseInfo.result;
+                        List<DynamicBean> list = null;
+                        listData = new ArrayList<DynamicBean>();
+                        Result result = JSON.parseObject(responseInfo.result, Result.class);
+                        if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                         {
-                            for (int l = 0; l < list.get(i).getListdata().size(); l++)
+                            list = JSON.parseArray(result.getRows().toJSONString(), DynamicBean.class);
+                            for (int i = 0; i < list.size(); i++)
                             {
-                                if (list.get(i).getListdata().get(l).getFlashStr().equals("1"))
+                                if (list.get(i).getListdata().size() != 0)
                                 {
-                                    k++;
+                                    for (int l = 0; l < list.get(i).getListdata().size(); l++)
+                                    {
+                                        if (list.get(i).getListdata().get(l).getFlashStr().equals("1"))
+                                        {
+                                            k++;
+                                        }
+                                    }
+                                    listData.add(list.get(i));
                                 }
                             }
-                            listData.add(list.get(i));
-                        }
-                    }
-                    list = utils.BubbleSortArray(list);//本地不行
-                    Intent intent = new Intent();
-                    intent.putExtra("Num", k + "");
-                    intent.setAction(AppContext.BROADCAST_NCZ_DT);
-                    getActivity().sendBroadcast(intent);
-                    k = 0;
-                    adapter_dynamic = new Adapter_Dynamic(getActivity(), list);
-                    lv.setAdapter(adapter_dynamic);
-                } else
-                {
-                    Toast.makeText(getActivity(), "连接数据库异常", Toast.LENGTH_SHORT).show();
-                    dialog.loadingTip(getText(R.string.error_data).toString());
-                    return;
-                }
-                dialog.dismiss();
-            }
+                            list = utils.BubbleSortArray(list);//本地不行
+                            Intent intent = new Intent();
+                            intent.putExtra("Num", k + "");
+                            intent.setAction(AppContext.BROADCAST_NCZ_DT);
+                            getActivity().sendBroadcast(intent);
+                            k = 0;
 
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                String a = msg;
-                Toast.makeText(getActivity(), "连接服务器异常", Toast.LENGTH_SHORT).show();
-                dialog.loadingTip(getText(R.string.error_network).toString());
+                            List<DynamicBean> list_new = new ArrayList();
+                            for (int i = 0; i < list.size(); i++)
+                            {
+                                String type = list.get(i).getType();
+                                if (type.equals("DL") || type.equals("XS"))
+                                {
+                                    list_new.add(list.get(i));
+                                }
+                            }
+                            adapter_dynamic = new Adapter_Dynamic(getActivity(), list_new);
+                            lv.setAdapter(adapter_dynamic);
+                        } else
+                        {
+                            Toast.makeText(getActivity(), "连接数据库异常", Toast.LENGTH_SHORT).show();
+                            dialog.loadingTip(getText(R.string.error_data).toString());
+                            return;
+                        }
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException error, String msg)
+                    {
+                        String a = msg;
+                        Toast.makeText(getActivity(), "连接服务器异常", Toast.LENGTH_SHORT).show();
+                        dialog.loadingTip(getText(R.string.error_network).toString());
 //                AppContext.makeToast(getActivity(), "error_connectServer");
 //                if (!ishidding && timethread != null)
 //                {
 //                    timethread.setSleep(false);
 //                }
-            }
-        });
+                    }
+                }
+
+        );
     }
 
     private void getDynamicData_temp()
