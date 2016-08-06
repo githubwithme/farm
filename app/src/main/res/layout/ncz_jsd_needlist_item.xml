@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="horizontal">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="41dip"
@@ -15,13 +16,9 @@
             android:background="@color/white"
             android:gravity="center"
             android:text="批次"
-            android:textColor="@color/bg_text"
+            android:textColor="@color/text_table_horizontitle"
             android:textSize="15sp"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/gray"/>
     </LinearLayout>
 
 
@@ -51,11 +48,6 @@
 
             </LinearLayout>
         </com.farm.widget.CustomHorizontalScrollView_Allitem>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/gray"/>
     </LinearLayout>
 
 
@@ -65,10 +57,10 @@
         android:background="@color/gray"/>
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="41dip"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/item_total"

@@ -77,12 +77,14 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
     {
         finish();
     }
+
     @AfterViews
     void afterview()
     {
         customOntouch = this;
         getDetailSecBysettleId();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -90,6 +92,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
         sellOrder_new = getIntent().getParcelableExtra("zbstudio");
         getActionBar().hide();
     }
+
     @Override
     public void customOnTouchEvent(HorizontalScrollView horizontalScrollView)
     {
@@ -111,6 +114,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
     {
         return mTouchView;
     }
+
     public void getDetailSecBysettleId()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_JSD_NeedList.this);
@@ -129,37 +133,27 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                   /* if (result.getAffectedRows() != 0)
-                    {*/
+                    listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+                    listData.addAll(listNewData);
 
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        listData.addAll(listNewData);
-
-                        DensityUtil densityUtil = new DensityUtil(NCZ_JSD_NeedList.this);
-                        screenWidth = densityUtil.getScreenWidth();
-                        int size =3;
-                        if (size == 1)
-                        {
-                            screenWidth = screenWidth / 3;
-                        } else if (size == 2)
-                        {
-                            screenWidth = screenWidth / 4;
-                        } else
-                        {
-                            screenWidth = screenWidth / 5;
-                        }
-                        tv_top_left.getLayoutParams().width = (screenWidth);
-                        tv_top_right.getLayoutParams().width = (screenWidth);
-                        tv_bottom_left.getLayoutParams().width = (screenWidth);
-                        alltoatal.getLayoutParams().width = (screenWidth);
-                        initViews();
-
-
-
-             /*       } else
+                    DensityUtil densityUtil = new DensityUtil(NCZ_JSD_NeedList.this);
+                    screenWidth = densityUtil.getScreenWidth();
+                    int size = 3;
+                    if (size == 1)
                     {
-                        listNewData = new ArrayList<SellOrder_New>();
-                    }*/
+                        screenWidth = screenWidth / 4;
+                    } else if (size == 2)
+                    {
+                        screenWidth = screenWidth / 4;
+                    } else
+                    {
+                        screenWidth = screenWidth / 4;
+                    }
+                    tv_top_left.getLayoutParams().width = (screenWidth);
+                    tv_top_right.getLayoutParams().width = (screenWidth);
+                    tv_bottom_left.getLayoutParams().width = (screenWidth);
+                    alltoatal.getLayoutParams().width = (screenWidth);
+                    initViews();
 
                 } else
                 {
@@ -176,6 +170,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
             }
         });
     }
+
     private void initViews()
     {
         int allnumber = 0;
@@ -183,7 +178,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
         ll_park.removeAllViews();
         ll_total.removeAllViews();
         LayoutInflater inflater = (LayoutInflater) NCZ_JSD_NeedList.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        String[] name = new String[]{"车辆","实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
+        String[] name = new String[]{"车辆", "实际金额", "合计金额", "总净重", "审批情况", "正品结算金额", "正品单价", "正品净重", "总包装费", "总搬运费"};
 //        String[] name = new String[]{"实际金额", "合计金额"};
         for (int i = 0; i < name.length; i++)
         {
@@ -326,6 +321,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
         mListView.setAdapter(mAdapter);
         utils.setListViewHeight(mListView);
     }
+
     public void addHViews(final CustomHorizontalScrollView_Allitem hScrollView)
     {
         if (!mHScrollViews.isEmpty())
@@ -349,6 +345,7 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
         }
         mHScrollViews.add(hScrollView);
     }
+
     class ScrollAdapter extends BaseAdapter
     {
 
@@ -394,6 +391,13 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
 //            {
             // 获取list_item布局文件的视图
             convertView = LayoutInflater.from(NCZ_JSD_NeedList.this).inflate(R.layout.ncz_jsd_needlist_item, null);
+            if (position % 2 == 0)
+            {
+                convertView.setBackgroundResource(R.color.bg_table_row);
+            } else
+            {
+                convertView.setBackgroundResource(R.color.white);
+            }
             listItemView = new ListItemView();
             listItemView.item_titlev = (TextView) convertView.findViewById(R.id.item_titlev);
             listItemView.item_total = (TextView) convertView.findViewById(R.id.item_total);
@@ -418,17 +422,17 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                 convertView.setBackgroundResource(R.color.white);
             }
 
-            if (listData.get(position).getIsNeedAudit().equals("0")||listData.get(position).getSettlestatus().equals("0"))
+            if (listData.get(position).getIsNeedAudit().equals("0") || listData.get(position).getSettlestatus().equals("0"))
             {
 
-            } else if (listData.get(position).getIsNeedAudit().equals("1")||listData.get(position).getSettlestatus().equals("1"))
+            } else if (listData.get(position).getIsNeedAudit().equals("1") || listData.get(position).getSettlestatus().equals("1"))
             {
                 listItemView.item_titlev.setTextColor(NCZ_JSD_NeedList.this.getResources().getColor(R.color.green));
-            } else if (listData.get(position).getIsNeedAudit().equals("-1")||listData.get(position).getSettlestatus().equals("-1"))
+            } else if (listData.get(position).getIsNeedAudit().equals("-1") || listData.get(position).getSettlestatus().equals("-1"))
             {
                 listItemView.item_titlev.setTextColor(NCZ_JSD_NeedList.this.getResources().getColor(R.color.red));
             }
-            listItemView.item_titlev.setText("结算单"+(position+1));
+            listItemView.item_titlev.setText("结算单" + (position + 1));
             listItemView.item_titlev.setTag(R.id.tag_batchtime, listData.get(position));
             listItemView.item_titlev.setOnClickListener(clickListener);
             // 第一次初始化的时候装进来
@@ -470,16 +474,16 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
                     case 4:
-                        if (listData.get(position).getIsNeedAudit().equals("0")||listData.get(position).getSettlestatus().equals("0"))
+                        if (listData.get(position).getIsNeedAudit().equals("0") || listData.get(position).getSettlestatus().equals("0"))
                         {
                             listItemView.btn_data.setText("待审批");
-                        } else if (listData.get(position).getIsNeedAudit().equals("-1")||listData.get(position).getSettlestatus().equals("-1"))
+                        } else if (listData.get(position).getIsNeedAudit().equals("-1") || listData.get(position).getSettlestatus().equals("-1"))
                         {
                             listItemView.btn_data.setText("审批不通过");
-                        } else if (listData.get(position).getIsNeedAudit().equals("1")||listData.get(position).getSettlestatus().equals("1"))
+                        } else if (listData.get(position).getIsNeedAudit().equals("1") || listData.get(position).getSettlestatus().equals("1"))
                         {
                             listItemView.btn_data.setText("审批通过");
-                        }else
+                        } else
                         {
                             listItemView.btn_data.setText("未反馈");
                         }
@@ -544,12 +548,11 @@ public class NCZ_JSD_NeedList extends Activity implements CustomHorizontalScroll
         public void onClick(View v)
         {
             v.setBackgroundResource(R.drawable.linearlayout_green_round_selector);
-            SellOrder_New sellOrder_neww=new SellOrder_New();
-            sellOrder_neww= (SellOrder_New) v.getTag(R.id.tag_batchtime);
+            SellOrder_New sellOrder_neww = new SellOrder_New();
+            sellOrder_neww = (SellOrder_New) v.getTag(R.id.tag_batchtime);
             Intent intent = new Intent(NCZ_JSD_NeedList.this, NCZ__NeedOrder_Detail_.class);
             intent.putExtra("bean", sellOrder_neww);
             intent.putExtra("sellOrder_new", sellOrder_new);
-
             NCZ_JSD_NeedList.this.startActivity(intent);
 
         }

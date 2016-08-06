@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/color_topbar">
+
+        <ImageButton
+            android:id="@+id/imgbtn_back"
+            android:layout_width="35dip"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:contentDescription=""
+            android:src="@drawable/ic_back"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/imgbtn_back"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:text="审批结算单"
+            android:textColor="@color/white"
+            android:textSize="@dimen/titlebar_textsize"/>
+
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"/>
+</LinearLayout>

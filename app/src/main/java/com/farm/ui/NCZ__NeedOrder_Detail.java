@@ -301,7 +301,6 @@ public class NCZ__NeedOrder_Detail extends Activity
     private void updatesellOrderSettlement(String isNeedAudit, String settlestatus)
     {
 
-
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("id", sellOrder.getid());
         params.addQueryStringParameter("settlestatus", settlestatus);
