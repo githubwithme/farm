@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/line_color"
-                android:visibility="gone"/>/>
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/line_color"
-                android:visibility="gone"/>/>
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -141,7 +141,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color"/>/>
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -176,7 +176,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color"/>/>
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -211,7 +211,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color"/>/>
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -246,7 +246,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color"/>/>
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -281,7 +281,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color"/>/>
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -316,7 +316,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color"/>/>
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -351,7 +351,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/line_color"/>/>
+                android:background="@color/line_color"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -388,7 +388,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/line_color"
-                android:visibility="gone"/>/>
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -425,7 +425,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:alpha="0.5"
-                android:background="@color/text_table_horizontitle"/>/>
+                android:background="@color/text_table_horizontitle"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -474,7 +474,7 @@
                     android:layout_width="1px"
                     android:layout_height="match_parent"
                     android:layout_toLeftOf="@+id/btn_Approval"
-                    android:background="@color/white"/>/>
+                    android:background="@color/white"/>
 
                 <Button
                     android:id="@+id/btn_reject"
@@ -496,7 +496,7 @@
                     android:layout_width="1px"
                     android:layout_height="match_parent"
                     android:layout_toLeftOf="@+id/btn_reject"
-                    android:background="@color/white"/>/>
+                    android:background="@color/white"/>
 
                 <Button
                     android:id="@+id/btn_showSettlementDetail"
