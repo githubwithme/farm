@@ -67,6 +67,18 @@ public class NCZ_ApproveSettlement extends Activity
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+
+                    if (listNewData.size()>0)
+                    {
+                        for (int i=0;i<listNewData.size();i++)
+                        {
+                            if (!listNewData.get(i).getIsNeedAudit().equals("0")||!listNewData.get(i).getSettlestatus().equals("0"))
+                            {
+                                listNewData.remove(listNewData.get(i));
+                            }
+
+                        }
+                    }
                     adapter_nczApproveSettlement = new Adapter_NCZApproveSettlement(NCZ_ApproveSettlement.this, listNewData);
                     lv.setAdapter(adapter_nczApproveSettlement);
                 } else

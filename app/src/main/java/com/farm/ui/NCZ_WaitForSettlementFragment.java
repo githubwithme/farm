@@ -167,25 +167,11 @@ public class NCZ_WaitForSettlementFragment extends Fragment {
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
 
+
+
                     listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                     listAdapter = new NCZ_WaitForSettlementAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                     lv.setAdapter(listAdapter);
-                    Intent intent = new Intent();
-                    intent.setAction(AppContext.BROADCAST_UPDATELISTNUMBER);
-                    intent.putExtra("type", AppContext.order_waitForSettlement);
-                    intent.putExtra("number", listData.size());
-                    getActivity().sendBroadcast(intent);
-//                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-//                        {
-//                            @Override
-//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-//                            {
-//                                int a=position;
-//                                Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
-//                                intent.putExtra("bean", listData.get(position));
-//                                getActivity().startActivity(intent);
-//                            }
-//                        });
 
 
                 } else {

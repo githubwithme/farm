@@ -24,6 +24,7 @@ import com.farm.app.AppContext;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
+import com.farm.ui.NCZ_All_OneOrder_Detail_;
 import com.farm.ui.NCZ_ApproveSettlement_;
 import com.farm.ui.NCZ_DD_SH_Detail_;
 import com.farm.ui.NCZ_JSD_NeedList_;
@@ -79,6 +80,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
         public TextView tv_car;
         public TextView tv_readynumber;
         public TextView tv_notreadynumber;
+        public Button btn_orderdetail;
 
     }
 
@@ -133,6 +135,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
             listItemView.tv_notreadynumber = (TextView) convertView.findViewById(R.id.tv_notreadynumber);
+            listItemView.btn_orderdetail = (Button) convertView.findViewById(R.id.btn_orderdetail);
             // 设置控件集到convertViews
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -142,7 +145,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
             convertView = lmap.get(position);
             listItemView = (ListItemView) convertView.getTag();
         }
-         //车辆
+        //车辆
         listItemView.tv_readynumber.setText(sellOrder.getReadyPlate() + "车;");
         listItemView.tv_notreadynumber.setText(sellOrder.getNotReadyPlate() + "车");
         listItemView.tv_car.setText("共" + (Integer.valueOf(sellOrder.getReadyPlate()) + Integer.valueOf(sellOrder.getNotReadyPlate())) + "车;");
@@ -176,6 +179,8 @@ public class NCZ_NeedAdapter extends BaseAdapter
         }
 //        final SpannableString content = new SpannableString(sellOrder.getPurchaName());
 //        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+
+
         listItemView.tv_buyer.setText(sellOrder.getPurchaName());
         listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
         {
@@ -207,7 +212,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
         });
 
 
-        if (sellOrder.getFreeDeposit().equals("0"))
+/*        if (sellOrder.getFreeDeposit().equals("0"))
         {
             listItemView.tv_ask.setText("申请免付定金");
         } else if (sellOrder.getFreeFinalPay().equals("0"))
@@ -222,8 +227,29 @@ public class NCZ_NeedAdapter extends BaseAdapter
         } else if (sellOrder.getSettlestatus().equals("0"))
         {
             listItemView.tv_ask.setText("审批结算单");
-        }
+        }*/
 
+        String status = "";
+        if (sellOrder.getFreeDeposit().equals("0"))
+        {
+            status = status + "申请免定金；";
+        }
+        if (sellOrder.getFreeFinalPay().equals("0"))
+        {
+            status = status + "申请先放车；";
+        }
+        if (sellOrder.getIsNeedAudit().equals("0"))
+        {
+            status = status + "申请修改订单；";
+        }
+        if (sellOrder.getIsNeedAudit().equals("0") && !sellOrder.getCreatorid().equals(""))
+        {
+        }
+        if (sellOrder.getSettlestatus().equals("0"))
+        {
+            status = status + "申请结算单；";
+        }
+        listItemView.tv_ask.setText(status);
         listItemView.btn_showdetail.setTag(R.id.tag_cash, sellOrder);
         listItemView.btn_showdetail.setOnClickListener(new View.OnClickListener()
         {
@@ -278,117 +304,26 @@ public class NCZ_NeedAdapter extends BaseAdapter
 //        }
         listItemView.tv_orderstate.setText(sellOrder.getSelltype());
         listItemView.tv_product.setText(sellOrder.getProduct());
-/*        if (sellOrder.getDeposit().equals("0"))
+
+        listItemView.btn_orderdetail.setTag(R.id.tag_bean, sellOrder);
+        listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener()
         {
-            listItemView.tv_orderstate.setText("等待买家付定金");
-        } else
-        {
-            if (sellOrder.getFinalpayment().equals("0"))
+            @Override
+            public void onClick(View v)
             {
-                listItemView.tv_orderstate.setText("等待买家付尾款");
-            } else
-            {
-                listItemView.tv_orderstate.setText("买家已付尾款");
+                SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
+                commembertab commembertab = AppContext.getUserInfo(context);
+                AppContext.eventStatus(context, "8", sellOrder_new.getUuid(), commembertab.getId());
+                Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
+                intent.putExtra("bean", sellOrder_new);
+                context.startActivity(intent);
             }
-        }*/
-/*            listItemView.btn_cancleorder.setTag(R.id.tag_cash,sellOrder);
-            listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    SellOrder_New sellOrder_new= (SellOrder_New) v.getTag(R.id.tag_cash);
-                    showDeleteTip(sellOrder_new);
-//                    deleteSellOrderAndDetail(sellOrder_new.getUuid());
-                }
-            });*/
-//        listItemView.btn_editorder.setTag(R.id.tag_postion, position);
-//        listItemView.btn_editorder.setTag(R.id.tag_bean, sellOrder);
-//        listItemView.btn_editorder.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                int pos = (int) v.getTag(R.id.tag_postion);
-//                SellOrder_New sellOrder = (SellOrder_New) v.getTag(R.id.tag_bean);
-//                Intent intent = new Intent(context, NCZ_EditOrder_.class);
-//                intent.putExtra("bean", sellOrder);
-//                intent.putExtra("broadcast", broadcast);
-//                context.startActivity(intent);
-//            }
-//        });
-        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work, R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
-        if (name.equals(""))
-        {
-            name += sellOrder.getMainPepole() + ",";
-        }
+        });
 
-//        for(int i=0;i<position;i++)
-        int str = position;
-
-
-        //                String[] nongzi = commandtab.getnongziName().split(",");
-
-//        if (name.indexOf(listItems.get(position).getMainPepole()) != -1)
-//        {
-//            String[] data = name.split(",");
-//            for (int j = 0; j < data.length; j++)
-//            {
-//                if (data[j].equals(listItems.get(position).getMainPepole()))
-//                    listItemView.circle_img.setImageResource(color[j % color.length]);
-//                int x = j % color.length;
-//            }
-//        } else
-//        {
-//            String[] data = name.split(",");
-//            name += listItems.get(position).getMainPepole() + ",";
-//            listItemView.circle_img.setImageResource(color[(data.length) % color.length]);
-//            int y = (data.length) % color.length;
 //        }
         return convertView;
     }
 
-    private void deleteSellOrderAndDetail(String uuid)
-    {
-
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uuid", uuid);
-        params.addQueryStringParameter("action", "deleteSellOrderAndDetail");//jobGetList1
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-               /* if (result.getAffectedRows() != 0)
-                {
-                    listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-
-                } else
-                {
-                    listData = new ArrayList<SellOrder_New>();
-                }*/
-
-                } else
-                {
-                    AppContext.makeToast(context, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(context, "error_connectServer");
-
-            }
-        });
-    }
 
     public void showDialog_addsaleinfo(final String phone)
     {
@@ -408,12 +343,6 @@ public class NCZ_NeedAdapter extends BaseAdapter
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
                 {
                     // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
                 context.startActivity(intent);

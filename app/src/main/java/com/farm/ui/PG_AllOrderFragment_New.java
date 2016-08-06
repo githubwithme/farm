@@ -157,37 +157,13 @@ public class PG_AllOrderFragment_New extends Fragment
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
-//                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+
                         listData = JSON.parseArray(result.getRows().toJSONString(), OrderPlanBean.class);
-        /*                Iterator<SellOrder_New> it = listData.iterator();
-                        while (it.hasNext())
-                        {
-                            String value = it.next().getSelltype();
-                            if (value.equals("已完成") || value.equals("待审批"))
-                            {
-                                it.remove();
-                            }
-                        }*/
+
                         listAdapter = new PG_AllOrderAdapter_New(getActivity(), listData.get(0).getSellOrderList(), AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
-   /*                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                        {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                            {
-//                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-                                Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
-                                intent.putExtra("bean", listData.get(position));
-                                getActivity().startActivity(intent);
-                            }
-                        });*/
 
-                    } else
-                    {
-                        listData = new ArrayList<OrderPlanBean>();
-                    }
+
 
                 } else
                 {

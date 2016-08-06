@@ -166,29 +166,11 @@ public class PG_NeedApproveOrderFragment extends Fragment
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         listAdapter = new PG_NeedAdapter(getActivity(), listData, AppContext.UPDATEMESSAGE_FARMMANAGER);
                         lv.setAdapter(listAdapter);
-/*                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                        {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                            {
 
-                                commembertab commembertab = AppContext.getUserInfo(getActivity());
-                                AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-                                Intent intent = new Intent(getActivity(), PG_Need_Orderdetail_.class);
-                                intent.putExtra("bean", listData.get(position));
-                                getActivity().startActivity(intent);
-                            }
-                        });*/
-
-                    } else
-                    {
-                        listData = new ArrayList<SellOrder_New>();
-                    }
 
                 } else
                 {
@@ -510,7 +492,7 @@ public class PG_NeedApproveOrderFragment extends Fragment
 
                         listAdapter = new PG_NeedAdapter(getActivity(), listData, AppContext.UPDATEMESSAGE_FARMMANAGER);
                         lv.setAdapter(listAdapter);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                    /*    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
                         {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -522,7 +504,7 @@ public class PG_NeedApproveOrderFragment extends Fragment
                                 intent.putExtra("bean", listData.get(position));
                                 getActivity().startActivity(intent);
                             }
-                        });
+                        });*/
 
                     } else
                     {

@@ -263,31 +263,6 @@ public class PG_NeedAdapter extends BaseAdapter
 
 
         listItemView.tv_buyer.setText(sellOrder.getPurchaName());
-//        listItemView.tv_price.setText(sellOrder.getPrice());
-//        listItemView.tv_from.setText(sellOrder.getProducer());
-//
-//        if (sellOrder.getActualsumvalues().equals(""))
-//        {
-//            listItemView.tv_sum.setText("待反馈");
-//        } else
-//        {
-//            listItemView.tv_sum.setText(sellOrder.getActualsumvalues());
-//        }
-
-
-/*        if (sellOrder.getDeposit().equals("0"))
-        {
-            listItemView.tv_orderstate.setText("等待买家付定金");
-        } else
-        {
-            if (sellOrder.getFinalpayment().equals("0"))
-            {
-                listItemView.tv_orderstate.setText("等待买家付尾款");
-            } else
-            {
-                listItemView.tv_orderstate.setText("买家已付尾款");
-            }
-        }*/
 
         listItemView.tv_orderstate.setText(sellOrder.getSelltype());
 
@@ -321,34 +296,10 @@ public class PG_NeedAdapter extends BaseAdapter
                 showDialog_addsaleinfo(phone);
             }
         });
-        int[] color = new int[]{R.color.bg_ask, R.color.red, R.color.blue, R.color.gray, R.color.green, R.color.bg_work, R.color.blue, R.color.color_orange, R.color.bg_job, R.color.bg_plant, R.color.bg_main, R.color.bg_text_small,};
-        if (name.equals(""))
-        {
-            name += sellOrder.getMainPepole() + ",";
-        }
-
-//        for(int i=0;i<position;i++)
-        int str = position;
 
 
-        //                String[] nongzi = commandtab.getnongziName().split(",");
 
-/*        if (name.indexOf(listItems.get(position).getMainPepole()) != -1)
-        {
-            String[] data = name.split(",");
-            for (int j = 0; j < data.length; j++)
-            {
-                if (data[j].equals(listItems.get(position).getMainPepole()))
-                    listItemView.circle_img.setImageResource(color[j % color.length]);
-                int x = j % color.length;
-            }
-        } else
-        {
-            String[] data = name.split(",");
-            name += listItems.get(position).getMainPepole() + ",";
-            listItemView.circle_img.setImageResource(color[(data.length) % color.length]);
-            int y = (data.length) % color.length;
-        }*/
+
         return convertView;
     }
 

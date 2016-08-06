@@ -278,6 +278,7 @@
                 android:background="@color/line_color" />/>
 
             <RelativeLayout
+                android:id="@+id/rl_car"
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
                 android:orientation="horizontal">

@@ -87,6 +87,7 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
         public TextView tv_car;
         public TextView tv_readynumber;
         public TextView tv_notreadynumber;
+        public RelativeLayout rl_car;
     }
 
     public NCZ_WaitForHarvestAdapter(Context context, List<SellOrder_New> data, String broadcast)
@@ -143,6 +144,7 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
             listItemView.tv_notreadynumber = (TextView) convertView.findViewById(R.id.tv_notreadynumber);
+            listItemView.rl_car = (RelativeLayout) convertView.findViewById(R.id.rl_car);
             // 设置控件集到convertView
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -191,13 +193,7 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
                 }
             });
 
-//            if (sellOrder.getIsReady().equals("true"))
-//            {
-//                listItemView.tv_prepareworkStatus.setText("准备就绪");
-//            } else
-//            {
-//                listItemView.tv_prepareworkStatus.setText("未准备就绪");
-//            }
+
 
             listItemView.tv_buyer.setTag(sellOrder.getBuyersPhone());
             listItemView.tv_buyer.setOnClickListener(new View.OnClickListener()
@@ -222,8 +218,8 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
                     myDatepicker.getDialog().show();
                 }
             });
-            listItemView.view_cardetail.setTag(R.id.tag_danwei, sellOrder);
-            listItemView.view_cardetail.setOnClickListener(new View.OnClickListener()
+            listItemView.rl_car.setTag(R.id.tag_danwei, sellOrder);
+            listItemView.rl_car.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -248,31 +244,6 @@ public class NCZ_WaitForHarvestAdapter extends BaseAdapter
                     context.startActivity(intent);
                 }
             });
-//            listItemView.ll_car.setTag(R.id.tag_contract, sellOrder);
-//            listItemView.ll_car.setTag(R.id.tag_batchtime, listItemView);
-//            listItemView.ll_car.setOnClickListener(new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_contract);
-//                    JSONObject jsonObject = utils.parseJsonFile(context, "dictionary.json");
-//                    JSONArray jsonArray = null;
-//                    try
-//                    {
-//                        jsonArray = JSONArray.parseArray(jsonObject.getString("number"));
-//                    } catch (Exception e)
-//                    {
-//
-//                    }
-//                    List<String> list = new ArrayList<String>();
-//                    for (int i = 0; i < jsonArray.size(); i++)
-//                    {
-//                        list.add(jsonArray.getString(i));
-//                    }
-//                    showDialog_workday(list, sellOrder_new);
-//                }
-//            });
             listItemView.btn_cancleorder.setTag(R.id.tag_cash, sellOrder);
             listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener()
             {

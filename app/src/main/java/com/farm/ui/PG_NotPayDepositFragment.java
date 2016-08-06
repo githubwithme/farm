@@ -99,7 +99,6 @@ public class PG_NotPayDepositFragment extends Fragment
     {
         getchanpin();//产品
         getpurchaser();//采购商
-        getlistdata();//园区
 //        getNewSaleList_test();
         setSpinner();
         getAllOrders();
@@ -172,34 +171,13 @@ public class PG_NotPayDepositFragment extends Fragment
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-                    if (result.getAffectedRows() != 0)
-                    {
+
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        Iterator<SellOrder_New> it = listData.iterator();
-                        while (it.hasNext())
-                        {
-                            String value = it.next().getSelltype();
-                            if (value.equals("已完成") || value.equals("待审批"))
-                            {
-                                it.remove();
-                            }
-                        }
+
                         listAdapter = new PG_NotPayDepositAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
-//                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-//                        {
-//                            @Override
-//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-//                            {
-//                        commembertab commembertab = AppContext.getUserInfo(getActivity());
-//                        AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-//                            }
-//                        });
 
-                    } else
-                    {
-                        listData = new ArrayList<SellOrder_New>();
-                    }
+
 
                 } else
                 {
@@ -276,86 +254,7 @@ public class PG_NotPayDepositFragment extends Fragment
         super.onDestroyView();
     }
 
-    //园区
-    private void getlistdata()
-    {
-        commembertab commembertab = AppContext.getUserInfo(getActivity());
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-//        params.addQueryStringParameter("parkId", "16");
-//        params.addQueryStringParameter("action", "getGoodsByUid");
-        params.addQueryStringParameter("action", "getcontractByUid");
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
-        {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<Wz_Storehouse> listNewData = null;
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        Wz_Storehouse wz_storehouses = new Wz_Storehouse();
-                        wz_storehouses.setParkId("");
-                        wz_storehouses.setParkName("全部分场");
-                        listpark.add(wz_storehouses);
-                        listNewData = JSON.parseArray(result.getRows().toJSONString(), Wz_Storehouse.class);
-                        listpark.addAll(listNewData);
 
-
-                        String park[] = new String[listpark.size()];
-                        for (int i = 0; i < listpark.size(); i++)
-                        {
-                            park[i] = listpark.get(i).getParkName();
-                        }
-
-                        //绑定适配器和值
-//        provinceAdapter = new CustomArrayAdapter(getActivity(), mProvinceDatas);
-                        provinceAdapter = new CustomArrayAdapter(getActivity(), park);
-                        provinceSpinner.setAdapter(provinceAdapter);
-                        provinceSpinner.setSelection(0, true);  //设置默认选中项，此处为默认选中第4个值
-                        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-                        {
-                            @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-                            {
-
-                                parkname = listpark.get(i).getParkName();
-                                getAllOrders();
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> adapterView)
-                            {
-
-                            }
-                        });
-                    } else
-                    {
-                        listNewData = new ArrayList<Wz_Storehouse>();
-                    }
-                } else
-                {
-                    AppContext.makeToast(getActivity(), "error_connectDataBase");
-
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                String a = error.getMessage();
-                AppContext.makeToast(getActivity(), "error_connectServer");
-
-            }
-        });
-
-    }
 
     //产品
     private void getchanpin()
