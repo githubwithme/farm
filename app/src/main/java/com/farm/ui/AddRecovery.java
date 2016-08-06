@@ -85,7 +85,11 @@ public class AddRecovery extends Activity {
         getpurchaser();
     }
 
-
+@Click
+void btn_back()
+{
+    finish();
+}
     @Click
 //准备就绪
     void btn_save() {

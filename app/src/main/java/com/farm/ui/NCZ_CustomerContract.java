@@ -49,6 +49,12 @@ public class NCZ_CustomerContract extends Activity
     @ViewById
     RelativeLayout rl_nodata;
 
+
+    @Click
+    void btn_back()
+    {
+        finish();
+    }
     @Click
     void et_goodsname()
     {

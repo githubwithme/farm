@@ -87,6 +87,7 @@ public class RecoveryDetail extends Activity
     List<Purchaser> listData_BZ = new ArrayList<Purchaser>();
     List<AllType> listAlltype = new ArrayList<AllType>();
 
+
     @AfterViews
     void afterOncreate()
     {

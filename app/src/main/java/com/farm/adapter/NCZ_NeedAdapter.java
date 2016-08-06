@@ -81,6 +81,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
         public TextView tv_readynumber;
         public TextView tv_notreadynumber;
         public Button btn_orderdetail;
+        public Button btn_cancleorder;
 
     }
 
@@ -136,6 +137,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
             listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
             listItemView.tv_notreadynumber = (TextView) convertView.findViewById(R.id.tv_notreadynumber);
             listItemView.btn_orderdetail = (Button) convertView.findViewById(R.id.btn_orderdetail);
+            listItemView.btn_cancleorder = (Button) convertView.findViewById(R.id.btn_cancleorder);
             // 设置控件集到convertViews
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
@@ -160,7 +162,14 @@ public class NCZ_NeedAdapter extends BaseAdapter
                 showDialog_addsaleinfo(phone);
             }
         });
-
+        listItemView.btn_cancleorder.setTag(R.id.tag_eventlisttp, sellOrder);
+        listItemView.btn_cancleorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_eventlisttp);
+                showdelete(sellOrder_new.getUuid());
+            }
+        });
         if (listItems.get(position).getFlashStr().equals("0"))
         {
             listItemView.circleImageView.setVisibility(View.INVISIBLE);
@@ -444,6 +453,61 @@ public class NCZ_NeedAdapter extends BaseAdapter
             public void onFailure(HttpException error, String msg)
             {
                 AppContext.makeToast(context, "error_connectServer");
+            }
+        });
+    }
+
+    private void showdelete(final String uuid) {
+
+        View dialog_layout = LayoutInflater.from(context).inflate(R.layout.customdialog_callback, null);
+        myDialog = new MyDialog(context, R.style.MyDialog, dialog_layout, "订单", "确定删除吗?", "删除", "取消", new MyDialog.CustomDialogListener() {
+            @Override
+            public void OnClick(View v) {
+                switch (v.getId()) {
+                    case R.id.btn_sure:
+                        deleteSellOrderAndDetail(uuid);
+                        break;
+                    case R.id.btn_cancle:
+                        myDialog.cancel();
+                        break;
+                }
+            }
+        });
+        myDialog.show();
+    }
+
+    private void deleteSellOrderAndDetail(String uuid) {
+
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("uuid", uuid);
+        params.addQueryStringParameter("action", "deleteSellOrderAndDetail");//jobGetList1
+        HttpUtils http = new HttpUtils();
+        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo)
+            {
+                String a = responseInfo.result;
+                Result result = JSON.parseObject(responseInfo.result, Result.class);
+                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                {
+
+                    Intent intent = new Intent();
+                    intent.setAction(AppContext.BROADCAST_UPDATEAllORDER);
+                    context.sendBroadcast(intent);
+                } else
+                {
+                    AppContext.makeToast(context, "error_connectDataBase");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException error, String msg)
+            {
+                AppContext.makeToast(context, "error_connectServer");
+
             }
         });
     }
