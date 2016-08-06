@@ -64,8 +64,8 @@
             android:layout_marginLeft="30dip"
             android:layout_marginRight="30dip"
             android:layout_marginTop="40dip"
-            android:focusableInTouchMode="true"
             android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <RelativeLayout
