@@ -60,7 +60,7 @@
                 android:id="@+id/view_isready"
                 android:layout_toLeftOf="@+id/button_update"
                 android:layout_width="100px"
-                android:layout_height="100px"
+                android:layout_height="match_parent"
                 android:background="@drawable/icon_cancle"
                 />
 

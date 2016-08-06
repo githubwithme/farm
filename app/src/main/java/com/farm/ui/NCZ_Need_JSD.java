@@ -176,7 +176,7 @@ public class NCZ_Need_JSD extends Activity
         packFee.setText(sellOrder.getPackFee());
         carryFee.setText(sellOrder.getCarryFee());
         totalFee.setText(sellOrder.getTotalFee());
-        actualMoney.setText(sellOrder.getActualMoney());
+        actualMoney.setText(sellOrder.getHasReceivedMoney());
         qualityWaterWeight.setText(sellOrder.getQualityWaterWeight());
         defectWaterWeight.setText(sellOrder.getDefectWaterWeight());
         qualityNetWeight.setText(sellOrder.getQualityNetWeight());

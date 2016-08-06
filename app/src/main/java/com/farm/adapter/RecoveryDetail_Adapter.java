@@ -63,7 +63,7 @@ public class RecoveryDetail_Adapter extends BaseAdapter
         public TextView tv_by;
         public Button button_update;
         public Button button_delete;
-        public View view_isready;
+//        public View view_isready;
     }
 
     HashMap<Integer, View> lmap = new HashMap<Integer, View>();
@@ -84,7 +84,7 @@ public class RecoveryDetail_Adapter extends BaseAdapter
             listItemView.tv_by = (TextView) convertView.findViewById(R.id.tv_by);
             listItemView.button_update = (Button) convertView.findViewById(R.id.button_update);
             listItemView.button_delete = (Button) convertView.findViewById(R.id.button_delete);
-            listItemView.view_isready = (View) convertView.findViewById(R.id.view_isready);
+//            listItemView.view_isready = (View) convertView.findViewById(R.id.view_isready);
             lmap.put(position, convertView);
             convertView.setTag(listItemView);
         } else
@@ -93,7 +93,7 @@ public class RecoveryDetail_Adapter extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
 
-        if (sellOrder_new.getIsReady().equals("False"))
+/*        if (sellOrder_new.getIsReady().equals("False"))
         {
             listItemView.view_isready.setVisibility(View.VISIBLE);
         }
@@ -107,7 +107,7 @@ public class RecoveryDetail_Adapter extends BaseAdapter
                 sellOrder_new= (SellOrder_New) view.getTag(R.id.tag_checkbox);
                 showUpdata(sellOrder_new);
             }
-        });
+        });*/
         listItemView.CR_chanpin.setText(sellOrder_new.getPlateNumber());
         listItemView.packPrice.setText(sellOrder_new.getPackPrice());
         listItemView.carryPrice.setText(sellOrder_new.getCarryPrice());
@@ -177,7 +177,7 @@ public class RecoveryDetail_Adapter extends BaseAdapter
                 String a = responseInfo.result;
                 List<PeopelList> listNewData = null;
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                if (result.getResultCode() != 1)// -1出错；0结果集数量为0；结果列表
                 {
                     Toast.makeText(context, "删除成功！", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent();

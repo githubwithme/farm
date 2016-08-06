@@ -235,9 +235,9 @@ public class JSD_Detail extends Activity
 
                     for (int j = 0; j < listData.size(); j++)
                     {
-                        if (!listData.get(j).getActualMoney().equals(""))
+                        if (!listData.get(j).getHasReceivedMoney().equals(""))
                         {
-                            totalnumber = totalnumber + Double.valueOf(listData.get(j).getActualMoney());
+                            totalnumber = totalnumber + Double.valueOf(listData.get(j).getHasReceivedMoney());
                         }
                     }
                     tv_total.setText(String.valueOf(totalnumber));
@@ -446,8 +446,8 @@ public class JSD_Detail extends Activity
                         listItemView.btn_data.setOnClickListener(clickListener);
                         break;
                     case 1:
-                        listItemView.btn_data.setText(listData.get(position).getActualMoney());
-                        String b=listData.get(position).getActualMoney();
+                        listItemView.btn_data.setText(listData.get(position).getHasReceivedMoney());
+                        String b=listData.get(position).getHasReceivedMoney();
                         listItemView.btn_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.btn_data.setTag(R.id.tag_batchtime, listData.get(position));

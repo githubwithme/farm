@@ -520,7 +520,7 @@ public class PG_JSD extends Activity
         bz_fzrid.setText(sellOrder_new.getPickName());
         jsd_zpprice.setText(sellOrder_new.getPrice());
 
-        actualMoney.setText(sellOrder_new.getActualMoney());
+        actualMoney.setText(sellOrder_new.getHasReceivedMoney());
 
         packPec.setText(sellOrder_new.getPackPec());
 
