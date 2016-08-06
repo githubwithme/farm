@@ -69,15 +69,17 @@ public class NCZ_ApproveSettlement extends Activity
                 {
                     listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
- /*                   Iterator<SellOrder_New> it = listData.iterator();
+                    Iterator<SellOrder_New> it = listNewData.iterator();
                     while (it.hasNext())
                     {
-                        String value = it.next().getSelltype();
-                        if (value.equals("已完成") || value.equals("待审批"))
+                        SellOrder_New sellordersd = it.next();
+                        if (sellordersd.getIsNeedAudit().equals("0")||sellordersd.getSettlestatus().equals("0"))
                         {
-                            it.remove();
-                        }
-                    }*/
+
+                        }else
+                        {
+                            it.remove(); }
+                    }
                     adapter_nczApproveSettlement = new Adapter_NCZApproveSettlement(NCZ_ApproveSettlement.this, listNewData);
                     lv.setAdapter(adapter_nczApproveSettlement);
                 } else

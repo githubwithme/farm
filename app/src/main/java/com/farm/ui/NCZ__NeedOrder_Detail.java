@@ -44,6 +44,8 @@ import java.util.List;
 public class NCZ__NeedOrder_Detail extends Activity
 {
 
+    @ViewById
+    TextView otherFee;
     String goodsnames;
     NCZ_Look_JSD_Adapter ncz_look_jsd_adapter;
     @ViewById
@@ -182,6 +184,7 @@ public class NCZ__NeedOrder_Detail extends Activity
 
     @ViewById
     Button button_no;
+
     @Click
     void button_yes()
     {
@@ -252,7 +255,7 @@ public class NCZ__NeedOrder_Detail extends Activity
         by_fzrid.setText(sellOrder.getContractorName());
         bz_fzrid.setText(sellOrder.getPickName());
         jsd_zpprice.setText(sellOrder.getActualprice());
-        actualMoney.setText(sellOrder.getActualMoney());
+        actualMoney.setText(sellOrder.getHasReceivedMoney());
         packFee.setText(sellOrder.getPackFee());
         carryFee.setText(sellOrder.getCarryFee());
         cp_jsje.setText(sellOrder.getDefectBalance());
@@ -269,6 +272,7 @@ public class NCZ__NeedOrder_Detail extends Activity
         jsd_zongjingzhong.setText(sellOrder.getTotalWeight());
         jsd_zongjianshu.setText(sellOrder.getTotal());
         totalFee.setText(sellOrder.getTotalFee());
+        otherFee.setText(sellOrder.getOtherFee());
 
 
         if (sellOrder.getDetailSecLists().size() > 0)
@@ -281,9 +285,9 @@ public class NCZ__NeedOrder_Detail extends Activity
 
         goodsname.setText(goodsnames);
         goodsname2.setText(goodsnames);
-        bz_nc_danjia1.setText(sellOrder.getPackPrice() );
+        bz_nc_danjia1.setText(sellOrder.getPackPrice());
         jsd_zongjianshu1.setText(sellOrder.getTotal());
-        by_nc_danjia1.setText(sellOrder.getCarryPrice() );
+        by_nc_danjia1.setText(sellOrder.getCarryPrice());
         all_weight1.setText(sellOrder.getTotalWeight());
     }
 
@@ -368,7 +372,7 @@ public class NCZ__NeedOrder_Detail extends Activity
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
 
-                        finish();
+                    finish();
 
                 } else
                 {

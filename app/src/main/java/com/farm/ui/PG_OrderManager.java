@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.farm.R;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
+import com.farm.bean.OrderTypeNum;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.commembertab;
@@ -151,6 +152,7 @@ public class PG_OrderManager extends Activity
     @AfterViews
     void afterOncreate()
     {
+        orderTypeNum();
 //        getNeedOrders();
 //        getAllOrders();
         setBackground(0);
@@ -168,11 +170,11 @@ public class PG_OrderManager extends Activity
         pg_waitForHarvestFragment = new PG_WaitForHarvestFragment_();
         pg_waitForSettlementFragment = new PG_WaitForSettlementFragment_();
         pg_allOrderFragment_new = new PG_AllOrderFragment_New_();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATELISTNUMBER);
-        registerReceiver(receiver_update, intentfilter_update);
+   /*     IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATELISTNUMBER);
+        registerReceiver(receiver_update, intentfilter_update);*/
     }
 
-    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+/*    BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override
@@ -223,8 +225,87 @@ public class PG_OrderManager extends Activity
                 }
             }
         }
-    };
+    };*/
+private void orderTypeNum()
+{
+    commembertab commembertab = AppContext.getUserInfo(PG_OrderManager.this);
+    RequestParams params = new RequestParams();
+    params.addQueryStringParameter("uid", commembertab.getuId());
+    params.addQueryStringParameter("userId", commembertab.getId());
+    params.addQueryStringParameter("action", "orderTypeNum");//
+    HttpUtils http = new HttpUtils();
+    http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+            {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo)
+                {
+                    String a = responseInfo.result;
+                    List<OrderTypeNum> listData = new ArrayList<OrderTypeNum>();
+                    Result result = JSON.parseObject(responseInfo.result, Result.class);
+                    if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
+                    {
+                        if (result.getAffectedRows() != 0)
+                        {
+                            OrderTypeNum orderTypeNum = new OrderTypeNum();
+                            listData = JSON.parseArray(result.getRows().toJSONString(), OrderTypeNum.class);
+                            if (listData.size() > 0)
+                            {
+                                orderTypeNum = listData.get(0);
+                            }
+                            //1
+                            if (!orderTypeNum.getTypeNum1().equals("0"))
+                            {
+                                tv_number_needapprove.setVisibility(View.VISIBLE);
+                                tv_number_needapprove.setText("(" + orderTypeNum.getTypeNum1() + ")");
+                            } else
+                            {
+                                tv_number_needapprove.setVisibility(View.GONE);
+                            }
+//2
+                            if (!orderTypeNum.getTypeNum2().equals("0"))
+                            {
+                                tv_number_notpaydeposit.setVisibility(View.VISIBLE);
+                                tv_number_notpaydeposit.setText("(" + orderTypeNum.getTypeNum2() + ")");
+                            } else
+                            {
+                                tv_number_notpaydeposit.setVisibility(View.GONE);
+                            }
 
+//3
+                            if (!orderTypeNum.getTypeNum3().equals("0"))
+                            {
+                                tv_number_waitingForHarvest.setVisibility(View.VISIBLE);
+                                tv_number_waitingForHarvest.setText("(" + orderTypeNum.getTypeNum3() + ")");
+                            } else
+                            {
+                                tv_number_waitingForHarvest.setVisibility(View.GONE);
+                            }
+//4
+                            if (!orderTypeNum.getTypeNum4().equals("0"))
+                            {
+                                tv_number_waitingForSettlement.setVisibility(View.VISIBLE);
+                                tv_number_waitingForSettlement.setText("(" + orderTypeNum.getTypeNum4() + ")");
+                            } else
+                            {
+                                tv_number_waitingForSettlement.setVisibility(View.GONE);
+                            }
+                        }
+
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure (HttpException error, String msg)
+                {
+                    AppContext.makeToast(PG_OrderManager.this, "error_connectServer");
+
+                }
+            }
+
+    );
+}
     public void switchContent(Fragment from, Fragment to)
     {
         if (mContent != to)

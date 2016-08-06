@@ -13,6 +13,7 @@ import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.Purchaser;
 import com.farm.bean.Result;
+import com.farm.bean.commembertab;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -67,6 +68,8 @@ public class Add_workPeopel extends Activity
             return;
         }
         purchaser=new Purchaser();
+        commembertab commembertab = AppContext.getUserInfo(Add_workPeopel.this);
+        purchaser.setUid(commembertab.getuId());
         purchaser.setUserType(types.getText().toString());
         purchaser.setName(add_name.getText().toString());
         purchaser.setTelephone(add_phone.getText().toString());

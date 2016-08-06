@@ -336,9 +336,9 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
 
                     for (int j = 0; j < listData.size(); j++)
                     {
-                        if (!listData.get(j).getActualMoney().equals(""))
+                        if (!listData.get(j).getHasReceivedMoney().equals(""))
                         {
-                            totalnumber = totalnumber + Double.valueOf(listData.get(j).getActualMoney());
+                            totalnumber = totalnumber + Double.valueOf(listData.get(j).getHasReceivedMoney());
                         }
                     }
                     tv_total.setText(String.valueOf(totalnumber));
@@ -574,7 +574,7 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
                         listItemView.tv_data.setOnClickListener(clickListener);
                         break;
                     case 1:
-                        listItemView.tv_data.setText(listData.get(position).getActualMoney());
+                        listItemView.tv_data.setText(listData.get(position).getHasReceivedMoney());
                         listItemView.tv_data.getLayoutParams().width = (screenWidth);
                         ll_middle.addView(view);
                         listItemView.tv_data.setTag(R.id.tag_batchtime, listData.get(position));

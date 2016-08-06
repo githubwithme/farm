@@ -485,6 +485,7 @@
                         android:text="承包户产量"
                         android:textSize="15dip"/>
                     <Button
+                        android:visibility="gone"
                         android:textColor="@color/white"
                         android:background="@null"
                         android:textSize="14dip"

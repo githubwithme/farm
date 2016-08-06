@@ -30,6 +30,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
         <Button
+            android:background="@null"
             android:layout_alignParentRight="true"
             android:id="@+id/button_add"
             android:layout_width="100dip"

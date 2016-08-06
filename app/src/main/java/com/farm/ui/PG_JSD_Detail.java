@@ -493,7 +493,7 @@ public class PG_JSD_Detail extends Activity
         by_fzrid.setText(sellOrder_new.getContractorName());
         bz_fzrid.setText(sellOrder_new.getPickName());
         jsd_zpprice.setText(sellOrder_new.getActualprice());
-        actualMoney.setText(sellOrder_new.getActualMoney());
+        actualMoney.setText(sellOrder_new.getHasReceivedMoney());
         packPec.setText(sellOrder_new.getPackPec());
         packFee.setText(sellOrder_new.getPackFee());
         carryFee.setText(sellOrder_new.getCarryFee());

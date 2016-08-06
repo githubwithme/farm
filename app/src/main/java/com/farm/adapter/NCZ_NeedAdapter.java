@@ -261,7 +261,7 @@ public class NCZ_NeedAdapter extends BaseAdapter
                 commembertab commembertab = AppContext.getUserInfo(context);
                 AppContext.eventStatus(context, "8", sellOrdesr.getUuid(), commembertab.getId());
 //                if (!sellOrdesr.getSettlestatus().equals("0"))
-                if (sellOrder.getFreeDeposit().equals("0") || sellOrder.getFreeFinalPay().equals("0") || sellOrder.getIsNeedAudit().equals("0"))
+                if (sellOrdesr.getFreeDeposit().equals("0") || sellOrdesr.getFreeFinalPay().equals("0") || sellOrdesr.getIsNeedAudit().equals("0"))
                 {
                     Intent intent = new Intent(context, NCZ_DD_SH_Detail_.class);
                     intent.putExtra("SellOrder_New", sellOrdesr);
@@ -278,6 +278,22 @@ public class NCZ_NeedAdapter extends BaseAdapter
 
             }
         });
+
+        listItemView.btn_orderdetail.setTag(R.id.tag_bean, sellOrder);
+        listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
+                commembertab commembertab = AppContext.getUserInfo(context);
+                AppContext.eventStatus(context, "8", sellOrder_new.getUuid(), commembertab.getId());
+                Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
+                intent.putExtra("bean", sellOrder_new);
+                context.startActivity(intent);
+            }
+        });
+
 /*            listItemView.btn_pizhun.setTag(R.id.tag_cash,sellOrder);
             listItemView.btn_pizhun.setOnClickListener(new View.OnClickListener()
             {
@@ -305,20 +321,6 @@ public class NCZ_NeedAdapter extends BaseAdapter
         listItemView.tv_orderstate.setText(sellOrder.getSelltype());
         listItemView.tv_product.setText(sellOrder.getProduct());
 
-        listItemView.btn_orderdetail.setTag(R.id.tag_bean, sellOrder);
-        listItemView.btn_orderdetail.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                SellOrder_New sellOrder_new = (SellOrder_New) v.getTag(R.id.tag_bean);
-                commembertab commembertab = AppContext.getUserInfo(context);
-                AppContext.eventStatus(context, "8", sellOrder_new.getUuid(), commembertab.getId());
-                Intent intent = new Intent(context, NCZ_All_OneOrder_Detail_.class);
-                intent.putExtra("bean", sellOrder_new);
-                context.startActivity(intent);
-            }
-        });
 
 //        }
         return convertView;

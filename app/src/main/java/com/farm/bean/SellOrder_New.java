@@ -118,7 +118,29 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
     public String settlestatus;// 订单审批
     public String readyPlate;// 就绪车辆
     public String notReadyPlate;// 未就绪车辆
+    public String hasReceivedMoney;// 已收到金额
+    public String otherFee;// 已收到金额
 
+
+    public String getOtherFee()
+    {
+        return otherFee;
+    }
+
+    public void setOtherFee(String otherFee)
+    {
+        this.otherFee = otherFee;
+    }
+
+    public String getHasReceivedMoney()
+    {
+        return hasReceivedMoney;
+    }
+
+    public void setHasReceivedMoney(String hasReceivedMoney)
+    {
+        this.hasReceivedMoney = hasReceivedMoney;
+    }
 
     public String getReadyPlate()
     {
@@ -258,6 +280,8 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         settlestatus = in.readString();
         readyPlate = in.readString();
         notReadyPlate = in.readString();
+        hasReceivedMoney = in.readString();
+        otherFee = in.readString();
 
     }
 
@@ -1267,5 +1291,7 @@ public class SellOrder_New implements Parcelable // 与数据库不一致
         dest.writeString(settlestatus);
         dest.writeString(readyPlate);
         dest.writeString(notReadyPlate);
+        dest.writeString(hasReceivedMoney);
+        dest.writeString(otherFee);
     }
 }
