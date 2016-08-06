@@ -168,20 +168,11 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
 
         tv_planweight.setText(sellOrder_new.getWeight());
 
-        if (!sellOrder_new.getWaitDeposit().equals(""))
-        {
+
             tv_deposit.setText(sellOrder_new.getWaitDeposit());
-        }else
-        {
-            tv_deposit.setText(sellOrder_new.getUnpaid());
-        }
-        if (!sellOrder_new.getDeposit().equals(""))
-        {
+
             deposit.setText(sellOrder_new.getDeposit());
-        }else
-        {
-            tv_deposit.setText(sellOrder_new.getPaid());
-        }
+
 
 
         tv_plansumvalues.setText(sellOrder_new.getSumvalues());
