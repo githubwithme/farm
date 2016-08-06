@@ -180,27 +180,13 @@ public class NCZ_NotPayDepositFragment extends Fragment
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
-               /*     if (result.getAffectedRows() != 0)
-                    {*/
-                    listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+
+                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
 
-                    listAdapter = new NCZ_NotPayDepositAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
-                    lv.setAdapter(listAdapter);
-                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                    {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                        {
-                            commembertab commembertab = AppContext.getUserInfo(getActivity());
-                            AppContext.eventStatus(getActivity(), "8", listData.get(position).getUuid(), commembertab.getId());
-                        }
-                    });
-                    Intent intent = new Intent();
-                    intent.setAction(AppContext.BROADCAST_UPDATELISTNUMBER);
-                    intent.putExtra("type", AppContext.order_waitForDeposit);
-                    intent.putExtra("number", listData.size());
-                    getActivity().sendBroadcast(intent);
+                        listAdapter = new NCZ_NotPayDepositAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
+                        lv.setAdapter(listAdapter);
+
 
 
                 } else
@@ -327,8 +313,8 @@ public class NCZ_NotPayDepositFragment extends Fragment
 
                                 if (listpark.get(i).getParkName().equals("全部分场"))
                                 {
-                                    parkname="-1";
-                                }else
+                                    parkname = "-1";
+                                } else
                                 {
                                     parkname = listpark.get(i).getParkName();
                                 }

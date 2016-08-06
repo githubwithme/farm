@@ -131,6 +131,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
         public CircleImageView circleImageView;
         public TextView tv_readynumber;
         public TextView tv_notreadynumber;
+        public  RelativeLayout rl_car;
 //        public RelativeLayout weijiux;
     }
 
@@ -174,6 +175,7 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
 
             listItemView.tv_readynumber= (TextView) convertView.findViewById(R.id.tv_readynumber);
             listItemView.tv_notreadynumber= (TextView) convertView.findViewById(R.id.tv_notreadynumber);
+            listItemView.rl_car= (RelativeLayout) convertView.findViewById(R.id.rl_car);
 //            listItemView.weijiux = (RelativeLayout) convertView.findViewById(R.id.weijiux);
 
             listItemView.tv_number.setText(String.valueOf(childPosition + 1));
@@ -203,8 +205,8 @@ public class Adapter_OrderPlan extends BaseExpandableListAdapter
             });
 
 
-            listItemView.view_cardetail.setTag(R.id.tag_danwei, sellOrder_new);
-            listItemView.view_cardetail.setOnClickListener(new View.OnClickListener()
+            listItemView.rl_car.setTag(R.id.tag_danwei, sellOrder_new);
+            listItemView.rl_car.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)

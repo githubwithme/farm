@@ -61,7 +61,6 @@
                         android:layout_height="30dip"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dip"
-                        android:layout_toRightOf="@+id/tv_number"
                         android:background="@mipmap/icon_buyyer" />
 
                     <LinearLayout
@@ -286,6 +285,7 @@
                 android:background="@color/line_color" />/>
 
             <RelativeLayout
+                android:id="@+id/rl_car"
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
                 android:orientation="horizontal">

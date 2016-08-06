@@ -73,6 +73,7 @@ public class AppContext extends Application {
     public final static String UPDATEMESSAGE_CHE_LIANG = "CHE_LIANG";
     public final static String UPDATEMESSAGE_NEW_JSD = "NEW_JSD";
     public final static String UPDATEMESSAGE_NCZ_XL_REFRESH = "NCZ_XL_REFRESH";
+    public final static String UPDATEMESSAGE_PG_JSD_REAFSG = "PG_JSD_REAFSG";
 
     public final static int TIME_REFRESH = 30000;
     public final static int TIME_GZ = 60000;

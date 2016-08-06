@@ -422,6 +422,9 @@ public class Charge_Settlement extends Activity
                     {
 
                         Toast.makeText(Charge_Settlement.this, "保存成功", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.UPDATEMESSAGE_PG_JSD_REAFSG);
+                        sendBroadcast(intent);
                  /*       btn_upload.setVisibility(View.GONE);
                         ll_cbhlist.setVisibility(View.VISIBLE);
                         ll_jsd.setVisibility(View.VISIBLE);*/
@@ -583,7 +586,7 @@ public class Charge_Settlement extends Activity
 
         params.addQueryStringParameter("qualityWaterWeight", mSellOrder.getQualityWaterWeight());
         params.addQueryStringParameter("qualityNetWeight", mSellOrder.getQualityNetWeight());
-        params.addQueryStringParameter("defectWaterWeight", mSellOrder.getDefectNetWeight());
+        params.addQueryStringParameter("defectWaterWeight", mSellOrder.getDefectWaterWeight());
         params.addQueryStringParameter("defectNetWeight", mSellOrder.getDefectNetWeight());
         params.addQueryStringParameter("action", "changesellOrderSettlement");
         HttpUtils http = new HttpUtils();
@@ -600,8 +603,10 @@ public class Charge_Settlement extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-
-
+                        Toast.makeText(Charge_Settlement.this, "保存成功", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.UPDATEMESSAGE_PG_JSD_REAFSG);
+                        sendBroadcast(intent);
                     } else
                     {
                         listData = new ArrayList<SellOrder_New>();

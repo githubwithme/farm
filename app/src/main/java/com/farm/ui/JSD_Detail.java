@@ -111,9 +111,21 @@ public class JSD_Detail extends Activity
 //        broadcast = getIntent().getStringExtra("broadcast");
         IntentFilter intentfilter_update = new IntentFilter(AppContext.UPDATEMESSAGE_PGDETAIL_UPDATE_DELETE);
         registerReceiver(receiver_update, intentfilter_update);
+
+        IntentFilter intentfilter_reash = new IntentFilter(AppContext.UPDATEMESSAGE_PG_JSD_REAFSG);
+        registerReceiver(receiver_reash, intentfilter_reash);
     }
 
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getDetailSecBysettleId();
+        }
+    };
+    BroadcastReceiver receiver_reash = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
         @Override

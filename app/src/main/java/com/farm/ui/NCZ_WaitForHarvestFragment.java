@@ -177,27 +177,11 @@ public class NCZ_WaitForHarvestFragment extends Fragment
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
 
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
 
+
+                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
                         listAdapter = new NCZ_WaitForHarvestAdapter(getActivity(), listData, AppContext.BROADCAST_UPDATENOTPAYORDER);
                         lv.setAdapter(listAdapter);
-                    Intent intent = new Intent();
-                    intent.setAction(AppContext.BROADCAST_UPDATELISTNUMBER);
-                    intent.putExtra("type", AppContext.order_waitForHarvest);
-                    intent.putExtra("number", listData.size());
-                    getActivity().sendBroadcast(intent);
-//                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-//                        {
-//                            @Override
-//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-//                            {
-////                                Intent intent = new Intent(getActivity(), NCZ_OrderDetail_.class);
-//                                Intent intent = new Intent(getActivity(), NCZ_All_OneOrder_Detail_.class);
-//                                intent.putExtra("bean", listData.get(position));
-//                                getActivity().startActivity(intent);
-//                            }
-//                        });
-
 
 
                 } else
@@ -206,7 +190,7 @@ public class NCZ_WaitForHarvestFragment extends Fragment
                     return;
                 }
 
-            }
+             }
 
             @Override
             public void onFailure(HttpException error, String msg)
@@ -324,12 +308,12 @@ public class NCZ_WaitForHarvestFragment extends Fragment
 
                                 if (listpark.get(i).getParkName().equals("全部分场"))
                                 {
-                                    parkname="-1";
-                                }else
+                                    parkname = "-1";
+                                } else
                                 {
                                     parkname = listpark.get(i).getParkName();
                                 }
-                                parkId=listpark.get(i).getId();
+                                parkId = listpark.get(i).getId();
                                 getAllOrders();
                             }
 
@@ -407,7 +391,7 @@ public class NCZ_WaitForHarvestFragment extends Fragment
                                 if (listdata_cp.get(i).getProductName().equals("全部产品"))
                                 {
                                     cpname = "-1";
-                                }else
+                                } else
                                 {
                                     cpname = listdata_cp.get(i).getProductName();
                                 }
@@ -501,7 +485,7 @@ public class NCZ_WaitForHarvestFragment extends Fragment
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                                 {
                                     cgsname = listData_CG.get(i).getName();
-                                    cgsId= listData_CG.get(i).getId();
+                                    cgsId = listData_CG.get(i).getId();
                                     getAllOrders();
                                 }
 

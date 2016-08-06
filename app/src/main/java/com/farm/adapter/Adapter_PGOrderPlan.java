@@ -128,6 +128,7 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
         public TextView tv_car;
         public TextView tv_readynumber;
         public TextView tv_notreadynumber;
+        public RelativeLayout rl_car;
 
     }
 
@@ -151,6 +152,7 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
             listItemView.view_buyer_call = (View) convertView.findViewById(R.id.view_buyer_call);
             listItemView.view_mainpeople_call = (View) convertView.findViewById(R.id.view_mainpeople_call);
             listItemView.view_cardetail = (View) convertView.findViewById(R.id.view_cardetail);
+
             listItemView.tv_buyer = (TextView) convertView.findViewById(R.id.tv_buyer);
             listItemView.tv_preparestatus = (TextView) convertView.findViewById(R.id.tv_preparestatus);
             listItemView.tv_orderstate = (TextView) convertView.findViewById(R.id.tv_orderstate);
@@ -162,6 +164,7 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
             listItemView.btn_editorder = (Button) convertView.findViewById(R.id.btn_editorder);
             listItemView.btn_changetime = (Button) convertView.findViewById(R.id.btn_changetime);
             listItemView.circleImageView = (CircleImageView) convertView.findViewById(R.id.circleImageView);
+            listItemView.rl_car = (RelativeLayout) convertView.findViewById(R.id.rl_car);
 
             listItemView.tv_car = (TextView) convertView.findViewById(R.id.tv_car);
             listItemView.tv_readynumber = (TextView) convertView.findViewById(R.id.tv_readynumber);
@@ -184,8 +187,8 @@ public class Adapter_PGOrderPlan extends BaseExpandableListAdapter
             listItemView.tv_notreadynumber.setText(sellOrder_new.getNotReadyPlate() + "车");
             listItemView.tv_car.setText("共" + (Integer.valueOf(sellOrder_new.getReadyPlate()) + Integer.valueOf(sellOrder_new.getNotReadyPlate())) + "车;");
 
-            listItemView.view_cardetail.setTag(R.id.tag_danwei, sellOrder_new);
-            listItemView.view_cardetail.setOnClickListener(new View.OnClickListener()
+            listItemView.rl_car.setTag(R.id.tag_danwei, sellOrder_new);
+            listItemView.rl_car.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)

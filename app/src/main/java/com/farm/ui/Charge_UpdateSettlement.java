@@ -334,7 +334,7 @@ public class Charge_UpdateSettlement extends Activity
         params.addQueryStringParameter("plateNumber", mSellOrder.getPlateNumber());*/
         params.addQueryStringParameter("qualityWaterWeight", mSellOrder.getQualityWaterWeight());
         params.addQueryStringParameter("qualityNetWeight", mSellOrder.getQualityNetWeight());
-        params.addQueryStringParameter("defectWaterWeight", mSellOrder.getDefectNetWeight());
+        params.addQueryStringParameter("defectWaterWeight", mSellOrder.getDefectWaterWeight());
         params.addQueryStringParameter("defectNetWeight", mSellOrder.getDefectNetWeight());
         params.addQueryStringParameter("isReady","True");
         params.addQueryStringParameter("action", "changesellOrderSettlement");
@@ -352,7 +352,10 @@ public class Charge_UpdateSettlement extends Activity
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-
+                        Toast.makeText(Charge_UpdateSettlement.this, "保存成功", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.UPDATEMESSAGE_PG_JSD_REAFSG);
+                        sendBroadcast(intent);
                         if (listdata.size()==0)
                         {
                             getsellOrderDetailBySaleId();

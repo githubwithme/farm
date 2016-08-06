@@ -177,16 +177,12 @@ public class NCZ_WaitForSettlementAdapter extends BaseAdapter {
             }
             listItemView.tv_product.setText(sellOrder.getProduct());
             listItemView.tv_mainpeople.setText(sellOrder.getMainPeople());
+
             listItemView.tv_settlementnumber.setText("共上报" + sellOrder.getSettlementNumber() + "份：");
             listItemView.tv_settlement_successnumber.setText(sellOrder.getPaidSettlementNumber() + "份；");
             listItemView.tv_waitforsettlementnumber.setText(sellOrder.getNotPaySettlementNumber() + "份；");
-//            if (sellOrder.getUnpaid().equals(""))
-//            {
-//                listItemView.tv_unpaid.setText("待结算0元");
-//            } else
-//            {
-//                listItemView.tv_unpaid.setText("待结算" + sellOrder.getUnpaid() + "元");
-//            }
+
+
 
             listItemView.tv_parkname.setText(sellOrder.getParkname());
             listItemView.tv_buyer.setText(sellOrder.getBuyersName());

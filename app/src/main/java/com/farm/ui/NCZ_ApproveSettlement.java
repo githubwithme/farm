@@ -22,6 +22,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -67,6 +68,16 @@ public class NCZ_ApproveSettlement extends Activity
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     listNewData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+
+ /*                   Iterator<SellOrder_New> it = listData.iterator();
+                    while (it.hasNext())
+                    {
+                        String value = it.next().getSelltype();
+                        if (value.equals("已完成") || value.equals("待审批"))
+                        {
+                            it.remove();
+                        }
+                    }*/
                     adapter_nczApproveSettlement = new Adapter_NCZApproveSettlement(NCZ_ApproveSettlement.this, listNewData);
                     lv.setAdapter(adapter_nczApproveSettlement);
                 } else

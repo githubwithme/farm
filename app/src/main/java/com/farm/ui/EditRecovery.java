@@ -246,6 +246,14 @@ public class EditRecovery extends Activity
     private void changesellOrderSettlement()
     {
 
+        String isReady="";
+        if (bzId.equals("")||byId.equals("")||CR_chanpin.getText().toString().equals("")||carryPrice.getText().toString().equals("")||packPrice.getText().toString().equals(""))
+        {
+            isReady="Fales";
+        }else
+        {
+            isReady="True";
+        }
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("id",sellOrder.getid() );
         params.addQueryStringParameter("contractorId",bzId );
@@ -253,6 +261,7 @@ public class EditRecovery extends Activity
         params.addQueryStringParameter("carryPrice",carryPrice.getText().toString() );
         params.addQueryStringParameter("packPrice",packPrice.getText().toString() );
         params.addQueryStringParameter("plateNumber",CR_chanpin.getText().toString() );
+        params.addQueryStringParameter("isReady",isReady );
         params.addQueryStringParameter("action", "changesellOrderSettlement");
 
         HttpUtils http = new HttpUtils();
