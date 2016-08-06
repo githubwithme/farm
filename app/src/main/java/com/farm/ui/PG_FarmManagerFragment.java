@@ -61,7 +61,7 @@ public class PG_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), PG_CommandActivity_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -69,7 +69,7 @@ public class PG_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), PG_JobFragment_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
 //    @Click
@@ -86,7 +86,7 @@ public class PG_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), SearchAllInformation_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -95,7 +95,7 @@ public class PG_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), PG_GddList_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -103,7 +103,7 @@ public class PG_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), PG_ListOfEvents_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -111,7 +111,7 @@ public class PG_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), PG_CKList_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -127,7 +127,7 @@ public class PG_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -145,23 +145,25 @@ public class PG_FarmManagerFragment extends Fragment
 //        Intent intent = new Intent(getActivity(), NCZ_Statistics_.class);
 //        Intent intent = new Intent(getActivity(), NCZ_AnalysisModule_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
     void rl_more()
     {
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
+
     @Click
     void img_location()
     {
         Toast.makeText(getActivity(), "该农场暂无其他城市分布!", Toast.LENGTH_SHORT).show();
     }
+
     @Click
     void rl_sk()
     {
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
 //    @Click

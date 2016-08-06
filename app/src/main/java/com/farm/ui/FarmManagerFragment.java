@@ -137,7 +137,7 @@ public class FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), SearchAllInformation_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     //    @Click
@@ -153,7 +153,7 @@ public class FarmManagerFragment extends Fragment
 //        Intent intent = new Intent(getActivity(), NCZ_CommandActivity_.class);
 ////        Intent intent = new Intent(getActivity(), PG_CommandActivity_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -162,7 +162,7 @@ public class FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), NCZ_JobActivity_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -170,7 +170,7 @@ public class FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), NCZ_MQActivity_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -178,7 +178,7 @@ public class FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), NCZ_SJActivity_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -201,7 +201,7 @@ public class FarmManagerFragment extends Fragment
 //        Intent intent = new Intent(getActivity(), Ncz_wz_ll_.class);
 //        Intent intent = new Intent(getActivity(), NCZ_GoogdsManagerActivity_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -228,7 +228,7 @@ public class FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -244,7 +244,7 @@ public class FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -253,7 +253,7 @@ public class FarmManagerFragment extends Fragment
 //        Intent intent = new Intent(getActivity(), NCZ_Statistics_.class);
 //        Intent intent = new Intent(getActivity(), NCZ_AnalysisModule_.class);
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
 //    @Click
@@ -270,7 +270,7 @@ public class FarmManagerFragment extends Fragment
 //        Intent intent = new Intent(getActivity(), NCZ_FarmMapActivity_.class);
 //        intent.putExtra("parkid", "80");
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
@@ -287,7 +287,7 @@ public class FarmManagerFragment extends Fragment
 //        Intent intent = new Intent(getActivity(), NCZ_MoreModule_.class);
 //        intent.putExtra("parkid", "80");
 //        getActivity().startActivity(intent);
-        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "该功能暂不开放喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
