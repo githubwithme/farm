@@ -191,7 +191,7 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
         @Override
         public void onReceive(Context context, Intent intent)
         {
-      finish();
+            finish();
         }
     };
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息

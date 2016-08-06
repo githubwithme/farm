@@ -956,7 +956,7 @@ public class PG_CreateOrder extends Activity
                 {
                     case R.id.btn_sure:
 //                        myDialog.dismiss();
-                        deleNewSaleAddsalefor();
+//                        deleNewSaleAddsalefor();
 
                         Toast.makeText(PG_CreateOrder.this, "已取消", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent();
