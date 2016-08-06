@@ -30,6 +30,7 @@ import com.farm.adapter.Adapter_SelectProduct;
 import com.farm.app.AppConfig;
 import com.farm.app.AppContext;
 import com.farm.bean.FilferBean_Sale;
+import com.farm.bean.OrderTypeNum;
 import com.farm.bean.Result;
 import com.farm.bean.SellOrder_New;
 import com.farm.bean.areatab;
@@ -194,6 +195,7 @@ public class NCZ_OrderManager extends Activity
         setBackground(0);
         switchContent(mContent, ncz_orderPlanFragment);
         getSaleFilferData();
+        orderTypeNum();
     }
 
     @Override
@@ -207,8 +209,8 @@ public class NCZ_OrderManager extends Activity
         ncz_waitForHarvestFragment = new NCZ_WaitForHarvestFragment_();
         ncz_waitForSettlementFragment = new NCZ_WaitForSettlementFragment_();
         ncz_allOrderFragment_new = new NCZ_AllOrderFragment_New_();
-        IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATELISTNUMBER);
-        registerReceiver(receiver_update, intentfilter_update);
+      /*  IntentFilter intentfilter_update = new IntentFilter(AppContext.BROADCAST_UPDATELISTNUMBER);
+        registerReceiver(receiver_update, intentfilter_update);*/
     }
 
     private void getSaleFilferData()
@@ -345,14 +347,12 @@ public class NCZ_OrderManager extends Activity
     }
 
 
-    private void getAllOrders()
+    private void orderTypeNum()
     {
         commembertab commembertab = AppContext.getUserInfo(NCZ_OrderManager.this);
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
+        params.addQueryStringParameter("action", "orderTypeNum");//
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
         {
@@ -360,127 +360,73 @@ public class NCZ_OrderManager extends Activity
             public void onSuccess(ResponseInfo<String> responseInfo)
             {
                 String a = responseInfo.result;
-                List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
+                List<OrderTypeNum> listData = new ArrayList<OrderTypeNum>();
                 Result result = JSON.parseObject(responseInfo.result, Result.class);
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     if (result.getAffectedRows() != 0)
                     {
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-                        Iterator<SellOrder_New> it = listData.iterator();
-                        while (it.hasNext())
-                        {
-                            String value = it.next().getSelltype();
-                            if (value.equals("已完成") || value.equals("待审批"))
-                            {
-                                it.remove();
-                            }
-                        }
-
-                        int b = 0;
+                        OrderTypeNum orderTypeNum = new OrderTypeNum();
+                        listData = JSON.parseArray(result.getRows().toJSONString(), OrderTypeNum.class);
                         if (listData.size() > 0)
                         {
-                            for (int j = 0; j < listData.size(); j++)
-                            {
-                                if (listData.get(j).getFlashStr().equals("1"))
-                                {
-                                    b++;
-                                }
-                            }
+                            orderTypeNum = listData.get(0);
                         }
-
-                        if (b > 0)
+                        //1
+                        if (!orderTypeNum.getTypeNum1().equals(""))
                         {
-                            fl_schedule.setVisibility(View.VISIBLE);
-                            tv_schedule_tip.setText(b + "");
-//                            fl_.setVisibility(View.VISIBLE);
-//                            tv_jyz.setText(b + "");
+                            tv_number_needapprove.setVisibility(View.VISIBLE);
+                            tv_number_needapprove.setText("(" + orderTypeNum.getTypeNum1() + ")");
+                        } else
+                        {
+                            tv_number_needapprove.setVisibility(View.GONE);
+                        }
+//2
+                        if (!orderTypeNum.getTypeNum2().equals(""))
+                        {
+                            tv_number_notpaydeposit.setVisibility(View.VISIBLE);
+                            tv_number_notpaydeposit.setText("(" + orderTypeNum.getTypeNum2() + ")");
+                        } else
+                        {
+                            tv_number_notpaydeposit.setVisibility(View.GONE);
                         }
 
-                    } else
-                    {
-                        listData = new ArrayList<SellOrder_New>();
+//3
+                        if (!orderTypeNum.getTypeNum3().equals(""))
+                        {
+                            tv_number_waitingForHarvest.setVisibility(View.VISIBLE);
+                            tv_number_waitingForHarvest.setText("(" + orderTypeNum.getTypeNum3() + ")");
+                        } else
+                        {
+                            tv_number_waitingForHarvest.setVisibility(View.GONE);
+                        }
+//4
+                        if (!orderTypeNum.getTypeNum4().equals(""))
+                        {
+                            tv_number_waitingForSettlement.setVisibility(View.VISIBLE);
+                            tv_number_waitingForSettlement.setText("(" + orderTypeNum.getTypeNum4() + ")");
+                        } else
+                        {
+                            tv_number_waitingForSettlement.setVisibility(View.GONE);
+                        }
                     }
 
-                } else
-                {
-                    AppContext.makeToast(NCZ_OrderManager.this, "error_connectDataBase");
-                    return;
-                }
 
             }
 
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(NCZ_OrderManager.this, "error_connectServer");
+        }
 
-            }
-        });
-    }
-
-    private void getNeedOrders()
-    {
-        commembertab commembertab = AppContext.getUserInfo(NCZ_OrderManager.this);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("uid", commembertab.getuId());
-        params.addQueryStringParameter("year", utils.getYear());
-        params.addQueryStringParameter("type", "0");
-        params.addQueryStringParameter("isApprove", "1");//不为空
-        params.addQueryStringParameter("action", "GetSpecifyOrderByNCZ");//
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.POST, AppConfig.testurl, params, new RequestCallBack<String>()
+        @Override
+        public void onFailure (HttpException error, String msg)
         {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo)
-            {
-                String a = responseInfo.result;
-                List<SellOrder_New> listData = new ArrayList<SellOrder_New>();
-                Result result = JSON.parseObject(responseInfo.result, Result.class);
-                if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
-                {
-                    if (result.getAffectedRows() != 0)
-                    {
-                        listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
+            AppContext.makeToast(NCZ_OrderManager.this, "error_connectServer");
 
-                        int b = 0;
-                        if (listData.size() > 0)
-                        {
-                            for (int j = 0; j < listData.size(); j++)
-                            {
-                                if (listData.get(j).getFlashStr().equals("1"))
-                                {
-                                    b++;
-                                }
-                            }
-                        }
-                        if (b > 0)
-                        {
-                            fl_waitingForSettlement.setVisibility(View.VISIBLE);
-                            tv_waitingForSettlement_tip.setText(b + "");
-                        }
-
-                    } else
-                    {
-                        listData = new ArrayList<SellOrder_New>();
-                    }
-
-                } else
-                {
-                    AppContext.makeToast(NCZ_OrderManager.this, "error_connectDataBase");
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException error, String msg)
-            {
-                AppContext.makeToast(NCZ_OrderManager.this, "error_connectServer");
-
-            }
-        });
+        }
     }
+
+    );
+}
+
 
     public void showPop_Filfer()
     {
@@ -542,8 +488,10 @@ public class NCZ_OrderManager extends Activity
             }
         });
     }
+
     /**
      * 设置添加屏幕的背景透明度
+     *
      * @param bgAlpha
      */
     public void backgroundAlpha(float bgAlpha)
@@ -552,16 +500,18 @@ public class NCZ_OrderManager extends Activity
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
-    /**
-     * 添加新笔记时弹出的popWin关闭的事件，主要是为了将背景透明度改回来
-     *
-     */
-    class popupDismissListener implements PopupWindow.OnDismissListener{
 
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(1f);
-        }
+/**
+ * 添加新笔记时弹出的popWin关闭的事件，主要是为了将背景透明度改回来
+ */
+class popupDismissListener implements PopupWindow.OnDismissListener
+{
 
+    @Override
+    public void onDismiss()
+    {
+        backgroundAlpha(1f);
     }
+
+}
 }

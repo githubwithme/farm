@@ -71,6 +71,7 @@ public class Charge_UpdateSettlement extends Activity
     String isSave="1";
 
 
+
     @Click
     void  charge_load()
     {
@@ -104,6 +105,7 @@ public class Charge_UpdateSettlement extends Activity
     @AfterViews
     void afterview()
     {
+        charge_save.setVisibility(View.GONE);
         charge_load.setVisibility(View.VISIBLE);
         getSellOrderDetailSec();
         showData();
