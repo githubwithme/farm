@@ -131,7 +131,11 @@ public class NCZ_EditOrder extends Activity
     String byId = "";
     String bzId = "";
     String fzrId = "";
-
+@Click
+void btn_back()
+{
+    finish();
+}
     @Click
     void btn_addcg()
     {

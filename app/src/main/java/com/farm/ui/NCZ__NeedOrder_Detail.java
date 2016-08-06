@@ -186,6 +186,11 @@ public class NCZ__NeedOrder_Detail extends Activity
     Button button_no;
 
     @Click
+    void  btn_back()
+    {
+        finish();
+    }
+    @Click
     void button_yes()
     {
 

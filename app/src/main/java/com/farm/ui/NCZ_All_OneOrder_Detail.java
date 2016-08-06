@@ -112,6 +112,11 @@ public class NCZ_All_OneOrder_Detail extends Activity implements CustomHorizonta
     TextView tv_note;
 
     @Click
+    void btn_back()
+    {
+        finish();
+    }
+    @Click
     void tv_clicks()
     {
         if (ll_detail.isShown())

@@ -50,6 +50,12 @@ public class Add_workPeopel extends Activity
     EditText add_address;
 
     @Click
+    void btn_back()
+    {
+    finish();
+    }
+
+    @Click
     void add_save()
     {
         if (types.getText().toString().equals(""))
@@ -67,7 +73,7 @@ public class Add_workPeopel extends Activity
             Toast.makeText(Add_workPeopel.this, "请填写人员电话", Toast.LENGTH_SHORT).show();
             return;
         }
-        purchaser=new Purchaser();
+        purchaser = new Purchaser();
         commembertab commembertab = AppContext.getUserInfo(Add_workPeopel.this);
         purchaser.setUid(commembertab.getuId());
         purchaser.setUserType(types.getText().toString());
@@ -79,8 +85,9 @@ public class Add_workPeopel extends Activity
         builder.append("{\"purchaser\": [");
         builder.append(JSON.toJSONString(purchaser));
         builder.append("]} ");
-        addOrder( builder.toString());
+        addOrder(builder.toString());
     }
+
     @AfterViews
     void afterview()
     {
@@ -95,7 +102,7 @@ public class Add_workPeopel extends Activity
         type = getIntent().getStringExtra("type");
     }
 
-    private void addOrder( String data)
+    private void addOrder(String data)
     {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("action", "addpurchaser");

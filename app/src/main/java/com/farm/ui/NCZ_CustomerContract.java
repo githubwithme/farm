@@ -45,6 +45,12 @@ public class NCZ_CustomerContract extends Activity
     @ViewById
     TextView et_goodsname;
 
+
+    @Click
+    void btn_back()
+    {
+        finish();
+    }
     @Click
     void et_goodsname()
     {
