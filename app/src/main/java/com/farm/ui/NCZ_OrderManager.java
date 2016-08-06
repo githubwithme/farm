@@ -373,7 +373,7 @@ public class NCZ_OrderManager extends Activity
                             orderTypeNum = listData.get(0);
                         }
                         //1
-                        if (!orderTypeNum.getTypeNum1().equals(""))
+                        if (!orderTypeNum.getTypeNum1().equals("0"))
                         {
                             tv_number_needapprove.setVisibility(View.VISIBLE);
                             tv_number_needapprove.setText("(" + orderTypeNum.getTypeNum1() + ")");
@@ -382,7 +382,7 @@ public class NCZ_OrderManager extends Activity
                             tv_number_needapprove.setVisibility(View.GONE);
                         }
 //2
-                        if (!orderTypeNum.getTypeNum2().equals(""))
+                        if (!orderTypeNum.getTypeNum2().equals("0"))
                         {
                             tv_number_notpaydeposit.setVisibility(View.VISIBLE);
                             tv_number_notpaydeposit.setText("(" + orderTypeNum.getTypeNum2() + ")");
@@ -392,7 +392,7 @@ public class NCZ_OrderManager extends Activity
                         }
 
 //3
-                        if (!orderTypeNum.getTypeNum3().equals(""))
+                        if (!orderTypeNum.getTypeNum3().equals("0"))
                         {
                             tv_number_waitingForHarvest.setVisibility(View.VISIBLE);
                             tv_number_waitingForHarvest.setText("(" + orderTypeNum.getTypeNum3() + ")");
@@ -401,7 +401,7 @@ public class NCZ_OrderManager extends Activity
                             tv_number_waitingForHarvest.setVisibility(View.GONE);
                         }
 //4
-                        if (!orderTypeNum.getTypeNum4().equals(""))
+                        if (!orderTypeNum.getTypeNum4().equals("0"))
                         {
                             tv_number_waitingForSettlement.setVisibility(View.VISIBLE);
                             tv_number_waitingForSettlement.setText("(" + orderTypeNum.getTypeNum4() + ")");
