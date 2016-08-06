@@ -221,21 +221,21 @@ public class PG_SP_EditOreder extends Activity
             Toast.makeText(PG_SP_EditOreder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (et_name.getText().toString().equals(""))
+ /*       if (et_name.getText().toString().equals(""))
         {
             Toast.makeText(PG_SP_EditOreder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
    /*     if (et_email.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
         }*/
-        if (et_address.getText().toString().equals(""))
+/*        if (et_address.getText().toString().equals(""))
         {
             Toast.makeText(PG_SP_EditOreder.this, "请先填写信息", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
   /*      if (et_phone.getText().toString().equals(""))
         {
             Toast.makeText(NCZ_CreateNewOrder.this, "请先填写信息", Toast.LENGTH_SHORT).show();

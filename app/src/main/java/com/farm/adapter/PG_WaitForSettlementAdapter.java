@@ -580,7 +580,9 @@ public class PG_WaitForSettlementAdapter extends BaseAdapter
                     if (result.getAffectedRows() != 0)
                     {
                         listData = JSON.parseArray(result.getRows().toJSONString(), SellOrder_New.class);
-
+                        Intent intent = new Intent();
+                        intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
+                        context.sendBroadcast(intent);
 
                     } else
                     {

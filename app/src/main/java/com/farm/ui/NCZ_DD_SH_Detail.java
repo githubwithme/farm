@@ -422,16 +422,16 @@ public class NCZ_DD_SH_Detail extends Activity
             sellOrder.setOldnumber("");
         }
 
-   /*     if (!sellOrder.getOldPrice().equals(""))
+        if (!sellOrder.getOldPrice().equals(""))
         {
             sellOrder.setPrice(sellOrder.getOldPrice());
             sellOrder.setOldPrice("");
-        }*/
-/*        if (!sellOrder.getOldsaletime().equals(""))
+        }
+        if (!sellOrder.getOldsaletime().equals(""))
         {
             sellOrder.setSaletime(sellOrder.getOldsaletime());
             sellOrder.setOldsaletime("");
-        }*/
+        }
         sellOrder.setSaletime(old_time.getText().toString());
         sellOrder.setPrice(old_price.getText().toString());
         sellOrder.setSumvalues(et_values.getText().toString());

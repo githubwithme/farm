@@ -152,8 +152,6 @@ public class PG_CreateOrder extends Activity
         dialog.show(getFragmentManager(), "TIP");
     }
 
-    //    dialog.loadingTip(getText(R.string.error_data).toString());
-//    dialog.loadingTip(getText(R.string.error_network).toString());
     @Click
     void add_jsd()
     {
@@ -166,17 +164,7 @@ public class PG_CreateOrder extends Activity
         startActivity(intent);
     }
 
-    //    @Click
-//    void rl_more_tip()
-//    {
-//        if (ll_more.isShown())
-//        {
-//            ll_more.setVisibility(View.GONE);
-//        }else
-//        {
-//            ll_more.setVisibility(View.VISIBLE);
-//        }
-//    }
+
     @Click
     void btn_addcg()
     {
@@ -226,15 +214,7 @@ public class PG_CreateOrder extends Activity
     void et_name()
     {
 
-//        listNewData = FileHelper.getAssetsData(NCZ_CreateNewOrder.this, "getPurchaser", Purchaser.class);
 
-//        JSONObject jsonObject = utils.parseJsonFile(NCZ_CreateNewOrder.this, "dictionary.json");
-//        JSONArray jsonArray = JSONArray.parseArray(jsonObject.getString("Happen"));
-/*        List<String> list = new ArrayList<String>();
-        for (int i = 0; i < listNewData.size(); i++)
-        {
-            list.add(listNewData.get(i).getName());
-        }*/
         List<String> listdata = new ArrayList<String>();
         List<String> listid = new ArrayList<String>();
         for (int i = 0; i < listData_CG.size(); i++)
@@ -243,7 +223,6 @@ public class PG_CreateOrder extends Activity
             listid.add(listData_CG.get(i).getId());
         }
         showDialog_workday(listdata, listid);
-//        showDialog_workday(list, list);
     }
 
     @Click
@@ -541,7 +520,7 @@ public class PG_CreateOrder extends Activity
         getpurchaser("");
         getchanpin();
 //        getlistdata();
-        deleNewSaleAddsalefor();
+//        deleNewSaleAddsalefor();
         et_price.addTextChangedListener(new TextWatcher()
         {
             @Override

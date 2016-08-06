@@ -512,7 +512,7 @@ public class CZ_CreateOrder extends Activity
         getchanpin();
         getlistdata();
         getNewSaleList();
-        deleNewSaleAddsalefor();
+//        deleNewSaleAddsalefor();
         et_price.addTextChangedListener(new TextWatcher()
         {
             @Override

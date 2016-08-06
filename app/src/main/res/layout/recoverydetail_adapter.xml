@@ -97,7 +97,7 @@
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/tv_bzg_tip"
                 android:gravity="center"
-                android:hint="李四"
+                android:hint="暂无"
                 android:paddingRight="20dip"
                 android:textColor="@color/text_table_horizontitle"
                 android:textSize="14sp" />
@@ -121,7 +121,7 @@
                 android:layout_toLeftOf="@+id/tv_tip_unit"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:text="1.8"
+                android:text="-1"
                 android:textColor="@color/text_table_horizontitle"
                 android:textSize="14dip" />
 
@@ -173,7 +173,7 @@
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/tv_byg_tip"
                 android:gravity="center"
-                android:hint="李四"
+                android:hint="暂无"
                 android:paddingRight="20dip"
                 android:textColor="@color/text_table_horizontitle"
                 android:textSize="14sp" />
@@ -197,7 +197,7 @@
                 android:layout_toLeftOf="@+id/tv_tip_bygunit"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:text="1.8"
+                android:text="-1"
                 android:textColor="@color/text_table_horizontitle"
                 android:textSize="14dip" />
 

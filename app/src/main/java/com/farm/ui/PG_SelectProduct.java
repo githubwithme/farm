@@ -178,10 +178,22 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
         registerReceiver(receiver_update, intentfilter_update);
 
 
+        IntentFilter intentfilter_finish = new IntentFilter(AppContext.BROADCAST_FINISHSELECTBATCHTIME);
+        registerReceiver(receiver_finish, intentfilter_finish);
+
         uuid = java.util.UUID.randomUUID().toString();
         commembertab = AppContext.getUserInfo(PG_SelectProduct.this);
     }
 
+    BroadcastReceiver receiver_finish = new BroadcastReceiver()// 从扩展页面返回信息
+    {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+      finish();
+        }
+    };
     BroadcastReceiver receiver_update = new BroadcastReceiver()// 从扩展页面返回信息
     {
         @SuppressWarnings("deprecation")
@@ -192,7 +204,6 @@ public class PG_SelectProduct extends Activity implements CustomHorizontalScroll
             NCZ_getContractSaleData();
         }
     };
-
 
     public void NCZ_getContractSaleData()
     {

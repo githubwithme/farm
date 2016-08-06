@@ -163,7 +163,7 @@ public class NCZ_AllOrderAdapter_New extends BaseAdapter
             if (sellOrder.getFreeDeposit().equals("1"))
             {
                 listItemView.tv_depositStatus.setText("免付定金");
-            } else if(!sellOrder.getDeposit().equals(""))
+            } else if(!sellOrder.getPaid().equals(""))
             {
                 listItemView.tv_depositStatus.setText("已付定金");
             }else
