@@ -17,8 +17,8 @@
             android:paddingLeft="10dip"
             android:layout_gravity="center_vertical"
             android:text="hellow"
-            android:textColor="@color/gray"
-            android:textSize="18sp"/>
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/tv_number"
@@ -26,9 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:layout_marginLeft="15dip"
+            android:layout_marginLeft="20dip"
             android:text="hellow"
-            android:textColor="@color/gray"
+            android:textColor="@color/text_table_horizontitle"
             android:textSize="13sp"/>
 
 

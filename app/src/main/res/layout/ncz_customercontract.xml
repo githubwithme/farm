@@ -28,7 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dip"
             android:layout_toRightOf="@+id/btn_back"
-            android:text="客户合同"
+            android:text="合同管理"
             android:textColor="@color/white"
             android:textSize="@dimen/titlebar_textsize"/>
 
@@ -48,12 +48,59 @@
 
     </RelativeLayout>
 
-    <View
-        android:id="@+id/line"
+    <RelativeLayout
+        android:id="@+id/rl_nodata"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/line"
-        android:layout_below="@+id/rl_titlebar"
-        android:background="@color/line_color"/>
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="360px"
+            android:background="@mipmap/iconfont_hetong_empty"/>
+
+        <TextView
+            android:id="@+id/tv_nodetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40px"
+            android:alpha="0.8"
+            android:gravity="center"
+            android:text="暂无农场合同"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_addtip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_nodetail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40px"
+            android:alpha="0.5"
+            android:gravity="center"
+            android:text="请与采购商签订合同"
+            android:textColor="@color/text_table_horizontitle"
+            android:textSize="14sp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_below="@+id/tv_addtip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="15dip"
+            android:layout_marginTop="80px"
+            android:background="@drawable/btn_add_immediately"
+            android:text="立即添加"
+            android:textColor="@color/white"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
 
     <RelativeLayout

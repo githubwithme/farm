@@ -15,6 +15,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.farm.R;
@@ -52,22 +53,22 @@ public class CZ_FarmManagerFragment extends Fragment
     Button btn_add;
     @ViewById
     Button btn_search;
-    @ViewById
-    GridView gv;
-    @ViewById
-    View view;
-    @ViewById
-    TextView tv_plantnumber_new;
-    @ViewById
-    TextView tv_cmdnumber_new;
-    @ViewById
-    TextView tv_worknumber_new;
-    @ViewById
-    FrameLayout fl_worknumber_new;
-    @ViewById
-    FrameLayout fl_plantnumber_new;
-    @ViewById
-    FrameLayout fl_cmdnumber_new;
+//    @ViewById
+//    GridView gv;
+//    @ViewById
+//    View view;
+//    @ViewById
+//    TextView tv_plantnumber_new;
+//    @ViewById
+//    TextView tv_cmdnumber_new;
+//    @ViewById
+//    TextView tv_worknumber_new;
+//    @ViewById
+//    FrameLayout fl_worknumber_new;
+//    @ViewById
+//    FrameLayout fl_plantnumber_new;
+//    @ViewById
+//    FrameLayout fl_cmdnumber_new;
 
     @AfterViews
     void afterOncrete()
@@ -79,27 +80,36 @@ public class CZ_FarmManagerFragment extends Fragment
         timethread.start();
     }
 
+//    @Click
+//    void btn_add()
+//    {
+//        showPop_add();
+//    }
+
     @Click
-    void btn_add()
+    void img_location()
     {
-        showPop_add();
+        Toast.makeText(getActivity(), "该农场暂无其他城市分布!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
     void btn_search()
     {
-        Intent intent = new Intent(getActivity(), SearchAllInformation_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), SearchAllInformation_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
-    void ll_zl()
+    void rl_zl()
     {
 //        Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
 //        getActivity().startActivity(intent);
-        Intent intent = new Intent(getActivity(), CZ_CommandListActivity_.class);
-        intent.putExtra("parkid", commembertab.getparkId());
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), CZ_CommandListActivity_.class);
+//        intent.putExtra("parkid", commembertab.getparkId());
+//        startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+
     }
 
     @Click
@@ -107,38 +117,42 @@ public class CZ_FarmManagerFragment extends Fragment
     {
 //        Intent intent = new Intent(getActivity(), NCZ_JobActivity_.class);
 //        getActivity().startActivity(intent);
-        Intent intent = new Intent(getActivity(), CZ_JobActivity_.class);
-        intent.putExtra("parkid", commembertab.getparkId());
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), CZ_JobActivity_.class);
+//        intent.putExtra("parkid", commembertab.getparkId());
+//        startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
-    void ll_mq()
+    void rl_mq()
     {
 //        Intent intent = new Intent(getActivity(), NCZ_MQActivity_.class);
-        Intent intent = new Intent(getActivity(), CZ_MQActivity_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), CZ_MQActivity_.class);
+//        getActivity().startActivity(intent);
 //        Intent intent = new Intent(getActivity(), CZ_ToDayPQ_.class);
 //        intent.putExtra("parkid", commembertab.getparkId());
 //        startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
-    void ll_sj()
+    void rl_sj()
     {
-        Intent intent = new Intent(getActivity(), PG_ListOfEvents_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), PG_ListOfEvents_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
-    void ll_kc()
+    void rl_kc()
     {
-        Intent intent = new Intent(getActivity(), Ncz_wz_ll_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), Ncz_wz_ll_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
-    void ll_xs()
+    void rl_xs()
     {
 //        Intent intent = new Intent(getActivity(), CZ_OrderManager_.class);
 //        Intent intent = new Intent(getActivity(), CZ_SaleActivity_.class);
@@ -149,9 +163,8 @@ public class CZ_FarmManagerFragment extends Fragment
     }
 
 
-
     @Click
-    void ll_dl()
+    void rl_dl()
     {
 //        Intent intent = new Intent(getActivity(), CZ_DLFragment_.class);
         Intent intent = new Intent(getActivity(), CZ_BreakOffActivity_.class);
@@ -161,8 +174,9 @@ public class CZ_FarmManagerFragment extends Fragment
     @Click
     void ll_sp()
     {
-        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
 //    @Click
@@ -173,33 +187,62 @@ public class CZ_FarmManagerFragment extends Fragment
 //        getActivity().startActivity(intent);
 //    }
 
-    @Click
-    void ll_tq()
-    {
-        Intent intent = new Intent(getActivity(), WeatherActivity_.class);
-        intent.putExtra("parkid", "80");
-        getActivity().startActivity(intent);
-    }
+//    @Click
+//    void ll_tq()
+//    {
+//        Intent intent = new Intent(getActivity(), WeatherActivity_.class);
+//        intent.putExtra("parkid", "80");
+//        getActivity().startActivity(intent);
+//    }
 
+    //    @Click
+//    void ll_jobself()
+//    {
+//        Intent intent = new Intent(getActivity(), CZ_JobFragment_.class);
+//        getActivity().startActivity(intent);
+//    }
     @Click
-    void ll_jobself()
-    {
-        Intent intent = new Intent(getActivity(), CZ_JobFragment_.class);
-        getActivity().startActivity(intent);
-    }    @Click
     void rl_sk()
     {
-        Intent intent = new Intent(getActivity(), NCZ_FarmMapActivity_.class);
-        intent.putExtra("parkid", "80");
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), NCZ_FarmMapActivity_.class);
+//        intent.putExtra("parkid", "80");
+//        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
     }
 
     @Click
-    void ll_more()
+    void rl_cw()
+    {
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Click
+    void rl_tj()
+    {
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Click
+    void rl_more()
     {
 //        Intent intent = new Intent(getActivity(), NCZ_MoreModule_.class);
 //        intent.putExtra("parkid", "80");
 //        getActivity().startActivity(intent);
+        Toast.makeText(getActivity(), "该功能待上线喔!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Click
+    void rl_dd()
+    {
+        Intent intent = new Intent(getActivity(), CZ_OrderManager_New_.class);
+        getActivity().startActivity(intent);
+    }
+
+    @Click
+    void rl_ht()
+    {
+        Intent intent = new Intent(getActivity(), NCZ_CustomerContract_.class);
+        getActivity().startActivity(intent);
     }
 
     @Override
@@ -239,30 +282,30 @@ public class CZ_FarmManagerFragment extends Fragment
                             intent.putExtra("number", Integer.valueOf(areatab.getJobCount()) + Integer.valueOf(areatab.getCommandCount()) + Integer.valueOf(areatab.getPlantGrowCount()));
                             intent.setAction(AppContext.UPDATEMESSAGE_FARMMANAGER);
                             getActivity().sendBroadcast(intent);
-                            if (Integer.valueOf(areatab.getJobCount()) > 0)
-                            {
-                                fl_worknumber_new.setVisibility(View.VISIBLE);
-                                tv_worknumber_new.setText(areatab.getJobCount());
-                            } else
-                            {
-                                fl_worknumber_new.setVisibility(View.GONE);
-                            }
-                            if (Integer.valueOf(areatab.getCommandCount()) > 0)
-                            {
-                                fl_cmdnumber_new.setVisibility(View.VISIBLE);
-                                tv_cmdnumber_new.setText(areatab.getCommandCount());
-                            } else
-                            {
-                                fl_cmdnumber_new.setVisibility(View.GONE);
-                            }
-                            if (Integer.valueOf(areatab.getPlantGrowCount()) > 0)
-                            {
-                                fl_plantnumber_new.setVisibility(View.VISIBLE);
-                                tv_plantnumber_new.setText(areatab.getPlantGrowCount());
-                            } else
-                            {
-                                fl_plantnumber_new.setVisibility(View.GONE);
-                            }
+//                            if (Integer.valueOf(areatab.getJobCount()) > 0)
+//                            {
+//                                fl_worknumber_new.setVisibility(View.VISIBLE);
+//                                tv_worknumber_new.setText(areatab.getJobCount());
+//                            } else
+//                            {
+//                                fl_worknumber_new.setVisibility(View.GONE);
+//                            }
+//                            if (Integer.valueOf(areatab.getCommandCount()) > 0)
+//                            {
+//                                fl_cmdnumber_new.setVisibility(View.VISIBLE);
+//                                tv_cmdnumber_new.setText(areatab.getCommandCount());
+//                            } else
+//                            {
+//                                fl_cmdnumber_new.setVisibility(View.GONE);
+//                            }
+//                            if (Integer.valueOf(areatab.getPlantGrowCount()) > 0)
+//                            {
+//                                fl_plantnumber_new.setVisibility(View.VISIBLE);
+//                                tv_plantnumber_new.setText(areatab.getPlantGrowCount());
+//                            } else
+//                            {
+//                                fl_plantnumber_new.setVisibility(View.GONE);
+//                            }
                         }
                     } else
                     {
@@ -283,82 +326,82 @@ public class CZ_FarmManagerFragment extends Fragment
         });
     }
 
-    public void showPop_add()
-    {
-        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
-        pv_command = layoutInflater.inflate(R.layout.dynamicfragment_add, null);// 外层
-        pv_command.setOnKeyListener(new View.OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
-                {
-                    pw_command.dismiss();
-                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-                    lp.alpha = 1f;
-                    getActivity().getWindow().setAttributes(lp);
-                    return true;
-                }
-                return false;
-            }
-        });
-        pv_command.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (pw_command.isShowing())
-                {
-                    pw_command.dismiss();
-                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-                    lp.alpha = 1f;
-                    getActivity().getWindow().setAttributes(lp);
-                }
-                return false;
-            }
-        });
-        pw_command = new PopupWindow(pv_command, 500, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-        pw_command.showAsDropDown(view, 0, 0);
-//        int[] location = new int[2];
-//        btn_add.getLocationOnScreen(location);
-//        pw_command.showAtLocation(btn_add, Gravity.NO_GRAVITY, location[0]+line.getWidth(), location[1]);
-        pw_command.setOutsideTouchable(true);
-        LinearLayout ll_addcost = (LinearLayout) pv_command.findViewById(R.id.ll_addcost);
-        LinearLayout ll_addcommand = (LinearLayout) pv_command.findViewById(R.id.ll_addcommand);
-
-
-        ll_addcost.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                pw_command.dismiss();
-                WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-                lp.alpha = 1f;
-                getActivity().getWindow().setAttributes(lp);
-                Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
-                getActivity().startActivity(intent);
-            }
-        });
-        ll_addcommand.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                pw_command.dismiss();
-                WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-                lp.alpha = 1f;
-                getActivity().getWindow().setAttributes(lp);
-                Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
-                getActivity().startActivity(intent);
-            }
-        });
-
-        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        lp.alpha = 0.7f;
-        getActivity().getWindow().setAttributes(lp);
-    }
+//    public void showPop_add()
+//    {
+//        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+//        pv_command = layoutInflater.inflate(R.layout.dynamicfragment_add, null);// 外层
+//        pv_command.setOnKeyListener(new View.OnKeyListener()
+//        {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event)
+//            {
+//                if ((keyCode == KeyEvent.KEYCODE_MENU) && (pw_command.isShowing()))
+//                {
+//                    pw_command.dismiss();
+//                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+//                    lp.alpha = 1f;
+//                    getActivity().getWindow().setAttributes(lp);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        pv_command.setOnTouchListener(new View.OnTouchListener()
+//        {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event)
+//            {
+//                if (pw_command.isShowing())
+//                {
+//                    pw_command.dismiss();
+//                    WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+//                    lp.alpha = 1f;
+//                    getActivity().getWindow().setAttributes(lp);
+//                }
+//                return false;
+//            }
+//        });
+//        pw_command = new PopupWindow(pv_command, 500, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+//        pw_command.showAsDropDown(view, 0, 0);
+////        int[] location = new int[2];
+////        btn_add.getLocationOnScreen(location);
+////        pw_command.showAtLocation(btn_add, Gravity.NO_GRAVITY, location[0]+line.getWidth(), location[1]);
+//        pw_command.setOutsideTouchable(true);
+//        LinearLayout ll_addcost = (LinearLayout) pv_command.findViewById(R.id.ll_addcost);
+//        LinearLayout ll_addcommand = (LinearLayout) pv_command.findViewById(R.id.ll_addcommand);
+//
+//
+//        ll_addcost.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                pw_command.dismiss();
+//                WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+//                lp.alpha = 1f;
+//                getActivity().getWindow().setAttributes(lp);
+//                Intent intent = new Intent(getActivity(), NCZ_CostModule_.class);
+//                getActivity().startActivity(intent);
+//            }
+//        });
+//        ll_addcommand.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                pw_command.dismiss();
+//                WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+//                lp.alpha = 1f;
+//                getActivity().getWindow().setAttributes(lp);
+//                Intent intent = new Intent(getActivity(), NCZ_CommandListActivity_.class);
+//                getActivity().startActivity(intent);
+//            }
+//        });
+//
+//        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+//        lp.alpha = 0.7f;
+//        getActivity().getWindow().setAttributes(lp);
+//    }
 
     class TimeThread extends Thread
     {

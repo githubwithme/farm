@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.farm.R;
 import com.farm.bean.DynamicBean;
 import com.farm.common.utils;
+import com.farm.ui.NCZ_BreakOffActivity_;
 import com.farm.ui.NCZ_CommandListActivity_;
 import com.farm.ui.NCZ_DLdatail_;
 import com.farm.ui.NCZ_JobActivity_;
@@ -99,12 +100,12 @@ public class Adapter_Dynamic extends BaseAdapter
             listItemView = (ListItemView) convertView.getTag();
         }
 //        listItemView.tv_new_item.setText(String.valueOf(dynamicBean.getListdata().size()));
-        if (dynamicBean.getListdata().size()>0)
+        if (dynamicBean.getListdata().size() > 0)
         {
             String date = dynamicBean.getListdata().get(0).getDate();
             date = date.replace("/", "-");
             listItemView.tv_date.setText(utils.OffSetOfDate(utils.getToday(), date));
-        }else
+        } else
         {
             listItemView.tv_date.setText("");
         }
@@ -112,10 +113,10 @@ public class Adapter_Dynamic extends BaseAdapter
         if (type.equals("ZL"))
         {
             listItemView.tv_title.setText("指令");
-            if (dynamicBean.getListdata().size()>0)
+            if (dynamicBean.getListdata().size() > 0)
             {
                 listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            }else
+            } else
             {
                 listItemView.tv_note.setText("暂无新内容");
             }
@@ -124,10 +125,10 @@ public class Adapter_Dynamic extends BaseAdapter
         } else if (type.equals("GZ"))
         {
             listItemView.tv_title.setText("工作");
-            if (dynamicBean.getListdata().size()>0)
+            if (dynamicBean.getListdata().size() > 0)
             {
                 listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            }else
+            } else
             {
                 listItemView.tv_note.setText("无");
             }
@@ -136,10 +137,10 @@ public class Adapter_Dynamic extends BaseAdapter
         {
             listItemView.tv_title.setText("苗情");
 //            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            if (dynamicBean.getListdata().size()>0)
+            if (dynamicBean.getListdata().size() > 0)
             {
                 listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            }else
+            } else
             {
                 listItemView.tv_note.setText("无");
             }
@@ -148,10 +149,10 @@ public class Adapter_Dynamic extends BaseAdapter
         {
             listItemView.tv_title.setText("销售");
 //            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            if (dynamicBean.getListdata().size()>0)
+            if (dynamicBean.getListdata().size() > 0)
             {
                 listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            }else
+            } else
             {
                 listItemView.tv_note.setText("无");
             }
@@ -160,10 +161,10 @@ public class Adapter_Dynamic extends BaseAdapter
         {
             listItemView.tv_title.setText("物资");
 //            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            if (dynamicBean.getListdata().size()>0)
+            if (dynamicBean.getListdata().size() > 0)
             {
                 listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            }else
+            } else
             {
                 listItemView.tv_note.setText("无");
             }
@@ -172,10 +173,10 @@ public class Adapter_Dynamic extends BaseAdapter
         {
             listItemView.tv_title.setText("审批");
 //            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            if (dynamicBean.getListdata().size()>0)
+            if (dynamicBean.getListdata().size() > 0)
             {
                 listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            }else
+            } else
             {
                 listItemView.tv_note.setText("无");
             }
@@ -184,10 +185,10 @@ public class Adapter_Dynamic extends BaseAdapter
         {
             listItemView.tv_title.setText("事件");
 //            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            if (dynamicBean.getListdata().size()>0)
+            if (dynamicBean.getListdata().size() > 0)
             {
                 listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            }else
+            } else
             {
                 listItemView.tv_note.setText("无");
             }
@@ -196,17 +197,17 @@ public class Adapter_Dynamic extends BaseAdapter
         {
             listItemView.tv_title.setText("断蕾");
 //            listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            if (dynamicBean.getListdata().size()>0)
+            if (dynamicBean.getListdata().size() > 0)
             {
                 listItemView.tv_note.setText(dynamicBean.getListdata().get(0).getNote());
-            }else
+            } else
             {
                 listItemView.tv_note.setText("无");
             }
             listItemView.circle_img.setBackgroundResource(R.drawable.icon_bud_break);
         }
 
-        if(dynamicBean.getListdata().size()>0)
+        if (dynamicBean.getListdata().size() > 0)
         {
             if (dynamicBean.getListdata().get(0).getFlashStr().equals("0"))
             {
@@ -217,13 +218,13 @@ public class Adapter_Dynamic extends BaseAdapter
             }
         }
 
-        listItemView.ll_select.setTag(R.id.tag_dt,dynamicBean);
+        listItemView.ll_select.setTag(R.id.tag_dt, dynamicBean);
         listItemView.ll_select.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                DynamicBean dynamicBean1= (DynamicBean) view.getTag(R.id.tag_dt);
+                DynamicBean dynamicBean1 = (DynamicBean) view.getTag(R.id.tag_dt);
                 Intent intent = null;
                 String type = dynamicBean1.getType();
                 if (type.equals("ZL"))
@@ -256,7 +257,7 @@ public class Adapter_Dynamic extends BaseAdapter
                     return;
                 } else if (type.equals("DL"))
                 {
-                    intent = new Intent(context, NCZ_DLdatail_.class);
+                    intent = new Intent(context, NCZ_BreakOffActivity_.class);
                 }
                 context.startActivity(intent);
 

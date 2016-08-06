@@ -2,8 +2,10 @@ package com.farm.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -44,6 +46,8 @@ public class NCZ_CustomerContract extends Activity
     ImageButton imgbtn;
     @ViewById
     TextView et_goodsname;
+    @ViewById
+    RelativeLayout rl_nodata;
 
     @Click
     void et_goodsname()
@@ -106,13 +110,20 @@ public class NCZ_CustomerContract extends Activity
                 if (result.getResultCode() == 1)// -1出错；0结果集数量为0；结果列表
                 {
                     listNewData = JSON.parseArray(result.getRows().toJSONString(), CustomerContractBean.class);
-                    adapter_customercontract = new Adapter_Customercontract(NCZ_CustomerContract.this, listNewData, expandableListView);
-                    expandableListView.setAdapter(adapter_customercontract);
-
-                    for (int i = 0; i < listNewData.size(); i++)
+                    if (listNewData.size() > 0)
                     {
-                        expandableListView.expandGroup(i);//展开
+                        rl_nodata.setVisibility(View.GONE);
+                        adapter_customercontract = new Adapter_Customercontract(NCZ_CustomerContract.this, listNewData, expandableListView);
+                        expandableListView.setAdapter(adapter_customercontract);
+                        for (int i = 0; i < listNewData.size(); i++)
+                        {
+                            expandableListView.expandGroup(i);//展开
+                        }
+                    } else
+                    {
+                        rl_nodata.setVisibility(View.VISIBLE);
                     }
+
 
                 } else
                 {
